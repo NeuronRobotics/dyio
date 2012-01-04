@@ -1,3 +1,7 @@
+-include common/Version.mk
+REVISION=$(MAJOR_VER).$(MINOR_VER).$(FIRMWARE_VER)
+PUB=java -jar FirmwarePublish/Publish.jar -revision=$(REVISION)
+
 all: main  coproc pub
 	echo ok
 upload:svnupdate update all commit
@@ -26,7 +30,11 @@ coproc:
 pub:
 	if (test -e FirmwarePublish/Release/*.xml);			then rm FirmwarePublish/Release/*.xml; rm FirmwarePublish/Release/legacy/*.xml; 			fi
 	if (test -e FirmwarePublish/Dev/*.xml);				then rm FirmwarePublish/Dev/*.xml; 				fi	
-	cd FirmwarePublish/src/pub;python FirmwarePublish.py
+	#cd FirmwarePublish/src/pub;python FirmwarePublish.py
+	$(PUB) -core=0,pic32mx440f128h,4,pic/output/Release/output.hex -core=1,avr_atmexaxx4p,2,avr/output/644p/output.hex -output=FirmwarePublish/Release/dyio-$(REVISION).xml
+	$(PUB) -core=0,pic32mx440f128h,4,pic/output/Release/output.hex -core=1,avr_atmexaxx4p,2,avr/output/324p/output.hex -output=FirmwarePublish/Release/legacy/dyio-$(REVISION)_legacy.xml
+	
+	$(PUB) -core=0,pic32mx440f128h,4,pic/output/Release/output.hex -core=1,avr_atmexaxx4p,2,avr/output/644p/output.hex -output=FirmwarePublish/Dev/dyio-DEV-$(REVISION)
 	if(rm ../NRSDK/fw/*); then echo OK; fi
 	cp FirmwarePublish/Dev/dyio* ../NRSDK/fw/
 	cp FirmwarePublish/Release/*.xml ../NRConsole/src/com/neuronrobotics/nrconsole/plugin/bootloader/fw/
