@@ -94,21 +94,11 @@ int main(void) {
     //Initialize the button and LED hardware
     initButton();
     initLed();
+    const char * start = "Demo Program!";
     while (1){
-        //Keep checking the server in the main loop
-        //You can add custom code here for co-operative operation
-        Bowler_Server(&Packet, FALSE);
+
         //Do something with the buttons
         if(!isPressed()){
-            //This will return false if it has not been enough time since last time it ran
-            if ((RunEvery(&blink)>0)){
-                //Set the LEDs to the oppsite state
-                setLed(blinkState,blinkState,blinkState);
-                blinkState = blinkState?FALSE:TRUE;
-            }
-        }else{
-            //mirror the buttons on the LED's
-            setLed(_RD6,_RD7,_RD13);
             //For direct access to the USB, you can access the USB API directly
             if(GetNumUSBBytes()>0){
                 //We have some data, read it in
@@ -116,6 +106,19 @@ int main(void) {
                 //then mirror it back out
                 USBPutArray(Packet.stream, GetNumUSBBytes());
             }
+            //This will return false if it has not been enough time since last time it ran
+            if ((RunEvery(&blink)>0)){
+                //Set the LEDs to the oppsite state
+                setLed(blinkState,blinkState,blinkState);
+                blinkState = blinkState?FALSE:TRUE;
+            }
+        }else{
+            USBPutArray((BYTE *)start, sizeof(start));
+            //Keep checking the server in the main loop
+            //You can add custom code here for co-operative operation
+            //Bowler_Server(&Packet, FALSE);
+            //mirror the buttons on the LED's
+            setLed(_RD6,_RD7,_RD13);
         }
 
     }
