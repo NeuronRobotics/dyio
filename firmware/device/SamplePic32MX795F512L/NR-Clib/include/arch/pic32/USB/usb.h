@@ -107,16 +107,16 @@ Description:
 // *****************************************************************************
 // *****************************************************************************
 
-#include "GenericTypeDefs.h"
-#include "Compiler.h"
+#include "arch/pic32/GenericTypeDefs.h"
+#include "arch/pic32/Compiler.h"
 
-#include "usb_config.h"             // Must be defined by the application
+#include "arch/pic32/usb_config.h"             // Must be defined by the application
 
-#include "USB/usb_common.h"         // Common USB library definitions
-#include "USB/usb_ch9.h"            // USB device framework definitions
+#include "arch/pic32/USB/usb_common.h"         // Common USB library definitions
+#include "arch/pic32/USB/usb_ch9.h"            // USB device framework definitions
 
 #if defined( USB_SUPPORT_DEVICE )
-    #include "USB/usb_device.h"     // USB Device abstraction layer interface
+    #include "arch/pic32/USB/usb_device.h"     // USB Device abstraction layer interface
 #endif
 
 #if defined( USB_SUPPORT_HOST )
@@ -127,7 +127,7 @@ Description:
     #include "usb/usb_otg.h" 
 #endif
 
-#include "USB/usb_hal.h"            // Hardware Abstraction Layer interface
+#include "arch/pic32/USB/usb_hal.h"            // Hardware Abstraction Layer interface
 
 // *****************************************************************************
 // *****************************************************************************

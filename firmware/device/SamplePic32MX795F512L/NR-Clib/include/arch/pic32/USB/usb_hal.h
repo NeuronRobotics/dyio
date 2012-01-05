@@ -93,7 +93,7 @@ Description:
 #elif defined(__C30__)
     #include "USB/usb_hal_pic24.h"
 #elif defined(__PIC32MX__)
-    #include "USB/usb_hal_pic32.h"
+    #include "arch/pic32/USB/usb_hal_pic32.h"
 #else
     #error "Silicon Platform not defined"
 #endif

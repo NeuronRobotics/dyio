@@ -97,13 +97,13 @@ ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 ${OBJECTDIR}/src/main/main.o: src/main/main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/src/main 
 	@${RM} ${OBJECTDIR}/src/main/main.o.d 
-	@${FIXDEPS} "${OBJECTDIR}/src/main/main.o.d" $(SILENT) -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1 -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"/home/hephaestus/workspace/NR-Clib/include" -I"/home/hephaestus/workspace/BowlerSampleProject.X" -MMD -MF "${OBJECTDIR}/src/main/main.o.d" -o ${OBJECTDIR}/src/main/main.o src/main/main.c  
+	@${FIXDEPS} "${OBJECTDIR}/src/main/main.o.d" $(SILENT) -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PIC32MXSK=1 -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../NR-Clib/include" -I"." -MMD -MF "${OBJECTDIR}/src/main/main.o.d" -o ${OBJECTDIR}/src/main/main.o src/main/main.c  
 	
 else
 ${OBJECTDIR}/src/main/main.o: src/main/main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/src/main 
 	@${RM} ${OBJECTDIR}/src/main/main.o.d 
-	@${FIXDEPS} "${OBJECTDIR}/src/main/main.o.d" $(SILENT) -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"/home/hephaestus/workspace/NR-Clib/include" -I"/home/hephaestus/workspace/BowlerSampleProject.X" -MMD -MF "${OBJECTDIR}/src/main/main.o.d" -o ${OBJECTDIR}/src/main/main.o src/main/main.c  
+	@${FIXDEPS} "${OBJECTDIR}/src/main/main.o.d" $(SILENT) -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../NR-Clib/include" -I"." -MMD -MF "${OBJECTDIR}/src/main/main.o.d" -o ${OBJECTDIR}/src/main/main.o src/main/main.c  
 	
 endif
 

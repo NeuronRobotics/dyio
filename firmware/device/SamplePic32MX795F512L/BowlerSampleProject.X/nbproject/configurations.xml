@@ -125,8 +125,7 @@
         <property key="strict-ansi" value="false"/>
         <property key="preprocessor-macros" value=""/>
         <property key="additional-warnings" value="false"/>
-        <property key="extra-include-directories"
-                  value="/home/hephaestus/workspace/NR-Clib/include;/home/hephaestus/workspace/BowlerSampleProject.X"/>
+        <property key="extra-include-directories" value="../NR-Clib/include;."/>
         <property key="post-instruction-scheduling" value="default"/>
         <property key="enable-app-io" value="false"/>
         <property key="enable-unroll-loops" value="false"/>
@@ -146,10 +145,10 @@
         <property key="preprocessor-macros" value=""/>
         <property key="exclude-floating-point-library" value="false"/>
         <property key="list-file" value=""/>
-        <property key="list-assembly" value="false"/>
         <property key="list-source" value="false"/>
-        <property key="extra-include-directories-for-preprocessor" value=""/>
+        <property key="list-assembly" value="false"/>
         <property key="warning-level" value=""/>
+        <property key="extra-include-directories-for-preprocessor" value=""/>
         <property key="list-section-info" value="false"/>
         <property key="omit-forms" value="false"/>
         <property key="list-symbols" value="false"/>
