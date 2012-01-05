@@ -121,6 +121,7 @@ int main(void) {
                 USBPutArray((BYTE *)start, size);
             }
             if(!_RD7){
+                //This is how to run a bowler server on the USB and serial port
                 //Keep checking the server in the main loop
                 //You can add custom code here for co-operative operation
                 Bowler_Server(&Packet, FALSE);
