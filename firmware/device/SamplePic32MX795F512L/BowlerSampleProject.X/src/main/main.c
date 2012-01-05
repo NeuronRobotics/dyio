@@ -98,8 +98,9 @@ int main(void) {
         //Keep checking the server in the main loop
         //You can add custom code here for co-operative operation
         Bowler_Server(&Packet, FALSE);
-        //This will return false if it has not been enough time since last time it ran
+        //Do something with the buttons
         if(!isPressed()){
+            //This will return false if it has not been enough time since last time it ran
             if ((RunEvery(&blink)>0)){
                 //Set the LEDs to the oppsite state
                 setLed(blinkState,blinkState,blinkState);
@@ -108,7 +109,15 @@ int main(void) {
         }else{
             //mirror the buttons on the LED's
             setLed(_RD6,_RD7,_RD13);
+            //For direct access to the USB, you can access the USB API directly
+            if(GetNumUSBBytes()>0){
+                //We have some data, read it in
+                USBGetArray(Packet.stream, GetNumUSBBytes());
+                //then mirror it back out
+                USBPutArray(Packet.stream, GetNumUSBBytes());
+            }
         }
+
     }
 }
 
