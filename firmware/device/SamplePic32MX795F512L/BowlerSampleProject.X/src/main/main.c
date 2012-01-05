@@ -115,18 +115,18 @@ int main(void) {
                 blinkState = blinkState?FALSE:TRUE;
             }
         }else{
-            if(_RD6){
+            if(!_RD6){
                 int size=0;
                 while(start[size++]);//Calculates the length of the null terminated string
                 USBPutArray((BYTE *)start, size);
             }
-            if(_RD7){
+            if(!_RD7){
                 //Keep checking the server in the main loop
                 //You can add custom code here for co-operative operation
                 Bowler_Server(&Packet, FALSE);
             }
             //mirror the buttons on the LED's
-            setLed(_RD6,_RD7,_RD13);
+            setLed(!_RD6,!_RD7,!_RD13);
         }
 
     }
