@@ -94,17 +94,19 @@ int main(void) {
     //Initialize the button and LED hardware
     initButton();
     initLed();
-    const char * start = "Demo Program!";
+    const char * start = "Demo_Program!\r\n";
     while (1){
 
         //Do something with the buttons
         if(!isPressed()){
             //For direct access to the USB, you can access the USB API directly
-            if(GetNumUSBBytes()>0){
+            int size = GetNumUSBBytes();
+            if(size>0){
                 //We have some data, read it in
-                USBGetArray(Packet.stream, GetNumUSBBytes());
+                size = USBGetArray(Packet.stream, size);
                 //then mirror it back out
-                USBPutArray(Packet.stream, GetNumUSBBytes());
+                USBPutArray(Packet.stream, size);
+                
             }
             //This will return false if it has not been enough time since last time it ran
             if ((RunEvery(&blink)>0)){
@@ -113,10 +115,16 @@ int main(void) {
                 blinkState = blinkState?FALSE:TRUE;
             }
         }else{
-            USBPutArray((BYTE *)start, sizeof(start));
-            //Keep checking the server in the main loop
-            //You can add custom code here for co-operative operation
-            //Bowler_Server(&Packet, FALSE);
+            if(_RD6){
+                int size=0;
+                while(start[size++]);//Calculates the length of the null terminated string
+                USBPutArray((BYTE *)start, size);
+            }
+            if(_RD7){
+                //Keep checking the server in the main loop
+                //You can add custom code here for co-operative operation
+                Bowler_Server(&Packet, FALSE);
+            }
             //mirror the buttons on the LED's
             setLed(_RD6,_RD7,_RD13);
         }
