@@ -65,7 +65,7 @@ BYTE UserGetRPCs(BowlerPacket *Packet){
     return 0;
 }
 BYTE UserPostRPCs(BowlerPacket *Packet){
-	return 0;
+    return 0;
 }
 BYTE UserCriticalRPCs(BowlerPacket *Packet){
     return 0;
@@ -89,7 +89,7 @@ int main(void) {
     BowlerPacket Packet;
     //Declare a storage data for a periodic event
     //This will run every 1000 ms
-    RunEveryData blink ={0,1000};
+    RunEveryData blink ={getMs(),1000};
     BOOL blinkState = TRUE;
     //Initialize the button and LED hardware
     initButton();
