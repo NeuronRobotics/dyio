@@ -33,7 +33,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/DyIO/common/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/DyIO/pic/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/DyIO/avr/include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/DyIO/NRLIB/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/DyIO/NR-Clib/include}&quot;"/>
 								</option>
 								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.630814093" languageId="org.eclipse.cdt.core.gcc" languageName="GNU C" sourceContentType="org.eclipse.cdt.core.cSource,org.eclipse.cdt.core.cHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>
@@ -49,7 +49,9 @@
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="DyIO.null.1803011575" name="DyIO"/>
 	</storageModule>
-	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="refreshScope" versionNumber="1">
+		<resource resourceType="PROJECT" workspacePath="/DyIO"/>
+	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		<profile id="de.innot.avreclipse.core.AVRGCCManagedMakePerProjectProfileC">
@@ -256,4 +258,5 @@
 			</profile>
 		</scannerConfigBuildInfo>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 </cproject>
