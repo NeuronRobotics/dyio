@@ -4,6 +4,7 @@ update:
 	echo Updating...
 	mkdir -p NR-Clib/lib/PIC32/32MX795F512L/
 	mkdir -p NR-Clib/include/
+	svn update
 	if (test -d ../NR-ClibRelease/); then \
 		cd ../NR-ClibRelease/;\
 		svn update;\
