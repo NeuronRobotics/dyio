@@ -115,7 +115,7 @@ Description:
  *************************************************************************/
 
 #if !defined(USB_HAL_PIC32_H)
-#include "Compiler.h"
+#include "arch/pic32/Compiler.h"
 
 #define USB_HAL_PIC32_H
 

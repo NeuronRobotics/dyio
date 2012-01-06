@@ -11,7 +11,7 @@ DIRS:
 	rm -rf output
 	mkdir -p output/release
 	mkdir -p output/debug
-
+	if (test -e $(BIN2HEX)) then echo Toolchain OK; else echo Toolchain error, check NR-Clib/toolchain/pic32/toolchain.mk; exit 1; fi
 all:DIRS release
 	echo ok
 release:	

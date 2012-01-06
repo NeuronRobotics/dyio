@@ -1,4 +1,5 @@
 -include ../common/Version.mk
+-include ../NR-Clib/toolchain/avr/toolchain.mk
 INCLUDES	    = -I../NR-Clib/include/ -I./include/ -I ../common/include -I ../NR-Clib/include/arch/avr -I/usr/lib/avr/include/ 
 
 DEVICEA         = atmega644p
@@ -6,9 +7,8 @@ CPU_SPD       	= 18432000UL
 LOW_FUSE     	= 0xce
 HIGH_FUSE    	= 0xd9
 EXT_FUSE      	= 0xff
-GCCA            = avr-gcc  $(DYIO_VER)
-CCA             = $(GCCA) -Wall -Os -fpack-struct -fshort-enums -funsigned-char -funsigned-bitfields -mmcu=$(DEVICEA) -DF_CPU=$(CPU_SPD) $(INCLUDES) -c
-CCA324          = $(GCCA) -Wall -Os -fpack-struct -fshort-enums -funsigned-char -funsigned-bitfields -mmcu=atmega324p -DF_CPU=$(CPU_SPD) $(INCLUDES) -c
+CCA             = $(GCCA) $(DYIO_VER) -mmcu=$(DEVICEA) -DF_CPU=$(CPU_SPD) $(INCLUDES) -c
+CCA324          = $(GCCA) $(DYIO_VER) -mmcu=atmega324p -DF_CPU=$(CPU_SPD) $(INCLUDES) -c
 
 LINK324p 		= $(GCCA)  -L ../../../NR-Clib/lib/AVR/atmega324p/ 
 
@@ -54,13 +54,13 @@ release:
 	$(CCA) -c src/BowlerCallbacks/PacketEventCallbacks.c 	-o output/644p/PacketEventCallbackss.o
 	
 	cd output/644p/; $(LINK)  -mmcu=$(DEVICEA) $(OBJ) -lNRLIB -o output.elf
-	cd output/644p/; avr-objcopy -R .eeprom -O ihex output.elf  "output.hex"
+	cd output/644p/; $(BIN2HEXAVR) -R .eeprom -O ihex output.elf  "output.hex"
 	#cd output/644p/; avr-size --format=avr --mcu=$(DEVICEA) output.elf
 	cp output/644p/* output/debug/
 	cd output/644p/; rm *.o
 	
 	cd output/debug/; $(LINK) -mmcu=$(DEVICEA)  $(OBJ) -lNRLIB_debug  -o output.elf
-	cd output/debug/; avr-objcopy -R .eeprom -O ihex output.elf  "output.hex"
+	cd output/debug/; $(BIN2HEXAVR) -R .eeprom -O ihex output.elf  "output.hex"
 	#cd output/debug/;  avr-size --format=avr --mcu=$(DEVICEA) output.elf
 	cd output/debug/; rm *.o
 legacy:	
@@ -90,7 +90,7 @@ legacy:
 	$(CCA324) -c src/BowlerCallbacks/PacketEventCallbacks.c 	-o output/324p/PacketEventCallbackss.o
 	
 	cd output/324p/; $(LINK324p)  -mmcu=atmega324p $(OBJ) -lNRLIB  -o output.elf
-	cd output/324p/; avr-objcopy -R .eeprom -O ihex output.elf  "output.hex"
+	cd output/324p/; $(BIN2HEXAVR) -R .eeprom -O ihex output.elf  "output.hex"
 	#cd output/324p/; avr-size --format=avr --mcu=atmega324p output.elf
 	cd output/324p/; rm *.o
 wpi:
@@ -122,7 +122,7 @@ wpi:
 	$(CCA) -DWPIRBE -c src/Driver/SPISlave.c 	-o output/wpi/SPISlave.o
 	
 	cd output/wpi/; $(LINK)  -mmcu=$(DEVICEA) $(OBJ) SPISlave.o -lNRLIB  -o output.elf
-	cd output/wpi/; avr-objcopy -R .eeprom -O ihex output.elf  "output.hex"
+	cd output/wpi/; $(BIN2HEXAVR) -R .eeprom -O ihex output.elf  "output.hex"
 	#cd output/wpi/; avr-size --format=avr --mcu=$(DEVICEA) output.elf	
 	cd output/wpi/; rm *.o
 dyiolib:	

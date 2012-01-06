@@ -98,7 +98,7 @@
 #define CDC_H
 
 /** I N C L U D E S **********************************************************/
-#include "USB/usb_fifo.h"
+#include "arch/pic32/USB/usb_fifo.h"
 
 /** D E F I N I T I O N S ****************************************************/
 

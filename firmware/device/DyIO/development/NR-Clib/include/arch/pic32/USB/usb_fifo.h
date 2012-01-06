@@ -7,12 +7,12 @@
 
 #ifndef USB_FIFO_H_
 #define USB_FIFO_H_
-#include "Compiler.h"
-#include "GenericTypeDefs.h"
-#include "usb_config.h"
-#include "USB/usb_common.h"
-#include "USB/usb.h"
-#include "USB/usb_function_cdc.h"
+#include "arch/pic32/Compiler.h"
+#include "arch/pic32/GenericTypeDefs.h"
+#include "arch/pic32/usb_config.h"
+#include "arch/pic32/USB/usb_common.h"
+#include "arch/pic32/USB/usb.h"
+#include "arch/pic32/USB/usb_function_cdc.h"
 //#include "USB/usb_function_hid.h"
 #include "Bowler/Bowler.h"
 

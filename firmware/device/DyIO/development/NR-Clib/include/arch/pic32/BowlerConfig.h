@@ -16,8 +16,6 @@
 	#define INPUT 					1
 
 	#include "HardwareProfile.h"
-	#include "Compiler.h"
-    #include "GenericTypeDefs.h"
 	#include "Delay.h"
 	#include "Tick.h"
 	#include "LED.h"
