@@ -34,6 +34,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/DyIO/pic/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/DyIO/avr/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/DyIO/NR-Clib/include}&quot;"/>
+									<listOptionValue builtIn="false" value="/home/opt/microchip/mplabc32/v2.02/pic32mx/include"/>
 								</option>
 								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.630814093" languageId="org.eclipse.cdt.core.gcc" languageName="GNU C" sourceContentType="org.eclipse.cdt.core.cSource,org.eclipse.cdt.core.cHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>
