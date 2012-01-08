@@ -379,7 +379,7 @@ BOOL clearToSend(void){
 		return FALSE;
 	return TRUE;
 }
-//#define SHORTISR
+#define SHORTISR
 void newByte(){
 #if !defined(SHORTISR)
 	int timeout =0;
