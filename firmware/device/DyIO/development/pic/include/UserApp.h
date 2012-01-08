@@ -49,5 +49,6 @@ int getHeartBeatTime();
 BOOL getHeartBeatLock();
 
 void buttonCheck(BYTE code);
+void MyServer();
 
 #endif /* USERAPP_H_ */

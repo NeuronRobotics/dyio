@@ -13,19 +13,24 @@ void buttonCheck(BYTE code){
 		Reset();
 	}
 }
-void runDyIOMain(void){
 #if defined(__AVR_ATmega324P__)
 	static BowlerPacketMini Packet;
 #else
 	static BowlerPacket Packet;
 #endif
+void MyServer(){
+	Bowler_Server((BowlerPacket *) &Packet, FALSE);
+}
+
+void runDyIOMain(void){
+
 	Bowler_Init();// Com Stack Init. Sets up timeout timer, uart 0 and if debug enabled, uart 1
 	UserInit();// User code init
 	//U1IE=0;// Mask all USB interrupts
 	while (1){
 		//USBDeviceTasks();
 		UserRun();
-		Bowler_Server((BowlerPacket *) &Packet, FALSE);
+		MyServer();
 		buttonCheck(0);
 	}
 }

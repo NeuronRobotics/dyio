@@ -406,6 +406,7 @@ void __ISR(_EXTERNAL_1_IRQ, ENCIPL) INT1_ISR(void){
 	}
 	//Delay1us(3);//debounce
 	mINT1ClearIntFlag();
+
 #if defined(USE_INT_DISABLE)
 	EndCritical();
 #endif
