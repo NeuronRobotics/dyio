@@ -8,7 +8,7 @@
 #include "UserApp.h"
 
 #if defined(USE_DMA)
-#define DMA_SIZE 255
+#define DMA_SIZE 1024
 
 static DmaChannel	chn = DMA_CHANNEL1;	// DMA channel to use for our example
 
@@ -28,9 +28,9 @@ void closeDma(){
 	dmaReadPointer = 0;
 
 	DmaChnAbortTxfer(chn);
-//	INTEnable(INT_SOURCE_DMA(chn), INT_DISABLED);
-//	DmaChnClrEvFlags(chn,DMA_EV_ALL_EVNTS);
-//	DmaChnDisable(chn);
+	INTEnable(INT_SOURCE_DMA(chn), INT_DISABLED);
+	DmaChnClrEvFlags(chn,DMA_EV_ALL_EVNTS);
+	DmaChnDisable(chn);
 	running=FALSE;
 }
 
@@ -43,16 +43,13 @@ void startUartDma(){
 	lastIndex=0;
 	sameCheck=0;
 	dmaReadPointer = 0;
-	//initCoProcUART();
-	OpenUART2(UART_EN|UART_NO_PAR_8BIT|UART_1STOPBIT|UART_DIS_BCLK_CTS_RTS,UART_TX_ENABLE|UART_RX_ENABLE,CalcBaud(INTERNAL_BAUD));
-	INTEnable(INT_SOURCE_UART_RX(UART2)		, INT_DISABLED);
-	INTEnable(INT_SOURCE_UART_TX(UART2)		, INT_DISABLED);
-	INTEnable(INT_SOURCE_UART_ERROR(UART2)	, INT_DISABLED);
-	INTEnable(INT_SOURCE_UART(UART2)		, INT_DISABLED);
+	initCoProcUART();
 	DmaChnOpen(chn, DMA_CHN_PRI2, DMA_OPEN_DEFAULT);
 	// set the events: we want the UART2 rx interrupt to start our transfer
 	// also we want to enable the pattern match: transfer stops upon detection of CR
-	DmaChnSetEventControl(chn, DMA_EV_START_IRQ_EN|DMA_EV_MATCH_EN|DMA_EV_START_IRQ(_UART2_RX_IRQ));
+	DmaChnSetEventControl(chn, 	DMA_EV_START_IRQ_EN|
+								//DMA_EV_MATCH_EN|
+								DMA_EV_START_IRQ(_UART2_RX_IRQ));
 
 	// set the transfer source and dest addresses, source and dest sizes and the cell size
 	DmaChnSetTxfer(chn, (void*)&U2RXREG, private, 1, DMA_SIZE, 1);
@@ -82,8 +79,6 @@ int pushContents(){
 		dmaReadPointer++;
 		num++;
 	}
-	closeDma();
-	startUartDma();
 	return num;
 }
 
@@ -96,7 +91,7 @@ int updateUartRx(){
 			sameCheck++;
 			if(sameCheck>2|| got==DMA_SIZE){
 				println("DMA got:");p_ul(got);//print(" Data [");
-				StartCritical();
+				//StartCritical();
 				numAdded = pushContents();
 
 			}else{
@@ -107,7 +102,7 @@ int updateUartRx(){
 		DelayMs(1);
 		lastIndex = got;
 	}
-	EndCritical();
+	//EndCritical();
 	return numAdded;
 }
 
@@ -125,6 +120,8 @@ void __ISR(_DMA1_VECTOR, IPL5SOFT) DmaHandler1(void)
     	//println("Maxed out buffer");
     	DmaChnClrEvFlags(chn,DMA_EV_ALL_EVNTS);
     	pushContents();
+    	closeDma();
+    	startUartDma();
     }
 }
 #endif

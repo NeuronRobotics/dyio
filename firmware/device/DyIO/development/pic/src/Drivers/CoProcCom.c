@@ -75,9 +75,6 @@ BOOL isProcessing(){
 }
 
 void initCoProcUART(){
-//	OpenUART2(UART_EN|UART_NO_PAR_8BIT|UART_1STOPBIT|UART_DIS_BCLK_CTS_RTS,UART_TX_ENABLE|UART_RX_ENABLE,CalcBaud(BAUD));
-//	ConfigIntUART2(UART_INT_PR7 | UART_RX_INT_EN);
-#if !defined(USE_DMA)
 	//Disable first to clear
 	INTEnable(INT_SOURCE_UART(UART2)		, INT_DISABLED);
 	INTEnable(INT_SOURCE_UART_TX(UART2)		, INT_DISABLED);
@@ -101,14 +98,13 @@ void initCoProcUART(){
 	UARTEnable(UART2, UART_ENABLE_FLAGS(UART_PERIPHERAL | UART_RX | UART_TX));
 
 //	// Configure UART2 RX Interrupt
+#if !defined(USE_DMA)
 	INTEnable(INT_SOURCE_UART_RX(UART2)		, INT_ENABLED);
+#endif
 	INTEnable(INT_SOURCE_UART_ERROR(UART2)	, INT_ENABLED);
 
 	INTSetVectorPriority(INT_VECTOR_UART(UART2), INT_PRIORITY_LEVEL_7);
 	INTSetVectorSubPriority(INT_VECTOR_UART(UART2), INT_SUB_PRIORITY_LEVEL_0);
-
-#endif
-
 }
 
 void uartErrorCheck(){
@@ -381,25 +377,27 @@ BOOL clearToSend(void){
 }
 #define SHORTISR
 void newByte(){
-#if !defined(SHORTISR)
-	int timeout =0;
-	while(DataRdyUART2()){
+#if !defined(USE_DMA)
+	#if !defined(SHORTISR)
+		int timeout =0;
+		while(DataRdyUART2()){
 
-		addCoProcByte(UARTGetDataByte(UART2));
+			addCoProcByte(UARTGetDataByte(UART2));
 
-		//buttonCheck(17);
-		timeout++;
-		if(timeout>8){// size of the built in FIFo
-			return;
+			//buttonCheck(17);
+			timeout++;
+			if(timeout>8){// size of the built in FIFo
+				return;
+			}
 		}
-	}
-#else
-	if(DataRdyUART2()){
-		addCoProcByte(UARTGetDataByte(UART2));
-	}
+	#else
+		if(DataRdyUART2()){
+			addCoProcByte(UARTGetDataByte(UART2));
+		}
+	#endif
 #endif
 }
-#if !defined(USE_DMA)
+//#if !defined(USE_DMA)
 void __ISR(_UART_2_VECTOR, ipl7) My_U2_ISR(void){
 	StartCritical();
 	//uartErrorCheck();
@@ -424,5 +422,5 @@ void __ISR(_UART_2_VECTOR, ipl7) My_U2_ISR(void){
 	//mU2ClearAllIntFlags();
 	EndCritical();
 }
-#endif
+//#endif
 
