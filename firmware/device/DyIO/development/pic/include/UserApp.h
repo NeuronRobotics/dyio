@@ -8,8 +8,6 @@
 #ifndef USERAPP_H_
 #define USERAPP_H_
 
-#define USE_DMA
-
 #define RELEASE_BOARD
 #if !defined(RELEASE_BOARD)
 #define LAST_DEV_BOARD

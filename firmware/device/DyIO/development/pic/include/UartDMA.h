@@ -8,6 +8,8 @@
 #ifndef UARTDMA_H_
 #define UARTDMA_H_
 
-int updateUartRx();
+#define USE_DMA
+
+int updateUartDmaRx();
 
 #endif /* UARTDMA_H_ */

@@ -35,7 +35,7 @@ void uartErrorCheck();
 
 BOOL getPacket(BowlerPacket * packet){
 #if defined(USE_DMA)
-	updateUartRx();
+	updateUartDmaRx();
 #endif
 	disableDebug();
 	BOOL b = GetBowlerPacket(packet,& store);
@@ -98,9 +98,9 @@ void initCoProcUART(){
 	UARTEnable(UART2, UART_ENABLE_FLAGS(UART_PERIPHERAL | UART_RX | UART_TX));
 
 //	// Configure UART2 RX Interrupt
-#if !defined(USE_DMA)
+//#if !defined(USE_DMA)
 	INTEnable(INT_SOURCE_UART_RX(UART2)		, INT_ENABLED);
-#endif
+//#endif
 	INTEnable(INT_SOURCE_UART_ERROR(UART2)	, INT_ENABLED);
 
 	INTSetVectorPriority(INT_VECTOR_UART(UART2), INT_PRIORITY_LEVEL_7);
