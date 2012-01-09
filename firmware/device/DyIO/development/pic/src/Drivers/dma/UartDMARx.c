@@ -8,7 +8,7 @@
 #include "UserApp.h"
 
 #if defined(USE_DMA)
-#define DMA_SIZE 2048
+
 
 static DmaChannel	chn = DMA_CHANNEL1;	// DMA channel to use for our example
 
@@ -43,16 +43,7 @@ void startUartDma(){
 	lastIndex=0;
 	sameCheck=0;
 	dmaReadPointer = 0;
-
-//	UARTConfigure(UART2, UART_ENABLE_PINS_TX_RX_ONLY);
-//	UARTSetFifoMode(UART2, UART_INTERRUPT_ON_RX_NOT_EMPTY);
-//	UARTSetLineControl(UART2, UART_DATA_SIZE_8_BITS | UART_PARITY_EVEN | UART_STOP_BITS_1);
-//	UARTSetDataRate(UART2, GetPeripheralClock(), INTERNAL_BAUD );
-//	UARTEnable(UART2, UART_ENABLE_FLAGS(UART_PERIPHERAL | UART_RX | UART_TX));
-//	INTEnable(INT_SOURCE_UART_RX(UART2)		, INT_ENABLED);
-//	INTEnable(INT_SOURCE_UART_ERROR(UART2)	, INT_ENABLED);
 	initCoProcUART();
-
 	DmaChnOpen(chn, DMA_CHN_PRI2, DMA_OPEN_DEFAULT);
 	// set the events: we want the UART2 rx interrupt to start our transfer
 	// also we want to enable the pattern match: transfer stops upon detection of CR
@@ -81,10 +72,12 @@ void startUartDma(){
 
 int dump(int from , int to){
 	int i;
+	int num=0;
 	for(i=from;i<to;i++){
 		addCoProcByte(private[i]);
+		num++;
 	}
-	return i;
+	return num;
 }
 
 int pushContents(){
@@ -96,7 +89,6 @@ int pushContents(){
 int updateUartDmaRx(){
 	startUartDma();
 	int numAdded=0;
-//
 //	int got = 	DmaChnGetDstPnt(chn);
 //	if((got == lastIndex) || got==DMA_SIZE){
 //		if(got>0){
@@ -105,6 +97,7 @@ int updateUartDmaRx(){
 //				//println("DMA got:");p_ul(got);//print(" Data [");
 //				//StartCritical();
 //				numAdded = pushContents();
+//				sameCheck=0;
 //			}else{
 //				//DelayMs(1);
 //			}
@@ -113,6 +106,7 @@ int updateUartDmaRx(){
 //		//DelayMs(1);
 //		lastIndex = got;
 //	}
+//	//EndCritical();
 	numAdded = pushContents();
 	return numAdded;
 }
@@ -127,17 +121,15 @@ void __ISR(_DMA1_VECTOR, IPL5SOFT) DmaHandler1(void)
 	evFlags=DmaChnGetEvFlags(chn);	// get the event flags
 
     if(evFlags&DMA_EV_BLOCK_DONE)
-    {
-
-    	DmaChnClrEvFlags(chn,DMA_EV_ALL_EVNTS);
+    { // just a sanity check. we enabled just the DMA_EV_BLOCK_DONE transfer done interrupt
+    	//println("Maxed out DMA buffer, resetting");
 
     	int from = dmaReadPointer;
-    	int to = DMA_SIZE-1;
-
+    	int to = DmaChnGetDstPnt(chn);
     	closeDma();
     	startUartDma();
     	dump(from,to);
-    	//println("Maxed out DMA buffer, resetting");
+    	println("Maxed out DMA buffer, resetting from: " );p_ul(from);print(" to: ");p_ul(to);
     }
 }
 #endif
