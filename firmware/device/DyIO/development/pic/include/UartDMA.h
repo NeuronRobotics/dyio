@@ -8,8 +8,8 @@
 #ifndef UARTDMA_H_
 #define UARTDMA_H_
 
-//#define USE_DMA
-#define DMA_SIZE 2048
+#define USE_DMA
+#define DMA_SIZE 255
 
 int updateUartDmaRx();
 

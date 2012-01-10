@@ -129,7 +129,8 @@ void __ISR(_DMA1_VECTOR, IPL5SOFT) DmaHandler1(void)
     	closeDma();
     	startUartDma();
     	dump(from,to);
-    	println("Maxed out DMA buffer, resetting from: " );p_ul(from);print(" to: ");p_ul(to);
+    	print("`");
+    	//println("Maxed out DMA buffer, resetting from: " );p_ul(from);print(" to: ");p_ul(to);
     }
 }
 #endif
