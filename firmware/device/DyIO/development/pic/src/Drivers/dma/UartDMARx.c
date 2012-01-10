@@ -43,7 +43,7 @@ void startUartDma(){
 	lastIndex=0;
 	sameCheck=0;
 	dmaReadPointer = 0;
-	initCoProcUART();
+	startUartCoProc();
 	DmaChnOpen(chn, DMA_CHN_PRI2, DMA_OPEN_DEFAULT);
 	// set the events: we want the UART2 rx interrupt to start our transfer
 	// also we want to enable the pattern match: transfer stops upon detection of CR

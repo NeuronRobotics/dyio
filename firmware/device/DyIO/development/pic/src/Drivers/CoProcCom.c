@@ -74,22 +74,7 @@ BOOL isProcessing(){
 	return processing;
 }
 
-void initCoProcUART(){
-	//Disable first to clear
-	INTEnable(INT_SOURCE_UART(UART2)		, INT_DISABLED);
-	INTEnable(INT_SOURCE_UART_TX(UART2)		, INT_DISABLED);
-	INTEnable(INT_SOURCE_UART_ERROR(UART2)	, INT_DISABLED);
-	INTEnable(INT_SOURCE_UART_RX(UART2)		, INT_DISABLED);
-
-	INTClearFlag(INT_SOURCE_UART_ERROR(UART2));
-	INTClearFlag(INT_SOURCE_UART_TX(UART2));
-	INTClearFlag(INT_SOURCE_UART_RX(UART2));
-	INTClearFlag(INT_SOURCE_UART(UART2));
-
-	uartErrorCheck();
-	CloseUART2();
-
-
+void startUartCoProc(){
 	//Start configuration
 	UARTConfigure(UART2, UART_ENABLE_PINS_TX_RX_ONLY);
 	UARTSetFifoMode(UART2, UART_INTERRUPT_ON_RX_NOT_EMPTY);
@@ -105,6 +90,23 @@ void initCoProcUART(){
 
 	INTSetVectorPriority(INT_VECTOR_UART(UART2), INT_PRIORITY_LEVEL_7);
 	INTSetVectorSubPriority(INT_VECTOR_UART(UART2), INT_SUB_PRIORITY_LEVEL_0);
+}
+
+void initCoProcUART(){
+	//Disable first to clear
+	INTEnable(INT_SOURCE_UART(UART2)		, INT_DISABLED);
+	INTEnable(INT_SOURCE_UART_TX(UART2)		, INT_DISABLED);
+	INTEnable(INT_SOURCE_UART_ERROR(UART2)	, INT_DISABLED);
+	INTEnable(INT_SOURCE_UART_RX(UART2)		, INT_DISABLED);
+
+	INTClearFlag(INT_SOURCE_UART_ERROR(UART2));
+	INTClearFlag(INT_SOURCE_UART_TX(UART2));
+	INTClearFlag(INT_SOURCE_UART_RX(UART2));
+	INTClearFlag(INT_SOURCE_UART(UART2));
+
+	uartErrorCheck();
+	CloseUART2();
+	startUartCoProc();
 }
 
 void uartErrorCheck(){

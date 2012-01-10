@@ -9,6 +9,7 @@
 #define COPROCCOM_H_
 void addCoProcByte(BYTE b);
 BOOL isProcessing();
+void startUartCoProc();
 void initCoProcCom(void);
 void SendPacketToCoProc(BowlerPacket * Packet);
 
