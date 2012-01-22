@@ -8,12 +8,6 @@
 #ifndef HARDWAREPROFILE_H_
 #define HARDWAREPROFILE_H_
 
-#define FlagBusy_DDR	DDRCbits._P7
-#define FlagAsync_DDR 	DDRCbits._P6
-#define FlagBusy_IO		PORTCbits._P7
-#define FlagAsync		PINCbits._P6
-#define InitFlagPins() 	FlagBusy_DDR=OUTPUT;FlagAsync_DDR=INPUT;FlagBusy_IO=0;PORTCbits._P6=1;
-
 
 #define DDR_Bank0		DDRBbits._P2
 #define DDR_Bank1		DDRBbits._P1

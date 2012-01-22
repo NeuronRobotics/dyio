@@ -7,7 +7,7 @@
 #include "UserApp.h"
 
 #define MAX_RETRY 5
-#define DELAY_TIMEOUT 300
+#define DELAY_TIMEOUT 200
 BOOL valadateRPC(int response,int sent);
 
 BYTE sendPacket(BowlerPacket * Packet);
@@ -38,7 +38,7 @@ BOOL getPacket(BowlerPacket * packet){
 	updateUartDmaRx();
 #endif
 	disableDebug();
-	BOOL b = GetBowlerPacket(packet,& store);
+	BOOL b = _getBowlerPacket(packet,& store,FALSE);
 	enableDebug();
 //	if(b){
 //		println("ASYN rx<<\n");printPacket(packet);
@@ -74,6 +74,22 @@ BOOL isProcessing(){
 	return processing;
 }
 
+void stopUartCoProc(){
+	//Disable first to clear
+	INTEnable(INT_SOURCE_UART(UART2)		, INT_DISABLED);
+	INTEnable(INT_SOURCE_UART_TX(UART2)		, INT_DISABLED);
+	INTEnable(INT_SOURCE_UART_ERROR(UART2)	, INT_DISABLED);
+	INTEnable(INT_SOURCE_UART_RX(UART2)		, INT_DISABLED);
+
+	INTClearFlag(INT_SOURCE_UART_ERROR(UART2));
+	INTClearFlag(INT_SOURCE_UART_TX(UART2));
+	INTClearFlag(INT_SOURCE_UART_RX(UART2));
+	INTClearFlag(INT_SOURCE_UART(UART2));
+
+	uartErrorCheck();
+	CloseUART2();
+}
+
 void startUartCoProc(){
 	//Start configuration
 	UARTConfigure(UART2, UART_ENABLE_PINS_TX_RX_ONLY);
@@ -93,19 +109,7 @@ void startUartCoProc(){
 }
 
 void initCoProcUART(){
-	//Disable first to clear
-	INTEnable(INT_SOURCE_UART(UART2)		, INT_DISABLED);
-	INTEnable(INT_SOURCE_UART_TX(UART2)		, INT_DISABLED);
-	INTEnable(INT_SOURCE_UART_ERROR(UART2)	, INT_DISABLED);
-	INTEnable(INT_SOURCE_UART_RX(UART2)		, INT_DISABLED);
-
-	INTClearFlag(INT_SOURCE_UART_ERROR(UART2));
-	INTClearFlag(INT_SOURCE_UART_TX(UART2));
-	INTClearFlag(INT_SOURCE_UART_RX(UART2));
-	INTClearFlag(INT_SOURCE_UART(UART2));
-
-	uartErrorCheck();
-	CloseUART2();
+	stopUartCoProc();
 	startUartCoProc();
 }
 
@@ -119,8 +123,10 @@ void uartErrorCheck(){
 	if(UART2GetErrors() & _U2STA_PERR_MASK){
 		 println("\n\n\n\nPARITY error");
 	}
-	if(UART2GetErrors() )
+	if(UART2GetErrors() ){
 		UART2ClearAllErrors();
+		startUartCoProc();
+	}
 }
 
 void initCoProcCom(){
@@ -401,6 +407,7 @@ void newByte(){
 }
 //#if !defined(USE_DMA)
 void __ISR(_UART_2_VECTOR, ipl7) My_U2_ISR(void){
+	FLAG_ASYNC=FLAG_BLOCK;
 	StartCritical();
 	//uartErrorCheck();
 	if (INTGetFlag(INT_SOURCE_UART_RX(UART2))){
@@ -423,6 +430,7 @@ void __ISR(_UART_2_VECTOR, ipl7) My_U2_ISR(void){
 	}
 	//mU2ClearAllIntFlags();
 	EndCritical();
+	FLAG_ASYNC=FLAG_OK;
 }
 //#endif
 

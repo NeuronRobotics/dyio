@@ -6,7 +6,7 @@
  */
 
 #include "UserApp.h"
-#define send(a) WriteAVRUART0(a);_delay_us(UARTDELAY);
+#define send(a) WriteAVRUART0(a);//_delay_us(UARTDELAY);
 void sendHeader(BYTE legnth,char * rpc){
 	BYTE i;
 	send(BOWLER_VERSION);
