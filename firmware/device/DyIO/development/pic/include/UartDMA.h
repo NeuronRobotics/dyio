@@ -9,7 +9,7 @@
 #define UARTDMA_H_
 
 #define USE_DMA
-#define DMA_SIZE 250
+#define DMA_SIZE 255
 
 int updateUartDmaRx();
 

@@ -7,7 +7,7 @@
 #include "UserApp.h"
 
 #define MAX_RETRY 5
-#define DELAY_TIMEOUT 200
+#define DELAY_TIMEOUT 300
 BOOL valadateRPC(int response,int sent);
 
 BYTE sendPacket(BowlerPacket * Packet);
@@ -373,6 +373,7 @@ BOOL SendPacketUARTCoProc(BYTE * packet,WORD size){
 		}while ( clearToSend() == FALSE);
 		//print("!");
 		Write32UART2(packet[i]);
+		Delay10us(1);
 	}
 	//println("Sending to co proc Done ");
 	return TRUE;
@@ -410,11 +411,13 @@ void __ISR(_UART_2_VECTOR, ipl7) My_U2_ISR(void){
 	FLAG_ASYNC=FLAG_BLOCK;
 	StartCritical();
 	//uartErrorCheck();
+#if !defined(USE_DMA)
 	if (INTGetFlag(INT_SOURCE_UART_RX(UART2))){
 		newByte();
 		INTClearFlag(INT_SOURCE_UART_RX(UART2));
-	}
-	else if(INTGetFlag(INT_SOURCE_UART_ERROR(UART2))){
+	}else
+#endif
+	 if(INTGetFlag(INT_SOURCE_UART_ERROR(UART2))){
 		newByte();
 		UART2ClearAllErrors();
 		INTClearFlag(INT_SOURCE_UART_ERROR(UART2));

@@ -90,25 +90,32 @@ int dump(int from , int to){
 	}
 	return num;
 }
-BOOL skip = FALSE;
+
 int pushContents(){
 	abortDump=FALSE;
 	int from = dmaReadPointer;
 	int to = DmaChnGetDstPnt(chn);
-	if(to>DMA_SIZE-10 && skip == FALSE){
-		skip = TRUE;
-		return 0;
+
+	BOOL reset=FALSE;
+	if(to>(DMA_SIZE-50)){
+		to = DmaChnGetDstPnt(chn);
+    	DmaChnAbortTxfer(chn);
+    	DmaChnSetTxfer(chn, (void*)&U2RXREG, private, 1, DMA_SIZE, 1);
+    	DmaChnEnable(chn);
+		while(DataRdyUART2()){
+			//Dump the remaining bytes in the UART buffer after resetting the DMA
+			private[to++]=UARTGetDataByte(UART2);
+			buttonCheck(56);
+		}
+
+    	reset=TRUE;
+    	println("Resetting DMA buffer, dumping from=");p_ul(from);print(" to=");p_ul(to);
 	}
 	if(to>from ){
-		skip = FALSE;
-		//closeDma();
 		int back = dump(from,to);
-		//startUartDma();
-
+		if(reset)
+			dmaReadPointer=0;
 		return back;
-	}else{
-		skip = FALSE;
-		return 0;
 	}
 }
 
@@ -165,7 +172,7 @@ void __ISR(_DMA1_VECTOR, IPL5SOFT) DmaHandler1(void)
 			addCoProcByte(UARTGetDataByte(UART2));
 			buttonCheck(33);
 		}
-    	//println("Maxed out DMA buffer, resetting from: " );p_ul(size);print("\n");
+    	println("Maxed out DMA buffer, resetting from: " );p_ul(size);print("\n");
     	dmaReadPointer=0;
 
 
