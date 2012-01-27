@@ -64,7 +64,8 @@
 	#define initButton() 	_TRISD6  = INPUT;_TRISD7  = INPUT;_TRISD13 = INPUT;CNPUESET=0x00098000;
 	#define isPressed()		( _RD6==0 || _RD7==0 || _RD13==0)
 	#define setLed(a,b,c) 	_RD0=a;_RD1=b;_RD2=c;
-
+#else
+#error No Board defined in for bootloader
 #endif
 
 
