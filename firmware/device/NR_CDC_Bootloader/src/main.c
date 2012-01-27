@@ -16,23 +16,83 @@ BOOL DebugFlag=TRUE;
 //unsigned int __attribute__((section("boot_software_key_sec,\"aw\",@nobits#"))) SoftwareKey;
 BOOL resetFlag;
 
+typedef enum _Myexcep_code{
+    EXCEP_IRQ = 0,          // interrupt
+    EXCEP_AdEL = 4,         // address error exception (load or ifetch)
+    EXCEP_AdES,             // address error exception (store)
+    EXCEP_IBE,              // bus error (ifetch)
+    EXCEP_DBE,              // bus error (load/store)
+    EXCEP_Sys,              // syscall
+    EXCEP_Bp,               // breakpoint
+    EXCEP_RI,               // reserved instruction
+    EXCEP_CpU,              // coprocessor unusable
+    EXCEP_Overflow,         // arithmetic overflow
+    EXCEP_Trap,             // trap (possible divide by zero)
+    EXCEP_IS1 = 16,         // implementation specfic 1
+    EXCEP_CEU,              // CorExtend Unuseable
+    EXCEP_C2E               // coprocessor 2
+} Myexcep_code;
+
 void _general_exception_handler(unsigned cause, unsigned status){
+
 	//printfDEBUG("#@#Exception! Status: ");
 	//printfDEBUG_UL(cause);
-	switch(status){
-	default:
-		//printfDEBUG("cause unknown :");
-		//printfDEBUG_UL(status);
+        Myexcep_code code = (status & 0x0000007C) >> 2;;
+	switch(code){
+            case EXCEP_AdEL:
+                println("address error exception (load or ifetch)");
+                break;
+            case EXCEP_AdES:
+                println("address error exception (store)");
+                break;
+            case EXCEP_Bp:
+                println("breakpoint");
+                return;
+            case EXCEP_C2E:
+                println("coprocessor 2");
+                break;
+            case EXCEP_CEU:
+                println("CorExtend Unuseable");
+                break;
+            case EXCEP_CpU:
+                println("coprocessor unusable");
+                break;
+            case EXCEP_DBE:
+                println("bus error (load/store)");
+                break;
+            case EXCEP_IBE:
+                println("bus error (ifetch)");
+                break;
+            case EXCEP_IRQ:
+                println("unhandled interrupt");
+                break;
+            case EXCEP_IS1:
+                println("implementation specfic 1");
+                break;
+            case EXCEP_Overflow:
+                println("arithmetic overflow");
+                break;
+            case EXCEP_RI:
+                println("reserved instruction");
+                break;
+            case EXCEP_Sys:
+                println("syscall");
+                break;
+            case EXCEP_Trap:
+                println("trap (possible divide by zero)");
+                break;
+            default:
 		break;
 	}
+        initLed();
 	setLed(1,0,0);
 	initButton();
 	while(1){
-		if(_RB0)
+		if(isPressed())
 			Reset();
 		setLed(1,0,0);
 		DelayMs(1000);
-		if(_RB0)
+		if(isPressed())
 			Reset();
 		setLed(1,0,1);
 		DelayMs(200);
@@ -74,7 +134,7 @@ int main(void){
     	}else{
     		setLed(1,0,0);
     	}
-    	Bowler_Server(&Packet, FALSE);
+    	Bowler_Server(&Packet, TRUE);
         if((isPressed()||resetFlag)){
 			U1CON = 0x0000;
 			DelayMs(100);
@@ -89,7 +149,7 @@ void InitializeSystem(void)
 	//println("Stack initialized");
 #if !defined(MAJOR_REV)
 	#define MAJOR_REV			3
-	#define MINOR_REV			7
+	#define MINOR_REV			0
 	#define FIRMWARE_VERSION	1
 #endif
 	BYTE rev[] = {MAJOR_REV,MINOR_REV,FIRMWARE_VERSION};
