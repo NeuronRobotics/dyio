@@ -31,8 +31,9 @@ main:
 coproc:
 	make -C avr all
 pub:
-	if (test -e FirmwarePublish/Release/*.xml);			then rm FirmwarePublish/Release/*.xml; rm FirmwarePublish/Release/legacy/*.xml; 			fi
-	if (test -e FirmwarePublish/Dev/*.xml);				then rm FirmwarePublish/Dev/*.xml; 				fi	
+	rm -rf FirmwarePublish/Release/*.xml; 
+	rm -rf FirmwarePublish/Release/legacy/*.xml
+	rm -rf FirmwarePublish/Dev/*.xml;
 	#Release
 	$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex -core=1,avr_atmegaXX4p,2,avr/output/644p/output.hex -output=FirmwarePublish/Release/dyio-$(REVISION).xml
 	$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex -core=1,avr_atmegaXX4p,2,avr/output/324p/output.hex -output=FirmwarePublish/Release/legacy/dyio-$(REVISION)_legacy.xml
