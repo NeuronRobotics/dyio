@@ -217,7 +217,6 @@ void setOutputMine(int group, float val){
 		return;
 
 	BYTE center = DATA.PIN[dyPid[group].outputChannel].ServoPos;
-	val*=(pidGroups[group].Polarity)?1:-1;
 	val += center;
 	if (val>190.0)
 		val=190.0;
