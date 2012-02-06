@@ -23,7 +23,6 @@ void MyServer(){
 }
 
 void runDyIOMain(void){
-
 	Bowler_Init();// Com Stack Init. Sets up timeout timer, uart 0 and if debug enabled, uart 1
 	UserInit();// User code init
 	//U1IE=0;// Mask all USB interrupts
