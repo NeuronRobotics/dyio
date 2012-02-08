@@ -102,7 +102,7 @@ static ADC_VALS adv;
 #define ANALOG_DEAD_BAND 10
 BOOL ack=FALSE;
 RunEveryData asyncSched = {0,10.0};
-#define blockTime 25
+#define blockTime 20
 RunEveryData block0 = {0,blockTime};
 RunEveryData block1 = {(blockTime/3),blockTime};
 RunEveryData block2 = {((blockTime/3)*2),blockTime};

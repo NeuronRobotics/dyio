@@ -191,7 +191,8 @@ void runLinearInterpolationServo(BYTE blockStart,BYTE blockEnd){
 			println("Interpolate out of bounds! got=");p_fl(ip);print(" on chan=");p_ul(i);
 			ip=0;
 		}
-		DATA.PIN[i].ServoPos= (BYTE) ip;
+		int tmp = (int)ip;
+		DATA.PIN[i].ServoPos= (BYTE) tmp;
 	}
 
 }
