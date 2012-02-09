@@ -218,16 +218,18 @@ void setOutputMine(int group, float val){
 
 	BYTE center = DATA.PIN[dyPid[group].outputChannel].ServoPos;
 	val += center;
-	if (val>190.0)
-		val=190.0;
-	if(val<25.0)
-		val=25.0;
+	if(dyPid[group].outputMode == IS_SERVO){
+		if (val>190.0)
+			val=190.0;
+		if(val<25.0)
+			val=25.0;
+	}
 	int set = (int)val;
 	if (dyPid[group].outVal==set){
 		//if(!(RunEvery(&force[chan->channel])>0))
 			return;
 	}else{
-		print(" Setting PID output, was ");p_sl(dyPid[group].outVal);print(" is now: ");p_sl(set);print(" on DyIO chan: ");p_sl(dyPid[group].outputChannel);print(", ");
+		//print(" Setting PID output, was ");p_sl(dyPid[group].outVal);print(" is now: ");p_sl(set);print(" on DyIO chan: ");p_sl(dyPid[group].outputChannel);print(", ");
 	}
 	dyPid[group].outVal=set;
 	SetChannelValueCoProc(dyPid[group].outputChannel,dyPid[group].outVal);
