@@ -249,7 +249,7 @@ void ProcessAsyncData(BowlerPacket * Packet){
 		//println("***Setting All Digital value: ");printPacket(Packet);
 	}else{
 		enableDebug();
-		println("***Async packet not GCHV***");
+		println("***Async packet not UNKNOWN***");
 		printPacket(Packet);
 	}
 	//println("Async");

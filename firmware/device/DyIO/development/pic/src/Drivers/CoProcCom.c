@@ -6,8 +6,8 @@
  */
 #include "UserApp.h"
 
-#define MAX_RETRY 5
-#define DELAY_TIMEOUT 150
+#define MAX_RETRY 10
+#define DELAY_TIMEOUT 100
 BOOL valadateRPC(int response,int sent);
 
 BYTE sendPacket(BowlerPacket * Packet);
@@ -29,6 +29,7 @@ static BOOL processing=FALSE;
 
 
 static BowlerPacket downstream;
+static BowlerPacket asyncPacket;
 void dealWithAsyncPacket(BowlerPacket * Packet);
 void uartErrorCheck();
 
@@ -37,9 +38,9 @@ BOOL getPacket(BowlerPacket * packet){
 #if defined(USE_DMA)
 	updateUartDmaRx();
 #endif
-	disableDebug();
-	BOOL b = _getBowlerPacket(packet,& store,FALSE);
-	enableDebug();
+	//disableDebug();
+	BOOL b = _getBowlerPacket(packet,& store,TRUE);
+	//enableDebug();
 //	if(b){
 //		println("ASYN rx<<\n");printPacket(packet);
 //	}
@@ -55,8 +56,7 @@ void addCoProcByte(BYTE b){
 
 
 void PushCoProcAsync(void){
-	BowlerPacket * Packet=&downstream;
-	FLAG_ASYNC=FLAG_BLOCK;
+	BowlerPacket * Packet=&asyncPacket;
 	while (getPacket(Packet)==TRUE){
 		buttonCheck(6);
 		if(Packet->use.head.MessageID!=0){
@@ -67,7 +67,6 @@ void PushCoProcAsync(void){
 			printPacket(Packet);
 		}
 	}
-	FLAG_ASYNC=FLAG_OK;
 }
 
 BOOL isProcessing(){
@@ -142,6 +141,7 @@ void initCoProcCom(){
 
 
 void SendPacketToCoProc(BowlerPacket * Packet){
+	float start = getMs();
 	initCoProcUART();
 	processing=TRUE;
 	if(init == FALSE){
@@ -151,15 +151,15 @@ void SendPacketToCoProc(BowlerPacket * Packet){
 
 	//
 	BYTE i=0;
-	BYTE ret;
+	BYTE ret=0;
 	int rpc = Packet->use.head.RPC;
 	do{
 		ret=sendPacket(Packet);
 		i++;
 		buttonCheck(5);
-		if(ret!=0){
-			initCoProcCom();
-		}
+//		if(ret!=0){
+//			initCoProcCom();
+//		}
 	}while ( (i!=MAX_RETRY) && (ret !=0 ) && valadateRPC(Packet->use.head.RPC,rpc));
 
 
@@ -184,14 +184,14 @@ void SendPacketToCoProc(BowlerPacket * Packet){
 
 	Packet->use.head.ResponseFlag = 1;
 	processing=FALSE;
-	FLAG_ASYNC=1;
+	//println("Coproc transaction took: ");p_fl(getMs()-start);print(" after try count: ");p_ul(i);
 }
 
 BYTE sendPacket(BowlerPacket * Packet){
 	//println("Sending to co processor");
 	BYTE i;
 	//int serIndex;
-	float packStartTime=getMs();
+
 	for(i=0;i<6;i++){
 		Packet->use.head.MAC.v[i]=0;//Set the mac address to broadcast
 	}
@@ -200,10 +200,12 @@ BYTE sendPacket(BowlerPacket * Packet){
 	//println(">>TX CoProc\n");printPacket(Packet);
 	int packetSize = BowlerHeaderSize + Packet->use.head.DataLegnth;
 
-	PushCoProcAsync();//clear out any packets before begining
-
 	FLAG_ASYNC=FLAG_BLOCK;
+	PushCoProcAsync();//clear out any packets before begining
+	float packStartTime=getMs();
 	if (SendPacketUARTCoProc(Packet->stream,packetSize)){
+		//println("Coproc Send took: ");p_fl(getMs()-packStartTime);
+
 		packStartTime=getMs();
 		RunEveryData wait={getMs(),DELAY_TIMEOUT};
 		//int dots=0;
@@ -216,13 +218,14 @@ BYTE sendPacket(BowlerPacket * Packet){
 					if(!valadateRPC(downstream.use.head.RPC,Packet->use.head.RPC) ){
 						enableDebug();
 						println("@@#@#@@Valadation failed, junk TX>>");printPacket(Packet);print("\nRX<<\n");printPacket(&downstream);
-						SendPacketUARTCoProc(Packet->stream,packetSize);
+						//SendPacketUARTCoProc(Packet->stream,packetSize);
 						SetColor(1,0,0);
 						//wait.MsTime += 2;
 					}else{
-						FLAG_ASYNC=FLAG_OK;
+
 						copyPacket(&downstream,Packet);
 						//println("<<RX CoProc\n");printPacket(Packet);
+						FLAG_ASYNC=FLAG_OK;
 						return 0;//Got a synchronus packet
 					}
 				}
@@ -242,9 +245,9 @@ BYTE sendPacket(BowlerPacket * Packet){
 		FLAG_ASYNC=FLAG_OK;
 		return 2;
 	}else{
+		FLAG_ASYNC=FLAG_OK;
 		enableDebug();
 		printfDEBUG("@@@@@@@@@@@@Transmit Timed Out, took: ");printfDEBUG_FL(getMs()-packStartTime);printfDEBUG_NNL(" ms");
-		FLAG_ASYNC=FLAG_OK;
 		return 1;
 	}
 }
@@ -359,6 +362,7 @@ BOOL valadateRPC(int response,int sent){
 
 
 BOOL SendPacketUARTCoProc(BYTE * packet,WORD size){
+	//FLAG_ASYNC=FLAG_BLOCK;
 	WORD i;
 	RunEveryData wait={getMs(),500};
 	//println("Sending to co proc: ");p_ul(size);print(" Bytes");
@@ -367,15 +371,17 @@ BOOL SendPacketUARTCoProc(BYTE * packet,WORD size){
 			//print("_");
 			if(RunEvery(&wait) > 0){
 				//print("X");
+				//FLAG_ASYNC=FLAG_OK;
 				return FALSE;
 			}
 			buttonCheck(3);
 		}while ( clearToSend() == FALSE);
 		//print("!");
 		Write32UART2(packet[i]);
-		//Delay10us(1);
+		Delay10us(2);
 	}
 	//println("Sending to co proc Done ");
+	//FLAG_ASYNC=FLAG_OK;
 	return TRUE;
 }
 
@@ -408,7 +414,7 @@ void newByte(){
 }
 //#if !defined(USE_DMA)
 void __ISR(_UART_2_VECTOR, ipl7) My_U2_ISR(void){
-	FLAG_ASYNC=FLAG_BLOCK;
+	//FLAG_ASYNC=FLAG_BLOCK;
 	StartCritical();
 	//uartErrorCheck();
 #if !defined(USE_DMA)
@@ -433,7 +439,7 @@ void __ISR(_UART_2_VECTOR, ipl7) My_U2_ISR(void){
 	}
 	//mU2ClearAllIntFlags();
 	EndCritical();
-	FLAG_ASYNC=FLAG_OK;
+	//FLAG_ASYNC=FLAG_OK;
 }
 //#endif
 

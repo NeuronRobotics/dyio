@@ -25,8 +25,8 @@ void sendHeader(BYTE legnth,char * rpc){
 
 void PushSerial(void){
 	UINT16 num = Get_UART_Byte_CountPassThrough();
-	FlagBusy_IO=1;
-	_delay_us(800);
+	//FlagBusy_IO=1;
+	//_delay_us(800);
 	sendHeader(4+1+num,"gchv");
 	send(17);
 	UINT16 i;
@@ -35,8 +35,8 @@ void PushSerial(void){
 		UARTGetArrayPassThrough(&b,1);
 		send(b);
 	}
-	FlagBusy_IO=0;
-	_delay_us(800);
+	//FlagBusy_IO=0;
+	//_delay_us(800);
 }
 
 void PushAllAdcVal(){
@@ -45,8 +45,8 @@ void PushAllAdcVal(){
 #endif
 	//println("Pushing analog");
 	UINT16_UNION an;
-	FlagBusy_IO=1;
-	_delay_us(800);
+	//FlagBusy_IO=1;
+	//_delay_us(800);
 	sendHeader(4+16,"aasn");
 	int i=0;
 	for(i=8;i<16;i++){
@@ -54,8 +54,8 @@ void PushAllAdcVal(){
 		send(an.byte.SB);
 		send(an.byte.LB);
 	}
-	FlagBusy_IO=0;
-	_delay_us(800);
+	//FlagBusy_IO=0;
+	//_delay_us(800);
 }
 
 void PushADCval(BYTE pin,UINT16 val){
@@ -64,40 +64,41 @@ void PushADCval(BYTE pin,UINT16 val){
 #endif
 	UINT16_UNION an;
 	an.Val=val;
-	FlagBusy_IO=1;
-	_delay_us(800);
+	//FlagBusy_IO=1;
+	//_delay_us(800);
 	sendHeader(4+3,"gchv");
 	send(pin);
 	send(an.byte.SB);
 	send(an.byte.LB);
-	_delay_us(800);
-	FlagBusy_IO=0;
+	//FlagBusy_IO=0;
+	//_delay_us(800);
 }
 void PushAllDiVal(){
 #if defined(WPIRBE)
 	return;
 #endif
 	println("Pushing digital");
-	FlagBusy_IO=1;
-	_delay_us(800);
+	//FlagBusy_IO=1;
+	//_delay_us(800);
 	sendHeader(4+24,"dasn");
 	int i=0;
 	for(i=0;i<24;i++){
 		send(getDig(i));
 	}
-	_delay_us(800);
-	FlagBusy_IO=0;
+	//FlagBusy_IO=0;
+	//_delay_us(800);
+
 }
 
 void PushDIval(BYTE pin,BYTE val){
 #if defined(WPIRBE)
 	return;
 #endif
-	FlagBusy_IO=1;
-	_delay_us(800);
+	//FlagBusy_IO=1;
+	//_delay_us(800);
 	sendHeader(4+2,"gchv");
 	send(pin);
 	send(val);
-	FlagBusy_IO=0;
-	_delay_us(800);
+	//FlagBusy_IO=0;
+	//_delay_us(800);
 }

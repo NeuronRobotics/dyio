@@ -102,7 +102,7 @@ static ADC_VALS adv;
 #define ANALOG_DEAD_BAND 10
 BOOL ack=FALSE;
 RunEveryData asyncSched = {0,10.0};
-#define blockTime 30.0f
+#define blockTime 24.0f
 #define blockInc1 (blockTime/3.0f)
 #define blockInc2 (blockInc1+blockInc1)
 RunEveryData block0 = {0,blockTime};
@@ -218,8 +218,8 @@ void UserRun(void){
 	if (RunEvery(&block0)>0.0f){
 		//println("Step 0");
 		//
+		block0.MsTime = getMs();
 		RunServo(0);
-
 		//return;
 	}
 	if (RunEvery(&block1)>0.0f){
@@ -230,8 +230,12 @@ void UserRun(void){
 	if (RunEvery(&block2)>0.0f){
 		//println("Step 2");
 		RunServo(2);
-		//resetBlocks();
-		//return;
+		//Re-align the offsets for the servos
+		block0.setPoint = blockTime;
+		block1.setPoint = blockTime;
+		block2.setPoint = blockTime;
+		block1.MsTime=block0.MsTime+blockInc1 ;
+		block2.MsTime=block0.MsTime+blockInc2 ;
 	}
 }
 

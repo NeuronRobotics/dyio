@@ -76,12 +76,13 @@ int dump(int from , int to){
 }
 
 int pushContents(){
+	//FLAG_ASYNC=FLAG_BLOCK;
 	abortDump=FALSE;
 	int from = dmaReadPointer;
 	int to = DmaChnGetDstPnt(chn);
 
 	BOOL reset=FALSE;
-	if(to>(DMA_SIZE-50)){
+	if(to>(DMA_SIZE-120)){
 		to = DmaChnGetDstPnt(chn);
     	DmaChnAbortTxfer(chn);
     	DmaChnSetTxfer(chn, (void*)&U2RXREG, private, 1, DMA_SIZE, 1);
@@ -98,8 +99,11 @@ int pushContents(){
 		int back = dump(from,to);
 		if(reset)
 			dmaReadPointer=0;
+		//FLAG_ASYNC=FLAG_OK;
 		return back;
 	}
+	//FLAG_ASYNC=FLAG_OK;
+	return 0;
 }
 
 int updateUartDmaRx(){
@@ -121,25 +125,12 @@ void __ISR(_DMA1_VECTOR, IPL5SOFT) DmaHandler1(void)
 
     if(evFlags&DMA_EV_BLOCK_DONE)
     { // just a sanity check. we enabled just the DMA_EV_BLOCK_DONE transfer done interrupt
-		FLAG_ASYNC=FLAG_BLOCK;
+		//FLAG_ASYNC=FLAG_BLOCK;
 
-    	DmaChnAbortTxfer(chn);
+		pushContents();
+    	println("##Maxed out DMA buffer, resetting" );
 
-    	DmaChnSetTxfer(chn, (void*)&U2RXREG, private, 1, DMA_SIZE, 1);
-    	DmaChnSetEvEnableFlags(chn, DMA_EV_BLOCK_DONE);		// enable the transfer done interrupt
-    	DmaChnEnable(chn);
-    	int size = dmaReadPointer;
-    	dump(dmaReadPointer,DMA_SIZE);
-		while(DataRdyUART2()){
-			addCoProcByte(UARTGetDataByte(UART2));
-			buttonCheck(33);
-		}
-    	println("Maxed out DMA buffer, resetting from: " );p_ul(size);print("\n");
-    	dmaReadPointer=0;
-
-    	abortDump=TRUE;
-    	FLAG_ASYNC=FLAG_OK;
-
+    	//FLAG_ASYNC=FLAG_OK;
 
     }
 }

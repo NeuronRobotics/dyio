@@ -18,6 +18,7 @@ void buttonCheck(BYTE code){
 #else
 	static BowlerPacket Packet;
 #endif
+
 void MyServer(){
 	Bowler_Server((BowlerPacket *) &Packet, FALSE);
 }
