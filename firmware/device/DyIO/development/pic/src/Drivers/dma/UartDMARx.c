@@ -14,35 +14,22 @@ static DmaChannel	chn = DMA_CHANNEL1;	// DMA channel to use for our example
 
 static int dmaReadPointer = 0;
 
-//static int lastIndex=0;
-//static int sameCheck =0;
-
 static BYTE private[DMA_SIZE+2];
 
 static BOOL running=FALSE;
 static BOOL abortDump=FALSE;
 
 void closeDma(){
-	//println("Closing DMA");
-	//lastIndex=0;
-	//sameCheck=0;
-	//dmaReadPointer = 0;
 	stopUartCoProc();
 	DmaChnAbortTxfer(chn);
-	//INTEnable(INT_SOURCE_DMA(chn), INT_DISABLED);
 	DmaChnClrEvFlags(chn,DMA_EV_ALL_EVNTS);
-	//DmaChnDisable(chn);
-
 	running=FALSE;
 }
 
 void startUartDma(){
 	if(running)
 		return;
-	//println("Starting DMA");
 	running=TRUE;
-//	lastIndex=0;
-//	sameCheck=0;
 	dmaReadPointer = 0;
 	startUartCoProc();
 	DmaChnOpen(chn, DMA_CHN_PRI2, DMA_OPEN_DEFAULT);
@@ -75,7 +62,6 @@ void startUartDma(){
 int dump(int from , int to){
 	if(from >= to)
 		return 0;
-	//println("Adding bytes from: " );p_ul(from);print(" to: ");p_ul(to);
 	int i;
 	int num=0;
 	for(i=from;i<to;i++){
@@ -83,9 +69,7 @@ int dump(int from , int to){
 			//println("Aborting dump" );
 			return num;
 		}
-		//INTEnable(INT_SOURCE_DMA(chn), INT_DISABLED);
 		addCoProcByte(private[dmaReadPointer++]);
-		//INTEnable(INT_SOURCE_DMA(chn), INT_ENABLED);		// enable the chn interrupt in the INT controller
 		num++;
 	}
 	return num;
@@ -109,7 +93,6 @@ int pushContents(){
 		}
 
     	reset=TRUE;
-    	println("Resetting DMA buffer, dumping from=");p_ul(from);print(" to=");p_ul(to);
 	}
 	if(to>from ){
 		int back = dump(from,to);
@@ -123,24 +106,6 @@ int updateUartDmaRx(){
 	startUartDma();
 	uartErrorCheck();
 	int numAdded=0;
-//	int got = 	DmaChnGetDstPnt(chn);
-//	if((got == lastIndex) || got==DMA_SIZE){
-//		if(got>0){
-//			sameCheck++;
-//			if(sameCheck>2|| got==DMA_SIZE){
-//				//println("DMA got:");p_ul(got);//print(" Data [");
-//				//StartCritical();
-//				numAdded = pushContents();
-//				sameCheck=0;
-//			}else{
-//				//DelayMs(1);
-//			}
-//		}
-//	}else{
-//		//DelayMs(1);
-//		lastIndex = got;
-//	}
-//	//EndCritical();
 	numAdded = pushContents();
 	return numAdded;
 }
@@ -156,10 +121,7 @@ void __ISR(_DMA1_VECTOR, IPL5SOFT) DmaHandler1(void)
 
     if(evFlags&DMA_EV_BLOCK_DONE)
     { // just a sanity check. we enabled just the DMA_EV_BLOCK_DONE transfer done interrupt
-    	//println("Maxed out DMA buffer, resetting");
 		FLAG_ASYNC=FLAG_BLOCK;
-    	//closeDma();
-    	//startUartDma();
 
     	DmaChnAbortTxfer(chn);
 
@@ -175,9 +137,7 @@ void __ISR(_DMA1_VECTOR, IPL5SOFT) DmaHandler1(void)
     	println("Maxed out DMA buffer, resetting from: " );p_ul(size);print("\n");
     	dmaReadPointer=0;
 
-
     	abortDump=TRUE;
-    	//print("`");
     	FLAG_ASYNC=FLAG_OK;
 
 

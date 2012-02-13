@@ -7,7 +7,7 @@
 #include "UserApp.h"
 
 #define MAX_RETRY 5
-#define DELAY_TIMEOUT 300
+#define DELAY_TIMEOUT 150
 BOOL valadateRPC(int response,int sent);
 
 BYTE sendPacket(BowlerPacket * Packet);
@@ -201,10 +201,10 @@ BYTE sendPacket(BowlerPacket * Packet){
 	int packetSize = BowlerHeaderSize + Packet->use.head.DataLegnth;
 
 	PushCoProcAsync();//clear out any packets before begining
-	packStartTime=getMs();
+
 	FLAG_ASYNC=FLAG_BLOCK;
 	if (SendPacketUARTCoProc(Packet->stream,packetSize)){
-
+		packStartTime=getMs();
 		RunEveryData wait={getMs(),DELAY_TIMEOUT};
 		//int dots=0;
 		while (RunEvery(&wait)<=0){
@@ -360,7 +360,7 @@ BOOL valadateRPC(int response,int sent){
 
 BOOL SendPacketUARTCoProc(BYTE * packet,WORD size){
 	WORD i;
-	RunEveryData wait={getMs(),DELAY_TIMEOUT*2};
+	RunEveryData wait={getMs(),500};
 	//println("Sending to co proc: ");p_ul(size);print(" Bytes");
 	for (i=0;i<size;i++){
 		do{
@@ -373,7 +373,7 @@ BOOL SendPacketUARTCoProc(BYTE * packet,WORD size){
 		}while ( clearToSend() == FALSE);
 		//print("!");
 		Write32UART2(packet[i]);
-		Delay10us(1);
+		//Delay10us(1);
 	}
 	//println("Sending to co proc Done ");
 	return TRUE;
