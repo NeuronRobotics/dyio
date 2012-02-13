@@ -102,10 +102,12 @@ static ADC_VALS adv;
 #define ANALOG_DEAD_BAND 10
 BOOL ack=FALSE;
 RunEveryData asyncSched = {0,10.0};
-#define blockTime 20
+#define blockTime 30.0f
+#define blockInc1 (blockTime/3.0f)
+#define blockInc2 (blockInc1+blockInc1)
 RunEveryData block0 = {0,blockTime};
-RunEveryData block1 = {(blockTime/3),blockTime};
-RunEveryData block2 = {((blockTime/3)*2),blockTime};
+RunEveryData block1 = {blockInc1,blockTime};
+RunEveryData block2 = {blockInc2,blockTime};
 
 //static BYTE asyncIndex = 0;
 
@@ -166,14 +168,20 @@ BOOL checkDigital(){
 }
 
 void resetBlocks(){
+
+	println("Block times b0: ");p_fl(block0.MsTime);print(", b1: ");p_fl(block1.MsTime);print(", b2: ");p_fl(block2.MsTime);
+
 	block0.setPoint = blockTime;
 	block0.MsTime=getMs();
 
 	block1.setPoint = blockTime;
-	block1.MsTime=block0.MsTime+(blockTime/3);
+	block1.MsTime=block0.MsTime+blockInc1 ;
 
 	block2.setPoint = blockTime;
-	block2.MsTime=block1.MsTime+(blockTime/3);
+	block2.MsTime=block0.MsTime+blockInc2 ;
+
+	println("Fixed to values, b0: ");p_fl(block0.MsTime);print(", b1: ");p_fl(block1.MsTime);print(", b2: ");p_fl(block2.MsTime);
+
 }
 
 void UserRun(void){
@@ -189,49 +197,40 @@ void UserRun(void){
 #if defined(USE_AS_LIBRARY)
 	RunUserCode();
 #endif
-//	int i;
-//	for(i=0;i<NUM_PINS;i++){
-//		checkAnalog(i);
-//		checkDigital(i);
-////		asyncIndex++;
-////		if(asyncIndex== NUM_PINS)
-////			asyncIndex=0;
-//	}
+
 	if (Get_UART_Byte_CountPassThrough()>0){
 		PushSerial();
 	}
 
-	if(!(block0.MsTime > 0)){
+	if(block0.MsTime < 0.0f){
+		println("Block0 error, ");p_fl(block0.MsTime);
 		resetBlocks();
 	}
-	if(!(block1.MsTime > 0)){
+	if(block1.MsTime < 0.0f){
+		println("Block1 error, ");p_fl(block1.MsTime);
 		resetBlocks();
 	}
-	if(!(block2.MsTime > 0)){
+	if(block2.MsTime < 0.0f){
+		println("Block2 error, ");p_fl(block2.MsTime);
 		resetBlocks();
 	}
-//	if(!(asyncSched.MsTime > 0)){
-//		asyncSched.setPoint = 5;
-//		asyncSched.MsTime=now;
-//		//println("Resetting async");
-//	}
 
-	if (RunEvery(&block0)>0){
+	if (RunEvery(&block0)>0.0f){
 		//println("Step 0");
 		//
 		RunServo(0);
 
 		//return;
 	}
-	if (RunEvery(&block1)>0){
+	if (RunEvery(&block1)>0.0f){
 		//println("Step 1");
 		RunServo(1);
 		//return;
 	}
-	if (RunEvery(&block2)>0){
+	if (RunEvery(&block2)>0.0f){
 		//println("Step 2");
 		RunServo(2);
-		resetBlocks();
+		//resetBlocks();
 		//return;
 	}
 }
