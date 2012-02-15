@@ -30,8 +30,8 @@
 
 #define PRINT_BAUD 					115200
 
-//#define INTERNAL_BAUD 				230400
-#define INTERNAL_BAUD 				115200
+#define INTERNAL_BAUD 				230400
+//#define INTERNAL_BAUD 				115200
 
 #define BOWLER_PacketSize		(BowlerHeaderSize+255)
 #define ASSERTED				0
