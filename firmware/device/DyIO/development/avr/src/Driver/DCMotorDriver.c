@@ -62,15 +62,25 @@ void SetDCMotor(BYTE pin,BYTE vel){
 	}
 	setPwmDir(pin);
 
-	int tmp = vel;
-		tmp-=128;
+	int tmp = vel-128;
+
 	DATA.PIN[pwm].ServoPos = vel;
 
 	if(tmp>0){
 		SetDIO(dir,0);
-		SetPWM(pwm,tmp<<1);
+		int val = tmp<<1;
+		if (val>255)
+			val=255;
+		if(val<0)
+			val=0;
+		SetPWM(pwm,val);
 	}else{
 		SetDIO(dir,1);
-		SetPWM(pwm,(tmp*-1)<<1);
+		int val =(tmp*-1)<<1;
+		if (val>255)
+			val=255;
+		if(val<0)
+			val=0;
+		SetPWM(pwm,val);
 	}
 }
