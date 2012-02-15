@@ -31,7 +31,11 @@ void disableDebug(void);
 /**
  * print a given value as a 16 bit hex value
  */
-#define prHEX(A) printfDEBUG_BYTE(GetHighNib(A>>8));printfDEBUG_BYTE(GetLowNib(A>>8));printfDEBUG_BYTE(GetHighNib(A&0x00ff));printfDEBUG_BYTE(GetLowNib(A&0x00ff))
+#define prHEX(A) 	prHEX16(A)
+#define prHEX8(A) 	printfDEBUG_BYTE(GetHighNib(A&0x000000ff));printfDEBUG_BYTE(GetLowNib(A&0x000000ff))
+#define prHEX16(A)  printfDEBUG_BYTE(GetHighNib((A&0x0000ff00)>>8));printfDEBUG_BYTE(GetLowNib((A&0x0000ff00)>>8)); prHEX8(A);
+#define prHEX24(A)  printfDEBUG_BYTE(GetHighNib((A&0x00ff0000)>>16));printfDEBUG_BYTE(GetLowNib((A&0x00ff0000)>>16)); prHEX16(A);
+#define prHEX32(A)  printfDEBUG_BYTE(GetHighNib((A&0xff000000)>>24));printfDEBUG_BYTE(GetLowNib((A&0xff000000)>>24)); prHEX24(A);
 
 /**
  * print the ascii of a float. No new line
@@ -41,7 +45,7 @@ void disableDebug(void);
 /**
  * print the ascii of an unsigned long/int. No new line
  */
-#define p_ul(A) printfDEBUG_UL(A)
+#define p_ul(A)  p_sl(A)
 
 /**
  * print the ascii of a signed long/int. No new line

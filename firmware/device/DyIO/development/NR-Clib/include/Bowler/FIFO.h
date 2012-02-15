@@ -26,6 +26,8 @@ typedef struct _BYTE_FIFO_STORAGE{
 
 void InitByteFifo(BYTE_FIFO_STORAGE * fifo,BYTE * buff,UINT32 size);
 
+UINT32 calcByteCount(BYTE_FIFO_STORAGE * fifo);
+
 BYTE ReadFirstByte(BYTE_FIFO_STORAGE * fifo);
 
 UINT32 FifoGetByteCount(BYTE_FIFO_STORAGE * fifo);

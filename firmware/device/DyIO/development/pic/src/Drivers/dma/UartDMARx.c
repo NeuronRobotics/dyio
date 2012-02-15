@@ -17,7 +17,6 @@ static int dmaReadPointer = 0;
 static BYTE private[DMA_SIZE+2];
 
 static BOOL running=FALSE;
-static BOOL abortDump=FALSE;
 
 void closeDma(){
 	stopUartCoProc();
@@ -34,9 +33,7 @@ void startUartDma(){
 	startUartCoProc();
 	DmaChnOpen(chn, DMA_CHN_PRI2, DMA_OPEN_DEFAULT);
 	// set the events: we want the UART2 rx interrupt to start our transfer
-	// also we want to enable the pattern match: transfer stops upon detection of CR
 	DmaChnSetEventControl(chn, 	DMA_EV_START_IRQ_EN|
-								//DMA_EV_MATCH_EN|
 								DMA_EV_START_IRQ(_UART2_RX_IRQ));
 
 	// set the transfer source and dest addresses, source and dest sizes and the cell size
@@ -65,10 +62,6 @@ int dump(int from , int to){
 	int i;
 	int num=0;
 	for(i=from;i<to;i++){
-		if(abortDump==TRUE){
-			//println("Aborting dump" );
-			return num;
-		}
 		addCoProcByte(private[dmaReadPointer++]);
 		num++;
 	}
@@ -76,33 +69,48 @@ int dump(int from , int to){
 }
 
 int pushContents(){
-	//FLAG_ASYNC=FLAG_BLOCK;
-	abortDump=FALSE;
+	FLAG_ASYNC=FLAG_BLOCK;
 	int from = dmaReadPointer;
 	int to = DmaChnGetDstPnt(chn);
 
 	BOOL reset=FALSE;
-	if(to>(DMA_SIZE-120)){
+	if(to>(DMA_SIZE-50)){
+		DelayMs(1);
 		to = DmaChnGetDstPnt(chn);
     	DmaChnAbortTxfer(chn);
-    	DmaChnSetTxfer(chn, (void*)&U2RXREG, private, 1, DMA_SIZE, 1);
-    	DmaChnEnable(chn);
-		while(DataRdyUART2()){
-			//Dump the remaining bytes in the UART buffer after resetting the DMA
-			private[to++]=UARTGetDataByte(UART2);
-			buttonCheck(56);
-		}
-
+    	if(DataRdyUART2()){
+    		println("Dumping UART buffer: ");
+    		int b=0;
+			while(DataRdyUART2()){
+				//Dump the remaining bytes in the UART buffer after resetting the DMA
+				private[to++]=UARTGetDataByte(UART2);
+				buttonCheck(56);
+				b++;
+			}
+			p_ul(b);print(" added");
+    	}
+      	DmaChnSetTxfer(chn, (void*)&U2RXREG, private, 1, DMA_SIZE, 1);
+      	DmaChnEnable(chn);
     	reset=TRUE;
 	}
 	if(to>from ){
+		if(to<0||to>DMA_SIZE||from<0||from>DMA_SIZE){
+			println("Load size, WTF? from=");p_ul(from);print(" to=");p_ul(to);
+		}
 		int back = dump(from,to);
-		if(reset)
+		FLAG_ASYNC=FLAG_OK;
+		if(reset){
 			dmaReadPointer=0;
-		//FLAG_ASYNC=FLAG_OK;
+			//println("Dma reset");
+		}
 		return back;
+	}else{
+		if(to != from){
+			println("Load error, WTF? from=");p_ul(from);print(" to=");p_ul(to);
+		}
+
 	}
-	//FLAG_ASYNC=FLAG_OK;
+	FLAG_ASYNC=FLAG_OK;
 	return 0;
 }
 

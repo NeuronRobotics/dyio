@@ -44,7 +44,7 @@
 #define SDK_LED_ALLOFF 			0xff
 #define SDK_LED_ON 				0
 #define SDK_LED_OFF 			1
-#define UARTDELAY				10
+#define UARTDELAY				20
 
 #define Nop()					__asm__("nop\n\t")
 #define nop()					Nop()

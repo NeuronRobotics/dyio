@@ -7,7 +7,7 @@
 #include "UserApp.h"
 
 #define MAX_RETRY 10
-#define DELAY_TIMEOUT 100
+#define DELAY_TIMEOUT 200
 BOOL valadateRPC(int response,int sent);
 
 BYTE sendPacket(BowlerPacket * Packet);
@@ -84,8 +84,6 @@ void stopUartCoProc(){
 	INTClearFlag(INT_SOURCE_UART_TX(UART2));
 	INTClearFlag(INT_SOURCE_UART_RX(UART2));
 	INTClearFlag(INT_SOURCE_UART(UART2));
-
-	uartErrorCheck();
 	CloseUART2();
 }
 
@@ -123,6 +121,7 @@ void uartErrorCheck(){
 		 println("\n\n\n\nPARITY error");
 	}
 	if(UART2GetErrors() ){
+		stopUartCoProc();
 		UART2ClearAllErrors();
 		startUartCoProc();
 	}
@@ -200,7 +199,6 @@ BYTE sendPacket(BowlerPacket * Packet){
 	//println(">>TX CoProc\n");printPacket(Packet);
 	int packetSize = BowlerHeaderSize + Packet->use.head.DataLegnth;
 
-	FLAG_ASYNC=FLAG_BLOCK;
 	PushCoProcAsync();//clear out any packets before begining
 	float packStartTime=getMs();
 	if (SendPacketUARTCoProc(Packet->stream,packetSize)){
@@ -225,7 +223,6 @@ BYTE sendPacket(BowlerPacket * Packet){
 
 						copyPacket(&downstream,Packet);
 						//println("<<RX CoProc\n");printPacket(Packet);
-						FLAG_ASYNC=FLAG_OK;
 						return 0;//Got a synchronus packet
 					}
 				}
@@ -242,10 +239,8 @@ BYTE sendPacket(BowlerPacket * Packet){
 		printfDEBUG_NNL(" ms to send:\n");printBowlerPacketDEBUG(Packet);
 		printFiFoState(&store,downstream.stream);
 		PushCoProcAsync();//clear out any packets
-		FLAG_ASYNC=FLAG_OK;
 		return 2;
 	}else{
-		FLAG_ASYNC=FLAG_OK;
 		enableDebug();
 		printfDEBUG("@@@@@@@@@@@@Transmit Timed Out, took: ");printfDEBUG_FL(getMs()-packStartTime);printfDEBUG_NNL(" ms");
 		return 1;
@@ -362,7 +357,7 @@ BOOL valadateRPC(int response,int sent){
 
 
 BOOL SendPacketUARTCoProc(BYTE * packet,WORD size){
-	//FLAG_ASYNC=FLAG_BLOCK;
+	FLAG_ASYNC=FLAG_BLOCK;
 	WORD i;
 	RunEveryData wait={getMs(),500};
 	//println("Sending to co proc: ");p_ul(size);print(" Bytes");
@@ -371,7 +366,7 @@ BOOL SendPacketUARTCoProc(BYTE * packet,WORD size){
 			//print("_");
 			if(RunEvery(&wait) > 0){
 				//print("X");
-				//FLAG_ASYNC=FLAG_OK;
+				FLAG_ASYNC=FLAG_OK;
 				return FALSE;
 			}
 			buttonCheck(3);
@@ -381,7 +376,7 @@ BOOL SendPacketUARTCoProc(BYTE * packet,WORD size){
 		Delay10us(2);
 	}
 	//println("Sending to co proc Done ");
-	//FLAG_ASYNC=FLAG_OK;
+	FLAG_ASYNC=FLAG_OK;
 	return TRUE;
 }
 
@@ -417,12 +412,10 @@ void __ISR(_UART_2_VECTOR, ipl7) My_U2_ISR(void){
 	//FLAG_ASYNC=FLAG_BLOCK;
 	StartCritical();
 	//uartErrorCheck();
-#if !defined(USE_DMA)
 	if (INTGetFlag(INT_SOURCE_UART_RX(UART2))){
 		newByte();
 		INTClearFlag(INT_SOURCE_UART_RX(UART2));
 	}else
-#endif
 	 if(INTGetFlag(INT_SOURCE_UART_ERROR(UART2))){
 		newByte();
 		UART2ClearAllErrors();
