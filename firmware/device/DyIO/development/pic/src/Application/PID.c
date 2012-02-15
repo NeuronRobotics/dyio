@@ -211,18 +211,25 @@ float getPositionMine(int group){
 	return ((float)pos);
 }
 
-void setOutputMine(int group, float val){
+void setOutputMine(int group, float v){
 	if( dyPid[group].outputChannel==DYPID_NON_USED||
 			((pidGroups[group].Enabled == FALSE) && (vel[group].enabled==FALSE)))
 		return;
-
+	int val = (int)(v);
 	BYTE center = DATA.PIN[dyPid[group].outputChannel].ServoPos;
-	val += center;
+
 	if(dyPid[group].outputMode == IS_SERVO){
-		if (val>190.0)
-			val=190.0;
-		if(val<25.0)
-			val=25.0;
+		val += center;
+		if (val>190)
+			val=190;
+		if(val<25)
+			val=25;
+	}else{
+		val += 128;
+		if (val>255)
+			val=255;
+		if(val<0)
+			val=0;
 	}
 	int set = (int)val;
 	if (dyPid[group].outVal==set){
