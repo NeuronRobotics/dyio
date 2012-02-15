@@ -73,6 +73,7 @@ BOOL isProcessing(){
 	return processing;
 }
 
+BOOL coProcRunning = FALSE;
 void stopUartCoProc(){
 	//Disable first to clear
 	INTEnable(INT_SOURCE_UART(UART2)		, INT_DISABLED);
@@ -85,14 +86,23 @@ void stopUartCoProc(){
 	INTClearFlag(INT_SOURCE_UART_RX(UART2));
 	INTClearFlag(INT_SOURCE_UART(UART2));
 	CloseUART2();
+	coProcRunning = FALSE;
 }
 
 void startUartCoProc(){
+	if(coProcRunning == TRUE)
+		return;
 	//Start configuration
-	UARTConfigure(UART2, UART_ENABLE_PINS_TX_RX_ONLY);
+	UARTConfigure(UART2, UART_ENABLE_PINS_TX_RX_ONLY|UART_ENABLE_HIGH_SPEED );
 	UARTSetFifoMode(UART2, UART_INTERRUPT_ON_RX_NOT_EMPTY);
+
+	//OpenUART1(UART_EN|UART_EVEN_PAR_8BIT|UART_1STOPBIT|UART_DIS_BCLK_CTS_RTS,UART_TX_ENABLE|UART_RX_ENABLE,CalcBaud(INTERNAL_BAUD ));
 	UARTSetLineControl(UART2, UART_DATA_SIZE_8_BITS | UART_PARITY_EVEN | UART_STOP_BITS_1);
-	UARTSetDataRate(UART2, GetPeripheralClock(), INTERNAL_BAUD );
+	int actual = UARTSetDataRate(UART2, GetPeripheralClock(), INTERNAL_BAUD );
+	float percent = (((float)INTERNAL_BAUD)/((float) actual))*100.0f;
+	if(actual!=INTERNAL_BAUD){
+		println("###Uart baud not what was set!! Actual=");p_ul(actual);print(" desired=");p_ul(INTERNAL_BAUD);print(" %");p_fl(percent);
+	}
 	UARTEnable(UART2, UART_ENABLE_FLAGS(UART_PERIPHERAL | UART_RX | UART_TX));
 
 //	// Configure UART2 RX Interrupt
@@ -103,32 +113,35 @@ void startUartCoProc(){
 
 	INTSetVectorPriority(INT_VECTOR_UART(UART2), INT_PRIORITY_LEVEL_7);
 	INTSetVectorSubPriority(INT_VECTOR_UART(UART2), INT_SUB_PRIORITY_LEVEL_0);
+	coProcRunning = TRUE;
 }
 
 void initCoProcUART(){
+	println("Initializing CoProc UART Hardware");
 	stopUartCoProc();
+	UART2ClearAllErrors();
 	startUartCoProc();
 }
 
 void uartErrorCheck(){
-	if(UART2GetErrors() & _U2STA_FERR_MASK){
+	int err = UART2GetErrors();
+	if(err & _U2STA_FERR_MASK){
 		 println("\n\n\nFraming error");
 	}
-	if(UART2GetErrors() & _U2STA_OERR_MASK){
+	if(err & _U2STA_OERR_MASK){
 		 println("\n\n\n\nOverflow error");
 	}
-	if(UART2GetErrors() & _U2STA_PERR_MASK){
+	if(err & _U2STA_PERR_MASK){
 		 println("\n\n\n\nPARITY error");
 	}
-	if(UART2GetErrors() ){
-		stopUartCoProc();
-		UART2ClearAllErrors();
-		startUartCoProc();
+	if(err ){
+		println("\n\n\n\nUnknown UART error");
+		initCoProcUART();
 	}
 }
 
 void initCoProcCom(){
-	//println("Initializing coproc upstream fifo");
+	println("Initializing coproc upstream fifo");
 	init = TRUE;
 	StartCritical();
 	InitByteFifo(&store,privateRX,sizeof(privateRX));
@@ -141,7 +154,7 @@ void initCoProcCom(){
 
 void SendPacketToCoProc(BowlerPacket * Packet){
 	float start = getMs();
-	initCoProcUART();
+	startUartCoProc();
 	processing=TRUE;
 	if(init == FALSE){
 		println("Co-proc initializing..");
@@ -418,7 +431,7 @@ void __ISR(_UART_2_VECTOR, ipl7) My_U2_ISR(void){
 	}else
 	 if(INTGetFlag(INT_SOURCE_UART_ERROR(UART2))){
 		newByte();
-		UART2ClearAllErrors();
+		uartErrorCheck();
 		INTClearFlag(INT_SOURCE_UART_ERROR(UART2));
 	}else{
 		if ( INTGetFlag(INT_SOURCE_UART_TX(UART2)) ) {

@@ -53,7 +53,7 @@ void startUartDma(){
 	// enable the chn
 	DmaChnEnable(chn);
 	EndCritical();
-	//FLAG_ASYNC=FLAG_OK;
+	println("DMA now started");
 }
 
 int dump(int from , int to){
