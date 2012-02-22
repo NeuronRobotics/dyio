@@ -183,13 +183,13 @@ void runLinearInterpolationServo(BYTE blockStart,BYTE blockEnd){
 	for (i=blockStart;i<blockEnd;i++){
 		float ip = interpolate(&velocity[i],getMs());
 
-		if(ip>255){
+		if(ip>(255- SERVO_BOUND)){
 			println("Interpolate out of bounds! got=");p_fl(ip);print(" on time=");p_fl(velocity[i].setTime);
-			ip=255;
+			ip=(255- SERVO_BOUND);
 		}
-		if(ip<0){
+		if(ip<SERVO_BOUND){
 			println("Interpolate out of bounds! got=");p_fl(ip);print(" on chan=");p_ul(i);
-			ip=0;
+			ip=SERVO_BOUND;
 		}
 		int tmp = (int)ip;
 		DATA.PIN[i].ServoPos= (BYTE) tmp;

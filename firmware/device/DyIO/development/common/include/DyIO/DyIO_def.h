@@ -24,6 +24,7 @@
 #define DYIO_DEF_H_
 
 #define NUM_PINS   			24
+#define SERVO_BOUND 		15
 
 //#define MAJOR_REV			3
 //#define MINOR_REV			7
