@@ -57,7 +57,10 @@ void initPIDChans(BYTE group){
 		pidGroups[group].SetPoint=0;
 	}
 }
-
+BOOL asyncCallback(BowlerPacket *Packet){
+    PutBowlerPacket(Packet);// This only works with USB and UART
+    return TRUE;
+}
 void InitPID(void){
 
 	BYTE i;
@@ -101,7 +104,7 @@ void InitPID(void){
 							&getPositionMine,
 							&setOutputMine,
 							&resetPositionMine,
-							&PutBowlerPacket,
+							&asyncCallback,
 							&onPidConfigureMine,
 							&checkPIDLimitEventsMine);
 
