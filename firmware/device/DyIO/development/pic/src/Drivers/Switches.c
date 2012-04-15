@@ -60,7 +60,7 @@ BYTE IsRegulated(float voltage){
 	float raw = GetRawVoltage();//adding the voltage drop across the diaode
 	if((voltage < raw+.01)&&(voltage > raw-.01))
 		return FALSE;
-	if ((voltage<(4.9))&&(voltage>(4.4))){//USB spec is 5.25v to 4.4v.
+	if ((voltage<(RawVoltageMin))&&(voltage>(4.4))){//USB spec is 5.25v to 4.4v.
 		return TRUE;
 	}
 	return FALSE;

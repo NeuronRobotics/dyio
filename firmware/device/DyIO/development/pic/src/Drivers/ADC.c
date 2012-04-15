@@ -128,14 +128,14 @@ BYTE GetRawVoltageCode(BYTE bank){
 	}else{
 		rv = GetRail1Voltage();
 	}
-	if(rv>RawVoltageMin){
+	if(rv>RawVoltageMin-1.5){
 		lastHighTime = getMs();
 		if(externalLock==TRUE)
 			return 3;
 		back=1;
 	}else {
 		lastLowTime = getMs();
-		if(rv<4 && externalLock==FALSE){
+		if(rv<3.0 && externalLock==FALSE){
 			back=2;
 		}else{
 			back=0;
