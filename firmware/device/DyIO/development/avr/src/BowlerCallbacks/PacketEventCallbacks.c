@@ -190,9 +190,8 @@ BYTE UserCriticalRPCs(BowlerPacket *Packet){
 		else
 			ERR(Packet,zone,3);
 		break;
-	case POVR:
+	case _PWR:
 		setPowerOverride(Packet->use.data[0]);
-		READY(Packet,zone,3);
 		break;
 	default:
 #if defined(USE_AS_LIBRARY)

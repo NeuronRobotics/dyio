@@ -181,6 +181,9 @@ BYTE UserCriticalRPCs(BowlerPacket *Packet){
 		DATA.PIN[Packet->use.data[0]].ServoPos=Packet->use.data[1];
 		SendPacketToCoProc(Packet);
 		break;
+	case _PWR:
+		SendPacketToCoProc(Packet);
+		break;
 	case INFO:
 		if ((Packet->use.head.DataLegnth>4+16)||(Packet->use.head.DataLegnth<=4)){
 			ERR(Packet,zone,3);
