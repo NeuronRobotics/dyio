@@ -58,7 +58,7 @@ void DownstreamPowerChange(void){
 	SendPacketToCoProc(& packetTemp);
 	enableDebug();
 }
-void LoagGACM(BowlerPacket * pack){
+void LoadGACM(BowlerPacket * pack){
 	LoadCorePacket(pack);
 	pack->use.head.Method=BOWLER_GET;
 	pack->use.head.RPC=GetRPCValue("gacm");
@@ -66,7 +66,7 @@ void LoagGACM(BowlerPacket * pack){
 	SetCRC(& packetTemp);
 }
 void GetAllModes(BowlerPacket * pack){
-	//printfDEBUG("Getting chan modes");
+	printfDEBUG("GetAllModes");
 	int total=0;
 	do{
 		total++;
@@ -74,7 +74,7 @@ void GetAllModes(BowlerPacket * pack){
 			printfDEBUG("Failed returning");
 			return;
 		}
-		LoagGACM(pack);
+		LoadGACM(pack);
 		SendPacketToCoProc(pack);
 		buttonCheck(14);
 	}while(pack->use.head.RPC != GetRPCValue("gacm"));

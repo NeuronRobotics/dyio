@@ -10,7 +10,7 @@ void server(){
 	Bowler_Server((BowlerPacket *) &Packet,FALSE);
 }
 
-#define analogTime  30
+#define analogTime  50
 
 void runDyIOMain(void){
 

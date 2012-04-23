@@ -45,3 +45,4 @@ pub:
 	if(rm ../NRSDK/fw/*); then echo OK; fi
 	#cp FirmwarePublish/Dev/dyio* ../NRSDK/fw/
 	#cp FirmwarePublish/Release/*.xml ../NRConsole/src/com/neuronrobotics/nrconsole/plugin/bootloader/fw/
+	nr-console

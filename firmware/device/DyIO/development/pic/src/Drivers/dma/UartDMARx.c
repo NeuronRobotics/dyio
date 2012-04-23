@@ -19,7 +19,7 @@ static BYTE private[DMA_SIZE+2];
 static BOOL running=FALSE;
 
 void closeDma(){
-	stopUartCoProc();
+	//stopUartCoProc();
 	DmaChnAbortTxfer(chn);
 	DmaChnClrEvFlags(chn,DMA_EV_ALL_EVNTS);
 	running=FALSE;
@@ -29,6 +29,8 @@ void startUartDma(){
 	if(running)
 		return;
 	running=TRUE;
+	println("startUartDma");
+
 	dmaReadPointer = 0;
 	startUartCoProc();
 	DmaChnOpen(chn, DMA_CHN_PRI2, DMA_OPEN_DEFAULT);
@@ -74,7 +76,7 @@ int pushContents(){
 	int to = DmaChnGetDstPnt(chn);
 
 	BOOL reset=FALSE;
-	if(to>(DMA_SIZE-50)){
+	if(to>(DMA_SIZE/2)){
 		DelayMs(1);
 		to = DmaChnGetDstPnt(chn);
     	DmaChnAbortTxfer(chn);
@@ -82,6 +84,7 @@ int pushContents(){
     		println("Dumping UART buffer: ");
     		int b=0;
 			while(DataRdyUART2()){
+				uartErrorCheck();
 				//Dump the remaining bytes in the UART buffer after resetting the DMA
 				private[to++]=UARTGetDataByte(UART2);
 				buttonCheck(56);
@@ -101,11 +104,12 @@ int pushContents(){
 		FLAG_ASYNC=FLAG_OK;
 		if(reset){
 			dmaReadPointer=0;
-			//println("Dma reset");
+			println("Dma reset");
 		}
 		return back;
 	}else{
 		if(to != from){
+			dmaReadPointer = DmaChnGetDstPnt(chn);
 			println("Load error, WTF? from=");p_ul(from);print(" to=");p_ul(to);
 		}
 
@@ -115,10 +119,12 @@ int pushContents(){
 }
 
 int updateUartDmaRx(){
+	//println("updateUartDmaRx");
 	startUartDma();
 	uartErrorCheck();
 	int numAdded=0;
 	numAdded = pushContents();
+
 	return numAdded;
 }
 
@@ -134,12 +140,9 @@ void __ISR(_DMA1_VECTOR, IPL5SOFT) DmaHandler1(void)
     if(evFlags&DMA_EV_BLOCK_DONE)
     { // just a sanity check. we enabled just the DMA_EV_BLOCK_DONE transfer done interrupt
 		//FLAG_ASYNC=FLAG_BLOCK;
-
-		pushContents();
+    	updateUartDmaRx();
     	println("##Maxed out DMA buffer, resetting" );
-
     	//FLAG_ASYNC=FLAG_OK;
-
     }
 }
 #endif

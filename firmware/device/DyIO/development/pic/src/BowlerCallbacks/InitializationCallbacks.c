@@ -66,7 +66,7 @@ void hardwareInit(){
 
 	//AVR Reset pin
 	InitAVR_RST();
-	ReleaseAVRReset();
+	HoldAVRReset();
 
 
 	ConfigUARTOpenCollector();
@@ -103,6 +103,8 @@ void UserInit(void){
 	println("Starting PIC initialization");
 	hardwareInit();
 	println("Hardware Init done");
+
+	ReleaseAVRReset();
 
 	InitPins();
 
