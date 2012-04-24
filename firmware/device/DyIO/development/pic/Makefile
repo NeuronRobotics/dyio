@@ -4,7 +4,7 @@ INCLUDES	    = -I../NR-Clib/include/ -I./include/ -I ../common/include -I ../NR-
 -include ../common/Version.mk
 DEVICEP 		= 32MX440F128H
 DEFINES			= -DUSE_VELOCITY $(DYIO_VER)
-CCP     		= $(GCCP) -mprocessor=$(DEVICEP) $(INCLUDES) $(DEFINES)
+CCP     		= $(GCCP) -mprocessor=$(DEVICEP) $(INCLUDES)  -I/home/opt/microchip/mplabc32/v2.02/pic32mx/include $(DEFINES)
 LINK 			= $(GCCP) -mprocessor=$(DEVICEP) -L ../../../NR-Clib/lib/PIC32/$(DEVICEP)/ -L ../../../common/Release/pic   -Wl,--script="elf32pic32mx.ld" 
 OBJ				= Main.o DyIOMain.o CartesianController.o UartDMARx.o Debug_DyIO.o PinFunctions.o ChannelConfig.o ChannelMode.o ChannelValues.o SPI.o PID.o PacketEventCallbackss.o InitializationCallbacks.o UpstreamPackets.o DownStreamPackets.o CoOpCallbacks.o AsyncManager.o Switches.o Pin_State.o SerialPassThrough.o PPMReader.o ADC.o  AVRInterface.o CoProcCom.o Counter.o EEPROMMannager.o
 DIRS:

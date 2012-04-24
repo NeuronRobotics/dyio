@@ -50,8 +50,8 @@
 #define __UART_H
 
 #include "GenericTypeDefs.h"
-void Write32UART1(BYTE  data);
-void Write32UART2(BYTE  data);
+BOOL Write32UART1(BYTE  data);
+BOOL Write32UART2(BYTE  data);
 
 void Pic32UARTPutArray(BYTE *packet,WORD size);
 void Pic32UART_HAL_INIT(void);

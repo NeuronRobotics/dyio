@@ -19,7 +19,7 @@ static BYTE private[DMA_SIZE+2];
 static BOOL running=FALSE;
 
 void closeDma(){
-	//stopUartCoProc();
+	FLAG_ASYNC=FLAG_BLOCK;
 	DmaChnAbortTxfer(chn);
 	DmaChnClrEvFlags(chn,DMA_EV_ALL_EVNTS);
 	running=FALSE;
@@ -28,6 +28,7 @@ void closeDma(){
 void startUartDma(){
 	if(running)
 		return;
+	FLAG_ASYNC=FLAG_BLOCK;
 	running=TRUE;
 	println("startUartDma");
 
@@ -55,6 +56,7 @@ void startUartDma(){
 	// enable the chn
 	DmaChnEnable(chn);
 	EndCritical();
+	FLAG_ASYNC=FLAG_OK;
 	println("DMA now started");
 }
 

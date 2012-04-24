@@ -102,15 +102,15 @@ void startUartCoProc(){
 	UARTSetFifoMode(UART2, UART_INTERRUPT_ON_RX_NOT_EMPTY);
 
 	//OpenUART1(UART_EN|UART_EVEN_PAR_8BIT|UART_1STOPBIT|UART_DIS_BCLK_CTS_RTS,UART_TX_ENABLE|UART_RX_ENABLE,CalcBaud(INTERNAL_BAUD ));
-	//UARTSetLineControl(UART2, UART_DATA_SIZE_8_BITS | UART_PARITY_EVEN | UART_STOP_BITS_1);
-	UARTSetLineControl(UART2, UART_DATA_SIZE_8_BITS | UART_PARITY_NONE| UART_STOP_BITS_1);
+	UARTSetLineControl(UART2, UART_DATA_SIZE_8_BITS | UART_PARITY_EVEN | UART_STOP_BITS_1);
+	//UARTSetLineControl(UART2, UART_DATA_SIZE_8_BITS | UART_PARITY_NONE| UART_STOP_BITS_1);
 	int actual = UARTSetDataRate(UART2, GetPeripheralClock(), INTERNAL_BAUD );
 	float percent = (((float)INTERNAL_BAUD)/((float) actual))*100.0f;
 	if(actual!=INTERNAL_BAUD){
 		println("###Uart baud not what was set!! Actual=");p_ul(actual);print(" desired=");p_ul(INTERNAL_BAUD);print(" %");p_fl(percent);
 	}
 	UARTEnable(UART2, UART_ENABLE_FLAGS(
-			//UART_PERIPHERAL |
+			UART_PERIPHERAL |
 			UART_RX | UART_TX));
 
 
@@ -124,6 +124,9 @@ void startUartCoProc(){
 
 void initCoProcUART(){
 	println("initCoProcUART");
+#if defined(USE_DMA)
+	closeDma();
+#endif
 	//Disable first to clear
 	INTEnable(INT_SOURCE_UART(UART2)		, INT_DISABLED);
 	INTEnable(INT_SOURCE_UART_TX(UART2)		, INT_DISABLED);
@@ -206,7 +209,7 @@ void SendPacketToCoProc(BowlerPacket * Packet){
 		enableDebug();
 		printfDEBUG("############Five times failed, co-proc reset: ");printPacket(Packet);
 		SetColor(1,0,0);
-		//initCoProcCom();
+		initCoProcCom();
 		PowerCycleAVR();
 		DelayMs(200);
 		ret = sendPacket(Packet);
@@ -280,7 +283,6 @@ BYTE sendPacket(BowlerPacket * Packet){
 			buttonCheck(4);
 		}
 		enableDebug();
-		initCoProcUART();
 		printfDEBUG("############Response Timed Out, took: ");printfDEBUG_FL(getMs()-packStartTime);
 		printfDEBUG_NNL(" ms to send:\n");printBowlerPacketDEBUG(Packet);
 		printFiFoState(&store,downstream.stream);
@@ -417,9 +419,11 @@ BOOL SendPacketUARTCoProc(BYTE * packet,WORD size){
 			}
 			buttonCheck(3);
 		}while ( clearToSend() == FALSE);
+		if(!Write32UART2(packet[i])){
+			return FALSE;
+		}
+		Delay10us(2);
 		print(" 0x");prHEX8(packet[i]);
-		Write32UART2(packet[i]);
-		//Delay10us(2);
 	}
 	println("] Sending to co proc Done ");
 	FLAG_ASYNC=FLAG_OK;
