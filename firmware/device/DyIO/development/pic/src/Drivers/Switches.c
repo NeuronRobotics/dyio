@@ -18,14 +18,14 @@ void CheckSwitches(void){
 	volt = GetRawVoltage();
 	BOOL up = FALSE;
 
-	//println("Voltage on raw:");
-	//p_fl(volt);
+	//println_I("Voltage on raw:");
+	//p_fl_I(volt);
 
-	//println("Voltage on bank0:");
-	//p_fl(GetRail0Voltage());
+	//println_I("Voltage on bank0:");
+	//p_fl_I(GetRail0Voltage());
 
-	//println("Voltage on bank1:");
-	//p_fl(GetRail1Voltage());
+	//println_I("Voltage on bank1:");
+	//p_fl_I(GetRail1Voltage());
 
 	BYTE reg = isRegulated_0();
 	if (bankState[0] != reg ){
@@ -51,7 +51,7 @@ void CheckSwitches(void){
 		}
 	//}
 	if(up){
-		print("\nPushing upstream Power Packet bank 0: ");p_ul(bankState[0]);print(" bank 1: ");p_ul(bankState[1]);print(" \nPower Code 0: ");p_ul(GetRawVoltageCode(0));print(" \nPower Code 1 : ");p_ul(GetRawVoltageCode(1));print(" \nRaw: ");p_fl(GetRawVoltage());
+		print_I("\nPushing upstream Power Packet bank 0: ");p_sl_I(bankState[0]);print_I(" bank 1: ");p_ul_I(bankState[1]);print_I(" \nPower Code 0: ");p_ul_I(GetRawVoltageCode(0));print_I(" \nPower Code 1 : ");p_ul_I(GetRawVoltageCode(1));print_I(" \nRaw: ");p_fl_I(GetRawVoltage());
 		UpstreamPushPowerChange();
 	}
 }

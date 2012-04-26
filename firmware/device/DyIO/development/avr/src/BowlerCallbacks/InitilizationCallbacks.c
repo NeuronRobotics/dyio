@@ -19,13 +19,14 @@
 #include "UserApp.h"
 const char startmessage[] = "###Starting AVR In Debug Mode\n";
 void UserInit(void){
-	enableDebug();
+
+	setPrintLevelInfoPrint();
 #if defined(DEBUG)
 	ConfigureUART(115200);
 	if(GetChannelMode(16)!=IS_UART_TX)
 		setMode(16,IS_UART_TX);
 #endif
-	//println("Starting User initialization");
+	//println_I("Starting User initialization");
 	InitFlagPins();
 	InitBankLEDs();
 	SetPowerState0(0,0);
@@ -42,14 +43,14 @@ void UserInit(void){
 	setMethodCallback(BOWLER_POST,UserPostRPCs);
 	setMethodCallback(BOWLER_CRIT,UserCriticalRPCs);
 
-	enableDebug();
 	//SetPinTris(0,OUTPUT);
 	//SetDIO(0,OFF);
 
 #if defined(USE_AS_LIBRARY)
 	InitializeUserCode();
 #endif
-	printfDEBUG(startmessage);// All printfDEBUG functions do not need to be removed from code if debug is disabled
+	println_I(startmessage);// All printfDEBUG functions do not need to be removed from code if debug is disabled
+	setPrintLevelErrorPrint();
 }
 
 

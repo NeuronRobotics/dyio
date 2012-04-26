@@ -27,7 +27,7 @@ void PushAllAsync(int * state){
 		packetTemp.use.data[(i*4)+2]=s.byte.SB;
 		packetTemp.use.data[(i*4)+3]=s.byte.LB;
 	}
-	//println("Sending: ");printPacket(&packetTemp);
+	//println_I("Sending: ");printPacket(&packetTemp);
 	PutBowlerPacket(& packetTemp);
 }
 void PushCounterChange(BYTE pin,LONG state){

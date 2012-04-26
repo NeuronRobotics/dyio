@@ -23,7 +23,7 @@
 extern DATA_STRUCT DATA;
 
 void ClearPWM(BYTE channel){
-	////printfDEBUG("Clearing PWM from pin:");
+	////println_I("Clearing PWM from pin:");
 	////printfDEBUG_UL(channel);
 	// Sets the compare channel to normal operation
 	switch (channel){
@@ -98,7 +98,7 @@ BYTE InitPWM(BYTE channel){
 		return FALSE;
 	}
 	configPinMode(channel,IS_PWM,OUTPUT,OFF);
-	//printfDEBUG("Initializing PWM from pin:");
+	//println_I("Initializing PWM from pin:");
 	//printfDEBUG_UL(channel);
 	//ClearPinState(channel);
 	//DATA.PIN[channel].State=IS_PWM;

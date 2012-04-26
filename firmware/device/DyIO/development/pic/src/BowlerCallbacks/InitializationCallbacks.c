@@ -41,6 +41,7 @@ const unsigned char dypidNSName[] = "bcs.pid.dypid.*;0.3;;";
 const unsigned char safeNSName[] = "bcs.safe.*;0.3;;";
 
 void hardwareInit(){
+	setPrintLevelInfoPrint();
 	StartCritical();
 	FlashGetMac(MyMAC.v);
 	char macStr[13];
@@ -50,8 +51,8 @@ void hardwareInit(){
 		macStr[j++]=GetLowNib(MyMAC.v[i]);
 	}
 	macStr[12]=0;
-	printfDEBUG("MAC address is =");
-	printfDEBUG_NNL(macStr);
+	println_I("MAC address is =");
+	print_I(macStr);
 	char * dev = "DyIO v.3";
 
 	usb_CDC_Serial_Init(dev,macStr,0x04D8,0x3742);
@@ -78,7 +79,7 @@ void hardwareInit(){
 	//Starts Timer 3
 	InitCounterPins();
 	InitADC();
-	println("Adding DyIO namespaces:");
+	println_I("Adding DyIO namespaces:");
 	AddNamespace(sizeof(ioNSName), ioNSName);
 	AddNamespace(sizeof(setModeNSName), setModeNSName);
 	AddNamespace(sizeof(dyioNSName), dyioNSName);
@@ -100,9 +101,9 @@ void hardwareInit(){
 }
 
 void UserInit(void){
-	println("Starting PIC initialization");
+	println_I("Starting PIC initialization");
 	hardwareInit();
-	println("Hardware Init done");
+	println_I("Hardware Init done");
 
 	ReleaseAVRReset();
 
@@ -120,13 +121,14 @@ void UserInit(void){
 
 	UpdateAVRLED();
 
-	//println("Syncing modes:");
+	//println_I("Syncing modes:");
 	SyncModes();
-	//println("Setting modes:");
+	//println_I("Setting modes:");
 
 	lockServos();
 
-	printfDEBUG("###Starting PIC In Debug Mode###\n");// All printfDEBUG functions do not need to be removed from code if debug is disabled
+	println_I("###Starting PIC In Debug Mode###\n");// All printfDEBUG functions do not need to be removed from code if debug is disabled
+	setPrintLevelErrorPrint();
 }
 
 

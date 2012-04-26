@@ -29,7 +29,7 @@ BYTE pinOn(BYTE pin);
 void pinOff(BYTE pin);
 
 void InitServo(BYTE PIN){
-	//println("Starting servo");
+	//println_I("Starting servo");
 	ClearPinState(PIN);
 	SetPinTris(PIN,OUTPUT);
 	//DATA.PIN[PIN].State=IS_SERVO;
@@ -142,8 +142,8 @@ void RunServo(BYTE block){
 	}
 
 //	if(print!=0xff){
-//		print("\n\tset: ");p_fl(velocity[print].set);
-//		print("\n\tServoPos: ");p_ul(DATA.PIN[print].ServoPos);
+//		print_I("\n\tset: ");p_fl_I(velocity[print].set);
+//		print_I("\n\tServoPos: ");p_sl_I(DATA.PIN[print].ServoPos);
 //		print = 0xff;
 //	}
 	//enableDebug();
@@ -184,11 +184,11 @@ void runLinearInterpolationServo(BYTE blockStart,BYTE blockEnd){
 		float ip = interpolate(&velocity[i],getMs());
 
 		if(ip>(255- SERVO_BOUND)){
-			println("Interpolate out of bounds! got=");p_fl(ip);print(" on time=");p_fl(velocity[i].setTime);
+			println_I("Interpolate out of bounds! got=");p_fl_I(ip);print_I(" on time=");p_fl_I(velocity[i].setTime);
 			ip=(255- SERVO_BOUND);
 		}
 		if(ip<SERVO_BOUND){
-			println("Interpolate out of bounds! got=");p_fl(ip);print(" on chan=");p_ul(i);
+			println_I("Interpolate out of bounds! got=");p_fl_I(ip);print_I(" on chan=");p_sl_I(i);
 			ip=SERVO_BOUND;
 		}
 		int tmp = (int)ip;

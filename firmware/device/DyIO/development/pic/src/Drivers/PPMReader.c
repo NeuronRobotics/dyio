@@ -52,8 +52,8 @@ void RunPPMCheck(void){
 	if(up){
 		//push upstream
 		pushPPMPacket();
-		//print("\nUpdating ppm chan ");printStream(ppmData,NUM_PPM_CHAN);
-		//print(" PPM cross link ");printStream(ppmLink,NUM_PPM_CHAN);
+		//print_I("\nUpdating ppm chan ");printStream(ppmData,NUM_PPM_CHAN);
+		//print_I(" PPM cross link ");printStream(ppmLink,NUM_PPM_CHAN);
 		for(i=0;i<NUM_PPM_CHAN;i++){
 			if(ppmLink[i] != INVALID_PPM_LINK){
 				if(ppmLastSent[i] != ppmData[i]){
@@ -123,12 +123,12 @@ void startPPM(BYTE chan){
 			if(ppmLink[i]>= NUM_PINS)
 				ppmLink[i]=INVALID_PPM_LINK;
 		}
-		//println("Starting PPM reader");
+		//println_I("Starting PPM reader");
 	}
 }
 
 void GetPPMDataToPacket(BowlerPacket * Packet){
-	//println("Getting PPM values");
+	//println_I("Getting PPM values");
 	int i;
 	LoadCorePacket(Packet);
 	Packet->use.head.Method=BOWLER_POST;

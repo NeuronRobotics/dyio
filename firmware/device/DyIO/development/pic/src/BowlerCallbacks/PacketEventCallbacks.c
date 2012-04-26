@@ -112,7 +112,7 @@ BYTE UserPostRPCs(BowlerPacket *Packet){
 	//float time;
 	switch (Packet->use.head.RPC){
 	case SCHM:
-		//println("got>>\n");printPacket(Packet);
+		//println_I("got>>\n");printPacket(Packet);
 		SetChannelMode(Packet);
 		break;
 	case SACM:
@@ -192,11 +192,11 @@ BYTE UserCriticalRPCs(BowlerPacket *Packet){
 			for(i=0;i<17;i++){
 				tmpName[i]='\0';
 			}
-			println("Setting name: ");
+			println_I("Setting name: ");
 			Packet->use.data[Packet->use.head.DataLegnth-4]='\0';
-			print((const char *)Packet->use.data);
-			print(" Num Bytes:");
-			p_ul(Packet->use.head.DataLegnth-4);
+			print_I((const char *)Packet->use.data);
+			print_I(" Num Bytes:");
+			p_sl_I(Packet->use.head.DataLegnth-4);
 			for(i=0;i<Packet->use.head.DataLegnth-4;i++){
 				tmpName[i]=Packet->use.data[i];
 			}

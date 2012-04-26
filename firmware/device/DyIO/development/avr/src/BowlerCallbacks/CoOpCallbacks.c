@@ -169,7 +169,7 @@ BOOL checkDigital(){
 
 void resetBlocks(){
 
-	println("Block times b0: ");p_fl(block0.MsTime);print(", b1: ");p_fl(block1.MsTime);print(", b2: ");p_fl(block2.MsTime);
+	println_I("Block times b0: ");p_fl_I(block0.MsTime);print_I(", b1: ");p_fl_I(block1.MsTime);print_I(", b2: ");p_fl_I(block2.MsTime);
 
 	block0.setPoint = blockTime;
 	block0.MsTime=getMs();
@@ -180,7 +180,7 @@ void resetBlocks(){
 	block2.setPoint = blockTime;
 	block2.MsTime=block0.MsTime+blockInc2 ;
 
-	println("Fixed to values, b0: ");p_fl(block0.MsTime);print(", b1: ");p_fl(block1.MsTime);print(", b2: ");p_fl(block2.MsTime);
+	println_I("Fixed to values, b0: ");p_fl_I(block0.MsTime);print_I(", b1: ");p_fl_I(block1.MsTime);print_I(", b2: ");p_fl_I(block2.MsTime);
 
 }
 
@@ -203,32 +203,32 @@ void UserRun(void){
 	}
 
 	if(block0.MsTime < 0.0f){
-		println("Block0 error, ");p_fl(block0.MsTime);
+		println_I("Block0 error, ");p_fl_I(block0.MsTime);
 		resetBlocks();
 	}
 	if(block1.MsTime < 0.0f){
-		println("Block1 error, ");p_fl(block1.MsTime);
+		println_I("Block1 error, ");p_fl_I(block1.MsTime);
 		resetBlocks();
 	}
 	if(block2.MsTime < 0.0f){
-		println("Block2 error, ");p_fl(block2.MsTime);
+		println_I("Block2 error, ");p_fl_I(block2.MsTime);
 		resetBlocks();
 	}
 
 	if (RunEvery(&block0)>0.0f){
-		//println("Step 0");
+		//println_I("Step 0");
 		//
 		block0.MsTime = getMs();
 		RunServo(0);
 		//return;
 	}
 	if (RunEvery(&block1)>0.0f){
-		//println("Step 1");
+		//println_I("Step 1");
 		RunServo(1);
 		//return;
 	}
 	if (RunEvery(&block2)>0.0f){
-		//println("Step 2");
+		//println_I("Step 2");
 		RunServo(2);
 		//Re-align the offsets for the servos
 		block0.setPoint = blockTime;

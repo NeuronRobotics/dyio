@@ -22,7 +22,7 @@ COUNTER_PINS pinmap[]={ {{17,16,3}},{{19,18,2}},{{21,20,1}},{{23,22,0}}  };
 
 void RunCounter(void){
 	BYTE iIndex;
-	//printfDEBUG("Running counter");
+	//println_I("Running counter");
 	for (iIndex=0;iIndex<NUM_COUNTER_GROUPS;iIndex++){
 		 runCounterGroup(iIndex);
 	}
@@ -40,7 +40,7 @@ void InitCounterPins(void){
 	OpenTimer3(T3_ON | T3_SOURCE_INT | T3_PS_1_256, (0x1000/10 ));
 	ConfigIntTimer3(T3_INT_ON | T3_INT_PRIOR_5);
 	INTEnableSystemMultiVectoredInt();
-    printfDEBUG("Initialized the Counter module");
+    println_I("Initialized the Counter module");
 }
 void ClearCounter(BYTE chan){
 	BYTE group = channelToCounterGroup(chan);
@@ -51,7 +51,7 @@ void ClearCounter(BYTE chan){
 		case IS_COUNTER_OUTPUT_INT:
 		case IS_COUNTER_OUTPUT_DIR:
 		case IS_COUNTER_OUTPUT_HOME:
-			println("Mode was counter, clearing");
+			println_I("Mode was counter, clearing");
 			SetCoProcMode(pinmap[group].DIR,IS_DI);
 			SetCoProcMode(pinmap[group].INT,IS_DI);
 			SetCoProcMode(pinmap[group].HOME,IS_DI);
@@ -61,8 +61,8 @@ void ClearCounter(BYTE chan){
 	}
 	if (group > 3)
 		return;
-	printfDEBUG("Clearing counter channel:");
-	printfDEBUG_UL(group);
+	println_I("Clearing counter channel:");
+	p_sl_I(group);
 
 	//Counter[chan].CURRENT=0;
 	//Counter[chan].SETPOINT=0;
@@ -108,12 +108,12 @@ BOOL StartCounterInput(BYTE chan){
 
 	BYTE group = channelToCounterGroup(chan);
 	LONG count = GetCounterByGroup(group);
-	printfDEBUG("Enabeling counter input channel:");
-	printfDEBUG_UL(group);
+	println_I("Enabeling counter input channel:");
+	p_sl_I(group);
 	Counter[group].OutputEnabled=FALSE;
 	if (group > 3)
 		return FALSE;
-	println("Setting counter output modes");
+	println_I("Setting counter output modes");
 	if(GetChannelMode(pinmap[group].DIR)!=IS_COUNTER_INPUT_DIR)
 		SetCoProcMode(pinmap[group].DIR,IS_COUNTER_INPUT_DIR);
 	if(GetChannelMode(pinmap[group].INT)!=IS_COUNTER_INPUT_INT)
@@ -158,9 +158,9 @@ BOOL StartCounterOutput(BYTE chan){
 
 	if (group > 3)
 		return FALSE;
-	printfDEBUG("Enabeling counter output channel: ");
-	printfDEBUG_UL(group);
-	printfDEBUG("Setting counter input modes");
+	println_I("Enabeling counter output channel: ");
+	p_sl_I(group);
+	println_I("Setting counter input modes");
 	if(GetChannelMode(pinmap[group].DIR)!=IS_COUNTER_OUTPUT_DIR)
 		SetCoProcMode(pinmap[group].DIR,IS_COUNTER_OUTPUT_DIR);
 	if(GetChannelMode(pinmap[group].INT)!=IS_COUNTER_OUTPUT_INT)
@@ -207,7 +207,7 @@ void runCounterOutputStep(BYTE group){
 	if(Counter[group].SETPOINT == Counter[group].CURRENT ){
 		return;
 	}
-	//print("Step");
+	//print_I("Step");
 	if (Counter[group].SETPOINT > Counter[group].CURRENT ){
 		switch (Counter[group].STEP_INDEX){
 		case 0:
@@ -276,10 +276,10 @@ void runCounterGroup(BYTE group){
 	if ( Counter[group].OutputEnabled == FALSE){
 			if ((GetDigitalValFromAsync(pinmap[group].HOME)==0) ){
 				if(Counter[group].Homed ==FALSE){
-					print("\nHoming INput group: ");p_ul(group);print(" based on DyIO input: ");p_ul(pinmap[group].HOME);
+					print_I("\nHoming INput group: ");p_sl_I(group);print_I(" based on DyIO input: ");p_sl_I(pinmap[group].HOME);
 					Counter[group].Homed=TRUE;
 					if(GetPIDGroup(pinmap[group].INT) != NOT_USED_IN_PID ){
-						println("Used in PID, pushing async limit event");
+						println_I("Used in PID, pushing async limit event");
 						BYTE g = GetPIDGroup(pinmap[group].INT);
 						//SetPID(g,Counter[group].CURRENT);
 						trigerPIDLimit(g,INDEXEVENT,Counter[group].CURRENT);
@@ -303,7 +303,7 @@ void runCounterGroup(BYTE group){
 
 			if ((GetDigitalValFromAsync(pinmap[group].HOME)==0) ){
 				if(Counter[group].Homed == FALSE){
-					print("\nHoming OUTput group: ");p_ul(group);print(" based on DyIO input: ");p_ul(pinmap[group].HOME);
+					print_I("\nHoming OUTput group: ");p_sl_I(group);print_I(" based on DyIO input: ");p_sl_I(pinmap[group].HOME);
 					Counter[group].Homed=TRUE;
 					Counter[group].CURRENT=0;
 					Counter[group].SETPOINT=0;

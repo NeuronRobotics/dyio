@@ -54,7 +54,7 @@ BOOL SetAllChannelMode(BowlerPacket * Packet){
 
 BOOL setMode(BYTE pin,BYTE mode){
 	ClearPinState(pin);
-	//println("Pin :");p_ul(pin);print(" is mode: ");printMode(mode);
+	//println_I("Pin :");p_sl_I(pin);print_I(" is mode: ");printMode(mode);
 	//BYTE pwm,dir;
 	if (mode == NO_CHANGE){
 		return TRUE;
@@ -129,7 +129,7 @@ void configPinMode(BYTE pin,BYTE mode,BYTE tris,BYTE io){
 	SetPinTris(pin,tris);
 	SetDIO(pin,io);
 	//DATA.PIN[pin].State=mode;
-	//print("\nSetting mode: ");printMode(mode);print(" on chan: ");p_ul(pin);
+	//print_I("\nSetting mode: ");printMode(mode);print_I(" on chan: ");p_sl_I(pin);
 	EEWriteMode(pin,mode);
 }
 

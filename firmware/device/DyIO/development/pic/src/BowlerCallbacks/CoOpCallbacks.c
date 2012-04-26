@@ -51,7 +51,6 @@ void UserRun(void){
 
 	RunAsync();
 
-	disableDebug();
 	if (RunEvery(&pid)>0){
 		RunPID();
 	}
@@ -60,7 +59,6 @@ void UserRun(void){
 		RunVel();
 	}
 #endif
-	enableDebug();
 
 	CartesianControllerCoOp();
 

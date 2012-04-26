@@ -12,11 +12,11 @@ extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 void InitPins(void){
 	InitPinFunction();
 	int i;
-	printfDEBUG("Pin Functions");
+	println_I("Pin Functions");
 	InitPinFunction();
-	printfDEBUG("Pin States");
+	println_I("Pin States");
 	InitPinStates();
-	printfDEBUG("Done with Pin States");
+	println_I("Done with Pin States");
 
 	FlashGetMac(MyMAC.v);
 	FlashGetName(self.Name);

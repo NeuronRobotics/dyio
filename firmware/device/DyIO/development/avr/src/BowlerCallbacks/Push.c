@@ -43,7 +43,7 @@ void PushAllAdcVal(){
 #if defined(WPIRBE)
 	return;
 #endif
-	//println("Pushing analog");
+	//println_I("Pushing analog");
 	UINT16_UNION an;
 	//FlagBusy_IO=1;
 	//_delay_us(800);
@@ -77,7 +77,7 @@ void PushAllDiVal(){
 #if defined(WPIRBE)
 	return;
 #endif
-	println("Pushing digital");
+	println_I("Pushing digital");
 	//FlagBusy_IO=1;
 	//_delay_us(800);
 	sendHeader(4+24,"dasn");

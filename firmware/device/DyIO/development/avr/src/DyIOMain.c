@@ -15,7 +15,7 @@ void server(){
 void runDyIOMain(void){
 
 	Bowler_Init();// Com Stack Init. Sets up timeout timer, uart 0 and if debug enabled, uart 1
-	//println("Stack initialized");
+	//println_I("Stack initialized");
 	UserInit();// User code init
 	//int i;
 	RunEveryData asyncSched = {0,analogTime};
@@ -27,7 +27,7 @@ void runDyIOMain(void){
 			if(checkDigital())
 				server();
 		}else{
-			//println("Skipping D async");
+			//println_I("Skipping D async");
 		}
 		server();
 		if(FlagAsync == FLAG_OK ){
@@ -37,7 +37,7 @@ void runDyIOMain(void){
 			}else{
 				now = getMs();
 				if(!((asyncSched.MsTime >= 0) && (asyncSched.MsTime <= now))){
-					println("Reseting async time, was=");p_fl(asyncSched.MsTime);print(" is=");p_fl(now);
+					println_I("Reseting async time, was=");p_fl_I(asyncSched.MsTime);print_I(" is=");p_fl_I(now);
 					asyncSched.setPoint = analogTime;
 					asyncSched.MsTime=now;
 					server();
@@ -45,7 +45,7 @@ void runDyIOMain(void){
 
 			}
 		}else{
-			//println("Skipping A async");
+			//println_I("Skipping A async");
 		}
 		server();
 

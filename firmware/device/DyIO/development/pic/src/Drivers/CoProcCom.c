@@ -38,19 +38,19 @@ BOOL getPacket(BowlerPacket * packet){
 #if defined(USE_DMA)
 	int numAdded = updateUartDmaRx();
 	if(numAdded>0){
-		println("getPacket DMA added ");p_ul(numAdded);
+		println_I("getPacket DMA added ");p_sl_I(numAdded);
 		printFiFoState(&store,downstream.stream);
 	}
 #endif
 	BOOL b = _getBowlerPacket(packet,& store,TRUE);
 	if(b){
-		println("Returning packet");
+		println_I("Returning packet");
 	}
 	return b;
 }
 
 void addCoProcByte(BYTE b){
-	//print("[");p_ul(b);print("]");
+	//print_I("[");p_sl_I(b);print_I("]");
 	BYTE err;
 	FifoAddByte(&store,b,&err);
 }
@@ -64,9 +64,8 @@ void PushCoProcAsync(void){
 		if(Packet->use.head.MessageID!=0){
 			dealWithAsyncPacket(Packet);
 		}else{
-			enableDebug();
-			println("###########Stray sync packet..");
-			printPacket(Packet);
+			println_I("###########Stray sync packet..");
+			printPacket(Packet,INFO_PRINT);
 		}
 	}
 }
@@ -95,7 +94,7 @@ void startUartCoProc(){
 	if(coProcRunning == TRUE)
 		return;
 
-	println("startUartCoProc");
+	println_I("startUartCoProc");
 
 	//Start configuration
 	UARTConfigure(UART2, UART_ENABLE_PINS_TX_RX_ONLY|UART_ENABLE_HIGH_SPEED );
@@ -107,7 +106,7 @@ void startUartCoProc(){
 	int actual = UARTSetDataRate(UART2, GetPeripheralClock(), INTERNAL_BAUD );
 	float percent = (((float)INTERNAL_BAUD)/((float) actual))*100.0f;
 	if(actual!=INTERNAL_BAUD){
-		println("###Uart baud not what was set!! Actual=");p_ul(actual);print(" desired=");p_ul(INTERNAL_BAUD);print(" %");p_fl(percent);
+		println_I("###Uart baud not what was set!! Actual=");p_sl_I(actual);print_I(" desired=");p_sl_I(INTERNAL_BAUD);print_I(" %");p_fl_I(percent);
 	}
 	UARTEnable(UART2, UART_ENABLE_FLAGS(
 			UART_PERIPHERAL |
@@ -123,7 +122,7 @@ void startUartCoProc(){
 }
 
 void initCoProcUART(){
-	println("initCoProcUART");
+	println_I("initCoProcUART");
 #if defined(USE_DMA)
 	closeDma();
 #endif
@@ -150,28 +149,28 @@ void initCoProcUART(){
 void uartErrorCheck(){
 	int err = UART2GetErrors();
 	if(err & _U2STA_FERR_MASK){
-		println("\n\n\nFraming error");
+		println_I("\n\n\nFraming error");
 		//UART2ClearAllErrors();
 		return;
 	}
 	if(err & _U2STA_OERR_MASK){
-		println("\n\n\n\nOverflow error");
+		println_I("\n\n\n\nOverflow error");
 		//UART2ClearAllErrors();
 		return;
 	}
 	if(err & _U2STA_PERR_MASK){
-		println("\n\n\n\nPARITY error");
+		println_I("\n\n\n\nPARITY error");
 		//UART2ClearAllErrors();
 		return;
 	}
 	if(err ){
-		println("\n\n\n\nUnknown UART error");
+		println_I("\n\n\n\nUnknown UART error");
 		//UART2ClearAllErrors();
 	}
 }
 
 void initCoProcCom(){
-	println("initCoProcCom");
+	println_I("initCoProcCom");
 	init = TRUE;
 	StartCritical();
 	InitByteFifo(&store,privateRX,sizeof(privateRX));
@@ -187,7 +186,7 @@ void SendPacketToCoProc(BowlerPacket * Packet){
 
 	processing=TRUE;
 	if(init == FALSE){
-		println("SendPacketToCoProc Co-proc initializing..");
+		println_I("SendPacketToCoProc Co-proc initializing..");
 		initCoProcCom();
 	}
 
@@ -206,19 +205,18 @@ void SendPacketToCoProc(BowlerPacket * Packet){
 
 
 	if (i==MAX_RETRY){
-		enableDebug();
-		printfDEBUG("############Five times failed, co-proc reset: ");printPacket(Packet);
+		println_I("############Five times failed, co-proc reset: ");printPacket(Packet,INFO_PRINT);
 		SetColor(1,0,0);
 		initCoProcCom();
 		PowerCycleAVR();
 		DelayMs(200);
 		ret = sendPacket(Packet);
 		if(ret == 0){
-			printfDEBUG("##SUCCESS! OK after AVR reset");
+			println_I("##SUCCESS! OK after AVR reset");
 			return;
 		}
-		printfDEBUG("##Failed sending to co-proc after reset also!!:");
-		printfDEBUG_UL(ret);
+		println_I("##Failed sending to co-proc after reset also!!:");
+		p_sl_I(ret);
 		ERR(Packet,0x55,ret);
 		lastWasError = TRUE;
 		//Reset();
@@ -226,11 +224,11 @@ void SendPacketToCoProc(BowlerPacket * Packet){
 
 	Packet->use.head.ResponseFlag = 1;
 	processing=FALSE;
-	//println("Coproc transaction took: ");p_fl(getMs()-start);print(" after try count: ");p_ul(i);
+	//println_I("Coproc transaction took: ");p_fl_I(getMs()-start);print_I(" after try count: ");p_sl_I(i);
 }
 
 BYTE sendPacket(BowlerPacket * Packet){
-	println("sendPacket");
+	println_I("sendPacket");
 	BYTE i;
 	//int serIndex;
 
@@ -239,42 +237,41 @@ BYTE sendPacket(BowlerPacket * Packet){
 	}
 	Packet->use.head.ProtocolRevision=BOWLER_VERSION;
 	SetCRC(Packet);
-	println(">>TX CoProc\n");printPacket(Packet);
+	println_I(">>TX CoProc\n");printPacket(Packet,INFO_PRINT);
 	int packetSize = BowlerHeaderSize + Packet->use.head.DataLegnth;
 
 	PushCoProcAsync();//clear out any packets before begining
 	float packStartTime=getMs();
 	if (SendPacketUARTCoProc(Packet->stream,packetSize)){
-		println("Coproc Send took: ");p_fl(getMs()-packStartTime);
+		println_I("Coproc Send took: ");p_fl_I(getMs()-packStartTime);
 
 		packStartTime=getMs();
 		RunEveryData wait={getMs(),DELAY_TIMEOUT};
 		//int dots=0;
 		while (RunEvery(&wait)<=0){
-//			print("\nCurrent time=");p_fl(getMs()/1000);
-//			print("\tCurrent ticks=");p_ul(TickGet());
-//			print("\tCurrent Lower ticks=");p_ul(TickGetLower());
-//			print("\tCurrent Upper ticks=");p_ul(TickGetUpper());
+//			print_I("\nCurrent time=");p_fl_I(getMs()/1000);
+//			print_I("\tCurrent ticks=");p_sl_I(TickGet());
+//			print_I("\tCurrent Lower ticks=");p_sl_I(TickGetLower());
+//			print_I("\tCurrent Upper ticks=");p_sl_I(TickGetUpper());
 
 			if(getPacket(&downstream)){
-				println("Got packet from getPacket");
+				println_I("Got packet from getPacket");
 				if(downstream.use.head.MessageID!=0){
-					println("Packet was async");
-					println("<<ASYNC\n");printPacket(&downstream);
+					println_I("Packet was async");
+					println_I("<<ASYNC\n");printPacket(&downstream,INFO_PRINT);
 					dealWithAsyncPacket(&downstream);
 					//wait.MsTime += 2;
 				}else{
-					println("Not async");
+					println_I("Not async");
 					if(!valadateRPC(downstream.use.head.RPC,Packet->use.head.RPC) ){
-						enableDebug();
-						println("@@#@#@@Valadation failed, junk TX>>");printPacket(Packet);print("\nRX<<\n");printPacket(&downstream);
+						println_I("@@#@#@@Valadation failed, junk TX>>");printPacket(Packet,INFO_PRINT);print_I("\nRX<<\n");printPacket(&downstream,INFO_PRINT);
 						//SendPacketUARTCoProc(Packet->stream,packetSize);
 						SetColor(1,0,0);
 						//wait.MsTime += 2;
 					}else{
 
 						copyPacket(&downstream,Packet);
-						println("<<RX CoProc\n");printPacket(Packet);
+						println_I("<<RX CoProc\n");printPacket(Packet,INFO_PRINT);
 						return 0;//Got a synchronus packet
 					}
 				}
@@ -282,15 +279,13 @@ BYTE sendPacket(BowlerPacket * Packet){
 
 			buttonCheck(4);
 		}
-		enableDebug();
-		printfDEBUG("############Response Timed Out, took: ");printfDEBUG_FL(getMs()-packStartTime);
-		printfDEBUG_NNL(" ms to send:\n");printBowlerPacketDEBUG(Packet);
+		println_I("############Response Timed Out, took: ");p_fl_I(getMs()-packStartTime);
+		print_I(" ms to send:\n");printPacket(Packet,INFO_PRINT);
 		printFiFoState(&store,downstream.stream);
 		PushCoProcAsync();//clear out any packets
 		return 2;
 	}else{
-		enableDebug();
-		printfDEBUG("@@@@@@@@@@@@Transmit Timed Out, took: ");printfDEBUG_FL(getMs()-packStartTime);printfDEBUG_NNL(" ms");
+		println_I("@@@@@@@@@@@@Transmit Timed Out, took: ");p_fl_I(getMs()-packStartTime);print_I(" ms");
 		return 1;
 	}
 }
@@ -398,7 +393,7 @@ BOOL valadateRPC(int response,int sent){
 			return FALSE;
 		}
 	default:
-		println("Method unknown");
+		println_I("Method unknown");
 		return TRUE;
 	}
 }
@@ -408,12 +403,12 @@ BOOL SendPacketUARTCoProc(BYTE * packet,WORD size){
 	FLAG_ASYNC=FLAG_BLOCK;
 	WORD i;
 	RunEveryData wait={getMs(),500};
-	println("SendPacketUARTCoProc ");p_ul(size);print(" Bytes [");
+	println_I("SendPacketUARTCoProc ");p_sl_I(size);print_I(" Bytes [");
 	for (i=0;i<size;i++){
 		do{
-			//print("_");
+			//print_I("_");
 			if(RunEvery(&wait) > 0){
-				//print("X");
+				//print_I("X");
 				FLAG_ASYNC=FLAG_OK;
 				return FALSE;
 			}
@@ -423,9 +418,9 @@ BOOL SendPacketUARTCoProc(BYTE * packet,WORD size){
 			return FALSE;
 		}
 		Delay10us(2);
-		print(" 0x");prHEX8(packet[i]);
+		print_I(" 0x");prHEX8(packet[i],INFO_PRINT);
 	}
-	println("] Sending to co proc Done ");
+	println_I("] Sending to co proc Done ");
 	FLAG_ASYNC=FLAG_OK;
 	return TRUE;
 }
@@ -474,11 +469,11 @@ void __ISR(_UART_2_VECTOR, ipl7) My_U2_ISR(void){
 	}else{
 		if ( INTGetFlag(INT_SOURCE_UART_TX(UART2)) ) {
 			INTClearFlag(INT_SOURCE_UART_TX(UART2));
-			//println("&@&@&&@&@&@ wtf tx");
+			//println_I("&@&@&&@&@&@ wtf tx");
 		}
 		if(INTGetFlag(INT_SOURCE_UART(UART2))){
 			INTClearFlag(INT_SOURCE_UART(UART2));
-			//println("&@&@&&@&@&@ generic uart");
+			//println_I("&@&@&&@&@&@ generic uart");
 		}
 	}
 	//mU2ClearAllIntFlags();

@@ -37,7 +37,7 @@ void InitUART(void){
 	/* rx interrupts enabled, rx and tx enabled, 8-bit data */
 	UCSR1B =( _BV(RXCIE1) | _BV(RXEN1) | _BV(TXEN1));
 	UCSR1A = 0x00;
-	//println("Uart Initialization: ");
+	//println_I("Uart Initialization: ");
 	InitByteFifo(&store,privateRXUART,UART_PASS_BUFF_SIZE);
 }
 void StopUartPassThrough(BYTE pin){

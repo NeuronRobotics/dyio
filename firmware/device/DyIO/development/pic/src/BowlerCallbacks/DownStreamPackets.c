@@ -37,7 +37,6 @@ void LoadDefaultValues(){
 }
 
 void SetCoProcLED(BOOL a, BOOL b, int batt){
-	disableDebug();
 	LoadCorePacket(& packetTemp);
 	POWER(& packetTemp);
 	packetTemp.use.data[0]=a;
@@ -45,18 +44,17 @@ void SetCoProcLED(BOOL a, BOOL b, int batt){
 	packetTemp.use.data[2]=0;
 	packetTemp.use.data[3]=batt;
 	SendPacketToCoProc(& packetTemp);
-	enableDebug();
 }
 
 void DownstreamPowerChange(void){
-	disableDebug();
+
 	LoadCorePacket(& packetTemp);
 	POWER(& packetTemp);
 	packetTemp.use.data[2]=GetRawVoltageCode(0);
 	packetTemp.use.data[3]=GetRawVoltageCode(1);
 	packetTemp.use.head.MessageID=37;
 	SendPacketToCoProc(& packetTemp);
-	enableDebug();
+
 }
 void LoadGACM(BowlerPacket * pack){
 	LoadCorePacket(pack);
@@ -66,19 +64,19 @@ void LoadGACM(BowlerPacket * pack){
 	SetCRC(& packetTemp);
 }
 void GetAllModes(BowlerPacket * pack){
-	printfDEBUG("GetAllModes");
+	println_I("GetAllModes");
 	int total=0;
 	do{
 		total++;
 		if (total>5){
-			printfDEBUG("Failed returning");
+			println_I("Failed returning");
 			return;
 		}
 		LoadGACM(pack);
 		SendPacketToCoProc(pack);
 		buttonCheck(14);
 	}while(pack->use.head.RPC != GetRPCValue("gacm"));
-	//printfDEBUG_NNL("..done");
+	//print_I("..done");
 	//SetColor(0,0,1);
 }
 
@@ -92,18 +90,18 @@ void CheckRev(void){
 		SetColor(0,0,1);
 	}else{
 		SetColor(1,0,0);
-		printfDEBUG("Rev. Check Failed! AVR:");
-		printfDEBUG_UL(packetTemp.use.data[0]);
-		printfDEBUG_NNL(".");
-		printfDEBUG_UL(packetTemp.use.data[1]);
-		printfDEBUG_NNL(".");
-		printfDEBUG_UL(packetTemp.use.data[2]);
-		printfDEBUG_NNL(" PIC:");
-		printfDEBUG_UL(MAJOR_REV);
-		printfDEBUG_NNL(".");
-		printfDEBUG_UL(MINOR_REV);
-		printfDEBUG_NNL(".");
-		printfDEBUG_UL(FIRMWARE_VERSION);
+		println_I("Rev. Check Failed! AVR:");
+		p_sl_I(packetTemp.use.data[0]);
+		print_I(".");
+		p_sl_I(packetTemp.use.data[1]);
+		print_I(".");
+		p_sl_I(packetTemp.use.data[2]);
+		print_I(" PIC:");
+		p_sl_I(MAJOR_REV);
+		print_I(".");
+		p_sl_I(MINOR_REV);
+		print_I(".");
+		p_sl_I(FIRMWARE_VERSION);
 
 	}
 }
@@ -128,9 +126,8 @@ void SetChannelValueCoProc(BYTE PIN,BYTE state){
 	BYTE retry = 0;
 	do{
 		if(retry>0){
-			enableDebug();
-			println("#####################################Set value did not return RDY");
-			printPacket(&packetTemp);
+			println_E("#####################################Set value did not return RDY");
+			printPacket(&packetTemp,ERROR_PRINT);
 		}
 		if(retry>5)
 			return;
@@ -171,7 +168,7 @@ WORD GetADC(BYTE PIN){
 	packetTemp.use.head.DataLegnth=5;
 	SendPacketToCoProc(& packetTemp);
 	if (packetTemp.use.head.RPC==_ERR){
-		println("Failed to get adc");
+		println_I("Failed to get adc");
 		return 1;
 	}
 	v.byte.HB=packetTemp.use.data[1];
@@ -200,11 +197,11 @@ BOOL GetSerialStream(BowlerPacket * packet){
 }
 
 void GetEEPRomData(BYTE start,BYTE stop,BYTE * data){
-	println("Getting eeprom page: ");p_ul(start);print(" to ");p_ul(stop);
+	println_I("Getting eeprom page: ");p_ul_I(start);print_I(" to ");p_ul_I(stop);
 	//WORD_VAL raw;
 	BYTE i=0;
 	if (start>stop){
-		println("###ERROR, index for eeprom read bad!");
+		println_I("###ERROR, index for eeprom read bad!");
 		return;
 	}
 	int total=0;
@@ -232,7 +229,7 @@ void GetEEPRomData(BYTE start,BYTE stop,BYTE * data){
 }
 
 void SetEEPRomData(BYTE start,BYTE stop,BYTE * data){
-	println("Setting eeprom page: ");p_ul(start);print(" to ");p_ul(stop);
+	println_I("Setting eeprom page: ");p_ul_I(start);print_I(" to ");p_ul_I(stop);
 	//WORD_VAL raw;
 	BYTE i=0;
 	if (start>=stop)
@@ -246,7 +243,7 @@ void SetEEPRomData(BYTE start,BYTE stop,BYTE * data){
 		packetTemp.use.data[2+i]=data[i];
 	}
 	packetTemp.use.head.DataLegnth=6+stop-start;
-	printfDEBUG("Sent data to coproc's eeprom");
+	println_I("Sent data to coproc's eeprom");
 	SendPacketToCoProc(& packetTemp);
 }
 

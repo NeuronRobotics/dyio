@@ -126,14 +126,14 @@ BOOL SetChannelValue(BowlerPacket * Packet){
 	BYTE bval;
 	UINT16_UNION wval;
 	BYTE zone=128;
-	//println("Setting Value of mode: ");printMode(mode);print(" on pin:");p_ul(pin);
+	//println_I("Setting Value of mode: ");printMode(mode);print_I(" on pin:");p_sl_I(pin);
 	if (isASetableMode(mode)){
 		bval = Packet->use.data[1];
 		if (Packet->use.head.DataLegnth>6){
 			wval.byte.SB = Packet->use.data[2];
 			wval.byte.LB = Packet->use.data[3];
 		}else{
-			//println("Packet was 6 or less data bytes");
+			//println_I("Packet was 6 or less data bytes");
 			wval.Val=0;
 		}
 		SetChanVal(pin,bval,(float)wval.Val);
@@ -163,7 +163,7 @@ BOOL SetChannelValue(BowlerPacket * Packet){
 
 BOOL SetChanVal(BYTE pin,INT32 bval, float time){
 	BYTE mode = GetChannelMode(pin);
-	//println("Setting channel pos\n\tchan: ");p_ul(pin);print(" \n\tto val: ");p_ul(bval);print("\n\tin time: ");p_fl(time);
+	//println_I("Setting channel pos\n\tchan: ");p_sl_I(pin);print_I(" \n\tto val: ");p_ul_I(bval);print_I("\n\tin time: ");p_fl_I(time);
 	switch (mode){
 	case IS_DI:
 	case IS_DO:

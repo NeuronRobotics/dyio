@@ -38,8 +38,8 @@ BOOL SetChannelMode(BowlerPacket * Packet){
 	}
 
 	if(setMode(pin,mode)){
-		//printfDEBUG("Valid Mode, setting...");
-		//printfDEBUG("Sending Mode Set To Co Proc");
+		//println_I("Valid Mode, setting...");
+		//println_I("Sending Mode Set To Co Proc");
 
 		//ASYNC managed in EEPROM on co proc
 		SendPacketToCoProc(Packet);
@@ -50,7 +50,7 @@ BOOL SetChannelMode(BowlerPacket * Packet){
 			startAdvancedAsyncDefault(pin);
 		return TRUE;
 	}else{
-		printfDEBUG("Mode Invalid!");
+		println_E("Mode Invalid!");
 		return FALSE;
 	}
 
@@ -69,7 +69,7 @@ BOOL SetAllChannelMode(BowlerPacket * Packet){
 
 
 BOOL setMode(BYTE pin,BYTE mode){
-	//printfDEBUG("Setting Mode: ");printMode(mode);printfDEBUG_NNL(" on: ");printfDEBUG_UL(pin);
+	//println_I("Setting Mode: ");printMode(mode);print_I(" on: ");printfDEBUG_UL(pin);
 	BYTE currentMode = GetChannelMode(pin);
 	ClearCounter(pin);
 	StopSPI(currentMode);
@@ -78,17 +78,17 @@ BOOL setMode(BYTE pin,BYTE mode){
 
 	case IS_SERVO:
 		if(((pin < 12) && (isRegulated_0() == 0)) || ((pin >= 12) && (isRegulated_1()== 0))   ){
-			//printfDEBUG_NNL("|Mode is now servo");
+			//print_I("|Mode is now servo");
 			break;
 		}else{
-			//printfDEBUG_NNL(" Servo Mode could not be set, voltage invalid");
+			//print_I(" Servo Mode could not be set, voltage invalid");
 			return FALSE;
 		}
 	case IS_SPI_MOSI:
 	case IS_SPI_MISO:
 	case IS_SPI_SCK:
 		if(DATA.FUNCTION[pin].HAS_SPI != FALSE){
-			//printfDEBUG_NNL("|Mode is now SPI");
+			//print_I("|Mode is now SPI");
 			InitSPI();
 			break;
 		}else{
@@ -99,11 +99,11 @@ BOOL setMode(BYTE pin,BYTE mode){
 	case IS_COUNTER_INPUT_DIR:
 	case IS_COUNTER_INPUT_HOME:
 		if(DATA.FUNCTION[pin].HAS_COUNTER_INPUT != FALSE){
-			//printfDEBUG_NNL("|Mode is now Counter Input");
+			//print_I("|Mode is now Counter Input");
 			StartCounterInput(pin);
 			break;
 		}else{
-			//printfDEBUG_NNL(", Counter Input not availible");
+			//print_I(", Counter Input not availible");
 			return FALSE;
 		}
 		break;
@@ -111,16 +111,16 @@ BOOL setMode(BYTE pin,BYTE mode){
 	case IS_COUNTER_OUTPUT_DIR:
 	case IS_COUNTER_OUTPUT_HOME:
 		if(DATA.FUNCTION[pin].HAS_COUNTER_OUTPUT != FALSE){
-			//printfDEBUG_NNL("|Mode is now Counter Output");
+			//print_I("|Mode is now Counter Output");
 			StartCounterOutput(pin);
 			break;
 		}else{
-			//printfDEBUG_NNL(", Counter Output not availible");
+			//print_I(", Counter Output not availible");
 			return FALSE;
 		}
 		break;
 	case IS_PPM_IN:
-		//println("Setting up PPM...");
+		//println_I("Setting up PPM...");
 		startPPM(pin);
 		break;
 	}

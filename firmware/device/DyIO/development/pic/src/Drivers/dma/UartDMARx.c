@@ -30,7 +30,7 @@ void startUartDma(){
 		return;
 	FLAG_ASYNC=FLAG_BLOCK;
 	running=TRUE;
-	println("startUartDma");
+	println_I("startUartDma");
 
 	dmaReadPointer = 0;
 	startUartCoProc();
@@ -57,7 +57,7 @@ void startUartDma(){
 	DmaChnEnable(chn);
 	EndCritical();
 	FLAG_ASYNC=FLAG_OK;
-	println("DMA now started");
+	println_I("DMA now started");
 }
 
 int dump(int from , int to){
@@ -83,7 +83,7 @@ int pushContents(){
 		to = DmaChnGetDstPnt(chn);
     	DmaChnAbortTxfer(chn);
     	if(DataRdyUART2()){
-    		println("Dumping UART buffer: ");
+    		println_I("Dumping UART buffer: ");
     		int b=0;
 			while(DataRdyUART2()){
 				uartErrorCheck();
@@ -92,7 +92,7 @@ int pushContents(){
 				buttonCheck(56);
 				b++;
 			}
-			p_ul(b);print(" added");
+			p_sl_I(b);print_I(" added");
     	}
       	DmaChnSetTxfer(chn, (void*)&U2RXREG, private, 1, DMA_SIZE, 1);
       	DmaChnEnable(chn);
@@ -100,19 +100,19 @@ int pushContents(){
 	}
 	if(to>from ){
 		if(to<0||to>DMA_SIZE||from<0||from>DMA_SIZE){
-			println("Load size, WTF? from=");p_ul(from);print(" to=");p_ul(to);
+			println_I("Load size, WTF? from=");p_sl_I(from);print_I(" to=");p_sl_I(to);
 		}
 		int back = dump(from,to);
 		FLAG_ASYNC=FLAG_OK;
 		if(reset){
 			dmaReadPointer=0;
-			println("Dma reset");
+			println_I("Dma reset");
 		}
 		return back;
 	}else{
 		if(to != from){
 			dmaReadPointer = DmaChnGetDstPnt(chn);
-			println("Load error, WTF? from=");p_ul(from);print(" to=");p_ul(to);
+			println_E("Load error, WTF? from=");p_sl_E(from);print_E(" to=");p_sl_E(to);
 		}
 
 	}
@@ -121,7 +121,7 @@ int pushContents(){
 }
 
 int updateUartDmaRx(){
-	//println("updateUartDmaRx");
+	//println_I("updateUartDmaRx");
 	startUartDma();
 	uartErrorCheck();
 	int numAdded=0;
@@ -143,7 +143,7 @@ void __ISR(_DMA1_VECTOR, IPL5SOFT) DmaHandler1(void)
     { // just a sanity check. we enabled just the DMA_EV_BLOCK_DONE transfer done interrupt
 		//FLAG_ASYNC=FLAG_BLOCK;
     	updateUartDmaRx();
-    	println("##Maxed out DMA buffer, resetting" );
+    	println_I("##Maxed out DMA buffer, resetting" );
     	//FLAG_ASYNC=FLAG_OK;
     }
 }

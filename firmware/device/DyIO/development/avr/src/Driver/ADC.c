@@ -81,7 +81,7 @@ void ClearADC(BYTE pin){
 		DIDR0bits._ADC7D=0;
 		break;
 	}
-	////printfDEBUG("Clearing ADC on pin:");
+	////println_I("Clearing ADC on pin:");
 	////printfDEBUG_UL(pin);
 }
 UINT16 GetADC(BYTE pin){
@@ -90,12 +90,12 @@ UINT16 GetADC(BYTE pin){
 	//UINT16_UNION adc;
 	pin -=8;
 	if (pin > 7){
-		////printfDEBUG("Bad ADC pin:");
+		////println_I("Bad ADC pin:");
 		////printfDEBUG_UL(pin);
 		return 0;
 	}
 
-	////printfDEBUG("Getting ADC on pin:");
+	////println_I("Getting ADC on pin:");
 	////printfDEBUG_UL(pin);
 
 	ADMUXbits._MUX = pin;
@@ -104,7 +104,7 @@ UINT16 GetADC(BYTE pin){
 	//adc.byte.LB =ADCL;
 	//adc.byte.SB =ADCH;
 
-	////printfDEBUG("ADC value is:");
+	////println_I("ADC value is:");
 	////printfDEBUG_UL(adc.Val);
 
 	return ADC;

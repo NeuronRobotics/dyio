@@ -23,7 +23,7 @@ BOOL GetChannelValue(BowlerPacket * Packet){
 		case IS_SPI_MISO:
 		case IS_SPI_SCK:
 		//case IS_SPI_SS:
-			//println("SPI ");
+			//println_I("SPI ");
 			//printMode(mode);
 			SendPacketToSPI(Packet);
 			Packet->use.head.Method=BOWLER_POST;
@@ -31,7 +31,7 @@ BOOL GetChannelValue(BowlerPacket * Packet){
 		case IS_COUNTER_INPUT_INT:
 		case IS_COUNTER_INPUT_DIR:
 		case IS_COUNTER_INPUT_HOME:
-			//println("Counter input ");
+			//println_I("Counter input ");
 			//printMode(mode);
 			set32bit(Packet,GetCounterByChannel(pin));
 			Packet->use.head.DataLegnth=9;
@@ -40,7 +40,7 @@ BOOL GetChannelValue(BowlerPacket * Packet){
 		case IS_COUNTER_OUTPUT_INT:
 		case IS_COUNTER_OUTPUT_DIR:
 		case IS_COUNTER_OUTPUT_HOME:
-			//println("Counter output ");
+			//println_I("Counter output ");
 			//printMode(mode);
 			set32bit(Packet,GetCounterOutput(pin));
 			Packet->use.head.DataLegnth=9;
@@ -50,7 +50,7 @@ BOOL GetChannelValue(BowlerPacket * Packet){
 			GetPPMDataToPacket(Packet);
 			return TRUE;
 		default:
-			//println("Get Mode not managed by PIC, sending to co-proc ");printMode(mode);
+			//println_I("Get Mode not managed by PIC, sending to co-proc ");printMode(mode);
 			SendPacketToCoProc(Packet);
 			return TRUE;
 		}
@@ -68,7 +68,7 @@ BOOL isASetableMode(BYTE mode){
 	return FALSE;
 }
 BOOL SetAllChannelValue(BowlerPacket * Packet){
-	//println("Setting all channel values");
+	//println_I("Setting all channel values");
 	UINT32_UNION time;
 	UINT32_UNION data;
 	BYTE i;
@@ -93,12 +93,12 @@ BOOL SetChannelValue(BowlerPacket * Packet){
 	BYTE mode = GetChannelMode(pin);
 	//BYTE bval;
 	//INT32_UNION lval;
-	//printfDEBUG("Attempting to set Channel...");
+	//println_I("Attempting to set Channel...");
 	switch(mode){
 	case IS_SPI_MOSI:
 	case IS_SPI_MISO:
 	case IS_SPI_SCK:
-		//println("SPI ");
+		//println_I("SPI ");
 		//printMode(mode);
 		SendPacketToSPI(Packet);
 		Packet->use.head.Method = BOWLER_POST;
@@ -119,7 +119,7 @@ BOOL SetChannelValue(BowlerPacket * Packet){
 		ConfigPPM(Packet);
 		return TRUE;
 	default:
-		//println("Set Mode not managed by PIC, sending to co-proc ");
+		//println_I("Set Mode not managed by PIC, sending to co-proc ");
 		//printMode(mode);
 		SendPacketToCoProc(Packet);
 		return (Packet->use.head.RPC != _ERR);
@@ -131,14 +131,14 @@ BOOL SetChanVal(BYTE pin,INT32 bval, float time){
 	case IS_COUNTER_INPUT_INT:
 	case IS_COUNTER_INPUT_DIR:
 	case IS_COUNTER_INPUT_HOME:
-		//println("Counter input ");
+		//println_I("Counter input ");
 		//printMode(mode);
 		SetCounterInput(pin,bval);
 		return TRUE;
 	case IS_COUNTER_OUTPUT_INT:
 	case IS_COUNTER_OUTPUT_DIR:
 	case IS_COUNTER_OUTPUT_HOME:
-		//println("Counter output ");
+		//println_I("Counter output ");
 		//printMode(mode);
 		SetCounterOutput(pin,bval,time);
 		return TRUE;

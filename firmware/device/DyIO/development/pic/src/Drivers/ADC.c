@@ -77,7 +77,7 @@ void InitADC(void){
 			calc(&adc[i]);
 		}
 	}
-	println("Initialized the ADC");
+	println_I("Initialized the ADC");
 }
 float lastHighTime=0;
 float lastLowTime=0;
@@ -169,11 +169,11 @@ float getVolt(BYTE chan){
 	AD1CHS =0;
 	WORD tmp = ADC1BUF0;
 	float back = ((float)tmp)*0.017283951;
-	//println("Voltage on chan:");
-	//p_ul(chan);
-	//print(" is ");
-	//p_ul(tmp);
-	//print(" is scaled to ");
-	//p_fl(back);
+//	println_I("Voltage on chan:");
+//	p_sl_I(chan);
+//	print_I(" is ");
+//	p_sl_I(tmp);
+//	print_I(" is scaled to ");
+//	p_fl_I(back);
 	return back;
 }

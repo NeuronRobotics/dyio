@@ -28,7 +28,7 @@ static BYTE_FIFO_STORAGE storeTX;
  * Initialize the SPI port to work as an SPI channel
  */
 void SPISlaveInit(){
-	//println("\t\tStarting the SPI slave mode");
+	//println_I("\t\tStarting the SPI slave mode");
 	DDRBbits._P4=INPUT;//Set the SS to an input
 	SPIDDRbits._MOSI=INPUT;// Master out
 	SPIDDRbits._SCK=INPUT; // Clock
@@ -64,7 +64,7 @@ void SPISlaveServer(){
 		SPISlaveTx(&Packet);
 		gotPacket=FALSE;
 	}
-	//println("Slave Server");
+	//println_I("Slave Server");
 }
 
 void SPISlaveTx(BowlerPacket * Packet){

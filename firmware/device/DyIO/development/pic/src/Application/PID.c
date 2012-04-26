@@ -46,7 +46,7 @@ void initPIDChans(BYTE group){
 		StartCounterInput(dyPid[group].inputChannel);
 	}
 
-	println("Setting Modes for PID");
+	println_I("Setting Modes for PID");
 	SetCoProcMode(dyPid[group].inputChannel,dyPid[group].inputMode|0x80);
 	SetCoProcMode(dyPid[group].outputChannel,dyPid[group].outputMode);
 	SyncModes();
@@ -91,7 +91,7 @@ void InitPID(void){
 		force[i].setPoint=200;
 		if(pidGroups[i].Enabled){
 			initPIDChans(i);
-			println("Resetting PID channel from init");
+			println_I("Resetting PID channel from init");
 			ZeroPID(i);
 		}
 
@@ -200,7 +200,7 @@ float getPositionMine(int group){
 		return 0;
 
 	LONG pos = 0;
-	//print("\nGetting PID value from group: ");p_ul(chan->channel);print(" of mode: ");printMode(chan->inputMode);print(" From channel: ");p_ul(chan->inputChannel);print("\n");
+	//print_I("\nGetting PID value from group: ");p_sl_I(chan->channel);print_I(" of mode: ");printMode(chan->inputMode);print_I(" From channel: ");p_ul_I(chan->inputChannel);print_I("\n");
 	switch(dyPid[group].inputMode){
 	case IS_COUNTER_INPUT_INT:
 	case IS_COUNTER_INPUT_DIR:
@@ -239,7 +239,7 @@ void setOutputMine(int group, float v){
 		//if(!(RunEvery(&force[chan->channel])>0))
 			return;
 	}else{
-		//print(" Setting PID output, was ");p_sl(dyPid[group].outVal);print(" is now: ");p_sl(set);print(" on DyIO chan: ");p_sl(dyPid[group].outputChannel);print(", ");
+		//print_I(" Setting PID output, was ");p_sl_I(dyPid[group].outVal);print_I(" is now: ");p_sl(set);print_I(" on DyIO chan: ");p_sl(dyPid[group].outputChannel);print_I(", ");
 	}
 	dyPid[group].outVal=set;
 	SetChannelValueCoProc(dyPid[group].outputChannel,dyPid[group].outVal);

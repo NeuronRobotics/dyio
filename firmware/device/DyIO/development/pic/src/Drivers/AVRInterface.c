@@ -38,7 +38,7 @@ void writeHighFuse()
 }
 
 void PowerCycleAVR(){
-	println("Power cycling the AVR");
+	println_I("Power cycling the AVR");
 	HoldAVRReset();
 //	getCommand(progmode);
 //	writeLowFuse();
@@ -48,7 +48,7 @@ void PowerCycleAVR(){
 }
 void HoldAVRReset(void){
 	AVR_RST_IO=0;
-	println("Holding AVR in reset");
+	println_I("Holding AVR in reset");
 	DelayMs(10);
 }
 
@@ -56,7 +56,7 @@ void ReleaseAVRReset(void){
 	AVR_RST_IO=1;
 	UpdateAVRLED();
 	DelayMs(30);
-	println("Release AVR in reset");
+	println_I("Release AVR in reset");
 }
 
 BOOL writeAVRTempFlashPageLowByte(BYTE data, BYTE address){

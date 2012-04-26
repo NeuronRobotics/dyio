@@ -15,13 +15,13 @@ BYTE loadEEDone=FALSE;
 void LoadEEstore(void){
 	if(loadEEDone)
 		return;
-	println("Loading eeprom data");
+	println_I("Loading eeprom data");
 	loadEEDone=TRUE;
 	int i;
 	for (i=0;i<NUM_PID_GROUPS;i++){
 		GetEEPRomData((pidValSize*i),(pidValSize*i)+pidValSize,pidEEPRomVal[i].stream);
 	}
-	println("Done loading eeprom data");
+	println_I("Done loading eeprom data");
 }
 void LoadPIDvals(AbsPID * pid, DYIO_PID * dy){
 	LoadEEstore();
@@ -32,7 +32,7 @@ void LoadPIDvals(AbsPID * pid, DYIO_PID * dy){
 		return;
 	if(pidEEPRomVal[i].outputMode==pidEEPRomVal[i].inputMode)
 		return;
-	println("Using values for chan: ");p_ul(i);
+	println_I("Using values for chan: ");p_ul_I(i);
 	//pidChan->Enabled=pidEEPRomVal[i].Enabled;
 	pid->Polarity=pidEEPRomVal[i].Polarity;
 	//pidChans->Async=pidEEPRomVal[i].Async;
