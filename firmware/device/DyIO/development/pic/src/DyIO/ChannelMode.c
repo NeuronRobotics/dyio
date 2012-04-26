@@ -69,7 +69,7 @@ BOOL SetAllChannelMode(BowlerPacket * Packet){
 
 
 BOOL setMode(BYTE pin,BYTE mode){
-	//println_I("Setting Mode: ");printMode(mode);print_I(" on: ");printfDEBUG_UL(pin);
+	println_I("Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_ul_I(pin);
 	BYTE currentMode = GetChannelMode(pin);
 	ClearCounter(pin);
 	StopSPI(currentMode);
@@ -78,17 +78,17 @@ BOOL setMode(BYTE pin,BYTE mode){
 
 	case IS_SERVO:
 		if(((pin < 12) && (isRegulated_0() == 0)) || ((pin >= 12) && (isRegulated_1()== 0))   ){
-			//print_I("|Mode is now servo");
+			print_I("|Mode is now servo");
 			break;
 		}else{
-			//print_I(" Servo Mode could not be set, voltage invalid");
+			print_I(" Servo Mode could not be set, voltage invalid");
 			return FALSE;
 		}
 	case IS_SPI_MOSI:
 	case IS_SPI_MISO:
 	case IS_SPI_SCK:
 		if(DATA.FUNCTION[pin].HAS_SPI != FALSE){
-			//print_I("|Mode is now SPI");
+			print_I("|Mode is now SPI");
 			InitSPI();
 			break;
 		}else{
@@ -99,11 +99,11 @@ BOOL setMode(BYTE pin,BYTE mode){
 	case IS_COUNTER_INPUT_DIR:
 	case IS_COUNTER_INPUT_HOME:
 		if(DATA.FUNCTION[pin].HAS_COUNTER_INPUT != FALSE){
-			//print_I("|Mode is now Counter Input");
+			print_I("|Mode is now Counter Input");
 			StartCounterInput(pin);
 			break;
 		}else{
-			//print_I(", Counter Input not availible");
+			print_I(", Counter Input not availible");
 			return FALSE;
 		}
 		break;
@@ -111,16 +111,16 @@ BOOL setMode(BYTE pin,BYTE mode){
 	case IS_COUNTER_OUTPUT_DIR:
 	case IS_COUNTER_OUTPUT_HOME:
 		if(DATA.FUNCTION[pin].HAS_COUNTER_OUTPUT != FALSE){
-			//print_I("|Mode is now Counter Output");
+			print_I("|Mode is now Counter Output");
 			StartCounterOutput(pin);
 			break;
 		}else{
-			//print_I(", Counter Output not availible");
+			print_I(", Counter Output not availible");
 			return FALSE;
 		}
 		break;
 	case IS_PPM_IN:
-		//println_I("Setting up PPM...");
+		println_I("Setting up PPM...");
 		startPPM(pin);
 		break;
 	}

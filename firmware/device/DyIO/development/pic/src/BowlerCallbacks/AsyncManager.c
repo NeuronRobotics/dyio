@@ -179,7 +179,7 @@ int GetAnalogValFromAsync(BYTE pin){
 		return asyncData[pin].currentVal;
 	}
 	println_I("Pin not in analog mode: ");
-	printMode(GetChannelMode(pin));
+	printMode(GetChannelMode(pin),INFO_PRINT);
 	return 0;
 }
 
@@ -313,7 +313,7 @@ BOOL pushAsyncReady( BYTE pin){
 			}
 			break;
 		default:
-			print_I("\nNo type defined!! chan: ");p_sl_I(pin);print_I(" mode: ");printMode(GetChannelMode(pin));print_I(" type: ");printAsyncType(asyncData[pin].type);
+			print_I("\nNo type defined!! chan: ");p_sl_I(pin);print_I(" mode: ");printMode(GetChannelMode(pin),INFO_PRINT);print_I(" type: ");printAsyncType(asyncData[pin].type);
 			startAdvancedAsyncDefault(pin);
 		}
 	}else{

@@ -8,6 +8,6 @@
 #ifndef DEBUG_DYIO_H_
 #define DEBUG_DYIO_H_
 #include "DyIO/DyIO_def.h"
-void printMode(BYTE mode);
+void printMode(BYTE mode, Print_Level l);
 
 #endif /* DEBUG_DYIO_H_ */

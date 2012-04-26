@@ -64,8 +64,8 @@ void PushCoProcAsync(void){
 		if(Packet->use.head.MessageID!=0){
 			dealWithAsyncPacket(Packet);
 		}else{
-			println_I("###########Stray sync packet..");
-			printPacket(Packet,INFO_PRINT);
+			println_W("###########Stray sync packet..");
+			printPacket(Packet,WARN_PRINT);
 		}
 	}
 }
@@ -106,7 +106,7 @@ void startUartCoProc(){
 	int actual = UARTSetDataRate(UART2, GetPeripheralClock(), INTERNAL_BAUD );
 	float percent = (((float)INTERNAL_BAUD)/((float) actual))*100.0f;
 	if(actual!=INTERNAL_BAUD){
-		println_I("###Uart baud not what was set!! Actual=");p_sl_I(actual);print_I(" desired=");p_sl_I(INTERNAL_BAUD);print_I(" %");p_fl_I(percent);
+		println_E("###Uart baud not what was set!! Actual=");p_sl_E(actual);print_E(" desired=");p_sl_E(INTERNAL_BAUD);print_E(" %");p_fl_E(percent);
 	}
 	UARTEnable(UART2, UART_ENABLE_FLAGS(
 			UART_PERIPHERAL |
@@ -149,22 +149,22 @@ void initCoProcUART(){
 void uartErrorCheck(){
 	int err = UART2GetErrors();
 	if(err & _U2STA_FERR_MASK){
-		println_I("\n\n\nFraming error");
+		println_E("\n\n\nFraming error");
 		//UART2ClearAllErrors();
 		return;
 	}
 	if(err & _U2STA_OERR_MASK){
-		println_I("\n\n\n\nOverflow error");
+		println_E("\n\n\n\nOverflow error");
 		//UART2ClearAllErrors();
 		return;
 	}
 	if(err & _U2STA_PERR_MASK){
-		println_I("\n\n\n\nPARITY error");
+		println_E("\n\n\n\nPARITY error");
 		//UART2ClearAllErrors();
 		return;
 	}
 	if(err ){
-		println_I("\n\n\n\nUnknown UART error");
+		println_E("\n\n\n\nUnknown UART error");
 		//UART2ClearAllErrors();
 	}
 }
@@ -205,18 +205,18 @@ void SendPacketToCoProc(BowlerPacket * Packet){
 
 
 	if (i==MAX_RETRY){
-		println_I("############Five times failed, co-proc reset: ");printPacket(Packet,INFO_PRINT);
+		println_E("############Five times failed, co-proc reset: ");printPacket(Packet,ERROR_PRINT);
 		SetColor(1,0,0);
 		initCoProcCom();
 		PowerCycleAVR();
 		DelayMs(200);
 		ret = sendPacket(Packet);
 		if(ret == 0){
-			println_I("##SUCCESS! OK after AVR reset");
+			println_W("##SUCCESS! OK after AVR reset");
 			return;
 		}
-		println_I("##Failed sending to co-proc after reset also!!:");
-		p_sl_I(ret);
+		println_E("##Failed sending to co-proc after reset also!!:");
+		p_sl_E(ret);
 		ERR(Packet,0x55,ret);
 		lastWasError = TRUE;
 		//Reset();
@@ -255,16 +255,16 @@ BYTE sendPacket(BowlerPacket * Packet){
 //			print_I("\tCurrent Upper ticks=");p_sl_I(TickGetUpper());
 
 			if(getPacket(&downstream)){
-				println_I("Got packet from getPacket");
+				//println_I("Got packet from getPacket");
 				if(downstream.use.head.MessageID!=0){
-					println_I("Packet was async");
-					println_I("<<ASYNC\n");printPacket(&downstream,INFO_PRINT);
+					println_W("Packet was async");
+					println_W("<<ASYNC\n");printPacket(&downstream,WARN_PRINT);
 					dealWithAsyncPacket(&downstream);
 					//wait.MsTime += 2;
 				}else{
-					println_I("Not async");
+					//println_I("Not async");
 					if(!valadateRPC(downstream.use.head.RPC,Packet->use.head.RPC) ){
-						println_I("@@#@#@@Valadation failed, junk TX>>");printPacket(Packet,INFO_PRINT);print_I("\nRX<<\n");printPacket(&downstream,INFO_PRINT);
+						println_E("@@#@#@@Valadation failed, junk TX>>");printPacket(Packet,ERROR_PRINT);print_E("\nRX<<\n");printPacket(&downstream,ERROR_PRINT);
 						//SendPacketUARTCoProc(Packet->stream,packetSize);
 						SetColor(1,0,0);
 						//wait.MsTime += 2;
@@ -279,13 +279,13 @@ BYTE sendPacket(BowlerPacket * Packet){
 
 			buttonCheck(4);
 		}
-		println_I("############Response Timed Out, took: ");p_fl_I(getMs()-packStartTime);
-		print_I(" ms to send:\n");printPacket(Packet,INFO_PRINT);
+		println_E("############Response Timed Out, took: ");p_fl_E(getMs()-packStartTime);
+		print_E(" ms to send:\n");printPacket(Packet,ERROR_PRINT);
 		printFiFoState(&store,downstream.stream);
 		PushCoProcAsync();//clear out any packets
 		return 2;
 	}else{
-		println_I("@@@@@@@@@@@@Transmit Timed Out, took: ");p_fl_I(getMs()-packStartTime);print_I(" ms");
+		println_E("@@@@@@@@@@@@Transmit Timed Out, took: ");p_fl_E(getMs()-packStartTime);print_E(" ms");
 		return 1;
 	}
 }
@@ -393,7 +393,7 @@ BOOL valadateRPC(int response,int sent){
 			return FALSE;
 		}
 	default:
-		println_I("Method unknown");
+		println_E("Method unknown");
 		return TRUE;
 	}
 }

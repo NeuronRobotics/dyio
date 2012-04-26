@@ -41,7 +41,7 @@ const unsigned char dypidNSName[] = "bcs.pid.dypid.*;0.3;;";
 const unsigned char safeNSName[] = "bcs.safe.*;0.3;;";
 
 void hardwareInit(){
-	setPrintLevelInfoPrint();
+	setPrintLevelWarningPrint();
 	StartCritical();
 	FlashGetMac(MyMAC.v);
 	char macStr[13];
@@ -128,7 +128,7 @@ void UserInit(void){
 	lockServos();
 
 	println_I("###Starting PIC In Debug Mode###\n");// All printfDEBUG functions do not need to be removed from code if debug is disabled
-	setPrintLevelErrorPrint();
+	setPrintLevelWarningPrint();
 }
 
 

@@ -23,16 +23,16 @@ BOOL GetChannelValue(BowlerPacket * Packet){
 		case IS_SPI_MISO:
 		case IS_SPI_SCK:
 		//case IS_SPI_SS:
-			//println_I("SPI ");
-			//printMode(mode);
+			println_I("SPI ");
+			printMode(mode,INFO_PRINT);
 			SendPacketToSPI(Packet);
 			Packet->use.head.Method=BOWLER_POST;
 			ret = TRUE;
 		case IS_COUNTER_INPUT_INT:
 		case IS_COUNTER_INPUT_DIR:
 		case IS_COUNTER_INPUT_HOME:
-			//println_I("Counter input ");
-			//printMode(mode);
+			println_I("Counter input ");
+			printMode(mode,INFO_PRINT);
 			set32bit(Packet,GetCounterByChannel(pin));
 			Packet->use.head.DataLegnth=9;
 			Packet->use.head.Method=BOWLER_POST;
@@ -40,8 +40,8 @@ BOOL GetChannelValue(BowlerPacket * Packet){
 		case IS_COUNTER_OUTPUT_INT:
 		case IS_COUNTER_OUTPUT_DIR:
 		case IS_COUNTER_OUTPUT_HOME:
-			//println_I("Counter output ");
-			//printMode(mode);
+			println_I("Counter output ");
+			printMode(mode,INFO_PRINT);
 			set32bit(Packet,GetCounterOutput(pin));
 			Packet->use.head.DataLegnth=9;
 			Packet->use.head.Method=BOWLER_POST;
@@ -50,7 +50,7 @@ BOOL GetChannelValue(BowlerPacket * Packet){
 			GetPPMDataToPacket(Packet);
 			return TRUE;
 		default:
-			//println_I("Get Mode not managed by PIC, sending to co-proc ");printMode(mode);
+			println_I("Get Mode not managed by PIC, sending to co-proc ");printMode(mode,INFO_PRINT);
 			SendPacketToCoProc(Packet);
 			return TRUE;
 		}
@@ -99,7 +99,7 @@ BOOL SetChannelValue(BowlerPacket * Packet){
 	case IS_SPI_MISO:
 	case IS_SPI_SCK:
 		//println_I("SPI ");
-		//printMode(mode);
+		//printMode(mode,INFO_PRINT);
 		SendPacketToSPI(Packet);
 		Packet->use.head.Method = BOWLER_POST;
 		return TRUE;
@@ -119,8 +119,8 @@ BOOL SetChannelValue(BowlerPacket * Packet){
 		ConfigPPM(Packet);
 		return TRUE;
 	default:
-		//println_I("Set Mode not managed by PIC, sending to co-proc ");
-		//printMode(mode);
+		println_I("Set Mode not managed by PIC, sending to co-proc ");
+		printMode(mode,INFO_PRINT);
 		SendPacketToCoProc(Packet);
 		return (Packet->use.head.RPC != _ERR);
 	}
@@ -131,15 +131,15 @@ BOOL SetChanVal(BYTE pin,INT32 bval, float time){
 	case IS_COUNTER_INPUT_INT:
 	case IS_COUNTER_INPUT_DIR:
 	case IS_COUNTER_INPUT_HOME:
-		//println_I("Counter input ");
-		//printMode(mode);
+		println_I("Counter input ");
+		printMode(mode,INFO_PRINT);
 		SetCounterInput(pin,bval);
 		return TRUE;
 	case IS_COUNTER_OUTPUT_INT:
 	case IS_COUNTER_OUTPUT_DIR:
 	case IS_COUNTER_OUTPUT_HOME:
-		//println_I("Counter output ");
-		//printMode(mode);
+		println_I("Counter output ");
+		printMode(mode,INFO_PRINT);
 		SetCounterOutput(pin,bval,time);
 		return TRUE;
 	}
