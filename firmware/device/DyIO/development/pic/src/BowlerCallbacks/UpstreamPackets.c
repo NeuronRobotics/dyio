@@ -11,24 +11,16 @@
 static BowlerPacket packetTemp;
 extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 
-void PushAllAsync(int * state){
+void PushAllAsync(){
 	SetColor(0,1,0);
-	INT32_UNION s;
-	LoadCorePacket(& packetTemp);
-	packetTemp.use.head.Method=BOWLER_POST;
-	packetTemp.use.head.RPC=GetRPCValue("gacv");
-	packetTemp.use.head.DataLegnth=(NUM_PINS*4)+4;
-	packetTemp.use.head.MessageID=37;
-	int i;
-	for(i=0;i<NUM_PINS;i++){
-		s.Val= state[i];
-		packetTemp.use.data[(i*4)+0]=s.byte.FB;
-		packetTemp.use.data[(i*4)+1]=s.byte.TB;
-		packetTemp.use.data[(i*4)+2]=s.byte.SB;
-		packetTemp.use.data[(i*4)+3]=s.byte.LB;
-	}
-	//println_I("Sending: ");printPacket(&packetTemp);
+
+	populateGACV(&packetTemp);
+
+	Print_Level l = getPrintLevel();
+	setPrintLevelInfoPrint();
 	PutBowlerPacket(& packetTemp);
+	println_I("Sending All Async: ");printPacket(&packetTemp,INFO_PRINT);
+	setPrintLevel(l);
 }
 void PushCounterChange(BYTE pin,LONG state){
 	SetColor(0,1,0);

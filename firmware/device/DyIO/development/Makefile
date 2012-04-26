@@ -9,17 +9,17 @@ upload:svnupdate update all commit
 	echo upload ok
 dyioUpdate:update
 	#used for cloning from the DyIO sources for a fork
-	if (test -d ../DyIO/); then 	rsync -raupE --exclude=.svn* --exclude=.project --exclude=.cproject --exclude=Makefile ../DyIO/* 				./; fi	
+	if (test -d ../DyIO/); then 	rsync -avz --exclude=.svn* --exclude=.project --exclude=.cproject --exclude=Makefile ../DyIO/* 				./; fi	
 update:
 	echo Updating...
 	if (test -d ../NR-Clib/);					then cd ../NR-Clib/;svn update;					fi
 	if (test -d ../NR-Clib/);					then cd ../NR-Clib/src;make pic32MX440F128H;		fi
 	if (test -d ../NR-Clib/);					then cd ../NR-Clib/src;make AVR644p;				fi
 	if (test -d ../NR-Clib/);					then cd ../NR-Clib/src;make AVR324p;				fi
-	if (test -d ../NR-Clib/include/); 		then rsync -raupE --exclude=.svn*					../NR-Clib/include/* 							NR-Clib/include;			fi
-	if (test -d ../NR-Clib/lib/AVR); 			then rsync -raupE --exclude=.svn* --exclude=*.r*   	../NR-Clib/lib/AVR/* 							NR-Clib/lib/AVR/;				fi
-	if (test -d ../NR-Clib/lib/); 			then rsync -raupE --exclude=.svn* --exclude=*.r*   	../NR-Clib/lib/PIC32/32MX440F128H/*			NR-Clib/lib/PIC32/32MX440F128H/;				fi
-	if (test -d ../NR-Clib/toolchain/); 		then rsync -raupE --exclude=.svn*  					../NR-Clib/toolchain/* 						NR-Clib/toolchain;		fi
+	if (test -d ../NR-Clib/include/); 		then rsync -avz --exclude=.svn*					../NR-Clib/include/* 							NR-Clib/include;			fi
+	if (test -d ../NR-Clib/lib/AVR); 			then rsync -avz --exclude=.svn* --exclude=*.r*   	../NR-Clib/lib/AVR/* 							NR-Clib/lib/AVR/;				fi
+	if (test -d ../NR-Clib/lib/); 			then rsync -avz --exclude=.svn* --exclude=*.r*   	../NR-Clib/lib/PIC32/32MX440F128H/*			NR-Clib/lib/PIC32/32MX440F128H/;				fi
+	if (test -d ../NR-Clib/toolchain/); 		then rsync -avz --exclude=.svn*  					../NR-Clib/toolchain/* 						NR-Clib/toolchain;		fi
 	echo Done Updating...
 svnupdate:
 	svn update

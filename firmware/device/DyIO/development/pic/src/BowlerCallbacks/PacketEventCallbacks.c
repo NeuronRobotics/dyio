@@ -43,6 +43,9 @@ BYTE UserGetRPCs(BowlerPacket *Packet){
 			ERR(Packet,zone,0);
 		}
 		break;
+	case GACV:
+		populateGACV(Packet);
+		break;
 	case _PWR:
 		POWER(Packet);
 		break;

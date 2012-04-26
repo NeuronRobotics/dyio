@@ -39,7 +39,7 @@ BOOL getPacket(BowlerPacket * packet){
 	int numAdded = updateUartDmaRx();
 	if(numAdded>0){
 		println_I("getPacket DMA added ");p_sl_I(numAdded);
-		printFiFoState(&store,downstream.stream);
+		printFiFoState_I(&store,downstream.stream);
 	}
 #endif
 	BOOL b = _getBowlerPacket(packet,& store,TRUE);
@@ -257,8 +257,8 @@ BYTE sendPacket(BowlerPacket * Packet){
 			if(getPacket(&downstream)){
 				//println_I("Got packet from getPacket");
 				if(downstream.use.head.MessageID!=0){
-					println_W("Packet was async");
-					println_W("<<ASYNC\n");printPacket(&downstream,WARN_PRINT);
+					println_I("Packet was async");
+					println_I("<<ASYNC\n");printPacket(&downstream,INFO_PRINT);
 					dealWithAsyncPacket(&downstream);
 					//wait.MsTime += 2;
 				}else{
@@ -281,7 +281,7 @@ BYTE sendPacket(BowlerPacket * Packet){
 		}
 		println_E("############Response Timed Out, took: ");p_fl_E(getMs()-packStartTime);
 		print_E(" ms to send:\n");printPacket(Packet,ERROR_PRINT);
-		printFiFoState(&store,downstream.stream);
+		printFiFoState_E(&store,downstream.stream);
 		PushCoProcAsync();//clear out any packets
 		return 2;
 	}else{

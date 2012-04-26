@@ -13,7 +13,7 @@ void pushError(BYTE zone,BYTE trace);
 
 BYTE GetChannelValueCoProc(BYTE PIN);
 
-void PushAllAsync(int * state);
+void PushAllAsync();
 void PushADCChange(BYTE pin,WORD state);
 void PushDIOChange(BYTE pin,BYTE state);
 void PushCounterChange(BYTE pin,LONG state);

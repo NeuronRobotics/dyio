@@ -64,7 +64,7 @@
 #define SCHV				0x76686373// Set channel value
 #define SACV				0x76636173// Set all channel values
 #define GCHV				0x76686367// Get channel value
-//#define GACV				0x76636167// Get all channel values
+#define GACV				0x76636167// Get all channel values
 #define CCHN				0x6E686363// Configure channel
 #define ASYN				0x6e797361 // 'asyn'  Set/Get asynchronous mode
 

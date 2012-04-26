@@ -34,7 +34,11 @@ UINT32 FifoGetByteCount(BYTE_FIFO_STORAGE * fifo);
 
 UINT32 FifoAddByte(BYTE_FIFO_STORAGE * fifo,BYTE b, BYTE * errorCode);
 
-void printFiFoState(BYTE_FIFO_STORAGE * fifo, BYTE * buffer);
+void printFiFoState(BYTE_FIFO_STORAGE * fifo, BYTE * buffer,Print_Level l);
+
+#define printFiFoState_E(A,B) printFiFoState(A, B,ERROR_PRINT)
+#define printFiFoState_W(A,B) printFiFoState(A, B,WARN_PRINT)
+#define printFiFoState_I(A,B) printFiFoState(A, B,INFO_PRINT)
 
 UINT32 FifoGetByteStream(BYTE_FIFO_STORAGE * fifo,BYTE *packet,UINT32 size);
 
