@@ -239,9 +239,10 @@ void setOutputMine(int group, float v){
 		//if(!(RunEvery(&force[chan->channel])>0))
 			return;
 	}else{
-		//print_I(" Setting PID output, was ");p_sl_I(dyPid[group].outVal);print_I(" is now: ");p_sl(set);print_I(" on DyIO chan: ");p_sl(dyPid[group].outputChannel);print_I(", ");
+		print_I(" Setting PID output, was ");p_sl_I(dyPid[group].outVal);print_I(" is now: ");p_sl_I(set);print_I(" on DyIO chan: ");p_sl_I(dyPid[group].outputChannel);print_I(", ");
 	}
 	dyPid[group].outVal=set;
+	println_I("PID setting output");
 	SetChannelValueCoProc(dyPid[group].outputChannel,dyPid[group].outVal);
 }
 

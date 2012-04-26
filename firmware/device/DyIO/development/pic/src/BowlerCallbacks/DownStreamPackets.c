@@ -126,7 +126,7 @@ void SetChannelValueCoProc(BYTE PIN,BYTE state){
 	BYTE retry = 0;
 	do{
 		if(retry>0){
-			println_E("#####################################Set value did not return RDY");
+			println_E("#*#*Set value did not return RDY");
 			printPacket(&packetTemp,ERROR_PRINT);
 		}
 		if(retry>5)
