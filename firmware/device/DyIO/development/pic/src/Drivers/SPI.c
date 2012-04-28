@@ -60,6 +60,8 @@ void SendPacketToSPI(BowlerPacket * Packet){
 		println_I("invalid SS pin");
 		return;
 	}
+	Print_Level l = getPrintLevel();
+	setPrintLevelInfoPrint();
 	println_I("Setting up SPI perpheral SS pin");
 	if(!SetCoProcMode(ss,IS_DO))
 		SetChannelValueCoProc(ss,1);
@@ -69,4 +71,5 @@ void SendPacketToSPI(BowlerPacket * Packet){
 		Packet->use.data[i+2]=GetByteSPI(Packet->use.data[i+2]);
 	}
 	SetChannelValueCoProc(ss,1);
+	setPrintLevel(l);
 }

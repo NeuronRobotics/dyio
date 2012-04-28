@@ -126,11 +126,10 @@ void SetChannelValueCoProc(BYTE PIN,BYTE state){
 	BYTE retry = 0;
 	do{
 		if(retry>0){
-			println_E("#*#*Set value did not return RDY");
+			println_E("#*#*SetChannelValueCoProc did not return RDY pin: ");p_sl_E(PIN);print_E(" mode: ");printMode(GetChannelMode(PIN),ERROR_PRINT);
 			printPacket(&packetTemp,ERROR_PRINT);
-		}
-		if(retry>5)
 			return;
+		}
 		LoadCorePacket(& packetTemp);
 		packetTemp.use.head.Method=BOWLER_POST;
 		packetTemp.use.head.RPC=GetRPCValue("schv");

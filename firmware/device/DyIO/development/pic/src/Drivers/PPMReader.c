@@ -58,8 +58,11 @@ void RunPPMCheck(void){
 			if(ppmLink[i] != INVALID_PPM_LINK){
 				if(ppmLastSent[i] != ppmData[i]){
 					ppmLastSent[i] = ppmData[i];
-					//unlockServos();
+					Print_Level l = getPrintLevel();
+					setPrintLevelInfoPrint();
+					println_I("PPM setting output");
 					SetChannelValueCoProc(ppmLink[i],ppmData[i]);
+					setPrintLevel(l);
 				}
 			}
 		}
