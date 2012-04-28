@@ -27,7 +27,7 @@ void ProcessAsyncData(BowlerPacket * Packet){
 	//printPacket(Packet);
 
 	Print_Level l = getPrintLevel();
-	//setPrintLevelInfoPrint();
+	setPrintLevelInfoPrint();
 
 	if (Packet->use.head.RPC==GCHV){
 		BYTE pin = Packet->use.data[0];
@@ -64,13 +64,6 @@ void ProcessAsyncData(BowlerPacket * Packet){
 				if(ana.Val>=0 && ana.Val<1024);
 					asyncData[pin].currentVal=ana.Val;
 			}
-
-			println_I("***Setting All analog value: [");
-			int i;
-			for(i=0;i<8;i++){
-				p_sl_I(asyncData[i+8].currentVal);print_I(" ");
-			}
-			print_I("]");
 		}
 	}else if (Packet->use.head.RPC==DASN){
 		int i;
@@ -81,11 +74,17 @@ void ProcessAsyncData(BowlerPacket * Packet){
 			}
 
 		}
-		println_I("***Setting All Digital value: ");
+		//println_I("***Setting All Digital value: ");
 	}else{
 		println_W("***Async packet not UNKNOWN***");
 		printPacket(Packet,WARN_PRINT);
 	}
+	println_I("***Setting All value: [");
+	int i;
+	for(i=0;i<NUM_PINS;i++){
+		p_sl_I(asyncData[i].currentVal);print_I(" ");
+	}
+	print_I("]");
 	setPrintLevel(l);
 }
 
@@ -333,10 +332,12 @@ BOOL pushAsyncReady( BYTE pin){
 	}
 	return FALSE;
 }
-//#define FASTIO
+#define FASTIO
 int currentState [NUM_PINS];
 
 void runAsyncIO(){
+	Print_Level l = getPrintLevel();
+	setPrintLevelInfoPrint();
 	initAdvancedAsync();
 	int i;
 	BOOL update=FALSE;
@@ -348,7 +349,7 @@ void runAsyncIO(){
 			case IS_DI:
 			case IS_COUNTER_INPUT_HOME:
 			case IS_COUNTER_OUTPUT_HOME:
-				//println_I("Pushing digital chan: ");p_sl_I(i);print_I(" value:");p_ul_I(asyncData[i].currentVal);
+				println_I("Pushing digital chan: ");p_sl_I(i);print_I(" value:");p_ul_I(asyncData[i].currentVal);
 				currentState [i] = GetDigitalValFromAsync(i);
 #if defined(FASTIO)
 				update=TRUE;
@@ -357,7 +358,7 @@ void runAsyncIO(){
 #endif
 				break;
 			case IS_ANALOG_IN:
-				//println_I("Pushing analog chan: ");p_sl_I(i);print_I(" value:");p_ul_I(asyncData[i].currentVal);
+				println_I("Pushing analog chan: ");p_sl_I(i);print_I(" value:");p_ul_I(asyncData[i].currentVal);
 				currentState [i] = GetAnalogValFromAsync(i);
 #if defined(FASTIO)
 				update=TRUE;
@@ -367,7 +368,7 @@ void runAsyncIO(){
 				break;
 			case IS_COUNTER_OUTPUT_INT:
 			case IS_COUNTER_INPUT_INT:
-				//println_I("Pushing counter chan: ");p_sl_I(i);print_I(" value:");p_sl_I(asyncData[i].currentVal);
+				println_I("Pushing counter chan: ");p_sl_I(i);print_I(" value:");p_sl_I(asyncData[i].currentVal);
 				currentState [i] = GetCounterByChannel(i);
 #if defined(FASTIO)
 				update=TRUE;
@@ -379,12 +380,15 @@ void runAsyncIO(){
 			}
 		}
 	}
+
+	setPrintLevel(l);
 #if defined(FASTIO)
 	if(update){
 		//println_I("Pushing async");
 		PushAllAsync();
 	}
 #endif
+
 }
 
 void populateGACV(BowlerPacket * Packet){

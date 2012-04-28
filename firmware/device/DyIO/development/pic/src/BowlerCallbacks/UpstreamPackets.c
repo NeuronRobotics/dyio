@@ -33,7 +33,7 @@ void PushAllAsync(){
 	populateGACV(&packetTemp);
 
 	Print_Level l = getPrintLevel();
-	setPrintLevelInfoPrint();
+	//setPrintLevelInfoPrint();
 	PutBowlerPacket(& packetTemp);
 	println_I("Sending All Async: ");printPacket(&packetTemp,INFO_PRINT);
 	setPrintLevel(l);
