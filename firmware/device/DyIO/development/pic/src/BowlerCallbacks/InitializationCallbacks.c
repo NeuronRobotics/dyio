@@ -126,7 +126,7 @@ void UserInit(void){
 	//println_I("Setting modes:");
 
 	lockServos();
-
+	setPrintLevelInfoPrint();
 	println_I("###Starting PIC In Debug Mode###\n");// All printfDEBUG functions do not need to be removed from code if debug is disabled
 	setPrintLevelWarningPrint();
 	//setPrintLevelErrorPrint();

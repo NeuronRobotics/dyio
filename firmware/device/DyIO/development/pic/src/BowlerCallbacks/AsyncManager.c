@@ -22,6 +22,74 @@ void runAsyncIO();
 static BOOL isInit=FALSE;
 static AdvancedAsyncData asyncData[NUM_PINS];
 
+void ProcessAsyncData(BowlerPacket * Packet){
+	//println_I("**Got Async Packet**");
+	//printPacket(Packet);
+
+	Print_Level l = getPrintLevel();
+	//setPrintLevelInfoPrint();
+
+	if (Packet->use.head.RPC==GCHV){
+		BYTE pin = Packet->use.data[0];
+		BYTE mode = GetChannelMode(pin);
+		if(mode == IS_ANALOG_IN ){
+			UINT16_UNION ana;
+			ana.byte.SB = Packet->use.data[1];
+			ana.byte.LB = Packet->use.data[2];
+			//ADC_val[pin-8]=ana.Val;
+			if(ana.Val>=0 && ana.Val<1024)
+				asyncData[pin].currentVal=ana.Val;
+			println_I("***Setting analog value: ");p_sl_I(pin);print_I(", ");p_ul_I(ana.Val);
+		}
+		else if((mode == IS_DI) || (mode == IS_COUNTER_INPUT_HOME)|| (mode == IS_COUNTER_OUTPUT_HOME)){
+			//DIG_val[pin]=Packet->use.data[1];
+			asyncData[pin].currentVal=Packet->use.data[1];
+			println_I("***Setting digital value: ");p_sl_I(pin);print_I(", ");p_ul_I(Packet->use.data[1]);//printStream(DIG_val,NUM_PINS);
+		}else {
+			if(IsAsync(pin)){
+				println_I("Sending async packet, not digital or analog");
+				PutBowlerPacket(Packet);
+			}
+		}
+	}else if (Packet->use.head.RPC==AASN){
+		int i;
+		for(i=0;i<8;i++){
+			BYTE pin = i+8;
+			BYTE mode = GetChannelMode(pin);
+			if(mode == IS_ANALOG_IN ){
+				UINT16_UNION ana;
+				ana.byte.SB = Packet->use.data[i*2];
+				ana.byte.LB = Packet->use.data[(i*2)+1];
+				//ADC_val[pin-8]=ana.Val
+				if(ana.Val>=0 && ana.Val<1024);
+					asyncData[pin].currentVal=ana.Val;
+			}
+
+			println_I("***Setting All analog value: [");
+			int i;
+			for(i=0;i<8;i++){
+				p_sl_I(asyncData[i+8].currentVal);print_I(" ");
+			}
+			print_I("]");
+		}
+	}else if (Packet->use.head.RPC==DASN){
+		int i;
+		for(i=0;i<NUM_PINS;i++){
+			BYTE mode = GetChannelMode(i);
+			if((mode == IS_DI) || (mode == IS_COUNTER_INPUT_HOME)|| (mode == IS_COUNTER_OUTPUT_HOME)){
+				asyncData[i].currentVal=Packet->use.data[i];
+			}
+
+		}
+		println_I("***Setting All Digital value: ");
+	}else{
+		println_W("***Async packet not UNKNOWN***");
+		printPacket(Packet,WARN_PRINT);
+	}
+	setPrintLevel(l);
+}
+
+
 void printAsyncType(BYTE t){
 	switch(t){
 	case AUTOSAMP:
@@ -196,72 +264,6 @@ void RunAsync(void){
 	runAsyncIO();
 }
 
-void ProcessAsyncData(BowlerPacket * Packet){
-	//println_I("**Got Async Packet**");
-	//printPacket(Packet);
-
-	Print_Level l = getPrintLevel();
-	//setPrintLevelInfoPrint();
-
-	if (Packet->use.head.RPC==GCHV){
-		BYTE pin = Packet->use.data[0];
-		BYTE mode = GetChannelMode(pin);
-		if(mode == IS_ANALOG_IN ){
-			UINT16_UNION ana;
-			ana.byte.SB = Packet->use.data[1];
-			ana.byte.LB = Packet->use.data[2];
-			//ADC_val[pin-8]=ana.Val;
-			if(ana.Val>=0 && ana.Val<1024)
-				asyncData[pin].currentVal=ana.Val;
-			println_I("***Setting analog value: ");p_sl_I(pin);print_I(", ");p_ul_I(ana.Val);
-		}
-		else if((mode == IS_DI) || (mode == IS_COUNTER_INPUT_HOME)|| (mode == IS_COUNTER_OUTPUT_HOME)){
-			//DIG_val[pin]=Packet->use.data[1];
-			asyncData[pin].currentVal=Packet->use.data[1];
-			println_I("***Setting digital value: ");p_sl_I(pin);print_I(", ");p_ul_I(Packet->use.data[1]);//printStream(DIG_val,NUM_PINS);
-		}else {
-			if(IsAsync(pin)){
-				println_I("Sending async packet, not digital or analog");
-				PutBowlerPacket(Packet);
-			}
-		}
-	}else if (Packet->use.head.RPC==AASN){
-		int i;
-		for(i=0;i<8;i++){
-			BYTE pin = i+8;
-			BYTE mode = GetChannelMode(pin);
-			if(mode == IS_ANALOG_IN ){
-				UINT16_UNION ana;
-				ana.byte.SB = Packet->use.data[i*2];
-				ana.byte.LB = Packet->use.data[(i*2)+1];
-				//ADC_val[pin-8]=ana.Val
-				if(ana.Val>=0 && ana.Val<1024);
-					asyncData[pin].currentVal=ana.Val;
-			}
-
-			println_I("***Setting All analog value: [");
-			int i;
-			for(i=0;i<8;i++){
-				p_sl_I(asyncData[i+8].currentVal);print_I(" ");
-			}
-			print_I("]");
-		}
-	}else if (Packet->use.head.RPC==DASN){
-		int i;
-		for(i=0;i<NUM_PINS;i++){
-			BYTE mode = GetChannelMode(i);
-			if((mode == IS_DI) || (mode == IS_COUNTER_INPUT_HOME)|| (mode == IS_COUNTER_OUTPUT_HOME)){
-				asyncData[i].currentVal=Packet->use.data[i];
-			}
-
-		}
-		println_I("***Setting All Digital value: ");
-	}else{
-		println_W("***Async packet not UNKNOWN***");
-		printPacket(Packet,WARN_PRINT);
-	}
-	setPrintLevel(l);
-}
 
 BOOL pushAsyncReady( BYTE pin){
 	initAdvancedAsync();
@@ -332,7 +334,6 @@ BOOL pushAsyncReady( BYTE pin){
 	return FALSE;
 }
 //#define FASTIO
-
 int currentState [NUM_PINS];
 
 void runAsyncIO(){
@@ -351,34 +352,29 @@ void runAsyncIO(){
 				currentState [i] = GetDigitalValFromAsync(i);
 #if defined(FASTIO)
 				update=TRUE;
-				break;
 #else
 				PushDIval(i,GetDigitalValFromAsync(i));
-				break;
 #endif
-
+				break;
 			case IS_ANALOG_IN:
 				//println_I("Pushing analog chan: ");p_sl_I(i);print_I(" value:");p_ul_I(asyncData[i].currentVal);
 				currentState [i] = GetAnalogValFromAsync(i);
 #if defined(FASTIO)
 				update=TRUE;
-				break;
 #else
 				PushADCval(i,GetAnalogValFromAsync(i));
-				break;
 #endif
-
+				break;
 			case IS_COUNTER_OUTPUT_INT:
 			case IS_COUNTER_INPUT_INT:
 				//println_I("Pushing counter chan: ");p_sl_I(i);print_I(" value:");p_sl_I(asyncData[i].currentVal);
 				currentState [i] = GetCounterByChannel(i);
 #if defined(FASTIO)
 				update=TRUE;
-				break;
 #else
 				PushCounterChange(i,GetCounterByChannel(i));
-				break;
 #endif
+				break;
 
 			}
 		}

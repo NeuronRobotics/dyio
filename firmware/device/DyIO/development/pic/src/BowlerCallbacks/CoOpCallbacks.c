@@ -19,6 +19,7 @@ RunEveryData ppm={0,200};
 static BOOL heartBeatLock = TRUE;
 static int heartBeatLockTime = 1;
 
+int numData=0;
 
 void UserRun(void){
 //	StartCritical();
@@ -41,6 +42,10 @@ void UserRun(void){
 	RTS_HO_IO=FLAG_BUSY;
 	if ((RunEvery(&syncVolt)>0)){
 		UpdateAVRLED();
+		pushDummy(numData++);
+		if(numData==(64))
+			numData=0;
+
 	}
 	CheckSwitches();
 

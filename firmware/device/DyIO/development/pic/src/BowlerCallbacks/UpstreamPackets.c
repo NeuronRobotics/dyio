@@ -11,6 +11,18 @@
 static BowlerPacket packetTemp;
 extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 
+void pushDummy(BYTE numData){
+	LoadCorePacket(& packetTemp);
+	packetTemp.use.head.Method=BOWLER_POST;
+	packetTemp.use.head.RPC=GetRPCValue("test");
+	packetTemp.use.head.MessageID=5;
+	packetTemp.use.head.DataLegnth=4+numData;
+	Print_Level l = getPrintLevel();
+	setPrintLevelInfoPrint();
+	PutBowlerPacket(& packetTemp);
+	setPrintLevel(l);
+}
+
 void PushAllAsync(){
 	SetColor(0,1,0);
 
