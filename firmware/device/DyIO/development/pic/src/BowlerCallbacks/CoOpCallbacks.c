@@ -42,10 +42,6 @@ void UserRun(void){
 	RTS_HO_IO=FLAG_BUSY;
 	if ((RunEvery(&syncVolt)>0)){
 		UpdateAVRLED();
-		pushDummy(numData++);
-		if(numData==(64))
-			numData=0;
-
 	}
 	CheckSwitches();
 

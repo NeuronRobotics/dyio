@@ -17,6 +17,10 @@ void pushDummy(BYTE numData){
 	packetTemp.use.head.RPC=GetRPCValue("test");
 	packetTemp.use.head.MessageID=5;
 	packetTemp.use.head.DataLegnth=4+numData;
+	int i;
+	for(i=0;i<numData;i++){
+		packetTemp.use.data[i]=numData;
+	}
 	Print_Level l = getPrintLevel();
 	setPrintLevelInfoPrint();
 	PutBowlerPacket(& packetTemp);
