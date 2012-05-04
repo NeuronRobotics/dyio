@@ -335,6 +335,8 @@ BOOL pushAsyncReady( BYTE pin){
 #define FASTIO
 int currentState [NUM_PINS];
 
+#define ASYN_RDY(i) ((pushAsyncReady(i)==TRUE)&&(IsAsync(i) == TRUE)&& (GetPIDGroup(i) == NOT_USED_IN_PID))
+
 void runAsyncIO(){
 	Print_Level l = getPrintLevel();
 	setPrintLevelInfoPrint();
@@ -342,43 +344,45 @@ void runAsyncIO(){
 	int i;
 	BOOL update=FALSE;
 	for(i=0;i<NUM_PINS;i++){
-		if(		IsAsync(i)==TRUE &&
-				pushAsyncReady(i)==TRUE &&
-				GetPIDGroup(i) == NOT_USED_IN_PID){
 			switch(GetChannelMode(i)){
 			case IS_DI:
 			case IS_COUNTER_INPUT_HOME:
 			case IS_COUNTER_OUTPUT_HOME:
-				println_I("Pushing digital chan: ");p_sl_I(i);print_I(" value:");p_ul_I(asyncData[i].currentVal);
+				//println_I("Pushing digital chan: ");p_sl_I(i);print_I(" value:");p_ul_I(asyncData[i].currentVal);
 				currentState [i] = GetDigitalValFromAsync(i);
+				if(ASYN_RDY(i)){
 #if defined(FASTIO)
-				update=TRUE;
+					update=TRUE;
 #else
-				PushDIval(i,GetDigitalValFromAsync(i));
+					PushDIval(i,GetDigitalValFromAsync(i));
 #endif
+				}
 				break;
 			case IS_ANALOG_IN:
-				println_I("Pushing analog chan: ");p_sl_I(i);print_I(" value:");p_ul_I(asyncData[i].currentVal);
+				//println_I("Pushing analog chan: ");p_sl_I(i);print_I(" value:");p_ul_I(asyncData[i].currentVal);
 				currentState [i] = GetAnalogValFromAsync(i);
+				if(ASYN_RDY(i)){
 #if defined(FASTIO)
-				update=TRUE;
+					update=TRUE;
 #else
-				PushADCval(i,GetAnalogValFromAsync(i));
+					PushADCval(i,GetAnalogValFromAsync(i));
 #endif
+				}
 				break;
 			case IS_COUNTER_OUTPUT_INT:
 			case IS_COUNTER_INPUT_INT:
-				println_I("Pushing counter chan: ");p_sl_I(i);print_I(" value:");p_sl_I(asyncData[i].currentVal);
+				//println_I("Pushing counter chan: ");p_sl_I(i);print_I(" value:");p_sl_I(asyncData[i].currentVal);
 				currentState [i] = GetCounterByChannel(i);
+				if(ASYN_RDY(i)){
 #if defined(FASTIO)
-				update=TRUE;
+					update=TRUE;
 #else
-				PushCounterChange(i,GetCounterByChannel(i));
+					PushCounterChange(i,GetCounterByChannel(i));
 #endif
+				}
 				break;
 
 			}
-		}
 	}
 
 	setPrintLevel(l);

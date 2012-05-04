@@ -154,8 +154,6 @@ BOOL checkDigital(){
 			if (aval!=getDig(i)){
 				ack=TRUE;
 				setDig(i,aval);
-				//PushDIval(i,aval);
-				//return;
 				update= TRUE;
 			}
 
