@@ -10,7 +10,6 @@ STORAGE self;
 extern DATA_STRUCT DATA __attribute__ ((section (".scs_global_var")));
 extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 void InitPins(void){
-	InitPinFunction();
 	int i;
 	println_I("Pin Functions");
 	InitPinFunction();

@@ -21,6 +21,7 @@ void InitPinStates(void){
 	int i;
 	for (i=0;i<NUM_PINS;i++){
 		setMode(i,GetChannelMode(i));
+		GetChannelValueCoProc(i);
 	}
 }
 BYTE GetChannelMode(BYTE chan){

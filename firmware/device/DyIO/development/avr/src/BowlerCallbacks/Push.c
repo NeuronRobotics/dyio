@@ -83,7 +83,7 @@ void PushAllDiVal(){
 	sendHeader(4+24,"dasn");
 	int i=0;
 	for(i=0;i<24;i++){
-		send(getDig(i));
+		send(GetDIO(i));
 	}
 	//FlagBusy_IO=0;
 	//_delay_us(800);
