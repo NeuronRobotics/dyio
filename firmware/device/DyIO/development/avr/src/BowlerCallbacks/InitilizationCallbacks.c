@@ -20,7 +20,7 @@
 const char startmessage[] = "###Starting AVR In Debug Mode\n";
 void UserInit(void){
 
-	setPrintLevelInfoPrint();
+	setPrintLevelNoPrint();
 #if defined(DEBUG)
 	ConfigureUART(115200);
 	if(GetChannelMode(16)!=IS_UART_TX)
