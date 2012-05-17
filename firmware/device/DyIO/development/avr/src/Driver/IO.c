@@ -46,10 +46,10 @@ BYTE GetDIO(BYTE PIN){
 	case 15:
 		return PI15;
 	case 16:
-		if (UCSR1Bbits._TXEN1 == 0)
+		if (getPrintLevel() != NO_PRINT)
 			return PI16;
 	case 17:
-		if (UCSR1Bbits._TXEN1 == 0)
+		if (getPrintLevel() != NO_PRINT)
 			return PI17;
 	case 18:
 		return PI18;
@@ -123,12 +123,18 @@ void SetDIO(BYTE PIN,BYTE state){
 		return;
 
 	case 16:
-		if (UCSR1Bbits._TXEN1 == 0)
+		if (getPrintLevel() != NO_PRINT){
+			UCSR1B=0;
+			SetPinTris(PIN,OUTPUT);
 			PO16 = state;
+		}
 		return;
 	case 17:
-		if (UCSR1Bbits._TXEN1 == 0)
+		if (getPrintLevel() != NO_PRINT){
+			UCSR1B=0;
+			SetPinTris(PIN,OUTPUT);
 			PO17 = state;
+		}
 		return;
 	case 18:
 		PO18 = state;
@@ -205,11 +211,11 @@ void SetPinTris(BYTE PIN,BYTE state){
 		DDR15 = state;
 		return;
 	case 16:
-		if (UCSR1Bbits._TXEN1 == 0)
+		if (getPrintLevel() != NO_PRINT)
 			DDR16 = state;
 		return;
 	case 17:
-		if (UCSR1Bbits._TXEN1 == 0)
+		if (getPrintLevel() != NO_PRINT)
 			DDR17 = state;
 		return;
 	case 18:
