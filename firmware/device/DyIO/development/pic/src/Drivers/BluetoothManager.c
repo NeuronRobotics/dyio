@@ -13,6 +13,9 @@ void sendString(char * data){
 	while(data[i++]!='\0');
 	Pic32UARTPutArray(data,i);
 	DelayMs(1100);
+	BluetoothReset=OFF; // reset
+	DelayMs(100);
+	BluetoothReset=ON; // Pull BT module out of reset
 }
 
 BOOL testAtCommand(int baud){
@@ -51,13 +54,10 @@ BYTE hasBluetooth(){
 			SetColor(1,0,1);
 			DelayMs(500);
 			btOk = FALSE;
-			Pic32UART_HAL_INIT(9600);
+			Pic32UART_HAL_INIT(HIGH_BAUD);
 		}
 
 		btChecked = TRUE;
-		BluetoothReset=OFF; // reset
-		DelayMs(100);
-		BluetoothReset=ON; // Pull BT module out of reset
 	}
 	BluetoothCommand=OFF;//Command mode
 	return btOk;
