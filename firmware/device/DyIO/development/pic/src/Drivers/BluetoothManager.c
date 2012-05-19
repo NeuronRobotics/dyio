@@ -3,27 +3,73 @@
  * This file is for managment of the onboard bluetooth module
  */
 #include "UserApp.h"
+BOOL btOk = FALSE;
+BOOL btChecked = FALSE;
 
-BYTE hasBluetooth(){
-	//TODO check for bluetooth module
-	return TRUE;
+#define HIGH_BAUD 230400
+char packet[20];
+void sendString(char * data){
+	int i=0;
+	while(data[i++]!='\0');
+	Pic32UARTPutArray(data,i);
+	DelayMs(1100);
 }
 
-#define BluetoothResetTRIS		_TRISD1
-#define BluetoothCommandTRIS	_TRISD4
-#define BluetoothLinkTRIS		_TRISD6
+BOOL testAtCommand(int baud){
+	Pic32UART_HAL_INIT(baud);
+	//from http://www.e-gizmo.com/KIT/images/EGBT-04/EGBT-045MS-046S%20Bluetooth%20Module%20Manual%20rev%201r0.pdf
+	//Testing AT command
+	sendString("AT");
+	if( Pic32Get_UART_Byte_Count()>1){
+		Pic32UARTGetArray(packet,Pic32Get_UART_Byte_Count());
+		//if(packet[0]=='O' && packet[1]=='K'){
+			sendString("AT+NAMEDyIO");
+			Pic32UARTGetArray(packet,Pic32Get_UART_Byte_Count());
+			sendString("AT+BAUD9");
+			Pic32UART_HAL_INIT(HIGH_BAUD);
+			Pic32UARTGetArray(packet,Pic32Get_UART_Byte_Count());
+			return TRUE;
+		//}
+	}
+	return FALSE;
+}
 
-#define BluetoothReset			_RD1
-#define BluetoothCommand		_RD4
-#define BluetoothLink			_RD6
+BYTE hasBluetooth(){
+	if(!btChecked){
+		/**
+		 * Start by checking the low baudrate
+		 */
+		//BluetoothCommand=ON;//Command mode
 
+		SetColor(1,1,0);//Set LEd to yellow
+
+		if(testAtCommand(9600)){
+			btOk = TRUE;
+		}else if (testAtCommand(HIGH_BAUD)){
+			btOk = TRUE;
+		}else{
+			SetColor(1,0,1);
+			DelayMs(500);
+			btOk = FALSE;
+			Pic32UART_HAL_INIT(9600);
+		}
+
+		btChecked = TRUE;
+		BluetoothReset=OFF; // reset
+		DelayMs(100);
+		BluetoothReset=ON; // Pull BT module out of reset
+	}
+	BluetoothCommand=OFF;//Command mode
+	return btOk;
+}
 
 
 void initBluetooth(){
-	BluetoothResetTRIS=0; //output mode on reset line
-	BluetoothCommandTRIS=0; //output mode on CMD line
-	BluetoothReset=1; // Pull BT module out of reset
+	BluetoothResetTRIS = OUTPUT; //output mode on reset line
+	BluetoothCommandTRIS = OUTPUT; //output mode on CMD line
+	BluetoothLinkTRIS = INPUT;
+	BluetoothReset=ON; // Pull BT module out of reset
+	BluetoothCommand=OFF;//Data mode
 	mPORTDOpenDrainClose(BIT_2 | BIT_3); // make sure the com port is driven 3.3
-	//_RD4=1; // enter command mode. this doesn't work cause i re-used the pin for RD4. Sorry kevin
-
+	hasBluetooth();
 }

@@ -54,7 +54,7 @@ BOOL Write32UART1(BYTE  data);
 BOOL Write32UART2(BYTE  data);
 
 void Pic32UARTPutArray(BYTE *packet,WORD size);
-void Pic32UART_HAL_INIT(void);
+void Pic32UART_HAL_INIT(int BAUDRATE);
 void Pic32UARTGetArray(BYTE *packet,WORD size);
 WORD Pic32Get_UART_Byte_Count(void);
 
