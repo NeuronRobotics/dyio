@@ -20,7 +20,7 @@
 const char startmessage[] = "###Starting AVR In Debug Mode\n";
 void UserInit(void){
 
-	setPrintLevelNoPrint();
+	setPrintLevelInfoPrint();
 #if defined(DEBUG)
 	ConfigureUART(115200);
 	if(GetChannelMode(16)!=IS_UART_TX)
@@ -50,7 +50,7 @@ void UserInit(void){
 	InitializeUserCode();
 #endif
 	println_I(startmessage);// All printfDEBUG functions do not need to be removed from code if debug is disabled
-	setPrintLevelErrorPrint();
+	setPrintLevelInfoPrint();
 }
 
 

@@ -7,18 +7,18 @@
 	static BowlerPacket Packet;
 #endif
 void server(){
-	Bowler_Server((BowlerPacket *) &Packet,FALSE);
+	Bowler_Server((BowlerPacket *) &Packet,TRUE);
 }
 
 #define analogTime  50
-
+static 	RunEveryData asyncSched = {0,analogTime};
 void runDyIOMain(void){
 
 	Bowler_Init();// Com Stack Init. Sets up timeout timer, uart 0 and if debug enabled, uart 1
 	//println_I("Stack initialized");
 	UserInit();// User code init
 	//int i;
-	RunEveryData asyncSched = {0,analogTime};
+
 	float now;
 	while (1){
 		UserRun();
@@ -37,7 +37,8 @@ void runDyIOMain(void){
 			}else{
 				now = getMs();
 				if(!((asyncSched.MsTime >= 0) && (asyncSched.MsTime <= now))){
-					println_I("Reseting async time, was=");p_fl_I(asyncSched.MsTime);print_I(" is=");p_fl_I(now);
+					println_E("Reseting async time, was=");p_fl_E(asyncSched.MsTime);print_E(" is=");p_fl_E(now);
+					println_E("Timer in ticks:");p_sl_E(GetTimeTicks());
 					asyncSched.setPoint = analogTime;
 					asyncSched.MsTime=now;
 					server();

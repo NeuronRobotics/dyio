@@ -39,6 +39,7 @@ release:
 	$(CCP) -c src/Drivers/SerialPassThrough.c 	-o output/release/SerialPassThrough.o
 	$(CCP) -c src/Drivers/SPI.c 				-o output/release/SPI.o
 	$(CCP) -c src/Drivers/Switches.c 			-o output/release/Switches.o
+	$(CCP) -c src/Drivers/BluetoothManager.c 	-o output/release/BluetoothManager.o
 	
 	$(CCP) -c src/BowlerCallbacks/AsyncManager.c 			-o output/release/AsyncManager.o
 	$(CCP) -c src/BowlerCallbacks/CoOpCallbacks.c 			-o output/release/CoOpCallbacks.o

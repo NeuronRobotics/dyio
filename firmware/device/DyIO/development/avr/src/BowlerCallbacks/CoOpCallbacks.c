@@ -167,7 +167,7 @@ BOOL checkDigital(){
 
 void resetBlocks(){
 
-	println_I("Block times b0: ");p_fl_I(block0.MsTime);print_I(", b1: ");p_fl_I(block1.MsTime);print_I(", b2: ");p_fl_I(block2.MsTime);
+	println_E("Block times b0: ");p_fl_E(block0.MsTime);print_E(", b1: ");p_fl_E(block1.MsTime);print_E(", b2: ");p_fl_E(block2.MsTime);
 
 	block0.setPoint = blockTime;
 	block0.MsTime=getMs();
@@ -178,7 +178,7 @@ void resetBlocks(){
 	block2.setPoint = blockTime;
 	block2.MsTime=block0.MsTime+blockInc2 ;
 
-	println_I("Fixed to values, b0: ");p_fl_I(block0.MsTime);print_I(", b1: ");p_fl_I(block1.MsTime);print_I(", b2: ");p_fl_I(block2.MsTime);
+	println_E("Fixed to values, b0: ");p_fl_E(block0.MsTime);print_E(", b1: ");p_fl_E(block1.MsTime);print_E(", b2: ");p_fl_E(block2.MsTime);
 
 }
 
