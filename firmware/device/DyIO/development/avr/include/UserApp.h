@@ -38,6 +38,7 @@ UINT16 getAnv(BYTE pin);
 BOOL getDig(BYTE pin);
 BOOL checkDigital();
 void initPinState(BYTE i);
+void initBluetooth();
 
 
 #endif /* USERAPP_H_ */

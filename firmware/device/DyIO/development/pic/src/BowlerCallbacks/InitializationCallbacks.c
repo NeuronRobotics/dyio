@@ -115,6 +115,8 @@ void UserInit(void){
 
 	LoadDefaultValues();
 
+	initBluetooth();
+
 	CartesianControllerInit();
 
 	InitPID();
@@ -134,5 +136,4 @@ void UserInit(void){
 	println_W("Warning level printing");
 	println_I("Info level printing");
 }
-
 
