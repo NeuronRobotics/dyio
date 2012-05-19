@@ -4,10 +4,15 @@
  */
 #include "UserApp.h"
 
+BOOL btAvailible = FALSE;
+
 BYTE hasBluetooth(){
 	//TODO check for bluetooth module
-	return TRUE;
+	btAvailible=TRUE;
+	return btAvailible;
 }
+
+
 
 void initBluetooth(){
 	_TRISD1=0; //output mode on reset line

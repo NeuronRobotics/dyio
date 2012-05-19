@@ -37,6 +37,7 @@
 #include "PPMReader.h"
 #include "CartesianController.h"
 #include "UartDMA.h"
+#include "Bluetooth.h"
 
 void UserInit(void);
 void UserRun(void);
