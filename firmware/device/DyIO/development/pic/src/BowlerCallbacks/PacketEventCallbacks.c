@@ -217,3 +217,31 @@ BYTE UserCriticalRPCs(BowlerPacket *Packet){
 	return TRUE;
 }
 
+BYTE UserPostRPCs(BowlerPacket *Packet){
+
+        INT32_UNION var1;
+        INT32_UNION var2;
+        INT32_UNION res;
+        BYTE board;
+        if(Packet->use.data[0]==boardaddr)
+{
+                switch (Packet->use.head.RPC){
+                case EXMP:
+                	var1=Packet->use.data[1];
+                	var2.byte.FB=Packet->use.data[2];//this is to handle 32bit data
+                	var2.byte.TB=Packet->use.data[3];
+                	var2.byte.SB=Packet->use.data[4];
+                	var2.byte.LB=Packet->use.data[5];
+                	//Call the internal function, get data to send back
+                	res.Val=func(var1,var2);
+
+            		Packet->use.data[1]=res.byte.FB;
+            		Packet->use.data[2]=res.byte.TB;
+            		Packet->use.data[3]=res.byte.SB;
+            		Packet->use.data[4]=res.byte.LB;
+            		Packet->use.head.DataLegnth = 4+1+4;//RPC len + board index + int data
+                	break;
+                }
+        }
+}
+

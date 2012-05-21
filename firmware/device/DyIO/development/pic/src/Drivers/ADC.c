@@ -19,7 +19,7 @@ typedef struct __attribute__((__packed__)) _ROLLINGAVG
 	BYTE adcChan;
 } ROLLINGAVG;
 
-ROLLINGAVG adc[3];
+ROLLINGAVG adc[4];
 float calc(ROLLINGAVG * avg){
 	float v=getVolt(avg->adcChan);
 	avg->avgSum+=v;
@@ -70,7 +70,8 @@ void InitADC(void){
 	adc[0].adcChan=15;
 	adc[1].adcChan=12;
 	adc[2].adcChan=14;
-	for(i=0;i<3;i++){
+	adc[3].adcChan=13;
+	for(i=0;i<4;i++){
 		adc[i].avgSum=0;
 		adc[i].avgIndex=0;
 		for(j=0;j<AVG_SIZE;j++){
@@ -146,6 +147,10 @@ BYTE GetRawVoltageCode(BYTE bank){
 
 float GetRawVoltage(void){
 	return calc(&adc[2]);
+}
+
+float GetRawVoltagePostFuse(void){
+	return calc(&adc[3]);
 }
 
 float GetRail0Voltage(void){
