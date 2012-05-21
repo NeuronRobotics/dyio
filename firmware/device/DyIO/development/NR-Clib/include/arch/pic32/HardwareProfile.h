@@ -260,10 +260,10 @@
 	#define InitSPI_AVR()		mPORTGOpenDrainOpen(BIT_8);mPORTGOpenDrainOpen(BIT_6);SPI_SCK_IO=1;SPI_SDO_IO=1;SPI_SDI_TRIS=INPUT;
 
 	#define RTS_HO_TRIS			(_TRISD4)
-	#define	RTS_HO_IO			(_RD4)
+	//#define	RTS_HO_IO			(_RD4)
 	#define CTS_HO_TRIS			(_TRISD0)
 	#define CTS_HO_IO			(_RD0)
-	#define InitCTS_RTS_HO()	mPORTDOpenDrainOpen(BIT_4);CTS_HO_TRIS=INPUT;RTS_HO_IO=NOT_ASSERTED;
+	#define InitCTS_RTS_HO()	CTS_HO_TRIS=INPUT;RTS_HO_IO=NOT_ASSERTED;
 
 	#define UART2TX_TRIS		(_TRISF5)
 	#define UART2TX_IO			(_RF5)
@@ -274,7 +274,7 @@
 	#define UART1TX_IO			(_RD3)
 	#define UART1RX_TRIS		(_TRISD2)
 	#define UART1RX_IO			(_RD2)
-	#define ConfigUARTOpenCollector()	mPORTDOpenDrainOpen(BIT_3); mPORTFOpenDrainOpen(BIT_5);
+	//#define ConfigUARTOpenCollector() mPORTFOpenDrainOpen(BIT_5);
 	#define ConfigUARTRXTristate()	UART1RX_TRIS=INPUT;UART2RX_TRIS=INPUT;
 	#define InitBankLEDs()
 	//#define InitDS_IO()

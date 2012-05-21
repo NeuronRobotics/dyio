@@ -96,6 +96,9 @@ void startUartCoProc(){
 
 	println_I("startUartCoProc");
 
+	//Rx should be open collector
+	mPORTFOpenDrainOpen(BIT_5);
+
 	//Start configuration
 	UARTConfigure(UART2, UART_ENABLE_PINS_TX_RX_ONLY|UART_ENABLE_HIGH_SPEED );
 	UARTSetFifoMode(UART2, UART_INTERRUPT_ON_RX_NOT_EMPTY);

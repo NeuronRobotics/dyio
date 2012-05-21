@@ -34,6 +34,10 @@ typedef enum _Print_Level{
 Print_Level setPrintLevel(Print_Level l);
 
 Print_Level getPrintLevel();
+/**
+ * Lets you set a custom printstream function pointer
+ */
+void setPrintStream(int (*sendToStreamPtr)(BYTE * ,int));
 
 void EnableDebugTerminal(void);
 ///**

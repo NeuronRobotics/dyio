@@ -63,14 +63,13 @@ void hardwareInit(){
 	}
 
 	Init_FLAG_BUSY_ASYNC();
-	InitCTS_RTS_HO();
+	//InitCTS_RTS_HO();
 
 	//AVR Reset pin
 	InitAVR_RST();
 	HoldAVRReset();
 
-
-	ConfigUARTOpenCollector();
+	//ConfigUARTOpenCollector();
 	ConfigUARTRXTristate();
 
 
@@ -101,6 +100,7 @@ void hardwareInit(){
 }
 
 void UserInit(void){
+	//setPrintStream(&USBPutArray);
 	println_I("Starting PIC initialization");
 	hardwareInit();
 	println_I("Hardware Init done");
@@ -114,8 +114,6 @@ void UserInit(void){
 	LoadEEstore();
 
 	LoadDefaultValues();
-
-	initBluetooth();
 
 	CartesianControllerInit();
 
@@ -135,5 +133,7 @@ void UserInit(void){
 	println_E("Error level printing");
 	println_W("Warning level printing");
 	println_I("Info level printing");
+
+	initBluetooth();
 }
 

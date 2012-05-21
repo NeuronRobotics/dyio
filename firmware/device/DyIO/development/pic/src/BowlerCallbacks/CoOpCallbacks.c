@@ -39,7 +39,7 @@ void UserRun(void){
 	buttonCheck(7);
 
 	//SetGreen(FLAG_BUSY);
-	RTS_HO_IO=FLAG_BUSY;
+	//RTS_HO_IO=FLAG_BUSY;
 	if ((RunEvery(&syncVolt)>0)){
 		UpdateAVRLED();
 	}

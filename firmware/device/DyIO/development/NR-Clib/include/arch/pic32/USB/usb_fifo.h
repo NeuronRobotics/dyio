@@ -26,7 +26,7 @@ void SetPICUSBFifo(BYTE_FIFO_STORAGE  * s);
 
 void usb_CDC_Serial_Init(char * DevStr,char * SerialStr,UINT16 vid,UINT16 pid);
 WORD USBGetArray(BYTE* stream, WORD count);
-WORD USBPutArray(BYTE* stream, WORD Len);
+int USBPutArray(BYTE* stream, int Len);
 WORD GetNumUSBBytes(void);
 
 void WriteUSBDeviceString(char * b);
