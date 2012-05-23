@@ -5,7 +5,7 @@ INCLUDES	    = -I../NR-Clib/include/ -I./include/ -I ../common/include -I ../NR-
 DEVICEP 		= 32MX440F128H
 DEFINES			= -DUSE_VELOCITY $(DYIO_VER)
 CCP     		= $(GCCP) -mprocessor=$(DEVICEP) $(INCLUDES)  -I$(PICTOOLCHAIN)../pic32mx/include $(DEFINES)
-LINK 			= $(GCCP) -mprocessor=$(DEVICEP) -L ../../../NR-Clib/lib/PIC32/$(DEVICEP)/ -L ../../../common/Release/pic  -Wl,--script="elf32pic32mx.ld" 
+LINK 			= $(GCCP) -mprocessor=$(DEVICEP) -L ../../../NR-Clib/lib/PIC32/$(DEVICEP)/ -L ../../../common/Release/pic  
 OBJ				= Main.o \
  DyIOMain.o\
  CartesianController.o \
@@ -78,12 +78,12 @@ release:
 	
 	
 	cp *.ld output/release/
-	cd output/release/; $(LINK) $(OBJ) -lNRLIB  -o output.elf
+	cd output/release/; $(LINK) $(OBJ) -lNRLIB  -o output.elf -Wl,--script="elf32pic32mx.ld",--defsym=__MPLAB_BUILD=1,--gc-sections,--report-mem
 	cd output/release/; $(BIN2HEX) -v -a  output.elf
 	
 	cp output/release/* output/debug/
 	
-	cd output/debug/; $(LINK)   $(OBJ) -lNRLIB_debug   -o output.elf
+	cd output/debug/; $(LINK)   $(OBJ) -lNRLIB_debug   -o output.elf -Wl,--script="elf32pic32mx.ld",--defsym=__MPLAB_BUILD=1,--gc-sections,--report-mem
 	cd output/debug/; $(BIN2HEX) -v -a  output.elf
 	
 	
