@@ -134,6 +134,6 @@ void UserInit(void){
 	println_W("Warning level printing");
 	println_I("Info level printing");
 
-	initBluetooth();
+	//initBluetooth();
 }
 
