@@ -27,6 +27,8 @@
 #define CHAN3P1_tris	_TRISD11
 #define OFF 			0
 #define ON 				1
+#define BTReset 			0
+#define BTNotReset 			1
 
 typedef struct __attribute__((__packed__)) _COUNTER
 {

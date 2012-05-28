@@ -216,7 +216,7 @@ BYTE UserCriticalRPCs(BowlerPacket *Packet){
 	SyncSessionTime(getMs());
 	return TRUE;
 }
-
+/*
 BYTE UserPostRPCs(BowlerPacket *Packet){
 
         INT32_UNION var1;
@@ -243,5 +243,5 @@ BYTE UserPostRPCs(BowlerPacket *Packet){
                 	break;
                 }
         }
-}
+}*/
 

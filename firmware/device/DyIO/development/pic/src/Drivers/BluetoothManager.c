@@ -12,12 +12,12 @@ char packet[50];
 int bauds[] = {	//1200,
 				//2400,
 				//4800,
-				9600,
+				9600
 				//19200,
 				//38400,
 				//57600,
 				//115200,
-				230400
+				//230400
 				//460800,
 				//921600,
 				//1382400
@@ -29,25 +29,25 @@ int getBluetoothBaud(){
 }
 
 void sendString(char * data){
-	BluetoothReset=OFF; // reset
-	DelayMs(100);
-	BluetoothReset=ON; // Pull BT module out of reset
-	DelayMs(100);
-
 	Pic32UARTGetArray(packet,Pic32Get_UART_Byte_Count());
 	int i=0;
-	while(data[i++]!=0);
-	Pic32UARTPutArray(data,i);
+	while(data[i++]!=0){}
+	Pic32UARTPutArray(data,i-1);
 	DelayMs(1000);
 }
 
 BOOL testAtCommand(int baud){
 
 	Pic32UARTSetBaud( baud );
-	BluetoothCommand = ON;
+	BluetoothCommand = OFF;
+	// Reset module
+	BluetoothReset=BTReset; // reset
+	DelayMs(10);
+	BluetoothReset=BTNotReset; // reset
+
 	//from http://www.e-gizmo.com/KIT/images/EGBT-04/EGBT-045MS-046S%20Bluetooth%20Module%20Manual%20rev%201r0.pdf
 	//Testing AT command
-	sendString("AT+NAME=DyIO");
+	sendString("AT");
 	if( Pic32Get_UART_Byte_Count()>1){
 		Pic32UARTGetArray(packet,Pic32Get_UART_Byte_Count());
 		if(packet[0]=='O' && packet[1]=='K'){
@@ -98,9 +98,10 @@ BYTE hasBluetooth(){
 
 void initBluetooth(){
 	btChecked = FALSE;
-	mPORTDOpenDrainClose(BIT_1 | BIT_2 | BIT_3 | BIT_4); // make sure the com port is driven 3.3
+	mPORTDOpenDrainClose(BIT_1 | BIT_2 | BIT_3); // make sure the com port is driven 3.3
 	BluetoothResetTRIS = OUTPUT; //output mode on reset line
 	BluetoothCommandTRIS = OUTPUT; //output mode on CMD line
 	BluetoothReset=ON; // Pull BT module out of reset
+	Pic32UARTSetBaud( 9600 );
 	hasBluetooth();
 }
