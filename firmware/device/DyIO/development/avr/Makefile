@@ -55,13 +55,13 @@ release:
 	
 	cd output/644p/; $(LINK)  -mmcu=$(DEVICEA) $(OBJ) -lNRLIB -o output.elf
 	cd output/644p/; $(BIN2HEXAVR) -R .eeprom -O ihex output.elf  "output.hex"
-	#cd output/644p/; avr-size --format=avr --mcu=$(DEVICEA) output.elf
+	cd output/644p/; avr-size --format=avr --mcu=$(DEVICEA) output.elf
 	cp output/644p/* output/debug/
 	cd output/644p/; rm *.o
 	
 	cd output/debug/; $(LINK) -mmcu=$(DEVICEA)  $(OBJ) -lNRLIB_debug  -o output.elf
 	cd output/debug/; $(BIN2HEXAVR) -R .eeprom -O ihex output.elf  "output.hex"
-	#cd output/debug/;  avr-size --format=avr --mcu=$(DEVICEA) output.elf
+	cd output/debug/;  avr-size --format=avr --mcu=$(DEVICEA) output.elf
 	cd output/debug/; rm *.o
 legacy:	
 	$(CCA324) -c ../common/src/dyio/PinFunctions.c 		-o output/324p/PinFunctions.o
@@ -91,7 +91,7 @@ legacy:
 	
 	cd output/324p/; $(LINK324p)  -mmcu=atmega324p $(OBJ) -lNRLIB  -o output.elf
 	cd output/324p/; $(BIN2HEXAVR) -R .eeprom -O ihex output.elf  "output.hex"
-	#cd output/324p/; avr-size --format=avr --mcu=atmega324p output.elf
+	cd output/324p/; avr-size --format=avr --mcu=atmega324p output.elf
 	cd output/324p/; rm *.o
 wpi:
 	$(CCA) -DWPIRBE -c ../common/src/dyio/PinFunctions.c 	-o output/wpi/PinFunctions.o
