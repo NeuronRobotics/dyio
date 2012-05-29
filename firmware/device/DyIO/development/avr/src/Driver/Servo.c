@@ -184,11 +184,15 @@ void runLinearInterpolationServo(BYTE blockStart,BYTE blockEnd){
 		float ip = interpolate(&velocity[i],getMs());
 
 		if(ip>(255- SERVO_BOUND)){
+#if ! defined(__AVR_ATmega324P__)
 			println_I("Interpolate out of bounds! got=");p_fl_I(ip);print_I(" on time=");p_fl_I(velocity[i].setTime);
+#endif
 			ip=(255- SERVO_BOUND);
 		}
 		if(ip<SERVO_BOUND){
+#if ! defined(__AVR_ATmega324P__)
 			println_I("Interpolate out of bounds! got=");p_fl_I(ip);print_I(" on chan=");p_sl_I(i);
+#endif
 			ip=SERVO_BOUND;
 		}
 		int tmp = (int)ip;

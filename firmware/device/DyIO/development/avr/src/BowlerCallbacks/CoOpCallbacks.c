@@ -166,9 +166,9 @@ BOOL checkDigital(){
 }
 
 void resetBlocks(){
-
+#if ! defined(__AVR_ATmega324P__)
 	println_E("Block times b0: ");p_fl_E(block0.MsTime);print_E(", b1: ");p_fl_E(block1.MsTime);print_E(", b2: ");p_fl_E(block2.MsTime);
-
+#endif
 	block0.setPoint = blockTime;
 	block0.MsTime=getMs();
 
@@ -177,9 +177,9 @@ void resetBlocks(){
 
 	block2.setPoint = blockTime;
 	block2.MsTime=block0.MsTime+blockInc2 ;
-
+#if ! defined(__AVR_ATmega324P__)
 	println_E("Fixed to values, b0: ");p_fl_E(block0.MsTime);print_E(", b1: ");p_fl_E(block1.MsTime);print_E(", b2: ");p_fl_E(block2.MsTime);
-
+#endif
 }
 
 void UserRun(void){
@@ -201,15 +201,21 @@ void UserRun(void){
 	}
 
 	if(block0.MsTime < 0.0f){
+#if ! defined(__AVR_ATmega324P__)
 		println_I("Block0 error, ");p_fl_I(block0.MsTime);
+#endif
 		resetBlocks();
 	}
 	if(block1.MsTime < 0.0f){
+#if ! defined(__AVR_ATmega324P__)
 		println_I("Block1 error, ");p_fl_I(block1.MsTime);
+#endif
 		resetBlocks();
 	}
 	if(block2.MsTime < 0.0f){
+#if ! defined(__AVR_ATmega324P__)
 		println_I("Block2 error, ");p_fl_I(block2.MsTime);
+#endif
 		resetBlocks();
 	}
 

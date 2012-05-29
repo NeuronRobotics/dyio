@@ -37,8 +37,10 @@ void runDyIOMain(void){
 			}else{
 				now = getMs();
 				if(!((asyncSched.MsTime >= 0) && (asyncSched.MsTime <= now))){
+#if ! defined(__AVR_ATmega324P__)
 					println_E("Reseting async time, was=");p_fl_E(asyncSched.MsTime);print_E(" is=");p_fl_E(now);
 					println_E("Timer in ticks:");p_sl_E(GetTimeTicks());
+#endif
 					asyncSched.setPoint = analogTime;
 					asyncSched.MsTime=now;
 					server();
