@@ -259,7 +259,7 @@ BYTE sendPacket(BowlerPacket * Packet){
 
 			if(getPacket(&downstream)){
 				//println_I("Got packet from getPacket");
-				if(downstream.use.head.MessageID!=0){
+				if(downstream.use.head.MessageID!=0 || downstream.use.head.Method == BOWLER_ASYN){
 					println_I("Packet was async");
 					println_I("<<ASYNC\n");printPacket(&downstream,INFO_PRINT);
 					dealWithAsyncPacket(&downstream);

@@ -13,7 +13,7 @@ extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 
 void pushDummy(BYTE numData){
 	LoadCorePacket(& packetTemp);
-	packetTemp.use.head.Method=BOWLER_POST;
+	packetTemp.use.head.Method=BOWLER_ASYN;
 	packetTemp.use.head.RPC=GetRPCValue("test");
 	packetTemp.use.head.MessageID=5;
 	packetTemp.use.head.DataLegnth=4+numData;
@@ -32,6 +32,7 @@ void PushAllAsync(){
 
 	populateGACV(&packetTemp);
 
+	packetTemp.use.head.Method=BOWLER_ASYN;
 	Print_Level l = getPrintLevel();
 	//setPrintLevelInfoPrint();
 	PutBowlerPacket(& packetTemp);
@@ -43,7 +44,7 @@ void PushCounterChange(BYTE pin,LONG state){
 	INT32_UNION s;
 	s.Val= state;
 	LoadCorePacket(& packetTemp);
-	packetTemp.use.head.Method=BOWLER_POST;
+	packetTemp.use.head.Method=BOWLER_ASYN;
 	packetTemp.use.head.RPC=GetRPCValue("gchv");
 	packetTemp.use.data[0]=pin;
 	packetTemp.use.data[1]=s.byte.FB;
@@ -61,7 +62,7 @@ void PushADCval(BYTE pin,UINT16 val){
 	an.Val=val;
 	SetColor(0,1,0);
 	LoadCorePacket(& packetTemp);
-	packetTemp.use.head.Method=BOWLER_POST;
+	packetTemp.use.head.Method=BOWLER_ASYN;
 	packetTemp.use.head.RPC=GetRPCValue("gchv");
 	packetTemp.use.data[0]=pin;
 	packetTemp.use.data[1]=an.byte.SB;
@@ -75,7 +76,7 @@ void PushDIval(BYTE pin,BYTE val){
 		return;
 	SetColor(0,1,0);
 	LoadCorePacket(& packetTemp);
-	packetTemp.use.head.Method=BOWLER_POST;
+	packetTemp.use.head.Method=BOWLER_ASYN;
 	packetTemp.use.head.RPC=GetRPCValue("gchv");
 	packetTemp.use.data[0]=pin;
 	packetTemp.use.data[1]=val;
@@ -109,6 +110,8 @@ void pushPPMPacket(void){
 	SetColor(0,1,0);
 	GetPPMDataToPacket(& packetTemp);
 	packetTemp.use.head.MessageID=45;
+
+	packetTemp.use.head.Method=BOWLER_ASYN;
 	PutBowlerPacket(& packetTemp);
 }
 

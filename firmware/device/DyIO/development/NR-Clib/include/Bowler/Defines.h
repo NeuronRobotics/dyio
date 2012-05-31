@@ -42,6 +42,7 @@
 #define BOWLER_GET						0x10
 #define BOWLER_POST  					0x20
 #define BOWLER_CRIT 	 				0x30
+#define BOWLER_ASYN 	 				0x40
 
 
 

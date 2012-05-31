@@ -13,10 +13,10 @@ void sendHeader(BYTE legnth,char * rpc){
 	for(i=0;i<6;i++){
 		send(0);//broadcast mac
 	}
-	send(BOWLER_POST);
+	send(BOWLER_ASYN);
 	send((0x80|99));//Set the response flag and set an async ID
 	send(legnth);
-	BYTE crc =(BYTE) (BOWLER_VERSION+BOWLER_POST+(0x80|99)+legnth);
+	BYTE crc =(BYTE) (BOWLER_VERSION+BOWLER_ASYN+(0x80|99)+legnth);
 	send(crc);
 	for(i=0;i<4;i++){
 		send(rpc[i]);//rpc bytes
