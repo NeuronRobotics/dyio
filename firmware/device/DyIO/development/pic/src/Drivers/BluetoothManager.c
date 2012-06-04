@@ -53,7 +53,7 @@ void configBluetooth(){
 		BluetoothReset=OFF; // Pull BT module out of reset
 		DelayMs(100);
 		BluetoothReset=ON; // Pull BT module out of reset
-		DelayMs(500);//wait for it to settle
+		DelayMs(100);//wait for it to settle
 	}else{
 		int i=0;
 		for(i=0;i<10;i++){
@@ -121,6 +121,6 @@ void initBluetooth(){
 	BluetoothResetTRIS = OUTPUT; //output mode on reset line
 	BluetoothCommandTRIS = OUTPUT; //output mode on CMD line
 	BluetoothReset=ON; // Pull BT module out of reset
-	DelayMs(500);//wait for it to settle
+	DelayMs(100);//wait for it to settle
 	hasBluetooth();
 }
