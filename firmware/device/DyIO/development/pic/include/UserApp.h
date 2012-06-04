@@ -39,6 +39,8 @@
 #include "UartDMA.h"
 #include "Bluetooth.h"
 
+#include "arch/pic32/BowlerConfig.h"
+
 void UserInit(void);
 void UserRun(void);
 

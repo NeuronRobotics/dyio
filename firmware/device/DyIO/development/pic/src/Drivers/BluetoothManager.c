@@ -10,8 +10,9 @@ BOOL btChecked = FALSE;
 char packet[50];
 
 int bauds[] = {
-				//230400,
+				230400,
 				9600
+				//115200
 };
 int myBaud = HIGH_BAUD;
 
@@ -85,7 +86,7 @@ BYTE hasBluetooth(){
 
 
 		if(!btOk){
-			SetColor(1,1,1);//Set LED to white
+			SetColor(1,0,1);//Set LED to purple
 			DelayMs(5000);
 		}
 
