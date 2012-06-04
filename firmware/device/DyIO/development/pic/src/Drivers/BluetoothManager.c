@@ -9,18 +9,9 @@ BOOL btChecked = FALSE;
 #define HIGH_BAUD 230400
 char packet[50];
 
-int bauds[] = {	//1200,
-				//2400,
-				//4800,
+int bauds[] = {
+				//230400,
 				9600
-				//19200,
-				//38400,
-				//57600,
-				//115200,
-				//230400
-				//460800,
-				//921600,
-				//1382400
 };
 int myBaud = HIGH_BAUD;
 
@@ -34,6 +25,14 @@ void sendString(char * data){
 	while(data[i++]!=0){}
 	Pic32UARTPutArray(data,i-1);
 	DelayMs(1000);
+}
+
+void configBluetooth(){
+	sendString("AT+NAMENeuron_Robotics_DyIO");
+	Pic32UARTGetArray(packet,Pic32Get_UART_Byte_Count());
+	//sendString("AT+BAUD9");
+	//Pic32UARTGetArray(packet,Pic32Get_UART_Byte_Count());
+	//Pic32UARTSetBaud( HIGH_BAUD );
 }
 
 BOOL testAtCommand(int baud){
@@ -52,10 +51,7 @@ BOOL testAtCommand(int baud){
 		Pic32UARTGetArray(packet,Pic32Get_UART_Byte_Count());
 		if(packet[0]=='O' && packet[1]=='K'){
 			SetColor(0,1,0);//Set LEd to green
-			DelayMs(500);
-			//sendString("AT+BAUD9");
-			//Pic32UARTGetArray(packet,Pic32Get_UART_Byte_Count());
-			//Pic32UARTSetBaud( HIGH_BAUD );
+			DelayMs(1100);
 			BluetoothCommand = OFF;
 			return TRUE;
 		}
@@ -80,14 +76,17 @@ BYTE hasBluetooth(){
 				if(testAtCommand(bauds[i])){
 					btOk = TRUE;
 					myBaud  = bauds[i];
+					if(bauds[i] == 9600){
+						configBluetooth();
+					}
 				}
 			}
 		}
 
 
 		if(!btOk){
-			SetColor(1,0,1);//Set LEd to yellow
-			DelayMs(1100);
+			SetColor(1,1,1);//Set LED to white
+			DelayMs(5000);
 		}
 
 		btChecked = TRUE;
