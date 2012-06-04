@@ -126,6 +126,7 @@ void startUartCoProc(){
 
 void initCoProcUART(){
 	println_I("initCoProcUART");
+	coProcRunning =FALSE;
 #if defined(USE_DMA)
 	closeDma();
 #endif

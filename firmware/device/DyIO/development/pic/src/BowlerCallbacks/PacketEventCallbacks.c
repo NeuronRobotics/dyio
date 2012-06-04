@@ -51,6 +51,9 @@ BYTE UserGetRPCs(BowlerPacket *Packet){
 		break;
 	case _REV:
 		SendPacketToCoProc(Packet);
+		if(Packet->use.head.RPC == _ERR){
+			break;
+		}
 		Packet->use.head.DataLegnth=4+3;
 		if((Packet->use.data[0]==MAJOR_REV) && (Packet->use.data[1]==MINOR_REV) && (Packet->use.data[2]==FIRMWARE_VERSION) ){
 			SetColor(0,0,1);

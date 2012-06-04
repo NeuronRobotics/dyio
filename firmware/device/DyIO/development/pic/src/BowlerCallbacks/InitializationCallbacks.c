@@ -97,6 +97,11 @@ void hardwareInit(){
 
 	EndCritical();
 	INTEnableSystemMultiVectoredInt();
+
+	initBluetooth();
+	if(!hasBluetooth()){
+		Pic32UARTSetBaud( 115200 );
+	}
 }
 
 void UserInit(void){
@@ -134,6 +139,5 @@ void UserInit(void){
 	println_W("Warning level printing");
 	println_I("Info level printing");
 
-	initBluetooth();
 }
 

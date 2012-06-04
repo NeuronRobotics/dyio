@@ -10,9 +10,8 @@ BOOL btChecked = FALSE;
 char packet[50];
 
 int bauds[] = {
-				230400,
+				HIGH_BAUD,
 				9600,
-				//115200
 };
 int myBaud = HIGH_BAUD;
 
@@ -25,7 +24,12 @@ void sendString(char * data){
 	int i=0;
 	while(data[i++]!=0){}
 	Pic32UARTPutArray(data,i-1);
-	DelayMs(1000);
+	int tick = 1000;
+	while(Pic32Get_UART_Byte_Count()<2 && tick>0){
+		tick--;
+		DelayMs(1);
+	}
+
 }
 
 
@@ -60,24 +64,16 @@ void configBluetooth(){
 BOOL testAtCommand(int baud){
 
 	Pic32UARTSetBaud( baud );
-	//BluetoothCommand = OFF;
-	// Reset module
-	//BluetoothReset=BTReset; // reset
-	//DelayMs(10);
-	//BluetoothReset=BTNotReset; // reset
-
 	//from http://www.e-gizmo.com/KIT/images/EGBT-04/EGBT-045MS-046S%20Bluetooth%20Module%20Manual%20rev%201r0.pdf
 	//Testing AT command
 	sendString("AT");
 	if( Pic32Get_UART_Byte_Count()>1){
 		Pic32UARTGetArray(packet,Pic32Get_UART_Byte_Count());
 		if(packet[0]=='O' && packet[1]=='K'){
-			BluetoothCommand = OFF;
 			return TRUE;
 		}
 	}
-	Pic32UARTSetBaud( 9600 );
-	BluetoothCommand = OFF;
+
 	return FALSE;
 }
 
@@ -95,9 +91,9 @@ BYTE hasBluetooth(){
 				if(testAtCommand(bauds[i])){
 					btOk = TRUE;
 					myBaud  = bauds[i];
-					//if(myBaud == 9600){
+					if(myBaud == 9600){
 						configBluetooth();
-					//}
+					}
 				}
 			}
 		}
@@ -105,9 +101,9 @@ BYTE hasBluetooth(){
 
 		if(!btOk){
 			int i=0;
-			for(i=0;i<5;i++){
+			for(i=0;i<10;i++){
 				SetColor(i%2,0,i%2);//Set LED to purple
-				DelayMs(1000);
+				DelayMs(100);
 			}
 		}
 
@@ -123,6 +119,5 @@ void initBluetooth(){
 	BluetoothResetTRIS = OUTPUT; //output mode on reset line
 	BluetoothCommandTRIS = OUTPUT; //output mode on CMD line
 	BluetoothReset=ON; // Pull BT module out of reset
-	Pic32UARTSetBaud( 9600 );
 	hasBluetooth();
 }
