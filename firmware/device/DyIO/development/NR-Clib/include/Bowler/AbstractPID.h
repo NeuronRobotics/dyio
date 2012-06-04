@@ -17,6 +17,7 @@
 #define RPID				0x64697072 // 'rpid'  Reset a PID channel
 #define _VPD				0x6470765f // '_vpd'    PID velocity command
 #define KPID				0x6469706b // 'kpid'  Kill all PID controllers
+#define PIDL				0x6c646970 // 'pidl'  PID limit event
 
 typedef enum _PidLimitType {
 

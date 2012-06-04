@@ -28,7 +28,7 @@
 #define RPCDataStart 			15
 #define RPCCodeStart 			BowlerHeaderSize
 
-#define PRINT_BAUD 					230400
+#define PRINT_BAUD 					9600
 
 #define INTERNAL_BAUD 				230400
 //#define INTERNAL_BAUD 				115200
