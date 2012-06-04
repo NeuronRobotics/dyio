@@ -24,10 +24,11 @@ void sendString(char * data){
 	int i=0;
 	while(data[i++]!=0){}
 	Pic32UARTPutArray(data,i-1);
-	int tick = 1000;
+	int tick = 1500;
 	while(Pic32Get_UART_Byte_Count()<2 && tick>0){
 		tick--;
 		DelayMs(1);
+		buttonCheck(100);
 	}
 
 }
@@ -39,9 +40,9 @@ void configBluetooth(){
 	Pic32UARTGetArray(packet,Pic32Get_UART_Byte_Count());
 	if(!(packet[0]=='O' && packet[1]=='K')){
 		int i=0;
-		for(i=0;i<5;i++){
+		for(i=0;i<10;i++){
 			SetColor(i%2,i%2,i%2);//Set LED to white
-			DelayMs(1000);
+			DelayMs(100);
 		}
 	}
 
@@ -52,11 +53,12 @@ void configBluetooth(){
 		BluetoothReset=OFF; // Pull BT module out of reset
 		DelayMs(100);
 		BluetoothReset=ON; // Pull BT module out of reset
+		DelayMs(500);//wait for it to settle
 	}else{
 		int i=0;
-		for(i=0;i<5;i++){
+		for(i=0;i<10;i++){
 			SetColor(i%2,0,0);//Set LED to white
-			DelayMs(1000);
+			DelayMs(100);
 		}
 	}
 }
@@ -119,5 +121,6 @@ void initBluetooth(){
 	BluetoothResetTRIS = OUTPUT; //output mode on reset line
 	BluetoothCommandTRIS = OUTPUT; //output mode on CMD line
 	BluetoothReset=ON; // Pull BT module out of reset
+	DelayMs(500);//wait for it to settle
 	hasBluetooth();
 }
