@@ -11,7 +11,7 @@ char packet[50];
 
 int bauds[] = {
 				230400,
-				9600
+				9600,
 				//115200
 };
 int myBaud = HIGH_BAUD;
@@ -39,11 +39,11 @@ void configBluetooth(){
 BOOL testAtCommand(int baud){
 
 	Pic32UARTSetBaud( baud );
-	BluetoothCommand = OFF;
+	//BluetoothCommand = OFF;
 	// Reset module
-	BluetoothReset=BTReset; // reset
-	DelayMs(10);
-	BluetoothReset=BTNotReset; // reset
+	//BluetoothReset=BTReset; // reset
+	//DelayMs(10);
+	//BluetoothReset=BTNotReset; // reset
 
 	//from http://www.e-gizmo.com/KIT/images/EGBT-04/EGBT-045MS-046S%20Bluetooth%20Module%20Manual%20rev%201r0.pdf
 	//Testing AT command
