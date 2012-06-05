@@ -8,7 +8,7 @@ BOOL btChecked = FALSE;
 
 #define HIGH_BAUD 230400
 char packet[50];
-
+#define BT_RESET_DELAY 300
 int bauds[] = {
 				HIGH_BAUD,
 				9600,
@@ -24,7 +24,7 @@ void sendString(char * data){
 	int i=0;
 	while(data[i++]!=0){}
 	Pic32UARTPutArray(data,i-1);
-	int tick = 1500;
+	int tick = 2000;
 	while(Pic32Get_UART_Byte_Count()<2 && tick>0){
 		tick--;
 		DelayMs(1);
@@ -53,11 +53,11 @@ void configBluetooth(){
 		BluetoothReset=OFF; // Pull BT module out of reset
 		DelayMs(100);
 		BluetoothReset=ON; // Pull BT module out of reset
-		DelayMs(100);//wait for it to settle
+		DelayMs(100 );//wait for it to settle
 	}else{
 		int i=0;
 		for(i=0;i<10;i++){
-			SetColor(i%2,0,0);//Set LED to white
+			SetColor(i%2,0,0);//Set LED to red
 			DelayMs(100);
 		}
 	}
@@ -121,6 +121,6 @@ void initBluetooth(){
 	BluetoothResetTRIS = OUTPUT; //output mode on reset line
 	BluetoothCommandTRIS = OUTPUT; //output mode on CMD line
 	BluetoothReset=ON; // Pull BT module out of reset
-	DelayMs(100);//wait for it to settle
+	DelayMs(BT_RESET_DELAY );//wait for it to settle
 	hasBluetooth();
 }
