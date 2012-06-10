@@ -5,6 +5,7 @@
 #include "UserApp.h"
 BOOL btOk = FALSE;
 BOOL btChecked = FALSE;
+extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 
 #define HIGH_BAUD 230400
 char packet[50];
@@ -36,7 +37,14 @@ void sendString(char * data){
 
 
 void configBluetooth(){
-	sendString("AT+NAMENR_DyIO");
+	char name [] ="AT+NAMENR_DyIOxxxx\0";
+	FlashGetMac(MyMAC.v);
+	name[14]=GetHighNib(MyMAC.v[4]);
+	name[15]=GetLowNib(MyMAC.v[4]);
+	name[16]=GetHighNib(MyMAC.v[5]);
+	name[17]=GetLowNib(MyMAC.v[5]);
+
+	sendString(name);
 	Pic32UARTGetArray(packet,Pic32Get_UART_Byte_Count());
 	if(!(packet[0]=='O' && packet[1]=='K')){
 		int i=0;
@@ -45,20 +53,21 @@ void configBluetooth(){
 			DelayMs(100);
 		}
 	}
-
-	sendString("AT+BAUD9");
-	Pic32UARTGetArray(packet,Pic32Get_UART_Byte_Count());
-	if(packet[0]=='O' && packet[1]=='K'){
-		Pic32UARTSetBaud( HIGH_BAUD );
-		BluetoothReset=OFF; // Pull BT module out of reset
-		DelayMs(100);
-		BluetoothReset=ON; // Pull BT module out of reset
-		DelayMs(100 );//wait for it to settle
-	}else{
-		int i=0;
-		for(i=0;i<10;i++){
-			SetColor(i%2,0,0);//Set LED to red
+	if(myBaud == 9600){
+		sendString("AT+BAUD9");
+		Pic32UARTGetArray(packet,Pic32Get_UART_Byte_Count());
+		if(packet[0]=='O' && packet[1]=='K'){
+			Pic32UARTSetBaud( HIGH_BAUD );
+			BluetoothReset=OFF; // Pull BT module out of reset
 			DelayMs(100);
+			BluetoothReset=ON; // Pull BT module out of reset
+			DelayMs(100 );//wait for it to settle
+		}else{
+			int i=0;
+			for(i=0;i<10;i++){
+				SetColor(i%2,0,0);//Set LED to red
+				DelayMs(100);
+			}
 		}
 	}
 }
@@ -93,9 +102,9 @@ BYTE hasBluetooth(){
 				if(testAtCommand(bauds[i])){
 					btOk = TRUE;
 					myBaud  = bauds[i];
-					if(myBaud == 9600){
+					//if(myBaud == 9600){
 						configBluetooth();
-					}
+					//}
 				}
 			}
 		}
