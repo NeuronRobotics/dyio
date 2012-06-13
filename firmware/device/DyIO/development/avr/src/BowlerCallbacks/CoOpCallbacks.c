@@ -148,7 +148,7 @@ BOOL checkDigital(){
 	BOOL update=FALSE;
 	for(i=0;i<NUM_PINS;i++){
 		BYTE mode = GetChannelMode(i);
-		BOOL run = (((mode == IS_DI) )  || ((mode == IS_COUNTER_INPUT_HOME)||(mode == IS_COUNTER_OUTPUT_HOME)));
+		BOOL run = (((mode == IS_DI) )  || ((mode == IS_COUNTER_INPUT_HOME)||(mode == IS_COUNTER_OUTPUT_HOME) || (mode == IS_SERVO)));
 		if (run){
 			aval=GetDIO(i)?1:0;
 			if (aval!=getDig(i)){
@@ -156,7 +156,6 @@ BOOL checkDigital(){
 				setDig(i,aval);
 				update= TRUE;
 			}
-
 		}
 	}
 	if(update)

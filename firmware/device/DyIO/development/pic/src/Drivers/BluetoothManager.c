@@ -131,5 +131,8 @@ void initBluetooth(){
 	BluetoothCommandTRIS = OUTPUT; //output mode on CMD line
 	BluetoothReset=ON; // Pull BT module out of reset
 	DelayMs(BT_RESET_DELAY );//wait for it to settle
-	hasBluetooth();
+	if(!hasBluetooth()){
+		Pic32UARTSetBaud( 115200 );
+	}
+
 }
