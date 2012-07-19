@@ -188,6 +188,7 @@ BYTE UserCriticalRPCs(BowlerPacket *Packet){
 		SendPacketToCoProc(Packet);
 		break;
 	case _PWR:
+		setBrownOutDetect(Packet->use.data[0]?0:1);
 		SendPacketToCoProc(Packet);
 		break;
 	case INFO:

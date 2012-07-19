@@ -68,6 +68,14 @@ BOOL SetAllChannelMode(BowlerPacket * Packet){
 	return TRUE;
 }
 
+BOOL brownOutDetect = TRUE;
+
+void setBrownOutDetect(BOOL b){
+	brownOutDetect = b;
+}
+BOOL getBrownOutDetect(){
+	return brownOutDetect;
+}
 
 BOOL setMode(BYTE pin,BYTE mode){
 	println_I("Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_ul_I(pin);
@@ -82,8 +90,12 @@ BOOL setMode(BYTE pin,BYTE mode){
 			print_I("|Mode is now servo");
 			break;
 		}else{
-			print_I(" Servo Mode could not be set, voltage invalid");
-			return FALSE;
+			if(getBrownOutDetect()){
+				print_I(" Servo Mode could not be set, voltage invalid");
+				return FALSE;
+			}else{
+				break;
+			}
 		}
 	case IS_SPI_MOSI:
 	case IS_SPI_MISO:

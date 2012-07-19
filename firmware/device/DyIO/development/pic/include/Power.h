@@ -13,6 +13,13 @@
 
 WORD GetRailVoltage(void);
 BYTE GetSwitchPosition(BYTE chan);
-
+/**
+ * Sets the current brown out mode
+ */
+void setBrownOutDetect(BOOL b);
+/**
+ * gets the current brown out mode
+ */
+BOOL getBrownOutDetect();
 
 #endif /* POWER_H_ */
