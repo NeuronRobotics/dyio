@@ -89,13 +89,8 @@ void InitPID(void){
 		printPIDvals(&pidGroups[i]);
 		force[i].MsTime=0;
 		force[i].setPoint=200;
-		if(pidGroups[i].Enabled){
-			initPIDChans(i);
-			println_I("Resetting PID channel from init");
-			ZeroPID(i);
-		}
 
-		pidGroups[i].Enabled=FALSE;
+		//pidGroups[i].Enabled=FALSE;
 	}
 
 	InitilizePidController( pidGroups,
@@ -107,6 +102,17 @@ void InitPID(void){
 							&asyncCallback,
 							&onPidConfigureMine,
 							&checkPIDLimitEventsMine);
+
+	for (i=0;i<NUM_PID_GROUPS;i++){
+		if(pidGroups[i].Enabled){
+			initPIDChans(i);
+			println_I("Resetting PID channel from init");
+			int value = 0;
+			if(dyPid[i].inputMode == IS_ANALOG_IN)
+				value = 512;
+			pidReset(i,value);
+		}
+	}
 
 }
 
@@ -215,9 +221,12 @@ float getPositionMine(int group){
 }
 
 void setOutputMine(int group, float v){
+
 	if( dyPid[group].outputChannel==DYPID_NON_USED||
 			((pidGroups[group].Enabled == FALSE) && (vel[group].enabled==FALSE)))
 		return;
+	Print_Level l = getPrintLevel();
+	setPrintLevelNoPrint();
 	int val = (int)(v);
 	BYTE center = DATA.PIN[dyPid[group].outputChannel].ServoPos;
 
@@ -242,8 +251,7 @@ void setOutputMine(int group, float v){
 		print_I(" Setting PID output, was ");p_sl_I(dyPid[group].outVal);print_I(" is now: ");p_sl_I(set);print_I(" on DyIO chan: ");p_sl_I(dyPid[group].outputChannel);print_I(", ");
 	}
 	dyPid[group].outVal=set;
-	Print_Level l = getPrintLevel();
-	//setPrintLevelInfoPrint();
+
 	println_I("PID setting output for group: ");p_ul_I(group);
 	SetChannelValueCoProc(dyPid[group].outputChannel,dyPid[group].outVal);
 	setPrintLevel(l);

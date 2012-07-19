@@ -46,6 +46,15 @@ void SetCoProcLED(BOOL a, BOOL b, int batt){
 	SendPacketToCoProc(& packetTemp);
 }
 
+void setCoProcBrownOutMode(BOOL b){
+	LoadCorePacket(& packetTemp);
+	packetTemp.use.head.Method=BOWLER_CRIT;
+	packetTemp.use.head.RPC=GetRPCValue("_pwr");
+	packetTemp.use.head.DataLegnth=4+1;
+	packetTemp.use.data[0]=b?0:1;
+	SendPacketToCoProc(& packetTemp);
+}
+
 void DownstreamPowerChange(void){
 
 	LoadCorePacket(& packetTemp);

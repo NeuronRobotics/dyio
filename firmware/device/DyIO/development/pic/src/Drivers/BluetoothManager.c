@@ -89,6 +89,7 @@ BOOL testAtCommand(int baud){
 }
 
 BYTE hasBluetooth(){
+#if defined(HAS_BLUTOOTH)
 	if(!btChecked){
 
 		SetColor(1,1,0);//Set LEd to yellow
@@ -121,10 +122,14 @@ BYTE hasBluetooth(){
 		btChecked = TRUE;
 	}
 	return btOk;
+#else
+	return FALSE;
+#endif
 }
 
 
 void initBluetooth(){
+#if defined(HAS_BLUTOOTH)
 	btChecked = FALSE;
 	mPORTDOpenDrainClose(BIT_1 | BIT_2 | BIT_3); // make sure the com port is driven 3.3
 	BluetoothResetTRIS = OUTPUT; //output mode on reset line
@@ -134,5 +139,5 @@ void initBluetooth(){
 	if(!hasBluetooth()){
 		Pic32UARTSetBaud( 115200 );
 	}
-
+#endif
 }

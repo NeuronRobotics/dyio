@@ -152,7 +152,18 @@ BYTE SetPID(BYTE chan,INT32 val);
 int GetPIDPosition(BYTE chan);
 void printPIDvals(AbsPID * pid);
 BYTE ZeroPID(BYTE chan);
+/**
+ * Runs both Control and Coms
+ */
 void RunPID(void);
+/**
+ * THis function runs the Comunication for the PID controller
+ */
+void RunPIDComs();
+/**
+ * This runs the get input/math/set output for the PID controller
+ */
+void RunPIDControl();
 void RunPDVel(BYTE chan);
 void pushPID(BYTE chan, INT32 value, float time);
 void pushPIDLimitEvent(PidLimitEvent * event);

@@ -72,6 +72,7 @@ BOOL brownOutDetect = TRUE;
 
 void setBrownOutDetect(BOOL b){
 	brownOutDetect = b;
+	setEEBrownOutDetect(b);
 }
 BOOL getBrownOutDetect(){
 	return brownOutDetect;

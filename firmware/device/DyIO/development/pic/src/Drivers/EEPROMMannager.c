@@ -10,6 +10,9 @@
 static pid_vales pidEEPRomVal[NUM_PID_GROUPS];
 #define pidValSize sizeof(pid_vales)
 #define PID_VAL_END ((pidValSize*(NUM_PID_GROUPS)))
+#define PPM_END	     (PID_VAL_END+NUM_PPM_CHAN)
+#define BROWNOUT_START  (PPM_END+1)
+#define BROWNOUT_END 	(BROWNOUT_START+1)
 
 BYTE loadEEDone=FALSE;
 void LoadEEstore(void){
@@ -33,7 +36,7 @@ void LoadPIDvals(AbsPID * pid, DYIO_PID * dy){
 	if(pidEEPRomVal[i].outputMode==pidEEPRomVal[i].inputMode)
 		return;
 	println_I("Using values for chan: ");p_ul_I(i);
-	//pidChan->Enabled=pidEEPRomVal[i].Enabled;
+	pid->Enabled=pidEEPRomVal[i].Enabled;
 	pid->Polarity=pidEEPRomVal[i].Polarity;
 	//pidChans->Async=pidEEPRomVal[i].Async;
 	dy->inputMode=pidEEPRomVal[i].inputMode;
@@ -65,6 +68,15 @@ void writePPMLink(BYTE * vals){
 }
 void readPPMLink(BYTE * vals){
 	GetEEPRomData(PID_VAL_END,PID_VAL_END+NUM_PPM_CHAN,vals);
+}
+
+void setEEBrownOutDetect(BOOL b){
+	SetEEPRomData(BROWNOUT_START,BROWNOUT_END,&b);
+}
+BOOL getEEBrownOutDetect(){
+	BYTE tmp =0;
+	GetEEPRomData(BROWNOUT_START,BROWNOUT_END,&tmp);
+	return tmp;
 }
 
 

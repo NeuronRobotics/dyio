@@ -36,6 +36,7 @@ DIRS:
 	rm -rf output
 	mkdir -p output/release
 	mkdir -p output/debug
+	mkdir -p output/bluetooth
 	if (test -e $(BIN2HEX)) then echo Toolchain OK; else echo Toolchain error, check NR-Clib/toolchain/pic32/toolchain.mk; exit 1; fi
 all:DIRS release
 	echo ok
@@ -80,6 +81,11 @@ release:
 	cp *.ld output/release/
 	cd output/release/; $(LINK) $(OBJ) -lNRLIB  -o output.elf -Wl,--script="elf32pic32mx.ld",--defsym=__MPLAB_BUILD=1,--gc-sections,--report-mem
 	cd output/release/; $(BIN2HEX) -v -a  output.elf
+	
+	cp output/release/* output/bluetooth/
+	$(CCP) -c src/Drivers/BluetoothManager.c -DHAS_BLUTOOTH	-o output/bluetooth/BluetoothManager.o
+	cd output/bluetooth/; $(LINK) $(OBJ) -lNRLIB  -o output.elf -Wl,--script="elf32pic32mx.ld",--defsym=__MPLAB_BUILD=1,--gc-sections,--report-mem
+	cd output/bluetooth/; $(BIN2HEX) -v -a  output.elf
 	
 	cp output/release/* output/debug/
 	

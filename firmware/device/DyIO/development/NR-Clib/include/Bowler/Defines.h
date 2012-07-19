@@ -98,8 +98,23 @@ typedef union _INT32_UNION
         BYTE TB;
         BYTE FB;
     } byte;
+    float f;
 
 } INT32_UNION;
+/*
+typedef union _UINT64_UNION_DOUBLE
+{
+    UINT64 Val;
+    BYTE v[8];
+    struct
+    {
+        UINT32_UNION LI;
+        UINT32_UNION SI;
+
+    } uint;
+    double d;
+
+} UINT64_UNION_DOUBLE;*/
 
 typedef union _UINT32_UNION
 {

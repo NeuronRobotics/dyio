@@ -41,7 +41,6 @@ const unsigned char dypidNSName[] = "bcs.pid.dypid.*;0.3;;";
 const unsigned char safeNSName[] = "bcs.safe.*;0.3;;";
 
 void hardwareInit(){
-	setPrintLevelWarningPrint();
 	StartCritical();
 	FlashGetMac(MyMAC.v);
 	char macStr[13];
@@ -102,10 +101,12 @@ void hardwareInit(){
 	if(!hasBluetooth()){
 		Pic32UARTSetBaud( 115200 );
 	}
+
 }
 
 void UserInit(void){
 	//setPrintStream(&USBPutArray);
+	setPrintLevelInfoPrint();
 	println_I("Starting PIC initialization");
 	hardwareInit();
 	println_I("Hardware Init done");
@@ -133,11 +134,14 @@ void UserInit(void){
 	lockServos();
 	setPrintLevelInfoPrint();
 	println_I("###Starting PIC In Debug Mode###\n");// All printfDEBUG functions do not need to be removed from code if debug is disabled
-	setPrintLevelWarningPrint();
+	setPrintLevelInfoPrint();
 	//setPrintLevelErrorPrint();
 	println_E("Error level printing");
 	println_W("Warning level printing");
 	println_I("Info level printing");
+	BOOL brown = getEEBrownOutDetect();
+	setCoProcBrownOutMode(brown);
+	setBrownOutDetect(brown);
 
 }
 

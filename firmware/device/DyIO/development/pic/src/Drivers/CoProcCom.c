@@ -407,16 +407,16 @@ BOOL SendPacketUARTCoProc(BYTE * packet,WORD size){
 	FLAG_ASYNC=FLAG_BLOCK;
 	WORD i;
 	RunEveryData wait={getMs(),500};
-	Print_Level l = getPrintLevel();
-	setPrintLevelInfoPrint();
-	println_I("SendPacketUARTCoProc ");p_sl_I(size);print_I(" Bytes [");
+//	Print_Level l = getPrintLevel();
+//	setPrintLevelInfoPrint();
+//	println_I("SendPacketUARTCoProc ");p_sl_I(size);print_I(" Bytes [");
 	for (i=0;i<size;i++){
 		do{
 			//print_I("_");
 			if(RunEvery(&wait) > 0){
 				//print_I("X");
 				FLAG_ASYNC=FLAG_OK;
-				setPrintLevel(l);
+				//setPrintLevel(l);
 				return FALSE;
 			}
 			buttonCheck(3);
@@ -424,7 +424,7 @@ BOOL SendPacketUARTCoProc(BYTE * packet,WORD size){
 		if(!Write32UART2(packet[i])){
 			println_E("ERROR Write failed!!");
 			initCoProcUART();
-			setPrintLevel(l);
+			//setPrintLevel(l);
 			return FALSE;
 		}
 		Delay10us(2);
@@ -432,7 +432,7 @@ BOOL SendPacketUARTCoProc(BYTE * packet,WORD size){
 	}
 	println_I("] Sending to co proc Done ");
 	FLAG_ASYNC=FLAG_OK;
-	setPrintLevel(l);
+//	setPrintLevel(l);
 	return TRUE;
 }
 

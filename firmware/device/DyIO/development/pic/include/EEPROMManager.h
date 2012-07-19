@@ -44,6 +44,9 @@ typedef union _EESTORAGE
 void readPPMLink(BYTE * vals);
 void writePPMLink(BYTE * vals);
 
+void setEEBrownOutDetect(BOOL b);
+BOOL getEEBrownOutDetect();
+
 void LoadEEstore(void);
 void WritePIDvalues(AbsPID * pid, DYIO_PID * dy);
 void LoadPIDvals(AbsPID * pid, DYIO_PID * dy);
