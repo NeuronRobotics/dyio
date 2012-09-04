@@ -41,7 +41,7 @@ void ProcessAsyncData(BowlerPacket * Packet){
 				asyncData[pin].currentVal=ana.Val;
 			println_I("***Setting analog value: ");p_sl_I(pin);print_I(", ");p_ul_I(ana.Val);
 		}
-		else if((mode == IS_DI) || (mode == IS_COUNTER_INPUT_HOME)|| (mode == IS_COUNTER_OUTPUT_HOME)){
+		else if((mode == IS_DI) || (mode == IS_COUNTER_INPUT_HOME)|| (mode == IS_COUNTER_OUTPUT_HOME) || mode == IS_SERVO){
 			//DIG_val[pin]=Packet->use.data[1];
 			asyncData[pin].currentVal=Packet->use.data[1];
 			println_I("***Setting digital value: ");p_sl_I(pin);print_I(", ");p_ul_I(Packet->use.data[1]);//printStream(DIG_val,NUM_PINS);
@@ -69,7 +69,7 @@ void ProcessAsyncData(BowlerPacket * Packet){
 		int i;
 		for(i=0;i<NUM_PINS;i++){
 			BYTE mode = GetChannelMode(i);
-			if((mode == IS_DI) || (mode == IS_COUNTER_INPUT_HOME)|| (mode == IS_COUNTER_OUTPUT_HOME)){
+			if((mode == IS_DI) || (mode == IS_COUNTER_INPUT_HOME)|| (mode == IS_COUNTER_OUTPUT_HOME)|| (mode == IS_SERVO)){
 				asyncData[i].currentVal=Packet->use.data[i];
 			}
 
@@ -176,6 +176,7 @@ void startAdvancedAsyncDefault(BYTE pin){
 	case IS_DI:
 	case IS_COUNTER_INPUT_HOME:
 	case IS_COUNTER_OUTPUT_HOME:
+	case IS_SERVO:
 		asyncData[pin].time.setPoint=5;
 		break;
 	case IS_ANALOG_IN:
@@ -223,7 +224,7 @@ void dealWithAsyncPacket(BowlerPacket * Packet){
 
 int GetDigitalValFromAsync(BYTE pin){
 	initAdvancedAsync();
-	if(GetChannelMode(pin)==IS_DI || GetChannelMode(pin)==IS_COUNTER_INPUT_HOME || GetChannelMode(pin)==IS_COUNTER_OUTPUT_HOME){
+	if(GetChannelMode(pin)==IS_DI || GetChannelMode(pin)==IS_COUNTER_INPUT_HOME || GetChannelMode(pin)==IS_COUNTER_OUTPUT_HOME || GetChannelMode(pin)==IS_SERVO){
 		return asyncData[pin].currentVal;
 	}
 	return 1;
@@ -348,6 +349,7 @@ void runAsyncIO(){
 			case IS_DI:
 			case IS_COUNTER_INPUT_HOME:
 			case IS_COUNTER_OUTPUT_HOME:
+			case IS_SERVO:
 				//println_I("Pushing digital chan: ");p_sl_I(i);print_I(" value:");p_ul_I(asyncData[i].currentVal);
 				currentState [i] = GetDigitalValFromAsync(i);
 				if(ASYN_RDY(i)){

@@ -165,6 +165,7 @@ BOOL IsAsync(BYTE channel){
 	case IS_COUNTER_OUTPUT_HOME:
 	case IS_COUNTER_OUTPUT_INT:
 	case IS_COUNTER_INPUT_INT:
+	case IS_SERVO:
 		return TRUE;
 	default:
 		return FALSE;
