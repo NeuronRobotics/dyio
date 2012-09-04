@@ -31,8 +31,8 @@ void PushAllAsync(){
 	SetColor(0,1,0);
 
 	populateGACV(&packetTemp);
-
 	packetTemp.use.head.Method=BOWLER_ASYN;
+	packetTemp.use.head.MessageID=0;
 	Print_Level l = getPrintLevel();
 	//setPrintLevelInfoPrint();
 	PutBowlerPacket(& packetTemp);
