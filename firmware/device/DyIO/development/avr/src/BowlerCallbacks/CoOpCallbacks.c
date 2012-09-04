@@ -23,55 +23,55 @@ extern DATA_STRUCT DATA;
 void setDig(BYTE pin, BYTE val);
 void setAnv(BYTE pin, UINT16 val);
 typedef struct __attribute__((__packed__)) _DIG_VALS{
-	unsigned b0;
-	unsigned b1;
-	unsigned b2;
-	unsigned b3;
-	unsigned b4;
-	unsigned b5;
-	unsigned b6;
-	unsigned b7;
-	unsigned b8;
-	unsigned b9 ;
-	unsigned b10;
-	unsigned b11;
-	unsigned b12;
-	unsigned b13;
-	unsigned b14;
-	unsigned b15;
-	unsigned b16;
-	unsigned b17;
-	unsigned b18;
-	unsigned b19;
-	unsigned b20;
-	unsigned b21;
-	unsigned b22;
-	unsigned b23;
+//	unsigned b0;
+//	unsigned b1;
+//	unsigned b2;
+//	unsigned b3;
+//	unsigned b4;
+//	unsigned b5;
+//	unsigned b6;
+//	unsigned b7;
+//	unsigned b8;
+//	unsigned b9 ;
+//	unsigned b10;
+//	unsigned b11;
+//	unsigned b12;
+//	unsigned b13;
+//	unsigned b14;
+//	unsigned b15;
+//	unsigned b16;
+//	unsigned b17;
+//	unsigned b18;
+//	unsigned b19;
+//	unsigned b20;
+//	unsigned b21;
+//	unsigned b22;
+//	unsigned b23;
 //	unsigned 	 :8;
-//	BYTE b0;
-//	BYTE b1;
-//	BYTE b2;
-//	BYTE b3;
-//	BYTE b4;
-//	BYTE b5;
-//	BYTE b6;
-//	BYTE b7;
-//	BYTE b8;
-//	BYTE b9 ;
-//	BYTE b10;
-//	BYTE b11;
-//	BYTE b12;
-//	BYTE b13;
-//	BYTE b14;
-//	BYTE b15;
-//	BYTE b16;
-//	BYTE b17;
-//	BYTE b18;
-//	BYTE b19;
-//	BYTE b20;
-//	BYTE b21;
-//	BYTE b22;
-//	BYTE b23;
+	BYTE b0;
+	BYTE b1;
+	BYTE b2;
+	BYTE b3;
+	BYTE b4;
+	BYTE b5;
+	BYTE b6;
+	BYTE b7;
+	BYTE b8;
+	BYTE b9 ;
+	BYTE b10;
+	BYTE b11;
+	BYTE b12;
+	BYTE b13;
+	BYTE b14;
+	BYTE b15;
+	BYTE b16;
+	BYTE b17;
+	BYTE b18;
+	BYTE b19;
+	BYTE b20;
+	BYTE b21;
+	BYTE b22;
+	BYTE b23;
 } DIG_VALS;
 typedef struct __attribute__((__packed__)) _ADC_VALS{
 	unsigned b0 :11;
@@ -150,7 +150,11 @@ BOOL checkDigital(){
 		BYTE mode = GetChannelMode(i);
 		BOOL run = (((mode == IS_DI) )  || ((mode == IS_COUNTER_INPUT_HOME)||(mode == IS_COUNTER_OUTPUT_HOME) || (mode == IS_SERVO)));
 		if (run){
-			aval=GetDIO(i)?1:0;
+			if(mode != IS_SERVO){
+				aval=GetDIO(i);
+			}else{
+				aval=GetServoPos(i);
+			}
 			if (aval!=getDig(i)){
 				ack=TRUE;
 				setDig(i,aval);
@@ -249,53 +253,53 @@ void AsynAck(void){
 BOOL getDig(BYTE pin){
 	switch(pin){
 	case 0:
-		return dig.b0?1:0;
+		return dig.b0;
 	case 1:
-		return dig.b1?1:0;
+		return dig.b1;
 	case 2:
-		return dig.b2?1:0;
+		return dig.b2;
 	case 3:
-		return dig.b3?1:0;
+		return dig.b3;
 	case 4:
-		return dig.b4?1:0;
+		return dig.b4;
 	case 5:
-		return dig.b5?1:0;
+		return dig.b5;
 	case 6:
-		return dig.b6?1:0;
+		return dig.b6;
 	case 7:
-		return dig.b7?1:0;
+		return dig.b7;
 	case 8:
-		return dig.b8?1:0;
+		return dig.b8;
 	case 9:
-		return dig.b9?1:0;
+		return dig.b9;
 	case 10:
-		return dig.b10?1:0;
+		return dig.b10;
 	case 11:
-		return dig.b11?1:0;
+		return dig.b11;
 	case 12:
-		return dig.b12?1:0;
+		return dig.b12;
 	case 13:
-		return dig.b13?1:0;
+		return dig.b13;
 	case 14:
-		return dig.b14?1:0;
+		return dig.b14;
 	case 15:
-		return dig.b15?1:0;
+		return dig.b15;
 	case 16:
-		return dig.b16?1:0;
+		return dig.b16;
 	case 17:
-		return dig.b17?1:0;
+		return dig.b17;
 	case 18:
-		return dig.b18?1:0;
+		return dig.b18;
 	case 19:
-		return dig.b19?1:0;
+		return dig.b19;
 	case 20:
-		return dig.b20?1:0;
+		return dig.b20;
 	case 21:
-		return dig.b21?1:0;
+		return dig.b21;
 	case 22:
-		return dig.b22?1:0;
+		return dig.b22;
 	case 23:
-		return dig.b23?1:0;
+		return dig.b23;
 	default:
 		return 0;
 	}
@@ -304,53 +308,77 @@ BOOL getDig(BYTE pin){
 void setDig(BYTE pin, BYTE val){
 	switch(pin){
 	case 0:
-		dig.b0=(val>0)?1:0;
+		dig.b0=val;
+		return;
 	case 1:
-		dig.b1=(val>0)?1:0;
+		dig.b1=val;
+		return;
 	case 2:
-		dig.b2=(val>0)?1:0;
+		dig.b2=val;
+		return;
 	case 3:
-		dig.b3=(val>0)?1:0;
+		dig.b3=val;
+		return;
 	case 4:
-		dig.b4=(val>0)?1:0;
+		dig.b4=val;
+		return;
 	case 5:
-		dig.b5=(val>0)?1:0;
+		dig.b5=val;
+		return;
 	case 6:
-		dig.b6=(val>0)?1:0;
+		dig.b6=val;
+		return;
 	case 7:
-		dig.b7=(val>0)?1:0;
+		dig.b7=val;
+		return;
 	case 8:
-		dig.b8=(val>0)?1:0;
+		dig.b8=val;
+		return;
 	case 9:
-		dig.b9=(val>0)?1:0;
+		dig.b9=val;
+		return;
 	case 10:
-		dig.b10=(val>0)?1:0;
+		dig.b10=val;
+		return;
 	case 11:
-		dig.b11=(val>0)?1:0;
+		dig.b11=val;
+		return;
 	case 12:
-		dig.b12=(val>0)?1:0;
+		dig.b12=val;
+		return;
 	case 13:
-		dig.b13=(val>0)?1:0;
+		dig.b13=val;
+		return;
 	case 14:
-		dig.b14=(val>0)?1:0;
+		dig.b14=val;
+		return;
 	case 15:
-		dig.b15=(val>0)?1:0;
+		dig.b15=val;
+		return;
 	case 16:
-		dig.b16=(val>0)?1:0;
+		dig.b16=val;
+		return;
 	case 17:
-		dig.b17=(val>0)?1:0;
+		dig.b17=val;
+		return;
 	case 18:
-		dig.b18=(val>0)?1:0;
+		dig.b18=val;
+		return;
 	case 19:
-		dig.b19=(val>0)?1:0;
+		dig.b19=val;
+		return;
 	case 20:
-		dig.b20=(val>0)?1:0;
+		dig.b20=val;
+		return;
 	case 21:
-		dig.b21=(val>0)?1:0;
+		dig.b21=val;
+		return;
 	case 22:
-		dig.b22=(val>0)?1:0;
+		dig.b22=val;
+		return;
 	case 23:
-		dig.b23=(val>0)?1:0;
+		dig.b23=val;
+		return;
 	}
 }
 
@@ -380,19 +408,27 @@ void setAnv(BYTE pin,UINT16 val){
 	switch(pin){
 	case 8:
 		adv.b0=val;
+		return;
 	case 9:
 		adv.b1=val;
+		return;
 	case 10:
 		adv.b2=val;
+		return;
 	case 11:
 		adv.b3=val;
+		return;
 	case 12:
 		adv.b4=val;
+		return;
 	case 13:
 		adv.b5=val;
+		return;
 	case 14:
 		adv.b6=val;
+		return;
 	case 15:
 		adv.b7=val;
+		return;
 	}
 }
