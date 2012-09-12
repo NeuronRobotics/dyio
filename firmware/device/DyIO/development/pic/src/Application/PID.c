@@ -86,7 +86,7 @@ void InitPID(void){
 			dyPid[i].outputChannel=DYPID_NON_USED;
 			WritePIDvalues(&pidGroups[i],&dyPid[i]);
 		}
-		printPIDvals(&pidGroups[i]);
+		printPIDvals(i);
 		force[i].MsTime=0;
 		force[i].setPoint=200;
 
