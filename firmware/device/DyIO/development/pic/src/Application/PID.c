@@ -86,11 +86,8 @@ void InitPID(void){
 			dyPid[i].outputChannel=DYPID_NON_USED;
 			WritePIDvalues(&pidGroups[i],&dyPid[i]);
 		}
-		printPIDvals(i);
 		force[i].MsTime=0;
 		force[i].setPoint=200;
-
-		//pidGroups[i].Enabled=FALSE;
 	}
 
 	InitilizePidController( pidGroups,
@@ -104,6 +101,7 @@ void InitPID(void){
 							&checkPIDLimitEventsMine);
 
 	for (i=0;i<NUM_PID_GROUPS;i++){
+		printPIDvals(i);
 		if(pidGroups[i].Enabled){
 			initPIDChans(i);
 			println_I("Resetting PID channel from init");
