@@ -21,7 +21,7 @@
 
 	typedef union _RPC_VALUE {
 		  unsigned char ASCII[4];
-		  UINT32		   value;
+		  unsigned long int		   value;
 	}RPC_VALUE;
 #if !defined(__STACK_TSK_H) && !defined(_SOCKET_H_)
 	typedef union __attribute__((__packed__)) _MAC_ADDR
@@ -40,7 +40,7 @@
 		unsigned    		ResponseFlag :1;		// Is this packet a response packet
 		unsigned char		DataLegnth;			// Length of data to come
 		unsigned char		CRC;				// CRC for packet
-		UINT32				RPC;				// 4 byte RPC stored as a 32 bit int for single compare;
+		unsigned long int				RPC;				// 4 byte RPC stored as a 32 bit int for single compare;
 	} HEADER;
 #define FullPacketDataSize 251
 	typedef union __attribute__((__packed__)) _BowlerPacket{

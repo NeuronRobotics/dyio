@@ -274,7 +274,7 @@
 	#define UART1TX_IO			(_RD3)
 	#define UART1RX_TRIS		(_TRISD2)
 	#define UART1RX_IO			(_RD2)
-	//#define ConfigUARTOpenCollector() mPORTFOpenDrainOpen(BIT_5);
+	#define ConfigUARTOpenCollector() mPORTFOpenDrainOpen(BIT_5);
 	#define ConfigUARTRXTristate()	UART1RX_TRIS=INPUT;UART2RX_TRIS=INPUT;
 	#define InitBankLEDs()
 	//#define InitDS_IO()

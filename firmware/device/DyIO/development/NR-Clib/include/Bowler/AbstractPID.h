@@ -8,7 +8,7 @@
 #ifndef ABSTRACTPID_H_
 #define ABSTRACTPID_H_
 #include "Bowler_Helper.h"
-#define IntegralSize  100.0
+#define IntegralSize  10
 
 //bcs.pid
 #define _PID				0x6469705f // '_pid'  Get/Set the pid setpoint
@@ -57,64 +57,68 @@ typedef struct  _PidLimitEvent{
  * It also has no assumptions on the time step it is run over. It stores previous time and
  * will calculate scaling based on that and the current time
  */
-	typedef struct __attribute__((__packed__)) _AbsPID
-	{
-		AdsPID_ConFIG  	K;
-		float 			SetPoint;
-		float			IndexLatchValue;
-		BOOL 			stopOnIndex;
-		BOOL 			useIndexLatch;
-		float			CurrentState;
-		float			PreviousError;
-		unsigned int	integralCircularBufferIndex;
-		float  			IntegralCircularBuffer[((int)IntegralSize)];
-		float	 		integralTotal;
-		float			Output;
-		// This must be in MS
-		float			PreviousTime;
-		unsigned char  	   channel;
-		unsigned	Enabled 	:1;
-		unsigned 	Polarity	:1;
-		unsigned 	Async		:1;
-		unsigned 				:5;
-		INTERPOLATE_DATA interpolate;
-		float lastPushedValue;
-		float lastPushedTime;
-	} AbsPID;
+typedef struct __attribute__((__packed__)) _AbsPID
+{
+        unsigned char           channel;
+        unsigned char           Enabled;
+        unsigned char           Polarity;
+        float 			SetPoint;
+        float			IndexLatchValue;
+        unsigned char 		stopOnIndex;
+        unsigned char   	useIndexLatch;
+        float			CurrentState;
+        float			PreviousError;
+        unsigned int            integralCircularBufferIndex;
+        float	 		integralTotal;
+        float			Output;
+        // This must be in MS
+        float			PreviousTime;
+        unsigned char           Async;
+        float                   lastPushedValue;
+        float                   lastPushedTime;
+        struct {
+		float		P;
+		float 		I;
+		float		D;
+	} K;
+        INTERPOLATE_DATA interpolate;
+        float  			IntegralCircularBuffer[IntegralSize];
+} AbsPID;
 
-	typedef struct __attribute__((__packed__)) _DYIO_PID
-	{
-		unsigned char inputMode;
-		unsigned char inputChannel;
-		unsigned char outputMode;
-		unsigned char outputChannel;
-		unsigned char outVal;
-	} DYIO_PID;
+typedef struct __attribute__((__packed__)) _DYIO_PID
+{
+        unsigned char inputMode;
+        unsigned char inputChannel;
+        unsigned char outputMode;
+        unsigned char outputChannel;
+        unsigned char outVal;
+} DYIO_PID;
 
-	typedef struct __attribute__((__packed__)) _PD_VEL
-	{
-		BOOL enabled;
-		float unitsPerSeCond;
-		INT32 lastPosition;
-		float lastVelocity;
-		float lastTime;
-		float currentOutputVel;
-	} PD_VEL;
+typedef struct _PD_VEL
+{
+        BOOL enabled;
+        float unitsPerSeCond;
+        INT32 lastPosition;
+        float lastVelocity;
+        float lastTime;
+        float currentOutputVel;
+} PD_VEL;
 /**
  * RunAbstractPIDCalc
  * @param state A pointer to the AbsPID struct to run the calculations on
  * @param CurrentTime a float of the time it is called in MS for use by the PID calculation
  */
 void RunAbstractPIDCalc(AbsPID * state,float CurrentTime);
-/**typedef struct __attribute__((__packed__)) _PD_VEL
-{
-	BOOL enabled;
-	float unitsPerSeCond;
-	INT32 lastPosition;
-	float lastVelocity;
-	float lastTime;
-	float currentOutputVel;
-} PD_VEL;
+
+/**
+ * Set the PID constants
+ * @param group which group to set
+ * @param p constant
+ * @param i constant
+ * @param d constant
+ */
+void setPIDConstants(int group,float p,float i,float d);
+/**
  * InitAbsPID
  * @param state A pointer to the AbsPID the initialize
  * @param KP the Proportional Constant
@@ -137,20 +141,29 @@ unsigned char ProcessPIDPacket(BowlerPacket * Packet);
  * @param resetPositionPtr function pointer to the re-set position function
  * @param pidAsyncCallbackPtr function pointer to push an async value
  */
-void InitilizePidController(AbsPID * groups,PD_VEL * vel,int numberOfGroups,
-		float (*getPositionPtr)(int),
-		void (*setOutputPtr)(int,float),
-		int (*resetPositionPtr)(int,int),
-		BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet),
-		void (*onPidConfigurePtr)(int),
-		PidLimitEvent * (*checkPIDLimitEventsPtr)(BYTE group));
+void InitilizePidController(AbsPID  groups [],
+                            PD_VEL * vel,
+                            int numberOfGroups,
+                            float (*getPositionPtr)(int),
+                            void (*setOutputPtr)(int,float),
+                            int (*resetPositionPtr)(int,int),
+                            BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet),
+                            void (*onPidConfigurePtr)(int),
+                            PidLimitEvent * (*checkPIDLimitEventsPtr)(BYTE group));
+/**
+ * This sets a different set of control loop math.
+ * @param math a function pointer to the math calculation to be used in place of the PID math
+ */
+void SetControllerMath( void (*math)(AbsPID * ,float ));
 
+void SetPIDEnabled(BYTE index, BOOL enabled);
 
+BOOL isPidEnabled(BYTE i);
 
 BYTE SetPIDTimed(BYTE chan,INT32 val,float ms);
 BYTE SetPID(BYTE chan,INT32 val);
 int GetPIDPosition(BYTE chan);
-void printPIDvals(AbsPID * pid);
+void printPIDvals(int i);
 BYTE ZeroPID(BYTE chan);
 /**
  * Runs both Control and Coms
