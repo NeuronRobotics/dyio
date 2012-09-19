@@ -15,6 +15,7 @@ BOOL pwr=FALSE;
 RunEveryData pid={0,30};
 RunEveryData vel={0,100};
 RunEveryData syncVolt={0,2000};
+RunEveryData sample={0,2000};
 RunEveryData ppm={0,200};
 static BOOL heartBeatLock = TRUE;
 static int heartBeatLockTime = 1;
