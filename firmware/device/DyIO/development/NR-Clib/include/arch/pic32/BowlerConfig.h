@@ -45,4 +45,8 @@ void SetPICUARTFifo(BYTE_FIFO_STORAGE * s);
 void SendPacketUSB(BYTE * packet,WORD size);
 void Pic32_Bowler_HAL_Init(void);
 
+
+void InitADCHardware(BYTE chan);
+float getAdcVoltage(BYTE chan);
+
 #endif /* BOWLERCONFIG_H_ */

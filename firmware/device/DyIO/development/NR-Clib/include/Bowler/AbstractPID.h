@@ -12,7 +12,7 @@
 
 //bcs.pid
 #define _PID				0x6469705f // '_pid'  Get/Set the pid setpoint
-#define CPID				0x64697063 //  Configure PID
+#define CPID				0x64697063 // 'cpid'  Configure PID
 #define APID				0x64697061 // 'apid'  Get/Set all PID channels
 #define RPID				0x64697072 // 'rpid'  Reset a PID channel
 #define _VPD				0x6470765f // '_vpd'    PID velocity command

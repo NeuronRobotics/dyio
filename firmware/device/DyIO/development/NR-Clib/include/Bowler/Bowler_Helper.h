@@ -49,6 +49,6 @@ typedef struct __attribute__((__packed__)) _INTERPOLATE_DATA
 
 float interpolate(INTERPOLATE_DATA * data, float currentTime);
 
-
+BOOL bound(float target, float actual, float plus, float minus);
 
 #endif /* BOWLER_HELPER_H_ */
