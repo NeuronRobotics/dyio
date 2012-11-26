@@ -39,7 +39,7 @@
 								<option id="com.crt.advproject.gcc.hdrlib.767211794" name="Use headers for C library" superClass="com.crt.advproject.gcc.hdrlib" value="com.crt.advproject.gcc.hdrlib.codered" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.1627300274" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSISv2p10_LPC43xx_DriverLib/inc}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NR-Clib/development/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NR-Clib/include}&quot;"/>
 								</option>
 								<option id="com.crt.advproject.gcc.fpu.211972217" name="Floating point" superClass="com.crt.advproject.gcc.fpu" value="com.crt.advproject.gcc.fpu.fpv4" valueType="enumerated"/>
 								<inputType id="com.crt.advproject.compiler.input.1952668724" superClass="com.crt.advproject.compiler.input"/>
@@ -50,9 +50,7 @@
 								<option id="gnu.both.asm.option.flags.crt.648161688" name="Assembler flags" superClass="gnu.both.asm.option.flags.crt" value="-c -x assembler-with-cpp -D__REDLIB__ -DDEBUG -D__CODE_RED" valueType="string"/>
 								<option id="com.crt.advproject.gas.hdrlib.1614246496" name="Use headers for C library" superClass="com.crt.advproject.gas.hdrlib" value="com.crt.advproject.gas.hdrlib.codered" valueType="enumerated"/>
 								<option id="com.crt.advproject.gas.fpu.154683449" name="Floating point" superClass="com.crt.advproject.gas.fpu" value="com.crt.advproject.gas.fpu.fpv4" valueType="enumerated"/>
-								<option id="gnu.both.asm.option.include.paths.391190448" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NR-Clib/include}&quot;"/>
-								</option>
+								<option id="gnu.both.asm.option.include.paths.391190448" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath"/>
 								<inputType id="com.crt.advproject.assembler.input.1060515697" name="Additional Assembly Source Files" superClass="com.crt.advproject.assembler.input"/>
 							</tool>
 							<tool id="com.crt.advproject.link.cpp.exe.debug.1303639566" name="MCU C++ Linker" superClass="com.crt.advproject.link.cpp.exe.debug"/>
@@ -547,6 +545,8 @@
 					</profile>
 				</scannerConfigBuildInfo>
 			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+			<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 		</cconfiguration>
 		<cconfiguration id="com.crt.advproject.config.exe.release.722986451">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.crt.advproject.config.exe.release.722986451" moduleId="org.eclipse.cdt.core.settings" name="Release">
@@ -1082,6 +1082,8 @@
 					</profile>
 				</scannerConfigBuildInfo>
 			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+			<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
