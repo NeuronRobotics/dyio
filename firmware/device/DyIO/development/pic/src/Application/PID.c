@@ -75,6 +75,7 @@ void InitPID(void){
 		pidGroups[i].Enabled=FALSE;
 		pidGroups[i].channel = i;
 		vel[i].enabled=FALSE;
+		vel[i].K.P=.1;
 		limits[i].type=NO_LIMIT;
 
 		LoadPIDvals(&pidGroups[i],&dyPid[i]);
