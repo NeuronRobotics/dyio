@@ -89,7 +89,8 @@ void UpstreamPushPowerChange(void){
 	SetColor(0,1,0);
 	LoadCorePacket(& packetTemp);
 	POWER(& packetTemp);
-	packetTemp.use.head.MessageID=44;
+	packetTemp.use.head.MessageID=3;
+	 packetTemp.use.head.Method=BOWLER_ASYN;
 	PutBowlerPacket(& packetTemp);
 	UpdateAVRLED();
 }
