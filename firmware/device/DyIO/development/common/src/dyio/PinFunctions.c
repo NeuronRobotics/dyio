@@ -114,20 +114,23 @@ void getFunctionList(BowlerPacket * Packet){
 	}
 	if(chan == 0){
 			Packet->use.data[index++]=IS_SPI_SCK	;
-			Packet->use.data[index++]=IS_COUNTER_INPUT_INT	;
-			Packet->use.data[index++]=IS_COUNTER_OUTPUT_INT	;
+			Packet->use.data[index++]=IS_COUNTER_INPUT_HOME	;
+			Packet->use.data[index++]=IS_COUNTER_OUTPUT_HOME	;
 		}
 	if(chan == 1){
 				Packet->use.data[index++]=IS_SPI_MISO		;
-				Packet->use.data[index++]=IS_COUNTER_INPUT_INT	;
-				Packet->use.data[index++]=IS_COUNTER_OUTPUT_INT	;
+				Packet->use.data[index++]=IS_COUNTER_INPUT_HOME		;
+				Packet->use.data[index++]=IS_COUNTER_OUTPUT_HOME		;
 			}
 	if(chan == 2){
 				Packet->use.data[index++]=IS_SPI_MOSI		;
-				Packet->use.data[index++]=IS_COUNTER_INPUT_INT	;
-				Packet->use.data[index++]=IS_COUNTER_OUTPUT_INT	;
+				Packet->use.data[index++]=IS_COUNTER_INPUT_HOME	;
+				Packet->use.data[index++]=IS_COUNTER_OUTPUT_HOME		;
 			}
-
+	if(chan == 3){
+				Packet->use.data[index++]=IS_COUNTER_INPUT_HOME	;
+				Packet->use.data[index++]=IS_COUNTER_OUTPUT_HOME		;
+			}
 
 	switch(chan){
 	case 8:
@@ -156,8 +159,8 @@ void getFunctionList(BowlerPacket * Packet){
 		case 21:
 		case 19:
 		case 17:
-			Packet->use.data[index++]=IS_COUNTER_INPUT_HOME;
-			Packet->use.data[index++]=IS_COUNTER_OUTPUT_HOME;
+			Packet->use.data[index++]=IS_COUNTER_INPUT_INT;
+			Packet->use.data[index++]=IS_COUNTER_OUTPUT_INT;
 			break;
 		}
 	switch(chan){
