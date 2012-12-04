@@ -2,12 +2,12 @@
 UNAME := $(shell uname)
 
 ifeq ($(UNAME), Linux)
-PICTOOLCHAIN    = /home/opt/microchip/xc32/v1.10/bin/
+PICTOOLCHAIN    = /home/opt/microchip/xc32/v1.00/bin/
 else
 
 endif
 
-GCCP			=xc32-gcc  -O1 -s
+GCCP			=xc32-gcc -mips16 -O1 -s
 ARP				=xc32-ar
 BIN2HEX			=xc32-bin2hex
 #PICTOOLCHAIN    = /usr/local/bin/
