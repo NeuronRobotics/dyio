@@ -181,5 +181,10 @@ void RunPDVel(BYTE chan);
 void pushPID(BYTE chan, INT32 value, float time);
 void pushPIDLimitEvent(PidLimitEvent * event);
 
+/***
+ * This is a getter for the interpolation state
+ */
+BOOL isPIDInterpolating(int index);
+
 
 #endif /* ABSTRACTPID_H_ */

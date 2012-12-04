@@ -18,45 +18,30 @@
 #ifndef BOWLERCONFIG_H_
 #define BOWLERCONFIG_H_
 
-	#include "reg_structs.h"
-	#include <util/delay.h>
-	#include <avr/io.h>
-	#include <string.h>
-	#include <avr/interrupt.h>
+#include <NXP/crp.h>
 
 #if !defined(__AVR_ATmega324P__)
 	#define USE_DYN_RPC
 #endif
 
-#define FlagBusy_DDR	DDRCbits._P7
-#define FlagAsync_DDR 	DDRCbits._P6
-#define FlagBusy_IO		PORTCbits._P7
-#define FlagAsync		PINCbits._P6
-#define InitFlagPins() 	FlagBusy_DDR=OUTPUT;FlagAsync_DDR=INPUT;FlagBusy_IO=0;PORTCbits._P6=1;
-
+// GPIO pin masking defines
 #define OUTPUT 					1
 #define INPUT  					0
 #define OFF						0
 #define ON						1
-#define ALLOUTPUT 				0xFF
-#define ALLINPUT  				0x00
-#define SDK_LED_ALLON 			0x00
-#define SDK_LED_ALLOFF 			0xff
-#define SDK_LED_ON 				0
-#define SDK_LED_OFF 			1
-#define UARTDELAY				20
 
-#define Nop()					__asm__("nop\n\t")
+
+#define Nop()					Nop()//__asm__("nop\n\t")
 #define nop()					Nop()
 
-void WriteAVRUART0(BYTE val);
-void WriteAVRUART1(BYTE val);
+//void WriteAVRUART0(BYTE val);
+//void WriteAVRUART1(BYTE val);
 
-//#define WriteUART_COM 			WriteAVRUART0
-//#define WriteUART_DEBUG 		WriteAVRUART1
+#define WriteUART_COM 		Nop()	//WriteAVRUART0
+#define WriteUART_DEBUG 		Nop() //WriteAVRUART1
 
-#define StartCritical() cli()
-#define EndCritical()   sei()
+#define StartCritical() Nop() //cli()
+#define EndCritical()   Nop() //sei()
 
 #define USE_UART
 void AVR_Bowler_HAL_Init(void);

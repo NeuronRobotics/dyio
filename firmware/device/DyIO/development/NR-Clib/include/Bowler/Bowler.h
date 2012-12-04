@@ -49,7 +49,9 @@
 #elif defined (__i386__) || defined (__ia64__) || defined (__amd64__)
 	#include "arch/native/BowlerConfig.h"
 #else
-	#error Unknown archetecture!! See Bowler.h
+	//#error Unknown archetecture!! See Bowler.h
+	#warning this is a hacky work around
+	#include "arch/NXP/BowlerConfig.h"
 #endif
 
 #include "BowlerServerHardwareAbstraction.h"

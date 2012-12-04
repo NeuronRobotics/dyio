@@ -7,7 +7,7 @@ else
 
 endif
 
-GCCP			=xc32-gcc  -O1 -mips16 -s
+GCCP			=xc32-gcc  -O1 -s
 ARP				=xc32-ar
 BIN2HEX			=xc32-bin2hex
 #PICTOOLCHAIN    = /usr/local/bin/

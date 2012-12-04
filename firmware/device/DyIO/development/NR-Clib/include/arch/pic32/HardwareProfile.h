@@ -280,3 +280,7 @@
 	//#define InitDS_IO()
 
 #endif
+
+void InitADCHardware(BYTE chan);
+float getAdcVoltage(BYTE chan, int samples);
+int getAdcRaw(BYTE chan, int samples);

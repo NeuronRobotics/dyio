@@ -37,7 +37,7 @@ DIRS:
 	mkdir -p output/release
 	mkdir -p output/debug
 	mkdir -p output/bluetooth
-	if (test -e $(BIN2HEX)) then echo Toolchain OK; else echo Toolchain error, check NR-Clib/toolchain/pic32/toolchain.mk; exit 1; fi
+	#if (test -e (which $(BIN2HEX)))) then echo Toolchain OK; else echo Toolchain error, check NR-Clib/toolchain/pic32/toolchain.mk; exit 1; fi
 all:DIRS release
 	echo ok
 release:	
