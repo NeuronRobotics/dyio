@@ -23,6 +23,7 @@ BYTE UserGetRPCs(BowlerPacket *Packet){
 	char tmpName[17];
 	int i;
 	BYTE rev[3];
+	static INT32_UNION PID_Temp;
 
 	switch (Packet->use.head.RPC){
 	case GCHM:
@@ -101,6 +102,17 @@ BYTE UserGetRPCs(BowlerPacket *Packet){
 		Packet->use.data[1]=timeUnion.byte.SB;
 		Packet->use.data[2]=timeUnion.byte.LB;
 		Packet->use.head.DataLegnth=4+3;
+		break;
+	case GCHC:
+		PID_Temp.Val=NUM_PINS;
+		Packet->use.data[1]=PID_Temp.byte.FB;
+		Packet->use.data[2]=PID_Temp.byte.TB;
+		Packet->use.data[3]=PID_Temp.byte.SB;
+		Packet->use.data[4]=PID_Temp.byte.LB;
+		Packet->use.head.DataLegnth=4+4;
+		break;
+	case GCML:
+		getFunctionList( Packet);
 		break;
 	default:
 		if(CartesianControllerGetPacket(Packet) == FALSE && (ProcessPIDPacket(Packet)==FALSE)){

@@ -13,11 +13,13 @@
 //bcs.pid
 #define _PID				0x6469705f // '_pid'  Get/Set the pid setpoint
 #define CPID				0x64697063 // 'cpid'  Configure PID
+#define CPDV				0x76647063 // 'cpdv'  Configure PD Velocity controler
 #define APID				0x64697061 // 'apid'  Get/Set all PID channels
 #define RPID				0x64697072 // 'rpid'  Reset a PID channel
 #define _VPD				0x6470765f // '_vpd'    PID velocity command
 #define KPID				0x6469706b // 'kpid'  Kill all PID controllers
 #define PIDL				0x6c646970 // 'pidl'  PID limit event
+#define GPDC				0x63647067 // 'gpdc'  Get PID count
 
 typedef enum _PidLimitType {
 
@@ -77,10 +79,10 @@ typedef struct __attribute__((__packed__)) _AbsPID
         float                   lastPushedValue;
         float                   lastPushedTime;
         struct {
-		float		P;
-		float 		I;
-		float		D;
-	} K;
+			float		P;
+			float 		I;
+			float		D;
+		} K;
         INTERPOLATE_DATA interpolate;
         float  			IntegralCircularBuffer[IntegralSize];
 } AbsPID;
@@ -102,6 +104,10 @@ typedef struct _PD_VEL
         float lastVelocity;
         float lastTime;
         float currentOutputVel;
+        struct {
+			float		P;
+			float		D;
+		} K;
 } PD_VEL;
 /**
  * RunAbstractPIDCalc
