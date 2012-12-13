@@ -140,6 +140,12 @@ BYTE UserPostRPCs(BowlerPacket *Packet){
 		SetPowerState1(Packet->use.data[3],Packet->use.data[1]);
 		//Packet->use.head.MessageID=44;
 		break;
+#if defined(ROBOSUB_DEMO)
+	case DIGO:
+		SetDIO(Packet->use.data[0],Packet->use.data[1]);
+		READY(Packet,zone,37);
+		break;
+#endif
 	case EEPD:
 		start = Packet->use.data[0];
 		end = Packet->use.data[1];
