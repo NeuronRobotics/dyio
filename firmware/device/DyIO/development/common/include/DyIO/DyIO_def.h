@@ -23,6 +23,8 @@
 #ifndef DYIO_DEF_H_
 #define DYIO_DEF_H_
 
+//#define ROBOSUB_DEMO
+
 #define NUM_PINS   			24
 #define SERVO_BOUND 		15
 

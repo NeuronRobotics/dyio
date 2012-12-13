@@ -40,7 +40,7 @@ BOOL checkDigital();
 void initPinState(BYTE i);
 void initBluetooth();
 
-//#define ROBOSUB_DEMO
+
 
 #if defined(ROBOSUB_DEMO)
 	#define DIGO			0x6f676964 // 'digo'  Comment
