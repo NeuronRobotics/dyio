@@ -36,20 +36,13 @@
 
 void USB_INT_DisableAllInterrupts(void)
 {
-	AVR32_USBB.USBCON.vbuste     = false;
-	AVR32_USBB.USBCON.idte       = false;
-
-	AVR32_USBB.uhinteclr         = -1;
-	AVR32_USBB.udinteclr         = -1;
+	IEC1bits.USBIE = 0;
 }
 
 void USB_INT_ClearAllInterrupts(void)
 {
-	AVR32_USBB.USBSTACLR.vbustic = true;
-	AVR32_USBB.USBSTACLR.idtic   = true;
-
-	AVR32_USBB.uhintclr          = -1;
-	AVR32_USBB.udintclr          = -1;
+	U1EIR = 0xFF;
+	U1IR  = 0xFF;
 }
 
 #pragma interrupt _USB1Interrupt ipl4 vector 45
