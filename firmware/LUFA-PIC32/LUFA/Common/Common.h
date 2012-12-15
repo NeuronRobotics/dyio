@@ -283,15 +283,11 @@
 					  _delay_ms(1);
 				}
 				#elif (ARCH == ARCH_PIC32)
-				if (GCC_IS_COMPILE_CONST(Milliseconds))
-				{
-					_delay_ms(Milliseconds);
-				}
-				else
-				{
-					while (Milliseconds--)
-					  _delay_ms(1);
-				}
+
+					volatile DWORD _dcnt;
+					DWORD dwCount = Milliseconds*10;
+					_dcnt = dwCount*((DWORD)(0.000036/(3.0/F_CPU)/10));
+					while(_dcnt--);
 				#endif
 			}
 
@@ -314,6 +310,9 @@
 				return __builtin_mfsr(AVR32_SR);
 				#elif (ARCH == ARCH_XMEGA)
 				return SREG;
+				#elif (ARCH == ARCH_PIC32)
+					#warning This is not implemented
+					return 0;
 				#endif
 			}
 
@@ -339,6 +338,9 @@
 				  __builtin_csrf(AVR32_SR_GM_OFFSET);
 				#elif (ARCH == ARCH_XMEGA)
 				SREG = GlobalIntState;
+				#elif (ARCH == ARCH_PIC32)
+					#warning This is not implemented
+					
 				#endif
 
 				GCC_MEMORY_BARRIER();
