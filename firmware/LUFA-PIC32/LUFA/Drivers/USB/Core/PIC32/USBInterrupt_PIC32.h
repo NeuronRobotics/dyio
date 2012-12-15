@@ -108,7 +108,7 @@
 						AVR32_USBB.UDINTESET.eorstes  = true;
 						break;
 					case USB_INT_SOFI:
-						AVR32_USBB.UDINTESET.sofes    = true;
+						U1IEbits.SOFIE    = true;
 						break;
 					case USB_INT_RXSTPI:
 						(&AVR32_USBB.UECON0SET)[USB_Endpoint_SelectedEndpoint].rxstpes = true;
@@ -161,7 +161,7 @@
 						AVR32_USBB.UDINTECLR.eorstec  = true;
 						break;
 					case USB_INT_SOFI:
-						AVR32_USBB.UDINTECLR.sofec    = true;
+						U1IEbits.SOFIE     			  = false;
 						break;
 					case USB_INT_RXSTPI:
 						(&AVR32_USBB.UECON0CLR)[USB_Endpoint_SelectedEndpoint].rxstpec = true;
@@ -219,8 +219,7 @@
 						(void)AVR32_USBB.UDINTCLR;
 						break;
 					case USB_INT_SOFI:
-						AVR32_USBB.UDINTCLR.sofc     = true;
-						(void)AVR32_USBB.UDINTCLR;
+						U1IRbits.SOFIF = false;
 						break;
 					case USB_INT_RXSTPI:
 						(&AVR32_USBB.UESTA0CLR)[USB_Endpoint_SelectedEndpoint].rxstpic = true;
@@ -274,7 +273,7 @@
 					case USB_INT_EORSTI:
 						return AVR32_USBB.UDINTE.eorste;
 					case USB_INT_SOFI:
-						return AVR32_USBB.UDINTE.sofe;
+						return U1IRbits.SOFIE;
 					case USB_INT_RXSTPI:
 						return (&AVR32_USBB.UECON0)[USB_Endpoint_SelectedEndpoint].rxstpe;
 					#endif
@@ -316,7 +315,7 @@
 					case USB_INT_EORSTI:
 						return AVR32_USBB.UDINT.eorst;
 					case USB_INT_SOFI:
-						return AVR32_USBB.UDINT.sof;
+						return U1IRbits.SOFIF;
 					case USB_INT_RXSTPI:
 						return (&AVR32_USBB.UESTA0)[USB_Endpoint_SelectedEndpoint].rxstpi;
 					#endif
