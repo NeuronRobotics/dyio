@@ -11,7 +11,7 @@
 
 MCU          = 32MX795F512L
 ARCH         = PIC32
-BOARD        = DELTA_FORGE
+BOARD        = Ethernet_Starter_Kit
 F_CPU        = 8000000
 F_USB        = $(F_CPU)
 OPTIMIZATION = s

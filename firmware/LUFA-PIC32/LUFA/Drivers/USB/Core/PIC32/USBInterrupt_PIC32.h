@@ -90,48 +90,49 @@
 				switch (Interrupt)
 				{
 					case USB_INT_VBUSTI:
-						AVR32_USBB.USBCON.vbuste      = true;
+#warning unimplemented
 						break;
 					#if defined(USB_CAN_BE_BOTH)
 					case USB_INT_IDTI:
-						AVR32_USBB.USBCON.idte        = true;
+#warning unimplemented
 						break;
 					#endif
 					#if defined(USB_CAN_BE_DEVICE)
 					case USB_INT_WAKEUPI:
-						AVR32_USBB.UDINTESET.wakeupes = true;
+#warning unimplemented
 						break;
 					case USB_INT_SUSPI:
-						AVR32_USBB.UDINTESET.suspes   = true;
+#warning unimplemented
 						break;
 					case USB_INT_EORSTI:
-						AVR32_USBB.UDINTESET.eorstes  = true;
+						U1IEbits.URSTIE = true;
 						break;
 					case USB_INT_SOFI:
 						U1IEbits.SOFIE    = true;
 						break;
 					case USB_INT_RXSTPI:
-						(&AVR32_USBB.UECON0SET)[USB_Endpoint_SelectedEndpoint].rxstpes = true;
+						//(&AVR32_USBB.UECON0SET)[USB_Endpoint_SelectedEndpoint].rxstpes = true;
+#warning unimplemented
 						break;
 					#endif
 					#if defined(USB_CAN_BE_HOST)
 					case USB_INT_HSOFI:
-						AVR32_USBB.UHINTESET.hsofies  = true;
+#warning unimplemented
 						break;
 					case USB_INT_DCONNI:
-						AVR32_USBB.UHINTESET.dconnies = true;
+#warning unimplemented
 						break;
 					case USB_INT_DDISCI:
-						AVR32_USBB.UHINTESET.ddiscies = true;
+#warning unimplemented
 						break;
 					case USB_INT_RSTI:
-						AVR32_USBB.UHINTESET.rsties   = true;
+#warning unimplemented
 						break;
 					case USB_INT_BCERRI:
-						AVR32_USBB.USBCON.bcerre      = true;
+#warning unimplemented
 						break;
 					case USB_INT_VBERRI:
-						AVR32_USBB.USBCON.vberre      = true;
+#warning unimplemented
 						break;
 					#endif
 				}
@@ -143,48 +144,49 @@
 				switch (Interrupt)
 				{
 					case USB_INT_VBUSTI:
-						AVR32_USBB.USBCON.vbuste      = false;
+#warning unimplemented
 						break;
 					#if defined(USB_CAN_BE_BOTH)
 					case USB_INT_IDTI:
-						AVR32_USBB.USBCON.idte        = false;
+#warning unimplemented
 						break;
 					#endif
 					#if defined(USB_CAN_BE_DEVICE)
 					case USB_INT_WAKEUPI:
-						AVR32_USBB.UDINTECLR.wakeupec = true;
+#warning unimplemented
 						break;
 					case USB_INT_SUSPI:
-						AVR32_USBB.UDINTECLR.suspec   = true;
+#warning unimplemented
 						break;
 					case USB_INT_EORSTI:
-						AVR32_USBB.UDINTECLR.eorstec  = true;
+						U1IEbits.URSTIE = false;
 						break;
 					case USB_INT_SOFI:
 						U1IEbits.SOFIE     			  = false;
 						break;
 					case USB_INT_RXSTPI:
-						(&AVR32_USBB.UECON0CLR)[USB_Endpoint_SelectedEndpoint].rxstpec = true;
+						//(&AVR32_USBB.UECON0CLR)[USB_Endpoint_SelectedEndpoint].rxstpec = true;
+#warning unimplemented
 						break;
 					#endif
 					#if defined(USB_CAN_BE_HOST)
 					case USB_INT_HSOFI:
-						AVR32_USBB.UHINTECLR.hsofiec  = true;
+#warning unimplemented
 						break;
 					case USB_INT_DCONNI:
-						AVR32_USBB.UHINTECLR.dconniec = true;
+#warning unimplemented
 						break;
 					case USB_INT_DDISCI:
-						AVR32_USBB.UHINTECLR.ddisciec = true;
+#warning unimplemented
 						break;
 					case USB_INT_RSTI:
-						AVR32_USBB.UHINTECLR.rstiec   = true;
+#warning unimplemented
 						break;
 					case USB_INT_BCERRI:
-						AVR32_USBB.USBCON.bcerre      = false;
+#warning unimplemented
 						break;
 					case USB_INT_VBERRI:
-						AVR32_USBB.USBCON.vberre      = false;
+#warning unimplemented
 						break;
 					#endif
 				}
@@ -196,59 +198,49 @@
 				switch (Interrupt)
 				{
 					case USB_INT_VBUSTI:
-						AVR32_USBB.USBSTACLR.vbustic = true;
-						(void)AVR32_USBB.USBSTACLR;
+#warning unimplemented
 						break;
 					#if defined(USB_CAN_BE_BOTH)
 					case USB_INT_IDTI:
-						AVR32_USBB.USBSTACLR.idtic   = true;
-						(void)AVR32_USBB.USBSTACLR;
+#warning unimplemented
 						break;
 					#endif
 					#if defined(USB_CAN_BE_DEVICE)
 					case USB_INT_WAKEUPI:
-						AVR32_USBB.UDINTCLR.wakeupc  = true;
-						(void)AVR32_USBB.UDINTCLR;
+#warning unimplemented
 						break;
 					case USB_INT_SUSPI:
-						AVR32_USBB.UDINTCLR.suspc    = true;
-						(void)AVR32_USBB.UDINTCLR;
+#warning unimplemented
 						break;
 					case USB_INT_EORSTI:
-						AVR32_USBB.UDINTCLR.eorstc   = true;
-						(void)AVR32_USBB.UDINTCLR;
+						U1IRbits.URSTIF = false;
 						break;
 					case USB_INT_SOFI:
 						U1IRbits.SOFIF = false;
 						break;
 					case USB_INT_RXSTPI:
-						(&AVR32_USBB.UESTA0CLR)[USB_Endpoint_SelectedEndpoint].rxstpic = true;
+						//(&AVR32_USBB.UESTA0CLR)[USB_Endpoint_SelectedEndpoint].rxstpic = true;
+#warning unimplemented
 						break;
 					#endif
 					#if defined(USB_CAN_BE_HOST)
 					case USB_INT_HSOFI:
-						AVR32_USBB.UHINTCLR.hsofic   = true;
-						(void)AVR32_USBB.UHINTCLR;
+#warning unimplemented
 						break;
 					case USB_INT_DCONNI:
-						AVR32_USBB.UHINTCLR.dconnic  = true;
-						(void)AVR32_USBB.UHINTCLR;
+#warning unimplemented
 						break;
 					case USB_INT_DDISCI:
-						AVR32_USBB.UHINTCLR.ddiscic  = true;
-						(void)AVR32_USBB.UHINTCLR;
+#warning unimplemented
 						break;
 					case USB_INT_RSTI:
-						AVR32_USBB.UHINTCLR.rstic    = true;
-						(void)AVR32_USBB.UHINTCLR;
+#warning unimplemented
 						break;
 					case USB_INT_BCERRI:
-						AVR32_USBB.USBSTACLR.bcerric = true;
-						(void)AVR32_USBB.USBSTACLR;
+#warning unimplemented
 						break;
 					case USB_INT_VBERRI:
-						AVR32_USBB.USBSTACLR.vberric = true;
-						(void)AVR32_USBB.USBSTACLR;
+#warning unimplemented
 						break;
 					#endif
 				}
@@ -260,36 +252,48 @@
 				switch (Interrupt)
 				{
 					case USB_INT_VBUSTI:
-						return AVR32_USBB.USBCON.vbuste;
+#warning unimplemented
+						return 0;
 					#if defined(USB_CAN_BE_BOTH)
 					case USB_INT_IDTI:
-						return AVR32_USBB.USBCON.idte;
+#warning unimplemented
+						return 0;
 					#endif
 					#if defined(USB_CAN_BE_DEVICE)
 					case USB_INT_WAKEUPI:
-						return AVR32_USBB.UDINTE.wakeupe;
+#warning unimplemented
+						return 0;
 					case USB_INT_SUSPI:
-						return AVR32_USBB.UDINTE.suspe;
+#warning unimplemented
+						return 0;
 					case USB_INT_EORSTI:
-						return AVR32_USBB.UDINTE.eorste;
+						return U1IEbits.URSTIE ;
 					case USB_INT_SOFI:
-						return U1IRbits.SOFIE;
+						return U1IEbits.SOFIE;
 					case USB_INT_RXSTPI:
-						return (&AVR32_USBB.UECON0)[USB_Endpoint_SelectedEndpoint].rxstpe;
+						//return (&AVR32_USBB.UECON0)[USB_Endpoint_SelectedEndpoint].rxstpe;
+#warning unimplemented
+						return 0;
 					#endif
 					#if defined(USB_CAN_BE_HOST)
 					case USB_INT_HSOFI:
-						return AVR32_USBB.UHINTE.hsofie;
+#warning unimplemented
+						return 0;
 					case USB_INT_DCONNI:
-						return AVR32_USBB.UHINTE.dconnie;
+#warning unimplemented
+						return 0;
 					case USB_INT_DDISCI:
-						return AVR32_USBB.UHINTE.ddiscie;
+#warning unimplemented
+						return 0;
 					case USB_INT_RSTI:
-						return AVR32_USBB.UHINTE.rstie;
+#warning unimplemented
+						return 0;
 					case USB_INT_BCERRI:
-						return AVR32_USBB.USBCON.bcerre;
+#warning unimplemented
+						return 0;
 					case USB_INT_VBERRI:
-						return AVR32_USBB.USBCON.vberre;
+#warning unimplemented
+						return 0;
 					#endif
 				}
 
@@ -302,36 +306,48 @@
 				switch (Interrupt)
 				{
 					case USB_INT_VBUSTI:
-						return AVR32_USBB.USBSTA.vbusti;
+#warning unimplemented
+						return 0;
 					#if defined(USB_CAN_BE_BOTH)
 					case USB_INT_IDTI:
-						return AVR32_USBB.USBSTA.idti;
+#warning unimplemented
+						return 0;
 					#endif
 					#if defined(USB_CAN_BE_DEVICE)
 					case USB_INT_WAKEUPI:
-						return AVR32_USBB.UDINT.wakeup;
+#warning unimplemented
+						return 0;
 					case USB_INT_SUSPI:
-						return AVR32_USBB.UDINT.susp;
+#warning unimplemented
+						return 0;
 					case USB_INT_EORSTI:
-						return AVR32_USBB.UDINT.eorst;
+						return U1IRbits.URSTIF;
 					case USB_INT_SOFI:
 						return U1IRbits.SOFIF;
 					case USB_INT_RXSTPI:
-						return (&AVR32_USBB.UESTA0)[USB_Endpoint_SelectedEndpoint].rxstpi;
+						//return (&AVR32_USBB.UESTA0)[USB_Endpoint_SelectedEndpoint].rxstpi;
+#warning unimplemented
+						return 0;
 					#endif
 					#if defined(USB_CAN_BE_HOST)
 					case USB_INT_HSOFI:
-						return AVR32_USBB.UHINT.hsofi;
+#warning unimplemented
+						return 0;
 					case USB_INT_DCONNI:
-						return AVR32_USBB.UHINT.dconni;
+#warning unimplemented
+						return 0;
 					case USB_INT_DDISCI:
-						return AVR32_USBB.UHINT.ddisci;
+#warning unimplemented
+						return 0;
 					case USB_INT_RSTI:
-						return AVR32_USBB.UHINT.rsti;
+#warning unimplemented
+						return 0;
 					case USB_INT_BCERRI:
-						return AVR32_USBB.USBSTA.bcerri;
+#warning unimplemented
+						return 0;
 					case USB_INT_VBERRI:
-						return AVR32_USBB.USBSTA.vberri;
+#warning unimplemented
+						return 0;
 					#endif
 				}
 

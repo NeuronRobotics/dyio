@@ -199,6 +199,7 @@ void __attribute__((nomips16)) _USB1Interrupt( void )
 		EVENT_USB_UIDChange();
 	}
 	#endif
+
 }
 
 #if defined(INTERRUPT_CONTROL_ENDPOINT) && defined(USB_CAN_BE_DEVICE)
