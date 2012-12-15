@@ -19,8 +19,9 @@ all:
 %:
 	@echo Executing \"make $@\" on all LUFA library elements.
 	@echo
-	$(MAKE) -C LUFA $@ 
-	$(MAKE) -C Demos $@
+	$(MAKE)  -C Projects/USBtoSerial_PIC32 $@ 
+	#$(MAKE) -C LUFA $@ 
+	#$(MAKE) -C Demos $@
 	#$(MAKE) -C Projects $@
 	#$(MAKE) -C Bootloaders $@
 	@echo

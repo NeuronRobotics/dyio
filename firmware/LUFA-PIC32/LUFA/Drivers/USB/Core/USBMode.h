@@ -244,6 +244,12 @@
 				#define USB_CAN_BE_DEVICE
 			#endif
 
+			#if defined(__PIC32MX__)
+				#define USB_SERIES_PIC32
+				#define USB_CAN_BE_DEVICE
+				#define USB_CAN_BE_HOST
+			#endif
+
 			#if (defined(USB_CAN_BE_DEVICE) && defined(USB_CAN_BE_HOST))
 				#define USB_CAN_BE_BOTH
 			#endif

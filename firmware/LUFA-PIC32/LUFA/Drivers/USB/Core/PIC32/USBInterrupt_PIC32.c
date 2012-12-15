@@ -52,7 +52,8 @@ void USB_INT_ClearAllInterrupts(void)
 	AVR32_USBB.udintclr          = -1;
 }
 
-ISR(USB_GEN_vect)
+#pragma interrupt _USB1Interrupt ipl4 vector 45
+void __attribute__((nomips16)) _USB1Interrupt( void )
 {
 	#if defined(USB_CAN_BE_DEVICE)
 	#if !defined(NO_SOF_EVENTS)
@@ -208,6 +209,7 @@ ISR(USB_GEN_vect)
 }
 
 #if defined(INTERRUPT_CONTROL_ENDPOINT) && defined(USB_CAN_BE_DEVICE)
+#error not availible on PIC32
 ISR(USB_COM_vect)
 {
 	uint8_t PrevSelectedEndpoint = Endpoint_GetCurrentEndpoint();
