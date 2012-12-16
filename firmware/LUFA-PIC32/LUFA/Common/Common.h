@@ -141,8 +141,17 @@
 			#include "Endianness.h"
 		#elif (ARCH == ARCH_PIC32)
 			typedef uint32_t uint_reg_t;
+			#include <p32xxxx.h>
 			#include <plib.h>
 			#include <GenericTypeDefs.h>
+			#define Reset()				SoftReset()
+			#define ClrWdt()			(WDTCONSET = _WDTCON_WDTCLR_MASK)
+
+			// MPLAB C Compiler for PIC32 MCUs version 1.04 and below don't have a
+			// Nop() function. However, version 1.05 has Nop() declared as _nop().
+			#if !defined(Nop)
+				#define Nop()				asm("nop")
+			#endif
 		#else
 			#error Unknown device architecture specified.
 		#endif

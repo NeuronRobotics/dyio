@@ -150,7 +150,9 @@
 			static inline uint16_t USB_Device_GetFrameNumber(void) ATTR_ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT;
 			static inline uint16_t USB_Device_GetFrameNumber(void)
 			{
-				return AVR32_USBB.UDFNUM.fnum;
+				//return AVR32_USBB.UDFNUM.fnum;
+#warning not implemented
+				return 0;
 			}
 
 			#if !defined(NO_SOF_EVENTS)
@@ -184,15 +186,15 @@
 			static inline void USB_Device_SetLowSpeed(void) ATTR_ALWAYS_INLINE;
 			static inline void USB_Device_SetLowSpeed(void)
 			{
-				AVR32_USBB.UDCON.ls      = true;
+				//AVR32_USBB.UDCON.ls      = true;
 			}
 
 			static inline void USB_Device_SetFullSpeed(void) ATTR_ALWAYS_INLINE;
 			static inline void USB_Device_SetFullSpeed(void)
 			{
-				AVR32_USBB.UDCON.ls      = false;
+				//AVR32_USBB.UDCON.ls      = false;
 				#if defined(USB_DEVICE_OPT_HIGHSPEED)
-				AVR32_USBB.UDCON.spdconf = 3;
+				//AVR32_USBB.UDCON.spdconf = 3;
 				#endif
 			}
 
@@ -200,22 +202,23 @@
 			static inline void USB_Device_SetHighSpeed(void) ATTR_ALWAYS_INLINE;
 			static inline void USB_Device_SetHighSpeed(void)
 			{
-				AVR32_USBB.UDCON.ls      = false;
-				AVR32_USBB.UDCON.spdconf = 0;
+				//AVR32_USBB.UDCON.ls      = false;
+				//AVR32_USBB.UDCON.spdconf = 0;
 			}
 			#endif
 
 			static inline void USB_Device_SetDeviceAddress(const uint8_t Address) ATTR_ALWAYS_INLINE;
 			static inline void USB_Device_SetDeviceAddress(const uint8_t Address)
 			{
-				AVR32_USBB.UDCON.uadd  = Address;
-				AVR32_USBB.UDCON.adden = (Address ? true : false);
+				//AVR32_USBB.UDCON.uadd  = Address;
+				//AVR32_USBB.UDCON.adden = (Address ? true : false);
+				U1BDTP1 = (((unsigned int)Address)/256);
 			}
 
 			static inline bool USB_Device_IsAddressSet(void) ATTR_ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT;
 			static inline bool USB_Device_IsAddressSet(void)
 			{
-				return AVR32_USBB.UDCON.adden;
+				return U1BDTP1?true:false;
 			}
 
 			#if (USE_INTERNAL_SERIAL != NO_DESCRIPTOR)
