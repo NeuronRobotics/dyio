@@ -164,6 +164,7 @@
 				OSC.CTRL     &= ~OSC_XOSCEN_bm;
 			}
 
+
 			/** Starts the given internal oscillator of the XMEGA microcontroller, with the given options. This routine blocks until
 			 *  the oscillator is ready for use.
 			 *

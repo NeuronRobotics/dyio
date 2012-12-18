@@ -6,6 +6,7 @@
 #           www.lufa-lib.org
 #
 
+
 LUFA_BUILD_MODULES         += ATPROGRAM
 LUFA_BUILD_TARGETS         += atprogram atprogram-ee
 LUFA_BUILD_MANDATORY_VARS  += MCU TARGET

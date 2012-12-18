@@ -130,6 +130,7 @@
 			 *
 			 *  \return Size in bytes of the descriptor if it exists, zero or \ref NO_DESCRIPTOR otherwise.
 			 */
+
 			uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue,
 			                                    const uint8_t wIndex,
 			                                    const void** const DescriptorAddress

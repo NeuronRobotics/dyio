@@ -180,6 +180,7 @@ else ifeq ($(ARCH), UC3)
 else ifeq ($(ARCH), PIC32)
    BASE_CC_FLAGS += -mprocessor=$(MCU)
    OPTIMIZATION  := 1
+
 endif
 BASE_CC_FLAGS += -Wall -fno-strict-aliasing -funsigned-char -funsigned-bitfields -ffunction-sections
 BASE_CC_FLAGS += -I. -I$(patsubst %/,%,$(LUFA_PATH))/..

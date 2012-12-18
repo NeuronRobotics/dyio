@@ -28,6 +28,7 @@
   this software.
 */
 
+
 /** \file
  *
  *  Header file for USBtoSerial.c.

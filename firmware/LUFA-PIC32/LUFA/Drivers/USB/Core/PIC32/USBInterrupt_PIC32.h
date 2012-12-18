@@ -7,6 +7,7 @@
 */
 
 /*
+
   Copyright 2012  Dean Camera (dean [at] fourwalledcubicle [dot] com)
 
   Permission to use, copy, modify, distribute, and sell this

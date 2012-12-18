@@ -86,6 +86,7 @@
 			#error Do not include this file directly. Include LUFA/Drivers/USB/USB.h instead.
 		#endif
 
+
 	/* Public Interface - May be used in end-application: */
 		/* Type Defines: */
 			/** Type define for a endpoint table entry, used to configure endpoints in groups via

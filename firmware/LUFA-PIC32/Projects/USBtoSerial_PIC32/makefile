@@ -8,7 +8,6 @@
 # --------------------------------------
 #         LUFA Project Makefile.
 # --------------------------------------
-
 MCU          = 32MX795F512L
 ARCH         = PIC32
 BOARD        = Ethernet_Starter_Kit

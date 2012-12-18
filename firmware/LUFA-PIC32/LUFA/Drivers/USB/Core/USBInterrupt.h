@@ -38,6 +38,7 @@
  *        dispatch header located in LUFA/Drivers/USB/USB.h.
  */
 
+
 #ifndef __USBINTERRUPT_H__
 #define __USBINTERRUPT_H__
 

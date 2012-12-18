@@ -728,6 +728,7 @@
 				(void)Dummy;
 			}
 
+
 		/* External Variables: */
 			/** Global indicating the maximum packet size of the default control endpoint located at address
 			 *  0 in the device. This value is set to the value indicated in the device descriptor in the user

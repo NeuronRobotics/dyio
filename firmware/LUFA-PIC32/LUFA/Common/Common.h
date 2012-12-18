@@ -325,6 +325,7 @@
 				#endif
 			}
 
+
 			/** Sets the global interrupt enable state of the microcontroller to the mask passed into the function.
 			 *  This can be combined with \ref GetGlobalInterruptMask() to save and restore the Global Interrupt Enable
 			 *  Mask bit(s) of the device after a critical section has completed.

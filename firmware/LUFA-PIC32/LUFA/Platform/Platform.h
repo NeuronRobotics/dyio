@@ -41,6 +41,7 @@
  *  modules required for a particular application.
  */
 
+
 /** \defgroup Group_PlatformDrivers System Platform Drivers - LUFA/Platform/Platform.h
  *  \brief Hardware platform drivers.
  *

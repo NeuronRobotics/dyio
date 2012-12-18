@@ -702,6 +702,7 @@
 			 *
 			 *  \note Regardless of CPU architecture, these values should be stored as little endian.
 			 */
+
 			typedef struct
 			{
 				uint8_t bLength; /**< Size of the descriptor, in bytes. */

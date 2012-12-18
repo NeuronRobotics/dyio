@@ -4,6 +4,7 @@
  *  documentation pages. It is not a project source file.
  */
 
+
 /** \mainpage USB to Serial Converter Project
  *
  *  \section Sec_Compat Project Compatibility:
