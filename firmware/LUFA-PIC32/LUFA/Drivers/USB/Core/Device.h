@@ -149,6 +149,8 @@
 			#include "XMEGA/Device_XMEGA.h"
 		#elif (ARCH == ARCH_PIC32)
 			#include "PIC32/Device_PIC32.h"
+		#else
+			#error Unknown Device
 		#endif
 
 	/* Disable C linkage for C++ Compilers: */

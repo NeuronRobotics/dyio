@@ -138,6 +138,10 @@
 			#include "UC3/USBController_UC3.h"
 		#elif (ARCH == ARCH_XMEGA)
 			#include "XMEGA/USBController_XMEGA.h"
+		#elif (ARCH == ARCH_PIC32)
+			#include "PIC32/USBController_PIC32.h"
+		#else
+			#error Unknown Arch
 		#endif
 
 	/* Disable C linkage for C++ Compilers: */

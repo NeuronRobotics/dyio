@@ -192,7 +192,9 @@
 		#elif (BOARD == BOARD_OLIMEXT32U4)
 			#include "AVR8/OLIMEXT32U4/LEDs.h"		
 		#elif (BOARD == BOARD_OLIMEXISPMK2)
-			#include "AVR8/OLIMEXISPMK2/LEDs.h"		
+			#include "AVR8/OLIMEXISPMK2/LEDs.h"
+		#elif (BOARD == Ethernet_Starter_Kit)
+			#include "PIC32/Ethernet_Starter_Kit/LEDs.h"
 		#else
 			#include "Board/LEDs.h"
 		#endif

@@ -105,8 +105,9 @@
 					MaskVal++;
 					CheckBytes <<= 1;
 				}
-
-				return (MaskVal << AVR32_USBB_EPSIZE_OFFSET);
+#warning unimplemented
+				return 0;
+				//return (MaskVal << AVR32_USBB_EPSIZE_OFFSET);
 			}
 
 		/* Function Prototypes: */
@@ -213,12 +214,14 @@
 				if (Number >= ENDPOINT_TOTAL_ENDPOINTS)
 				  return false;
 
-				return Endpoint_ConfigureEndpoint_Prv(Number,
-				                                      (AVR32_USBB_ALLOC_MASK |
-				                                       ((uint32_t)Type << AVR32_USBB_EPTYPE_OFFSET) |
-				                                       ((Address & ENDPOINT_DIR_IN) ? AVR32_USBB_UECFG0_EPDIR_MASK : 0) |
-				                                       ((Banks > 1) ? AVR32_USBB_UECFG0_EPBK_SINGLE : AVR32_USBB_UECFG0_EPBK_DOUBLE) |
-				                                       Endpoint_BytesToEPSizeMask(Size)));
+#warning unimplemented
+				return true;
+//				return Endpoint_ConfigureEndpoint_Prv(Number,
+//				                                      (AVR32_USBB_ALLOC_MASK |
+//				                                       ((uint32_t)Type << AVR32_USBB_EPTYPE_OFFSET) |
+//				                                       ((Address & ENDPOINT_DIR_IN) ? AVR32_USBB_UECFG0_EPDIR_MASK : 0) |
+//				                                       ((Banks > 1) ? AVR32_USBB_UECFG0_EPBK_SINGLE : AVR32_USBB_UECFG0_EPBK_DOUBLE) |
+//				                                       Endpoint_BytesToEPSizeMask(Size)));
 			}
 
 			/** Indicates the number of bytes currently stored in the current endpoint's selected bank.
@@ -230,7 +233,9 @@
 			static inline uint16_t Endpoint_BytesInEndpoint(void) ATTR_WARN_UNUSED_RESULT ATTR_ALWAYS_INLINE;
 			static inline uint16_t Endpoint_BytesInEndpoint(void)
 			{
-				return (&AVR32_USBB.UESTA0)[USB_Endpoint_SelectedEndpoint].byct;
+#warning unimplemented
+				return true;
+				//return (&AVR32_USBB.UESTA0)[USB_Endpoint_SelectedEndpoint].byct;
 			}
 
 			/** Determines the currently selected endpoint's direction.
@@ -240,7 +245,9 @@
 			static inline uint32_t Endpoint_GetEndpointDirection(void) ATTR_WARN_UNUSED_RESULT ATTR_ALWAYS_INLINE;
 			static inline uint32_t Endpoint_GetEndpointDirection(void)
 			{
-				return ((&AVR32_USBB.UECFG0)[USB_Endpoint_SelectedEndpoint].epdir ? ENDPOINT_DIR_IN : ENDPOINT_DIR_OUT);
+#warning unimplemented
+				return true;
+				//return ((&AVR32_USBB.UECFG0)[USB_Endpoint_SelectedEndpoint].epdir ? ENDPOINT_DIR_IN : ENDPOINT_DIR_OUT);
 			}
 
 			/** Get the endpoint address of the currently selected endpoint. This is typically used to save
@@ -277,10 +284,10 @@
 			static inline void Endpoint_ResetEndpoint(const uint8_t Address)
 			{
 				uint32_t EndpointNumber = (Address & ENDPOINT_EPNUM_MASK);
-			
-				AVR32_USBB.uerst |=  (AVR32_USBB_EPRST0_MASK << EndpointNumber);
-				AVR32_USBB.uerst &= ~(AVR32_USBB_EPRST0_MASK << EndpointNumber);
-				USB_Endpoint_FIFOPos[EndpointNumber] = &AVR32_USBB_SLAVE[EndpointNumber * ENDPOINT_HSB_ADDRESS_SPACE_SIZE];
+#warning unimplemented
+				//AVR32_USBB.uerst |=  (AVR32_USBB_EPRST0_MASK << EndpointNumber);
+				//AVR32_USBB.uerst &= ~(AVR32_USBB_EPRST0_MASK << EndpointNumber);
+				//USB_Endpoint_FIFOPos[EndpointNumber] = &AVR32_USBB_SLAVE[EndpointNumber * ENDPOINT_HSB_ADDRESS_SPACE_SIZE];
 			}
 
 			/** Enables the currently selected endpoint so that data can be sent and received through it to
@@ -291,7 +298,8 @@
 			static inline void Endpoint_EnableEndpoint(void) ATTR_ALWAYS_INLINE;
 			static inline void Endpoint_EnableEndpoint(void)
 			{
-				AVR32_USBB.uerst |=  (AVR32_USBB_EPEN0_MASK << USB_Endpoint_SelectedEndpoint);
+#warning unimplemented
+				//AVR32_USBB.uerst |=  (AVR32_USBB_EPEN0_MASK << USB_Endpoint_SelectedEndpoint);
 			}
 
 			/** Disables the currently selected endpoint so that data cannot be sent and received through it
@@ -300,7 +308,8 @@
 			static inline void Endpoint_DisableEndpoint(void) ATTR_ALWAYS_INLINE;
 			static inline void Endpoint_DisableEndpoint(void)
 			{
-				AVR32_USBB.uerst &= ~(AVR32_USBB_EPEN0_MASK << USB_Endpoint_SelectedEndpoint);
+#warning unimplemented
+				//AVR32_USBB.uerst &= ~(AVR32_USBB_EPEN0_MASK << USB_Endpoint_SelectedEndpoint);
 			}
 
 			/** Determines if the currently selected endpoint is enabled, but not necessarily configured.
@@ -310,7 +319,10 @@
 			static inline bool Endpoint_IsEnabled(void) ATTR_WARN_UNUSED_RESULT ATTR_ALWAYS_INLINE;
 			static inline bool Endpoint_IsEnabled(void)
 			{
-				return ((AVR32_USBB.uerst & (AVR32_USBB_EPEN0_MASK << USB_Endpoint_SelectedEndpoint)) ? true : false);
+#warning unimplemented
+				return true;
+
+				//return ((AVR32_USBB.uerst & (AVR32_USBB_EPEN0_MASK << USB_Endpoint_SelectedEndpoint)) ? true : false);
 			}
 
 			/** Retrieves the number of busy banks in the currently selected endpoint, which have been queued for
@@ -324,7 +336,10 @@
 			static inline uint8_t Endpoint_GetBusyBanks(void) ATTR_ALWAYS_INLINE ATTR_WARN_UNUSED_RESULT;
 			static inline uint8_t Endpoint_GetBusyBanks(void)
 			{
-				return (&AVR32_USBB.UESTA0)[USB_Endpoint_SelectedEndpoint].nbusybk;
+#warning unimplemented
+				return true;
+
+				//return (&AVR32_USBB.UESTA0)[USB_Endpoint_SelectedEndpoint].nbusybk;
 			}
 
 			/** Aborts all pending IN transactions on the currently selected endpoint, once the bank
@@ -338,8 +353,9 @@
 			{
 				while (Endpoint_GetBusyBanks() != 0)
 				{
-					(&AVR32_USBB.UECON0SET)[USB_Endpoint_SelectedEndpoint].killbks = true;
-					while ((&AVR32_USBB.UECON0)[USB_Endpoint_SelectedEndpoint].killbk);
+#warning unimplemented
+//					(&AVR32_USBB.UECON0SET)[USB_Endpoint_SelectedEndpoint].killbks = true;
+//					while ((&AVR32_USBB.UECON0)[USB_Endpoint_SelectedEndpoint].killbk);
 				}
 			}
 
@@ -357,7 +373,10 @@
 			static inline bool Endpoint_IsReadWriteAllowed(void) ATTR_WARN_UNUSED_RESULT ATTR_ALWAYS_INLINE;
 			static inline bool Endpoint_IsReadWriteAllowed(void)
 			{
-				return (&AVR32_USBB.UESTA0)[USB_Endpoint_SelectedEndpoint].rwall;
+#warning unimplemented
+				return true;
+
+				//return (&AVR32_USBB.UESTA0)[USB_Endpoint_SelectedEndpoint].rwall;
 			}
 
 			/** Determines if the currently selected endpoint is configured.
@@ -367,7 +386,10 @@
 			static inline bool Endpoint_IsConfigured(void) ATTR_WARN_UNUSED_RESULT ATTR_ALWAYS_INLINE;
 			static inline bool Endpoint_IsConfigured(void)
 			{
-				return (&AVR32_USBB.UESTA0)[USB_Endpoint_SelectedEndpoint].cfgok;
+#warning unimplemented
+				return true;
+
+				//return (&AVR32_USBB.UESTA0)[USB_Endpoint_SelectedEndpoint].cfgok;
 			}
 
 			/** Returns a mask indicating which INTERRUPT type endpoints have interrupted - i.e. their
@@ -379,10 +401,13 @@
 			static inline uint32_t Endpoint_GetEndpointInterrupts(void) ATTR_WARN_UNUSED_RESULT ATTR_ALWAYS_INLINE;
 			static inline uint32_t Endpoint_GetEndpointInterrupts(void)
 			{
-				return ((AVR32_USBB.udint & (AVR32_USBB_EP6INT_MASK | AVR32_USBB_EP5INT_MASK |
-				                             AVR32_USBB_EP4INT_MASK | AVR32_USBB_EP3INT_MASK |
-				                             AVR32_USBB_EP2INT_MASK | AVR32_USBB_EP1INT_MASK |
-				                             AVR32_USBB_EP0INT_MASK)) >> AVR32_USBB_EP0INT_OFFSET);
+#warning unimplemented
+				return true;
+
+//				return ((AVR32_USBB.udint & (AVR32_USBB_EP6INT_MASK | AVR32_USBB_EP5INT_MASK |
+//				                             AVR32_USBB_EP4INT_MASK | AVR32_USBB_EP3INT_MASK |
+//				                             AVR32_USBB_EP2INT_MASK | AVR32_USBB_EP1INT_MASK |
+//				                             AVR32_USBB_EP0INT_MASK)) >> AVR32_USBB_EP0INT_OFFSET);
 			}
 
 			/** Determines if the specified endpoint number has interrupted (valid only for INTERRUPT type
@@ -395,7 +420,10 @@
 			static inline bool Endpoint_HasEndpointInterrupted(const uint8_t Address) ATTR_WARN_UNUSED_RESULT ATTR_ALWAYS_INLINE;
 			static inline bool Endpoint_HasEndpointInterrupted(const uint8_t Address)
 			{
-				return ((Endpoint_GetEndpointInterrupts() & (AVR32_USBB_EP0INT_MASK << (Address & ENDPOINT_EPNUM_MASK))) ? true : false);
+#warning unimplemented
+				return true;
+
+//				return ((Endpoint_GetEndpointInterrupts() & (AVR32_USBB_EP0INT_MASK << (Address & ENDPOINT_EPNUM_MASK))) ? true : false);
 			}
 
 			/** Determines if the selected IN endpoint is ready for a new packet to be sent to the host.
@@ -407,7 +435,10 @@
 			static inline bool Endpoint_IsINReady(void) ATTR_WARN_UNUSED_RESULT ATTR_ALWAYS_INLINE;
 			static inline bool Endpoint_IsINReady(void)
 			{
-				return (&AVR32_USBB.UESTA0)[USB_Endpoint_SelectedEndpoint].txini;
+#warning unimplemented
+				return true;
+
+//				return (&AVR32_USBB.UESTA0)[USB_Endpoint_SelectedEndpoint].txini;
 			}
 
 			/** Determines if the selected OUT endpoint has received new packet from the host.
@@ -419,7 +450,10 @@
 			static inline bool Endpoint_IsOUTReceived(void) ATTR_WARN_UNUSED_RESULT ATTR_ALWAYS_INLINE;
 			static inline bool Endpoint_IsOUTReceived(void)
 			{
-				return (&AVR32_USBB.UESTA0)[USB_Endpoint_SelectedEndpoint].rxouti;
+#warning unimplemented
+				return true;
+
+//				return (&AVR32_USBB.UESTA0)[USB_Endpoint_SelectedEndpoint].rxouti;
 			}
 
 			/** Determines if the current CONTROL type endpoint has received a SETUP packet.
@@ -431,7 +465,10 @@
 			static inline bool Endpoint_IsSETUPReceived(void) ATTR_WARN_UNUSED_RESULT ATTR_ALWAYS_INLINE;
 			static inline bool Endpoint_IsSETUPReceived(void)
 			{
-				return (&AVR32_USBB.UESTA0)[USB_Endpoint_SelectedEndpoint].rxstpi;
+#warning unimplemented
+				return true;
+
+//				return (&AVR32_USBB.UESTA0)[USB_Endpoint_SelectedEndpoint].rxstpi;
 			}
 
 			/** Clears a received SETUP packet on the currently selected CONTROL type endpoint, freeing up the
@@ -444,8 +481,9 @@
 			static inline void Endpoint_ClearSETUP(void) ATTR_ALWAYS_INLINE;
 			static inline void Endpoint_ClearSETUP(void)
 			{
-				(&AVR32_USBB.UESTA0CLR)[USB_Endpoint_SelectedEndpoint].rxstpic = true;
-				USB_Endpoint_FIFOPos[USB_Endpoint_SelectedEndpoint] = &AVR32_USBB_SLAVE[USB_Endpoint_SelectedEndpoint * ENDPOINT_HSB_ADDRESS_SPACE_SIZE];
+#warning unimplemented
+//				(&AVR32_USBB.UESTA0CLR)[USB_Endpoint_SelectedEndpoint].rxstpic = true;
+//				USB_Endpoint_FIFOPos[USB_Endpoint_SelectedEndpoint] = &AVR32_USBB_SLAVE[USB_Endpoint_SelectedEndpoint * ENDPOINT_HSB_ADDRESS_SPACE_SIZE];
 			}
 
 			/** Sends an IN packet to the host on the currently selected endpoint, freeing up the endpoint for the
@@ -456,9 +494,10 @@
 			static inline void Endpoint_ClearIN(void) ATTR_ALWAYS_INLINE;
 			static inline void Endpoint_ClearIN(void)
 			{
-				(&AVR32_USBB.UESTA0CLR)[USB_Endpoint_SelectedEndpoint].txinic   = true;
-				(&AVR32_USBB.UECON0CLR)[USB_Endpoint_SelectedEndpoint].fifoconc = true;
-				USB_Endpoint_FIFOPos[USB_Endpoint_SelectedEndpoint] = &AVR32_USBB_SLAVE[USB_Endpoint_SelectedEndpoint * ENDPOINT_HSB_ADDRESS_SPACE_SIZE];
+#warning unimplemented
+//				(&AVR32_USBB.UESTA0CLR)[USB_Endpoint_SelectedEndpoint].txinic   = true;
+//				(&AVR32_USBB.UECON0CLR)[USB_Endpoint_SelectedEndpoint].fifoconc = true;
+//				USB_Endpoint_FIFOPos[USB_Endpoint_SelectedEndpoint] = &AVR32_USBB_SLAVE[USB_Endpoint_SelectedEndpoint * ENDPOINT_HSB_ADDRESS_SPACE_SIZE];
 			}
 
 			/** Acknowledges an OUT packet to the host on the currently selected endpoint, freeing up the endpoint
@@ -469,9 +508,10 @@
 			static inline void Endpoint_ClearOUT(void) ATTR_ALWAYS_INLINE;
 			static inline void Endpoint_ClearOUT(void)
 			{
-				(&AVR32_USBB.UESTA0CLR)[USB_Endpoint_SelectedEndpoint].rxoutic  = true;
-				(&AVR32_USBB.UECON0CLR)[USB_Endpoint_SelectedEndpoint].fifoconc = true;
-				USB_Endpoint_FIFOPos[USB_Endpoint_SelectedEndpoint] = &AVR32_USBB_SLAVE[USB_Endpoint_SelectedEndpoint * ENDPOINT_HSB_ADDRESS_SPACE_SIZE];
+#warning unimplemented
+//				(&AVR32_USBB.UESTA0CLR)[USB_Endpoint_SelectedEndpoint].rxoutic  = true;
+//				(&AVR32_USBB.UECON0CLR)[USB_Endpoint_SelectedEndpoint].fifoconc = true;
+//				USB_Endpoint_FIFOPos[USB_Endpoint_SelectedEndpoint] = &AVR32_USBB_SLAVE[USB_Endpoint_SelectedEndpoint * ENDPOINT_HSB_ADDRESS_SPACE_SIZE];
 			}
 
 			/** Stalls the current endpoint, indicating to the host that a logical problem occurred with the
@@ -488,7 +528,8 @@
 			static inline void Endpoint_StallTransaction(void) ATTR_ALWAYS_INLINE;
 			static inline void Endpoint_StallTransaction(void)
 			{
-				(&AVR32_USBB.UECON0SET)[USB_Endpoint_SelectedEndpoint].stallrqs = true;
+#warning unimplemented
+				//(&AVR32_USBB.UECON0SET)[USB_Endpoint_SelectedEndpoint].stallrqs = true;
 			}
 
 			/** Clears the STALL condition on the currently selected endpoint.
@@ -498,7 +539,8 @@
 			static inline void Endpoint_ClearStall(void) ATTR_ALWAYS_INLINE;
 			static inline void Endpoint_ClearStall(void)
 			{
-				(&AVR32_USBB.UECON0CLR)[USB_Endpoint_SelectedEndpoint].stallrqc = true;
+#warning unimplemented
+				//(&AVR32_USBB.UECON0CLR)[USB_Endpoint_SelectedEndpoint].stallrqc = true;
 			}
 
 			/** Determines if the currently selected endpoint is stalled, false otherwise.
@@ -510,14 +552,18 @@
 			static inline bool Endpoint_IsStalled(void) ATTR_WARN_UNUSED_RESULT ATTR_ALWAYS_INLINE;
 			static inline bool Endpoint_IsStalled(void)
 			{
-				return (&AVR32_USBB.UECON0)[USB_Endpoint_SelectedEndpoint].stallrq;
+#warning unimplemented
+				return true;
+
+//				return (&AVR32_USBB.UECON0)[USB_Endpoint_SelectedEndpoint].stallrq;
 			}
 
 			/** Resets the data toggle of the currently selected endpoint. */
 			static inline void Endpoint_ResetDataToggle(void) ATTR_ALWAYS_INLINE;
 			static inline void Endpoint_ResetDataToggle(void)
 			{
-				(&AVR32_USBB.UECON0SET)[USB_Endpoint_SelectedEndpoint].rstdts = true;
+#warning unimplemented
+				//(&AVR32_USBB.UECON0SET)[USB_Endpoint_SelectedEndpoint].rstdts = true;
 			}
 
 			/** Sets the direction of the currently selected endpoint.
@@ -527,7 +573,8 @@
 			static inline void Endpoint_SetEndpointDirection(const uint32_t DirectionMask) ATTR_ALWAYS_INLINE;
 			static inline void Endpoint_SetEndpointDirection(const uint32_t DirectionMask)
 			{
-				(&AVR32_USBB.UECFG0)[USB_Endpoint_SelectedEndpoint].epdir = (DirectionMask == ENDPOINT_DIR_IN);
+#warning unimplemented
+				//(&AVR32_USBB.UECFG0)[USB_Endpoint_SelectedEndpoint].epdir = (DirectionMask == ENDPOINT_DIR_IN);
 			}
 
 			/** Reads one byte from the currently selected endpoint's bank, for OUT direction endpoints.

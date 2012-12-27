@@ -138,8 +138,6 @@ int main(void)
 		uint16_t BufferCount = RingBuffer_GetCount(&USARTtoUSB_Buffer);
 		if ((BufferCount > (uint8_t)(sizeof(USARTtoUSB_Buffer_Data) * .75)))
 		{
-			/* Clear flush timer expiry flag */
-			TIFR0 |= (1 << TOV0);
 
 			/* Read bytes from the USART receive buffer into the USB IN endpoint */
 			while (BufferCount--)
@@ -157,8 +155,9 @@ int main(void)
 		}
 
 		/* Load the next byte from the USART transmit buffer into the USART */
-		if (!(RingBuffer_IsEmpty(&USBtoUSART_Buffer)))
-		  Serial_SendByte(RingBuffer_Remove(&USBtoUSART_Buffer));
+		if (!(RingBuffer_IsEmpty(&USBtoUSART_Buffer))){
+		  //Serial_SendByte(RingBuffer_Remove(&USBtoUSART_Buffer));
+		}
 
 		CDC_Device_USBTask(&VirtualSerial_CDC_Interface);
 		USB_USBTask();
@@ -170,8 +169,8 @@ void SetupHardware(void)
 {
 
 	/* Hardware Initialization */
-	//LEDs_Init();
-	USB_Init();
+	LEDs_Init();
+	USB_Init(0);
 
 	RingBuffer_InitBuffer(&USBtoUSART_Buffer, USBtoUSART_Buffer_Data, sizeof(USBtoUSART_Buffer_Data));
 	RingBuffer_InitBuffer(&USARTtoUSB_Buffer, USARTtoUSB_Buffer_Data, sizeof(USARTtoUSB_Buffer_Data));
@@ -183,13 +182,13 @@ void SetupHardware(void)
 /** Event handler for the library USB Connection event. */
 void EVENT_USB_Device_Connect(void)
 {
-	//LEDs_SetAllLEDs(LEDMASK_USB_ENUMERATING);
+	LEDs_SetAllLEDs(LEDMASK_USB_ENUMERATING);
 }
 
 /** Event handler for the library USB Disconnection event. */
 void EVENT_USB_Device_Disconnect(void)
 {
-	//LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
+	LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
 }
 
 /** Event handler for the library USB Configuration Changed event. */
@@ -199,7 +198,7 @@ void EVENT_USB_Device_ConfigurationChanged(void)
 
 	ConfigSuccess &= CDC_Device_ConfigureEndpoints(&VirtualSerial_CDC_Interface);
 
-	//LEDs_SetAllLEDs(ConfigSuccess ? LEDMASK_USB_READY : LEDMASK_USB_ERROR);
+	LEDs_SetAllLEDs(ConfigSuccess ? LEDMASK_USB_READY : LEDMASK_USB_ERROR);
 }
 
 /** Event handler for the library USB Control Request reception event. */
@@ -244,15 +243,15 @@ void EVENT_CDC_Device_LineEncodingChanged(USB_ClassInfo_CDC_Device_t* const CDCI
 			break;
 	}
 
-	/* Must turn off USART before reconfiguring it, otherwise incorrect operation may occur 
+	// Must turn off USART before reconfiguring it, otherwise incorrect operation may occur
 	UCSR1B = 0;
 	UCSR1A = 0;
 	UCSR1C = 0;
 
-	/* Set the new baud rate before configuring the USART 
+	// Set the new baud rate before configuring the USART
 	UBRR1  = SERIAL_2X_UBBRVAL(CDCInterfaceInfo->State.LineEncoding.BaudRateBPS);
 
-	/* Reconfigure the USART in double speed mode for a wider baud rate range at the expense of accuracy 
+	// Reconfigure the USART in double speed mode for a wider baud rate range at the expense of accuracy
 	UCSR1C = ConfigMask;
 	UCSR1A = (1 << U2X1);
 	UCSR1B = ((1 << RXCIE1) | (1 << TXEN1) | (1 << RXEN1));
