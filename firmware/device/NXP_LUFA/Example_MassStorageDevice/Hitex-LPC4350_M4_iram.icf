@@ -1,0 +1,57 @@
+/*###ICF### Section handled by ICF editor, don't touch! ****/
+/*-Editor annotation file-*/
+/* IcfEditorFile="$TOOLKIT_DIR$\config\ide\IcfEditor\cortex_v1_0.xml" */
+/*-Specials-*/
+define symbol __ICFEDIT_intvec_start__ = 0x10000000;
+/*-Memory Regions-*/
+define symbol __ICFEDIT_region_ROM_start__ = 0x00000000;
+define symbol __ICFEDIT_region_ROM_end__   = 0x00000000;
+define symbol __ICFEDIT_region_RAM_start__ = 0x10000114;
+define symbol __ICFEDIT_region_RAM_end__   = 0x1001FFFF;
+/*-Sizes-*/
+define symbol __ICFEDIT_size_cstack__ = 0x400;
+define symbol __ICFEDIT_size_heap__   = 0x200;
+/**** End of ICF editor section. ###ICF###*/
+
+define symbol HOST_CMD_BUFFER_start__ = 0x20007F00;
+define symbol HOST_CMD_BUFFER_end__   = 0x20007F7F;
+
+export symbol HOST_CMD_BUFFER_start__;
+export symbol HOST_CMD_BUFFER_end__;
+
+define symbol HOST_MSG_BUFFER_start__ = 0x20007F80;
+define symbol HOST_MSG_BUFFER_end__   = 0x20007FFF;
+
+export symbol HOST_MSG_BUFFER_start__;
+export symbol HOST_MSG_BUFFER_end__;
+
+/* define symbol __CRP_start__   = 0x000002FC; */
+/* define symbol __CRP_end__     = 0x000002FF; */
+
+define symbol DATA_RAM_start__ = 0x20000000;
+define symbol DATA_RAM_end__   = 0x20007EFF;
+
+define memory mem with size = 4G;
+define region ROM_region      = mem:[from __ICFEDIT_region_ROM_start__   to __ICFEDIT_region_ROM_end__];
+define region RAM_region      = mem:[from __ICFEDIT_region_RAM_start__   to __ICFEDIT_region_RAM_end__];
+define region DATA_RAM_region = mem:[from DATA_RAM_start__   to DATA_RAM_end__];
+define region HOST_CMD_BUFFER_region = mem:[from HOST_CMD_BUFFER_start__   to HOST_CMD_BUFFER_end__];
+define region HOST_MSG_BUFFER_region = mem:[from HOST_MSG_BUFFER_start__   to HOST_MSG_BUFFER_end__];
+/* define region CRP_region   = mem:[from  __CRP_start__ to __CRP_end__]; */
+
+define block CSTACK    with alignment = 8, size = __ICFEDIT_size_cstack__   { };
+define block HEAP      with alignment = 8, size = __ICFEDIT_size_heap__     { };
+
+initialize by copy { readwrite };
+do not initialize  { section .noinit };
+
+place at address mem:__ICFEDIT_intvec_start__ { section .intvec };
+
+place in RAM_region       { readonly };
+place in DATA_RAM_region  { readwrite,
+                            block CSTACK, block HEAP };
+
+place at start of HOST_CMD_BUFFER_region { section .host_cmd_buffer };
+place at start of HOST_MSG_BUFFER_region { section .host_msg_buffer };
+
+/* place in CRP_region  { section .crp}; */
