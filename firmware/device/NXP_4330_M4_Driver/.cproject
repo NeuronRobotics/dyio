@@ -802,6 +802,7 @@
 								<option id="com.crt.advproject.gcc.exe.release.option.optimization.level.1395002222" name="Optimization Level" superClass="com.crt.advproject.gcc.exe.release.option.optimization.level" value="gnu.c.optimization.level.size" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.1821365420" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NXP_4330_M4_Driver/inc/LPC4330_Hardware_Drivers_inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/NXP_4330_M4_Driver/nxpUSBlib/Drivers/USB}&quot;"/>
 								</option>
 								<inputType id="com.crt.advproject.compiler.input.1485231237" superClass="com.crt.advproject.compiler.input"/>
 							</tool>
