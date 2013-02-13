@@ -105,6 +105,7 @@ void POWER(BowlerPacket * packet){
 	packet->use.data[2]=raw.byte.SB;
 	packet->use.data[3]=raw.byte.LB;
 	packet->use.head.DataLegnth=8;
+	packet->use.head.MessageID=0;
 }
 
 void pushPPMPacket(void){

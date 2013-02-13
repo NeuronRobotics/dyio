@@ -78,7 +78,7 @@ void setHeartBeatState( BOOL hb, int time){
 }
 
 int getHeartBeatTime(){
-	return heartBeatLockTime;
+	return heartBeatLockTime/2;
 }
 BOOL getHeartBeatLock(){
 	return heartBeatLock;

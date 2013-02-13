@@ -78,7 +78,8 @@
 #define _REV				0x7665725f // '_rev'  Get the revision number
 #define INFO				0x6f666e69 // 'info'  Get and set the name string
 #define _PWR				0x7277705f // '_pwr'  Request the power state
-//private
+
+//private internal RPC's for communication between the host and co processor
 #define EEPD				0x64706565// Interface with the EEPROM
 #define DASN			    0x6e736164 // 'dasn'  Get 8 bit Async data
 #define AASN				0x6e736161 // 'aasn'  Get 16 bit Async data

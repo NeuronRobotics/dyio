@@ -53,7 +53,7 @@ void hardwareInit(){
 	println_I("MAC address is =");
 	print_I(macStr);
 #if defined(ROBOSUB_DEMO)
-	char * dev = "AHD Wave";
+	//char * dev = "AHD Wave";
 #else
 	char * dev = "DyIO v.3";
 #endif

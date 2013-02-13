@@ -52,6 +52,7 @@ BYTE UserGetRPCs(BowlerPacket *Packet){
 		break;
 	case _REV:
 		SendPacketToCoProc(Packet);
+
 		if(Packet->use.head.RPC == _ERR){
 			break;
 		}
@@ -73,6 +74,7 @@ BYTE UserGetRPCs(BowlerPacket *Packet){
 			Packet->use.data[i+3]=rev[i];
 		}
 		Packet->use.head.DataLegnth=4+6;
+		Packet->use.head.Method=BOWLER_POST;
 		break;
 	case INFO:
 		FlashGetName(tmpName);
@@ -202,6 +204,7 @@ BYTE UserCriticalRPCs(BowlerPacket *Packet){
 	case _PWR:
 		setBrownOutDetect(Packet->use.data[0]?0:1);
 		SendPacketToCoProc(Packet);
+		READY(Packet,zone,5);
 		break;
 	case INFO:
 		if ((Packet->use.head.DataLegnth>4+16)||(Packet->use.head.DataLegnth<=4)){
