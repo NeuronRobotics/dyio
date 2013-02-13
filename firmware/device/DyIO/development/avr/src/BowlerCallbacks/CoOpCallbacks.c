@@ -138,7 +138,7 @@ BOOL checkAnalog(){
 
 		}
 	}
-	if(update)
+	//if(update)
 		PushAllAdcVal();
 
 	return update;

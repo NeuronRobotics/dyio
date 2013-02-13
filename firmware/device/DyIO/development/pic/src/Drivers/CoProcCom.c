@@ -152,24 +152,20 @@ void initCoProcUART(){
 
 void uartErrorCheck(){
 	int err = UART2GetErrors();
-	if(err & _U2STA_FERR_MASK){
-		println_E("\n\n\nFraming error");
-		//UART2ClearAllErrors();
-		return;
-	}
-	if(err & _U2STA_OERR_MASK){
-		println_E("\n\n\n\nOverflow error");
-		//UART2ClearAllErrors();
-		return;
-	}
-	if(err & _U2STA_PERR_MASK){
-		println_E("\n\n\n\nPARITY error");
-		//UART2ClearAllErrors();
-		return;
-	}
 	if(err ){
-		println_E("\n\n\n\nUnknown UART error");
-		//UART2ClearAllErrors();
+		if(err & _U2STA_FERR_MASK){
+			println_E("\n\n\nFraming error");
+		}
+		else if(err & _U2STA_OERR_MASK){
+			println_E("\n\n\n\nOverflow error");
+		}
+		else if(err & _U2STA_PERR_MASK){
+			println_E("\n\n\n\nPARITY error");
+		}
+		else {
+			println_E("\n\n\n\nUnknown UART error");
+		}
+		UART2ClearAllErrors();
 	}
 }
 
@@ -441,38 +437,38 @@ BOOL clearToSend(void){
 		return FALSE;
 	return TRUE;
 }
-#define SHORTISR
+//#define SHORTISR
 void newByte(){
 #if defined(USE_DMA)
 	return;
 #else
-//	#if !defined(SHORTISR)
-//		int timeout =0;
-//		while(DataRdyUART2()){
-//
-//			addCoProcByte(UARTGetDataByte(UART2));
-//
-//			//buttonCheck(17);
-//			timeout++;
-//			if(timeout>8){// size of the built in FIFo
-//				return;
-//			}
-//		}
-//	#else
+	#if !defined(SHORTISR)
+		int timeout =0;
+		while(DataRdyUART2()){
+			addCoProcByte(UARTGetDataByte(UART2));
+			mU2ClearAllIntFlags();
+			buttonCheck(17);
+			timeout++;
+			if(timeout>8){// size of the built in FIFo
+				return;
+			}
+		}
+	#else
 		if(DataRdyUART2()){
 			addCoProcByte(UARTGetDataByte(UART2));
 		}
-//	#endif
+	#endif
 
 #endif
 }
 //#if !defined(USE_DMA)
 void __ISR(_UART_2_VECTOR, ipl7) My_U2_ISR(void){
-	//FLAG_ASYNC=FLAG_BLOCK;
+	FLAG_ASYNC=FLAG_BLOCK;
 	StartCritical();
 	if (INTGetFlag(INT_SOURCE_UART_RX(UART2))){
 		newByte();
 		INTClearFlag(INT_SOURCE_UART_RX(UART2));
+		mU2ClearAllIntFlags();
 	}else
 	 if(INTGetFlag(INT_SOURCE_UART_ERROR(UART2))){
 		//uartErrorCheck();
@@ -487,9 +483,10 @@ void __ISR(_UART_2_VECTOR, ipl7) My_U2_ISR(void){
 			//println_I("&@&@&&@&@&@ generic uart");
 		}
 	}
-	//mU2ClearAllIntFlags();
+	UART2ClearAllErrors();
+
 	EndCritical();
-	//FLAG_ASYNC=FLAG_OK;
+	FLAG_ASYNC=FLAG_OK;
 }
 //#endif
 

@@ -14,7 +14,7 @@ static DmaChannel	chn = DMA_CHANNEL1;	// DMA channel to use for our example
 
 static int dmaReadPointer = 0;
 
-static BYTE private[DMA_SIZE+2];
+static BYTE private[DMA_SIZE*2];
 
 static BOOL running=FALSE;
 
