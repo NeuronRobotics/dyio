@@ -17,7 +17,7 @@
  */
 #ifndef DEFINES_H_
 #define DEFINES_H_
-
+#include <stddef.h>
 #define BOWLER_VERSION			3
 #define BowlerHeaderSize		11
 #define CRCIndex				10
@@ -44,14 +44,8 @@
 #define BOWLER_CRIT 	 				0x30
 #define BOWLER_ASYN 	 				0x40
 
-
-
-
-#define TRUE 					1
-#define FALSE 					0
-
 #if !defined(__GENERIC_TYPE_DEFS_H_)
-	typedef unsigned char			BOOL;
+	typedef enum _BOOL { FALSE = 0, TRUE } BOOL;    /* Undefined size */
 	typedef unsigned char			BYTE;
 	typedef signed int          	INT;
 	typedef signed char         	INT8;

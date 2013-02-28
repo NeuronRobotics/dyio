@@ -226,6 +226,13 @@
 	//#pragma config FPLLODIV = DIV_1, FPLLMUL = MUL_20, FPLLIDIV = DIV_2, FWDTEN = OFF, FPBDIV = DIV_1, POSCMOD = XT, FNOSC = PRIPLL, CP = OFF
 #endif
 
+#if defined(__32MX795F512L__)
+	#include "arch/pic32/EthHardware.h"
+#endif
+#if defined(__32MX460F512L__)
+	#include "arch/pic32/Pizo.h"
+#endif
+
 #if !defined(RED_LED_TRIS)
 	#define RED_LED_TRIS		(_TRISB3)	//
 	#define RED_LED_IO			(_RB3)

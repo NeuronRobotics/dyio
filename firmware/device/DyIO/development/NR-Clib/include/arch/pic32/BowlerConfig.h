@@ -8,6 +8,11 @@
 #ifndef BOWLERCONFIG_H_
 #define BOWLERCONFIG_H_
 
+#if defined(__PIC32MX__)
+	#include "arch/pic32/Compiler.h"
+    #include "arch/pic32/GenericTypeDefs.h"
+#endif
+
 	#define USE_DYN_RPC
 
 	#define ASSERTED				0

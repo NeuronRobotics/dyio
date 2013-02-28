@@ -41,11 +41,16 @@
   1.3   02/06/08     Add def's for PIC32
   1.4   08/08/08     Remove LSB/MSB Macros, adopted by Peripheral lib
   1.5   08/14/08     Simplify file header
-  2.0   07/13/09     Updated for new release of coding standards
+  Draft 2.0   07/13/09     Updated for new release of coding standards
 *******************************************************************/
 
 #ifndef __GENERIC_TYPE_DEFS_H_
 #define __GENERIC_TYPE_DEFS_H_
+
+#ifdef __cplusplus
+extern "C"
+  {
+#endif
 
 /* Specify an extension for GCC based compilers */
 #if defined(__GNUC__)
@@ -54,19 +59,10 @@
 #define __EXTENSION
 #endif
 
-#if !defined(__PACKED)
-    #define __PACKED
-#endif
-
 /* get compiler defined type definitions (NULL, size_t, etc) */
-#include <stddef.h> 
+#include <stddef.h>
 
-#if !defined(TRUE)
-	typedef unsigned char BOOL;
-	#define TRUE 1
-	#define FALSE 0
-#endif
-
+//typedef enum _BOOL { FALSE = 0, TRUE } BOOL;    /* Undefined size */
 typedef enum _BIT { CLEAR = 0, SET } BIT;
 
 #define PUBLIC                                  /* Function attributes */
@@ -74,28 +70,28 @@ typedef enum _BIT { CLEAR = 0, SET } BIT;
 #define PRIVATE   static
 
 /* INT is processor specific in length may vary in size */
-typedef signed int          INT;
-typedef signed char         INT8;
-typedef signed short int    INT16;
-typedef signed long int     INT32;
+//typedef signed int          INT;
+//typedef signed char         INT8;
+//typedef signed short int    INT16;
+//typedef signed long int     INT32;
 
 /* MPLAB C Compiler for PIC18 does not support 64-bit integers */
 #if !defined(__18CXX)
-__EXTENSION typedef signed long long    INT64;
+//__EXTENSION typedef signed long long    INT64;
 #endif
 
 /* UINT is processor specific in length may vary in size */
-typedef unsigned int        UINT;
-typedef unsigned char       UINT8;
-typedef unsigned short int  UINT16;
+//typedef unsigned int        UINT;
+//typedef unsigned char       UINT8;
+//typedef unsigned short int  UINT16;
 /* 24-bit type only available on C18 */
 #if defined(__18CXX)
 typedef unsigned short long UINT24;
 #endif
-typedef unsigned long int   UINT32;     /* other name for 32-bit integer */
+//typedef unsigned long int   UINT32;     /* other name for 32-bit integer */
 /* MPLAB C Compiler for PIC18 does not support 64-bit integers */
 #if !defined(__18CXX)
-__EXTENSION typedef unsigned long long  UINT64;
+//__EXTENSION typedef unsigned long long  UINT64;
 #endif
 
 typedef union
@@ -114,16 +110,16 @@ typedef union
     } bits;
 } UINT8_VAL, UINT8_BITS;
 
-typedef union 
+typedef union
 {
     UINT16 Val;
-    UINT8 v[2] __PACKED;
-    struct __PACKED
+    UINT8 v[2];
+    struct
     {
         UINT8 LB;
         UINT8 HB;
     } byte;
-    struct __PACKED
+    struct
     {
         __EXTENSION UINT8 b0:1;
         __EXTENSION UINT8 b1:1;
@@ -149,14 +145,14 @@ typedef union
 typedef union
 {
     UINT24 Val;
-    UINT8 v[3] __PACKED;
-    struct __PACKED
+    UINT8 v[3];
+    struct
     {
         UINT8 LB;
         UINT8 HB;
         UINT8 UB;
     } byte;
-    struct __PACKED
+    struct
     {
         __EXTENSION UINT8 b0:1;
         __EXTENSION UINT8 b1:1;
@@ -189,26 +185,26 @@ typedef union
 typedef union
 {
     UINT32 Val;
-    UINT16 w[2] __PACKED;
-    UINT8  v[4] __PACKED;
-    struct __PACKED
+    UINT16 w[2];
+    UINT8  v[4];
+    struct
     {
         UINT16 LW;
         UINT16 HW;
     } word;
-    struct __PACKED
+    struct
     {
         UINT8 LB;
         UINT8 HB;
         UINT8 UB;
         UINT8 MB;
     } byte;
-    struct __PACKED
+    struct
     {
         UINT16_VAL low;
         UINT16_VAL high;
     }wordUnion;
-    struct __PACKED
+    struct
     {
         __EXTENSION UINT8 b0:1;
         __EXTENSION UINT8 b1:1;
@@ -250,22 +246,22 @@ typedef union
 typedef union
 {
     UINT64 Val;
-    UINT32 d[2] __PACKED;
-    UINT16 w[4] __PACKED;
-    UINT8 v[8]  __PACKED;
-    struct __PACKED
+    UINT32 d[2];
+    UINT16 w[4];
+    UINT8 v[8];
+    struct
     {
         UINT32 LD;
         UINT32 HD;
     } dword;
-    struct __PACKED
+    struct
     {
         UINT16 LW;
         UINT16 HW;
         UINT16 UW;
         UINT16 MW;
     } word;
-    struct __PACKED
+    struct
     {
         __EXTENSION UINT8 b0:1;
         __EXTENSION UINT8 b1:1;
@@ -343,22 +339,26 @@ typedef void                    VOID;
 typedef char                    CHAR8;
 typedef unsigned char           UCHAR8;
 
-typedef unsigned char           BYTE;                           /* 8-bit unsigned  */
+//typedef unsigned char           BYTE;                           /* 8-bit unsigned  */
 typedef unsigned short int      WORD;                           /* 16-bit unsigned */
 typedef unsigned long           DWORD;                          /* 32-bit unsigned */
 /* MPLAB C Compiler for PIC18 does not support 64-bit integers */
+#if !defined(__18CXX)
 __EXTENSION
 typedef unsigned long long      QWORD;                          /* 64-bit unsigned */
+#endif /* __18CXX */
 typedef signed char             CHAR;                           /* 8-bit signed    */
 typedef signed short int        SHORT;                          /* 16-bit signed   */
 typedef signed long             LONG;                           /* 32-bit signed   */
 /* MPLAB C Compiler for PIC18 does not support 64-bit integers */
+#if !defined(__18CXX)
 __EXTENSION
 typedef signed long long        LONGLONG;                       /* 64-bit signed   */
+#endif /* __18CXX */
 typedef union
 {
     BYTE Val;
-    struct __PACKED
+    struct
     {
         __EXTENSION BYTE b0:1;
         __EXTENSION BYTE b1:1;
@@ -374,13 +374,13 @@ typedef union
 typedef union
 {
     WORD Val;
-    BYTE v[2] __PACKED;
-    struct __PACKED
+    BYTE v[2];
+    struct
     {
         BYTE LB;
         BYTE HB;
     } byte;
-    struct __PACKED
+    struct
     {
         __EXTENSION BYTE b0:1;
         __EXTENSION BYTE b1:1;
@@ -404,26 +404,26 @@ typedef union
 typedef union
 {
     DWORD Val;
-    WORD w[2] __PACKED;
-    BYTE v[4] __PACKED;
-    struct __PACKED
+    WORD w[2];
+    BYTE v[4];
+    struct
     {
         WORD LW;
         WORD HW;
     } word;
-    struct __PACKED
+    struct
     {
         BYTE LB;
         BYTE HB;
         BYTE UB;
         BYTE MB;
     } byte;
-    struct __PACKED
+    struct
     {
         WORD_VAL low;
         WORD_VAL high;
     }wordUnion;
-    struct __PACKED
+    struct
     {
         __EXTENSION BYTE b0:1;
         __EXTENSION BYTE b1:1;
@@ -461,25 +461,26 @@ typedef union
 } DWORD_VAL;
 
 /* MPLAB C Compiler for PIC18 does not support 64-bit integers */
+#if !defined(__18CXX)
 typedef union
 {
     QWORD Val;
-    DWORD d[2] __PACKED;
-    WORD w[4] __PACKED;
-    BYTE v[8] __PACKED;
-    struct __PACKED
+    DWORD d[2];
+    WORD w[4];
+    BYTE v[8];
+    struct
     {
         DWORD LD;
         DWORD HD;
     } dword;
-    struct __PACKED
+    struct
     {
         WORD LW;
         WORD HW;
         WORD UW;
         WORD MW;
     } word;
-    struct __PACKED
+    struct
     {
         __EXTENSION BYTE b0:1;
         __EXTENSION BYTE b1:1;
@@ -547,7 +548,11 @@ typedef union
         __EXTENSION BYTE b63:1;
     } bits;
 } QWORD_VAL;
+#endif /* __18CXX */
 
 #undef __EXTENSION
 
+#ifdef __cplusplus
+  }
+#endif
 #endif /* __GENERIC_TYPE_DEFS_H_ */

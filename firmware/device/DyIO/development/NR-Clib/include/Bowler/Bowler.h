@@ -17,10 +17,7 @@
  */
 #ifndef WASP_H_
 #define WASP_H_
-#if defined(__PIC32MX__)
-	#include "arch/pic32/Compiler.h"
-    #include "arch/pic32/GenericTypeDefs.h"
-#endif
+
 #include "Defines.h"
 #include "Bowler_Struct_Def.h"
 #include "Debug.h"
@@ -36,12 +33,7 @@
 
 
 #if defined(__PIC32MX__)
-	#if defined(__32MX795F512L__)
-		#include "arch/pic32/EthHardware.h"
-	#endif
-	#if defined(__32MX460F512L__)
-		#include "arch/pic32/Pizo.h"
-	#endif
+
 	#include "arch/pic32/BowlerConfig.h"
 
 #elif defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644PA__) || defined(__AVR_ATmega324P__)

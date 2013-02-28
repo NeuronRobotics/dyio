@@ -138,7 +138,7 @@ void InitAbsPID(AbsPID * state,float KP,float KI,float KD,float time);
  * Handle a PID packet.
  * @return True if the packet was processed, False if it was not  PID packet
  */
-unsigned char ProcessPIDPacket(BowlerPacket * Packet);
+BOOL ProcessPIDPacket(BowlerPacket * Packet);
 /**
  * @param groups a pointer the the array of PID groups
  * @param the number of PID groups
