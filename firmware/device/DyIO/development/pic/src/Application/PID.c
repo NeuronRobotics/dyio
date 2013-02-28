@@ -44,6 +44,7 @@ void initPIDChans(BYTE group){
 	case IS_COUNTER_INPUT_HOME:
 		dyPid[group].inputChannel = getCounterIntChannnel( channelToCounterGroup(dyPid[group].inputChannel));
 		StartCounterInput(dyPid[group].inputChannel);
+		break;
 	}
 
 	println_I("Setting Modes for PID");
@@ -148,6 +149,7 @@ BYTE GetPIDGroup(BYTE channel){
 	case IS_COUNTER_INPUT_DIR:
 	case IS_COUNTER_INPUT_HOME:
 	case IS_ANALOG_IN:
+	case IS_DI:
 		for(i=0;i<NUM_PID_GROUPS;i++){
 			if(dyPid[i].inputChannel == channel){
 				if(pidGroups[i].Enabled || vel[i].enabled )
@@ -159,6 +161,7 @@ BYTE GetPIDGroup(BYTE channel){
 	case IS_DC_MOTOR_DIR:
 	case IS_DC_MOTOR_VEL:
 	case IS_PWM:
+	case IS_DO:
 		for(i=0;i<NUM_PID_GROUPS;i++){
 			if(dyPid[i].outputChannel == channel){
 				if(pidGroups[i].Enabled || vel[i].enabled)
@@ -195,6 +198,8 @@ int resetPositionMine(int group, int current){
 		SetCounterInput(dyPid[group].inputChannel,current);
 	}else if(dyPid[group].inputMode == IS_ANALOG_IN){
 		current=GetAnalogValFromAsync(dyPid[group].inputChannel);
+	}else if(dyPid[group].inputMode == IS_DI){
+		current=GetDigitalValFromAsync(dyPid[group].inputChannel);
 	}
 	return current;
 }
@@ -214,6 +219,9 @@ float getPositionMine(int group){
 		break;
 	case IS_ANALOG_IN:
 		pos=GetAnalogValFromAsync(dyPid[group].inputChannel);
+		break;
+	case IS_DI:
+		pos = GetDigitalValFromAsync(dyPid[group].inputChannel);
 		break;
 	}
 	return ((float)pos);
@@ -235,6 +243,11 @@ void setOutputMine(int group, float v){
 			val=190;
 		if(val<25)
 			val=25;
+	}else if(dyPid[group].outputMode == IS_DO){
+		if(val>0)
+			val=1;
+		else
+			val=0;
 	}else{
 		val += 128;
 		if (val>255)
