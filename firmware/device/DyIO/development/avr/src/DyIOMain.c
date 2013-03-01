@@ -13,7 +13,8 @@ void server(){
 #define analogTime  20
 static 	RunEveryData asyncSched = {0,analogTime};
 void runDyIOMain(void){
-
+	startScheduler();
+	Bowler_HAL_Init();
 	Bowler_Init();// Com Stack Init. Sets up timeout timer, uart 0 and if debug enabled, uart 1
 	//println_I("Stack initialized");
 	UserInit();// User code init
