@@ -29,6 +29,7 @@ unsigned short int GetPacketLegnth(BowlerPacket * Packet);
 
 
 unsigned long Bytes2Int32(BYTE a,BYTE b,BYTE c,BYTE d);
+
 unsigned long GetRPCValue(char * data);
 
 unsigned char CheckAddress(BYTE * one,BYTE * two);

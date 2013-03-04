@@ -7,12 +7,42 @@
 
 #ifndef NAMESPACE_H_
 #define NAMESPACE_H_
+#include <stdio.h>
 
-//bcs.core
-#define _ERR					0x7272655f // '_err'  The Error RPC
-#define _RDY					0x7964725f // '_rdy'  The ready RPC
-#define _PNG					0x676E705F // '_png'  Generic ping
-#define _NMS					0x736d6e5f // '_nms'  Namespace RPC
+//#define USE_LINKED_LIST_NAMESPACE
+
+typedef BYTE packetEventCallback(BowlerPacket *);
+typedef BYTE asyncEventCallback(BowlerPacket *);
+
+typedef struct __attribute__((__packed__)) _RPC_LIST{
+	//This is the bowler method for this RPC
+	BYTE bowlerMethod;
+	//This is the 4 byte code for of the RPC
+	unsigned long rpc;
+	//This is the callback function pointer for execution of the method
+	packetEventCallback * callback;
+	//This is the linked list field
+	struct _RPC_LIST * next;
+} RPC_LIST;
+
+typedef struct __attribute__((__packed__)) _NAMESPACE_LIST{
+	//This is the string that identifies the names pace
+	const char *  namespaceString;
+	//This is the linked list of the RPC's
+	RPC_LIST * rpcSet;
+	//This is the callback function pointer for checking for async.
+	asyncEventCallback * asyncEventCheck;
+	//This is the linked list field
+	struct _NAMESPACE_LIST * next;
+} NAMESPACE_LIST;
+
+RPC_LIST * getRpcByID(NAMESPACE_LIST * namespace,unsigned long  rpcId, BYTE bowlerMethod);
+void addNamespaceToList(NAMESPACE_LIST * newNs);
+void addRpcToNamespace(NAMESPACE_LIST * namespace,RPC_LIST * rpc );
+NAMESPACE_LIST * getNamespaceAtIndex(int index);
+BYTE getNumberOfNamespaces();
+
+
 //bcs.safe
 #define SAFE					0x65666173 // 'safe'  Get/Set the safe-mode parameters
 

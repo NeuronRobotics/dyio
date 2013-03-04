@@ -30,6 +30,7 @@
 #include "BowlerTransport.h"
 #include "namespace.h"
 #include "BowlerRPCRegestration.h"
+#include "Namespace_bcs_core.h"
 
 
 #if defined(__PIC32MX__)

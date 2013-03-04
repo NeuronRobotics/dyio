@@ -10,7 +10,7 @@ void server(){
 	Bowler_Server((BowlerPacket *) &Packet,TRUE);
 }
 
-#define analogTime  20
+#define analogTime  10
 static 	RunEveryData asyncSched = {0,analogTime};
 void runDyIOMain(void){
 	startScheduler();

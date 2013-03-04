@@ -82,6 +82,7 @@ void hardwareInit(){
 	InitCounterPins();
 	InitADC();
 	println_I("Adding DyIO namespaces:");
+
 	AddNamespace(sizeof(ioNSName), ioNSName);
 	AddNamespace(sizeof(setModeNSName), setModeNSName);
 	AddNamespace(sizeof(dyioNSName), dyioNSName);
@@ -92,6 +93,8 @@ void hardwareInit(){
 	setMethodCallback(BOWLER_GET,UserGetRPCs);
 	setMethodCallback(BOWLER_POST,UserPostRPCs);
 	setMethodCallback(BOWLER_CRIT,UserCriticalRPCs);
+
+
 	BYTE rev [] = {MAJOR_REV,MINOR_REV,FIRMWARE_VERSION};
 	FlashSetFwRev(rev);
 
