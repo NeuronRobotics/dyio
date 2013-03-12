@@ -30,7 +30,7 @@ const unsigned char dypidNSName[] = "bcs.pid.dypid.*;0.3;http://neuronrobotics.c
 
 const unsigned char ioNSName[] = "bcs.io.*;0.3;;";
 
-const unsigned char setModeNSName[] = "bcs.io.setmode.*;;";
+const unsigned char setModeNSName[] = "bcs.io.setmode.*;0.3;;";
 
 const unsigned char dyioNSName[] = "neuronrobotics.dyio.*;0.3;;";
 
