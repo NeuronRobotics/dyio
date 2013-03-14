@@ -14,12 +14,9 @@ LINK 			= $(GCCA)  -L ../NR-Clib/lib/AVR/$(DEVICEA)/
 OUTPUTDIR       =output/$(DEVICEA)/
 OUTPUTDIR_DEBUG =output/$(DEVICEA)_debug/
 
-CFILES := $(wildcard ../common/src/dyio/*.c) \
-$(wildcard ../common/src/main/*.c) \
+CFILES := $(wildcard ../common/src/*/*.c) \
 $(wildcard src/*.c) \
-$(wildcard src/BowlerCallbacks/*.c) \
-$(wildcard src/Driver/*.c) \
-$(wildcard src/DyIO/*.c) 
+$(wildcard src/*/*.c)
 
 OFILES := $(CFILES:%.c=%.o)
 DFILES := $(CFILES:%.c=%.d)

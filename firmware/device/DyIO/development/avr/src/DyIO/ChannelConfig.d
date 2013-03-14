@@ -5,10 +5,10 @@ src/DyIO/ChannelConfig.o: src/DyIO/ChannelConfig.c include/UserApp.h \
  ../NR-Clib/include/Bowler/Bowler_Helper.h \
  ../NR-Clib/include/Bowler/Bowler_Server.h \
  ../NR-Clib/include/Bowler/FIFO.h ../NR-Clib/include/Bowler/RPC_Process.h \
+ ../NR-Clib/include/Bowler/namespace.h \
  ../NR-Clib/include/Bowler/Scheduler.h \
  ../NR-Clib/include/Bowler/AbstractPID.h \
  ../NR-Clib/include/Bowler/BowlerTransport.h \
- ../NR-Clib/include/Bowler/namespace.h \
  ../NR-Clib/include/Bowler/BowlerRPCRegestration.h \
  ../NR-Clib/include/Bowler/Namespace_bcs_core.h \
  ../NR-Clib/include/arch/AVR/BowlerConfig.h \
@@ -41,13 +41,13 @@ include/UserApp.h:
 
 ../NR-Clib/include/Bowler/RPC_Process.h:
 
+../NR-Clib/include/Bowler/namespace.h:
+
 ../NR-Clib/include/Bowler/Scheduler.h:
 
 ../NR-Clib/include/Bowler/AbstractPID.h:
 
 ../NR-Clib/include/Bowler/BowlerTransport.h:
-
-../NR-Clib/include/Bowler/namespace.h:
 
 ../NR-Clib/include/Bowler/BowlerRPCRegestration.h:
 
