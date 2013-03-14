@@ -11,12 +11,12 @@ CCP     		= $(GCCP) -mprocessor=$(DEVICEP) $(INCLUDES)  -I$(PICTOOLCHAIN)../pic3
 LINK 			= $(GCCP) -mprocessor=$(DEVICEP) -L ../NR-Clib/lib/PIC32/$(DEVICEP)/ 
 LFLAFS          = -Wl,--script="elf32pic32mx.ld",--defsym=__MPLAB_BUILD=1,--gc-sections,--report-mem
 
-CFILES := $(wildcard ../common/src/*/*.c) \
-$(wildcard src/*.c) \
-$(wildcard src/*/*.c) \
-$(wildcard src/*/*/*.c)
+CFILES :=	$(wildcard ../common/src/*/*.c) \
+			$(wildcard src/*.c) \
+			$(wildcard src/*/*.c) \
+			$(wildcard src/*/*/*.c)
 
-OFILES := $(CFILES:%.c=%.o)
+OFILES := 	$(CFILES:%.c=%.o)
 
     
 all:clean release debug bluetooth
@@ -42,5 +42,3 @@ buildSpecificClean:
 	$(CCP) -c $< -o $@
 clean:
 	 rm -rf $(OFILES)
-lib:$(OFILES)
-	$(AR) rcs  libNRLIB.a $(OFILES)

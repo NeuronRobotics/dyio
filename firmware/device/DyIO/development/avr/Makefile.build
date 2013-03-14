@@ -16,7 +16,7 @@ OUTPUTDIR_DEBUG =output/$(DEVICEA)_debug/
 
 CFILES := $(wildcard ../common/src/*/*.c) \
 $(wildcard src/*.c) \
-$(wildcard src/*/*.c)
+$(wildcard src/*/*.c) 
 
 OFILES := $(CFILES:%.c=%.o)
 DFILES := $(CFILES:%.c=%.d)
@@ -42,5 +42,3 @@ debug: $(OFILES)
 	$(CC) -c $< -o $@
 clean:
 	 rm -rf $(OFILES) $(DFILES)
-lib:$(OFILES)
-	$(AR) rcs  libNRLIB.a $(OFILES)
