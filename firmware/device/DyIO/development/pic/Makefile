@@ -26,20 +26,21 @@ OFILES := $(CFILES:%.c=%.o)
 all:clean release debug bluetooth
 	echo PIC Build OK!
 
-release:$(OFILES)
-	$(CCP) -c src/Drivers/BluetoothManager.c	-o src/Drivers/BluetoothManager.o
+release:buildSpecificClean $(OFILES)
 	$(LINK) $(OFILES) -lNRLIB  		-o output/release/output.elf $(LFLAFS)
 	cd output/release/;$(BIN2HEX) 	-v -a  output.elf	
 	
-debug:$(OFILES)
-	$(CCP) -c src/Drivers/BluetoothManager.c -o src/Drivers/BluetoothManager.o
+debug:buildSpecificClean $(OFILES)
 	$(LINK) $(OFILES) -lNRLIB_debug  -o output/debug/output.elf $(LFLAFS)
 	cd output/debug/;$(BIN2HEX) 	 -v -a  output.elf
 	
-bluetooth:	$(OFILES)
+bluetooth:buildSpecificClean	$(OFILES)
 	$(CCP) -c src/Drivers/BluetoothManager.c -DHAS_BLUTOOTH	-o src/Drivers/BluetoothManager.o
 	$(LINK) $(OFILES) -lNRLIB  		 -o output/bluetooth/output.elf $(LFLAFS)  
 	cd output/bluetooth/;$(BIN2HEX)  -v -a  output.elf
+	
+buildSpecificClean:
+	rm -rf src/Drivers/BluetoothManager.o
 
 %.o: %.c
 	$(CCP) -c $< -o $@
