@@ -38,16 +38,18 @@ pub:
 	rm -rf FirmwarePublish/Release/legacy/*.xml
 	rm -rf FirmwarePublish/Dev/*.xml;
 	#Release
-	$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 		-core=1,avr_atmegaXX4p,2,avr/output/644p/output.hex -output=FirmwarePublish/Release/dyio-$(REVISION).xml
-	$(PUB) -core=0,pic32mx440f128h,4,pic/output/bluetooth/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/644p/output.hex -output=FirmwarePublish/Release/dyio-bluetooth-$(REVISION).xml
-	$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 		-core=1,avr_atmegaXX4p,2,avr/output/324p/output.hex -output=FirmwarePublish/Release/legacy/dyio-$(REVISION)_legacy.xml
+	$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 		-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Release/dyio-$(REVISION).xml
+	$(PUB) -core=0,pic32mx440f128h,4,pic/output/bluetooth/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Release/dyio-bluetooth-$(REVISION).xml
+	$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 		-core=1,avr_atmegaXX4p,2,avr/output/atmega324p/output.hex -output=FirmwarePublish/Release/legacy/dyio-$(REVISION)_legacy.xml
 	#Debug
-	$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/644p/output.hex -output=FirmwarePublish/Dev/dyio-DEV-$(REVISION)
-	$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/debug/output.hex -output=FirmwarePublish/Dev/dyio-DEV-AVRDEBUG-$(REVISION)
-	$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/debug/output.hex -output=FirmwarePublish/Dev/dyio-DEV-AVRDEBUG-PICDEBUG-$(REVISION)
-	$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/644p/output.hex -output=FirmwarePublish/Dev/dyio-DEV-PICDEBUG-$(REVISION)
+	$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Dev/dyio-DEV-$(REVISION)
+	$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p_debug/output.hex -output=FirmwarePublish/Dev/dyio-DEV-AVRDEBUG-$(REVISION)
+	$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p_debug/output.hex -output=FirmwarePublish/Dev/dyio-DEV-AVRDEBUG-PICDEBUG-$(REVISION)
+	$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Dev/dyio-DEV-PICDEBUG-$(REVISION)
 	if(rm ../NRSDK/fw/*); then echo OK; fi
 	#cp FirmwarePublish/Dev/dyio* ../NRSDK/fw/
 	#cp FirmwarePublish/Release/*.xml ../NRConsole/src/com/neuronrobotics/nrconsole/plugin/bootloader/fw/
 	nr-console
 clean:update
+	make -C pic clean
+	make -C avr clean

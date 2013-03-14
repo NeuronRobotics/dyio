@@ -1,0 +1,49 @@
+-include ../common/Version.mk
+-include ../NR-Clib/toolchain/avr/toolchain.mk
+INCLUDES	    = -I../NR-Clib/include/ -I./include/ -I ../common/include -I ../NR-Clib/include/arch/avr -I/usr/lib/avr/include/ 
+
+
+CPU_SPD       	= 18432000UL
+LOW_FUSE     	= 0xce
+HIGH_FUSE    	= 0xd9
+EXT_FUSE      	= 0xff
+CCA             = $(GCCA) $(DYIO_VER) -mmcu=$(DEVICEA) -DF_CPU=$(CPU_SPD) $(INCLUDES)
+CC				= $(CCA)
+
+LINK 			= $(GCCA)  -L ../NR-Clib/lib/AVR/$(DEVICEA)/ 
+OUTPUTDIR       =output/$(DEVICEA)/
+OUTPUTDIR_DEBUG =output/$(DEVICEA)_debug/
+
+CFILES := $(wildcard ../common/src/dyio/*.c) \
+$(wildcard ../common/src/main/*.c) \
+$(wildcard src/*.c) \
+$(wildcard src/BowlerCallbacks/*.c) \
+$(wildcard src/Driver/*.c) \
+$(wildcard src/DyIO/*.c) 
+
+OFILES := $(CFILES:%.c=%.o)
+DFILES := $(CFILES:%.c=%.d)
+
+all:clean release debug
+	echo AVR Build OK!
+
+release: $(OFILES)
+	rm -rf $(OUTPUTDIR)
+	mkdir $(OUTPUTDIR)
+	$(LINK)  -mmcu=$(DEVICEA) $(OFILES) -lNRLIB -o $(OUTPUTDIR)output.elf
+	cd $(OUTPUTDIR); $(BIN2HEXAVR) -R .eeprom -O ihex output.elf  "output.hex"
+	cd $(OUTPUTDIR); avr-size --format=avr --mcu=$(DEVICEA) output.elf
+	
+debug: $(OFILES)
+	rm -rf $(OUTPUTDIR_DEBUG)
+	mkdir $(OUTPUTDIR_DEBUG)
+	$(LINK)  -mmcu=$(DEVICEA) $(OFILES) -lNRLIB_debug -o $(OUTPUTDIR_DEBUG)output.elf
+	cd $(OUTPUTDIR_DEBUG); $(BIN2HEXAVR) -R .eeprom -O ihex output.elf  "output.hex"
+	cd $(OUTPUTDIR_DEBUG); avr-size --format=avr --mcu=$(DEVICEA) output.elf
+
+%.o: %.c
+	$(CC) -c $< -o $@
+clean:
+	 rm -rf $(OFILES) $(DFILES)
+lib:$(OFILES)
+	$(AR) rcs  libNRLIB.a $(OFILES)
