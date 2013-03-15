@@ -192,5 +192,9 @@ void pushPIDLimitEvent(PidLimitEvent * event);
  */
 BOOL isPIDInterpolating(int index);
 
+BOOL processPIDGet(BowlerPacket * Packet);
+
+BOOL processPIDPost(BowlerPacket * Packet);
+BOOL processPIDCrit(BowlerPacket * Packet);
 
 #endif /* ABSTRACTPID_H_ */

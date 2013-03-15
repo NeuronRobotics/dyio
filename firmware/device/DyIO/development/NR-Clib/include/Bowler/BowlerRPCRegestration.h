@@ -10,7 +10,9 @@
 
 #define MAX_NUM_RPC 15
 BYTE addRPC(BYTE method,const char * rpc,void( *_callback)(BowlerPacket*));
+#if !defined(USE_LINKED_LIST_NAMESPACE)
 BYTE setMethodCallback(BYTE method,BYTE( *_callback)(BowlerPacket*));
+#endif
 
 typedef void rpcCallback(BowlerPacket *);
 

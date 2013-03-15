@@ -18,7 +18,7 @@
 
 #ifndef RPC_PROCESS_H_
 #define RPC_PROCESS_H_
-
+#include "namespace.h"
 
 float getLastPacketTime(void);
 void Process_Self_Packet(BowlerPacket * Packet);
@@ -31,6 +31,8 @@ unsigned char UserGetRPCs(BowlerPacket * Packet);
 unsigned char UserPostRPCs(BowlerPacket * Packet);
 unsigned char UserCriticalRPCs(BowlerPacket * Packet);
 
+#if !defined(USE_LINKED_LIST_NAMESPACE)
 void AddNamespace(unsigned char len, const unsigned char *  string);
+#endif
 
 #endif /* RPC_PROCESS_H_ */
