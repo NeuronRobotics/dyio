@@ -16,29 +16,6 @@ BYTE SaveTheState=0;
 const BYTE MY_MAC_ADDRESS[]={0x74,0xf7,0x26,0x01,0x01,0x01};
 
 extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
-/*
-const unsigned char ioNSName[] = "bcs.io.*;0.3;http://neuronrobotics.com/wiki/Bcs-io;";
-
-const unsigned char setModeNSName[] = "bcs.io.setmode.*;0.3;http://neuronrobotics.com/wiki/Bcs-io-setmode;";
-
-const unsigned char dyioNSName[] = "neuronrobotics.dyio.*;0.3;http://neuronrobotics.com/wiki/Neuronrobotics-dyio;";
-
-const unsigned char pidNSName[] = "bcs.pid.*;0.3;http://neuronrobotics.com/wiki/Bcs-pid;";
-
-const unsigned char dypidNSName[] = "bcs.pid.dypid.*;0.3;http://neuronrobotics.com/wiki/Bcs-pid-dypid;";
- */
-
-const unsigned char ioNSName[] = "bcs.io.*;0.3;;";
-
-const unsigned char setModeNSName[] = "bcs.io.setmode.*;0.3;;";
-
-const unsigned char dyioNSName[] = "neuronrobotics.dyio.*;0.3;;";
-
-const unsigned char pidNSName[] = "bcs.pid.*;0.3;;";
-
-const unsigned char dypidNSName[] = "bcs.pid.dypid.*;0.3;;";
-
-const unsigned char safeNSName[] = "bcs.safe.*;0.3;;";
 
 void hardwareInit(){
 	StartCritical();
@@ -83,6 +60,7 @@ void hardwareInit(){
 	InitADC();
 	println_I("Adding DyIO namespaces:");
 
+	/*
 	AddNamespace(sizeof(ioNSName), ioNSName);
 	AddNamespace(sizeof(setModeNSName), setModeNSName);
 	AddNamespace(sizeof(dyioNSName), dyioNSName);
@@ -93,6 +71,13 @@ void hardwareInit(){
 	setMethodCallback(BOWLER_GET,UserGetRPCs);
 	setMethodCallback(BOWLER_POST,UserPostRPCs);
 	setMethodCallback(BOWLER_CRIT,UserCriticalRPCs);
+	*/
+	addNamespaceToList(get_neuronRoboticsDyIONamespace());
+	addNamespaceToList(get_bcsIoNamespace());
+	addNamespaceToList(get_bcsIoSetmodeNamespace());
+	addNamespaceToList(get_bcsPidDypidNamespace());
+	addNamespaceToList(get_bcsSafeNamespace());
+	addNamespaceToList(getBcsPidNamespace());
 
 
 	BYTE rev [] = {MAJOR_REV,MINOR_REV,FIRMWARE_VERSION};
