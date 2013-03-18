@@ -72,9 +72,9 @@ void hardwareInit(){
 	setMethodCallback(BOWLER_POST,UserPostRPCs);
 	setMethodCallback(BOWLER_CRIT,UserCriticalRPCs);
 	*/
+	addNamespaceToList(get_bcsIoNamespace());//Implemented
+	addNamespaceToList(get_bcsIoSetmodeNamespace());//Implemented
 	addNamespaceToList(get_neuronRoboticsDyIONamespace());
-	addNamespaceToList(get_bcsIoNamespace());
-	addNamespaceToList(get_bcsIoSetmodeNamespace());
 	addNamespaceToList(get_bcsPidDypidNamespace());
 	addNamespaceToList(get_bcsSafeNamespace());
 	addNamespaceToList(getBcsPidNamespace());

@@ -15,13 +15,12 @@ BOOL bcsIoSetmodeAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Pa
 }
 
 BOOL bcsIoSetmodeProcessor(BowlerPacket * Packet){
-	BYTE temp0;
 	switch (Packet->use.head.RPC){
-	case GCHM:
-		temp0=Packet->use.data[0];
-		Packet->use.data[1]=GetChannelMode(temp0);
-		Packet->use.head.DataLegnth=6;
-		Packet->use.head.Method=BOWLER_POST;
+	case SCHM:
+		SetChannelMode(Packet);
+		break;
+	case SACM:
+		SetAllChannelMode(Packet);
 		break;
 	default:
 		return FALSE;
@@ -31,12 +30,16 @@ BOOL bcsIoSetmodeProcessor(BowlerPacket * Packet){
 
 
 
-static RPC_LIST bcsIoSetmode_gchm={	BOWLER_POST,// Method
-                                "gchm",//RPC as string
+static RPC_LIST bcsIoSetmode_schm_p={	BOWLER_POST,// Method
+                                "schm",//RPC as string
                                 &bcsIoSetmodeProcessor,//function pointer to a packet parsinf function
                                 NULL //Termination
 };
-
+static RPC_LIST bcsIoSetmode_sacm_p={	BOWLER_POST,// Method
+                                "sacm",//RPC as string
+                                &bcsIoSetmodeProcessor,//function pointer to a packet parsinf function
+                                NULL //Termination
+};
 
 
 static NAMESPACE_LIST bcsIoSetmode ={	ioNSName,// The string defining the namespace
@@ -50,8 +53,8 @@ NAMESPACE_LIST * get_bcsIoSetmodeNamespace(){
 	if(!namespcaedAdded){
                 //POST
                 //Add the RPC structs to the namespace
-                addRpcToNamespace(&bcsIoSetmode,& bcsIoSetmode_gchm);
-
+                addRpcToNamespace(&bcsIoSetmode,& bcsIoSetmode_schm_p);
+                addRpcToNamespace(&bcsIoSetmode,& bcsIoSetmode_sacm_p);
                 namespcaedAdded =TRUE;
 	}
 

@@ -23,30 +23,48 @@ BOOL bcsPidDypidAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Pac
     return FALSE;
 }
 
-BOOL bcsPidDypidProcessor(BowlerPacket * Packet){
+BOOL bcsPidDypidProcessor_g(BowlerPacket * Packet){
 	BYTE temp0;
 	switch (Packet->use.head.RPC){
-	case GCHM:
-		temp0=Packet->use.data[0];
-		Packet->use.data[1]=GetChannelMode(temp0);
-		Packet->use.head.DataLegnth=6;
-		Packet->use.head.Method=BOWLER_POST;
+	case DPID:
+		GetConfigDyPID(Packet);
 		break;
 	default:
 		return FALSE;
 	}
+	SyncSessionTime(getMs());
+	return TRUE;
+}
+
+BOOL bcsPidDypidProcessor_c(BowlerPacket * Packet){
+	BYTE temp0;
+	BYTE zone =4;
+	switch (Packet->use.head.RPC){
+	case DPID:
+		if(ConfigDyPID(Packet)){
+			READY(Packet,zone,1);
+		}else
+			ERR(Packet,zone,1);
+		break;
+	default:
+		return FALSE;
+	}
+	SyncSessionTime(getMs());
 	return TRUE;
 }
 
 
-
-static RPC_LIST bcsPidDypid_gchm={	BOWLER_POST,// Method
-                                "gchm",//RPC as string
-                                &bcsPidDypidProcessor,//function pointer to a packet parsinf function
+static RPC_LIST bcsPidDypid_dpid_g={	BOWLER_GET,// Method
+                                "dpid",//RPC as string
+                                &bcsPidDypidProcessor_g,//function pointer to a packet parsinf function
                                 NULL //Termination
 };
 
-
+static RPC_LIST bcsPidDypid_dpid_c={	BOWLER_CRIT,// Method
+                                "dpid",//RPC as string
+                                &bcsPidDypidProcessor_c,//function pointer to a packet parsinf function
+                                NULL //Termination
+};
 
 static NAMESPACE_LIST bcsPidDypid ={	ioNSName,// The string defining the namespace
                                 NULL,// the first element in the RPC list
@@ -59,7 +77,8 @@ NAMESPACE_LIST * get_bcsPidDypidNamespace(){
 	if(!namespcaedAdded){
                 //POST
                 //Add the RPC structs to the namespace
-                addRpcToNamespace(&bcsPidDypid,& bcsPidDypid_gchm);
+                addRpcToNamespace(&bcsPidDypid,& bcsPidDypid_dpid_g);
+                addRpcToNamespace(&bcsPidDypid,& bcsPidDypid_dpid_c);
 
                 namespcaedAdded =TRUE;
 	}

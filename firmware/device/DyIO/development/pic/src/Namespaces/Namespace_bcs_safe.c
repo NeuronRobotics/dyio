@@ -15,26 +15,52 @@ BOOL bcsSafeAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)
     return FALSE;
 }
 
-BOOL bcsSafeProcessor(BowlerPacket * Packet){
+BOOL bcsSafeProcessor_g(BowlerPacket * Packet){
 	BYTE temp0;
+	UINT16_UNION timeUnion;
 	switch (Packet->use.head.RPC){
-	case GCHM:
-		temp0=Packet->use.data[0];
-		Packet->use.data[1]=GetChannelMode(temp0);
-		Packet->use.head.DataLegnth=6;
+	case SAFE:
 		Packet->use.head.Method=BOWLER_POST;
+		Packet->use.data[0]=getHeartBeatLock();
+		timeUnion.Val = getHeartBeatTime();
+		Packet->use.data[1]=timeUnion.byte.SB;
+		Packet->use.data[2]=timeUnion.byte.LB;
+		Packet->use.head.DataLegnth=4+3;
 		break;
 	default:
 		return FALSE;
 	}
+	SyncSessionTime(getMs());
+	return TRUE;
+}
+BOOL bcsSafeProcessor_p(BowlerPacket * Packet){
+	BYTE temp0;
+	UINT16_UNION timeUnion;
+	BYTE zone =5;
+	switch (Packet->use.head.RPC){
+
+	case SAFE:
+		timeUnion.byte.SB=Packet->use.data[1];
+		timeUnion.byte.LB=Packet->use.data[2];
+		setHeartBeatState(Packet->use.data[0],timeUnion.Val);
+		READY(Packet,zone,7);
+		break;
+	default:
+		return FALSE;
+	}
+	SyncSessionTime(getMs());
 	return TRUE;
 }
 
 
-
-static RPC_LIST bcsSafe_gchm={	BOWLER_POST,// Method
-                                "gchm",//RPC as string
-                                &bcsSafeProcessor,//function pointer to a packet parsinf function
+static RPC_LIST bcsSafe_safe_g={	BOWLER_GET,// Method
+                                "safe",//RPC as string
+                                &bcsSafeProcessor_g,//function pointer to a packet parsinf function
+                                NULL //Termination
+};
+static RPC_LIST bcsSafe_safe_p={	BOWLER_POST,// Method
+                                "safe",//RPC as string
+                                &bcsSafeProcessor_p,//function pointer to a packet parsinf function
                                 NULL //Termination
 };
 
@@ -51,7 +77,8 @@ NAMESPACE_LIST * get_bcsSafeNamespace(){
 	if(!namespcaedAdded){
                 //POST
                 //Add the RPC structs to the namespace
-                addRpcToNamespace(&bcsSafe,& bcsSafe_gchm);
+                addRpcToNamespace(&bcsSafe,& bcsSafe_safe_g);
+                addRpcToNamespace(&bcsSafe,& bcsSafe_safe_p);
 
                 namespcaedAdded =TRUE;
 	}

@@ -97,6 +97,10 @@ BOOL bcsIoProcessor_c(BowlerPacket * Packet){
 		DATA.PIN[Packet->use.data[0]].ServoPos=Packet->use.data[1];
 		SendPacketToCoProc(Packet);
 		break;
+	case ASYN:
+		setAsync(Packet->use.data[0],TRUE);
+		configAdvancedAsync(Packet);
+		break;
 	default:
 		return FALSE;
 	}
@@ -166,7 +170,12 @@ static RPC_LIST bcsIo_cchn_c={	BOWLER_CRIT,// Method
 };
 static RPC_LIST bcsIo_schv_c={	BOWLER_CRIT,// Method
                                 "schv",//RPC as string
-                                &bcsIoProcessor_p,//function pointer to a packet parsing function
+                                &bcsIoProcessor_c,//function pointer to a packet parsing function
+                                NULL //Termination
+};
+static RPC_LIST bcsIo_asyn_c={	BOWLER_CRIT,// Method
+                                "asyn",//RPC as string
+                                &bcsIoProcessor_c,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 
@@ -200,6 +209,7 @@ NAMESPACE_LIST * get_bcsIoNamespace(){
 		//CRIT
 		addRpcToNamespace(&bcsIo,& bcsIo_cchn_c);
 		addRpcToNamespace(&bcsIo,& bcsIo_schv_c);
+		addRpcToNamespace(&bcsIo,& bcsIo_asyn_c);
 
 		namespcaedAdded =TRUE;
 	}
