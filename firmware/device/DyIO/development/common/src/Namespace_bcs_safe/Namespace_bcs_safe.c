@@ -4,7 +4,7 @@
  * Created on: Mar 16, 2013
  * @author hephaestus
  */
-#include "UserApp.h"
+#include "Bowler/Bowler.h"
 
 const unsigned char safeNSName[] = "bcs.safe.*;0.3;;";
 
@@ -30,7 +30,6 @@ BOOL bcsSafeProcessor_g(BowlerPacket * Packet){
 	default:
 		return FALSE;
 	}
-	SyncSessionTime(getMs());
 	return TRUE;
 }
 BOOL bcsSafeProcessor_p(BowlerPacket * Packet){
@@ -48,7 +47,6 @@ BOOL bcsSafeProcessor_p(BowlerPacket * Packet){
 	default:
 		return FALSE;
 	}
-	SyncSessionTime(getMs());
 	return TRUE;
 }
 

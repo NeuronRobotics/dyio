@@ -32,7 +32,6 @@ BOOL bcsPidDypidProcessor_g(BowlerPacket * Packet){
 	default:
 		return FALSE;
 	}
-	SyncSessionTime(getMs());
 	return TRUE;
 }
 
@@ -49,7 +48,6 @@ BOOL bcsPidDypidProcessor_c(BowlerPacket * Packet){
 	default:
 		return FALSE;
 	}
-	SyncSessionTime(getMs());
 	return TRUE;
 }
 

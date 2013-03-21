@@ -4,7 +4,11 @@
  * Created on: Mar 16, 2013
  * @author hephaestus
  */
-#include "UserApp.h"
+
+
+#include "Bowler/Bowler.h"
+
+#include "Namespace/Namespace_bcs_io.h"
 
 const unsigned char ioNSName[] = "bcs.io.*;0.3;;";
 RunEveryData ppm={0,200};
@@ -19,6 +23,7 @@ BOOL bcsIoAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
 
 BOOL bcsIoProcessor_g(BowlerPacket * Packet){
 	BYTE temp0;
+	int i;
 	switch (Packet->use.head.RPC){
 	case GCHM:
 		temp0=Packet->use.data[0];
@@ -47,7 +52,7 @@ BOOL bcsIoProcessor_g(BowlerPacket * Packet){
 		Packet->use.head.DataLegnth=4+2;
 		break;
 	case GCHC:
-		Packet->use.data[0]=NUM_PINS;
+		Packet->use.data[0]=getNumberOfIOChannels();
 		Packet->use.data[1]=0;
 		Packet->use.data[2]=0;
 		Packet->use.data[3]=0;
@@ -59,7 +64,6 @@ BOOL bcsIoProcessor_g(BowlerPacket * Packet){
 	default:
 		return FALSE;
 	}
-	SyncSessionTime(getMs());
 	return TRUE;
 }
 
@@ -83,7 +87,6 @@ BOOL bcsIoProcessor_p(BowlerPacket * Packet){
 	default:
 		return FALSE;
 	}
-	SyncSessionTime(getMs());
 	return TRUE;
 }
 
@@ -104,7 +107,6 @@ BOOL bcsIoProcessor_c(BowlerPacket * Packet){
 	default:
 		return FALSE;
 	}
-	SyncSessionTime(getMs());
 	return TRUE;
 }
 
