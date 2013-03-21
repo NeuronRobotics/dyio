@@ -6,7 +6,7 @@
  */
 
 #include "UserApp.h"
-extern DATA_STRUCT DATA __attribute__ ((section (".scs_global_var")));
+extern DATA_STRUCT * DATA __attribute__ ((section (".scs_global_var")));
 extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 static BowlerPacket packetTemp;
 BYTE isAscii(char * str);
@@ -32,7 +32,7 @@ void LoadDefaultValues(){
 	SendPacketToCoProc(& packetTemp);
 	BYTE i;
 	for (i=0;i<NUM_PINS;i++){
-		DATA.PIN[i].ServoPos=packetTemp.use.data[i];
+		DATA[i].PIN.ServoPos=packetTemp.use.data[i];
 	}
 }
 
@@ -116,10 +116,9 @@ void CheckRev(void){
 }
 
 BYTE SetCoProcMode(BYTE PIN,BYTE mode){
-	extern DATA_STRUCT DATA;
-	if(DATA.PIN[PIN].State == mode)
+	if(DATA[PIN].PIN.State == mode)
 		return TRUE;
-	DATA.PIN[PIN].State=mode;
+	DATA[PIN].PIN.State=mode;
 	LoadCorePacket(& packetTemp);
 	packetTemp.use.head.Method=BOWLER_POST;
 	packetTemp.use.head.RPC=GetRPCValue("schm");
@@ -340,11 +339,11 @@ BYTE isAscii(char * str){
 }
 
 void SyncModes(void){
-	extern DATA_STRUCT DATA;
+
 	BYTE i;
 	GetAllModes(& packetTemp);
 	for (i=0;i<24;i++){
-		DATA.PIN[i].State=packetTemp.use.data[i] & 0x7f;
+		DATA[i].PIN.State=packetTemp.use.data[i] & 0x7f;
 		setAsyncLocal(i,(packetTemp.use.data[i]>0x80)?TRUE:FALSE);
 	}
 }

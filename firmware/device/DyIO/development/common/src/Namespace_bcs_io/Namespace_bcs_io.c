@@ -7,11 +7,14 @@
 
 
 #include "Bowler/Bowler.h"
-
 #include "Namespace/Namespace_bcs_io.h"
+
+extern DATA_STRUCT * DATA __attribute__ ((section (".scs_global_var")));
 
 const unsigned char ioNSName[] = "bcs.io.*;0.3;;";
 RunEveryData ppm={0,200};
+
+
 
 BOOL bcsIoAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
 	RunAsync();
@@ -97,7 +100,7 @@ BOOL bcsIoProcessor_c(BowlerPacket * Packet){
 		SendPacketToCoProc(Packet);
 		break;
 	case SCHV:
-		DATA.PIN[Packet->use.data[0]].ServoPos=Packet->use.data[1];
+		DATA[Packet->use.data[0]].PIN.ServoPos=Packet->use.data[1];
 		SendPacketToCoProc(Packet);
 		break;
 	case ASYN:

@@ -78,27 +78,7 @@
 #define FLAG_OK    1
 
 
-typedef union __attribute__((__packed__)) _FUNCTION_MAP
-	{
-		struct{
-			unsigned HAS_ANALOG_IN		:1;
-			unsigned HAS_ANALOG_PUSHED	:1;
-			unsigned HAS_PWM			:1;
-			unsigned HAS_UART			:1;
-			unsigned HAS_SPI			:1;
-			unsigned HAS_COUNTER_INPUT	:1;
-			unsigned HAS_COUNTER_OUTPUT	:1;
-			unsigned HAS_DC_MOTOR		:1;
-		};
-		BYTE b;
-	} FUNCTION_MAP;
-	typedef struct __attribute__((__packed__)) _PIN_MAP
-	{
-		BYTE ServoPos;
-#if !defined(__AVR_ATmega324P__)
-		BYTE State;
-#endif
-	} PIN_MAP;
+
 
 	typedef struct __attribute__((__packed__)) _STORAGE
 	{
@@ -107,12 +87,7 @@ typedef union __attribute__((__packed__)) _FUNCTION_MAP
 	} STORAGE;
 
 
-	typedef struct __attribute__((__packed__)) _DATA
-	{
-		//STORAGE self;
-		PIN_MAP PIN[NUM_PINS];
-		FUNCTION_MAP FUNCTION[NUM_PINS];
-	} DATA_STRUCT;
+
 
 
 BOOL ConfigChannel(BowlerPacket * Packet);

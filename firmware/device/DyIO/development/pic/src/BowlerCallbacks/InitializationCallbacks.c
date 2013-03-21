@@ -72,12 +72,12 @@ void hardwareInit(){
 	setMethodCallback(BOWLER_POST,UserPostRPCs);
 	setMethodCallback(BOWLER_CRIT,UserCriticalRPCs);
 	*/
-	addNamespaceToList(get_bcsIoNamespace());//Implemented
-	addNamespaceToList(get_bcsIoSetmodeNamespace());//Implemented
-	addNamespaceToList(get_neuronRoboticsDyIONamespace());
-	addNamespaceToList(get_bcsPidDypidNamespace());
-	addNamespaceToList(get_bcsSafeNamespace());
-	addNamespaceToList(getBcsPidNamespace());
+	addNamespaceToList((NAMESPACE_LIST * )get_bcsIoNamespace());//Implemented
+	addNamespaceToList((NAMESPACE_LIST * )get_bcsIoSetmodeNamespace());//Implemented
+	addNamespaceToList((NAMESPACE_LIST * )get_neuronRoboticsDyIONamespace());
+	addNamespaceToList((NAMESPACE_LIST * )get_bcsPidDypidNamespace());
+	addNamespaceToList((NAMESPACE_LIST * )get_bcsSafeNamespace());
+	addNamespaceToList((NAMESPACE_LIST * )getBcsPidNamespace());
 
 
 	BYTE rev [] = {MAJOR_REV,MINOR_REV,FIRMWARE_VERSION};

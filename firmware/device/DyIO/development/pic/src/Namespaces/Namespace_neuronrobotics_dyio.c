@@ -13,7 +13,7 @@ BOOL pwr=FALSE;
 static BOOL heartBeatLock = TRUE;
 static int heartBeatLockTime = 1;
 
-extern DATA_STRUCT DATA __attribute__ ((section (".scs_global_var")));
+
 extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 
 void UpdateAVRLED(void){

@@ -19,6 +19,9 @@
 #endif
 
 #include "Bowler/Bowler.h"
+#include "Namespace/Namespace_bcs_io.h"
+#include "Namespace/Namespace_bcs_io_setmode.h"
+
 #include "DyIO/DyIO_def.h"
 #include "CoProcCom.h"
 #include "PIC_IO.h"
@@ -40,6 +43,8 @@
 #include "Bluetooth.h"
 
 #include "arch/pic32/BowlerConfig.h"
+
+
 
 void UserInit(void);
 void UserRun(void);

@@ -64,7 +64,7 @@ static RPC_LIST bcsSafe_safe_p={	BOWLER_POST,// Method
 
 
 
-static NAMESPACE_LIST bcsSafe ={	ioNSName,// The string defining the namespace
+static NAMESPACE_LIST bcsSafe ={	safeNSName,// The string defining the namespace
                                 NULL,// the first element in the RPC list
                                 &bcsSafeAsyncEventCallback,// async for this namespace
                                 NULL// no initial elements to the other namesapce field.

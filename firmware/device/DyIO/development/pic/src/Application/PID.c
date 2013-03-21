@@ -11,7 +11,8 @@ static AbsPID 			pidGroups[NUM_PID_GROUPS];
 static DYIO_PID 		dyPid[NUM_PID_GROUPS];
 static PD_VEL 			vel[NUM_PID_GROUPS];
 static PidLimitEvent	limits[NUM_PID_GROUPS];
-extern DATA_STRUCT DATA __attribute__ ((section (".scs_global_var")));
+
+extern DATA_STRUCT * DATA __attribute__ ((section (".scs_global_var")));
 
 #define DYPID_NON_USED 0xff
 
@@ -235,7 +236,7 @@ void setOutputMine(int group, float v){
 	Print_Level l = getPrintLevel();
 	setPrintLevelNoPrint();
 	int val = (int)(v);
-	BYTE center = DATA.PIN[dyPid[group].outputChannel].ServoPos;
+	BYTE center = DATA[dyPid[group].outputChannel].PIN.ServoPos;
 
 	if(dyPid[group].outputMode == IS_SERVO){
 		val += center;

@@ -4,7 +4,8 @@
  * Created on: Mar 16, 2013
  * @author hephaestus
  */
-#include "UserApp.h"
+#include "Bowler/Bowler.h"
+#include "Namespace/Namespace_bcs_io_setmode.h"
 
 const unsigned char setModeNSName[] = "bcs.io.setmode.*;0.3;;";
 
@@ -42,7 +43,7 @@ static RPC_LIST bcsIoSetmode_sacm_p={	BOWLER_POST,// Method
 };
 
 
-static NAMESPACE_LIST bcsIoSetmode ={	ioNSName,// The string defining the namespace
+static NAMESPACE_LIST bcsIoSetmode ={	setModeNSName,// The string defining the namespace
                                 NULL,// the first element in the RPC list
                                 &bcsIoSetmodeAsyncEventCallback,// async for this namespace
                                 NULL// no initial elements to the other namesapce field.

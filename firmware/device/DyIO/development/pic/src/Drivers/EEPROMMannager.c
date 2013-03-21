@@ -71,7 +71,8 @@ void readPPMLink(BYTE * vals){
 }
 
 void setEEBrownOutDetect(BOOL b){
-	SetEEPRomData(BROWNOUT_START,BROWNOUT_END,&b);
+	BYTE tmp = b?1:0;
+	SetEEPRomData(BROWNOUT_START,BROWNOUT_END,&tmp);
 }
 BOOL getEEBrownOutDetect(){
 	BYTE tmp =0;
