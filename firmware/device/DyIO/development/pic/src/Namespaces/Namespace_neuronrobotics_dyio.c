@@ -32,6 +32,14 @@ BOOL getHeartBeatLock(){
 	return heartBeatLock;
 }
 
+
+
+float lastSyncSession=0;
+
+void SyncSessionTime(float time){
+	lastSyncSession = time;
+}
+
 BOOL neuronRoboticsDyIOAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
 
 	//BYTE i;
