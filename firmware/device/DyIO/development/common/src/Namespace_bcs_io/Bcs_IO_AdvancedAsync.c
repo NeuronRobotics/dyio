@@ -7,6 +7,7 @@
 
 
 #include "UserApp.h"
+#include "Namespace/AsyncManager.h"
 
 #define ADCINIT 0xFFFF
 
@@ -14,6 +15,7 @@
 void runAsyncIO();
 static BOOL isInit=FALSE;
 static AdvancedAsyncData asyncData[NUM_PINS];
+
 #define FASTIO
 int currentState [NUM_PINS];
 #define ASYN_RDY(i) ((pushAsyncReady(i)==TRUE)&&(IsAsync(i) == TRUE)&& (GetPIDGroup(i) == NOT_USED_IN_PID))

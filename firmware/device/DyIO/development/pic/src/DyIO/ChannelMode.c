@@ -6,7 +6,7 @@
  */
 #include "UserApp.h"
 
-extern DATA_STRUCT DATA;
+extern DATA_STRUCT * DATA __attribute__ ((section (".scs_global_var")));
 
 BOOL setMode(BYTE pin,BYTE mode);
 void setAsync(BYTE channel,BOOL async);
@@ -26,7 +26,7 @@ void InitPinStates(void){
 }
 BYTE GetChannelMode(BYTE chan){
 	//Strip off the internally stored High Bit
-	return DATA.PIN[chan].State & 0x7f;
+	return DATA[chan].PIN.State & 0x7f;
 }
 BOOL SetChannelMode(BowlerPacket * Packet){
 
@@ -101,7 +101,7 @@ BOOL setMode(BYTE pin,BYTE mode){
 	case IS_SPI_MOSI:
 	case IS_SPI_MISO:
 	case IS_SPI_SCK:
-		if(DATA.FUNCTION[pin].HAS_SPI != FALSE){
+		if(DATA[pin].FUNCTION.HAS_SPI != FALSE){
 			print_I("|Mode is now SPI");
 			InitSPI();
 			break;
@@ -112,7 +112,7 @@ BOOL setMode(BYTE pin,BYTE mode){
 	case IS_COUNTER_INPUT_INT:
 	case IS_COUNTER_INPUT_DIR:
 	case IS_COUNTER_INPUT_HOME:
-		if(DATA.FUNCTION[pin].HAS_COUNTER_INPUT != FALSE){
+		if(DATA[pin].FUNCTION.HAS_COUNTER_INPUT != FALSE){
 			print_I("|Mode is now Counter Input");
 			StartCounterInput(pin);
 			break;
@@ -124,7 +124,7 @@ BOOL setMode(BYTE pin,BYTE mode){
 	case IS_COUNTER_OUTPUT_INT:
 	case IS_COUNTER_OUTPUT_DIR:
 	case IS_COUNTER_OUTPUT_HOME:
-		if(DATA.FUNCTION[pin].HAS_COUNTER_OUTPUT != FALSE){
+		if(DATA[pin].FUNCTION.HAS_COUNTER_OUTPUT != FALSE){
 			print_I("|Mode is now Counter Output");
 			StartCounterOutput(pin);
 			break;
@@ -138,14 +138,14 @@ BOOL setMode(BYTE pin,BYTE mode){
 		startPPM(pin);
 		break;
 	}
-	DATA.PIN[pin].State=mode;
+	DATA[pin].PIN.State=mode;
 	return TRUE;
 }
 void setAsync(BYTE channel,BOOL async){
 	SyncModes();
 	BYTE mode = GetChannelMode(channel);
 	mode = (async)?mode|0x80:mode;
-	DATA.PIN[channel].State = mode;
+	DATA[channel].PIN.State = mode;
 	SetCoProcMode(channel,mode);
 	startAdvancedAsyncDefault(channel);
 }

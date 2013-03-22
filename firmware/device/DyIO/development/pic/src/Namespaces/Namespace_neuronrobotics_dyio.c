@@ -114,7 +114,6 @@ BOOL neuronRoboticsDyIOProcessor_g(BowlerPacket * Packet){
 	default:
 		return FALSE;
 	}
-	SyncSessionTime(getMs());
 	return TRUE;
 }
 BOOL neuronRoboticsDyIOProcessor_p(BowlerPacket * Packet){
@@ -124,7 +123,6 @@ BOOL neuronRoboticsDyIOProcessor_p(BowlerPacket * Packet){
 	default:
 		return FALSE;
 	}
-	SyncSessionTime(getMs());
 	return TRUE;
 }
 
@@ -171,7 +169,6 @@ BOOL neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet){
 	default:
 		return FALSE;
 	}
-	SyncSessionTime(getMs());
 	return TRUE;
 }
 
@@ -207,7 +204,7 @@ static RPC_LIST neuronRoboticsDyIO_info_c={	BOWLER_POST,// Method
                                 NULL //Termination
 };
 
-static NAMESPACE_LIST neuronRoboticsDyIO ={	ioNSName,// The string defining the namespace
+static NAMESPACE_LIST neuronRoboticsDyIO ={	dyioNSName,// The string defining the namespace
                                 NULL,// the first element in the RPC list
                                 &neuronRoboticsDyIOAsyncEventCallback,// async for this namespace
                                 NULL// no initial elements to the other namesapce field.

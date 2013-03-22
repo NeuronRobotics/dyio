@@ -64,7 +64,7 @@ static RPC_LIST bcsPidDypid_dpid_c={	BOWLER_CRIT,// Method
                                 NULL //Termination
 };
 
-static NAMESPACE_LIST bcsPidDypid ={	ioNSName,// The string defining the namespace
+static NAMESPACE_LIST bcsPidDypid ={	dypidNSName,// The string defining the namespace
                                 NULL,// the first element in the RPC list
                                 &bcsPidDypidAsyncEventCallback,// async for this namespace
                                 NULL// no initial elements to the other namesapce field.

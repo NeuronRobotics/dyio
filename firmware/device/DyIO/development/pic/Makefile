@@ -19,7 +19,7 @@ CFILES :=	$(wildcard ../common/src/*/*.c) \
 OFILES := 	$(CFILES:%.c=%.o)
 
     
-all:clean release debug bluetooth
+all:clean release debug bluetooth clean
 	echo PIC Build OK!
 
 release:buildSpecificClean $(OFILES)
