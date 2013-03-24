@@ -8,9 +8,7 @@
 
 //extern DATA_STRUCT DATA;
 #define ADCINIT 0xFFFF
-
-
-void runAsyncIO();
+//void runAsyncIO();
 //static BOOL isInit=FALSE;
 //static AdvancedAsyncData asyncData[NUM_PINS];
 
@@ -101,11 +99,11 @@ void dealWithAsyncPacket(BowlerPacket * Packet){
 }
 
 
-
-void RunAsync(void){
-	PushCoProcAsync();
-	runAsyncIO();
-}
+//
+//void RunAsync(void){
+//	PushCoProcAsync();
+//	runAsyncIO();
+//}
 
 
 

@@ -32,31 +32,6 @@
 //#define MINOR_REV			7
 //#define FIRMWARE_VERSION	19
 
-#define NO_CHANGE	 	 		0x00
-#define HIGH_IMPEDANCE 	 		0x01
-#define IS_DI	 		 		0x02
-#define IS_DO		 			0x03
-#define IS_ANALOG_IN 			0x04
-#define IS_ANALOG_OUT			0x05
-#define IS_PWM	 				0x06
-#define IS_SERVO 				0x07
-#define IS_UART_TX		 		0x08
-#define IS_UART_RX	 			0x09
-#define IS_SPI_MOSI				0x0A
-#define IS_SPI_MISO				0x0B
-#define IS_SPI_SCK	 			0x0C
-//#define IS_SPI_SS	 			0x0D
-#define IS_COUNTER_INPUT_INT	0x0E
-#define IS_COUNTER_INPUT_DIR	0x0F
-#define IS_COUNTER_INPUT_HOME	0x10
-#define IS_COUNTER_OUTPUT_INT	0x11
-#define IS_COUNTER_OUTPUT_DIR	0x12
-#define IS_COUNTER_OUTPUT_HOME	0x13
-#define IS_DC_MOTOR_VEL			0x14
-#define IS_DC_MOTOR_DIR			0x15
-#define IS_PPM_IN				0x16
-
-
 
 //neuronrobotics.dyio
 #define _REV				0x7665725f // '_rev'  Get the revision number

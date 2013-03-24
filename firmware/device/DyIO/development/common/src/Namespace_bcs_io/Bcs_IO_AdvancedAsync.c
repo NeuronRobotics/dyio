@@ -18,7 +18,8 @@ static AdvancedAsyncData asyncData[NUM_PINS];
 
 #define FASTIO
 int currentState [NUM_PINS];
-#define ASYN_RDY(i) ((pushAsyncReady(i)==TRUE)&&(IsAsync(i) == TRUE)&& (GetPIDGroup(i) == NOT_USED_IN_PID))
+//#define ASYN_RDY(i) ((pushAsyncReady(i)==TRUE)&&(IsAsync(i) == TRUE)&& (GetPIDGroup(i) == NOT_USED_IN_PID))
+#define ASYN_RDY(i) ((pushAsyncReady(i)==TRUE)&&(IsAsync(i) == TRUE))
 BOOL isAsync[NUM_PINS];
 
 void setAsync(BYTE channel,BOOL async){
@@ -123,6 +124,7 @@ void configAdvancedAsync(BowlerPacket * Packet){
 		break;
 	default:
 		ERR(Packet,45,0);
+		break;
 	}
 	setAsyncLocal(pin,TRUE);
 	READY(Packet,45,0);
@@ -160,7 +162,6 @@ void initAdvancedAsync(){
 	if(isInit == TRUE)
 		return;
 	isInit=TRUE;
-	SyncModes();
 	println_I("Initializing Advanced Async");
 	int i;
 	for (i=0;i<NUM_PINS;i++){

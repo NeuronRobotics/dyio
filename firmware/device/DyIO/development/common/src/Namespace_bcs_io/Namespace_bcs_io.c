@@ -9,15 +9,13 @@
 #include "Bowler/Bowler.h"
 #include "Namespace/Namespace_bcs_io.h"
 
-//extern DATA_STRUCT * DATA __attribute__ ((section (".scs_global_var")));
-
 const unsigned char ioNSName[] = "bcs.io.*;0.3;;";
 RunEveryData ppm={0,200};
 
 
 
 BOOL bcsIoAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
-	RunAsync();
+	runAsyncIO();
 	if (RunEvery(&ppm)>0)
 		RunPPMCheck();
 
@@ -25,22 +23,9 @@ BOOL bcsIoAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
 }
 
 BOOL bcsIoProcessor_g(BowlerPacket * Packet){
-	BYTE temp0;
-	int i;
+
 	switch (Packet->use.head.RPC){
-	case GCHM:
-		temp0=Packet->use.data[0];
-		Packet->use.data[1]=GetChannelMode(temp0);
-		Packet->use.head.DataLegnth=6;
-		Packet->use.head.Method=BOWLER_POST;
-		break;
-	case GACM:
-		Packet->use.head.Method=BOWLER_POST;
-		for (i=0;i<24;i++){
-			Packet->use.data[i]=GetChannelMode(i);
-		}
-		Packet->use.head.DataLegnth=4+24;
-		break;
+
 	case GCHV:
 		if(!GetChannelValue(Packet)){
 			//ERR(Packet,zone,0);
@@ -49,21 +34,7 @@ BOOL bcsIoProcessor_g(BowlerPacket * Packet){
 	case GACV:
 		populateGACV(Packet);
 		break;
-	case ASYN:
-		Packet->use.head.Method=BOWLER_POST;
-		Packet->use.data[1]=IsAsync(Packet->use.data[0]);
-		Packet->use.head.DataLegnth=4+2;
-		break;
-	case GCHC:
-		Packet->use.data[0]=getNumberOfIOChannels();
-		Packet->use.data[1]=0;
-		Packet->use.data[2]=0;
-		Packet->use.data[3]=0;
-		Packet->use.head.DataLegnth=4+4;
-		break;
-	case GCML:
-		getFunctionList( Packet);
-		break;
+
 	default:
 		return FALSE;
 	}
@@ -100,7 +71,7 @@ BOOL bcsIoProcessor_c(BowlerPacket * Packet){
 		SendPacketToCoProc(Packet);
 		break;
 	case SCHV:
-		DATA[Packet->use.data[0]].PIN.ServoPos=Packet->use.data[1];
+		getBcsIoDataTable()[Packet->use.data[0]].PIN.ServoPos=Packet->use.data[1];
 		SendPacketToCoProc(Packet);
 		break;
 	case ASYN:
@@ -116,13 +87,13 @@ BOOL bcsIoProcessor_c(BowlerPacket * Packet){
 // GET structures
 static RPC_LIST bcsIo_gchm_g={	BOWLER_GET,// Method
                                 "gchm",//RPC as string
-                                &bcsIoProcessor_g,//function pointer to a packet parsing function
+                                &GetChannelModeFromPacket,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 
 static RPC_LIST bcsIo_gacm_g={	BOWLER_GET,// Method
                                 "gacm",//RPC as string
-                                &bcsIoProcessor_g,//function pointer to a packet parsing function
+                                &GetAllChannelModeFromPacket,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 
@@ -138,17 +109,17 @@ static RPC_LIST bcsIo_gacv_g={	BOWLER_GET,// Method
 };
 static RPC_LIST bcsIo_asyn_g={	BOWLER_GET,// Method
                                 "asyn",//RPC as string
-                                &bcsIoProcessor_g,//function pointer to a packet parsing function
+                                &GetAsyncFromPacket,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 static RPC_LIST bcsIo_gchc_g={	BOWLER_GET,// Method
                                 "gchc",//RPC as string
-                                &bcsIoProcessor_g,//function pointer to a packet parsing function
+                                &GetIOChannelCountFromPacket,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 static RPC_LIST bcsIo_gcml_g={	BOWLER_GET,// Method
                                 "gcml",//RPC as string
-                                &bcsIoProcessor_g,//function pointer to a packet parsing function
+                                &getFunctionList,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 //POST
@@ -197,7 +168,7 @@ static NAMESPACE_LIST bcsIo ={	ioNSName,// The string defining the namespace
 static BOOL namespcaedAdded = FALSE;
 NAMESPACE_LIST * get_bcsIoNamespace(){
 	if(!namespcaedAdded){
-
+		namespcaedAdded =TRUE;
 		//Add the RPC structs to the namespace
 		//GET
 		addRpcToNamespace(&bcsIo,& bcsIo_gchm_g);
@@ -216,7 +187,10 @@ NAMESPACE_LIST * get_bcsIoNamespace(){
 		addRpcToNamespace(&bcsIo,& bcsIo_schv_c);
 		addRpcToNamespace(&bcsIo,& bcsIo_asyn_c);
 
-		namespcaedAdded =TRUE;
+		//IO stack initilizations
+		initAdvancedAsync();
+
+
 	}
 
 	return &bcsIo;//Return pointer to the struct

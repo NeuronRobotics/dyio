@@ -133,7 +133,7 @@ BYTE SetCoProcMode(BYTE PIN,BYTE mode){
 BYTE SetAllCoProcMode(BYTE * mode){
 	int i=0;
 	BOOL send = FALSE;
-	for(i=0;i<getNumberOfIOChannels();i++){
+	for(i=0;i<GetNumberOfIOChannels();i++){
 		if(DATA[i].PIN.State != mode[i]){
 			 send=TRUE;
 		}
@@ -143,7 +143,7 @@ BYTE SetAllCoProcMode(BYTE * mode){
 		packetTemp.use.head.Method=BOWLER_POST;
 		packetTemp.use.head.RPC=GetRPCValue("sacm");
 		packetTemp.use.head.DataLegnth = 4;
-		for(i=0;i<getNumberOfIOChannels();i++){
+		for(i=0;i<GetNumberOfIOChannels();i++){
 			packetTemp.use.data[i]=mode[i];
 			packetTemp.use.head.DataLegnth++;
 		}

@@ -39,7 +39,7 @@ BOOL SetChannelMode(BYTE chan,BYTE mode){
  */
 BOOL SetAllChannelModes(BYTE * modeArray){
 	int i=0;
-	for(i=0;i<getNumberOfIOChannels();i++){
+	for(i=0;i<GetNumberOfIOChannels();i++){
 		if(!SetChannelMode(i,modeArray[i])){
 			return FALSE;
 		}
@@ -79,7 +79,7 @@ BOOL AbstractSetChannelMode(BowlerPacket * Packet){
  */
 BOOL AbstractSetAllChannelMode(BowlerPacket * Packet){
 	int i=0;
-	for(i=0;i<getNumberOfIOChannels();i++){
+	for(i=0;i<GetNumberOfIOChannels();i++){
 		SetChannelMode(i,Packet->use.data[i]);
 		if(IsAsync(i))
 			startAdvancedAsyncDefault(i);

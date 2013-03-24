@@ -37,7 +37,7 @@ BOOL neuronRoboticsDyIOAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPack
 
 	//BYTE i;
 	buttonCheck(7);
-
+	PushCoProcAsync();
 	//SetGreen(FLAG_BUSY);
 	//RTS_HO_IO=FLAG_BUSY;
 	if ((RunEvery(&syncVolt)>0)){

@@ -8,31 +8,28 @@
 
 #define MAX_RETRY 5
 #define DELAY_TIMEOUT 300
+
 BOOL valadateRPC(int response,int sent);
-
 BYTE sendPacket(BowlerPacket * Packet);
-BYTE GetCoProcSingleByte(void);
-
-DWORD CalcBaud(DWORD Baud);
 BOOL clearToSend(void);
+void dealWithAsyncPacket(BowlerPacket * Packet);
+void uartErrorCheck();
 
-extern DATA_STRUCT DATA;
-extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 
 static BYTE privateRX[BOWLER_PacketSize*10];
 static BYTE_FIFO_STORAGE store;
 static BOOL lastWasError = FALSE;
 static BOOL init=FALSE;
 static BOOL processing=FALSE;
-//static BOOL addJunk = FALSE;
-
-
-
 static BowlerPacket downstream;
 static BowlerPacket asyncPacket;
-void dealWithAsyncPacket(BowlerPacket * Packet);
-void uartErrorCheck();
 
+
+//extern DATA_STRUCT DATA;
+//extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
+//static BOOL addJunk = FALSE;
+//BYTE GetCoProcSingleByte(void);
+//DWORD CalcBaud(DWORD Baud);
 
 BOOL getPacket(BowlerPacket * packet){
 #if defined(USE_DMA)
