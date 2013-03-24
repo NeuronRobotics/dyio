@@ -12,76 +12,12 @@
 const unsigned char ioNSName[] = "bcs.io.*;0.3;;";
 RunEveryData ppm={0,200};
 
-
-
 BOOL bcsIoAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
 	runAsyncIO();
 	if (RunEvery(&ppm)>0)
 		RunPPMCheck();
 
     return FALSE;
-}
-
-BOOL bcsIoProcessor_g(BowlerPacket * Packet){
-
-	switch (Packet->use.head.RPC){
-
-	case GCHV:
-		if(!GetChannelValue(Packet)){
-			//ERR(Packet,zone,0);
-		}
-		break;
-	case GACV:
-		populateGACV(Packet);
-		break;
-
-	default:
-		return FALSE;
-	}
-	return TRUE;
-}
-
-BOOL bcsIoProcessor_p(BowlerPacket * Packet){
-	int zone=2;
-	switch (Packet->use.head.RPC){
-	case SCHV:
-		if(SetChannelValue(Packet))
-			READY(Packet,zone,2);
-		else
-			ERR(Packet,zone,2);
-		break;
-	case SACV:
-		SetAllChannelValue(Packet);
-		break;
-	case ASYN:
-		Packet->use.head.Method=BOWLER_POST;
-		setAsync(Packet->use.data[0],Packet->use.data[1]);
-		Packet->use.head.DataLegnth=4;
-		break;
-	default:
-		return FALSE;
-	}
-	return TRUE;
-}
-
-BOOL bcsIoProcessor_c(BowlerPacket * Packet){
-	int zone=2;
-	switch (Packet->use.head.RPC){
-	case CCHN:
-		SendPacketToCoProc(Packet);
-		break;
-	case SCHV:
-		getBcsIoDataTable()[Packet->use.data[0]].PIN.ServoPos=Packet->use.data[1];
-		SendPacketToCoProc(Packet);
-		break;
-	case ASYN:
-		setAsync(Packet->use.data[0],TRUE);
-		configAdvancedAsync(Packet);
-		break;
-	default:
-		return FALSE;
-	}
-	return TRUE;
 }
 
 // GET structures
@@ -135,7 +71,7 @@ static RPC_LIST bcsIo_sacv_p={	BOWLER_POST,// Method
 };
 static RPC_LIST bcsIo_asyn_p={	BOWLER_POST,// Method
                                 "asyn",//RPC as string
-                                &bcsIoProcessor_p,//function pointer to a packet parsing function
+                                &SetAsyncFromPacket,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 //CRIT
@@ -151,7 +87,7 @@ static RPC_LIST bcsIo_schv_c={	BOWLER_CRIT,// Method
 };
 static RPC_LIST bcsIo_asyn_c={	BOWLER_CRIT,// Method
                                 "asyn",//RPC as string
-                                &bcsIoProcessor_c,//function pointer to a packet parsing function
+                                &configAdvancedAsync,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 

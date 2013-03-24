@@ -126,7 +126,7 @@ void configAdvancedAsync(BowlerPacket * Packet){
 		ERR(Packet,45,0);
 		break;
 	}
-	setAsyncLocal(pin,TRUE);
+	setAsync(Packet->use.data[0],TRUE);
 	READY(Packet,45,0);
 }
 

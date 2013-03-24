@@ -15,6 +15,43 @@ static DATA_STRUCT * dataPtr = NULL;
 BOOL (*setChanelValueHWPtr)(BYTE,BYTE*,INT32 *,float);
 BOOL (*getChanelValueHWPtr)(BYTE,BYTE*,INT32 *);
 
+BOOL bcsIoProcessor_g(BowlerPacket * Packet){
+	switch (Packet->use.head.RPC){
+	case GCHV:
+		GetChannelValue(Packet);
+		break;
+	case GACV:
+		populateGACV(Packet);
+		break;
+	}
+	return TRUE;
+}
+BOOL bcsIoProcessor_p(BowlerPacket * Packet){
+	int zone=2;
+	switch (Packet->use.head.RPC){
+	case SCHV:
+		SetChannelValue(Packet);
+		break;
+	case SACV:
+		SetAllChannelValue(Packet);
+		break;
+	}
+	return TRUE;
+}
+BOOL bcsIoProcessor_c(BowlerPacket * Packet){
+	int zone=2;
+	switch (Packet->use.head.RPC){
+	case CCHN:
+		SendPacketToCoProc(Packet);
+		break;
+	case SCHV:
+		getBcsIoDataTable()[Packet->use.data[0]].PIN.ServoPos=Packet->use.data[1];
+		SendPacketToCoProc(Packet);
+		break;
+	}
+	return TRUE;
+}
+
 void InitilizeBcsIo(int numPins,
 					DATA_STRUCT * dataPtrLocal,
 					BOOL (*setChanelValueHWPtrLocal)(BYTE,BYTE*,INT32 *,float),
@@ -83,6 +120,13 @@ BOOL GetAsyncFromPacket(BowlerPacket * Packet){
 	Packet->use.head.DataLegnth=4+2;
 	return TRUE;
 }
+BOOL SetAsyncFromPacket(BowlerPacket * Packet){
+	Packet->use.head.Method=BOWLER_POST;
+	setAsync(Packet->use.data[0],Packet->use.data[1]);
+	Packet->use.head.DataLegnth=4;
+	return TRUE;
+}
+
 BOOL GetIOChannelCountFromPacket(BowlerPacket * Packet){
 	Packet->use.head.Method=BOWLER_POST;
 	Packet->use.data[0]=GetNumberOfIOChannels();
