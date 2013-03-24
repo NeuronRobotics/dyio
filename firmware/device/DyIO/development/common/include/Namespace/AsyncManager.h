@@ -17,6 +17,9 @@ void StopAsync(void);
 void StartAsync(void);
 void SyncSessionTime(float time);
 
+void setAsync(BYTE channel,BOOL async);
+void setAsyncLocal(BYTE channel,BOOL async);
+
 
 #define		NOTEQUAL 		0
 #define		DEADBAND 		1

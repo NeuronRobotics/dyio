@@ -9,10 +9,7 @@
 void set8bit(BowlerPacket * Packet,BYTE val);
 void set16bit(BowlerPacket * Packet,WORD val);
 void set32bit(BowlerPacket * Packet,INT32 val);
-
 INT32 get32bit(BowlerPacket * Packet, BYTE offset);
-
-extern BOOL DebugFlag;
 
 BOOL GetChannelValue(BowlerPacket * Packet){
 	BOOL ret=FALSE;
@@ -27,7 +24,7 @@ BOOL GetChannelValue(BowlerPacket * Packet){
 			printMode(mode,INFO_PRINT);
 			SendPacketToSPI(Packet);
 			Packet->use.head.Method=BOWLER_POST;
-			ret = TRUE;
+			return TRUE;
 		case IS_COUNTER_INPUT_INT:
 		case IS_COUNTER_INPUT_DIR:
 		case IS_COUNTER_INPUT_HOME:

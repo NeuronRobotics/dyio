@@ -60,24 +60,15 @@ void hardwareInit(){
 	InitADC();
 	println_I("Adding DyIO namespaces:");
 
-	/*
-	AddNamespace(sizeof(ioNSName), ioNSName);
-	AddNamespace(sizeof(setModeNSName), setModeNSName);
-	AddNamespace(sizeof(dyioNSName), dyioNSName);
-	AddNamespace(sizeof(pidNSName), pidNSName);
-	AddNamespace(sizeof(dypidNSName), dypidNSName);
-	AddNamespace(sizeof(safeNSName), safeNSName);
 
-	setMethodCallback(BOWLER_GET,UserGetRPCs);
-	setMethodCallback(BOWLER_POST,UserPostRPCs);
-	setMethodCallback(BOWLER_CRIT,UserCriticalRPCs);
-	*/
-	addNamespaceToList((NAMESPACE_LIST * )get_bcsIoNamespace());//Implemented
-	addNamespaceToList((NAMESPACE_LIST * )get_bcsIoSetmodeNamespace());//Implemented
+	addNamespaceToList((NAMESPACE_LIST * )get_bcsIoNamespace());
+	addNamespaceToList((NAMESPACE_LIST * )get_bcsIoSetmodeNamespace());
 	addNamespaceToList((NAMESPACE_LIST * )get_neuronRoboticsDyIONamespace());
 	addNamespaceToList((NAMESPACE_LIST * )get_bcsPidDypidNamespace());
 	addNamespaceToList((NAMESPACE_LIST * )get_bcsSafeNamespace());
 	addNamespaceToList((NAMESPACE_LIST * )getBcsPidNamespace());
+
+	InitilizeBcsIoSetmode(&setMode);
 
 
 	BYTE rev [] = {MAJOR_REV,MINOR_REV,FIRMWARE_VERSION};

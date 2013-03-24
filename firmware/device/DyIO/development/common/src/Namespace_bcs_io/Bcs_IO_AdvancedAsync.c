@@ -19,6 +19,39 @@ static AdvancedAsyncData asyncData[NUM_PINS];
 #define FASTIO
 int currentState [NUM_PINS];
 #define ASYN_RDY(i) ((pushAsyncReady(i)==TRUE)&&(IsAsync(i) == TRUE)&& (GetPIDGroup(i) == NOT_USED_IN_PID))
+BOOL isAsync[NUM_PINS];
+
+void setAsync(BYTE channel,BOOL async){
+	SyncModes();
+	BYTE mode = GetChannelMode(channel);
+	mode = (async)?mode|0x80:mode;
+	DATA[channel].PIN.State = mode;
+	SetCoProcMode(channel,mode);
+	startAdvancedAsyncDefault(channel);
+	setAsyncLocal(channel,async);
+}
+
+void setAsyncLocal(BYTE channel,BOOL async){
+	isAsync[channel]=async;
+}
+
+BOOL IsAsync(BYTE channel){
+	if (isAsync[channel]){
+		return TRUE;
+	}
+	BYTE mode=GetChannelMode(channel);
+	switch(mode){
+	case IS_UART_RX:
+	case IS_COUNTER_INPUT_HOME:
+	case IS_COUNTER_OUTPUT_HOME:
+	case IS_COUNTER_OUTPUT_INT:
+	case IS_COUNTER_INPUT_INT:
+	case IS_SERVO:
+		return TRUE;
+	default:
+		return FALSE;
+	}
+}
 
 void printAsyncType(BYTE t){
 	switch(t){

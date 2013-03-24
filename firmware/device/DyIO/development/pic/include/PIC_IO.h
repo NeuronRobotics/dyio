@@ -9,6 +9,8 @@
 #define PIC_IO_H_
 
 BYTE SetCoProcMode(BYTE PIN,BYTE mode);
+BYTE SetAllCoProcMode(BYTE * mode);
+
 void SetChannelValueCoProc(BYTE PIN,BYTE state);
 BYTE GetChannelValueCoProc(BYTE PIN);
 WORD GetADC(BYTE PIN);

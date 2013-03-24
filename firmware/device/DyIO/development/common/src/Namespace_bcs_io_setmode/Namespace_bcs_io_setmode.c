@@ -9,36 +9,23 @@
 
 const unsigned char setModeNSName[] = "bcs.io.setmode.*;0.3;;";
 
+
+
 BOOL bcsIoSetmodeAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
 	//no async
 
     return FALSE;
 }
 
-BOOL bcsIoSetmodeProcessor(BowlerPacket * Packet){
-	switch (Packet->use.head.RPC){
-	case SCHM:
-		SetChannelMode(Packet);
-		break;
-	case SACM:
-		SetAllChannelMode(Packet);
-		break;
-	default:
-		return FALSE;
-	}
-	return TRUE;
-}
-
-
 
 static RPC_LIST bcsIoSetmode_schm_p={	BOWLER_POST,// Method
                                 "schm",//RPC as string
-                                &bcsIoSetmodeProcessor,//function pointer to a packet parsinf function
+                                &AbstractSetChannelMode,//function pointer to a packet parsinf function
                                 NULL //Termination
 };
 static RPC_LIST bcsIoSetmode_sacm_p={	BOWLER_POST,// Method
                                 "sacm",//RPC as string
-                                &bcsIoSetmodeProcessor,//function pointer to a packet parsinf function
+                                &AbstractSetAllChannelMode,//function pointer to a packet parsinf function
                                 NULL //Termination
 };
 

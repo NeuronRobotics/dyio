@@ -6,15 +6,11 @@
  */
 #include "UserApp.h"
 
-extern DATA_STRUCT * DATA __attribute__ ((section (".scs_global_var")));
-
 BOOL setMode(BYTE pin,BYTE mode);
-void setAsync(BYTE channel,BOOL async);
-void setAsyncLocal(BYTE channel,BOOL async);
+
 void SyncModes(void);
-BOOL isAsync[NUM_PINS];
 
-
+BOOL brownOutDetect = TRUE;
 
 void InitPinStates(void){
 	SyncModes();
@@ -24,51 +20,6 @@ void InitPinStates(void){
 		GetChannelValueCoProc(i);
 	}
 }
-BYTE GetChannelMode(BYTE chan){
-	//Strip off the internally stored High Bit
-	return DATA[chan].PIN.State & 0x7f;
-}
-BOOL SetChannelMode(BowlerPacket * Packet){
-
-	BYTE pin =Packet->use.data[0];
-
-	BYTE mode=Packet->use.data[1]& 0x7f;
-
-	if(Packet->use.head.DataLegnth == 7){
-		isAsync[pin] = Packet->use.data[2]?TRUE:FALSE;
-	}
-
-	if(setMode(pin,mode)){
-		//println_I("Valid Mode, setting...");
-		//println_I("Sending Mode Set To Co Proc");
-
-		//ASYNC managed in EEPROM on co proc
-		SendPacketToCoProc(Packet);
-
-		SyncModes();
-		READY(Packet,4,33);
-		if(isAsync[pin])
-			startAdvancedAsyncDefault(pin);
-		return TRUE;
-	}else{
-		println_E("Mode Invalid!");
-		return FALSE;
-	}
-
-}
-
-BOOL SetAllChannelMode(BowlerPacket * Packet){
-	SendPacketToCoProc(Packet);
-	SyncModes();
-	int i=0;
-	for(i=0;i<NUM_PINS;i++){
-		if(IsAsync(i))
-			startAdvancedAsyncDefault(i);
-	}
-	return TRUE;
-}
-
-BOOL brownOutDetect = TRUE;
 
 void setBrownOutDetect(BOOL b){
 	brownOutDetect = b;
@@ -101,7 +52,7 @@ BOOL setMode(BYTE pin,BYTE mode){
 	case IS_SPI_MOSI:
 	case IS_SPI_MISO:
 	case IS_SPI_SCK:
-		if(DATA[pin].FUNCTION.HAS_SPI != FALSE){
+		if(getBcsIoDataTable()[pin].FUNCTION.HAS_SPI != FALSE){
 			print_I("|Mode is now SPI");
 			InitSPI();
 			break;
@@ -112,7 +63,7 @@ BOOL setMode(BYTE pin,BYTE mode){
 	case IS_COUNTER_INPUT_INT:
 	case IS_COUNTER_INPUT_DIR:
 	case IS_COUNTER_INPUT_HOME:
-		if(DATA[pin].FUNCTION.HAS_COUNTER_INPUT != FALSE){
+		if(getBcsIoDataTable()[pin].FUNCTION.HAS_COUNTER_INPUT != FALSE){
 			print_I("|Mode is now Counter Input");
 			StartCounterInput(pin);
 			break;
@@ -124,7 +75,7 @@ BOOL setMode(BYTE pin,BYTE mode){
 	case IS_COUNTER_OUTPUT_INT:
 	case IS_COUNTER_OUTPUT_DIR:
 	case IS_COUNTER_OUTPUT_HOME:
-		if(DATA[pin].FUNCTION.HAS_COUNTER_OUTPUT != FALSE){
+		if(getBcsIoDataTable()[pin].FUNCTION.HAS_COUNTER_OUTPUT != FALSE){
 			print_I("|Mode is now Counter Output");
 			StartCounterOutput(pin);
 			break;
@@ -138,37 +89,62 @@ BOOL setMode(BYTE pin,BYTE mode){
 		startPPM(pin);
 		break;
 	}
-	DATA[pin].PIN.State=mode;
+	getBcsIoDataTable()[pin].PIN.State=mode;
+	//println_I("Valid Mode, setting...");
+	//println_I("Sending Mode Set To Co Proc");
+
+	//ASYNC managed in EEPROM on co proc
+	SetCoProcMode(pin,mode);
+
+	SyncModes();
+
 	return TRUE;
 }
-void setAsync(BYTE channel,BOOL async){
-	SyncModes();
-	BYTE mode = GetChannelMode(channel);
-	mode = (async)?mode|0x80:mode;
-	DATA[channel].PIN.State = mode;
-	SetCoProcMode(channel,mode);
-	startAdvancedAsyncDefault(channel);
-}
 
-void setAsyncLocal(BYTE channel,BOOL async){
-	isAsync[channel]=async;
-}
 
-BOOL IsAsync(BYTE channel){
-	if (isAsync[channel]){
-		return TRUE;
+
+
+/*
+BOOL SetChannelMode(BowlerPacket * Packet){
+
+	BYTE pin =Packet->use.getBcsIoDataTable()[0];
+
+	BYTE mode=Packet->use.getBcsIoDataTable()[1]& 0x7f;
+
+	if(Packet->use.head.getBcsIoDataTable()Legnth == 7){
+		isAsync[pin] = Packet->use.getBcsIoDataTable()[2]?TRUE:FALSE;
 	}
-	BYTE mode=GetChannelMode(channel);
-	switch(mode){
-	case IS_UART_RX:
-	case IS_COUNTER_INPUT_HOME:
-	case IS_COUNTER_OUTPUT_HOME:
-	case IS_COUNTER_OUTPUT_INT:
-	case IS_COUNTER_INPUT_INT:
-	case IS_SERVO:
+
+	if(setMode(pin,mode)){
+		//println_I("Valid Mode, setting...");
+		//println_I("Sending Mode Set To Co Proc");
+
+		//ASYNC managed in EEPROM on co proc
+		SendPacketToCoProc(Packet);
+
+		SyncModes();
+		READY(Packet,4,33);
+		if(isAsync[pin])
+			startAdvancedAsyncDefault(pin);
 		return TRUE;
-	default:
+	}else{
+		println_E("Mode Invalid!");
 		return FALSE;
 	}
+
 }
+
+BOOL SetAllChannelMode(BowlerPacket * Packet){
+	SendPacketToCoProc(Packet);
+	SyncModes();
+	int i=0;
+	for(i=0;i<NUM_PINS;i++){
+		if(IsAsync(i))
+			startAdvancedAsyncDefault(i);
+	}
+	return TRUE;
+}
+*/
+
+
 
