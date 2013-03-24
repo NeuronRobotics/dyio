@@ -51,5 +51,23 @@ typedef struct __attribute__((__packed__)) _DATA
 	FUNCTION_MAP FUNCTION;
 } DATA_STRUCT;
 
+/**
+ * Set Channel Values
+ * This function takes a
+ * @param pin pin index
+ * @param numValues a number of values to be delt with
+ * @param data an array of data values
+ * @param ms the time for the transition to take
+ *
+ */
+BOOL SetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data, float ms);
+
+/**
+ * Set Channel Values
+ * This function takes a pin index, a number of values to be delt with, and an array of data values
+ * Data is stored into numValues and data
+ */
+BOOL GetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data);
+
 
 #endif /* NAMESPACE_BCS_IO_H_ */

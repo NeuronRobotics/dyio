@@ -9,7 +9,7 @@
 #include "Bowler/Bowler.h"
 #include "Namespace/Namespace_bcs_io.h"
 
-extern DATA_STRUCT * DATA __attribute__ ((section (".scs_global_var")));
+//extern DATA_STRUCT * DATA __attribute__ ((section (".scs_global_var")));
 
 const unsigned char ioNSName[] = "bcs.io.*;0.3;;";
 RunEveryData ppm={0,200};

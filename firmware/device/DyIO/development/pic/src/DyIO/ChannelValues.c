@@ -6,6 +6,24 @@
  */
 #include "UserApp.h"
 
+
+/**
+ * Set Channel Values
+ * This function takes a pin index, a number of values to be delt with, and an array of data values
+ */
+BOOL SetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data, float ms){
+
+}
+
+/**
+ * Set Channel Values
+ * This function takes a pin index, a number of values to be delt with, and an array of data values
+ * Data is stored into numValues and data
+ */
+BOOL GetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data){
+
+}
+
 void set8bit(BowlerPacket * Packet,BYTE val);
 void set16bit(BowlerPacket * Packet,WORD val);
 void set32bit(BowlerPacket * Packet,INT32 val);

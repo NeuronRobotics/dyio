@@ -7,14 +7,22 @@
 
 #include "Bowler/Bowler.h"
 
+
 static int NumberOfIOChannels = 0;
 static DATA_STRUCT * dataPtr = NULL;
 
+BOOL (*setChanelValueHWPtr)(BYTE,BYTE*,INT32 *,float);
+BOOL (*getChanelValueHWPtr)(BYTE,BYTE*,INT32 *);
+
 void InitilizeBcsIo(int numPins,
-					DATA_STRUCT * dataPtrLocal
+					DATA_STRUCT * dataPtrLocal,
+					BOOL (*setChanelValueHWPtrLocal)(BYTE,BYTE*,INT32 *,float),
+					BOOL (*getChanelValueHWPtrLocal)(BYTE,BYTE*,INT32 *),
 ){
 	if(	NumberOfIOChannels ==0||
-		dataPtrLocal==NULL
+		dataPtrLocal==NULL||
+		setChanelValueHWPtrLocal==NULL||
+		getChanelValueHWPtrLocal==NULL
 	){
 		//FAIL sanity check
 		while(1);
@@ -22,7 +30,8 @@ void InitilizeBcsIo(int numPins,
 
 	NumberOfIOChannels = numPins;
 	dataPtr = dataPtrLocal;
-
+	setChanelValueHWPtr=setChanelValueHWPtrLocal;
+	getChanelValueHWPtr=getChanelValueHWPtrLocal;
 }
 
 
