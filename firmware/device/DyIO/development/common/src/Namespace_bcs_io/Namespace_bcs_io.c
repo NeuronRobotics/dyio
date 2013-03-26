@@ -35,12 +35,12 @@ static RPC_LIST bcsIo_gacm_g={	BOWLER_GET,// Method
 
 static RPC_LIST bcsIo_gchv_g={	BOWLER_GET,// Method
                                 "gchv",//RPC as string
-                                &bcsIoProcessor_g,//function pointer to a packet parsing function
+                                &GetChanelValueFromPacket,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 static RPC_LIST bcsIo_gacv_g={	BOWLER_GET,// Method
                                 "gacv",//RPC as string
-                                &bcsIoProcessor_g,//function pointer to a packet parsing function
+                                &GetAllChanelValueFromPacket,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 static RPC_LIST bcsIo_asyn_g={	BOWLER_GET,// Method
@@ -61,12 +61,12 @@ static RPC_LIST bcsIo_gcml_g={	BOWLER_GET,// Method
 //POST
 static RPC_LIST bcsIo_schv_p={	BOWLER_POST,// Method
                                 "schv",//RPC as string
-                                &bcsIoProcessor_p,//function pointer to a packet parsing function
+                                &SetChanelValueFromPacket,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 static RPC_LIST bcsIo_sacv_p={	BOWLER_POST,// Method
                                 "sacv",//RPC as string
-                                &bcsIoProcessor_p,//function pointer to a packet parsing function
+                                &SetAllChannelValueFromPacket,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 static RPC_LIST bcsIo_asyn_p={	BOWLER_POST,// Method
@@ -77,14 +77,16 @@ static RPC_LIST bcsIo_asyn_p={	BOWLER_POST,// Method
 //CRIT
 static RPC_LIST bcsIo_cchn_c={	BOWLER_CRIT,// Method
                                 "cchn",//RPC as string
-                                &bcsIoProcessor_c,//function pointer to a packet parsing function
+                                &ConfigureChannelFromPacket,//function pointer to a packet parsing function
                                 NULL //Termination
 };
-static RPC_LIST bcsIo_schv_c={	BOWLER_CRIT,// Method
-                                "schv",//RPC as string
-                                &bcsIoProcessor_c,//function pointer to a packet parsing function
-                                NULL //Termination
-};
+//@Depricated
+	static RPC_LIST bcsIo_schv_c={	BOWLER_CRIT,// Method
+									"schv",//RPC as string
+									&ConfigureChannelFromPacket,//function pointer to a packet parsing function
+									NULL //Termination
+	};
+//@Depricated
 static RPC_LIST bcsIo_asyn_c={	BOWLER_CRIT,// Method
                                 "asyn",//RPC as string
                                 &configAdvancedAsync,//function pointer to a packet parsing function

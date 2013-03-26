@@ -9,6 +9,7 @@
 #define NAMESPACE_BCS_IO_H_
 
 /*
+ * This is the case statements for using the DyIO channel modes in a switch statement
 case IS_DI:
 	break;
 case IS_DO:
@@ -77,6 +78,13 @@ case IS_PPM_IN:
 
 #define IO_MODE_MAX				IS_PPM_IN
 
+#define isStremChannelMode(A) ( (A==IS_UART_TX)||\
+								(A==IS_UART_RX)||\
+								(A==IS_SPI_MOSI)||\
+								(A==IS_SPI_MISO)||\
+								(A==IS_SPI_SCK)||\
+								(A==IS_PPM_IN))
+
 //bcs.io
 #define GCHM				0x6D686367// Get channel mode
 #define GACM				0x6D636167// Get all channel mode
@@ -112,10 +120,10 @@ typedef union __attribute__((__packed__)) _FUNCTION_MAP
 	} FUNCTION_MAP;
 	typedef struct __attribute__((__packed__)) _PIN_MAP
 	{
-		BYTE ServoPos;
-#if !defined(__AVR_ATmega324P__)
-		BYTE State;
-#endif
+		INT32 currentValue;
+		INT32 configuration;
+		INT32 previousValue;
+		INT32 previousConfiguration;
 	} PIN_MAP;
 
 typedef struct __attribute__((__packed__)) _DATA
@@ -137,6 +145,23 @@ int GetNumberOfIOChannels();
  */
 BYTE GetChannelMode(BYTE chan);
 
+
+/**
+ * Initialize Bcs.IO namespace
+ * Pass in the data table and the call back functions to start the namespace
+ *
+ */
+void InitilizeBcsIo(int numPins,
+					DATA_STRUCT * dataPtrLocal,
+					BOOL (*setChanelValueHWPtrLocal)(BYTE,BYTE,INT32 *,float),
+					BOOL (*getChanelValueHWPtrLocal)(BYTE,BYTE*,INT32 *),
+					BOOL (*setAllChanelValueHWPtrLocal)(INT32 *,float),
+					BOOL (*getAllChanelValueHWPtrLocal)(INT32 *),
+					BOOL (*configChannelHWPtrLocal)(BYTE,BYTE,INT32 *)
+);
+
+//These are the Hardware interface functions that need to be declared and passed in for Initilaize
+
 /**
  * Set Channel Values
  * This function takes a
@@ -146,7 +171,7 @@ BYTE GetChannelMode(BYTE chan);
  * @param ms the time for the transition to take
  *
  */
-BOOL SetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data, float ms);
+BOOL SetChanelValueHW(BYTE pin,BYTE numValues,INT32 * data, float ms);
 
 /**
  * Set Channel Values
@@ -154,6 +179,30 @@ BOOL SetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data, float ms);
  * Data is stored into numValues and data
  */
 BOOL GetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data);
+/**
+ * Set Channel Values
+ * This function takes a
+ * @param data an array of data values
+ * @param ms the time for the transition to take
+ *
+ */
+BOOL SetAllChanelValueHW(INT32 * data, float ms);
+
+/**
+ * Set Channel Values
+ * This function takes a pin index, a number of values to be delt with, and an array of data values
+ * Data is stored into numValues and data
+ */
+BOOL GetAllChanelValueHW(INT32 * data);
+
+/**
+ * Configure Channel
+ * @param pin the index of the channel to configure
+ * @param numValues The number of values passed in to deal with
+ * @param data the array of values to use in the configuration step
+ */
+
+BOOL ConfigureChannelHW(BYTE pin,BYTE numValues,INT32 * data);
 
 
 #endif /* NAMESPACE_BCS_IO_H_ */

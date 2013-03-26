@@ -12,8 +12,11 @@
 static int NumberOfIOChannels = 0;
 static DATA_STRUCT * dataPtr = NULL;
 
-BOOL (*setChanelValueHWPtr)(BYTE,BYTE*,INT32 *,float);
+BOOL (*setChanelValueHWPtr)(BYTE,BYTE,INT32 *,float);
 BOOL (*getChanelValueHWPtr)(BYTE,BYTE*,INT32 *);
+BOOL (*setAllChanelValueHWPtr)(INT32 *,float);
+BOOL (*getAllChanelValueHWPtr)(INT32 *);
+BOOL (*configChannelHWPtr)(BYTE,BYTE,INT32 *);
 
 BOOL bcsIoProcessor_g(BowlerPacket * Packet){
 	switch (Packet->use.head.RPC){
@@ -54,13 +57,19 @@ BOOL bcsIoProcessor_c(BowlerPacket * Packet){
 
 void InitilizeBcsIo(int numPins,
 					DATA_STRUCT * dataPtrLocal,
-					BOOL (*setChanelValueHWPtrLocal)(BYTE,BYTE*,INT32 *,float),
+					BOOL (*setChanelValueHWPtrLocal)(BYTE,BYTE,INT32 *,float),
 					BOOL (*getChanelValueHWPtrLocal)(BYTE,BYTE*,INT32 *),
+					BOOL (*setAllChanelValueHWPtrLocal)(INT32 *,float),
+					BOOL (*getAllChanelValueHWPtrLocal)(INT32 *),
+					BOOL (*configChannelHWPtrLocal)(BYTE,BYTE,INT32 *)
 ){
-	if(	NumberOfIOChannels ==0||
+	if(	NumberOfIOChannels < 1 ||
 		dataPtrLocal==NULL||
 		setChanelValueHWPtrLocal==NULL||
-		getChanelValueHWPtrLocal==NULL
+		getChanelValueHWPtrLocal==NULL||
+		setAllChanelValueHWPtrLocal==NULL||
+		getAllChanelValueHWPtrLocal==NULL||
+		configChannelHWPtrLocal==NULL
 	){
 		//FAIL sanity check
 		while(1);
@@ -70,6 +79,9 @@ void InitilizeBcsIo(int numPins,
 	dataPtr = dataPtrLocal;
 	setChanelValueHWPtr=setChanelValueHWPtrLocal;
 	getChanelValueHWPtr=getChanelValueHWPtrLocal;
+	setAllChanelValueHWPtr=setAllChanelValueHWPtrLocal;
+	getAllChanelValueHWPtr=getAllChanelValueHWPtrLocal;
+	configChannelHWPtr=configChannelHWPtrLocal;
 }
 
 
@@ -136,6 +148,34 @@ BOOL GetIOChannelCountFromPacket(BowlerPacket * Packet){
 	Packet->use.head.DataLegnth=4+4;
 	return TRUE;
 }
+
+BOOL SetChanelValueFromPacket(BowlerPacket * Packet){
+	BYTE pin = Packet->use.data[0];
+	BYTE mode = GetChannelMode(pin);
+
+	return TRUE;
+}
+BOOL SetAllChannelValueFromPacket(BowlerPacket * Packet){
+
+	return TRUE;
+}
+BOOL GetChanelValueFromPacket(BowlerPacket * Packet){
+	BYTE pin = Packet->use.data[0];
+	BYTE mode = GetChannelMode(pin);
+
+	return TRUE;
+}
+BOOL GetAllChanelValueFromPacket(BowlerPacket * Packet){
+
+	return TRUE;
+}
+BOOL ConfigureChannelFromPacket(BowlerPacket * Packet){
+	BYTE pin = Packet->use.data[0];
+	BYTE mode = GetChannelMode(pin);
+
+	return TRUE;
+}
+
 
 
 

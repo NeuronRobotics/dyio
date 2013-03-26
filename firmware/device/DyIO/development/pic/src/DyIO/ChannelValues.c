@@ -9,9 +9,14 @@
 
 /**
  * Set Channel Values
- * This function takes a pin index, a number of values to be delt with, and an array of data values
+ * This function takes a
+ * @param pin pin index
+ * @param numValues a number of values to be delt with
+ * @param data an array of data values
+ * @param ms the time for the transition to take
+ *
  */
-BOOL SetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data, float ms){
+BOOL SetChanelValueHW(BYTE pin,BYTE numValues,INT32 * data, float ms){
 
 }
 
@@ -21,6 +26,36 @@ BOOL SetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data, float ms){
  * Data is stored into numValues and data
  */
 BOOL GetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data){
+
+}
+/**
+ * Set Channel Values
+ * This function takes a
+ * @param data an array of data values
+ * @param ms the time for the transition to take
+ *
+ */
+BOOL SetAllChanelValueHW(INT32 * data, float ms){
+
+}
+
+/**
+ * Set Channel Values
+ * This function takes a pin index, a number of values to be delt with, and an array of data values
+ * Data is stored into numValues and data
+ */
+BOOL GetAllChanelValueHW(INT32 * data){
+
+}
+
+/**
+ * Configure Channel
+ * @param pin the index of the channel to configure
+ * @param numValues The number of values passed in to deal with
+ * @param data the array of values to use in the configuration step
+ */
+
+BOOL ConfigureChannelHW(BYTE pin,BYTE numValues,INT32 * data){
 
 }
 
