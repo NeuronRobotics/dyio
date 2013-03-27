@@ -61,7 +61,8 @@ void RunPPMCheck(void){
 					Print_Level l = getPrintLevel();
 					setPrintLevelInfoPrint();
 					println_I("PPM setting output");
-					SetChannelValueCoProc(ppmLink[i],ppmData[i]);
+					//SetChannelValueCoProc(ppmLink[i],ppmData[i]);
+					getBcsIoDataTable()[ppmLink[i]].PIN.currentValue=ppmData[i];
 					setPrintLevel(l);
 				}
 			}
