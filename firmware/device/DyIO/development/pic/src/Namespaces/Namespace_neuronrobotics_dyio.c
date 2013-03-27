@@ -8,6 +8,8 @@
 
 const unsigned char dyioNSName[] = "neuronrobotics.dyio.*;0.3;;";
 RunEveryData syncVolt={0,2000};
+RunEveryData ppm={0,50};
+
 BOOL pwr=FALSE;
 
 static BOOL heartBeatLock = TRUE;
@@ -34,7 +36,8 @@ BOOL getHeartBeatLock(){
 
 
 BOOL neuronRoboticsDyIOAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
-
+	if (RunEvery(&ppm)>0)
+		RunPPMCheck();
 	//BYTE i;
 	buttonCheck(7);
 	PushCoProcAsync();

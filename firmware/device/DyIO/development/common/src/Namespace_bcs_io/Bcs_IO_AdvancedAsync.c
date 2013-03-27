@@ -6,21 +6,28 @@
  */
 
 
-#include "UserApp.h"
+#include "Bowler/Bowler.h"
 #include "Namespace/AsyncManager.h"
+#include "Namespace/Namespace_bcs_io.h"
+
+//#define ASYN_RDY(i) ((pushAsyncReady(i)==TRUE)&&(IsAsync(i) == TRUE)&& (GetPIDGroup(i) == NOT_USED_IN_PID))
 
 #define ADCINIT 0xFFFF
-
+#define FASTIO
 
 void runAsyncIO();
 static BOOL isInit=FALSE;
-//static AdvancedAsyncData asyncData[NUM_PINS];
 
-#define FASTIO
-//int currentState [NUM_PINS];
-//#define ASYN_RDY(i) ((pushAsyncReady(i)==TRUE)&&(IsAsync(i) == TRUE)&& (GetPIDGroup(i) == NOT_USED_IN_PID))
-#define ASYN_RDY(i) ((pushAsyncReady(i)==TRUE)&&(IsAsync(i) == TRUE))
-BOOL isAsyncDataArray[NUM_PINS];
+void initAdvancedAsync(){
+	if(isInit == TRUE)
+		return;
+	isInit=TRUE;
+	println_I("Initializing Advanced Async");
+	int i;
+	for (i=0;i<GetNumberOfIOChannels();i++){
+		startAdvancedAsyncDefault(i);
+	}
+}
 
 void setAsync(BYTE channel,BOOL async){
 	BYTE mode = GetChannelMode(channel);
@@ -31,11 +38,11 @@ void setAsync(BYTE channel,BOOL async){
 }
 
 void setAsyncLocal(BYTE channel,BOOL async){
-	isAsyncDataArray[channel]=async;
+	getBcsIoDataTable()[channel].asyncData.enabled=async;
 }
 
 BOOL IsAsync(BYTE channel){
-	if (isAsyncDataArray[channel]){
+	if (getBcsIoDataTable()[channel].asyncData.enabled){
 		return TRUE;
 	}
 	BYTE mode=GetChannelMode(channel);
@@ -156,29 +163,20 @@ void startAdvancedAsyncDefault(BYTE pin){
 	println_I("Async Type set to: ");printAsyncType(getBcsIoDataTable()[pin].asyncData.type);
 }
 
-void initAdvancedAsync(){
-	if(isInit == TRUE)
-		return;
-	isInit=TRUE;
-	println_I("Initializing Advanced Async");
-	int i;
-	for (i=0;i<NUM_PINS;i++){
-		startAdvancedAsyncDefault(i);
-	}
-}
+
 
 
 void SetValFromAsync(int pin, int value){
 	getBcsIoDataTable()[pin].asyncData.currentVal=value;
 }
 
-int GetValFromAsync(int pin, int value){
+int GetValFromAsync(int pin){
 	return getBcsIoDataTable()[pin].asyncData.currentVal;
 }
 
 int GetDigitalValFromAsync(BYTE pin){
 	initAdvancedAsync();
-	if(GetChannelMode(pin)==IS_DI || GetChannelMode(pin)==IS_COUNTER_INPUT_HOME || GetChannelMode(pin)==IS_COUNTER_OUTPUT_HOME || GetChannelMode(pin)==IS_SERVO){
+	if(GetChannelMode(pin)==IS_DI || GetChannelMode(pin)==IS_COUNTER_INPUT_HOME || GetChannelMode(pin)==IS_COUNTER_OUTPUT_HOME ){
 		return getBcsIoDataTable()[pin].asyncData.currentVal;
 	}
 	return 1;
@@ -273,73 +271,68 @@ BOOL pushAsyncReady( BYTE pin){
 }
 
 
-void runAsyncIO(){
-	Print_Level l = getPrintLevel();
-	setPrintLevelInfoPrint();
-	initAdvancedAsync();
-	int i;
-	BOOL update=FALSE;
-	for(i=0;i<NUM_PINS;i++){
-			switch(GetChannelMode(i)){
-			case IS_DI:
-			case IS_COUNTER_INPUT_HOME:
-			case IS_COUNTER_OUTPUT_HOME:
-			case IS_SERVO:
-				//println_I("Pushing digital chan: ");p_sl_I(i);print_I(" value:");p_ul_I(getBcsIoDataTable()[i].asyncData.currentVal);
-				//currentState [i] = GetDigitalValFromAsync(i);
-				if(ASYN_RDY(i)){
-#if defined(FASTIO)
-					update=TRUE;
-#else
-					PushDIval(i,GetDigitalValFromAsync(i));
-#endif
-				}
-				break;
-			case IS_ANALOG_IN:
-				//println_I("Pushing analog chan: ");p_sl_I(i);print_I(" value:");p_ul_I(getBcsIoDataTable()[i].asyncData.currentVal);
-				//currentState [i] = GetAnalogValFromAsync(i);
-				if(ASYN_RDY(i)){
-#if defined(FASTIO)
-					update=TRUE;
-#else
-					PushADCval(i,GetAnalogValFromAsync(i));
-#endif
-				}
-				break;
-			case IS_COUNTER_OUTPUT_INT:
-			case IS_COUNTER_INPUT_INT:
-				//println_I("Pushing counter chan: ");p_sl_I(i);print_I(" value:");p_sl_I(getBcsIoDataTable()[i].asyncData.currentVal);
-				//currentState [i] = GetCounterByChannel(i);
-				if(ASYN_RDY(i)){
-#if defined(FASTIO)
-					update=TRUE;
-#else
-					PushCounterChange(i,GetCounterByChannel(i));
-#endif
-				}
-				break;
+//void runAsyncIO(){
+//	Print_Level l = getPrintLevel();
+//	//setPrintLevelInfoPrint();
+//	initAdvancedAsync();
+//	int i;
+//	BOOL update=FALSE;
+//	for(i=0;i<GetNumberOfIOChannels();i++){
+//#if defined(FASTIO)
+//			if(ASYN_RDY(i)){
+//				update=TRUE;
+//			}
+//#else
+//			switch(GetChannelMode(i)){
+//
+//			case IS_DI:
+//			case IS_COUNTER_INPUT_HOME:
+//			case IS_COUNTER_OUTPUT_HOME:
+//			case IS_SERVO:
+//				//println_I("Pushing digital chan: ");p_sl_I(i);print_I(" value:");p_ul_I(getBcsIoDataTable()[i].asyncData.currentVal);
+//				//currentState [i] = GetDigitalValFromAsync(i);
+//				if(ASYN_RDY(i)){
+//					PushDIval(i,GetDigitalValFromAsync(i));
+//				}
+//				break;
+//			case IS_ANALOG_IN:
+//				//println_I("Pushing analog chan: ");p_sl_I(i);print_I(" value:");p_ul_I(getBcsIoDataTable()[i].asyncData.currentVal);
+//				//currentState [i] = GetAnalogValFromAsync(i);
+//				if(ASYN_RDY(i)){
+//					PushADCval(i,GetAnalogValFromAsync(i));
+//				}
+//				break;
+//			case IS_COUNTER_OUTPUT_INT:
+//			case IS_COUNTER_INPUT_INT:
+//				//println_I("Pushing counter chan: ");p_sl_I(i);print_I(" value:");p_sl_I(getBcsIoDataTable()[i].asyncData.currentVal);
+//				//currentState [i] = GetCounterByChannel(i);
+//				if(ASYN_RDY(i)){
+//					PushCounterChange(i,GetCounterByChannel(i));
+//
+//				}
+//				break;
+//#endif
+//			}
+//	}
+//
+//	setPrintLevel(l);
+//#if defined(FASTIO)
+//	if(update){
+//		//println_I("Pushing async");
+//		PushAllAsync();
+//	}
+//#endif
+//
+//}
 
-			}
-	}
-
-	setPrintLevel(l);
-#if defined(FASTIO)
-	if(update){
-		//println_I("Pushing async");
-		PushAllAsync();
-	}
-#endif
-
-}
-
-void initCounterAsync(BYTE chan,INT32 val){
-	println_I("Setting up Counter Async chan: ");
-	p_sl_I(chan);
-	print_I(" to val: ");
-	p_sl_I(val);
-	getBcsIoDataTable()[getCounterIntChannnel(chan)].asyncData.currentVal=val;
-	getBcsIoDataTable()[getCounterIntChannnel(chan)].asyncData.previousVal=val;
-}
+//void initCounterAsync(BYTE chan,INT32 val){
+//	println_I("Setting up Counter Async chan: ");
+//	p_sl_I(chan);
+//	print_I(" to val: ");
+//	p_sl_I(val);
+//	getBcsIoDataTable()[getCounterIntChannnel(chan)].asyncData.currentVal=val;
+//	getBcsIoDataTable()[getCounterIntChannnel(chan)].asyncData.previousVal=val;
+//}
 
 
 void populateGACV(BowlerPacket * Packet){
@@ -347,10 +340,10 @@ void populateGACV(BowlerPacket * Packet){
 	LoadCorePacket(Packet);
 	Packet->use.head.Method=BOWLER_POST;
 	Packet->use.head.RPC=GetRPCValue("gacv");
-	Packet->use.head.DataLegnth=(NUM_PINS*4)+4;
+	Packet->use.head.DataLegnth=(GetNumberOfIOChannels()*4)+4;
 	Packet->use.head.MessageID=37;
 	int i;
-	for(i=0;i<NUM_PINS;i++){
+	for(i=0;i<GetNumberOfIOChannels();i++){
 		s.Val= getBcsIoDataTable()[i].PIN.currentValue;
 		Packet->use.data[(i*4)+0]=s.byte.FB;
 		Packet->use.data[(i*4)+1]=s.byte.TB;

@@ -7,6 +7,7 @@
 
 #ifndef ASYNCMANAGER_H_
 #define ASYNCMANAGER_H_
+#define ASYN_RDY(i) ((pushAsyncReady(i)==TRUE)&&(IsAsync(i) == TRUE))
 
 void ProcessAsyncData(BowlerPacket * Packet);
 int GetAnalogValFromAsync(BYTE pin);

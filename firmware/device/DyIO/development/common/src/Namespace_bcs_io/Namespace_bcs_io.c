@@ -10,12 +10,24 @@
 #include "Namespace/Namespace_bcs_io.h"
 
 const unsigned char ioNSName[] = "bcs.io.*;0.3;;";
-RunEveryData ppm={0,200};
 
+
+static BowlerPacket packetTemp;
 BOOL bcsIoAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
-	runAsyncIO();
-	if (RunEvery(&ppm)>0)
-		RunPPMCheck();
+	initAdvancedAsync();
+	int i;
+	BOOL update=FALSE;
+	for(i=0;i<GetNumberOfIOChannels();i++){
+		if(ASYN_RDY(i)){
+			update=TRUE;
+		}
+	}
+	if(update){
+		populateGACV(&packetTemp);
+		packetTemp.use.head.Method=BOWLER_ASYN;
+		if(pidAsyncCallbackPtr!=NULL)
+			pidAsyncCallbackPtr(& packetTemp);
+	}
 
     return FALSE;
 }
