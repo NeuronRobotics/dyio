@@ -63,6 +63,7 @@ void RunPPMCheck(void){
 					println_I("PPM setting output");
 					//SetChannelValueCoProc(ppmLink[i],ppmData[i]);
 					getBcsIoDataTable()[ppmLink[i]].PIN.currentValue=ppmData[i];
+					//SetValFromAsync(ppmLink[i],ppmData[i]);
 					setPrintLevel(l);
 				}
 			}
@@ -124,7 +125,7 @@ void startPPM(BYTE chan){
 		state = START;
 		readPPMLink(ppmLink);
 		for(i=0;i<NUM_PPM_CHAN;i++){
-			if(ppmLink[i]>= NUM_PINS)
+			if(ppmLink[i]>= GetNumberOfIOChannels())
 				ppmLink[i]=INVALID_PPM_LINK;
 		}
 		//println_I("Starting PPM reader");
@@ -152,7 +153,7 @@ void ConfigPPM(BowlerPacket * Packet){
 	int i;
 	for(i=0;i<NUM_PPM_CHAN;i++){
 		ppmLink[i]=Packet->use.data[i+1];
-		if(ppmLink[i]>= NUM_PINS){
+		if(ppmLink[i]>= GetNumberOfIOChannels()){
 			ppmLink[i]=INVALID_PPM_LINK;
 		}else{
 			unlockServos();
