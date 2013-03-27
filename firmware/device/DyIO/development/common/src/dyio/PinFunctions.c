@@ -1,6 +1,8 @@
 #include "DyIO/DyIO_def.h"
 #include "Namespace/Namespace_bcs_io.h"
 
+#define NUM_PINS   			24
+
 DATA_STRUCT DATA[NUM_PINS];
 
 void InitPinFunction(void){
@@ -91,4 +93,14 @@ void InitPinFunction(void){
 	DATA[22].FUNCTION.HAS_COUNTER_OUTPUT_D = TRUE;
 
 	DATA[23].FUNCTION.HAS_PPM = TRUE;
+
+	InitilizeBcsIo(	NUM_PINS,
+					DATA,
+					&SetChanelValueHW,
+					&GetChanelValueHW,
+					&SetAllChanelValueHW,
+					&GetAllChanelValueHW,
+					&ConfigureChannelHW
+				);
+	InitilizeBcsIoSetmode(&setMode);
 }

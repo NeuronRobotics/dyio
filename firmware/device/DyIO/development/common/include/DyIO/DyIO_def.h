@@ -25,7 +25,6 @@
 
 //#define ROBOSUB_DEMO
 
-#define NUM_PINS   			24
 #define SERVO_BOUND 		15
 
 //#define MAJOR_REV			3

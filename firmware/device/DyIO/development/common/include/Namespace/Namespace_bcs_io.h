@@ -149,7 +149,10 @@ typedef struct __attribute__((__packed__)) _DATA
 	AdvancedAsyncData asyncData;
 } DATA_STRUCT;
 
-
+void set8bit(BowlerPacket * Packet,BYTE val);
+void set16bit(BowlerPacket * Packet,WORD val);
+void set32bit(BowlerPacket * Packet,INT32 val);
+INT32 get32bit(BowlerPacket * Packet, BYTE offset);
 
 /**
  * This returns the number of IO channels availible

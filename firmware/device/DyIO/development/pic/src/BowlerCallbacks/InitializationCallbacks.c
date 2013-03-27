@@ -68,7 +68,6 @@ void hardwareInit(){
 	addNamespaceToList((NAMESPACE_LIST * )get_bcsSafeNamespace());
 	addNamespaceToList((NAMESPACE_LIST * )getBcsPidNamespace());
 
-	InitilizeBcsIoSetmode(&setMode);
 
 
 	BYTE rev [] = {MAJOR_REV,MINOR_REV,FIRMWARE_VERSION};

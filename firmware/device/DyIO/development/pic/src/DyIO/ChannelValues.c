@@ -17,6 +17,51 @@
  *
  */
 BOOL SetChanelValueHW(BYTE pin,BYTE numValues,INT32 * data, float ms){
+	BYTE mode = GetChannelMode(pin);
+	if(isStremChannelMode(mode)){
+		switch(mode){
+		case IS_SPI_MOSI:
+		case IS_SPI_MISO:
+		case IS_SPI_SCK:
+			//println_I("SPI ");
+			//printMode(mode,INFO_PRINT);
+			SendPacketToSPI(Packet);
+			Packet->use.head.Method = BOWLER_POST;
+			return TRUE;
+		case IS_COUNTER_INPUT_INT:
+		case IS_COUNTER_INPUT_DIR:
+		case IS_COUNTER_INPUT_HOME:
+		case IS_COUNTER_OUTPUT_INT:
+		case IS_COUNTER_OUTPUT_DIR:
+		case IS_COUNTER_OUTPUT_HOME:
+			SetChanVal(pin,get32bit(Packet,1),get32bit(Packet,5));
+			return TRUE;
+		case IS_UART_TX:
+		case IS_UART_RX:
+			SendToSerialPassThrough(Packet);
+			return TRUE;
+		case IS_PPM_IN:
+			ConfigPPM(Packet);
+			return TRUE;
+		default:
+			println_I("Set Mode not managed by PIC, sending to co-proc ");
+			printMode(mode,INFO_PRINT);
+			SendPacketToCoProc(Packet);
+			return (Packet->use.head.RPC != _ERR);
+		}
+	}else{
+		switch(mode){
+		case IS_COUNTER_INPUT_INT:
+		case IS_COUNTER_INPUT_DIR:
+		case IS_COUNTER_OUTPUT_INT:
+		case IS_COUNTER_OUTPUT_DIR:
+			SetChanVal(pin,get32bit(Packet,1),get32bit(Packet,5));
+			return TRUE;
+		default:
+
+		}
+	}
+
 
 }
 
@@ -26,7 +71,12 @@ BOOL SetChanelValueHW(BYTE pin,BYTE numValues,INT32 * data, float ms){
  * Data is stored into numValues and data
  */
 BOOL GetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data){
+	BYTE mode = GetChannelMode(pin);
+	if(isStremChannelMode(mode)){
 
+	}else{
+
+	}
 }
 /**
  * Set Channel Values
@@ -58,11 +108,6 @@ BOOL GetAllChanelValueHW(INT32 * data){
 BOOL ConfigureChannelHW(BYTE pin,BYTE numValues,INT32 * data){
 
 }
-
-void set8bit(BowlerPacket * Packet,BYTE val);
-void set16bit(BowlerPacket * Packet,WORD val);
-void set32bit(BowlerPacket * Packet,INT32 val);
-INT32 get32bit(BowlerPacket * Packet, BYTE offset);
 
 BOOL GetChannelValue(BowlerPacket * Packet){
 	BOOL ret=FALSE;
@@ -105,18 +150,7 @@ BOOL GetChannelValue(BowlerPacket * Packet){
 			return TRUE;
 		}
 }
-BOOL isASetableMode(BYTE mode){
-	switch(mode&0x7f){
-	case IS_COUNTER_INPUT_INT:
-	case IS_COUNTER_INPUT_DIR:
-	case IS_COUNTER_INPUT_HOME:
-	case IS_COUNTER_OUTPUT_INT:
-	case IS_COUNTER_OUTPUT_DIR:
-	case IS_COUNTER_OUTPUT_HOME:
-		return TRUE;
-	}
-	return FALSE;
-}
+
 BOOL SetAllChannelValue(BowlerPacket * Packet){
 	//println_I("Setting all channel values");
 	UINT32_UNION time;
@@ -196,29 +230,15 @@ BOOL SetChanVal(BYTE pin,INT32 bval, float time){
 	return TRUE;
 }
 
-
-void set8bit(BowlerPacket * Packet,BYTE val){
-	Packet->use.data[1]=val;
-}
-void set16bit(BowlerPacket * Packet,WORD val){
-	UINT16_UNION wval;
-	wval.Val=val;
-	Packet->use.data[1]=wval.byte.SB;
-	Packet->use.data[2]=wval.byte.LB;
-}
-void set32bit(BowlerPacket * Packet,INT32 val){
-	INT32_UNION lval;
-	lval.Val=val;
-	Packet->use.data[1]=lval.byte.FB;
-	Packet->use.data[2]=lval.byte.TB;
-	Packet->use.data[3]=lval.byte.SB;
-	Packet->use.data[4]=lval.byte.LB;
-}
-INT32 get32bit(BowlerPacket * Packet, BYTE offset){
-	INT32_UNION lval;
-	lval.byte.FB=Packet->use.data[0+offset];
-	lval.byte.TB=Packet->use.data[1+offset];
-	lval.byte.SB=Packet->use.data[2+offset];
-	lval.byte.LB=Packet->use.data[3+offset];
-	return lval.Val;
+BOOL isASetableMode(BYTE mode){
+	switch(mode&0x7f){
+	case IS_COUNTER_INPUT_INT:
+	case IS_COUNTER_INPUT_DIR:
+	case IS_COUNTER_INPUT_HOME:
+	case IS_COUNTER_OUTPUT_INT:
+	case IS_COUNTER_OUTPUT_DIR:
+	case IS_COUNTER_OUTPUT_HOME:
+		return TRUE;
+	}
+	return FALSE;
 }

@@ -19,20 +19,6 @@ BOOL (*getAllChanelValueHWPtr)(INT32 *);
 BOOL (*configChannelHWPtr)(BYTE,BYTE,INT32 *);
 
 
-BOOL bcsIoProcessor_c(BowlerPacket * Packet){
-	int zone=2;
-	switch (Packet->use.head.RPC){
-	case CCHN:
-		SendPacketToCoProc(Packet);
-		break;
-	case SCHV:
-		getBcsIoDataTable()[Packet->use.data[0]].PIN.ServoPos=Packet->use.data[1];
-		SendPacketToCoProc(Packet);
-		break;
-	}
-	return TRUE;
-}
-
 void InitilizeBcsIo(int numPins,
 					DATA_STRUCT * dataPtrLocal,
 					BOOL (*setChanelValueHWPtrLocal)(BYTE,BYTE,INT32 *,float),
@@ -136,7 +122,7 @@ BOOL SetChanelValueFromPacket(BowlerPacket * Packet){
 			//Data pointer is offset by one to start after the pin index
 			setChanelValueHWPtr(pin,
 								Packet->use.head.DataLegnth-(4+1),
-								(Packet->use.data)+1,
+								(INT32 *)(Packet->use.data+1),
 								(float)0);
 			READY(Packet,1,3);
 	}else{
@@ -165,6 +151,7 @@ BOOL SetChanelValueFromPacket(BowlerPacket * Packet){
 				time=0;
 			}
 		}
+		getBcsIoDataTable()[pin].PIN.currentValue = data;
 		if(setChanelValueHWPtr!=NULL)
 			setChanelValueHWPtr(pin,1,&data,(float)time);
 		READY(Packet,2,3);
@@ -173,15 +160,21 @@ BOOL SetChanelValueFromPacket(BowlerPacket * Packet){
 	return TRUE;
 }
 BOOL SetAllChannelValueFromPacket(BowlerPacket * Packet){
+	INT32 * data = (INT32 *)(Packet->use.data+4);
 	if(setAllChanelValueHWPtr!=NULL){
 		UINT32_UNION time;
 		BYTE i;
+		UINT32 tmp;
 		time.byte.FB=Packet->use.data[0];
 		time.byte.TB=Packet->use.data[1];
 		time.byte.SB=Packet->use.data[2];
 		time.byte.LB=Packet->use.data[3];
-		//REVERSE?
-		setAllChanelValueHWPtr(((INT32 *)Packet->use.data)+4,time.Val);
+		for(i=0;i<GetNumberOfIOChannels();i++){
+			tmp = get32bit(Packet, i*4);
+			getBcsIoDataTable()[i].PIN.currentValue = tmp;
+			data[i]=tmp;
+		}
+		setAllChanelValueHWPtr(data,time.Val);
 		READY(Packet,3,3);
 	}else{
 		return FALSE;
@@ -199,7 +192,7 @@ BOOL GetChanelValueFromPacket(BowlerPacket * Packet){
 			//Data pointer is offset by one to start after the pin index
 			getChanelValueHWPtr(pin,
 								&numValues,
-								(Packet->use.data)+1);
+								(INT32 *)(Packet->use.data+1));
 			Packet->use.head.DataLegnth = 4+1+numValues;
 		}else{
 			return FALSE;
@@ -228,9 +221,16 @@ BOOL GetChanelValueFromPacket(BowlerPacket * Packet){
 	return TRUE;
 }
 BOOL GetAllChanelValueFromPacket(BowlerPacket * Packet){
+	INT32 * data = (INT32 *)(Packet->use.data);
 	if(getAllChanelValueHWPtr!=NULL){
-		//REVERSE?
+		int i;
+		INT32 tmp;
 		getAllChanelValueHWPtr((INT32 * )Packet->use.data);
+		for(i=0;i<GetNumberOfIOChannels();i++){
+			tmp = data[i];
+			getBcsIoDataTable()[i].PIN.currentValue = tmp;
+			set32bit(Packet,tmp,i*4);
+		}
 		Packet->use.head.DataLegnth = 4+GetNumberOfIOChannels()*4;
 	}else
 		return FALSE;
@@ -322,21 +322,21 @@ BOOL getFunctionList(BowlerPacket * Packet){
 }
 
 void set8bit(BowlerPacket * Packet,BYTE val, BYTE offset){
-	Packet->use.data[1+offset]=val;
+	Packet->use.data[0+offset]=val;
 }
 void set16bit(BowlerPacket * Packet,WORD val, BYTE offset){
 	UINT16_UNION wval;
 	wval.Val=val;
-	Packet->use.data[1+offset]=wval.byte.SB;
-	Packet->use.data[2+offset]=wval.byte.LB;
+	Packet->use.data[0+offset]=wval.byte.SB;
+	Packet->use.data[1+offset]=wval.byte.LB;
 }
 void set32bit(BowlerPacket * Packet,INT32 val, BYTE offset){
 	INT32_UNION lval;
 	lval.Val=val;
-	Packet->use.data[1+offset]=lval.byte.FB;
-	Packet->use.data[2+offset]=lval.byte.TB;
-	Packet->use.data[3+offset]=lval.byte.SB;
-	Packet->use.data[4+offset]=lval.byte.LB;
+	Packet->use.data[0+offset]=lval.byte.FB;
+	Packet->use.data[1+offset]=lval.byte.TB;
+	Packet->use.data[2+offset]=lval.byte.SB;
+	Packet->use.data[3+offset]=lval.byte.LB;
 }
 INT32 get32bit(BowlerPacket * Packet, BYTE offset){
 	INT32_UNION lval;
