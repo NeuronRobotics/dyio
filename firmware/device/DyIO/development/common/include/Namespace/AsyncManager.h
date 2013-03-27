@@ -37,6 +37,7 @@ typedef struct _AdvancedAsyncData{
 	INT32			currentVal;
 	RunEveryData 	time;
 	BYTE		type;
+	BYTE 		enabled;
 	struct{
 		INT32 	val;
 	}deadBand;

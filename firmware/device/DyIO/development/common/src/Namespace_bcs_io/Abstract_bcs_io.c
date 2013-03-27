@@ -18,29 +18,7 @@ BOOL (*setAllChanelValueHWPtr)(INT32 *,float);
 BOOL (*getAllChanelValueHWPtr)(INT32 *);
 BOOL (*configChannelHWPtr)(BYTE,BYTE,INT32 *);
 
-BOOL bcsIoProcessor_g(BowlerPacket * Packet){
-	switch (Packet->use.head.RPC){
-	case GCHV:
-		GetChannelValue(Packet);
-		break;
-	case GACV:
-		populateGACV(Packet);
-		break;
-	}
-	return TRUE;
-}
-BOOL bcsIoProcessor_p(BowlerPacket * Packet){
-	int zone=2;
-	switch (Packet->use.head.RPC){
-	case SCHV:
-		SetChannelValue(Packet);
-		break;
-	case SACV:
-		SetAllChannelValue(Packet);
-		break;
-	}
-	return TRUE;
-}
+
 BOOL bcsIoProcessor_c(BowlerPacket * Packet){
 	int zone=2;
 	switch (Packet->use.head.RPC){
@@ -95,7 +73,7 @@ BYTE GetChannelMode(BYTE chan){
 		while(1);
 	}
 	//Strip off the internally stored High Bit
-	return getBcsIoDataTable()[chan].PIN.State & 0x7f;
+	return getBcsIoDataTable()[chan].PIN.currentChannelMode & 0x7f;
 }
 
 
@@ -152,27 +130,129 @@ BOOL GetIOChannelCountFromPacket(BowlerPacket * Packet){
 BOOL SetChanelValueFromPacket(BowlerPacket * Packet){
 	BYTE pin = Packet->use.data[0];
 	BYTE mode = GetChannelMode(pin);
+	if(isStremChannelMode(mode)){
+		if(setChanelValueHWPtr!=NULL)
+			// Load the data directly into the packet as the buffer
+			//Data pointer is offset by one to start after the pin index
+			setChanelValueHWPtr(pin,
+								Packet->use.head.DataLegnth-(4+1),
+								(Packet->use.data)+1,
+								(float)0);
+			READY(Packet,1,3);
+	}else{
+		UINT32 data = 0;
+		UINT32 time = 0;
+
+		if(isSingleByteMode(mode)){
+			data = Packet->use.data[1];
+			if (Packet->use.head.DataLegnth>(4+2)){
+				time = get16bit(Packet,2);
+			}else{
+				time=0;
+			}
+		}else if(isTwoByteMode(mode)){
+			data=get16bit(Packet,1);
+			if (Packet->use.head.DataLegnth>(4+3)){
+				time=time = get32bit(Packet,3);
+			}else{
+				time=0;
+			}
+		}else{
+			data=get32bit(Packet,1);
+			if (Packet->use.head.DataLegnth>(4+5)){
+				time=time = get32bit(Packet,5);
+			}else{
+				time=0;
+			}
+		}
+		if(setChanelValueHWPtr!=NULL)
+			setChanelValueHWPtr(pin,1,&data,(float)time);
+		READY(Packet,2,3);
+	}
 
 	return TRUE;
 }
 BOOL SetAllChannelValueFromPacket(BowlerPacket * Packet){
-
+	if(setAllChanelValueHWPtr!=NULL){
+		UINT32_UNION time;
+		BYTE i;
+		time.byte.FB=Packet->use.data[0];
+		time.byte.TB=Packet->use.data[1];
+		time.byte.SB=Packet->use.data[2];
+		time.byte.LB=Packet->use.data[3];
+		//REVERSE?
+		setAllChanelValueHWPtr(((INT32 *)Packet->use.data)+4,time.Val);
+		READY(Packet,3,3);
+	}else{
+		return FALSE;
+	}
 	return TRUE;
 }
 BOOL GetChanelValueFromPacket(BowlerPacket * Packet){
 	BYTE pin = Packet->use.data[0];
 	BYTE mode = GetChannelMode(pin);
+	BYTE numValues;
+	if(isStremChannelMode(mode)){
 
+		if(getChanelValueHWPtr!=NULL){
+			// Load the data directly into the packet as the buffer
+			//Data pointer is offset by one to start after the pin index
+			getChanelValueHWPtr(pin,
+								&numValues,
+								(Packet->use.data)+1);
+			Packet->use.head.DataLegnth = 4+1+numValues;
+		}else{
+			return FALSE;
+		}
+	}else{
+		UINT32 data;
+		if(getChanelValueHWPtr!=NULL){
+			getChanelValueHWPtr(pin,
+								&numValues,
+								&data);
+		}else{
+			return FALSE;
+		}
+		if(isSingleByteMode(mode)){
+			set8bit(Packet,data, 1);
+			numValues=1;
+		}else if(isTwoByteMode(mode)){
+			set16bit(Packet,data, 1);
+			numValues=2;
+		}else{
+			set32bit(Packet,data, 1);
+			numValues=4;
+		}
+		Packet->use.head.DataLegnth = 4+1+numValues;
+	}
 	return TRUE;
 }
 BOOL GetAllChanelValueFromPacket(BowlerPacket * Packet){
-
+	if(getAllChanelValueHWPtr!=NULL){
+		//REVERSE?
+		getAllChanelValueHWPtr((INT32 * )Packet->use.data);
+		Packet->use.head.DataLegnth = 4+GetNumberOfIOChannels()*4;
+	}else
+		return FALSE;
 	return TRUE;
 }
 BOOL ConfigureChannelFromPacket(BowlerPacket * Packet){
 	BYTE pin = Packet->use.data[0];
 	BYTE mode = GetChannelMode(pin);
 
+	if(configChannelHWPtr!=NULL){
+		if(Packet->use.head.DataLegnth>5 && mode != IS_SERVO){
+			int numVals = (Packet->use.head.DataLegnth-(4+1))/4;
+			//REVERSE?
+			configChannelHWPtr(pin,numVals,(INT32 * )(Packet->use.data+1));
+		}else{
+			// Single Byte Servo, legacy HACK
+			INT32 value  = Packet->use.data[1];
+			configChannelHWPtr(pin,1,&value);
+		}
+	}else{
+		return FALSE;
+	}
 	return TRUE;
 }
 
@@ -240,3 +320,38 @@ BOOL getFunctionList(BowlerPacket * Packet){
 	Packet->use.head.DataLegnth=4+index;
 	return TRUE;
 }
+
+void set8bit(BowlerPacket * Packet,BYTE val, BYTE offset){
+	Packet->use.data[1+offset]=val;
+}
+void set16bit(BowlerPacket * Packet,WORD val, BYTE offset){
+	UINT16_UNION wval;
+	wval.Val=val;
+	Packet->use.data[1+offset]=wval.byte.SB;
+	Packet->use.data[2+offset]=wval.byte.LB;
+}
+void set32bit(BowlerPacket * Packet,INT32 val, BYTE offset){
+	INT32_UNION lval;
+	lval.Val=val;
+	Packet->use.data[1+offset]=lval.byte.FB;
+	Packet->use.data[2+offset]=lval.byte.TB;
+	Packet->use.data[3+offset]=lval.byte.SB;
+	Packet->use.data[4+offset]=lval.byte.LB;
+}
+INT32 get32bit(BowlerPacket * Packet, BYTE offset){
+	INT32_UNION lval;
+	lval.byte.FB=Packet->use.data[0+offset];
+	lval.byte.TB=Packet->use.data[1+offset];
+	lval.byte.SB=Packet->use.data[2+offset];
+	lval.byte.LB=Packet->use.data[3+offset];
+	return lval.Val;
+}
+
+INT32 get16bit(BowlerPacket * Packet, BYTE offset){
+	UINT16_UNION wval;
+	wval.byte.SB=Packet->use.data[0+offset];
+	wval.byte.LB=Packet->use.data[1+offset];
+	return wval.Val;
+}
+
+

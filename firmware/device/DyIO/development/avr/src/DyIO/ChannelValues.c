@@ -47,10 +47,11 @@ BOOL GetChannelValue(BowlerPacket * Packet){
 		Packet->use.head.DataLegnth=5;
 		UINT16 numBytes=Get_UART_Byte_CountPassThrough();
 		if(numBytes>0){
-			UARTGetArrayPassThrough(Packet->use.data,numBytes);
-			for (i=0;i<numBytes;i++){
-				Packet->use.data[(numBytes)-i]=Packet->use.data[(numBytes-1)-i];
-			}
+			UARTGetArrayPassThrough(Packet->use.data+1,numBytes);
+			//Offset using pointer, rather then shuffeling
+//			for (i=0;i<numBytes;i++){
+//				Packet->use.data[(numBytes)-i]=Packet->use.data[(numBytes-1)-i];
+//			}
 			Packet->use.data[0]=17;
 			Packet->use.head.DataLegnth+=numBytes;
 		}

@@ -76,7 +76,7 @@ case IS_PPM_IN:
 #define IS_DC_MOTOR_DIR			0x15
 #define IS_PPM_IN				0x16
 
-#define IO_MODE_MAX				IS_PPM_IN
+#define IO_MODE_MAX				(IS_PPM_IN+1)
 
 #define isStremChannelMode(A) ( (A==IS_UART_TX)||\
 								(A==IS_UART_RX)||\
@@ -84,6 +84,18 @@ case IS_PPM_IN:
 								(A==IS_SPI_MISO)||\
 								(A==IS_SPI_SCK)||\
 								(A==IS_PPM_IN))
+#define isSingleByteMode(A)  ( 	(A==IS_DO)||\
+								(A==IS_DI)||\
+								(A==IS_PWM)||\
+								(A==IS_DC_MOTOR_VEL	)||\
+								(A==IS_DC_MOTOR_DIR	)||\
+								(A==IS_SERVO)\
+							)
+#define isTwoByteMode(A)  ( 	(A==IS_ANALOG_IN)||\
+								(A==IS_ANALOG_OUT)\
+							)
+
+
 
 //bcs.io
 #define GCHM				0x6D686367// Get channel mode
@@ -121,9 +133,12 @@ typedef union __attribute__((__packed__)) _FUNCTION_MAP
 	typedef struct __attribute__((__packed__)) _PIN_MAP
 	{
 		INT32 currentValue;
-		INT32 configuration;
+		INT32 currentChannelMode;
+		BYTE  currentConfiguration;
+		//Used to detect any hardware state change and synchronize
 		INT32 previousValue;
 		INT32 previousConfiguration;
+		BYTE  previousChannelMode;
 	} PIN_MAP;
 
 typedef struct __attribute__((__packed__)) _DATA
@@ -131,6 +146,7 @@ typedef struct __attribute__((__packed__)) _DATA
 	//STORAGE self;
 	PIN_MAP PIN;
 	FUNCTION_MAP FUNCTION;
+	AdvancedAsyncData asyncData;
 } DATA_STRUCT;
 
 

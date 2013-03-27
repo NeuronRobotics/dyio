@@ -29,7 +29,11 @@ BOOL SetChannelMode(BYTE chan,BYTE mode){
 	if(setChanelModeHWPtr == NULL)
 		return FALSE;
 
-	return setChanelModeHWPtr(chan,mode);
+	BOOL ok = setChanelModeHWPtr(chan,mode & 0x7);
+	getBcsIoDataTable()[chan].PIN.currentChannelMode = mode;
+	if(IsAsync(chan))
+		startAdvancedAsyncDefault(chan);
+	return ok;
 }
 
 /*
@@ -58,13 +62,12 @@ BOOL AbstractSetChannelMode(BowlerPacket * Packet){
 
 	if(Packet->use.head.DataLegnth == 7){
 		setAsync(pin,Packet->use.data[2]?TRUE:FALSE);
+		//Grab the async flag
+		mode = GetChannelMode(pin);
 	}
 
 	if(SetChannelMode(pin,mode)){
-
 		READY(Packet,4,33);
-		if( IsAsync(pin))
-			startAdvancedAsyncDefault(pin);
 		return TRUE;
 	}else{
 		println_E("Mode Invalid!");
@@ -81,8 +84,6 @@ BOOL AbstractSetAllChannelMode(BowlerPacket * Packet){
 	int i=0;
 	for(i=0;i<GetNumberOfIOChannels();i++){
 		SetChannelMode(i,Packet->use.data[i]);
-		if(IsAsync(i))
-			startAdvancedAsyncDefault(i);
 	}
 	return TRUE;
 }
