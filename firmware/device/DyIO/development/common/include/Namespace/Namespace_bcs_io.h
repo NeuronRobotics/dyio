@@ -141,6 +141,8 @@ typedef union __attribute__((__packed__)) _FUNCTION_MAP
 		BYTE  previousChannelMode;
 	} PIN_MAP;
 
+
+
 typedef struct __attribute__((__packed__)) _DATA
 {
 	//STORAGE self;

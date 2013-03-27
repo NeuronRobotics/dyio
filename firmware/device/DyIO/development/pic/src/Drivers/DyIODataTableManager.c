@@ -16,7 +16,7 @@ void SyncDataTable(){
 
 }
 
-BOOL LoadSerialTxData(BYTE numValues,INT32 * data){
+BOOL LoadSerialTxData(BYTE numValues,BYTE * data){
 	int i;
 	BYTE err;
 	for(i=0;i<numValues;i++){
@@ -25,3 +25,11 @@ BOOL LoadSerialTxData(BYTE numValues,INT32 * data){
 	return TRUE;
 }
 
+BYTE GetSerialRxData(BYTE * data){
+	int i;
+	BYTE err;
+	BYTE numValues = FifoGetByteCount(&storeRx);
+	if(numValues>0)
+		numValues = FifoGetByteStream(&storeRx,data,numValues);
+	return numValues;
+}

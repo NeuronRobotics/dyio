@@ -43,6 +43,11 @@ BOOL SetChanelValueHW(BYTE pin,BYTE numValues,INT32 * data, float ms){
 			SetChanVal(pin,data[0],ms);
 			return TRUE;
 		}
+		if(isSingleByteMode(mode)){
+			INT32 time = (INT32)ms;
+			//mask the time into the data byte
+			//getBcsIoDataTable()[pin].PIN.currentValue = (time<<16)|(data[0]&0x000000ff);
+		}
 	}
 
 
