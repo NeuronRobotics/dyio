@@ -15,6 +15,9 @@ void runPPMEvent(void);
 void RunPPMCheck(void);
 void clearPPM(BYTE chan);
 void startPPM(BYTE chan);
+
+void ConfigPPMFromArray(BYTE * data);
+
 void GetPPMDataToPacket(BowlerPacket * Packet);
 void ConfigPPM(BowlerPacket * Packet);
 void GetPPMDataToArray(BYTE * data);

@@ -161,10 +161,11 @@ BOOL SetChanelValueFromPacket(BowlerPacket * Packet){
 }
 BOOL SetAllChannelValueFromPacket(BowlerPacket * Packet){
 	INT32 * data = (INT32 *)(Packet->use.data+4);
+	UINT32 tmp;
 	if(setAllChanelValueHWPtr!=NULL){
 		UINT32_UNION time;
 		BYTE i;
-		UINT32 tmp;
+
 		time.byte.FB=Packet->use.data[0];
 		time.byte.TB=Packet->use.data[1];
 		time.byte.SB=Packet->use.data[2];
@@ -193,7 +194,6 @@ BOOL GetChanelValueFromPacket(BowlerPacket * Packet){
 			getChanelValueHWPtr(pin,
 								&numValues,
 								(INT32 *)(Packet->use.data+1));
-			Packet->use.head.DataLegnth = 4+1+numValues;
 		}else{
 			return FALSE;
 		}
@@ -216,8 +216,9 @@ BOOL GetChanelValueFromPacket(BowlerPacket * Packet){
 			set32bit(Packet,data, 1);
 			numValues=4;
 		}
-		Packet->use.head.DataLegnth = 4+1+numValues;
+
 	}
+	Packet->use.head.DataLegnth = 4+1+numValues;
 	return TRUE;
 }
 BOOL GetAllChanelValueFromPacket(BowlerPacket * Packet){
@@ -239,11 +240,17 @@ BOOL GetAllChanelValueFromPacket(BowlerPacket * Packet){
 BOOL ConfigureChannelFromPacket(BowlerPacket * Packet){
 	BYTE pin = Packet->use.data[0];
 	BYTE mode = GetChannelMode(pin);
-
+	INT32 * data = (INT32 *)(Packet->use.data+1);
+	INT32 tmp;
+	int i;
 	if(configChannelHWPtr!=NULL){
 		if(Packet->use.head.DataLegnth>5 && mode != IS_SERVO){
 			int numVals = (Packet->use.head.DataLegnth-(4+1))/4;
-			//REVERSE?
+			for(i=0;i<numVals;i++){
+				tmp = get32bit(Packet, (i*4)+1);
+				getBcsIoDataTable()[i].PIN.currentValue = tmp;
+				data[i]=tmp;
+			}
 			configChannelHWPtr(pin,numVals,(INT32 * )(Packet->use.data+1));
 		}else{
 			// Single Byte Servo, legacy HACK

@@ -50,26 +50,27 @@ BYTE GetByteSPI(BYTE b){
 	return getcSPI2();
 }
 
+void SendPacketToSPIFromArray(BYTE numBytes,BYTE * data){
+	BYTE ss = data[0];
+	if(ss<3){
+		println_I("invalid SS pin");
+		return;
+	}
+	if(!SetCoProcMode(ss,IS_DO))
+		SetChannelValueCoProc(ss,1);
+	SetChannelValueCoProc(ss,0);
+	BYTE i;
+	for (i=0;i<numBytes;i++){
+		data[i+1]=GetByteSPI(data[i+1]);
+	}
+	SetChannelValueCoProc(ss,1);
+}
+
+
 void SendPacketToSPI(BowlerPacket * Packet){
 	if(!isSPI(GetChannelMode(Packet->use.data[0]))){
 		println_I("channel is not SPI");
 		return;
 	}
-	BYTE ss = Packet->use.data[1];
-	if(ss<3){
-		println_I("invalid SS pin");
-		return;
-	}
-	Print_Level l = getPrintLevel();
-	setPrintLevelInfoPrint();
-	println_I("Setting up SPI perpheral SS pin");
-	if(!SetCoProcMode(ss,IS_DO))
-		SetChannelValueCoProc(ss,1);
-	SetChannelValueCoProc(ss,0);
-	BYTE i;
-	for (i=0;i<Packet->use.head.DataLegnth-6;i++){
-		Packet->use.data[i+2]=GetByteSPI(Packet->use.data[i+2]);
-	}
-	SetChannelValueCoProc(ss,1);
-	setPrintLevel(l);
+	SendPacketToSPIFromArray(Packet->use.head.DataLegnth-6,Packet->use.data+1);
 }

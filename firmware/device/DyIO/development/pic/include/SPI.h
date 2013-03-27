@@ -15,4 +15,5 @@ void StopSPI(BYTE mode);
 BOOL isSPI(BYTE mode);
 BYTE GetByteSPI(BYTE b);
 void SendPacketToSPI(BowlerPacket * Packet);
+void SendPacketToSPIFromArray(BYTE numBytes,BYTE * data);
 #endif /* SPI_H_ */

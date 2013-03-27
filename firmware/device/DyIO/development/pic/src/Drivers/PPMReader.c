@@ -149,6 +149,20 @@ void GetPPMDataToPacket(BowlerPacket * Packet){
 	Packet->use.head.MessageID=0;
 	SetCRC(Packet);
 }
+
+void ConfigPPMFromArray(BYTE * data){
+	int i;
+	for(i=0;i<NUM_PPM_CHAN;i++){
+		ppmLink[i]=data[i];
+		if(ppmLink[i]>= GetNumberOfIOChannels()){
+			ppmLink[i]=INVALID_PPM_LINK;
+		}else{
+			unlockServos();
+		}
+	}
+	writePPMLink(ppmLink);
+}
+
 void ConfigPPM(BowlerPacket * Packet){
 	int i;
 	for(i=0;i<NUM_PPM_CHAN;i++){
