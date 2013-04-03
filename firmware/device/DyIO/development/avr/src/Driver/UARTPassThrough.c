@@ -5,7 +5,7 @@
  *      Author: hephaestus
  */
 
-#include "UserApp.h"
+#include "UserApp_avr.h"
 
 extern DATA_STRUCT DATA;
 
@@ -41,7 +41,9 @@ void InitUART(void){
 	InitByteFifo(&store,privateRXUART,UART_PASS_BUFF_SIZE);
 }
 void StopUartPassThrough(BYTE pin){
-	if (DATA.FUNCTION[pin].HAS_UART == FALSE){
+	if (!(	pinHasFunction(pin,IS_UART_RX)||
+			pinHasFunction(pin,IS_UART_TX)
+		)){
 		return;
 	}
 	UCSR1B=0;

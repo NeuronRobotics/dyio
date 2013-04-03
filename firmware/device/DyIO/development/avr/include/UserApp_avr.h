@@ -44,6 +44,8 @@ BOOL checkDigital();
 void initPinState(BYTE i);
 void initBluetooth();
 
+BOOL avrAsyncCallbackPtr(BowlerPacket *Packet);
+
 
 
 #if defined(ROBOSUB_DEMO)

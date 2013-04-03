@@ -4,7 +4,7 @@
  * Created on: Mar 16, 2013
  * @author hephaestus
  */
-#include "UserApp.h"
+#include "UserApp_avr.h"
 
 const unsigned char internalNSName[] = "neuronrobotics.internal*;0.3;;";
 
@@ -58,6 +58,7 @@ NAMESPACE_LIST * get_internalNamespace(){
                 //POST
                 //Add the RPC structs to the namespace
                 addRpcToNamespace(&internalNamespace,& bcsPidDypid_dpid_g);
+                int i;
 
                 namespcaedAdded =TRUE;
 	}

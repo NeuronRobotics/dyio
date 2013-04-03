@@ -16,14 +16,12 @@
  *
  */
 
-#include "UserApp.h"
+#include "UserApp_avr.h"
 BOOL powerOverRide = FALSE;
 
 INTERPOLATE_DATA velocity[NUM_PINS];
 void runLinearInterpolationServo(BYTE blockStart,BYTE blockEnd);
 
-
-extern DATA_STRUCT DATA;
 
 BYTE pinOn(BYTE pin);
 void pinOff(BYTE pin);
@@ -86,9 +84,9 @@ void SetServoPos(BYTE PIN,BYTE val,float time){
 		time=0;
 	velocity[PIN].setTime=time;
 	velocity[PIN].set=(float)val;
-	velocity[PIN].start=(float)DATA.PIN[PIN].ServoPos;
+	velocity[PIN].start=(float)getBcsIoDataTable()[PIN].asyncData.currentVal;
 	velocity[PIN].startTime=getMs();
-	if (val==DATA.PIN[PIN].ServoPos){
+	if (val==getBcsIoDataTable()[PIN].asyncData.currentVal){
 		velocity[PIN].setTime=0;
 	}
 	if(PIN<12){
@@ -101,7 +99,7 @@ void SetServoPos(BYTE PIN,BYTE val,float time){
 	print = PIN;
 }
 BYTE GetServoPos(BYTE PIN){
-	return DATA.PIN[PIN].ServoPos;
+	return getBcsIoDataTable()[PIN].asyncData.currentVal;
 }
 
 void RunServo(BYTE block){
@@ -127,7 +125,7 @@ void RunServo(BYTE block){
 	for (j=0;j<256;j++){
 		//check all servo positions
 		for (xIndex=start; xIndex < stop ;xIndex++){
-			if (j == DATA.PIN[xIndex].ServoPos ){
+			if (j == getBcsIoDataTable()[xIndex].asyncData.currentVal){
 				//turn off if it is time to turn off
 				pinOff(xIndex);
 			}
@@ -196,7 +194,7 @@ void runLinearInterpolationServo(BYTE blockStart,BYTE blockEnd){
 			ip=SERVO_BOUND;
 		}
 		int tmp = (int)ip;
-		DATA.PIN[i].ServoPos= (BYTE) tmp;
+		getBcsIoDataTable()[i].asyncData.currentVal=  tmp;
 	}
 
 }

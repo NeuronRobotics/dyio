@@ -5,7 +5,7 @@
  *      Author: hephaestus
  */
 
-#include "UserApp.h"
+#include "UserApp_avr.h"
 
 extern MAC_ADDR MyMAC;
 

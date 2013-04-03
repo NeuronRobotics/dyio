@@ -16,7 +16,7 @@
  *
  */
 
-#include "UserApp.h"
+#include "UserApp_avr.h"
 const char startmessage[] = "###Starting AVR In Debug Mode\n";
 void UserInit(void){
 

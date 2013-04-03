@@ -24,7 +24,7 @@
  *
  */
 
-#include "UserApp.h"
+#include "UserApp_avr.h"
 
 static BYTE zone;
 

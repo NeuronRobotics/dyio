@@ -1,5 +1,5 @@
 
-#include "UserApp.h"
+#include "UserApp_avr.h"
 
 #if defined(__AVR_ATmega324P__)
 	static BowlerPacketMini Packet;

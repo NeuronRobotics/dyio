@@ -4,7 +4,7 @@
  *  Created on: Jan 30, 2010
  *      Author: hephaestus
  */
-#include "UserApp.h"
+#include "UserApp_avr.h"
 
 extern DATA_STRUCT DATA;
 
@@ -27,10 +27,10 @@ void InitPinModes(void){
 }
 
 
-BYTE GetChannelMode(BYTE chan){
-	return EEReadMode(chan) & 0x7f;
-}
-BOOL SetChannelMode(BowlerPacket * Packet){
+//BYTE GetChannelMode(BYTE chan){
+//	return EEReadMode(chan) & 0x7f;
+//}
+BOOL SetChannelModeFromPacket(BowlerPacket * Packet){
 	//BYTE isAsync;
 	BYTE pin = Packet->use.data[0];
 	BYTE mode = Packet->use.data[1];
@@ -41,7 +41,7 @@ BOOL SetChannelMode(BowlerPacket * Packet){
 	return setMode(pin,mode);
 }
 
-BOOL SetAllChannelMode(BowlerPacket * Packet){
+BOOL SetAllChannelModeFromPacket(BowlerPacket * Packet){
 	BYTE i;
 	for (i=0;i<NUM_PINS;i++){
 		if(!setMode(i,Packet->use.data[i])){
@@ -76,7 +76,7 @@ BOOL setMode(BYTE pin,BYTE mode){
 	case IS_SPI_MOSI:
 	case IS_SPI_MISO:
 	case IS_SPI_SCK:
-		if(DATA.FUNCTION[pin].HAS_SPI  ){
+		if(pin == 0 || pin == 1||pin == 2   ){
 			configPinMode(0,IS_SPI_SCK,INPUT,ON);
 			configPinMode(1,IS_SPI_MISO,INPUT,ON);
 			configPinMode(2,IS_SPI_MOSI,INPUT,ON);

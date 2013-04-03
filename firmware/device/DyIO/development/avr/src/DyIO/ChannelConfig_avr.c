@@ -4,7 +4,11 @@
  *  Created on: Jan 30, 2010
  *      Author: hephaestus
  */
-#include "UserApp.h"
+#include "UserApp_avr.h"
+
+void SetNewConfigurationDataTable(BYTE pin, INT32 value){
+
+}
 
 BOOL ConfigChannel(BowlerPacket * Packet){
 	BYTE mode = GetChannelMode(Packet->use.data[0]);

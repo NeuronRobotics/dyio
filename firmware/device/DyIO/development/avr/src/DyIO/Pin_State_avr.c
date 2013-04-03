@@ -4,15 +4,16 @@
  *  Created on: Nov 23, 2009
  *      Author: hephaestus
  */
-#include "UserApp.h"
+#include "UserApp_avr.h"
 
 
 void InitPins(void){
 	InitPinFunction();
 	InitPinModes();
 	int i=0;
-	for(i=0;i<NUM_PINS;i++){
+	for(i=0;i<GetNumberOfIOChannels();i++){
 		initPinState(i);
+		configAdvancedAsyncNotEqual(i,10);
 	}
 }
 

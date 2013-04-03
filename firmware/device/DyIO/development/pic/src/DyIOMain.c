@@ -22,7 +22,7 @@ void buttonCheck(BYTE code){
 void MyServer(){
 	// Run the Bowler Stack Namespace iteration of all async packets
 	// Pass in  the function pointer to push the packets upstream
-	RunNamespaceAsync(&Packet);
+	RunNamespaceAsync(&Packet,&PutBowlerPacket);
 	Bowler_Server((BowlerPacket *) &Packet, FALSE);
 }
 

@@ -16,11 +16,9 @@
  *
  */
 
-#include "UserApp.h"
+#include "UserApp_avr.h"
 
 #define HIGHSPEED
-
-extern DATA_STRUCT DATA;
 
 void ClearPWM(BYTE channel){
 	////println_I("Clearing PWM from pin:");
@@ -94,7 +92,7 @@ void enable(BYTE channel){
 }
 
 BYTE InitPWM(BYTE channel){
-	if (DATA.FUNCTION[channel].HAS_PWM == FALSE){
+	if (pinHasFunction(channel,IS_PWM)){
 		return FALSE;
 	}
 	configPinMode(channel,IS_PWM,OUTPUT,OFF);
@@ -128,10 +126,11 @@ void SetPWM(BYTE channel,BYTE val){
 		OCR2B =val;
 		break;
 	}
+	getBcsIoDataTable()[channel].PIN.currentValue = val;
 }
 
 BYTE GetPWM(BYTE pin){
 	if (GetChannelMode(pin) != IS_PWM)
 		return 0;
-	return EEReadValue(pin);
+	return getBcsIoDataTable()[pin].PIN.currentValue;
 }

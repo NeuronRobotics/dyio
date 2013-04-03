@@ -5,12 +5,11 @@
  *      Author: hephaestus
  */
 
-#include "UserApp.h"
+#include "UserApp_avr.h"
 
-extern DATA_STRUCT DATA;
 
 BYTE InitADC(BYTE pin){
-	if (!DATA.FUNCTION[pin].HAS_ANALOG_IN ){
+	if (!pinHasFunction(pin,IS_ANALOG_IN)){
 		return FALSE;
 	}
 
@@ -52,7 +51,7 @@ BYTE InitADC(BYTE pin){
 	return TRUE;
 }
 void ClearADC(BYTE pin){
-	if (!DATA.FUNCTION[pin].HAS_ANALOG_IN){
+	if (!pinHasFunction(pin,IS_ANALOG_IN)){
 		return;
 	}
 	switch (pin){

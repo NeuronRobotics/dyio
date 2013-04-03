@@ -4,9 +4,8 @@
  *  Created on: Sep 9, 2010
  * @author Kevin Harrington
  */
-#include "UserApp.h"
+#include "UserApp_avr.h"
 
-extern DATA_STRUCT DATA;
 
 BYTE pwm,dir;
 
@@ -21,7 +20,8 @@ void setPwmDir(BYTE pin){
 }
 
 BOOL InitDCMotor(BYTE pin){
-	if (DATA.FUNCTION[pin].HAS_DC_MOTOR == FALSE){
+	if (!(	pinHasFunction(pin,IS_DC_MOTOR_DIR) ||
+			pinHasFunction(pin,IS_DC_MOTOR_VEL))){
 		return FALSE;
 	}
 	setPwmDir(pin);
@@ -35,7 +35,8 @@ BOOL InitDCMotor(BYTE pin){
 }
 
 void ClearDCMotor(BYTE pin){
-	if (DATA.FUNCTION[pin].HAS_DC_MOTOR == FALSE){
+	if (!(	pinHasFunction(pin,IS_DC_MOTOR_DIR) ||
+			pinHasFunction(pin,IS_DC_MOTOR_VEL))){
 		return;
 	}
 	setPwmDir(pin);
@@ -50,21 +51,23 @@ void ClearDCMotor(BYTE pin){
 
 }
 BYTE GetDCMotor(BYTE pin){
-	if (DATA.FUNCTION[pin].HAS_DC_MOTOR == FALSE){
+	if (!(	pinHasFunction(pin,IS_DC_MOTOR_DIR) ||
+			pinHasFunction(pin,IS_DC_MOTOR_VEL))){
 		return 0;
 	}
 	setPwmDir(pin);
-	return DATA.PIN[pwm].ServoPos;
+	return getBcsIoDataTable()[pin].PIN.currentValue;
 }
 void SetDCMotor(BYTE pin,BYTE vel){
-	if (DATA.FUNCTION[pin].HAS_DC_MOTOR == FALSE){
+	if (!(	pinHasFunction(pin,IS_DC_MOTOR_DIR) ||
+			pinHasFunction(pin,IS_DC_MOTOR_VEL))){
 		return;
 	}
 	setPwmDir(pin);
 
 	int tmp = vel-128;
 
-	DATA.PIN[pwm].ServoPos = vel;
+	getBcsIoDataTable()[pwm].PIN.currentValue = vel;
 
 	if(tmp>0){
 		SetDIO(dir,0);

@@ -16,7 +16,7 @@
  *
  */
 #include "Bowler/Bowler.h"
-#include "UserApp.h"
+#include "UserApp_avr.h"
 
 /**
  * Main loop
