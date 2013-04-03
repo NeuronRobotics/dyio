@@ -135,11 +135,11 @@ typedef union __attribute__((__packed__)) _FUNCTION_MAP
 	typedef struct __attribute__((__packed__)) _PIN_MAP
 	{
 		INT32 currentValue;
-		INT32 currentConfiguration;
+		BYTE  currentConfiguration;
 		BYTE  currentChannelMode;
 		//Used to detect any hardware state change and synchronize
 		INT32 previousValue;
-		INT32 previousConfiguration;
+		BYTE previousConfiguration;
 		BYTE  previousChannelMode;
 	} PIN_MAP;
 

@@ -7,12 +7,10 @@
 
 #include "UserApp_avr.h"
 
-extern DATA_STRUCT DATA;
-
 #if defined(__AVR_ATmega324P__)
 	#define UART_PASS_BUFF_SIZE 5
 #else
-	#define UART_PASS_BUFF_SIZE 100
+	#define UART_PASS_BUFF_SIZE 20
 #endif
 
 

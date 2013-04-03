@@ -1,11 +1,8 @@
 
 #include "UserApp_avr.h"
 
-#if defined(__AVR_ATmega324P__)
-	static BowlerPacketMini Packet;
-#else
-	static BowlerPacket Packet;
-#endif
+static BowlerPacketMini Packet;
+
 void server(){
 	// Run the Bowler Stack Namespace iteration of all async packets
 	// Pass in  the function pointer to push the packets upstream
