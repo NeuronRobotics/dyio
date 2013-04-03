@@ -9,7 +9,7 @@
 #include "Bowler/Bowler.h"
 #include "Namespace/Namespace_bcs_io.h"
 
-const unsigned char ioNSName[] = "bcs.io.*;0.3;;";
+const char ioNSName[] = "bcs.io.*;0.3;;";
 
 
 static BowlerPacket packetTemp;

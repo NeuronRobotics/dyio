@@ -6,24 +6,8 @@
  */
 
 #include "UserApp.h"
-extern DATA_STRUCT * DATA __attribute__ ((section (".scs_global_var")));
-extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 static BowlerPacket packetTemp;
 BYTE isAscii(char * str);
-
-void LoadCorePacket(BowlerPacket * Packet){
-	//SetColor(0,1,0);
-	BYTE i;
-	Packet->use.head.ProtocolRevision=BOWLER_VERSION;
-	for (i=0;i<6;i++){
-		Packet->use.head.MAC.v[i]=0;
-	}
-	Packet->use.head.MessageID=1;
-	Packet->use.head.ResponseFlag=1;
-	Packet->use.head.Method=BOWLER_STATUS;
-	Packet->use.head.RPC=GetRPCValue("****");
-	Packet->use.head.DataLegnth=4;
-}
 
 void LoadDefaultValues(){
 	LoadCorePacket(& packetTemp);
@@ -31,8 +15,8 @@ void LoadDefaultValues(){
 	packetTemp.use.head.RPC=GetRPCValue("save");
 	SendPacketToCoProc(& packetTemp);
 	BYTE i;
-	for (i=0;i<NUM_PINS;i++){
-		DATA[i].PIN.ServoPos=packetTemp.use.data[i];
+	for (i=0;i<GetNumberOfIOChannels();i++){
+		getBcsIoDataTable()[i].PIN.currentConfiguration=packetTemp.use.data[i];
 	}
 }
 
@@ -116,9 +100,9 @@ void CheckRev(void){
 }
 
 BYTE SetCoProcMode(BYTE PIN,BYTE mode){
-	if(DATA[PIN].PIN.State == mode)
+	if(getBcsIoDataTable()[PIN].PIN.currentChannelMode == mode)
 		return TRUE;
-	DATA[PIN].PIN.State=mode;
+	getBcsIoDataTable()[PIN].PIN.currentChannelMode=mode;
 	LoadCorePacket(& packetTemp);
 	packetTemp.use.head.Method=BOWLER_POST;
 	packetTemp.use.head.RPC=GetRPCValue("schm");
@@ -127,6 +111,7 @@ BYTE SetCoProcMode(BYTE PIN,BYTE mode){
 	packetTemp.use.data[2]=(mode>0x80)?1:0;
 	packetTemp.use.head.DataLegnth=7;
 	SendPacketToCoProc(& packetTemp);
+	getBcsIoDataTable()[PIN].PIN.previousChannelMode=mode;
 	return FALSE;
 }
 
@@ -134,7 +119,7 @@ BYTE SetAllCoProcMode(BYTE * mode){
 	int i=0;
 	BOOL send = FALSE;
 	for(i=0;i<GetNumberOfIOChannels();i++){
-		if(DATA[i].PIN.State != mode[i]){
+		if(getBcsIoDataTable()[i].PIN.currentChannelMode != mode[i]){
 			 send=TRUE;
 		}
 	}
@@ -148,6 +133,9 @@ BYTE SetAllCoProcMode(BYTE * mode){
 			packetTemp.use.head.DataLegnth++;
 		}
 		SendPacketToCoProc(& packetTemp);
+		for(i=0;i<GetNumberOfIOChannels();i++){
+			getBcsIoDataTable()[i].PIN.previousChannelMode = mode[i];
+		}
 	}
 	return TRUE;
 }
@@ -365,7 +353,7 @@ void SyncModes(void){
 	BYTE i;
 	GetAllModes(& packetTemp);
 	for (i=0;i<24;i++){
-		DATA[i].PIN.State=packetTemp.use.data[i] & 0x7f;
+		getBcsIoDataTable()[i].PIN.currentChannelMode=packetTemp.use.data[i] & 0x7f;
 		setAsyncLocal(i,(packetTemp.use.data[i]>0x80)?TRUE:FALSE);
 	}
 }

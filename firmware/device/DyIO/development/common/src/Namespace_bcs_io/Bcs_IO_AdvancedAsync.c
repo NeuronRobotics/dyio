@@ -10,12 +10,9 @@
 #include "Namespace/AsyncManager.h"
 #include "Namespace/Namespace_bcs_io.h"
 
-//#define ASYN_RDY(i) ((pushAsyncReady(i)==TRUE)&&(IsAsync(i) == TRUE)&& (GetPIDGroup(i) == NOT_USED_IN_PID))
-
 #define ADCINIT 0xFFFF
 #define FASTIO
 
-void runAsyncIO();
 static BOOL isInit=FALSE;
 
 void initAdvancedAsync(){
@@ -97,7 +94,7 @@ void configAdvancedAsyncAutoSample(BYTE pin,float time){
 	getBcsIoDataTable()[pin].asyncData.type = AUTOSAMP;
 }
 
-void configAdvancedAsync(BowlerPacket * Packet){
+BOOL configAdvancedAsync(BowlerPacket * Packet){
 	INT32_UNION val;
 	INT32_UNION time;
 	BYTE pin = Packet->use.data[0];
@@ -133,6 +130,7 @@ void configAdvancedAsync(BowlerPacket * Packet){
 	}
 	setAsync(Packet->use.data[0],TRUE);
 	READY(Packet,45,0);
+	return TRUE;
 }
 
 
@@ -182,36 +180,27 @@ int GetDigitalValFromAsync(BYTE pin){
 	return 1;
 }
 
-int GetAnalogValFromAsync(BYTE pin){
-	initAdvancedAsync();
-	if(pin<8||pin>15){
-		println_E("###Invalid ADC pin! ");
-		p_sl_I(pin);
-		return 0;
-	}
-	if(GetChannelMode(pin)==IS_ANALOG_IN){
-		if(getBcsIoDataTable()[pin].asyncData.currentVal==ADCINIT)
-			SetValFromAsync( pin, GetADC(pin));
-		return getBcsIoDataTable()[pin].asyncData.currentVal;
-	}
-	println_I("Pin not in analog mode: ");
-	printMode(GetChannelMode(pin),INFO_PRINT);
-	return 0;
-}
+//int GetAnalogValFromAsync(BYTE pin){
+//	initAdvancedAsync();
+//	if(pin<8||pin>15){
+//		println_E("###Invalid ADC pin! ");
+//		p_sl_I(pin);
+//		return 0;
+//	}
+//	if(GetChannelMode(pin)==IS_ANALOG_IN){
+//		return getBcsIoDataTable()[pin].asyncData.currentVal;
+//	}
+//	println_I("Pin not in analog mode: ");
+//	//printMode(GetChannelMode(pin),INFO_PRINT);
+//	return 0;
+//}
 
 BOOL pushAsyncReady( BYTE pin){
 	initAdvancedAsync();
 	INT32 last;
 	INT32 aval;
 	INT32 db;
-	int i=pin;
-//	if(GetChannelMode(i)==IS_COUNTER_INPUT_INT || GetChannelMode(i)==IS_COUNTER_OUTPUT_INT){
-//		getBcsIoDataTable()[i].asyncData.currentVal = GetCounterByChannel(i);
-//	}
-//	if(GetChannelMode(i)==IS_ANALOG_IN){
-//		getBcsIoDataTable()[i].asyncData.currentVal = GetAnalogValFromAsync(i);
-//	}
-	getBcsIoDataTable()[i].asyncData.currentVal = getBcsIoDataTable()[i].PIN.currentValue;
+	//int i=pin;
 
 	if(RunEvery(&getBcsIoDataTable()[pin].asyncData.time) !=0){
 		//println_I("Time to do something");
@@ -260,7 +249,7 @@ BOOL pushAsyncReady( BYTE pin){
 			}
 			break;
 		default:
-			print_I("\nNo type defined!! chan: ");p_sl_I(pin);print_I(" mode: ");printMode(GetChannelMode(pin),INFO_PRINT);print_I(" type: ");printAsyncType(getBcsIoDataTable()[pin].asyncData.type);
+			//print_I("\nNo type defined!! chan: ");p_sl_I(pin);print_I(" mode: ");printMode(GetChannelMode(pin),INFO_PRINT);print_I(" type: ");printAsyncType(getBcsIoDataTable()[pin].asyncData.type);
 			startAdvancedAsyncDefault(pin);
 			break;
 		}

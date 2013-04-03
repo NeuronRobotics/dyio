@@ -1,5 +1,6 @@
 #include "DyIO/DyIO_def.h"
 #include "Namespace/Namespace_bcs_io.h"
+#include "Namespace/Namespace_bcs_io_setmode.h"
 
 #define NUM_PINS   			24
 

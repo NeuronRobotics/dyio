@@ -21,8 +21,8 @@ BYTE GetChannelMode(BYTE chan);
 /**
  * Sets the modes from an incoming packet
  */
-BOOL SetChannelMode(BowlerPacket * Packet);
-BOOL SetAllChannelMode(BowlerPacket * Packet);
+BOOL SetChannelModeFromPacket(BowlerPacket * Packet);
+BOOL SetAllChannelModeFromPacket(BowlerPacket * Packet);
 
 
 

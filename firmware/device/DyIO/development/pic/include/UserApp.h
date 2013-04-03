@@ -32,7 +32,6 @@
 #include "BowlerPush.h"
 #include "ADC.h"
 #include "EEPROMManager.h"
-#include "AsyncManager.h"
 #include "SPI.h"
 #include "AVRInterface.h"
 #include "FlashStorage.h"

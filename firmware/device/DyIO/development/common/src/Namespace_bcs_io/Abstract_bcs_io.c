@@ -86,7 +86,7 @@ BOOL GetAllChannelModeFromPacket(BowlerPacket * Packet){
 		Packet->use.data[i]=GetChannelMode(i);
 	}
 	Packet->use.head.DataLegnth=4+GetNumberOfIOChannels();
-	break;
+
 	return TRUE;
 }
 
@@ -126,8 +126,8 @@ BOOL SetChanelValueFromPacket(BowlerPacket * Packet){
 								(float)0);
 			READY(Packet,1,3);
 	}else{
-		UINT32 data = 0;
-		UINT32 time = 0;
+		INT32 data = 0;
+		INT32 time = 0;
 
 		if(isSingleByteMode(mode)){
 			data = Packet->use.data[1];
@@ -139,14 +139,14 @@ BOOL SetChanelValueFromPacket(BowlerPacket * Packet){
 		}else if(isTwoByteMode(mode)){
 			data=get16bit(Packet,1);
 			if (Packet->use.head.DataLegnth>(4+3)){
-				time=time = get32bit(Packet,3);
+				time= get32bit(Packet,3);
 			}else{
 				time=0;
 			}
 		}else{
 			data=get32bit(Packet,1);
 			if (Packet->use.head.DataLegnth>(4+5)){
-				time=time = get32bit(Packet,5);
+				time= get32bit(Packet,5);
 			}else{
 				time=0;
 			}
@@ -198,7 +198,7 @@ BOOL GetChanelValueFromPacket(BowlerPacket * Packet){
 			return FALSE;
 		}
 	}else{
-		UINT32 data;
+		INT32 data;
 		if(getChanelValueHWPtr!=NULL){
 			getChanelValueHWPtr(pin,
 								&numValues,
@@ -331,7 +331,7 @@ BOOL getFunctionList(BowlerPacket * Packet){
 void set8bit(BowlerPacket * Packet,BYTE val, BYTE offset){
 	Packet->use.data[0+offset]=val;
 }
-void set16bit(BowlerPacket * Packet,WORD val, BYTE offset){
+void set16bit(BowlerPacket * Packet,INT16 val, BYTE offset){
 	UINT16_UNION wval;
 	wval.Val=val;
 	Packet->use.data[0+offset]=wval.byte.SB;

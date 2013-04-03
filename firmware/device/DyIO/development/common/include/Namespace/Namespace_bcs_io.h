@@ -7,6 +7,8 @@
 
 #ifndef NAMESPACE_BCS_IO_H_
 #define NAMESPACE_BCS_IO_H_
+#include "Bowler/Bowler.h"
+#include "AsyncManager.h"
 
 /*
  * This is the case statements for using the DyIO channel modes in a switch statement
@@ -133,8 +135,8 @@ typedef union __attribute__((__packed__)) _FUNCTION_MAP
 	typedef struct __attribute__((__packed__)) _PIN_MAP
 	{
 		INT32 currentValue;
-		INT32 currentChannelMode;
-		BYTE  currentConfiguration;
+		INT32 currentConfiguration;
+		BYTE  currentChannelMode;
 		//Used to detect any hardware state change and synchronize
 		INT32 previousValue;
 		INT32 previousConfiguration;
@@ -151,10 +153,16 @@ typedef struct __attribute__((__packed__)) _DATA
 	AdvancedAsyncData asyncData;
 } DATA_STRUCT;
 
-void set8bit(BowlerPacket * Packet,BYTE val);
-void set16bit(BowlerPacket * Packet,WORD val);
-void set32bit(BowlerPacket * Packet,INT32 val);
+void set8bit(BowlerPacket * Packet,BYTE val, BYTE offset);
+void set16bit(BowlerPacket * Packet,INT16 val, BYTE offset);
+void set32bit(BowlerPacket * Packet,INT32 val, BYTE offset);
+INT32 get16bit(BowlerPacket * Packet, BYTE offset);
 INT32 get32bit(BowlerPacket * Packet, BYTE offset);
+
+/**
+ * Crawls the function map and returns true if a mode is availible
+ */
+BOOL pinHasFunction(BYTE pin, BYTE function);
 
 /**
  * This returns the number of IO channels availible
@@ -165,6 +173,11 @@ int GetNumberOfIOChannels();
  * Gets the channel mode
  */
 BYTE GetChannelMode(BYTE chan);
+
+/**
+ * Retrevie the pointer to the datatable
+ */
+DATA_STRUCT * getBcsIoDataTable();
 
 
 /**
@@ -224,6 +237,20 @@ BOOL GetAllChanelValueHW(INT32 * data);
  */
 
 BOOL ConfigureChannelHW(BYTE pin,BYTE numValues,INT32 * data);
+
+//Callbacks
+BOOL GetChannelModeFromPacket(BowlerPacket * Packet);
+BOOL GetAllChannelModeFromPacket(BowlerPacket * Packet);
+BOOL GetChanelValueFromPacket(BowlerPacket * Packet);
+BOOL GetAllChanelValueFromPacket(BowlerPacket * Packet);
+BOOL GetAsyncFromPacket(BowlerPacket * Packet);
+BOOL GetIOChannelCountFromPacket(BowlerPacket * Packet);
+BOOL getFunctionList(BowlerPacket * Packet);
+BOOL SetChanelValueFromPacket(BowlerPacket * Packet);
+BOOL SetAllChannelValueFromPacket(BowlerPacket * Packet);
+BOOL SetAsyncFromPacket(BowlerPacket * Packet);
+BOOL ConfigureChannelFromPacket(BowlerPacket * Packet);
+BOOL configAdvancedAsync(BowlerPacket * Packet);
 
 
 #endif /* NAMESPACE_BCS_IO_H_ */

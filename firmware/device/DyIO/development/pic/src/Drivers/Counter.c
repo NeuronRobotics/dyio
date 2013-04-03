@@ -30,7 +30,7 @@ void RunCounter(void){
 
 void InitCounterPins(void){
 	BYTE i;
-	for (i=0;i<NUM_PINS;i++){
+	for (i=0;i< GetNumberOfIOChannels();i++){
 		 ClearCounter(i);
 	}
 	for (i=0;i<NUM_COUNTER_GROUPS;i++){

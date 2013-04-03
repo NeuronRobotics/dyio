@@ -7,7 +7,7 @@
 #include "Bowler/Bowler.h"
 #include "Namespace/Namespace_bcs_io_setmode.h"
 
-const unsigned char setModeNSName[] = "bcs.io.setmode.*;0.3;;";
+const char setModeNSName[] = "bcs.io.setmode.*;0.3;;";
 
 
 

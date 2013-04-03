@@ -1,6 +1,7 @@
 
 #include "DyIO/Debug_DyIO.h"
 #include "Bowler/Bowler.h"
+#include "Namespace/Namespace_bcs_io.h"
 
 void printMode(BYTE mode, Print_Level l){
 	#if !defined(__AVR_ATmega324P__)

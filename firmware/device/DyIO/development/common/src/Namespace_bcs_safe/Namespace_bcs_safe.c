@@ -4,9 +4,12 @@
  * Created on: Mar 16, 2013
  * @author hephaestus
  */
-#include "Bowler/Bowler.h"
+#include "UserApp.h"
+int getHeartBeatTime();
+BOOL getHeartBeatLock();
+void setHeartBeatState( BOOL hb, int time);
 
-const unsigned char safeNSName[] = "bcs.safe.*;0.3;;";
+const char safeNSName[] = "bcs.safe.*;0.3;;";
 
 
 BOOL bcsSafeAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
@@ -16,7 +19,7 @@ BOOL bcsSafeAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)
 }
 
 BOOL bcsSafeProcessor_g(BowlerPacket * Packet){
-	BYTE temp0;
+	//BYTE temp0;
 	UINT16_UNION timeUnion;
 	switch (Packet->use.head.RPC){
 	case SAFE:
@@ -33,7 +36,7 @@ BOOL bcsSafeProcessor_g(BowlerPacket * Packet){
 	return TRUE;
 }
 BOOL bcsSafeProcessor_p(BowlerPacket * Packet){
-	BYTE temp0;
+	//BYTE temp0;
 	UINT16_UNION timeUnion;
 	BYTE zone =5;
 	switch (Packet->use.head.RPC){

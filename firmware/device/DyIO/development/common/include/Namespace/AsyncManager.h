@@ -7,7 +7,15 @@
 
 #ifndef ASYNCMANAGER_H_
 #define ASYNCMANAGER_H_
+
+//#define ASYN_RDY(i) ((pushAsyncReady(i)==TRUE)&&(IsAsync(i) == TRUE)&& (GetPIDGroup(i) == NOT_USED_IN_PID))
+
 #define ASYN_RDY(i) ((pushAsyncReady(i)==TRUE)&&(IsAsync(i) == TRUE))
+
+BOOL IsAsync(BYTE channel);
+
+void populateGACV(BowlerPacket * Packet);
+void initAdvancedAsync();
 
 void ProcessAsyncData(BowlerPacket * Packet);
 int GetAnalogValFromAsync(BYTE pin);
@@ -51,6 +59,5 @@ typedef struct _AdvancedAsyncData{
 BOOL pushAsyncReady( BYTE pin);
 void startAdvancedAsyncDefault(BYTE pin);
 void setAsyncLocal(BYTE channel,BOOL async);
-void configAdvancedAsync(BowlerPacket * Packet);
 
 #endif /* ASYNCMANAGER_H_ */

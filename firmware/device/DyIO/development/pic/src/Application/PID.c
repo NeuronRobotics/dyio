@@ -236,7 +236,7 @@ void setOutputMine(int group, float v){
 	Print_Level l = getPrintLevel();
 	setPrintLevelNoPrint();
 	int val = (int)(v);
-	BYTE center = DATA[dyPid[group].outputChannel].PIN.ServoPos;
+	BYTE center = DATA[dyPid[group].outputChannel].PIN.currentConfiguration;
 
 	if(dyPid[group].outputMode == IS_SERVO){
 		val += center;

@@ -68,7 +68,7 @@ BOOL ConfigChannel(BowlerPacket * Packet);
 void ClearPinState(BYTE pin);
 void InitPins(void);
 void InitPinFunction(void);
-void getFunctionList(BowlerPacket * Packet);
+
 BOOL pinHasFunction(BYTE pin, BYTE function);
 void runDyIOMain(void);
 

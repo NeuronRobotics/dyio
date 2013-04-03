@@ -20,6 +20,6 @@ void ConfigPPMFromArray(BYTE * data);
 
 void GetPPMDataToPacket(BowlerPacket * Packet);
 void ConfigPPM(BowlerPacket * Packet);
-void GetPPMDataToArray(BYTE * data);
+int GetPPMDataToArray(BYTE * data);
 
 #endif /* PPMREADER_H_ */

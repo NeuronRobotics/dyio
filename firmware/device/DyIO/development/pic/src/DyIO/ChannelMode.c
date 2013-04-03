@@ -15,7 +15,7 @@ BOOL brownOutDetect = TRUE;
 void InitPinStates(void){
 	SyncModes();
 	int i;
-	for (i=0;i<NUM_PINS;i++){
+	for (i=0;i<GetNumberOfIOChannels();i++){
 		setMode(i,GetChannelMode(i));
 		GetChannelValueCoProc(i);
 	}
@@ -52,7 +52,7 @@ BOOL setMode(BYTE pin,BYTE mode){
 	case IS_SPI_MOSI:
 	case IS_SPI_MISO:
 	case IS_SPI_SCK:
-		if(getBcsIoDataTable()[pin].FUNCTION.HAS_SPI != FALSE){
+		if( pinHasFunction(pin, mode) != FALSE){
 			print_I("|Mode is now SPI");
 			InitSPI();
 			break;
@@ -63,7 +63,7 @@ BOOL setMode(BYTE pin,BYTE mode){
 	case IS_COUNTER_INPUT_INT:
 	case IS_COUNTER_INPUT_DIR:
 	case IS_COUNTER_INPUT_HOME:
-		if(getBcsIoDataTable()[pin].FUNCTION.HAS_COUNTER_INPUT != FALSE){
+		if(pinHasFunction(pin, mode) != FALSE){
 			print_I("|Mode is now Counter Input");
 			StartCounterInput(pin);
 			break;
@@ -75,7 +75,7 @@ BOOL setMode(BYTE pin,BYTE mode){
 	case IS_COUNTER_OUTPUT_INT:
 	case IS_COUNTER_OUTPUT_DIR:
 	case IS_COUNTER_OUTPUT_HOME:
-		if(getBcsIoDataTable()[pin].FUNCTION.HAS_COUNTER_OUTPUT != FALSE){
+		if(pinHasFunction(pin, mode) != FALSE){
 			print_I("|Mode is now Counter Output");
 			StartCounterOutput(pin);
 			break;
@@ -89,9 +89,7 @@ BOOL setMode(BYTE pin,BYTE mode){
 		startPPM(pin);
 		break;
 	}
-	getBcsIoDataTable()[pin].PIN.State=mode;
-	//println_I("Valid Mode, setting...");
-	//println_I("Sending Mode Set To Co Proc");
+
 
 	//ASYNC managed in EEPROM on co proc
 	SetCoProcMode(pin,mode);

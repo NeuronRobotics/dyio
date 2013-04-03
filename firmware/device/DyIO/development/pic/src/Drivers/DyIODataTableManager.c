@@ -13,6 +13,10 @@ void InitializeDyIODataTableManager(){
 }
 
 void SyncDataTable(){
+	// TODO, fill in
+}
+
+void SetNewConfigurationDataTable(BYTE pin, INT32 value){
 
 }
 

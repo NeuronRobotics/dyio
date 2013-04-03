@@ -177,11 +177,15 @@ void ConfigPPM(BowlerPacket * Packet){
 	READY(Packet,66,0);
 }
 
-void GetPPMDataToArray(BYTE * data){
+int GetPPMDataToArray(BYTE * data){
 	int i;
 	for(i=0;i<NUM_PPM_CHAN;i++){
 		data[i]=ppmData[i];
 	}
+	for(i=0;i<NUM_PPM_CHAN;i++){
+		data[i+NUM_PPM_CHAN]=ppmLink[i];
+	}
+	return NUM_PPM_CHAN+NUM_PPM_CHAN;
 }
 
 

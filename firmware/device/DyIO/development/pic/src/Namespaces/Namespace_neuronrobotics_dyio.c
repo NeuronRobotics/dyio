@@ -36,13 +36,23 @@ BOOL getHeartBeatLock(){
 
 
 BOOL neuronRoboticsDyIOAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
+
+	buttonCheck(7);
+
+	int i;
+	for(i=0;i<GetNumberOfIOChannels();i++){
+		if(GetChannelMode(i)==IS_COUNTER_INPUT_INT || GetChannelMode(i)==IS_COUNTER_OUTPUT_INT){
+			getBcsIoDataTable()[i].asyncData.currentVal = GetCounterByChannel(i);
+		}
+		if(GetChannelMode(i)==IS_ANALOG_IN){
+			getBcsIoDataTable()[i].asyncData.currentVal = GetAnalogValFromAsync(i);
+		}
+	}
 	if (RunEvery(&ppm)>0)
 		RunPPMCheck();
-	//BYTE i;
-	buttonCheck(7);
+
 	PushCoProcAsync();
-	//SetGreen(FLAG_BUSY);
-	//RTS_HO_IO=FLAG_BUSY;
+
 	if ((RunEvery(&syncVolt)>0)){
 		UpdateAVRLED();
 	}
@@ -61,6 +71,9 @@ BOOL neuronRoboticsDyIOAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPack
 	}else{
 		unlockServos();
 	}
+
+	SyncDataTable();
+
 	SetColor((isLocked() )?1:0,(isActive() && !isLocked())?1:0,1);
 
     return FALSE;
@@ -78,9 +91,9 @@ BOOL neuronRoboticsDyIOProcessor_g(BowlerPacket * Packet){
 		case _REV:
 			SendPacketToCoProc(Packet);
 
-			if(Packet->use.head.RPC == _ERR){
-				break;
-			}
+//			if(Packet->use.head.RPC == _ERR){
+//				break;
+//			}
 			Packet->use.head.DataLegnth=4+3;
 			if((Packet->use.data[0]==MAJOR_REV) && (Packet->use.data[1]==MINOR_REV) && (Packet->use.data[2]==FIRMWARE_VERSION) ){
 				SetColor(0,0,1);

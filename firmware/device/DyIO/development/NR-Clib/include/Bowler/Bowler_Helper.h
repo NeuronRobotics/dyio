@@ -34,6 +34,7 @@ unsigned long GetRPCValue(char * data);
 
 unsigned char CheckAddress(BYTE * one,BYTE * two);
 
+void LoadCorePacket(BowlerPacket * Packet);
 
 void SetCRC(BowlerPacket * Packet);
 unsigned char CheckCRC(BowlerPacket * Packet);

@@ -57,7 +57,7 @@ void ProcessAsyncData(BowlerPacket * Packet){
 		}
 	}else if (Packet->use.head.RPC==DASN){
 		int i;
-		for(i=0;i<NUM_PINS;i++){
+		for(i=0;i<GetNumberOfIOChannels();i++){
 			BYTE mode = GetChannelMode(i);
 			if((mode == IS_DI) || (mode == IS_COUNTER_INPUT_HOME)|| (mode == IS_COUNTER_OUTPUT_HOME)|| (mode == IS_SERVO)){
 				SetValFromAsync(i,Packet->use.data[i]);//asyncData[i].currentVal=Packet->use.data[i];

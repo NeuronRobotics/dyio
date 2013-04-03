@@ -31,7 +31,7 @@ void LoadPIDvals(AbsPID * pid, DYIO_PID * dy){
 	BYTE i = pid->channel;
 	if(pidEEPRomVal[i].outputChannel==pidEEPRomVal[i].inputChannel)
 		return;
-	if(pidEEPRomVal[i].outputChannel>=NUM_PINS ||pidEEPRomVal[i].inputChannel>=NUM_PINS )
+	if(pidEEPRomVal[i].outputChannel>=GetNumberOfIOChannels() ||pidEEPRomVal[i].inputChannel>=GetNumberOfIOChannels() )
 		return;
 	if(pidEEPRomVal[i].outputMode==pidEEPRomVal[i].inputMode)
 		return;

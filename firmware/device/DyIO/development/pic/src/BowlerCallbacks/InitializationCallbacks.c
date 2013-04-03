@@ -7,7 +7,7 @@
 
 #include "UserApp.h"
 
-BYTE InputState[NUM_PINS];
+//BYTE InputState[NUM_PINS];
 
 BYTE SaveTheState=0;
 

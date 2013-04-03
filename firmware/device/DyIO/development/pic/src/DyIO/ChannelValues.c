@@ -46,8 +46,9 @@ BOOL SetChanelValueHW(BYTE pin,BYTE numValues,INT32 * data, float ms){
 		if(isSingleByteMode(mode)){
 			INT32 time = (INT32)ms;
 			//mask the time into the data byte
-			//getBcsIoDataTable()[pin].PIN.currentValue = (time<<16)|(data[0]&0x000000ff);
+			getBcsIoDataTable()[pin].PIN.currentValue = (time<<16)|(data[0]&0x000000ff);
 		}
+		return TRUE;
 	}
 
 
@@ -61,9 +62,38 @@ BOOL SetChanelValueHW(BYTE pin,BYTE numValues,INT32 * data, float ms){
 BOOL GetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data){
 	BYTE mode = GetChannelMode(pin);
 	if(isStremChannelMode(mode)){
-
+		BYTE * bData = (BYTE *)data;
+		switch(mode){
+		case IS_SPI_MOSI:
+		case IS_SPI_MISO:
+		case IS_SPI_SCK:
+			SendPacketToSPIFromArray(numValues[0],bData);
+			return TRUE;
+		case IS_UART_TX:
+		case IS_UART_RX:
+			 numValues[0] = GetSerialRxData( bData);
+			return TRUE;
+		case IS_PPM_IN:
+			numValues[0] = GetPPMDataToArray(bData);
+			return TRUE;
+		}
 	}else{
-
+		numValues[0]=1;
+		switch(mode){
+		case IS_COUNTER_INPUT_INT:
+		case IS_COUNTER_INPUT_DIR:
+			data[0] = GetCounterByChannel(pin);
+			return TRUE;
+		case IS_COUNTER_OUTPUT_INT:
+		case IS_COUNTER_OUTPUT_DIR:
+			data[0] = GetCounterOutput(pin);
+			return TRUE;
+		}
+		if(isSingleByteMode(mode)){
+			//mask the time into the data byte
+			 data[0] = getBcsIoDataTable()[pin].asyncData.currentVal & 0x000000ff;
+		}
+		return TRUE;
 	}
 }
 /**
@@ -74,7 +104,12 @@ BOOL GetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data){
  *
  */
 BOOL SetAllChanelValueHW(INT32 * data, float ms){
-
+	int i;
+	for(i=0;i<GetNumberOfIOChannels();i++){
+		if(!isStremChannelMode(GetChannelMode(i)))
+			SetChanelValueHW(i,1,& data[i], ms);
+	}
+	return TRUE;
 }
 
 /**
@@ -83,7 +118,13 @@ BOOL SetAllChanelValueHW(INT32 * data, float ms){
  * Data is stored into numValues and data
  */
 BOOL GetAllChanelValueHW(INT32 * data){
-
+	int i;
+	BYTE numValues;
+	for(i=0;i<GetNumberOfIOChannels();i++){
+		if(!isStremChannelMode(GetChannelMode(i)))
+			GetChanelValueHW(i,&numValues,& data[i]);
+	}
+	return TRUE;
 }
 
 /**
@@ -94,7 +135,9 @@ BOOL GetAllChanelValueHW(INT32 * data){
  */
 
 BOOL ConfigureChannelHW(BYTE pin,BYTE numValues,INT32 * data){
-
+	if(!isStremChannelMode(GetChannelMode(pin)))
+		SetNewConfigurationDataTable( pin, data[0]);
+	return TRUE;
 }
 
 BOOL SetChanVal(BYTE pin,INT32 bval, float time){
@@ -116,47 +159,47 @@ BOOL SetChanVal(BYTE pin,INT32 bval, float time){
 	return TRUE;
 }
 
-BOOL GetChannelValue(BowlerPacket * Packet){
-	BOOL ret=FALSE;
-	BYTE pin = Packet->use.data[0];
-	BYTE mode = GetChannelMode(pin);
-	switch(mode){
-		case IS_SPI_MOSI:
-		case IS_SPI_MISO:
-		case IS_SPI_SCK:
-		//case IS_SPI_SS:
-			println_I("SPI ");
-			printMode(mode,INFO_PRINT);
-			SendPacketToSPI(Packet);
-			Packet->use.head.Method=BOWLER_POST;
-			return TRUE;
-		case IS_COUNTER_INPUT_INT:
-		case IS_COUNTER_INPUT_DIR:
-		case IS_COUNTER_INPUT_HOME:
-			println_I("Counter input ");
-			printMode(mode,INFO_PRINT);
-			set32bit(Packet,GetCounterByChannel(pin));
-			Packet->use.head.DataLegnth=9;
-			Packet->use.head.Method=BOWLER_POST;
-			return TRUE;
-		case IS_COUNTER_OUTPUT_INT:
-		case IS_COUNTER_OUTPUT_DIR:
-		case IS_COUNTER_OUTPUT_HOME:
-			println_I("Counter output ");
-			printMode(mode,INFO_PRINT);
-			set32bit(Packet,GetCounterOutput(pin));
-			Packet->use.head.DataLegnth=9;
-			Packet->use.head.Method=BOWLER_POST;
-			return TRUE;
-		case IS_PPM_IN:
-			GetPPMDataToPacket(Packet);
-			return TRUE;
-		default:
-			println_I("Get Mode not managed by PIC, sending to co-proc ");printMode(mode,INFO_PRINT);
-			SendPacketToCoProc(Packet);
-			return TRUE;
-		}
-}
+//BOOL GetChannelValue(BowlerPacket * Packet){
+//	BOOL ret=FALSE;
+//	BYTE pin = Packet->use.data[0];
+//	BYTE mode = GetChannelMode(pin);
+//	switch(mode){
+//		case IS_SPI_MOSI:
+//		case IS_SPI_MISO:
+//		case IS_SPI_SCK:
+//		//case IS_SPI_SS:
+//			println_I("SPI ");
+//			printMode(mode,INFO_PRINT);
+//			SendPacketToSPI(Packet);
+//			Packet->use.head.Method=BOWLER_POST;
+//			return TRUE;
+//		case IS_COUNTER_INPUT_INT:
+//		case IS_COUNTER_INPUT_DIR:
+//		case IS_COUNTER_INPUT_HOME:
+//			println_I("Counter input ");
+//			printMode(mode,INFO_PRINT);
+//			set32bit(Packet,GetCounterByChannel(pin));
+//			Packet->use.head.DataLegnth=9;
+//			Packet->use.head.Method=BOWLER_POST;
+//			return TRUE;
+//		case IS_COUNTER_OUTPUT_INT:
+//		case IS_COUNTER_OUTPUT_DIR:
+//		case IS_COUNTER_OUTPUT_HOME:
+//			println_I("Counter output ");
+//			printMode(mode,INFO_PRINT);
+//			set32bit(Packet,GetCounterOutput(pin));
+//			Packet->use.head.DataLegnth=9;
+//			Packet->use.head.Method=BOWLER_POST;
+//			return TRUE;
+//		case IS_PPM_IN:
+//			GetPPMDataToPacket(Packet);
+//			return TRUE;
+//		default:
+//			println_I("Get Mode not managed by PIC, sending to co-proc ");printMode(mode,INFO_PRINT);
+//			SendPacketToCoProc(Packet);
+//			return TRUE;
+//		}
+//}
 
 //BOOL SetAllChannelValue(BowlerPacket * Packet){
 //	//println_I("Setting all channel values");
