@@ -2,7 +2,7 @@
 REVISION=$(MAJOR_VER).$(MINOR_VER).$(FIRMWARE_VER)
 PUB=java -jar FirmwarePublish/Publish.jar -revision=$(REVISION)
 
-all: main coproc pub
+all: pub
 	echo DyIO Firmware built OK!
 upload:svnupdate update all commit
 	if (test -d ../NR-Clib/);then cd ../NR-Clib/;make commit;	fi
@@ -29,11 +29,11 @@ svnupdate:
 commit:
 	svn commit -m="Building the DyIO"
 	cd ../NRSDK/fw; svn commit -m="Building the DyIO"
-main:
+main:coproc
 	make -C pic all	
 coproc:
 	make -C avr all
-pub:
+pub:main
 	rm -rf FirmwarePublish/Release/*.xml; 
 	rm -rf FirmwarePublish/Release/legacy/*.xml
 	rm -rf FirmwarePublish/Dev/*.xml;

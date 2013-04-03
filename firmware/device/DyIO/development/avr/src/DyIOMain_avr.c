@@ -21,20 +21,20 @@ void runDyIOMain(void){
 	//int i;
 
 	float now;
-	float start;
+	//float start;
 	while (1){
-		start =  getMs();
+		//start =  getMs();
 		UserRun();
-		float one =  getMs();
+		//float one =  getMs();
 		if(FlagAsync == FLAG_OK ){
 			if(checkDigital())
 				server();
 		}else{
 			//println_I("Skipping D async");
 		}
-		float two =  getMs();
+		//float two =  getMs();
 		server();
-		float three =  getMs();
+		//float three =  getMs();
 		if(FlagAsync == FLAG_OK ){
 			if (RunEvery(&asyncSched)>0){
 				if(checkAnalog())
@@ -55,7 +55,7 @@ void runDyIOMain(void){
 		}else{
 			//println_I("Skipping A async");
 		}
-		float four =  getMs();
+		//float four =  getMs();
 		server();
 //		float five =  getMs();
 //		println_I("TOTAL ");p_fl_I(start-five);

@@ -18,9 +18,10 @@ void populateGACV(BowlerPacket * Packet);
 void initAdvancedAsync();
 
 void ProcessAsyncData(BowlerPacket * Packet);
-int GetAnalogValFromAsync(BYTE pin);
+//int GetAnalogValFromAsync(BYTE pin);
 void SetValFromAsync(int pin, int value);
-int GetDigitalValFromAsync(BYTE pin);
+int GetValFromAsync(int pin);
+//int  GetDigitalValFromAsync(BYTE pin);
 void RunAsync(void);
 void StopAsync(void);
 void StartAsync(void);

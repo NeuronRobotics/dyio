@@ -30,15 +30,19 @@
 					<fileInfo id="0.702444624.1653347302" name="UARTPassThrough.c" rcbsApplicability="disable" resourcePath="avr/src/Driver/UARTPassThrough.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1952241767" name="PWM.c" rcbsApplicability="disable" resourcePath="avr/src/Driver/PWM.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1986292667" name="DCMotorDriver.c" rcbsApplicability="disable" resourcePath="avr/src/Driver/DCMotorDriver.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.442300139" name="DyIOMain.c" rcbsApplicability="disable" resourcePath="avr/src/DyIOMain.c" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.536667842" name="Main.c" rcbsApplicability="disable" resourcePath="avr/src/Main_avr.c" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.442300139" name="DyIOMain.c" rcbsApplicability="disable" resourcePath="avr/src/DyIOMain_avr.c" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.984088215" name="DyIOMain.c" rcbsApplicability="disable" resourcePath="avr/src/DyIOMain.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.755521243" name="InitilizationCallbacks.c" rcbsApplicability="disable" resourcePath="avr/src/BowlerCallbacks/InitilizationCallbacks.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1110590307" name="Push.c" rcbsApplicability="disable" resourcePath="avr/src/BowlerCallbacks/Push.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.545564663" name="PacketEventCallbacks.c" rcbsApplicability="disable" resourcePath="avr/src/BowlerCallbacks/PacketEventCallbacks.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.567594353" name="CoOpCallbacks.c" rcbsApplicability="disable" resourcePath="avr/src/BowlerCallbacks/CoOpCallbacks.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.536667842" name="Main.c" rcbsApplicability="disable" resourcePath="avr/src/Main.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.1467074842" name="ChannelValues.c" rcbsApplicability="disable" resourcePath="avr/src/DyIO/ChannelValues.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.611643409" name="ChannelMode.c" rcbsApplicability="disable" resourcePath="avr/src/DyIO/ChannelMode.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.837731795" name="ChannelConfig.c" rcbsApplicability="disable" resourcePath="avr/src/DyIO/ChannelConfig.c" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.162845643" name="Main.c" rcbsApplicability="disable" resourcePath="avr/src/Main.c" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.837731795" name="ChannelConfig.c" rcbsApplicability="disable" resourcePath="avr/src/DyIO/ChannelConfig_avr.c" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.1467074842" name="ChannelValues.c" rcbsApplicability="disable" resourcePath="avr/src/DyIO/ChannelValues_avr.c" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.611643409" name="ChannelMode.c" rcbsApplicability="disable" resourcePath="avr/src/DyIO/ChannelMode_avr.c" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.1197407577" name="ChannelMode.c" rcbsApplicability="disable" resourcePath="avr/src/DyIO/ChannelMode.c" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.1904389352" name="ChannelConfig.c" rcbsApplicability="disable" resourcePath="avr/src/DyIO/ChannelConfig.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.824828397" name="Pin_State.c" rcbsApplicability="disable" resourcePath="avr/src/DyIO/Pin_State.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1244972545" name="PinFunctions.c" rcbsApplicability="disable" resourcePath="common/src/dyio/PinFunctions.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1156447476" name="Debug_DyIO.c" rcbsApplicability="disable" resourcePath="common/src/main/Debug_DyIO.c" toolsToInvoke=""/>

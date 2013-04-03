@@ -54,7 +54,7 @@ void initPIDChans(BYTE group){
 	SyncModes();
 
 	if(dyPid[group].inputMode== IS_ANALOG_IN){
-		pidGroups[group].SetPoint=GetAnalogValFromAsync(dyPid[group].inputChannel);
+		pidGroups[group].SetPoint=GetValFromAsync(dyPid[group].inputChannel);
 	}else{
 		pidGroups[group].SetPoint=0;
 	}
@@ -198,7 +198,7 @@ int resetPositionMine(int group, int current){
 	if(dyPid[group].inputMode == IS_COUNTER_INPUT_INT){
 		SetCounterInput(dyPid[group].inputChannel,current);
 	}else if(dyPid[group].inputMode == IS_ANALOG_IN){
-		current=GetAnalogValFromAsync(dyPid[group].inputChannel);
+		current=GetValFromAsync(dyPid[group].inputChannel);
 	}else if(dyPid[group].inputMode == IS_DI){
 		current=GetDigitalValFromAsync(dyPid[group].inputChannel);
 	}
@@ -219,7 +219,7 @@ float getPositionMine(int group){
 		pos=GetCounterByChannel( dyPid[group].inputChannel );
 		break;
 	case IS_ANALOG_IN:
-		pos=GetAnalogValFromAsync(dyPid[group].inputChannel);
+		pos=GetValFromAsync(dyPid[group].inputChannel);
 		break;
 	case IS_DI:
 		pos = GetDigitalValFromAsync(dyPid[group].inputChannel);

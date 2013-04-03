@@ -44,9 +44,6 @@ BOOL neuronRoboticsDyIOAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPack
 		if(GetChannelMode(i)==IS_COUNTER_INPUT_INT || GetChannelMode(i)==IS_COUNTER_OUTPUT_INT){
 			getBcsIoDataTable()[i].asyncData.currentVal = GetCounterByChannel(i);
 		}
-		if(GetChannelMode(i)==IS_ANALOG_IN){
-			getBcsIoDataTable()[i].asyncData.currentVal = GetAnalogValFromAsync(i);
-		}
 	}
 	if (RunEvery(&ppm)>0)
 		RunPPMCheck();

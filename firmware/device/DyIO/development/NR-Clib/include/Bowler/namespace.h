@@ -9,7 +9,7 @@
 #define NAMESPACE_H_
 #include <stdio.h>
 
-//#define USE_LINKED_LIST_NAMESPACE
+#define USE_LINKED_LIST_NAMESPACE
 
 typedef BOOL packetEventCallback(BowlerPacket *);
 typedef BOOL asyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *));

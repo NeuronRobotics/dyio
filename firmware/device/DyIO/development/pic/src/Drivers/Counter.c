@@ -120,7 +120,7 @@ BOOL StartCounterInput(BYTE chan){
 		SetCoProcMode(pinmap[group].INT,IS_COUNTER_INPUT_INT);
 	if(GetChannelMode(pinmap[group].HOME)!=IS_COUNTER_INPUT_HOME)
 		SetCoProcMode(pinmap[group].HOME ,IS_COUNTER_INPUT_HOME);
-	initCounterAsync(group, count);
+	//initCounterAsync(group, count);
 	switch (group){
 	case 0:
 		CHAN0P0_tris=INPUT;

@@ -6,7 +6,6 @@
  */
 #include "UserApp.h"
 
-extern DATA_STRUCT DATA;
 
 void InitPins(void){
 	InitPinFunction();
