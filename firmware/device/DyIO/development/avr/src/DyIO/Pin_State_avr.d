@@ -24,7 +24,8 @@ src/DyIO/Pin_State_avr.o: src/DyIO/Pin_State_avr.c include/UserApp_avr.h \
  include/DyIOApp/Servo.h include/DyIOApp/AVR_IO.h include/DyIOApp/ADC.h \
  include/DyIOApp/PWM.h include/DyIOApp/EEPROM.h \
  include/DyIOApp/UARTPassThrough.h include/DyIOApp/DCMotorDriver.h \
- include/DyIOApp/Push.h include/DyIOApp/SPISlave.h
+ include/DyIOApp/Push.h include/DyIOApp/SPISlave.h \
+ ../common/include/Namespace/AsyncManager.h
 
 include/UserApp_avr.h:
 
@@ -99,3 +100,5 @@ include/DyIOApp/DCMotorDriver.h:
 include/DyIOApp/Push.h:
 
 include/DyIOApp/SPISlave.h:
+
+../common/include/Namespace/AsyncManager.h:

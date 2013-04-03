@@ -179,6 +179,7 @@ BYTE GetChannelMode(BYTE chan);
  */
 DATA_STRUCT * getBcsIoDataTable();
 
+NAMESPACE_LIST * get_bcsIoNamespace();
 
 /**
  * Initialize Bcs.IO namespace

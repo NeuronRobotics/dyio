@@ -45,6 +45,8 @@ void initPinState(BYTE i);
 void initBluetooth();
 
 BOOL avrAsyncCallbackPtr(BowlerPacket *Packet);
+void SetNewConfigurationDataTable(BYTE pin, INT32 value);
+NAMESPACE_LIST * get_internalNamespace();
 
 
 

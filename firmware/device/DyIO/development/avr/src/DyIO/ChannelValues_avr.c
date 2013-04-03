@@ -18,7 +18,7 @@
 BOOL SetChanelValueHW(BYTE pin,BYTE numValues,INT32 * data, float ms){
 	BYTE mode = GetChannelMode(pin);
 	if(isStremChannelMode(mode)){
-		BYTE * bData = (BYTE *)data;
+		//BYTE * bData = (BYTE *)data;
 		switch(mode){
 //		case IS_SPI_MOSI:
 //		case IS_SPI_MISO:
@@ -50,7 +50,7 @@ BOOL SetChanelValueHW(BYTE pin,BYTE numValues,INT32 * data, float ms){
 		return TRUE;
 	}
 
-
+	return TRUE;
 }
 
 /**
@@ -61,7 +61,7 @@ BOOL SetChanelValueHW(BYTE pin,BYTE numValues,INT32 * data, float ms){
 BOOL GetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data){
 	BYTE mode = GetChannelMode(pin);
 	if(isStremChannelMode(mode)){
-		BYTE * bData = (BYTE *)data;
+		//BYTE * bData = (BYTE *)data;
 		switch(mode){
 //		case IS_SPI_MOSI:
 //		case IS_SPI_MISO:
@@ -94,6 +94,7 @@ BOOL GetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data){
 		}
 		return TRUE;
 	}
+	return TRUE;
 }
 /**
  * Set Channel Values
@@ -160,7 +161,7 @@ BOOL GetChannelValue(BowlerPacket * Packet){
 	BOOL ret=FALSE;
 	BYTE pin = Packet->use.data[0];
 	BYTE mode = GetChannelMode(pin);
-	int i;
+	//int i;
 	UINT16 val=GetChanVal(pin);
 	if(IsAsync(pin)){
 		AsynAck();

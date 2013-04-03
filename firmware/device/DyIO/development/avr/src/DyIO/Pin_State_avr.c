@@ -5,7 +5,7 @@
  *      Author: hephaestus
  */
 #include "UserApp_avr.h"
-
+#include "Namespace/AsyncManager.h"
 
 void InitPins(void){
 	InitPinFunction();

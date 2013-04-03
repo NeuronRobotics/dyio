@@ -9,7 +9,7 @@
 void server(){
 	// Run the Bowler Stack Namespace iteration of all async packets
 	// Pass in  the function pointer to push the packets upstream
-	RunNamespaceAsync(&Packet,&avrAsyncCallbackPtr);
+	RunNamespaceAsync((BowlerPacket *)&Packet,&avrAsyncCallbackPtr);
 	Bowler_Server((BowlerPacket *) &Packet,TRUE);
 }
 

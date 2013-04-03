@@ -17,6 +17,7 @@
  */
 
 #include "UserApp_avr.h"
+
 const char startmessage[] = "###Starting AVR In Debug Mode\n";
 void UserInit(void){
 
@@ -44,9 +45,9 @@ void UserInit(void){
 //	setMethodCallback(BOWLER_CRIT,UserCriticalRPCs);
 
 	InitPins();
-	addNamespaceToList(get_bcsIoNamespace());
-	addNamespaceToList(get_bcsIoSetmodeNamespace());
-	addNamespaceToList(get_internalNamespace());
+	addNamespaceToList((NAMESPACE_LIST *)get_bcsIoNamespace());
+	addNamespaceToList((NAMESPACE_LIST *)get_bcsIoSetmodeNamespace());
+	addNamespaceToList((NAMESPACE_LIST *)get_internalNamespace());
 
 	//SetPinTris(0,OUTPUT);
 	//SetDIO(0,OFF);

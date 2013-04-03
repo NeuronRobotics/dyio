@@ -6,12 +6,12 @@
  */
 #include "UserApp_avr.h"
 
-const unsigned char internalNSName[] = "neuronrobotics.internal*;0.3;;";
+const char internalNSName[] = "neuronrobotics.internal*;0.3;;";
 
 RunEveryData pid={0,30};
 RunEveryData vel={0,100};
 
-BOOL bcsPidDypidAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
+BOOL bcsPidDypidAsyncEventCallback(BowlerPacket* Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
 	checkDigital();
 	checkAnalog();
 
@@ -58,7 +58,6 @@ NAMESPACE_LIST * get_internalNamespace(){
                 //POST
                 //Add the RPC structs to the namespace
                 addRpcToNamespace(&internalNamespace,& bcsPidDypid_dpid_g);
-                int i;
 
                 namespcaedAdded =TRUE;
 	}

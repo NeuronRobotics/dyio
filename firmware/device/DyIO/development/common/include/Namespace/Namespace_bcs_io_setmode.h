@@ -18,6 +18,8 @@
 
 void InitilizeBcsIoSetmode(BOOL (*setChanelModeHWPtrLocal)(BYTE,BYTE));
 
+NAMESPACE_LIST * get_bcsIoSetmodeNamespace();
+
 /*
  * Set Channel Mode
  * Sets the given channel to the given mode

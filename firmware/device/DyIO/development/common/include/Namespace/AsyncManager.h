@@ -60,5 +60,6 @@ typedef struct _AdvancedAsyncData{
 BOOL pushAsyncReady( BYTE pin);
 void startAdvancedAsyncDefault(BYTE pin);
 void setAsyncLocal(BYTE channel,BOOL async);
+void configAdvancedAsyncNotEqual(BYTE pin,float time);
 
 #endif /* ASYNCMANAGER_H_ */

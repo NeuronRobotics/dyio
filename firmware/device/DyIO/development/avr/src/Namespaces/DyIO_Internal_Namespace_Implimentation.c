@@ -112,14 +112,14 @@ BYTE UserGetRPCs(BowlerPacket *Packet){
 }
 BYTE UserPostRPCs(BowlerPacket *Packet){
 	zone = 5;
-	UINT16_UNION v;
+//	UINT16_UNION v;
 	UINT16 start;
 	UINT16  end;
 	UINT16 i;
 	switch (Packet->use.head.RPC){
 	case _PWR:
-		v.byte.SB = Packet->use.data[2];
-		v.byte.LB = Packet->use.data[3];
+//		v.byte.SB = Packet->use.data[2];
+//		v.byte.LB = Packet->use.data[3];
 		SetPowerState0(Packet->use.data[2],Packet->use.data[0]);
 		SetPowerState1(Packet->use.data[3],Packet->use.data[1]);
 		//Packet->use.head.MessageID=44;
@@ -176,7 +176,7 @@ BYTE UserPostRPCs(BowlerPacket *Packet){
 }
 BYTE UserCriticalRPCs(BowlerPacket *Packet){
 	zone = 6;
-	BYTE pin,val,conf;
+	//BYTE pin,val,conf;
 	switch (Packet->use.head.RPC){
 
 	case _MAC:
