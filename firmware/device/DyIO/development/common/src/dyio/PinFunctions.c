@@ -2,7 +2,7 @@
 #include "Namespace/Namespace_bcs_io.h"
 #include "Namespace/Namespace_bcs_io_setmode.h"
 
-#define NUM_PINS   			24
+
 
 DATA_STRUCT DATA[NUM_PINS];
 

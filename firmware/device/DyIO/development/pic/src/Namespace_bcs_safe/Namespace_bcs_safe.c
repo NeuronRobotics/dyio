@@ -12,7 +12,7 @@ void setHeartBeatState( BOOL hb, int time);
 const char safeNSName[] = "bcs.safe.*;0.3;;";
 
 
-BOOL bcsSafeAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
+BOOL bcsSafeAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
 
 
     return FALSE;

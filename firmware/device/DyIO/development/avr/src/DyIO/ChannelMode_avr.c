@@ -132,20 +132,3 @@ void configPinMode(BYTE pin,BYTE mode,BYTE tris,BYTE io){
 	//print_I("\nSetting mode: ");printMode(mode);print_I(" on chan: ");p_sl_I(pin);
 	EEWriteMode(pin,mode);
 }
-
-
-
-BOOL IsAsync(BYTE channel){
-	if (EEReadMode(channel)>0x80){
-		return TRUE;
-	}
-	BYTE mode=GetChannelMode(channel);
-	switch(mode){
-	case IS_UART_RX:
-	case IS_COUNTER_INPUT_HOME:
-	case IS_COUNTER_OUTPUT_HOME:
-		return TRUE;
-	default:
-		return FALSE;
-	}
-}

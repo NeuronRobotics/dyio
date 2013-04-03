@@ -1,3 +1,11 @@
+/**
+ * @file DyIO_Internal_Namespace_Implimentation.c
+ *
+ * Created on: Apr 3, 2013
+ * @author hephaestus
+ */
+
+
 /*
  *
  * Copyright 2009 Neuron Robotics, LLC
@@ -27,24 +35,6 @@ BYTE UserGetRPCs(BowlerPacket *Packet){
 	UINT16 end;
 	//UINT16_UNION adc;
 	switch (Packet->use.head.RPC){
-	case GCHM:
-		Packet->use.data[1]=EEReadMode(Packet->use.data[0]);
-		Packet->use.head.DataLegnth=6;
-		Packet->use.head.Method=BOWLER_POST;
-		break;
-	case GACM:
-		for (i=0;i<24;i++){
-			Packet->use.data[i]=EEReadMode(i);
-		}
-		Packet->use.head.DataLegnth=4+24;
-		Packet->use.head.Method=BOWLER_POST;
-		break;
-	case GCHV:
-		AsynAck();
-		if(!GetChannelValue(Packet)){
-			ERR(Packet,zone,0);
-		}
-		break;
 	case EEPD:
 		start = Packet->use.data[0];
 		end = Packet->use.data[1];
@@ -63,6 +53,25 @@ BYTE UserGetRPCs(BowlerPacket *Packet){
 		Packet->use.data[2]=FIRMWARE_VERSION;
 		Packet->use.head.DataLegnth=4+3;
 		break;
+//	case GCHM:
+//		Packet->use.data[1]=EEReadMode(Packet->use.data[0]);
+//		Packet->use.head.DataLegnth=6;
+//		Packet->use.head.Method=BOWLER_POST;
+//		break;
+//	case GACM:
+//		for (i=0;i<24;i++){
+//			Packet->use.data[i]=EEReadMode(i);
+//		}
+//		Packet->use.head.DataLegnth=4+24;
+//		Packet->use.head.Method=BOWLER_POST;
+//		break;
+//	case GCHV:
+//		AsynAck();
+//		if(!GetChannelValue(Packet)){
+//			ERR(Packet,zone,0);
+//		}
+//		break;
+
 //	case DASN:
 //		AsynAck();
 //		for (i=0;i<24;i++){
@@ -85,13 +94,13 @@ BYTE UserGetRPCs(BowlerPacket *Packet){
 //		Packet->use.head.Method=BOWLER_POST;
 //		Packet->use.head.RPC=GetRPCValue("_rdy");
 //		break;
-	case SAVE:
-		Packet->use.head.Method=BOWLER_POST;
-		Packet->use.head.DataLegnth = 4 + NUM_PINS;
-		for (i=0;i<NUM_PINS;i++){
-			Packet->use.data[i]=EEReadValue(i);
-		}
-		break;
+//	case SAVE:
+//		Packet->use.head.Method=BOWLER_POST;
+//		Packet->use.head.DataLegnth = 4 + GetNumberOfIOChannels();
+//		for (i=0;i<GetNumberOfIOChannels();i++){
+//			Packet->use.data[i]=EEReadValue(i);
+//		}
+//		break;
 	default:
 #if defined(USE_AS_LIBRARY)
 		return DyIOLibOnPacket(Packet);
@@ -108,31 +117,6 @@ BYTE UserPostRPCs(BowlerPacket *Packet){
 	UINT16  end;
 	UINT16 i;
 	switch (Packet->use.head.RPC){
-	case SCHM:
-		if(SetChannelMode(Packet)==FALSE){
-			ERR(Packet,zone,0);
-		}
-		break;
-	case SACM:
-		if(!SetAllChannelMode(Packet)){
-			ERR(Packet,zone,1);
-		}
-		break;
-	case SCHV:
-		if(SetChannelValue(Packet)){
-			READY(Packet,zone,2);
-			break;
-		}
-		else
-			ERR(Packet,zone,2);
-		break;
-	case SACV:
-		if(SetAllChannelValue(Packet)){
-			READY(Packet,zone,37);
-		}else{
-			ERR(Packet,zone,3);
-		}
-		break;
 	case _PWR:
 		v.byte.SB = Packet->use.data[2];
 		v.byte.LB = Packet->use.data[3];
@@ -140,12 +124,6 @@ BYTE UserPostRPCs(BowlerPacket *Packet){
 		SetPowerState1(Packet->use.data[3],Packet->use.data[1]);
 		//Packet->use.head.MessageID=44;
 		break;
-#if defined(ROBOSUB_DEMO)
-	case DIGO:
-		SetDIO(Packet->use.data[0],Packet->use.data[1]);
-		READY(Packet,zone,37);
-		break;
-#endif
 	case EEPD:
 		start = Packet->use.data[0];
 		end = Packet->use.data[1];
@@ -156,6 +134,37 @@ BYTE UserPostRPCs(BowlerPacket *Packet){
 		}else
 			ERR(Packet,zone,4);
 		break;
+//	case SCHM:
+//		if(SetChannelMode(Packet)==FALSE){
+//			ERR(Packet,zone,0);
+//		}
+//		break;
+//	case SACM:
+//		if(!SetAllChannelMode(Packet)){
+//			ERR(Packet,zone,1);
+//		}
+//		break;
+//	case SCHV:
+//		if(SetChannelValue(Packet)){
+//			READY(Packet,zone,2);
+//			break;
+//		}
+//		else
+//			ERR(Packet,zone,2);
+//		break;
+//	case SACV:
+//		if(SetAllChannelValue(Packet)){
+//			READY(Packet,zone,37);
+//		}else{
+//			ERR(Packet,zone,3);
+//		}
+//		break;
+//#if defined(ROBOSUB_DEMO)
+//	case DIGO:
+//		SetDIO(Packet->use.data[0],Packet->use.data[1]);
+//		READY(Packet,zone,37);
+//		break;
+//#endif
 	default:
 #if defined(USE_AS_LIBRARY)
 		return DyIOLibOnPacket(Packet);
@@ -169,13 +178,7 @@ BYTE UserCriticalRPCs(BowlerPacket *Packet){
 	zone = 6;
 	BYTE pin,val,conf;
 	switch (Packet->use.head.RPC){
-	case CCHN:
-		conf = ConfigChannel(Packet);
-		if(conf==FALSE){
-			ERR(Packet,zone,conf);
-		}else
-			READY(Packet,zone,conf);
-		break;
+
 	case _MAC:
 		if(ProvisionMAC(Packet->use.data)){
 			READY(Packet,zone,1);
@@ -184,21 +187,30 @@ BYTE UserCriticalRPCs(BowlerPacket *Packet){
 		else
 			ERR(Packet,zone,1);
 		break;
-	case SCHV:
-		pin = Packet->use.data[0];
-		val = Packet->use.data[1];
-		if(SetChannelValue(Packet)){
-			if(SaveValue(pin,val))
-				READY(Packet,zone,2);
-			else
-				ERR(Packet,zone,2);
-		}
-		else
-			ERR(Packet,zone,3);
-		break;
 	case _PWR:
 		setPowerOverride(Packet->use.data[0]);
 		break;
+
+//	case CCHN:
+//		conf = ConfigChannel(Packet);
+//		if(conf==FALSE){
+//			ERR(Packet,zone,conf);
+//		}else
+//			READY(Packet,zone,conf);
+//		break;
+//	case SCHV:
+//		pin = Packet->use.data[0];
+//		val = Packet->use.data[1];
+//		if(SetChannelValue(Packet)){
+//			if(SaveValue(pin,val))
+//				READY(Packet,zone,2);
+//			else
+//				ERR(Packet,zone,2);
+//		}
+//		else
+//			ERR(Packet,zone,3);
+//		break;
+
 	default:
 #if defined(USE_AS_LIBRARY)
 		return DyIOLibOnPacket(Packet);

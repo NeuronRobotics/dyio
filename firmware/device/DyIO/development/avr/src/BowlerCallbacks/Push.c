@@ -23,6 +23,14 @@ void sendHeader(BYTE legnth,char * rpc){
 	}
 }
 
+BOOL avrAsyncCallbackPtr(BowlerPacket *Packet){
+	int i;
+	for(i=0;i<Packet->use.head.DataLegnth+BowlerHeaderSize;i++){
+		send(Packet->stream[i]);//rpc bytes
+	}
+	return TRUE;
+}
+
 void PushSerial(void){
 	UINT16 num = Get_UART_Byte_CountPassThrough();
 	//FlagBusy_IO=1;

@@ -11,6 +11,9 @@
 //#define WPIRBE
 
 #include "Bowler/Bowler.h"
+#include "Namespace/Namespace_bcs_io.h"
+#include "Namespace/Namespace_bcs_io_setmode.h"
+
 #include "DyIOApp/HardwareProfile.h"
 
 #include "DyIO/DyIO_def.h"
@@ -23,6 +26,7 @@
 #include "DyIOApp/UARTPassThrough.h"
 #include "DyIOApp/DCMotorDriver.h"
 #include "DyIOApp/Push.h"
+
 
 #include "DyIOApp/SPISlave.h"
 #if defined(USE_AS_LIBRARY)

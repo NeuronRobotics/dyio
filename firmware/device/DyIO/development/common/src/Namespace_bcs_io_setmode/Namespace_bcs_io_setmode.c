@@ -11,7 +11,7 @@ const char setModeNSName[] = "bcs.io.setmode.*;0.3;;";
 
 
 
-BOOL bcsIoSetmodeAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
+BOOL bcsIoSetmodeAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
 	//no async
 
     return FALSE;

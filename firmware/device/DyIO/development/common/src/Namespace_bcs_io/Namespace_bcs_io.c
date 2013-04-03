@@ -13,7 +13,7 @@ const char ioNSName[] = "bcs.io.*;0.3;;";
 
 
 static BowlerPacket packetTemp;
-BOOL bcsIoAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
+BOOL bcsIoAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
 	initAdvancedAsync();
 	int i;
 	BOOL update=FALSE;

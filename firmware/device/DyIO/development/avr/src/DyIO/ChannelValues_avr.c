@@ -6,12 +6,145 @@
  */
 #include "UserApp.h"
 
-void set8bit(BowlerPacket * Packet,BYTE val);
-void set16bit(BowlerPacket * Packet,UINT16 val);
-void set32bit(BowlerPacket * Packet,INT32 val);
+/**
+ * Set Channel Values
+ * This function takes a
+ * @param pin pin index
+ * @param numValues a number of values to be delt with
+ * @param data an array of data values
+ * @param ms the time for the transition to take
+ *
+ */
+BOOL SetChanelValueHW(BYTE pin,BYTE numValues,INT32 * data, float ms){
+	BYTE mode = GetChannelMode(pin);
+	if(isStremChannelMode(mode)){
+		BYTE * bData = (BYTE *)data;
+		switch(mode){
+		case IS_SPI_MOSI:
+		case IS_SPI_MISO:
+		case IS_SPI_SCK:
+			SendPacketToSPIFromArray(numValues,bData);
+			return TRUE;
+		case IS_UART_TX:
+		case IS_UART_RX:
+			LoadSerialTxData( numValues,bData);
+			return TRUE;
+		case IS_PPM_IN:
+			ConfigPPMFromArray(bData);
+			return TRUE;
+		}
+	}else{
+		switch(mode){
+		case IS_COUNTER_INPUT_INT:
+		case IS_COUNTER_INPUT_DIR:
+		case IS_COUNTER_OUTPUT_INT:
+		case IS_COUNTER_OUTPUT_DIR:
+			SetChanVal(pin,data[0],ms);
+			return TRUE;
+		}
+		if(isSingleByteMode(mode)){
+			INT32 time = (INT32)ms;
+			//mask the time into the data byte
+			getBcsIoDataTable()[pin].PIN.currentValue = (time<<16)|(data[0]&0x000000ff);
+		}
+		return TRUE;
+	}
 
-INT32 get32bit(BowlerPacket * Packet);
 
+}
+
+/**
+ * Set Channel Values
+ * This function takes a pin index, a number of values to be delt with, and an array of data values
+ * Data is stored into numValues and data
+ */
+BOOL GetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data){
+	BYTE mode = GetChannelMode(pin);
+	if(isStremChannelMode(mode)){
+		BYTE * bData = (BYTE *)data;
+		switch(mode){
+		case IS_SPI_MOSI:
+		case IS_SPI_MISO:
+		case IS_SPI_SCK:
+			SendPacketToSPIFromArray(numValues[0],bData);
+			return TRUE;
+		case IS_UART_TX:
+		case IS_UART_RX:
+			 numValues[0] = GetSerialRxData( bData);
+			return TRUE;
+		case IS_PPM_IN:
+			numValues[0] = GetPPMDataToArray(bData);
+			return TRUE;
+		}
+	}else{
+		numValues[0]=1;
+		switch(mode){
+		case IS_COUNTER_INPUT_INT:
+		case IS_COUNTER_INPUT_DIR:
+			data[0] = GetCounterByChannel(pin);
+			return TRUE;
+		case IS_COUNTER_OUTPUT_INT:
+		case IS_COUNTER_OUTPUT_DIR:
+			data[0] = GetCounterOutput(pin);
+			return TRUE;
+		}
+		if(isSingleByteMode(mode)){
+			//mask the time into the data byte
+			 data[0] = getBcsIoDataTable()[pin].asyncData.currentVal & 0x000000ff;
+		}
+		return TRUE;
+	}
+}
+/**
+ * Set Channel Values
+ * This function takes a
+ * @param data an array of data values
+ * @param ms the time for the transition to take
+ *
+ */
+BOOL SetAllChanelValueHW(INT32 * data, float ms){
+	int i;
+	for(i=0;i<GetNumberOfIOChannels();i++){
+		if(!isStremChannelMode(GetChannelMode(i)))
+			SetChanelValueHW(i,1,& data[i], ms);
+	}
+	return TRUE;
+}
+
+/**
+ * Set Channel Values
+ * This function takes a pin index, a number of values to be delt with, and an array of data values
+ * Data is stored into numValues and data
+ */
+BOOL GetAllChanelValueHW(INT32 * data){
+	int i;
+	BYTE numValues;
+	for(i=0;i<GetNumberOfIOChannels();i++){
+		if(!isStremChannelMode(GetChannelMode(i)))
+			GetChanelValueHW(i,&numValues,& data[i]);
+	}
+	return TRUE;
+}
+
+/**
+ * Configure Channel
+ * @param pin the index of the channel to configure
+ * @param numValues The number of values passed in to deal with
+ * @param data the array of values to use in the configuration step
+ */
+
+BOOL ConfigureChannelHW(BYTE pin,BYTE numValues,INT32 * data){
+	if(!isStremChannelMode(GetChannelMode(pin)))
+		SetNewConfigurationDataTable( pin, data[0]);
+	return TRUE;
+}
+
+
+/**
+ * Legacy
+ *
+ *
+ */
 BOOL SaveValue(BYTE pin,BYTE val){
 	switch(GetChannelMode(pin)){
 	case IS_SERVO:
@@ -184,31 +317,4 @@ BOOL SetChanVal(BYTE pin,INT32 bval, float time){
 		return FALSE;
 	}
 	return TRUE;
-}
-
-
-void set8bit(BowlerPacket * Packet,BYTE val){
-	Packet->use.data[1]=val;
-}
-void set16bit(BowlerPacket * Packet,UINT16 val){
-	UINT16_UNION wval;
-	wval.Val=val;
-	Packet->use.data[1]=wval.byte.SB;
-	Packet->use.data[2]=wval.byte.LB;
-}
-void set32bit(BowlerPacket * Packet,INT32 val){
-	INT32_UNION lval;
-	lval.Val=val;
-	Packet->use.data[1]=lval.byte.FB;
-	Packet->use.data[2]=lval.byte.TB;
-	Packet->use.data[3]=lval.byte.SB;
-	Packet->use.data[4]=lval.byte.LB;
-}
-INT32 get32bit(BowlerPacket * Packet){
-	INT32_UNION lval;
-	lval.byte.FB=Packet->use.data[1];
-	lval.byte.TB=Packet->use.data[2];
-	lval.byte.SB=Packet->use.data[3];
-	lval.byte.LB=Packet->use.data[4];
-	return lval.Val;
 }

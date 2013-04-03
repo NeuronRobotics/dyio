@@ -60,7 +60,7 @@ void hardwareInit(){
 	InitADC();
 	println_I("Adding DyIO namespaces:");
 
-
+	InitPins();
 	addNamespaceToList((NAMESPACE_LIST * )get_bcsIoNamespace());
 	addNamespaceToList((NAMESPACE_LIST * )get_bcsIoSetmodeNamespace());
 	addNamespaceToList((NAMESPACE_LIST * )get_neuronRoboticsDyIONamespace());
@@ -95,7 +95,7 @@ void UserInit(void){
 
 	ReleaseAVRReset();
 
-	InitPins();
+
 
 	CheckRev();
 

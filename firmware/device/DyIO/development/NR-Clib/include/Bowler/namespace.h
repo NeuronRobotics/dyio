@@ -12,7 +12,7 @@
 #define USE_LINKED_LIST_NAMESPACE
 
 typedef BOOL packetEventCallback(BowlerPacket *);
-typedef BOOL asyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *));
+typedef BOOL asyncEventCallback(BowlerPacket *,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *));
 
 typedef struct __attribute__((__packed__)) _RPC_LIST{
 	//This is the bowler method for this RPC
@@ -44,7 +44,7 @@ void addRpcToNamespace(NAMESPACE_LIST * namespace,RPC_LIST * rpc );
 NAMESPACE_LIST * getNamespaceAtIndex(int index);
 BYTE getNumberOfNamespaces();
 
-void RunNamespaceAsync(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
+void RunNamespaceAsync(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
 
 
 //bcs.safe

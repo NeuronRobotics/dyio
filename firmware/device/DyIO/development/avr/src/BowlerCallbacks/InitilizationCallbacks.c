@@ -31,7 +31,7 @@ void UserInit(void){
 	InitBankLEDs();
 	SetPowerState0(0,0);
 	SetPowerState1(0,0);
-	InitPins();
+
 
 	//_delay_ms(1);
 
@@ -39,9 +39,14 @@ void UserInit(void){
 	SPISlaveInit();
 #endif
 
-	setMethodCallback(BOWLER_GET,UserGetRPCs);
-	setMethodCallback(BOWLER_POST,UserPostRPCs);
-	setMethodCallback(BOWLER_CRIT,UserCriticalRPCs);
+//	setMethodCallback(BOWLER_GET,UserGetRPCs);
+//	setMethodCallback(BOWLER_POST,UserPostRPCs);
+//	setMethodCallback(BOWLER_CRIT,UserCriticalRPCs);
+
+	InitPins();
+	addNamespaceToList(get_bcsIoNamespace());
+	addNamespaceToList(get_bcsIoSetmodeNamespace());
+	addNamespaceToList(get_internalNamespace());
 
 	//SetPinTris(0,OUTPUT);
 	//SetDIO(0,OFF);

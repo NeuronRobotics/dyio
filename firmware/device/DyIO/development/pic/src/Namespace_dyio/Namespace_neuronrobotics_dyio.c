@@ -35,7 +35,7 @@ BOOL getHeartBeatLock(){
 }
 
 
-BOOL neuronRoboticsDyIOAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
+BOOL neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
 
 	buttonCheck(7);
 

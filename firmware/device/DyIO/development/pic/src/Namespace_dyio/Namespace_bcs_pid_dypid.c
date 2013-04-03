@@ -10,7 +10,7 @@ const unsigned char dypidNSName[] = "bcs.pid.dypid.*;0.3;;";
 RunEveryData pid={0,30};
 RunEveryData vel={0,100};
 
-BOOL bcsPidDypidAsyncEventCallback(BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
+BOOL bcsPidDypidAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
 
 	if (RunEvery(&pid)>0){
 		RunPID();
