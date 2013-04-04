@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+<?fileVersion 4.0.0?>
+
+<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="0.702444624">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="0.702444624" moduleId="org.eclipse.cdt.core.settings" name="Default">
@@ -32,28 +34,24 @@
 					<fileInfo id="0.702444624.1986292667" name="DCMotorDriver.c" rcbsApplicability="disable" resourcePath="avr/src/Driver/DCMotorDriver.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.536667842" name="Main.c" rcbsApplicability="disable" resourcePath="avr/src/Main_avr.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.442300139" name="DyIOMain.c" rcbsApplicability="disable" resourcePath="avr/src/DyIOMain_avr.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.984088215" name="DyIOMain.c" rcbsApplicability="disable" resourcePath="avr/src/DyIOMain.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.755521243" name="InitilizationCallbacks.c" rcbsApplicability="disable" resourcePath="avr/src/BowlerCallbacks/InitilizationCallbacks.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1110590307" name="Push.c" rcbsApplicability="disable" resourcePath="avr/src/BowlerCallbacks/Push.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.736367220" name="PacketEventCallbacks.c" rcbsApplicability="disable" resourcePath="avr/src/BowlerCallbacks/PacketEventCallbacks.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.567594353" name="CoOpCallbacks.c" rcbsApplicability="disable" resourcePath="avr/src/BowlerCallbacks/CoOpCallbacks.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.162845643" name="Main.c" rcbsApplicability="disable" resourcePath="avr/src/Main.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.824828397" name="Pin_State.c" rcbsApplicability="disable" resourcePath="avr/src/DyIO/Pin_State_avr.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.837731795" name="ChannelConfig.c" rcbsApplicability="disable" resourcePath="avr/src/DyIO/ChannelConfig_avr.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.611643409" name="ChannelMode.c" rcbsApplicability="disable" resourcePath="avr/src/DyIO/ChannelMode_avr.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1467074842" name="ChannelValues.c" rcbsApplicability="disable" resourcePath="avr/src/DyIO/ChannelValues_avr.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.375577309" name="ChannelValues.c" rcbsApplicability="disable" resourcePath="avr/src/DyIO/ChannelValues.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.1197407577" name="ChannelMode.c" rcbsApplicability="disable" resourcePath="avr/src/DyIO/ChannelMode.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.1904389352" name="ChannelConfig.c" rcbsApplicability="disable" resourcePath="avr/src/DyIO/ChannelConfig.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1244972545" name="PinFunctions.c" rcbsApplicability="disable" resourcePath="common/src/dyio/PinFunctions.c" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.695325250" name="Namespace_bcs_io_setmode.c" rcbsApplicability="disable" resourcePath="common/src/Namespace_bcs_io_setmode/Namespace_bcs_io_setmode.c" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.2077198970" name="Namespace_bcs_io.c" rcbsApplicability="disable" resourcePath="common/src/Namespace_bcs_io/Namespace_bcs_io.c" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.570594938" name="Bcs_IO_AdvancedAsync.c" rcbsApplicability="disable" resourcePath="common/src/Namespace_bcs_io/Bcs_IO_AdvancedAsync.c" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.1051167662" name="Abstract_bcs_io.c" rcbsApplicability="disable" resourcePath="common/src/Namespace_bcs_io/Abstract_bcs_io.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1156447476" name="Debug_DyIO.c" rcbsApplicability="disable" resourcePath="common/src/main/Debug_DyIO.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1928737996" name="CartesianController.c" rcbsApplicability="disable" resourcePath="pic/src/Application/CartesianController.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1507709394" name="PID.c" rcbsApplicability="disable" resourcePath="pic/src/Application/PID.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1465490269" name="DyIOMain.c" rcbsApplicability="disable" resourcePath="pic/src/DyIOMain.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1027023793" name="InitializationCallbacks.c" rcbsApplicability="disable" resourcePath="pic/src/BowlerCallbacks/InitializationCallbacks.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1222159836" name="DownStreamPackets.c" rcbsApplicability="disable" resourcePath="pic/src/BowlerCallbacks/DownStreamPackets.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.30541194" name="PacketEventCallbacks.c" rcbsApplicability="disable" resourcePath="pic/src/BowlerCallbacks/PacketEventCallbacks.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.1469869321" name="CoOpCallbacks.c" rcbsApplicability="disable" resourcePath="pic/src/BowlerCallbacks/CoOpCallbacks.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1805628419" name="AsyncManager.c" rcbsApplicability="disable" resourcePath="pic/src/BowlerCallbacks/AsyncManager.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1035655765" name="UpstreamPackets.c" rcbsApplicability="disable" resourcePath="pic/src/BowlerCallbacks/UpstreamPackets.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1913547314" name="Counter.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/Counter.c" toolsToInvoke=""/>
