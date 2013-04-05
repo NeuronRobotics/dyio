@@ -12,14 +12,14 @@ RunEveryData pid={0,30};
 RunEveryData vel={0,100};
 
 static BYTE zone;
-BOOL bcsPidDypidAsyncEventCallback(BowlerPacket* Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
+BOOL internalAsyncEventCallback(BowlerPacket* Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
 	checkDigital();
 	checkAnalog();
 
     return FALSE;
 }
 
-BOOL bcsPidDypidProcessor_g(BowlerPacket * Packet){
+BOOL internalProcessor_g(BowlerPacket * Packet){
 	zone = 4;
 	UINT16 i;
 	UINT16  start;
@@ -56,7 +56,7 @@ BOOL bcsPidDypidProcessor_g(BowlerPacket * Packet){
 	}
 	return TRUE;
 }
-BOOL bcsPidDypidProcessor_p(BowlerPacket * Packet){
+BOOL internalProcessor_p(BowlerPacket * Packet){
 	zone = 5;
 	UINT16_UNION v;
 	UINT16 start;
@@ -87,7 +87,7 @@ BOOL bcsPidDypidProcessor_p(BowlerPacket * Packet){
 	return TRUE;
 }
 
-BOOL bcsPidDypidProcessor_c(BowlerPacket * Packet){
+BOOL internalProcessor_c(BowlerPacket * Packet){
 
 	switch (Packet->use.head.RPC){
 	case _MAC:
@@ -108,16 +108,49 @@ BOOL bcsPidDypidProcessor_c(BowlerPacket * Packet){
 }
 
 
-static RPC_LIST bcsPidDypid_dpid_g={	BOWLER_GET,// Method
-                                "dpid",//RPC as string
-                                &bcsPidDypidProcessor_g,//function pointer to a packet parsinf function
+static RPC_LIST internal_eepd_g={	BOWLER_GET,// Method
+                                "eepd",//RPC as string
+                                &internalProcessor_g,//function pointer to a packet parsinf function
+                                NULL //Termination
+};
+static RPC_LIST internal_rev_g={	BOWLER_GET,// Method
+                                "_rev",//RPC as string
+                                &internalProcessor_g,//function pointer to a packet parsinf function
+                                NULL //Termination
+};
+static RPC_LIST internal_save_g={	BOWLER_GET,// Method
+                                "save",//RPC as string
+                                &internalProcessor_g,//function pointer to a packet parsinf function
+                                NULL //Termination
+};
+
+static RPC_LIST internal_pwr_p={	BOWLER_POST,// Method
+                                "_pwr",//RPC as string
+                                &internalProcessor_g,//function pointer to a packet parsinf function
+                                NULL //Termination
+};
+static RPC_LIST internal_eepd_p={	BOWLER_POST,// Method
+                                "eepd",//RPC as string
+                                &internalProcessor_g,//function pointer to a packet parsinf function
+                                NULL //Termination
+};
+
+
+static RPC_LIST internal_mac_c={	BOWLER_CRIT,// Method
+                                "_mac",//RPC as string
+                                &internalProcessor_g,//function pointer to a packet parsinf function
+                                NULL //Termination
+};
+static RPC_LIST internal_pwr_c={	BOWLER_CRIT,// Method
+                                "_pwr",//RPC as string
+                                &internalProcessor_g,//function pointer to a packet parsinf function
                                 NULL //Termination
 };
 
 
 static NAMESPACE_LIST internalNamespace ={	internalNSName,// The string defining the namespace
                                 NULL,// the first element in the RPC list
-                                &bcsPidDypidAsyncEventCallback,// async for this namespace
+                                &internalAsyncEventCallback,// async for this namespace
                                 NULL// no initial elements to the other namesapce field.
 };
 
@@ -126,7 +159,15 @@ NAMESPACE_LIST * get_internalNamespace(){
 	if(!namespcaedAdded){
                 //POST
                 //Add the RPC structs to the namespace
-                addRpcToNamespace(&internalNamespace,& bcsPidDypid_dpid_g);
+                addRpcToNamespace(&internalNamespace,& internal_eepd_g);
+                addRpcToNamespace(&internalNamespace,& internal_rev_g);
+                addRpcToNamespace(&internalNamespace,& internal_save_g);
+
+                addRpcToNamespace(&internalNamespace,& internal_pwr_p);
+                addRpcToNamespace(&internalNamespace,& internal_eepd_p);
+
+                addRpcToNamespace(&internalNamespace,& internal_pwr_c);
+                addRpcToNamespace(&internalNamespace,& internal_mac_c);
 
                 namespcaedAdded =TRUE;
 	}

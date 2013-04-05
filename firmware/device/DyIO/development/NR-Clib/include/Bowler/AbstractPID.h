@@ -192,6 +192,14 @@ void pushPIDLimitEvent(PidLimitEvent * event);
  */
 BOOL isPIDInterpolating(int index);
 
+/**
+ * This function checks the PID channel to see if it has settled at the setpoint plus or minus a bound
+ * @param index
+ * @param plusOrMinus
+ * @return
+ */
+BOOL isPIDArrivedAtSetpoint(int index, float plusOrMinus);
+
 BOOL processPIDGet(BowlerPacket * Packet);
 
 BOOL processPIDPost(BowlerPacket * Packet);

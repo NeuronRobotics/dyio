@@ -18,7 +18,7 @@
 					<folderInfo id="0.702444624." name="/" resourcePath="">
 						<toolChain id="org.eclipse.cdt.build.core.prefbase.toolchain.1220353356" name="No ToolChain" resourceTypeBasedDiscovery="false" superClass="org.eclipse.cdt.build.core.prefbase.toolchain">
 							<targetPlatform id="org.eclipse.cdt.build.core.prefbase.toolchain.1220353356.1262549142" name=""/>
-							<builder arguments="main" id="org.eclipse.linuxtools.cdt.autotools.core.toolchain.builder.991834479" keepEnvironmentInBuildfile="false"/>
+							<builder arguments="" id="org.eclipse.linuxtools.cdt.autotools.core.toolchain.builder.991834479" keepEnvironmentInBuildfile="false"/>
 							<tool id="org.eclipse.cdt.build.core.settings.holder.libs.203827591" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs"/>
 							<tool id="org.eclipse.cdt.build.core.settings.holder.1961328103" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
 								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.896688412" languageId="org.eclipse.cdt.core.assembly" languageName="Assembly" sourceContentType="org.eclipse.cdt.core.asmSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>

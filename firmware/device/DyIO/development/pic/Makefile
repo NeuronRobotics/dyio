@@ -23,14 +23,17 @@ all:clean release debug bluetooth clean
 	echo PIC Build OK!
 
 release:buildSpecificClean $(OFILES)
+	mkdir -p output/release/
 	$(LINK) $(OFILES) -lNRLIB  		-o output/release/output.elf $(LFLAFS)
 	cd output/release/;$(BIN2HEX) 	-v -a  output.elf	
 	
 debug:buildSpecificClean $(OFILES)
+	mkdir -p output/debug/
 	$(LINK) $(OFILES) -lNRLIB_debug  -o output/debug/output.elf $(LFLAFS)
 	cd output/debug/;$(BIN2HEX) 	 -v -a  output.elf
 	
 bluetooth:buildSpecificClean	$(OFILES)
+	mkdir -p output/bluetooth/
 	$(CCP) -c src/Drivers/BluetoothManager.c -DHAS_BLUTOOTH	-o src/Drivers/BluetoothManager.o
 	$(LINK) $(OFILES) -lNRLIB  		 -o output/bluetooth/output.elf $(LFLAFS)  
 	cd output/bluetooth/;$(BIN2HEX)  -v -a  output.elf
