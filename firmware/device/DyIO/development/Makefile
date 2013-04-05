@@ -50,6 +50,6 @@ pub:main
 	#cp FirmwarePublish/Dev/dyio* ../NRSDK/fw/
 	#cp FirmwarePublish/Release/*.xml ../NRConsole/src/com/neuronrobotics/nrconsole/plugin/bootloader/fw/
 	nr-console
-clean:update
+clean:
 	make -C pic clean
 	make -C avr clean
