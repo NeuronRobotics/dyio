@@ -257,7 +257,7 @@
 
 	#define AVR_RST_TRIS		(_TRISE3)
 	#define AVR_RST_IO			(_RE3)
-	#define InitAVR_RST()	  	 mPORTEOpenDrainOpen(BIT_3);AVR_RST_IO=0;
+	#define InitAVR_RST()	  	 mPORTEOpenDrainOpen(BIT_3);AVR_RST_TRIS=OUTPUT;AVR_RST_IO=0;
 	//#define InitAVR_RST()	  	 mPORTEOpenDrainOpen(BIT_3);AVR_RST_IO=1;
 
 	#define SPI_SCK_IO			(_RG6)

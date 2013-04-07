@@ -19,7 +19,7 @@ void initAdvancedAsync(){
 	if(isInit == TRUE)
 		return;
 	isInit=TRUE;
-	println_I("Initializing Advanced Async");
+	//println_I((const char*)"Initializing Advanced Async");
 	int i;
 	for (i=0;i<GetNumberOfIOChannels();i++){
 		startAdvancedAsyncDefault(i);
@@ -59,15 +59,15 @@ BOOL IsAsync(BYTE channel){
 void printAsyncType(BYTE t){
 	switch(t){
 	case AUTOSAMP:
-		print_I("AUTOSAMP");return;
+		print_I((const char*)"AUTOSAMP");return;
 	case NOTEQUAL:
-		print_I("NOTEQUAL");return;
+		print_I((const char*)"NOTEQUAL");return;
 	case DEADBAND:
-		print_I("DEADBAND");return;
+		print_I((const char*)"DEADBAND");return;
 	case THRESHHOLD:
-		print_I("THRESHHOLD");return;
+		print_I((const char*)"THRESHHOLD");return;
 	default:
-		print_I("UNKNOWN: "); p_sl_I(t);return;
+		print_I((const char*)"UNKNOWN: "); p_sl_I(t);return;
 	}
 }
 void configAdvancedAsyncNotEqual(BYTE pin,float time){
@@ -139,7 +139,7 @@ void startAdvancedAsyncDefault(BYTE pin){
 	getBcsIoDataTable()[pin].asyncData.currentVal=1;
 	getBcsIoDataTable()[pin].asyncData.previousVal=1;
 	getBcsIoDataTable()[pin].asyncData.time.MsTime=getMs();
-	getBcsIoDataTable()[pin].asyncData.time.setPoint=100;
+	getBcsIoDataTable()[pin].asyncData.time.setPoint=10;
 	getBcsIoDataTable()[pin].asyncData.type = NOTEQUAL;
 	switch(GetChannelMode(pin)){
 	case IS_DI:
@@ -158,7 +158,7 @@ void startAdvancedAsyncDefault(BYTE pin){
 //		getBcsIoDataTable()[pin].asyncData.threshhold.edge=ASYN_RISING;
 		break;
 	}
-	println_I("Async Type set to: ");printAsyncType(getBcsIoDataTable()[pin].asyncData.type);
+	//println_I((const char*)"Async Type set to: ");printAsyncType(getBcsIoDataTable()[pin].asyncData.type); print_I((const char*)"on pin# ");p_ul_I(pin);
 }
 
 
@@ -259,6 +259,23 @@ BOOL pushAsyncReady( BYTE pin){
 	return FALSE;
 }
 
+void populateGACV(BowlerPacket * Packet){
+	INT32_UNION s;
+	LoadCorePacket(Packet);
+	Packet->use.head.Method=BOWLER_POST;
+	Packet->use.head.RPC=GetRPCValue("gacv");
+	Packet->use.head.DataLegnth=(GetNumberOfIOChannels()*4)+4;
+	Packet->use.head.MessageID=37;
+	int i;
+	for(i=0;i<GetNumberOfIOChannels();i++){
+		s.Val= getBcsIoDataTable()[i].PIN.currentValue;
+		Packet->use.data[(i*4)+0]=s.byte.FB;
+		Packet->use.data[(i*4)+1]=s.byte.TB;
+		Packet->use.data[(i*4)+2]=s.byte.SB;
+		Packet->use.data[(i*4)+3]=s.byte.LB;
+	}
+}
+
 
 //void runAsyncIO(){
 //	Print_Level l = getPrintLevel();
@@ -324,19 +341,4 @@ BOOL pushAsyncReady( BYTE pin){
 //}
 
 
-void populateGACV(BowlerPacket * Packet){
-	INT32_UNION s;
-	LoadCorePacket(Packet);
-	Packet->use.head.Method=BOWLER_POST;
-	Packet->use.head.RPC=GetRPCValue("gacv");
-	Packet->use.head.DataLegnth=(GetNumberOfIOChannels()*4)+4;
-	Packet->use.head.MessageID=37;
-	int i;
-	for(i=0;i<GetNumberOfIOChannels();i++){
-		s.Val= getBcsIoDataTable()[i].PIN.currentValue;
-		Packet->use.data[(i*4)+0]=s.byte.FB;
-		Packet->use.data[(i*4)+1]=s.byte.TB;
-		Packet->use.data[(i*4)+2]=s.byte.SB;
-		Packet->use.data[(i*4)+3]=s.byte.LB;
-	}
-}
+

@@ -41,6 +41,21 @@ void hardwareInit(){
 	for (i=0;i<6;i++){
 		MyMAC.v[i]= MY_MAC_ADDRESS[i];
 	}
+	//Must initialize IO before hardware
+	InitPins();
+	println_I("Adding IO Namespace");
+	addNamespaceToList((NAMESPACE_LIST * )get_bcsIoNamespace());
+	println_I("Adding IO.Setmode Namespace");
+	addNamespaceToList((NAMESPACE_LIST * )get_bcsIoSetmodeNamespace());
+	println_I("Adding DyIO Namespace");
+	addNamespaceToList((NAMESPACE_LIST * )get_neuronRoboticsDyIONamespace());
+	println_I("Adding PID Namespace");
+	addNamespaceToList((NAMESPACE_LIST * )getBcsPidNamespace());
+	println_I("Adding DyIO PID Namespace");
+	addNamespaceToList((NAMESPACE_LIST * )get_bcsPidDypidNamespace());
+	println_I("Adding Safe Namespace");
+	addNamespaceToList((NAMESPACE_LIST * )get_bcsSafeNamespace());
+
 
 	Init_FLAG_BUSY_ASYNC();
 	//InitCTS_RTS_HO();
@@ -58,16 +73,6 @@ void hardwareInit(){
 	//Starts Timer 3
 	InitCounterPins();
 	InitADC();
-	println_I("Adding DyIO namespaces:");
-
-	InitPins();
-	addNamespaceToList((NAMESPACE_LIST * )get_bcsIoNamespace());
-	addNamespaceToList((NAMESPACE_LIST * )get_bcsIoSetmodeNamespace());
-	addNamespaceToList((NAMESPACE_LIST * )get_neuronRoboticsDyIONamespace());
-	addNamespaceToList((NAMESPACE_LIST * )get_bcsPidDypidNamespace());
-	addNamespaceToList((NAMESPACE_LIST * )get_bcsSafeNamespace());
-	addNamespaceToList((NAMESPACE_LIST * )getBcsPidNamespace());
-
 
 
 	BYTE rev [] = {MAJOR_REV,MINOR_REV,FIRMWARE_VERSION};
@@ -89,7 +94,7 @@ void hardwareInit(){
 void UserInit(void){
 	//setPrintStream(&USBPutArray);
 	setPrintLevelInfoPrint();
-	println_I("Starting PIC initialization");
+	println_I("\n\nStarting PIC initialization");
 	hardwareInit();
 	println_I("Hardware Init done");
 

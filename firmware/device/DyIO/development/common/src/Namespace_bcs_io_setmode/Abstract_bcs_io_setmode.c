@@ -15,6 +15,8 @@ BOOL (*setChanelModeHWPtr)(BYTE,BYTE);
 
 void InitilizeBcsIoSetmode(BOOL (*setChanelModeHWPtrLocal)(BYTE,BYTE)){
 	if(setChanelModeHWPtrLocal == NULL){
+		setPrintLevelErrorPrint();
+		println_E("Failed IO.SETMODE sanity check: initialization");
 		while(1);
 	}
 	setChanelModeHWPtr = setChanelModeHWPtrLocal;

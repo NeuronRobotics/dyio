@@ -34,73 +34,73 @@ BOOL bcsIoAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(Bo
 
 // GET structures
 static RPC_LIST bcsIo_gchm_g={	BOWLER_GET,// Method
-                                "gchm",//RPC as string
+		(const char*)"gchm",//RPC as string
                                 &GetChannelModeFromPacket,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 
 static RPC_LIST bcsIo_gacm_g={	BOWLER_GET,// Method
-                                "gacm",//RPC as string
+		(const char*) "gacm",//RPC as string
                                 &GetAllChannelModeFromPacket,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 
 static RPC_LIST bcsIo_gchv_g={	BOWLER_GET,// Method
-                                "gchv",//RPC as string
+		(const char*) "gchv",//RPC as string
                                 &GetChanelValueFromPacket,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 static RPC_LIST bcsIo_gacv_g={	BOWLER_GET,// Method
-                                "gacv",//RPC as string
+		(const char*) "gacv",//RPC as string
                                 &GetAllChanelValueFromPacket,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 static RPC_LIST bcsIo_asyn_g={	BOWLER_GET,// Method
-                                "asyn",//RPC as string
+		(const char*) "asyn",//RPC as string
                                 &GetAsyncFromPacket,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 static RPC_LIST bcsIo_gchc_g={	BOWLER_GET,// Method
-                                "gchc",//RPC as string
+		(const char*) "gchc",//RPC as string
                                 &GetIOChannelCountFromPacket,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 static RPC_LIST bcsIo_gcml_g={	BOWLER_GET,// Method
-                                "gcml",//RPC as string
+		(const char*)"gcml",//RPC as string
                                 &getFunctionList,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 //POST
 static RPC_LIST bcsIo_schv_p={	BOWLER_POST,// Method
-                                "schv",//RPC as string
+		(const char*) "schv",//RPC as string
                                 &SetChanelValueFromPacket,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 static RPC_LIST bcsIo_sacv_p={	BOWLER_POST,// Method
-                                "sacv",//RPC as string
+		(const char*) "sacv",//RPC as string
                                 &SetAllChannelValueFromPacket,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 static RPC_LIST bcsIo_asyn_p={	BOWLER_POST,// Method
-                                "asyn",//RPC as string
+		(const char*) "asyn",//RPC as string
                                 &SetAsyncFromPacket,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 //CRIT
 static RPC_LIST bcsIo_cchn_c={	BOWLER_CRIT,// Method
-                                "cchn",//RPC as string
+		(const char*) "cchn",//RPC as string
                                 &ConfigureChannelFromPacket,//function pointer to a packet parsing function
                                 NULL //Termination
 };
 //@Depricated
 	static RPC_LIST bcsIo_schv_c={	BOWLER_CRIT,// Method
-									"schv",//RPC as string
+			(const char*)"schv",//RPC as string
 									&ConfigureChannelFromPacket,//function pointer to a packet parsing function
 									NULL //Termination
 	};
 //@Depricated
 static RPC_LIST bcsIo_asyn_c={	BOWLER_CRIT,// Method
-                                "asyn",//RPC as string
+		(const char*)"asyn",//RPC as string
                                 &configAdvancedAsync,//function pointer to a packet parsing function
                                 NULL //Termination
 };

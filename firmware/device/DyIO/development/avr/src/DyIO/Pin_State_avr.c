@@ -8,13 +8,17 @@
 #include "Namespace/AsyncManager.h"
 
 void InitPins(void){
+	println_I(PSTR("Starting Pin Functions"));
 	InitPinFunction();
+	println_I(PSTR("Starting Pin Modes"));
 	InitPinModes();
 	int i=0;
+	println_I(PSTR("Starting hardware modes"));
 	for(i=0;i<GetNumberOfIOChannels();i++){
 		initPinState(i);
 		configAdvancedAsyncNotEqual(i,10);
 	}
+	println_I(PSTR("DONE pin initialization"));
 }
 
 

@@ -18,16 +18,16 @@
 
 #include "UserApp_avr.h"
 
-const char startmessage[] = "###Starting AVR In Debug Mode\n";
+const char startmessage[] PROGMEM  = "###Starting AVR In Debug Mode\n";
 void UserInit(void){
-
+	StartCritical();
 	setPrintLevelInfoPrint();
 #if defined(DEBUG)
 	ConfigureUART(115200);
 	if(GetChannelMode(16)!=IS_UART_TX)
 		setMode(16,IS_UART_TX);
 #endif
-	//println_I("Starting User initialization");
+	println_I(PSTR("\n\n***Starting User initialization***"));
 	InitFlagPins();
 	InitBankLEDs();
 	SetPowerState0(0,0);
@@ -43,10 +43,13 @@ void UserInit(void){
 //	setMethodCallback(BOWLER_GET,UserGetRPCs);
 //	setMethodCallback(BOWLER_POST,UserPostRPCs);
 //	setMethodCallback(BOWLER_CRIT,UserCriticalRPCs);
-
+	println_I(PSTR("Starting Pin Initialization"));
 	InitPins();
+	println_I(PSTR("Adding IO Initialization"));
 	addNamespaceToList((NAMESPACE_LIST *)get_bcsIoNamespace());
+	println_I(PSTR("Adding IO.SETMODE Initialization"));
 	addNamespaceToList((NAMESPACE_LIST *)get_bcsIoSetmodeNamespace());
+	println_I(PSTR("Adding Internal Initialization"));
 	addNamespaceToList((NAMESPACE_LIST *)get_internalNamespace());
 
 	//SetPinTris(0,OUTPUT);
@@ -57,6 +60,7 @@ void UserInit(void){
 #endif
 	println_I(startmessage);// All printfDEBUG functions do not need to be removed from code if debug is disabled
 	setPrintLevelInfoPrint();
+	EndCritical();
 }
 
 
