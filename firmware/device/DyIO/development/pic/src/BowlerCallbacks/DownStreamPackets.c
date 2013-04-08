@@ -9,6 +9,9 @@
 static BowlerPacket packetTemp;
 BYTE isAscii(char * str);
 
+BOOL bankA=TRUE,bankB=TRUE;
+BYTE batteryCode0=0,batteryCode1=0;
+
 void LoadDefaultValues(){
 	LoadCorePacket(& packetTemp);
 	packetTemp.use.head.Method=BOWLER_GET;
@@ -20,15 +23,15 @@ void LoadDefaultValues(){
 	}
 }
 
-void SetCoProcLED(BOOL a, BOOL b, int batt){
-	LoadCorePacket(& packetTemp);
-	POWER(& packetTemp);
-	packetTemp.use.data[0]=a;
-	packetTemp.use.data[1]=b;
-	packetTemp.use.data[2]=0;
-	packetTemp.use.data[3]=batt;
-	SendPacketToCoProc(& packetTemp);
-}
+//void SetCoProcLED(BOOL a, BOOL b, int batt){
+//	LoadCorePacket(& packetTemp);
+//	POWER(& packetTemp);
+//	packetTemp.use.data[0]=a;
+//	packetTemp.use.data[1]=b;
+//	packetTemp.use.data[2]=0;
+//	packetTemp.use.data[3]=batt;
+//	SendPacketToCoProc(& packetTemp);
+//}
 
 void setCoProcBrownOutMode(BOOL b){
 	LoadCorePacket(& packetTemp);
@@ -43,9 +46,20 @@ void DownstreamPowerChange(void){
 
 	LoadCorePacket(& packetTemp);
 	POWER(& packetTemp);
+
 	packetTemp.use.data[2]=GetRawVoltageCode(0);
 	packetTemp.use.data[3]=GetRawVoltageCode(1);
-	packetTemp.use.head.MessageID=37;
+
+	if(		packetTemp.use.data[0]==bankA &&
+			packetTemp.use.data[1]==bankB &&
+			packetTemp.use.data[2]==batteryCode0 &&
+			packetTemp.use.data[3]==batteryCode1)
+			return;
+	bankA=packetTemp.use.data[0];
+	bankB=packetTemp.use.data[1];
+	batteryCode0=packetTemp.use.data[2];
+	batteryCode1=packetTemp.use.data[3];
+
 	SendPacketToCoProc(& packetTemp);
 
 }
@@ -115,11 +129,11 @@ BYTE SetCoProcMode(BYTE PIN,BYTE mode){
 	return FALSE;
 }
 
-BYTE SetAllCoProcMode(BYTE * mode){
+BYTE SetAllCoProcMode(){
 	int i=0;
 	BOOL send = FALSE;
 	for(i=0;i<GetNumberOfIOChannels();i++){
-		if(getBcsIoDataTable()[i].PIN.currentChannelMode != mode[i]){
+		if(getBcsIoDataTable()[i].PIN.currentChannelMode != getBcsIoDataTable()[i].PIN.previousChannelMode ){
 			 send=TRUE;
 		}
 	}
@@ -129,13 +143,34 @@ BYTE SetAllCoProcMode(BYTE * mode){
 		packetTemp.use.head.RPC=GetRPCValue("sacm");
 		packetTemp.use.head.DataLegnth = 4;
 		for(i=0;i<GetNumberOfIOChannels();i++){
-			packetTemp.use.data[i]=mode[i];
+			packetTemp.use.data[i]=getBcsIoDataTable()[i].PIN.currentChannelMode ;
+			getBcsIoDataTable()[i].PIN.previousChannelMode =getBcsIoDataTable()[i].PIN.currentChannelMode ;
 			packetTemp.use.head.DataLegnth++;
 		}
 		SendPacketToCoProc(& packetTemp);
-		for(i=0;i<GetNumberOfIOChannels();i++){
-			getBcsIoDataTable()[i].PIN.previousChannelMode = mode[i];
+	}
+	return TRUE;
+}
+BYTE SetAllCoProcValues(){
+	int i=0;
+	BOOL send = FALSE;
+	for(i=0;i<GetNumberOfIOChannels();i++){
+		if(getBcsIoDataTable()[i].PIN.currentValue != getBcsIoDataTable()[i].PIN.previousValue ){
+			 send=TRUE;
 		}
+	}
+	INT32 tmp;
+	if(send){
+		LoadCorePacket(& packetTemp);
+		packetTemp.use.head.Method=BOWLER_POST;
+		packetTemp.use.head.RPC=GetRPCValue("sacv");
+		packetTemp.use.head.DataLegnth = 4;
+		for(i=0;i<GetNumberOfIOChannels();i++){
+			tmp = getBcsIoDataTable()[i].PIN.currentValue ;
+			getBcsIoDataTable()[i].PIN.previousValue =getBcsIoDataTable()[i].PIN.currentValue ;
+			set32bit(& packetTemp,tmp,i*4);
+		}
+		SendPacketToCoProc(& packetTemp);
 	}
 	return TRUE;
 }
@@ -354,6 +389,7 @@ void SyncModes(void){
 	GetAllModes(& packetTemp);
 	for (i=0;i<24;i++){
 		getBcsIoDataTable()[i].PIN.currentChannelMode=packetTemp.use.data[i] & 0x7f;
+		getBcsIoDataTable()[i].PIN.previousChannelMode=getBcsIoDataTable()[i].PIN.currentChannelMode;
 		setAsyncLocal(i,(packetTemp.use.data[i]>0x80)?TRUE:FALSE);
 	}
 }

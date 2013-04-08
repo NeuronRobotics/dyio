@@ -13,7 +13,11 @@ void InitializeDyIODataTableManager(){
 }
 
 void SyncDataTable(){
-	// TODO, fill in
+	PushCoProcAsync();
+	SetAllCoProcMode();
+	SetAllCoProcValues();
+	DownstreamPowerChange();
+
 }
 
 void SetNewConfigurationDataTable(BYTE pin, INT32 value){

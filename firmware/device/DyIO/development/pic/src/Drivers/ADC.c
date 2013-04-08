@@ -20,6 +20,11 @@ typedef struct __attribute__((__packed__)) _ROLLINGAVG
 } ROLLINGAVG;
 
 ROLLINGAVG adc[4];
+float lastHighTime=0;
+float lastLowTime=0;
+
+static BOOL lockOutRail = FALSE;
+static BOOL externalLock=FALSE;
 float calc(ROLLINGAVG * avg){
 	float v=getVolt(avg->adcChan);
 	avg->avgSum+=v;
@@ -30,11 +35,12 @@ float calc(ROLLINGAVG * avg){
 	return (avg->avgSum/AVG_SIZE);
 }
 void InitADC(void){
-	if (init)
+	if(init==TRUE)
 		return;
+	init = TRUE;
+	println_I("Start Initialized the ADC");
 	BYTE i,j;
 
-	init = TRUE;
 	DDPCONbits.JTAGEN=0;
 	AD1CHS = 0x0000;
 	AD1PCFG = 0xFFFF;
@@ -71,6 +77,7 @@ void InitADC(void){
 	adc[1].adcChan=12;
 	adc[2].adcChan=14;
 	adc[3].adcChan=13;
+
 	for(i=0;i<4;i++){
 		adc[i].avgSum=0;
 		adc[i].avgIndex=0;
@@ -78,13 +85,11 @@ void InitADC(void){
 			calc(&adc[i]);
 		}
 	}
-	println_I("Initialized the ADC");
-}
-float lastHighTime=0;
-float lastLowTime=0;
+	println_I("Finish Initializing the ADC");
 
-static BOOL lockOutRail = FALSE;
-static BOOL externalLock=FALSE;
+
+}
+
 BOOL isLocked(void){
 	return lockOutRail;
 }
@@ -167,9 +172,14 @@ float getVolt(BYTE chan){
 	AD1CON1bits.SAMP = 1;
 	Delay10us(5);
 	AD1CON1bits.SAMP = 0;
-	while (AD1CON1bits.DONE == 0){
+	RUN_EVERY timeout = {getMs(),2};
+	while (AD1CON1bits.DONE == 0 && RunEvery(&timeout)==0){
 		// Wait for ADC to finish
 		buttonCheck(2);
+	}
+	if(AD1CON1bits.DONE == 1){
+		//init = FALSE;
+		return 0;
 	}
 	AD1CHS =0;
 	WORD tmp = ADC1BUF0;

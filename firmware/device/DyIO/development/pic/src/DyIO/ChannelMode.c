@@ -16,8 +16,8 @@ void InitPinStates(void){
 	SyncModes();
 	int i;
 	for (i=0;i<GetNumberOfIOChannels();i++){
-		setMode(i,GetChannelMode(i));
-		GetChannelValueCoProc(i);
+		//DelayMs(10);
+		SetChannelMode(i,GetChannelMode(i));
 	}
 }
 
@@ -33,10 +33,10 @@ BOOL setMode(BYTE pin,BYTE mode){
 	println_I("Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_ul_I(pin);
 	BYTE currentMode = GetChannelMode(pin);
 	ClearCounter(pin);
-	StopSPI(currentMode);
+	StopSPI(pin);
 	clearPPM(pin);
+	print_I(" \tHardware Cleared");
 	switch (mode & 0x7f){
-
 	case IS_SERVO:
 		if(((pin < 12) && (isRegulated_0() == 0)) || ((pin >= 12) && (isRegulated_1()== 0))   ){
 			print_I("|Mode is now servo");
@@ -46,9 +46,11 @@ BOOL setMode(BYTE pin,BYTE mode){
 				print_I(" Servo Mode could not be set, voltage invalid");
 				return FALSE;
 			}else{
+				print_I(" Servo Mode set|");
 				break;
 			}
 		}
+		break;
 	case IS_SPI_MOSI:
 	case IS_SPI_MISO:
 	case IS_SPI_SCK:
@@ -59,7 +61,7 @@ BOOL setMode(BYTE pin,BYTE mode){
 		}else{
 			return FALSE;
 		}
-
+		break;
 	case IS_COUNTER_INPUT_INT:
 	case IS_COUNTER_INPUT_DIR:
 	case IS_COUNTER_INPUT_HOME:
@@ -89,13 +91,7 @@ BOOL setMode(BYTE pin,BYTE mode){
 		startPPM(pin);
 		break;
 	}
-
-
-	//ASYNC managed in EEPROM on co proc
-	SetCoProcMode(pin,mode);
-
-	SyncModes();
-
+	print_I(" \tMode set");
 	return TRUE;
 }
 

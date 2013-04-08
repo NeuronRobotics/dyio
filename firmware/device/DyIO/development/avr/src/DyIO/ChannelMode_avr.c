@@ -20,7 +20,7 @@ void InitPinModes(void){
 		if((mode == 0)||(mode == 255)||(mode == 1)){
 			EEWriteMode(i,IS_DI);
 		}
-		getBcsIoDataTable()[i].PIN.currentChannelMode = EEReadMode(i);
+		getBcsIoDataTable()[i].PIN.currentChannelMode = mode;
 		setMode(i,EEReadMode(i));
 	}
 
@@ -30,33 +30,33 @@ void InitPinModes(void){
 //BYTE GetChannelMode(BYTE chan){
 //	return EEReadMode(chan) & 0x7f;
 //}
-BOOL SetChannelModeFromPacket(BowlerPacket * Packet){
-	//BYTE isAsync;
-	BYTE pin = Packet->use.data[0];
-	BYTE mode = Packet->use.data[1];
-	if(Packet->use.head.DataLegnth>6){
-		if((Packet->use.data[2]>0))
-			mode |=0x80;
-	}
-	return setMode(pin,mode);
-}
-
-BOOL SetAllChannelModeFromPacket(BowlerPacket * Packet){
-	BYTE i;
-	for (i=0;i<NUM_PINS;i++){
-		if(!setMode(i,Packet->use.data[i])){
-			return FALSE;
-		}
-	}
-	return TRUE;
-}
+//BOOL SetChannelModeFromPacket(BowlerPacket * Packet){
+//	//BYTE isAsync;
+//	BYTE pin = Packet->use.data[0];
+//	BYTE mode = Packet->use.data[1];
+//	if(Packet->use.head.DataLegnth>6){
+//		if((Packet->use.data[2]>0))
+//			mode |=0x80;
+//	}
+//	return setMode(pin,mode);
+//}
+//
+//BOOL SetAllChannelModeFromPacket(BowlerPacket * Packet){
+//	BYTE i;
+//	for (i=0;i<NUM_PINS;i++){
+//		if(!setMode(i,Packet->use.data[i])){
+//			return FALSE;
+//		}
+//	}
+//	return TRUE;
+//}
 
 
 BOOL setMode(BYTE pin,BYTE mode){
 	ClearPinState(pin);
 	//println_I("Pin :");p_sl_I(pin);print_I(" is mode: ");printMode(mode);
 	//BYTE pwm,dir;
-	getBcsIoDataTable()[pin].PIN.currentChannelMode = mode;
+
 	if (mode == NO_CHANGE){
 		return TRUE;
 	}
@@ -129,7 +129,6 @@ void configPinMode(BYTE pin,BYTE mode,BYTE tris,BYTE io){
 	ClearPinState(pin);
 	SetPinTris(pin,tris);
 	SetDIO(pin,io);
-	//DATA.PIN[pin].State=mode;
-	//print_I("\nSetting mode: ");printMode(mode);print_I(" on chan: ");p_sl_I(pin);
+	getBcsIoDataTable()[pin].PIN.currentChannelMode = mode;
 	EEWriteMode(pin,mode);
 }

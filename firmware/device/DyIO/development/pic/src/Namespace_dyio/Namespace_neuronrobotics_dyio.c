@@ -48,11 +48,11 @@ BOOL neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCa
 	if (RunEvery(&ppm)>0)
 		RunPPMCheck();
 
-	PushCoProcAsync();
 
-	if ((RunEvery(&syncVolt)>0)){
-		UpdateAVRLED();
-	}
+
+//	if ((RunEvery(&syncVolt)>0)){
+//		UpdateAVRLED();
+//	}
 	CheckSwitches();
 
 	if(pwr){

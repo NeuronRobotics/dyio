@@ -15,10 +15,9 @@ void server(){
 void runDyIOMain(void){
 	startScheduler();
 	AVR_Bowler_HAL_Init();
-	println_I(PSTR("Hardware Initialized"));
 	Bowler_Init();// Com Stack Init. Sets up timeout timer, uart 0 and if debug enabled, uart 1
 	UserInit();// User code init
-	println_I(PSTR("Stack initialized"));
+	println_I(("Stack initialized"));
 
 	while (1){
 

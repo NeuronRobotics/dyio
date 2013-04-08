@@ -20,8 +20,8 @@ void InitSPI(void){
 	SetCoProcMode(2,IS_SPI_MOSI);
 }
 
-void StopSPI(BYTE mode){
-	if (isSPI(mode)){
+void StopSPI(BYTE pin){
+	if (isSPI(GetChannelMode(pin))){
 		CloseSPI2();
 		_RG6=1;
 		_RG8=1;

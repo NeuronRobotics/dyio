@@ -18,7 +18,7 @@
 
 #include "UserApp_avr.h"
 
-const char startmessage[] PROGMEM  = "###Starting AVR In Debug Mode\n";
+const char startmessage[]  = "\n\n###Starting AVR In Debug Mode\n";
 void UserInit(void){
 	StartCritical();
 	setPrintLevelInfoPrint();
@@ -27,7 +27,7 @@ void UserInit(void){
 	if(GetChannelMode(16)!=IS_UART_TX)
 		setMode(16,IS_UART_TX);
 #endif
-	println_I(PSTR("\n\n***Starting User initialization***"));
+	//println_I(/*PSTR*/("\n\n***Starting User initialization***"));
 	InitFlagPins();
 	InitBankLEDs();
 	SetPowerState0(0,0);
@@ -43,13 +43,13 @@ void UserInit(void){
 //	setMethodCallback(BOWLER_GET,UserGetRPCs);
 //	setMethodCallback(BOWLER_POST,UserPostRPCs);
 //	setMethodCallback(BOWLER_CRIT,UserCriticalRPCs);
-	println_I(PSTR("Starting Pin Initialization"));
+	//println_I(/*PSTR*/("Starting Pin Initialization"));
 	InitPins();
-	println_I(PSTR("Adding IO Initialization"));
+	//println_I(/*PSTR*/("Adding IO Initialization"));
 	addNamespaceToList((NAMESPACE_LIST *)get_bcsIoNamespace());
-	println_I(PSTR("Adding IO.SETMODE Initialization"));
+	//println_I(/*PSTR*/("Adding IO.SETMODE Initialization"));
 	addNamespaceToList((NAMESPACE_LIST *)get_bcsIoSetmodeNamespace());
-	println_I(PSTR("Adding Internal Initialization"));
+	//println_I(/*PSTR*/("Adding Internal Initialization"));
 	addNamespaceToList((NAMESPACE_LIST *)get_internalNamespace());
 
 	//SetPinTris(0,OUTPUT);

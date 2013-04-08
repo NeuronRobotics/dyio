@@ -95,6 +95,7 @@ void UserInit(void){
 	//setPrintStream(&USBPutArray);
 	setPrintLevelInfoPrint();
 	println_I("\n\nStarting PIC initialization");
+	DelayMs(1000);
 	hardwareInit();
 	println_I("Hardware Init done");
 
@@ -113,10 +114,6 @@ void UserInit(void){
 	InitPID();
 
 	UpdateAVRLED();
-
-	//println_I("Syncing modes:");
-	SyncModes();
-	//println_I("Setting modes:");
 
 
 	lockServos();
