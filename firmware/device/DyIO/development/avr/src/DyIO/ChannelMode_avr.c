@@ -20,6 +20,7 @@ void InitPinModes(void){
 		if((mode == 0)||(mode == 255)||(mode == 1)){
 			EEWriteMode(i,IS_DI);
 		}
+		getBcsIoDataTable()[i].PIN.currentChannelMode = EEReadMode(i);
 		setMode(i,EEReadMode(i));
 	}
 
@@ -55,6 +56,7 @@ BOOL setMode(BYTE pin,BYTE mode){
 	ClearPinState(pin);
 	//println_I("Pin :");p_sl_I(pin);print_I(" is mode: ");printMode(mode);
 	//BYTE pwm,dir;
+	getBcsIoDataTable()[pin].PIN.currentChannelMode = mode;
 	if (mode == NO_CHANGE){
 		return TRUE;
 	}

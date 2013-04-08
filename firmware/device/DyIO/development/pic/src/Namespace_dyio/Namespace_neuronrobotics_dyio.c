@@ -201,17 +201,17 @@ static RPC_LIST neuronRoboticsDyIO_info_g={	BOWLER_GET,// Method
                                 NULL //Termination
 };
 
-static RPC_LIST neuronRoboticsDyIO__mac_c={	BOWLER_POST,// Method
+static RPC_LIST neuronRoboticsDyIO__mac_c={	BOWLER_CRIT,// Method
                                 "_mac",//RPC as string
                                 &neuronRoboticsDyIOProcessor_c,//function pointer to a packet parsinf function
                                 NULL //Termination
 };
-static RPC_LIST neuronRoboticsDyIO__pwr_c={	BOWLER_POST,// Method
+static RPC_LIST neuronRoboticsDyIO__pwr_c={	BOWLER_CRIT,// Method
                                 "_pwr",//RPC as string
                                 &neuronRoboticsDyIOProcessor_c,//function pointer to a packet parsinf function
                                 NULL //Termination
 };
-static RPC_LIST neuronRoboticsDyIO_info_c={	BOWLER_POST,// Method
+static RPC_LIST neuronRoboticsDyIO_info_c={	BOWLER_CRIT,// Method
                                 "info",//RPC as string
                                 &neuronRoboticsDyIOProcessor_c,//function pointer to a packet parsinf function
                                 NULL //Termination

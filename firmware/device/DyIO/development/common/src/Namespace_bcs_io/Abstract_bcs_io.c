@@ -157,10 +157,10 @@ BOOL SetAsyncFromPacket(BowlerPacket * Packet){
 
 BOOL GetIOChannelCountFromPacket(BowlerPacket * Packet){
 	Packet->use.head.Method=BOWLER_POST;
-	Packet->use.data[0]=GetNumberOfIOChannels();
+	Packet->use.data[0]=0;
 	Packet->use.data[1]=0;
 	Packet->use.data[2]=0;
-	Packet->use.data[3]=0;
+	Packet->use.data[3]=GetNumberOfIOChannels();;
 	Packet->use.head.DataLegnth=4+4;
 	FixPacket(Packet);
 	return TRUE;

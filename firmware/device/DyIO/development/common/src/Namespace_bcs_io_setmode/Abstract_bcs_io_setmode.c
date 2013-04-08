@@ -69,7 +69,7 @@ BOOL AbstractSetChannelMode(BowlerPacket * Packet){
 	}
 
 	if(SetChannelMode(pin,mode)){
-		READY(Packet,4,33);
+		//READY(Packet,4,33);
 		return TRUE;
 	}else{
 		println_E("Mode Invalid!");
