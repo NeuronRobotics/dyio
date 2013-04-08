@@ -14,7 +14,7 @@ const char ioNSName[] = "bcs.io.*;0.3;;";
 
 static BowlerPacket packetTemp;
 BOOL bcsIoAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
-	initAdvancedAsync();
+
 	int i;
 	BOOL update=FALSE;
 	for(i=0;i<GetNumberOfIOChannels();i++){
@@ -25,6 +25,7 @@ BOOL bcsIoAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(Bo
 	if(update){
 		populateGACV(&packetTemp);
 		packetTemp.use.head.Method=BOWLER_ASYN;
+		FixPacket(Packet);
 		if(pidAsyncCallbackPtr!=NULL)
 			pidAsyncCallbackPtr(& packetTemp);
 	}
@@ -139,7 +140,6 @@ NAMESPACE_LIST * get_bcsIoNamespace(){
 
 		//IO stack initilizations
 		initAdvancedAsync();
-
 
 	}
 

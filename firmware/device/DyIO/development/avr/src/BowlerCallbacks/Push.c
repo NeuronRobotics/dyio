@@ -24,9 +24,12 @@ void sendHeader(BYTE legnth,char * rpc){
 }
 
 BOOL avrAsyncCallbackPtr(BowlerPacket *Packet){
+	//println_I("<<Async\n\r");printPacket(Packet,INFO_PRINT);
+	FixPacket(Packet);
+	//println_I("<<Fixed\n\r");printPacket(Packet,INFO_PRINT);
 	int i;
 	for(i=0;i<Packet->use.head.DataLegnth+BowlerHeaderSize;i++){
-		send(Packet->stream[i]);//rpc bytes
+		send(Packet->stream[i]);
 	}
 	return TRUE;
 }

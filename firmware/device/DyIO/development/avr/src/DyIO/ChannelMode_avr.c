@@ -6,7 +6,6 @@
  */
 #include "UserApp_avr.h"
 
-extern DATA_STRUCT DATA;
 
 void InitPinModes(void){
 	BYTE i;

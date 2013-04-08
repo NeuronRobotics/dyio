@@ -36,6 +36,7 @@ unsigned char CheckAddress(BYTE * one,BYTE * two);
 
 void LoadCorePacket(BowlerPacket * Packet);
 
+BYTE CalcCRC(BowlerPacket *Packet);
 void SetCRC(BowlerPacket * Packet);
 unsigned char CheckCRC(BowlerPacket * Packet);
 void copyPacket(BowlerPacket * from,BowlerPacket * to);

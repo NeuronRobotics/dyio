@@ -124,6 +124,7 @@ BOOL GetChannelModeFromPacket(BowlerPacket * Packet){
 	Packet->use.data[1]=GetChannelMode(Packet->use.data[0]);
 	Packet->use.head.DataLegnth=6;
 	Packet->use.head.Method=BOWLER_POST;
+	FixPacket(Packet);
 	return TRUE;
 }
 
@@ -135,7 +136,7 @@ BOOL GetAllChannelModeFromPacket(BowlerPacket * Packet){
 		Packet->use.data[i]=GetChannelMode(i);
 	}
 	Packet->use.head.DataLegnth=4+GetNumberOfIOChannels();
-
+	FixPacket(Packet);
 	return TRUE;
 }
 
@@ -143,12 +144,14 @@ BOOL GetAsyncFromPacket(BowlerPacket * Packet){
 	Packet->use.head.Method=BOWLER_POST;
 	Packet->use.data[1]=IsAsync(Packet->use.data[0]);
 	Packet->use.head.DataLegnth=4+2;
+	FixPacket(Packet);
 	return TRUE;
 }
 BOOL SetAsyncFromPacket(BowlerPacket * Packet){
 	Packet->use.head.Method=BOWLER_POST;
 	setAsync(Packet->use.data[0],Packet->use.data[1]);
 	Packet->use.head.DataLegnth=4;
+	FixPacket(Packet);
 	return TRUE;
 }
 
@@ -159,6 +162,7 @@ BOOL GetIOChannelCountFromPacket(BowlerPacket * Packet){
 	Packet->use.data[2]=0;
 	Packet->use.data[3]=0;
 	Packet->use.head.DataLegnth=4+4;
+	FixPacket(Packet);
 	return TRUE;
 }
 
@@ -226,6 +230,7 @@ BOOL SetAllChannelValueFromPacket(BowlerPacket * Packet){
 		}
 		setAllChanelValueHWPtr(data,time.Val);
 		READY(Packet,3,3);
+		FixPacket(Packet);
 	}else{
 		return FALSE;
 	}
@@ -268,6 +273,7 @@ BOOL GetChanelValueFromPacket(BowlerPacket * Packet){
 
 	}
 	Packet->use.head.DataLegnth = 4+1+numValues;
+	FixPacket(Packet);
 	return TRUE;
 }
 BOOL GetAllChanelValueFromPacket(BowlerPacket * Packet){
@@ -284,6 +290,7 @@ BOOL GetAllChanelValueFromPacket(BowlerPacket * Packet){
 		Packet->use.head.DataLegnth = 4+GetNumberOfIOChannels()*4;
 	}else
 		return FALSE;
+	FixPacket(Packet);
 	return TRUE;
 }
 BOOL ConfigureChannelFromPacket(BowlerPacket * Packet){
@@ -309,6 +316,7 @@ BOOL ConfigureChannelFromPacket(BowlerPacket * Packet){
 	}else{
 		return FALSE;
 	}
+	FixPacket(Packet);
 	return TRUE;
 }
 
@@ -374,6 +382,7 @@ BOOL getFunctionList(BowlerPacket * Packet){
 		}
 	}
 	Packet->use.head.DataLegnth=4+index;
+	FixPacket(Packet);
 	return TRUE;
 }
 
