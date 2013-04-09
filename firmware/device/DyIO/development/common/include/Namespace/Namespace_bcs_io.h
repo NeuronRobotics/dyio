@@ -158,6 +158,7 @@ void set16bit(BowlerPacket * Packet,INT16 val, BYTE offset);
 void set32bit(BowlerPacket * Packet,INT32 val, BYTE offset);
 INT32 get16bit(BowlerPacket * Packet, BYTE offset);
 INT32 get32bit(BowlerPacket * Packet, BYTE offset);
+void printMode(BYTE mode, Print_Level l);
 
 /**
  * Crawls the function map and returns true if a mode is availible

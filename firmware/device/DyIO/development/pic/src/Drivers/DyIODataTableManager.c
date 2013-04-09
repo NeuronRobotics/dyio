@@ -11,12 +11,19 @@ void InitializeDyIODataTableManager(){
 	InitByteFifo(&storeTx,privateSerialTX,BOWLER_PacketSize);
 
 }
-
+RUN_EVERY printData = {0,10000};
 void SyncDataTable(){
 	PushCoProcAsync();
 	SetAllCoProcMode();
 	SetAllCoProcValues();
 	DownstreamPowerChange();
+	if(RunEvery(&printData)>0){
+		println_I("Data Table:");
+		printValues();
+		printModes();
+		//printConfigurations();
+		//printAsync();
+	}
 
 }
 

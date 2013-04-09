@@ -445,4 +445,38 @@ INT32 get16bit(BowlerPacket * Packet, BYTE offset){
 	return wval.Val;
 }
 
+void printValues(){
+	int i;
+	println_I("Values");
+	for(i=0;i<GetNumberOfIOChannels();i++){
+		println_I("\t# ");p_ul_I(i);print_I("\tCurrent ");p_ul_I(getBcsIoDataTable()[i].PIN.currentValue);print_I("\tPrevious ");p_ul_I(getBcsIoDataTable()[i].PIN.previousValue);
+	}
+}
+
+void printModes(){
+	int i;
+	println_I("Modes");
+	for(i=0;i<GetNumberOfIOChannels();i++){
+		println_I("\t# ");p_ul_I(i);print_I("\tCurrent ");printMode(getBcsIoDataTable()[i].PIN.currentChannelMode,INFO_PRINT);print_I("\tPrevious ");printMode(getBcsIoDataTable()[i].PIN.previousChannelMode,INFO_PRINT);
+	}
+}
+
+void printConfigurations(){
+	int i;
+	println_I("Configurations");
+	for(i=0;i<GetNumberOfIOChannels();i++){
+		println_I("\t# ");p_ul_I(i);print_I("\tCurrent ");p_ul_I(getBcsIoDataTable()[i].PIN.currentConfiguration);print_I("\tPrevious ");p_ul_I(getBcsIoDataTable()[i].PIN.previousConfiguration);
+	}
+}
+void printAsync(){
+	int i;
+	println_I("Async Data");
+	for(i=0;i<GetNumberOfIOChannels();i++){
+		println_I("\t# ");p_ul_I(i);print_I("\tCurrent ");p_ul_I(getBcsIoDataTable()[i].asyncData.currentVal);print_I("\tPrevious ");p_ul_I(getBcsIoDataTable()[i].asyncData.previousVal);
+
+	}
+}
+
+
+
 
