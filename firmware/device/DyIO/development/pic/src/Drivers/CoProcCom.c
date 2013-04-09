@@ -7,7 +7,7 @@
 #include "UserApp.h"
 
 #define MAX_RETRY 5
-#define DELAY_TIMEOUT 300
+#define DELAY_TIMEOUT 500
 
 BOOL valadateRPC(int response,int sent);
 BYTE sendPacket(BowlerPacket * Packet);
@@ -420,10 +420,10 @@ BOOL SendPacketUARTCoProc(BYTE * packet,WORD size){
 			//setPrintLevel(l);
 			return FALSE;
 		}
-		Delay10us(2);
+		//Delay10us(2);
 		print_I(" 0x");prHEX8(packet[i],INFO_PRINT);
 	}
-	println_I("] Sending to co proc Done ");
+	//println_I("] Sending to co proc Done ");
 	FLAG_ASYNC=FLAG_OK;
 //	setPrintLevel(l);
 	return TRUE;

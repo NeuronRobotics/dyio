@@ -27,9 +27,10 @@ const char *  printModeStrings[]={
 		"IS_DC_MOTOR_DIR",
 		"IS_DC_MOTOR_VEL",
 		"IS_PPM_IN"
+
 };
 
-
+const char * unknown = "UNKNOWN";
 void printMode(BYTE mode, Print_Level l){
 	mode = mode & 0x7f;
 	int i=0;
@@ -40,17 +41,21 @@ void printMode(BYTE mode, Print_Level l){
 				maxNumCharsInModes = len;
 		}
 	}
-	if(mode>0 && mode<IO_MODE_MAX	){
-		print(printModeStrings[mode],l);
-		int spaces = maxNumCharsInModes - strlen(printModeStrings[mode]);
+	if(mode >0 	){
+		int spaces;
+		if(mode>IO_MODE_MAX){
+			print(unknown,l);
+			spaces = maxNumCharsInModes - strlen(unknown);
+		}else{
+			print(printModeStrings[mode],l);
+			spaces = maxNumCharsInModes - strlen(printModeStrings[mode]);
+		}
+		print(" 0x",l);prHEX8(mode,l);
 		if (spaces>0){
 			for (i=0;i<spaces;i++){
 				putCharDebug(' ');
 			}
 		}
-	}else{
-		print("UNKNOWN #",l);
-		p_ul(mode,l);
 	}
 
 }
