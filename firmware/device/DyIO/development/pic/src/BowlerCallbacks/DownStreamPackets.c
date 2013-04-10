@@ -121,8 +121,8 @@ BYTE SetCoProcMode(BYTE PIN,BYTE mode){
 	packetTemp.use.head.Method=BOWLER_POST;
 	packetTemp.use.head.RPC=GetRPCValue("schm");
 	packetTemp.use.data[0]=PIN;
-	packetTemp.use.data[1]=mode & 0x7f;
-	packetTemp.use.data[2]=(mode>0x80)?1:0;
+	packetTemp.use.data[1]=mode;
+	packetTemp.use.data[2]=(IsAsync(PIN))?1:0;
 	packetTemp.use.head.DataLegnth=7;
 	SendPacketToCoProc(& packetTemp);
 	getBcsIoDataTable()[PIN].PIN.previousChannelMode=mode;
@@ -388,9 +388,8 @@ void SyncModes(void){
 	BYTE i;
 	GetAllModes(& packetTemp);
 	for (i=0;i<24;i++){
-		getBcsIoDataTable()[i].PIN.currentChannelMode=packetTemp.use.data[i] & 0x7f;
-		getBcsIoDataTable()[i].PIN.previousChannelMode=getBcsIoDataTable()[i].PIN.currentChannelMode;
-		setAsyncLocal(i,(packetTemp.use.data[i]>0x80)?TRUE:FALSE);
+		getBcsIoDataTable()[i].PIN.currentChannelMode=packetTemp.use.data[i];
+		getBcsIoDataTable()[i].PIN.previousChannelMode=packetTemp.use.data[i];
 	}
 }
 

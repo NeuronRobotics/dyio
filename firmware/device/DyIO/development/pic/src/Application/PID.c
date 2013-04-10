@@ -39,7 +39,7 @@ void initPIDChans(BYTE group){
 	if(dyPid[group].inputChannel==DYPID_NON_USED || dyPid[group].outputChannel==DYPID_NON_USED)
 		return;
 
-	switch(dyPid[group].inputMode & 0x7F){
+	switch(dyPid[group].inputMode){
 	case IS_COUNTER_INPUT_INT:
 	case IS_COUNTER_INPUT_DIR:
 	case IS_COUNTER_INPUT_HOME:
@@ -49,7 +49,7 @@ void initPIDChans(BYTE group){
 	}
 
 	println_I("Setting Modes for PID");
-	SetCoProcMode(dyPid[group].inputChannel,dyPid[group].inputMode|0x80);
+	SetCoProcMode(dyPid[group].inputChannel,dyPid[group].inputMode);
 	SetCoProcMode(dyPid[group].outputChannel,dyPid[group].outputMode);
 	SyncModes();
 

@@ -59,7 +59,7 @@ typedef struct  _PidLimitEvent{
  * It also has no assumptions on the time step it is run over. It stores previous time and
  * will calculate scaling based on that and the current time
  */
-typedef struct __attribute__((__packed__)) _AbsPID
+typedef struct _AbsPID
 {
         unsigned char           channel;
         unsigned char           Enabled;
@@ -87,7 +87,7 @@ typedef struct __attribute__((__packed__)) _AbsPID
         float  			IntegralCircularBuffer[IntegralSize];
 } AbsPID;
 
-typedef struct __attribute__((__packed__)) _DYIO_PID
+typedef struct _DYIO_PID
 {
         unsigned char inputMode;
         unsigned char inputChannel;

@@ -24,7 +24,7 @@
 		  unsigned long int		   value;
 	}RPC_VALUE;
 #if !defined(__STACK_TSK_H) && !defined(_SOCKET_H_)
-	typedef union __attribute__((__packed__)) _MAC_ADDR
+	typedef union _MAC_ADDR
 	{
 		struct{
 			unsigned char v[6];
@@ -43,7 +43,7 @@
 		unsigned long int				RPC;				// 4 byte RPC stored as a 32 bit int for single compare;
 	} HEADER;
 #define FullPacketDataSize 251
-	typedef union __attribute__((__packed__)) _BowlerPacket{
+	typedef union  _BowlerPacket{
 		unsigned char stream[FullPacketDataSize+sizeof(HEADER)];
 		struct
 		{
@@ -52,7 +52,7 @@
 		} use;
 	}BowlerPacket;
 #define MiniPacketDataSize 105
-	typedef union __attribute__((__packed__)) _BowlerPacketMini{
+	typedef union _BowlerPacketMini{
 		unsigned char stream[MiniPacketDataSize+sizeof(HEADER)];
 		struct
 		{

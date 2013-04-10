@@ -42,7 +42,7 @@ unsigned char CheckCRC(BowlerPacket * Packet);
 void copyPacket(BowlerPacket * from,BowlerPacket * to);
 
 
-typedef struct __attribute__((__packed__)) _INTERPOLATE_DATA
+typedef struct _INTERPOLATE_DATA
 {
 	float set;
 	float start;

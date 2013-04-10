@@ -110,7 +110,7 @@ case IS_PPM_IN:
 #define ASYN				0x6e797361 // 'asyn'  Set/Get asynchronous mode
 #define GCHC				0x63686367 // 'gchc'  Get Channel Count
 #define GCML				0x6c6d6367 // 'gcml'  Get channel Mode List
-typedef union __attribute__((__packed__)) _FUNCTION_MAP
+typedef union  _FUNCTION_MAP
 	{
 		struct{
 			unsigned HAS_ANALOG_IN			:1;
@@ -132,7 +132,7 @@ typedef union __attribute__((__packed__)) _FUNCTION_MAP
 		};
 		UINT32 b;
 	} FUNCTION_MAP;
-	typedef struct __attribute__((__packed__)) _PIN_MAP
+	typedef struct  _PIN_MAP
 	{
 		INT32 currentValue;
 		BYTE  currentConfiguration;
@@ -141,16 +141,24 @@ typedef union __attribute__((__packed__)) _FUNCTION_MAP
 		INT32 previousValue;
 		BYTE previousConfiguration;
 		BYTE  previousChannelMode;
+		INT32			asyncDatapreviousVal;
+		INT32			asyncDatacurrentVal;
+		BYTE		asyncDatatype;
+		BYTE 		asyncDataenabled;
+		INT32 	asyncDatadeadBandval;
+		INT32 	asyncDatathreshholdval;
+		BYTE asyncDatathreshholdedge;
+		RunEveryData 	asyncDatatime;
 	} PIN_MAP;
 
 
 
-typedef struct __attribute__((__packed__)) _DATA
+typedef struct _DATA
 {
 	//STORAGE self;
 	PIN_MAP PIN;
 	FUNCTION_MAP FUNCTION;
-	AdvancedAsyncData asyncData;
+	//AdvancedAsyncData asyncData;
 } DATA_STRUCT;
 
 void set8bit(BowlerPacket * Packet,BYTE val, BYTE offset);
@@ -159,6 +167,10 @@ void set32bit(BowlerPacket * Packet,INT32 val, BYTE offset);
 INT32 get16bit(BowlerPacket * Packet, BYTE offset);
 INT32 get32bit(BowlerPacket * Packet, BYTE offset);
 void printMode(BYTE mode, Print_Level l);
+void printModes();
+void printAsync();
+void printConfigurations();
+void printValues();
 
 /**
  * Crawls the function map and returns true if a mode is availible

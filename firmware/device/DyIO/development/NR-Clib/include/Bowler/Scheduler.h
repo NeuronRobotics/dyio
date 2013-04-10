@@ -61,7 +61,7 @@ void TimeoutCounterStop(void);
  * Data storage for scheduling events.
  */
 
-typedef struct __attribute__((__packed__)) _RUN_EVERY{
+typedef struct _RUN_EVERY{
 	//The start time for the schedule
 	float MsTime;
 	//The time from the start time to loop over

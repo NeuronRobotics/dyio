@@ -14,7 +14,7 @@
 typedef BOOL packetEventCallback(BowlerPacket *);
 typedef BOOL asyncEventCallback(BowlerPacket *,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *));
 
-typedef struct __attribute__((__packed__)) _RPC_LIST{
+typedef struct  _RPC_LIST{
 	//This is the bowler method for this RPC
 	BYTE bowlerMethod;
 	//This is the 4 byte code for of the RPC
@@ -25,7 +25,7 @@ typedef struct __attribute__((__packed__)) _RPC_LIST{
 	struct _RPC_LIST * next;
 } RPC_LIST;
 
-typedef struct __attribute__((__packed__)) _NAMESPACE_LIST{
+typedef struct _NAMESPACE_LIST{
 	//This is the string that identifies the names pace
 	const char *  namespaceString;
 	//This is the linked list of the RPC's
@@ -50,12 +50,12 @@ void RunNamespaceAsync(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPa
 //bcs.safe
 #define SAFE					0x65666173 // 'safe'  Get/Set the safe-mode parameters
 
-typedef struct __attribute__((__packed__)) _NAMESPACE{
+typedef struct  _NAMESPACE{
 		unsigned char len;
 		const unsigned char * name;
 } NAMESPACE;
 
-typedef struct __attribute__((__packed__)) _NAMESPACE_SET{
+typedef struct  _NAMESPACE_SET{
 		unsigned char numNamespaces;
 		NAMESPACE  names[8];
 } NAMESPACE_SET;

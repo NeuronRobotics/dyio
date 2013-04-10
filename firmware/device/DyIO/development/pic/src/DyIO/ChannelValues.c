@@ -91,7 +91,7 @@ BOOL GetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data){
 		}
 		if(isSingleByteMode(mode)){
 			//mask the time into the data byte
-			 data[0] = getBcsIoDataTable()[pin].asyncData.currentVal & 0x000000ff;
+			 data[0] = getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal & 0x000000ff;
 		}
 		return TRUE;
 	}
@@ -264,7 +264,7 @@ BOOL SetChanVal(BYTE pin,INT32 bval, float time){
 
 
 //BOOL isASetableMode(BYTE mode){
-//	switch(mode&0x7f){
+//	switch(mode){
 //	case IS_COUNTER_INPUT_INT:
 //	case IS_COUNTER_INPUT_DIR:
 //	case IS_COUNTER_INPUT_HOME:

@@ -16,7 +16,8 @@ void InitPins(void){
 	//println_I(/*PSTR*/("Starting hardware modes"));
 	for(i=0;i<GetNumberOfIOChannels();i++){
 		initPinState(i);
-		configAdvancedAsyncNotEqual(i,1000);
+		//configAdvancedAsyncNotEqual(i,10);
+		setAsyncLocal(i,FALSE);
 	}
 	//println_I(/*PSTR*/("DONE pin initialization"));
 }

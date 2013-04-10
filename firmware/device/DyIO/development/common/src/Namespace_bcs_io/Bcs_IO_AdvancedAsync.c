@@ -13,13 +13,13 @@
 #define ADCINIT 0xFFFF
 #define FASTIO
 
-static BOOL isInit=FALSE;
+BOOL isInit=FALSE;
 
 void initAdvancedAsync(){
 	if(isInit == TRUE)
 		return;
 	isInit=TRUE;
-	//println_I((const char*)"Initializing Advanced Async");
+	println_I((const char*)"Initializing Advanced Async");
 	int i;
 	for (i=0;i<GetNumberOfIOChannels();i++){
 		startAdvancedAsyncDefault(i);
@@ -28,18 +28,17 @@ void initAdvancedAsync(){
 
 void setAsync(BYTE channel,BOOL async){
 	BYTE mode = GetChannelMode(channel);
-	mode = (async)?mode|0x80:mode;
 	getBcsIoDataTable()[channel].PIN.currentChannelMode = mode;
-	startAdvancedAsyncDefault(channel);
 	setAsyncLocal(channel,async);
+	startAdvancedAsyncDefault(channel);
 }
 
 void setAsyncLocal(BYTE channel,BOOL async){
-	getBcsIoDataTable()[channel].asyncData.enabled=async;
+	getBcsIoDataTable()[channel].PIN.asyncDataenabled=async;
 }
 
 BOOL IsAsync(BYTE channel){
-	if (getBcsIoDataTable()[channel].asyncData.enabled){
+	if (getBcsIoDataTable()[channel].PIN.asyncDataenabled){
 		return TRUE;
 	}
 	BYTE mode=GetChannelMode(channel);
@@ -71,27 +70,27 @@ void printAsyncType(BYTE t){
 	}
 }
 void configAdvancedAsyncNotEqual(BYTE pin,float time){
-	getBcsIoDataTable()[pin].asyncData.time.MsTime=getMs();
-	getBcsIoDataTable()[pin].asyncData.time.setPoint=time;
-	getBcsIoDataTable()[pin].asyncData.type = NOTEQUAL;
+	getBcsIoDataTable()[pin].PIN.asyncDatatime.MsTime=getMs();
+	getBcsIoDataTable()[pin].PIN.asyncDatatime.setPoint=time;
+	getBcsIoDataTable()[pin].PIN.asyncDatatype = NOTEQUAL;
 }
 void configAdvancedAsyncDeadBand(BYTE pin,float time,INT32 deadbandSize){
-	getBcsIoDataTable()[pin].asyncData.time.MsTime=getMs();
-	getBcsIoDataTable()[pin].asyncData.time.setPoint=time;
-	getBcsIoDataTable()[pin].asyncData.type = DEADBAND;
-	getBcsIoDataTable()[pin].asyncData.deadBand.val=deadbandSize;
+	getBcsIoDataTable()[pin].PIN.asyncDatatime.MsTime=getMs();
+	getBcsIoDataTable()[pin].PIN.asyncDatatime.setPoint=time;
+	getBcsIoDataTable()[pin].PIN.asyncDatatype = DEADBAND;
+	getBcsIoDataTable()[pin].PIN.asyncDatadeadBandval=deadbandSize;
 }
 void configAdvancedAsyncTreshhold(BYTE pin,float time,INT32 threshholdValue, BYTE edgeType){
-	getBcsIoDataTable()[pin].asyncData.time.MsTime=getMs();
-	getBcsIoDataTable()[pin].asyncData.time.setPoint=time;
-	getBcsIoDataTable()[pin].asyncData.type = THRESHHOLD;
-	getBcsIoDataTable()[pin].asyncData.threshhold.val=threshholdValue;
-	getBcsIoDataTable()[pin].asyncData.threshhold.edge=edgeType;
+	getBcsIoDataTable()[pin].PIN.asyncDatatime.MsTime=getMs();
+	getBcsIoDataTable()[pin].PIN.asyncDatatime.setPoint=time;
+	getBcsIoDataTable()[pin].PIN.asyncDatatype = THRESHHOLD;
+	getBcsIoDataTable()[pin].PIN.asyncDatathreshholdval=threshholdValue;
+	getBcsIoDataTable()[pin].PIN.asyncDatathreshholdedge=edgeType;
 }
 void configAdvancedAsyncAutoSample(BYTE pin,float time){
-	getBcsIoDataTable()[pin].asyncData.time.MsTime=getMs();
-	getBcsIoDataTable()[pin].asyncData.time.setPoint=time;
-	getBcsIoDataTable()[pin].asyncData.type = AUTOSAMP;
+	getBcsIoDataTable()[pin].PIN.asyncDatatime.MsTime=getMs();
+	getBcsIoDataTable()[pin].PIN.asyncDatatime.setPoint=time;
+	getBcsIoDataTable()[pin].PIN.asyncDatatype = AUTOSAMP;
 }
 
 BOOL configAdvancedAsync(BowlerPacket * Packet){
@@ -135,47 +134,57 @@ BOOL configAdvancedAsync(BowlerPacket * Packet){
 
 
 void startAdvancedAsyncDefault(BYTE pin){
+	switch(getBcsIoDataTable()[pin].PIN.asyncDatatype){
+	case AUTOSAMP:
+	case NOTEQUAL:
+	case DEADBAND:
+	case THRESHHOLD:
+		return;
+	default:
+		//Not already set the mode type, setting defaults
+		break;
+	}
 	//println_I("Starting advanced async on channel: ");p_sl_I(pin);
-	getBcsIoDataTable()[pin].asyncData.currentVal=1;
-	getBcsIoDataTable()[pin].asyncData.previousVal=1;
-	getBcsIoDataTable()[pin].asyncData.time.MsTime=getMs();
-	getBcsIoDataTable()[pin].asyncData.time.setPoint=10;
-	getBcsIoDataTable()[pin].asyncData.type = NOTEQUAL;
+	getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal=1;
+	getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal=1;
+	getBcsIoDataTable()[pin].PIN.asyncDatatime.MsTime=getMs();
+	getBcsIoDataTable()[pin].PIN.asyncDatatime.setPoint=10;
+	getBcsIoDataTable()[pin].PIN.asyncDatatype = NOTEQUAL;
 	switch(GetChannelMode(pin)){
 	case IS_DI:
 	case IS_COUNTER_INPUT_HOME:
 	case IS_COUNTER_OUTPUT_HOME:
 	case IS_SERVO:
-		getBcsIoDataTable()[pin].asyncData.time.setPoint=5;
+		getBcsIoDataTable()[pin].PIN.asyncDatatime.setPoint=5;
 		break;
 	case IS_ANALOG_IN:
-		getBcsIoDataTable()[pin].asyncData.currentVal=ADCINIT;
-		getBcsIoDataTable()[pin].asyncData.previousVal=ADCINIT;
-		getBcsIoDataTable()[pin].asyncData.type = DEADBAND;
-		getBcsIoDataTable()[pin].asyncData.deadBand.val=10;
-//		getBcsIoDataTable()[pin].asyncData.type = THRESHHOLD;
-//		getBcsIoDataTable()[pin].asyncData.threshhold.val=512;
-//		getBcsIoDataTable()[pin].asyncData.threshhold.edge=ASYN_RISING;
+		getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal=ADCINIT;
+		getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal=ADCINIT;
+		getBcsIoDataTable()[pin].PIN.asyncDatatype = DEADBAND;
+		getBcsIoDataTable()[pin].PIN.asyncDatadeadBandval=10;
+//		getBcsIoDataTable()[pin].PIN.asyncDatatype = THRESHHOLD;
+//		getBcsIoDataTable()[pin].PIN.asyncDatathreshhold.val=512;
+//		getBcsIoDataTable()[pin].PIN.asyncDatathreshhold.edge=ASYN_RISING;
 		break;
 	}
-	//println_I((const char*)"Async Type set to: ");printAsyncType(getBcsIoDataTable()[pin].asyncData.type); print_I((const char*)"on pin# ");p_ul_I(pin);
+	//println_I((const char*)"Async Type set to: ");printAsyncType(getBcsIoDataTable()[pin].PIN.asyncDatatype); print_I((const char*)"on pin# ");p_ul_I(pin);
 }
 
 
 
 
 void SetValFromAsync(int pin, int value){
-	getBcsIoDataTable()[pin].asyncData.currentVal=value;
+	getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal=value;
 }
 
 int GetValFromAsync(int pin){
-	return getBcsIoDataTable()[pin].asyncData.currentVal;
+	return getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal;
 }
 
 int GetDigitalValFromAsync(BYTE pin){
 	initAdvancedAsync();
 	if(GetChannelMode(pin)==IS_DI || GetChannelMode(pin)==IS_COUNTER_INPUT_HOME || GetChannelMode(pin)==IS_COUNTER_OUTPUT_HOME ){
-		return getBcsIoDataTable()[pin].asyncData.currentVal;
+		return getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal;
 	}
 	return 1;
 }
@@ -188,7 +197,7 @@ int GetDigitalValFromAsync(BYTE pin){
 //		return 0;
 //	}
 //	if(GetChannelMode(pin)==IS_ANALOG_IN){
-//		return getBcsIoDataTable()[pin].asyncData.currentVal;
+//		return getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal;
 //	}
 //	println_I("Pin not in analog mode: ");
 //	//printMode(GetChannelMode(pin),INFO_PRINT);
@@ -202,54 +211,63 @@ BOOL pushAsyncReady( BYTE pin){
 	INT32 db;
 	//int i=pin;
 
-	if(RunEvery(&getBcsIoDataTable()[pin].asyncData.time) !=0){
+	if(RunEvery(&getBcsIoDataTable()[pin].PIN.asyncDatatime) !=0){
 		//println_I("Time to do something");
-		switch(getBcsIoDataTable()[pin].asyncData.type&0x0F){
+		switch(getBcsIoDataTable()[pin].PIN.asyncDatatype&0x0F){
 		case AUTOSAMP:
-			//println_I("Auto samp");
-			getBcsIoDataTable()[pin].asyncData.previousVal = getBcsIoDataTable()[pin].asyncData.currentVal;
+			println_I("Auto samp ");p_ul_I(pin);
+			getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal = getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal;
+
 			return TRUE;
 		case NOTEQUAL:
 			//
-			if(getBcsIoDataTable()[pin].asyncData.currentVal != getBcsIoDataTable()[pin].asyncData.previousVal){
-				//println_I("not equ");
-				getBcsIoDataTable()[pin].asyncData.previousVal = getBcsIoDataTable()[pin].asyncData.currentVal;
+			if(getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal != getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal){
+				println_I("not equ ");p_ul_I(pin);
+				printfDEBUG_BYTE('\t',INFO_PRINT);
+				p_ul_I(getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal);
+				printfDEBUG_BYTE('\t',INFO_PRINT);
+				p_ul_I(getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal);
+				getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal = getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal;
+				printfDEBUG_BYTE('\t',INFO_PRINT);
+				p_ul_I(getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal);
+				printfDEBUG_BYTE('\t',INFO_PRINT);
+				p_ul_I(getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal);
 				return TRUE;
 			}
 			break;
 		case DEADBAND:
-			aval = getBcsIoDataTable()[pin].asyncData.currentVal;
-			last = getBcsIoDataTable()[pin].asyncData.previousVal;
-			db = getBcsIoDataTable()[pin].asyncData.deadBand.val;
+			aval = getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal;
+			last = getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal;
+			db = getBcsIoDataTable()[pin].PIN.asyncDatadeadBandval;
 			if (	( 	( last >(aval+db)) ||
 						( last <(aval-db)) ) &&
 					(aval >=db)
 					){
-				//println_I("deadband");
-				getBcsIoDataTable()[pin].asyncData.previousVal=aval;
+				println_I("deadband");p_ul_I(pin);
+				getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal=aval;
 				return TRUE;
 			}
 			break;
 		case THRESHHOLD:
-			//println_I("treshhold");
-			aval = getBcsIoDataTable()[pin].asyncData.currentVal;
-			last = getBcsIoDataTable()[pin].asyncData.previousVal;
-			db = getBcsIoDataTable()[pin].asyncData.threshhold.val;
-			getBcsIoDataTable()[pin].asyncData.previousVal = getBcsIoDataTable()[pin].asyncData.currentVal;
-			if(getBcsIoDataTable()[pin].asyncData.threshhold.edge == ASYN_RISING || getBcsIoDataTable()[pin].asyncData.threshhold.edge == ASYN_BOTH){
+			println_I("treshhold");p_ul_I(pin);
+			aval = getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal;
+			last = getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal;
+			db = getBcsIoDataTable()[pin].PIN.asyncDatathreshholdval;
+			getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal = getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal;
+			if(getBcsIoDataTable()[pin].PIN.asyncDatathreshholdedge == ASYN_RISING || getBcsIoDataTable()[pin].PIN.asyncDatathreshholdedge == ASYN_BOTH){
 				if(last<= db && aval>db){
 
 					return TRUE;
 				}
 			}
-			if(getBcsIoDataTable()[pin].asyncData.threshhold.edge == ASYN_FALLING|| getBcsIoDataTable()[pin].asyncData.threshhold.edge == ASYN_BOTH){
+			if(getBcsIoDataTable()[pin].PIN.asyncDatathreshholdedge == ASYN_FALLING|| getBcsIoDataTable()[pin].PIN.asyncDatathreshholdedge == ASYN_BOTH){
 				if(last> db && aval<=db){
 					return TRUE;
 				}
 			}
 			break;
 		default:
-			//print_I("\nNo type defined!! chan: ");p_sl_I(pin);print_I(" mode: ");printMode(GetChannelMode(pin),INFO_PRINT);print_I(" type: ");printAsyncType(getBcsIoDataTable()[pin].asyncData.type);
+			//print_I("\nNo type defined!! chan: ");p_sl_I(pin);print_I(" mode: ");printMode(GetChannelMode(pin),INFO_PRINT);print_I(" type: ");printAsyncType(getBcsIoDataTable()[pin].PIN.asyncDatatype);
 			startAdvancedAsyncDefault(pin);
 			break;
 		}
@@ -295,14 +313,14 @@ void populateGACV(BowlerPacket * Packet){
 //			case IS_COUNTER_INPUT_HOME:
 //			case IS_COUNTER_OUTPUT_HOME:
 //			case IS_SERVO:
-//				//println_I("Pushing digital chan: ");p_sl_I(i);print_I(" value:");p_ul_I(getBcsIoDataTable()[i].asyncData.currentVal);
+//				//println_I("Pushing digital chan: ");p_sl_I(i);print_I(" value:");p_ul_I(getBcsIoDataTable()[i].PIN.asyncDatacurrentVal);
 //				//currentState [i] = GetDigitalValFromAsync(i);
 //				if(ASYN_RDY(i)){
 //					PushDIval(i,GetDigitalValFromAsync(i));
 //				}
 //				break;
 //			case IS_ANALOG_IN:
-//				//println_I("Pushing analog chan: ");p_sl_I(i);print_I(" value:");p_ul_I(getBcsIoDataTable()[i].asyncData.currentVal);
+//				//println_I("Pushing analog chan: ");p_sl_I(i);print_I(" value:");p_ul_I(getBcsIoDataTable()[i].PIN.asyncDatacurrentVal);
 //				//currentState [i] = GetAnalogValFromAsync(i);
 //				if(ASYN_RDY(i)){
 //					PushADCval(i,GetAnalogValFromAsync(i));
@@ -310,7 +328,7 @@ void populateGACV(BowlerPacket * Packet){
 //				break;
 //			case IS_COUNTER_OUTPUT_INT:
 //			case IS_COUNTER_INPUT_INT:
-//				//println_I("Pushing counter chan: ");p_sl_I(i);print_I(" value:");p_sl_I(getBcsIoDataTable()[i].asyncData.currentVal);
+//				//println_I("Pushing counter chan: ");p_sl_I(i);print_I(" value:");p_sl_I(getBcsIoDataTable()[i].PIN.asyncDatacurrentVal);
 //				//currentState [i] = GetCounterByChannel(i);
 //				if(ASYN_RDY(i)){
 //					PushCounterChange(i,GetCounterByChannel(i));
@@ -336,8 +354,8 @@ void populateGACV(BowlerPacket * Packet){
 //	p_sl_I(chan);
 //	print_I(" to val: ");
 //	p_sl_I(val);
-//	getBcsIoDataTable()[getCounterIntChannnel(chan)].asyncData.currentVal=val;
-//	getBcsIoDataTable()[getCounterIntChannnel(chan)].asyncData.previousVal=val;
+//	getBcsIoDataTable()[getCounterIntChannnel(chan)].PIN.asyncDatacurrentVal=val;
+//	getBcsIoDataTable()[getCounterIntChannnel(chan)].PIN.asyncDatapreviousVal=val;
 //}
 
 

@@ -16,7 +16,7 @@ BOOL (*setChanelModeHWPtr)(BYTE,BYTE);
 void InitilizeBcsIoSetmode(BOOL (*setChanelModeHWPtrLocal)(BYTE,BYTE)){
 	if(setChanelModeHWPtrLocal == NULL){
 		setPrintLevelErrorPrint();
-		println_E("Failed IO.SETMODE sanity check: initialization");
+		//println_E("Failed IO.SETMODE sanity check: initialization");
 		while(1);
 	}
 	setChanelModeHWPtr = setChanelModeHWPtrLocal;
@@ -30,8 +30,8 @@ void InitilizeBcsIoSetmode(BOOL (*setChanelModeHWPtrLocal)(BYTE,BYTE)){
 BOOL SetChannelMode(BYTE chan,BYTE mode){
 	if(setChanelModeHWPtr == NULL)
 		return FALSE;
-
-	BOOL ok = setChanelModeHWPtr(chan,mode & 0x7);
+	//println_I("Abstract_bcs_io_setmode Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_ul_I(chan);
+	BOOL ok = setChanelModeHWPtr(chan,mode);
 	getBcsIoDataTable()[chan].PIN.currentChannelMode = mode;
 	if(IsAsync(chan))
 		startAdvancedAsyncDefault(chan);
@@ -60,12 +60,10 @@ BOOL SetAllChannelModes(BYTE * modeArray){
 BOOL AbstractSetChannelMode(BowlerPacket * Packet){
 	BYTE pin =Packet->use.data[0];
 
-	BYTE mode=Packet->use.data[1]& 0x7f;
+	BYTE mode=Packet->use.data[1];
 
 	if(Packet->use.head.DataLegnth == 7){
 		setAsync(pin,Packet->use.data[2]?TRUE:FALSE);
-		//Grab the async flag
-		mode = GetChannelMode(pin);
 	}
 
 	if(SetChannelMode(pin,mode)){

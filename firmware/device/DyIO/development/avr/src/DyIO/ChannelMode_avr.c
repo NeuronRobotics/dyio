@@ -6,37 +6,40 @@
  */
 #include "UserApp_avr.h"
 
-
+BOOL startup = TRUE;
 void InitPinModes(void){
 	BYTE i;
 	BYTE mode=0;
 	for (i=0;i<24;i++){
+
 		//ClearPinState(i);
 		SetPinTris(i,INPUT);
 		SetDIO(i,0);
 		SetPWM(i,EEReadValue(i));
 		SetServoPos(i,EEReadValue(i),0);
+		//getBcsIoDataTable()[i].PIN.previousChannelMode=NO_CHANGE;
 		mode=EEReadMode(i);
-		if((mode == 0)||(mode == 255)||(mode == 1)){
+		if((mode < 2)||(mode >=IO_MODE_MAX)){
 			EEWriteMode(i,IS_DI);
+			mode = EEReadMode(i);
 		}
 		getBcsIoDataTable()[i].PIN.currentChannelMode = mode;
 		setMode(i,EEReadMode(i));
 	}
-
+	startup = FALSE;
+	//printModes();
 }
 
 
 //BYTE GetChannelMode(BYTE chan){
-//	return EEReadMode(chan) & 0x7f;
+//	return EEReadMode(chan) ;
 //}
 //BOOL SetChannelModeFromPacket(BowlerPacket * Packet){
 //	//BYTE isAsync;
 //	BYTE pin = Packet->use.data[0];
 //	BYTE mode = Packet->use.data[1];
 //	if(Packet->use.head.DataLegnth>6){
-//		if((Packet->use.data[2]>0))
-//			mode |=0x80;
+
 //	}
 //	return setMode(pin,mode);
 //}
@@ -53,14 +56,16 @@ void InitPinModes(void){
 
 
 BOOL setMode(BYTE pin,BYTE mode){
+	if (mode == getBcsIoDataTable()[pin].PIN.previousChannelMode){
+		return TRUE;
+	}
 	ClearPinState(pin);
 	//println_I("Pin :");p_sl_I(pin);print_I(" is mode: ");printMode(mode);
 	//BYTE pwm,dir;
-
 	if (mode == NO_CHANGE){
 		return TRUE;
 	}
-	switch (mode & 0x7F){
+	switch (mode){
 	case HIGH_IMPEDANCE:
 		ClearPinState(pin);
 		// Return here so as not to save this state to the eeprom
@@ -131,4 +136,5 @@ void configPinMode(BYTE pin,BYTE mode,BYTE tris,BYTE io){
 	SetDIO(pin,io);
 	getBcsIoDataTable()[pin].PIN.currentChannelMode = mode;
 	EEWriteMode(pin,mode);
+	getBcsIoDataTable()[pin].PIN.previousChannelMode = mode;
 }

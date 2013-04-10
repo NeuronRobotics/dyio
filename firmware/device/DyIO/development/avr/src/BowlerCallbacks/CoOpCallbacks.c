@@ -113,32 +113,23 @@ void initPinState(BYTE i){
 	BYTE mode =GetChannelMode(i);
 	if ((mode == IS_ANALOG_IN) ){
 		setAnv(i,GetADC(i));
-	}
-	if(((mode == IS_DI) )  || ((mode == IS_COUNTER_INPUT_HOME)||(mode == IS_COUNTER_OUTPUT_HOME))){
+	}else if(((mode == IS_DI) )  || ((mode == IS_COUNTER_INPUT_HOME)||(mode == IS_COUNTER_OUTPUT_HOME))){
 		setDig(i,GetDIO(i)?1:0);
+	}else{
+		SetValFromAsync(i,0);
 	}
 }
 
-static INT16 aval,last;
+INT16 aval;
 BOOL checkAnalog(){
 	BOOL update=FALSE;
 	int i=0;
 	for(i=8;i<16;i++){
 		if ((GetChannelMode(i) == IS_ANALOG_IN) ){
 			aval = GetADC(i);
-			last = getAnv(i);
-			if (( last >(aval+ANALOG_DEAD_BAND))||(	(last < (aval-ANALOG_DEAD_BAND) && (aval >=ANALOG_DEAD_BAND)	))){
-				ack=TRUE;
-				setAnv(i,aval);
-				//PushADCval(i,aval);
-				update= TRUE;
-			}
-
+			setAnv(i,aval);
 		}
 	}
-//	if(update)
-//		PushAllAdcVal();
-
 	return update;
 }
 BOOL checkDigital(){
@@ -148,21 +139,14 @@ BOOL checkDigital(){
 		BYTE mode = GetChannelMode(i);
 		BOOL run = (((mode == IS_DI) )  || ((mode == IS_COUNTER_INPUT_HOME)||(mode == IS_COUNTER_OUTPUT_HOME) || (mode == IS_SERVO)));
 		if (run){
-			if(mode != IS_SERVO){
-				aval=GetDIO(i);
-			}else{
+			if(mode == IS_SERVO){
 				aval=GetServoPos(i);
+			}else{
+				aval=GetDIO(i);
 			}
-			if (aval!=getDig(i)){
-				ack=TRUE;
-				setDig(i,aval);
-				update= TRUE;
-			}
+			setDig(i,aval);
 		}
 	}
-//	if(update)
-//		PushAllDiVal();
-
 	return update;
 }
 

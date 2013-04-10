@@ -14,9 +14,9 @@ void sendHeader(BYTE legnth,char * rpc){
 		send(0);//broadcast mac
 	}
 	send(BOWLER_ASYN);
-	send((0x80|99));//Set the response flag and set an async ID
+	send((0x80|0));//Set the response flag and set an async ID
 	send(legnth);
-	BYTE crc =(BYTE) (BOWLER_VERSION+BOWLER_ASYN+(0x80|99)+legnth);
+	BYTE crc =(BYTE) (BOWLER_VERSION+BOWLER_ASYN+(0x80|0)+legnth);
 	send(crc);
 	for(i=0;i<4;i++){
 		send(rpc[i]);//rpc bytes
@@ -26,7 +26,7 @@ void sendHeader(BYTE legnth,char * rpc){
 BOOL avrAsyncCallbackPtr(BowlerPacket *Packet){
 	//println_I("<<Async\n\r");printPacket(Packet,INFO_PRINT);
 	FixPacket(Packet);
-	//println_I("<<Fixed\n\r");printPacket(Packet,INFO_PRINT);
+	println_I("<<Fixed\n\r");printPacket(Packet,INFO_PRINT);
 	int i;
 	for(i=0;i<Packet->use.head.DataLegnth+BowlerHeaderSize;i++){
 		send(Packet->stream[i]);

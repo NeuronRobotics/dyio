@@ -41,7 +41,7 @@ BOOL getPacket(BowlerPacket * packet){
 #endif
 	BOOL b = _getBowlerPacket(packet,& store,TRUE);
 	if(b){
-		println_I("Returning packet");
+		//println_I("Returning packet");
 	}
 	return b;
 }

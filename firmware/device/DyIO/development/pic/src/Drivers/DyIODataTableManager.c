@@ -18,9 +18,9 @@ void SyncDataTable(){
 	SetAllCoProcValues();
 	DownstreamPowerChange();
 	if(RunEvery(&printData)>0){
-		println_I("Data Table:");
-		printValues();
-		printModes();
+//		println_I("Data Table:");
+//		printValues();
+//		printModes();
 		//printConfigurations();
 		//printAsync();
 	}

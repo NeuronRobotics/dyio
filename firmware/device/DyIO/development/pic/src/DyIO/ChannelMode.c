@@ -36,7 +36,7 @@ BOOL setMode(BYTE pin,BYTE mode){
 	StopSPI(pin);
 	clearPPM(pin);
 	print_I(" \tHardware Cleared");
-	switch (mode & 0x7f){
+	switch (mode){
 	case IS_SERVO:
 		if(((pin < 12) && (isRegulated_0() == 0)) || ((pin >= 12) && (isRegulated_1()== 0))   ){
 			print_I("|Mode is now servo");
@@ -103,7 +103,7 @@ BOOL SetChannelMode(BowlerPacket * Packet){
 
 	BYTE pin =Packet->use.getBcsIoDataTable()[0];
 
-	BYTE mode=Packet->use.getBcsIoDataTable()[1]& 0x7f;
+	BYTE mode=Packet->use.getBcsIoDataTable()[1];
 
 	if(Packet->use.head.getBcsIoDataTable()Legnth == 7){
 		isAsync[pin] = Packet->use.getBcsIoDataTable()[2]?TRUE:FALSE;
