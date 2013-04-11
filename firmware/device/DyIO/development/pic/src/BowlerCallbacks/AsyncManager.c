@@ -66,7 +66,10 @@ void ProcessAsyncData(BowlerPacket * Packet){
 		}
 		//println_I("***Setting All Digital value: ");
 	}if (Packet->use.head.RPC==GetRPCValue("gacv")){
-
+		int i;
+		for(i=0;i<GetNumberOfIOChannels();i++){
+			SetValFromAsync(i,get32bit(Packet, i*4));//asyncData[i].currentVal=Packet->use.data[i];
+		}
 	}else{
 		println_W("***Async packet not UNKNOWN***");
 		printPacket(Packet,WARN_PRINT);
