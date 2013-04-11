@@ -141,7 +141,7 @@ void RunServo(BYTE block){
 
 //	if(print!=0xff){
 //		print_I("\n\tset: ");p_fl_I(velocity[print].set);
-//		print_I("\n\tServoPos: ");p_sl_I(DATA.PIN[print].ServoPos);
+//		print_I("\n\tServoPos: ");p_int_I(DATA.PIN[print].ServoPos);
 //		print = 0xff;
 //	}
 	//enableDebug();
@@ -179,22 +179,23 @@ void DelayPreServo(void){
 void runLinearInterpolationServo(BYTE blockStart,BYTE blockEnd){
 	BYTE i;
 	for (i=blockStart;i<blockEnd;i++){
-		float ip = interpolate(&velocity[i],getMs());
-
-		if(ip>(255- SERVO_BOUND)){
-#if ! defined(__AVR_ATmega324P__)
-			println_I("Interpolate out of bounds! got=");p_fl_I(ip);print_I(" on time=");p_fl_I(velocity[i].setTime);
-#endif
-			ip=(255- SERVO_BOUND);
+		if(GetChannelMode(i)==IS_SERVO){
+			INT32 ip = interpolate(&velocity[i],getMs());
+			if(ip>(255- SERVO_BOUND)){
+	#if ! defined(__AVR_ATmega324P__)
+				println_I("Servo Upper out of bounds! got=");p_int_I(ip);print_I(" on time=");p_fl_I(velocity[i].setTime);
+	#endif
+				ip=(255- SERVO_BOUND);
+			}
+			if(ip<SERVO_BOUND){
+	#if ! defined(__AVR_ATmega324P__)
+				println_I("Servo Lower out of bounds! got=");p_int_I(ip);print_I(" on chan=");p_int_I(i);
+	#endif
+				ip=SERVO_BOUND;
+			}
+			int tmp = (int)ip;
+			getBcsIoDataTable()[i].PIN.asyncDatacurrentVal=  tmp;
 		}
-		if(ip<SERVO_BOUND){
-#if ! defined(__AVR_ATmega324P__)
-			println_I("Interpolate out of bounds! got=");p_fl_I(ip);print_I(" on chan=");p_sl_I(i);
-#endif
-			ip=SERVO_BOUND;
-		}
-		int tmp = (int)ip;
-		getBcsIoDataTable()[i].PIN.asyncDatacurrentVal=  tmp;
 	}
 
 }

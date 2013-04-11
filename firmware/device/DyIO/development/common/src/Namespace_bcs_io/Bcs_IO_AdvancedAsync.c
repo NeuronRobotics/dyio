@@ -66,7 +66,7 @@ void printAsyncType(BYTE t){
 	case THRESHHOLD:
 		print_I((const char*)"THRESHHOLD");return;
 	default:
-		print_I((const char*)"UNKNOWN: "); p_sl_I(t);return;
+		print_I((const char*)"UNKNOWN: "); p_int_I(t);return;
 	}
 }
 void configAdvancedAsyncNotEqual(BYTE pin,float time){
@@ -144,7 +144,7 @@ void startAdvancedAsyncDefault(BYTE pin){
 		//Not already set the mode type, setting defaults
 		break;
 	}
-	//println_I("Starting advanced async on channel: ");p_sl_I(pin);
+	//println_I("Starting advanced async on channel: ");p_int_I(pin);
 	getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal=1;
 	getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal=1;
 	getBcsIoDataTable()[pin].PIN.asyncDatatime.MsTime=getMs();
@@ -167,7 +167,8 @@ void startAdvancedAsyncDefault(BYTE pin){
 //		getBcsIoDataTable()[pin].PIN.asyncDatathreshhold.edge=ASYN_RISING;
 		break;
 	}
-	//println_I((const char*)"Async Type set to: ");printAsyncType(getBcsIoDataTable()[pin].PIN.asyncDatatype); print_I((const char*)"on pin# ");p_ul_I(pin);
+	println_I("Async Type set to: ");printAsyncType(getBcsIoDataTable()[pin].PIN.asyncDatatype);
+	print_I("on pin# ");p_int_I(pin);
 }
 
 
@@ -193,7 +194,7 @@ int GetDigitalValFromAsync(BYTE pin){
 //	initAdvancedAsync();
 //	if(pin<8||pin>15){
 //		println_E("###Invalid ADC pin! ");
-//		p_sl_I(pin);
+//		p_int_I(pin);
 //		return 0;
 //	}
 //	if(GetChannelMode(pin)==IS_ANALOG_IN){
@@ -215,23 +216,23 @@ BOOL pushAsyncReady( BYTE pin){
 		//println_I("Time to do something");
 		switch(getBcsIoDataTable()[pin].PIN.asyncDatatype&0x0F){
 		case AUTOSAMP:
-			println_I("Auto samp ");p_ul_I(pin);
+			println_I("Auto samp ");p_int_I(pin);
 			getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal = getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal;
 
 			return TRUE;
 		case NOTEQUAL:
 			//
 			if(getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal != getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal){
-				println_I("not equ ");p_ul_I(pin);
+				println_I("not equ ");p_int_I(pin);
 				printfDEBUG_BYTE('\t',INFO_PRINT);
-				p_ul_I(getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal);
+				p_int_I(getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal);
 				printfDEBUG_BYTE('\t',INFO_PRINT);
-				p_ul_I(getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal);
+				p_int_I(getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal);
 				getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal = getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal;
 				printfDEBUG_BYTE('\t',INFO_PRINT);
-				p_ul_I(getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal);
+				p_int_I(getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal);
 				printfDEBUG_BYTE('\t',INFO_PRINT);
-				p_ul_I(getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal);
+				p_int_I(getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal);
 				return TRUE;
 			}
 			break;
@@ -243,13 +244,13 @@ BOOL pushAsyncReady( BYTE pin){
 						( last <(aval-db)) ) &&
 					(aval >=db)
 					){
-				println_I("deadband");p_ul_I(pin);
+				println_I("deadband");p_int_I(pin);
 				getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal=aval;
 				return TRUE;
 			}
 			break;
 		case THRESHHOLD:
-			println_I("treshhold");p_ul_I(pin);
+			println_I("treshhold");p_int_I(pin);
 			aval = getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal;
 			last = getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal;
 			db = getBcsIoDataTable()[pin].PIN.asyncDatathreshholdval;
@@ -267,7 +268,7 @@ BOOL pushAsyncReady( BYTE pin){
 			}
 			break;
 		default:
-			//print_I("\nNo type defined!! chan: ");p_sl_I(pin);print_I(" mode: ");printMode(GetChannelMode(pin),INFO_PRINT);print_I(" type: ");printAsyncType(getBcsIoDataTable()[pin].PIN.asyncDatatype);
+			//print_I("\nNo type defined!! chan: ");p_int_I(pin);print_I(" mode: ");printMode(GetChannelMode(pin),INFO_PRINT);print_I(" type: ");printAsyncType(getBcsIoDataTable()[pin].PIN.asyncDatatype);
 			startAdvancedAsyncDefault(pin);
 			break;
 		}
@@ -313,14 +314,14 @@ void populateGACV(BowlerPacket * Packet){
 //			case IS_COUNTER_INPUT_HOME:
 //			case IS_COUNTER_OUTPUT_HOME:
 //			case IS_SERVO:
-//				//println_I("Pushing digital chan: ");p_sl_I(i);print_I(" value:");p_ul_I(getBcsIoDataTable()[i].PIN.asyncDatacurrentVal);
+//				//println_I("Pushing digital chan: ");p_int_I(i);print_I(" value:");p_int_I(getBcsIoDataTable()[i].PIN.asyncDatacurrentVal);
 //				//currentState [i] = GetDigitalValFromAsync(i);
 //				if(ASYN_RDY(i)){
 //					PushDIval(i,GetDigitalValFromAsync(i));
 //				}
 //				break;
 //			case IS_ANALOG_IN:
-//				//println_I("Pushing analog chan: ");p_sl_I(i);print_I(" value:");p_ul_I(getBcsIoDataTable()[i].PIN.asyncDatacurrentVal);
+//				//println_I("Pushing analog chan: ");p_int_I(i);print_I(" value:");p_int_I(getBcsIoDataTable()[i].PIN.asyncDatacurrentVal);
 //				//currentState [i] = GetAnalogValFromAsync(i);
 //				if(ASYN_RDY(i)){
 //					PushADCval(i,GetAnalogValFromAsync(i));
@@ -328,7 +329,7 @@ void populateGACV(BowlerPacket * Packet){
 //				break;
 //			case IS_COUNTER_OUTPUT_INT:
 //			case IS_COUNTER_INPUT_INT:
-//				//println_I("Pushing counter chan: ");p_sl_I(i);print_I(" value:");p_sl_I(getBcsIoDataTable()[i].PIN.asyncDatacurrentVal);
+//				//println_I("Pushing counter chan: ");p_int_I(i);print_I(" value:");p_int_I(getBcsIoDataTable()[i].PIN.asyncDatacurrentVal);
 //				//currentState [i] = GetCounterByChannel(i);
 //				if(ASYN_RDY(i)){
 //					PushCounterChange(i,GetCounterByChannel(i));
@@ -351,9 +352,9 @@ void populateGACV(BowlerPacket * Packet){
 
 //void initCounterAsync(BYTE chan,INT32 val){
 //	println_I("Setting up Counter Async chan: ");
-//	p_sl_I(chan);
+//	p_int_I(chan);
 //	print_I(" to val: ");
-//	p_sl_I(val);
+//	p_int_I(val);
 //	getBcsIoDataTable()[getCounterIntChannnel(chan)].PIN.asyncDatacurrentVal=val;
 //	getBcsIoDataTable()[getCounterIntChannnel(chan)].PIN.asyncDatapreviousVal=val;
 //}

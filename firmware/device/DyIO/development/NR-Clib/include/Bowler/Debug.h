@@ -65,12 +65,7 @@ void EnableDebugTerminal(void);
 /**
  * print the ascii of an unsigned long/int. No new line
  */
-#define p_ul(A,B)  p_sl(A,B)
-
-/**
- * print the ascii of a signed long/int. No new line
- */
-#define p_sl(A,B) printfDEBUG_SL(A,B)
+#define p_int(A,B)   printfDEBUG_INT(A,B)
 
 /**
  * print the null terminated string with no new lines
@@ -94,12 +89,7 @@ void EnableDebugTerminal(void);
 /**
  * print the ascii of an unsigned long/int. No new line
  */
-#define p_ul_E(A)  p_sl(A,ERROR_PRINT)
-
-/**
- * print the ascii of a signed long/int. No new line
- */
-#define p_sl_E(A) printfDEBUG_SL(A,ERROR_PRINT)
+#define p_int_E(A)  printfDEBUG_INT(A,ERROR_PRINT)
 
 /**
  * print the null terminated string with no new lines
@@ -123,12 +113,8 @@ void EnableDebugTerminal(void);
 /**
  * print the ascii of an unsigned long/int. No new line
  */
-#define p_ul_W(A)  p_sl(A,WARN_PRINT)
+#define p_int_W(A)  printfDEBUG_INT(A,WARN_PRINT)
 
-/**
- * print the ascii of a signed long/int. No new line
- */
-#define p_sl_W(A) printfDEBUG_SL(A,WARN_PRINT)
 
 /**
  * print the null terminated string with no new lines
@@ -152,12 +138,8 @@ void EnableDebugTerminal(void);
 /**
  * print the ascii of an unsigned long/int. No new line
  */
-#define p_ul_I(A)  p_sl(A,INFO_PRINT)
+#define p_int_I(A)  printfDEBUG_INT(A,INFO_PRINT)
 
-/**
- * print the ascii of a signed long/int. No new line
- */
-#define p_sl_I(A) printfDEBUG_SL(A,INFO_PRINT)
 
 /**
  * print the null terminated string with no new lines
@@ -187,14 +169,9 @@ void printfDEBUG(const char *str,Print_Level l);
 void printfDEBUG_NNL(const char *str,Print_Level l);
 
 /**
- * print the ascii of an unsigned long/int. No new line
- */
-void printfDEBUG_UL(unsigned long val,Print_Level l);
-
-/**
  * print the ascii of a signed long/int. No new line
  */
-void printfDEBUG_SL(long val,Print_Level l);
+void printfDEBUG_INT(long val,Print_Level l);
 
 /**
  * convert a long into an ascii string and place the string into the Buffer
