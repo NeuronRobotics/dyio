@@ -51,7 +51,7 @@ void CheckSwitches(void){
 		}
 	//}
 	if(up){
-		print_I("\nPushing upstream Power Packet bank 0: ");p_sl_I(bankState[0]);print_I(" bank 1: ");p_ul_I(bankState[1]);print_I(" \nPower Code 0: ");p_ul_I(GetRawVoltageCode(0));print_I(" \nPower Code 1 : ");p_ul_I(GetRawVoltageCode(1));print_I(" \nRaw: ");p_fl_I(GetRawVoltage());
+		print_I("\nPushing upstream Power Packet bank 0: ");p_int_I(bankState[0]);print_I(" bank 1: ");p_int_I(bankState[1]);print_I(" \nPower Code 0: ");p_int_I(GetRawVoltageCode(0));print_I(" \nPower Code 1 : ");p_int_I(GetRawVoltageCode(1));print_I(" \nRaw: ");p_fl_I(GetRawVoltage());
 		UpstreamPushPowerChange();
 	}
 }

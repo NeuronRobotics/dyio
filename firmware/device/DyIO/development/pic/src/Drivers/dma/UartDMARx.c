@@ -92,7 +92,7 @@ int pushContents(){
 				buttonCheck(56);
 				b++;
 			}
-			p_sl_I(b);print_I(" added");
+			p_int_I(b);print_I(" added");
     	}
       	DmaChnSetTxfer(chn, (void*)&U2RXREG, private, 1, DMA_SIZE, 1);
       	DmaChnEnable(chn);
@@ -100,7 +100,7 @@ int pushContents(){
 	}
 	if(to>from ){
 		if(to<0||to>DMA_SIZE||from<0||from>DMA_SIZE){
-			println_I("Load size, WTF? from=");p_sl_I(from);print_I(" to=");p_sl_I(to);
+			println_I("Load size, WTF? from=");p_int_I(from);print_I(" to=");p_int_I(to);
 		}
 		int back = dump(from,to);
 		FLAG_ASYNC=FLAG_OK;
@@ -112,7 +112,7 @@ int pushContents(){
 	}else{
 		if(to != from){
 			dmaReadPointer = DmaChnGetDstPnt(chn);
-			println_E("Load error, WTF? from=");p_sl_E(from);print_E(" to=");p_sl_E(to);
+			println_E("Load error, WTF? from=");p_int_E(from);print_E(" to=");p_int_E(to);
 		}
 
 	}

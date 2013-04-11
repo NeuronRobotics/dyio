@@ -154,9 +154,9 @@ float getVolt(BYTE chan){
 //	WORD tmp = ADC1BUF0;
 //	float back = ((float)tmp)*0.017283951;
 //	println_I("Voltage on chan:");
-//	p_sl_I(chan);
+//	p_int_I(chan);
 //	print_I(" is ");
-//	p_sl_I(tmp);
+//	p_int_I(tmp);
 //	print_I(" is scaled to ");
 //	p_fl_I(back);
 	return getAdcVoltage(chan, 10);

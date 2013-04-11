@@ -31,9 +31,9 @@ void InitilizeBcsIo(int numPins,
 	){
 		setPrintLevelErrorPrint();
 #if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-		println_E("Failed IO sanity check: failed initialization channels #");p_ul_E(numPins);
+		println_E("Failed IO sanity check: failed initialization channels #");p_int_E(numPins);
 #endif
-		//println_E("Failed IO sanity check: failed initialization channels #");p_ul_E(numPins);
+		//println_E("Failed IO sanity check: failed initialization channels #");p_int_E(numPins);
 		//FAIL sanity check
 		while(1);
 	}
@@ -123,7 +123,7 @@ BYTE GetChannelMode(BYTE chan){
 	if(chan<0 || chan>GetNumberOfIOChannels()){
 		setPrintLevelErrorPrint();
 #if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-		println_E("Failed IO sanity check: channel number out of bounds # ");p_ul_E(chan);
+		println_E("Failed IO sanity check: channel number out of bounds # ");p_int_E(chan);
 #endif
 		//FAIL sanity check
 		while(1);
@@ -449,9 +449,9 @@ void printValues(){
 	int i;
 	println_I("Values");
 	for(i=0;i<GetNumberOfIOChannels();i++){
-		println_I("\t# ");p_ul_I(i);
-		print_I("\tCurrent ");p_ul_I(getBcsIoDataTable()[i].PIN.currentValue);
-		print_I("\tPrevious ");p_ul_I(getBcsIoDataTable()[i].PIN.previousValue);
+		println_I("\t# ");p_int_I(i);
+		print_I("\tCurrent ");p_int_I(getBcsIoDataTable()[i].PIN.currentValue);
+		print_I("\tPrevious ");p_int_I(getBcsIoDataTable()[i].PIN.previousValue);
 	}
 }
 
@@ -459,7 +459,7 @@ void printModes(){
 	int i;
 	println_I("Modes");
 	for(i=0;i<GetNumberOfIOChannels();i++){
-		println_I("\t# ");p_ul_I(i);
+		println_I("\t# ");p_int_I(i);
 		print_I("\tCurrent ");printMode(getBcsIoDataTable()[i].PIN.currentChannelMode,INFO_PRINT);
 		print_I("\tPrevious ");printMode(getBcsIoDataTable()[i].PIN.previousChannelMode,INFO_PRINT);
 	}
@@ -469,18 +469,18 @@ void printConfigurations(){
 	int i;
 	println_I("Configurations");
 	for(i=0;i<GetNumberOfIOChannels();i++){
-		println_I("\t# ");p_ul_I(i);
-		print_I("\tCurrent ");p_ul_I(getBcsIoDataTable()[i].PIN.currentConfiguration);
-		print_I("\tPrevious ");p_ul_I(getBcsIoDataTable()[i].PIN.previousConfiguration);
+		println_I("\t# ");p_int_I(i);
+		print_I("\tCurrent ");p_int_I(getBcsIoDataTable()[i].PIN.currentConfiguration);
+		print_I("\tPrevious ");p_int_I(getBcsIoDataTable()[i].PIN.previousConfiguration);
 	}
 }
 void printAsync(){
 	int i;
 	println_I("Async Data");
 	for(i=0;i<GetNumberOfIOChannels();i++){
-		println_I("\t# ");p_ul_I(i);
-		print_I("\tCurrent ");p_ul_I(getBcsIoDataTable()[i].PIN.asyncDatacurrentVal);
-		print_I("\tPrevious ");p_ul_I(getBcsIoDataTable()[i].PIN.asyncDatapreviousVal);
+		println_I("\t# ");p_int_I(i);
+		print_I("\tCurrent ");p_int_I(getBcsIoDataTable()[i].PIN.asyncDatacurrentVal);
+		print_I("\tPrevious ");p_int_I(getBcsIoDataTable()[i].PIN.asyncDatapreviousVal);
 
 	}
 }

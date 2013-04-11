@@ -8,6 +8,8 @@
 #ifndef ABSTRACTPID_H_
 #define ABSTRACTPID_H_
 #include "Bowler_Helper.h"
+#include "namespace.h"
+
 #define IntegralSize  10
 
 //bcs.pid
@@ -204,5 +206,7 @@ BOOL processPIDGet(BowlerPacket * Packet);
 
 BOOL processPIDPost(BowlerPacket * Packet);
 BOOL processPIDCrit(BowlerPacket * Packet);
+
+NAMESPACE_LIST * getBcsPidNamespace();
 
 #endif /* ABSTRACTPID_H_ */

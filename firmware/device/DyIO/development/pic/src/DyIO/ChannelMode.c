@@ -30,7 +30,7 @@ BOOL getBrownOutDetect(){
 }
 
 BOOL setMode(BYTE pin,BYTE mode){
-	println_I("Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_ul_I(pin);
+	println_I("Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_int_I(pin);
 	BYTE currentMode = GetChannelMode(pin);
 	ClearCounter(pin);
 	StopSPI(pin);

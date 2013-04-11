@@ -35,7 +35,7 @@ void LoadPIDvals(AbsPID * pid, DYIO_PID * dy){
 		return;
 	if(pidEEPRomVal[i].outputMode==pidEEPRomVal[i].inputMode)
 		return;
-	println_I("Using values for chan: ");p_ul_I(i);
+	println_I("Using values for chan: ");p_int_I(i);
 	pid->Enabled=pidEEPRomVal[i].Enabled;
 	pid->Polarity=pidEEPRomVal[i].Polarity;
 	//pidChans->Async=pidEEPRomVal[i].Async;

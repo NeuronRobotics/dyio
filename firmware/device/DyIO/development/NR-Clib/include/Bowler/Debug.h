@@ -89,7 +89,7 @@ void EnableDebugTerminal(void);
 /**
  * print the ascii of an unsigned long/int. No new line
  */
-#define p_int_E(A)  printfDEBUG_INT(A,ERROR_PRINT)
+#define p_int_E(A)  p_int(A,ERROR_PRINT)
 
 /**
  * print the null terminated string with no new lines
@@ -113,7 +113,7 @@ void EnableDebugTerminal(void);
 /**
  * print the ascii of an unsigned long/int. No new line
  */
-#define p_int_W(A)  printfDEBUG_INT(A,WARN_PRINT)
+#define p_int_W(A)  p_int(A,WARN_PRINT)
 
 
 /**
@@ -138,7 +138,7 @@ void EnableDebugTerminal(void);
 /**
  * print the ascii of an unsigned long/int. No new line
  */
-#define p_int_I(A)  printfDEBUG_INT(A,INFO_PRINT)
+#define p_int_I(A)  p_int(A,INFO_PRINT)
 
 
 /**

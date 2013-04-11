@@ -98,17 +98,17 @@ void CheckRev(void){
 	}else{
 		SetColor(1,0,0);
 		println_I("Rev. Check Failed! AVR:");
-		p_sl_I(packetTemp.use.data[0]);
+		p_int_I(packetTemp.use.data[0]);
 		print_I(".");
-		p_sl_I(packetTemp.use.data[1]);
+		p_int_I(packetTemp.use.data[1]);
 		print_I(".");
-		p_sl_I(packetTemp.use.data[2]);
+		p_int_I(packetTemp.use.data[2]);
 		print_I(" PIC:");
-		p_sl_I(MAJOR_REV);
+		p_int_I(MAJOR_REV);
 		print_I(".");
-		p_sl_I(MINOR_REV);
+		p_int_I(MINOR_REV);
 		print_I(".");
-		p_sl_I(FIRMWARE_VERSION);
+		p_int_I(FIRMWARE_VERSION);
 
 	}
 }
@@ -179,7 +179,7 @@ void SetChannelValueCoProc(BYTE PIN,BYTE state){
 	BYTE retry = 0;
 	do{
 		if(retry>0){
-			println_E("#*#*SetChannelValueCoProc did not return RDY pin: ");p_sl_E(PIN);print_E(" mode: ");printMode(GetChannelMode(PIN),ERROR_PRINT);
+			println_E("#*#*SetChannelValueCoProc did not return RDY pin: ");p_int_E(PIN);print_E(" mode: ");printMode(GetChannelMode(PIN),ERROR_PRINT);
 			printPacket(&packetTemp,ERROR_PRINT);
 			return;
 		}
@@ -249,7 +249,7 @@ BOOL GetSerialStream(BowlerPacket * packet){
 }
 
 void GetEEPRomData(BYTE start,BYTE stop,BYTE * data){
-	println_I("Getting eeprom page: ");p_ul_I(start);print_I(" to ");p_ul_I(stop);
+	println_I("Getting eeprom page: ");p_int_I(start);print_I(" to ");p_int_I(stop);
 	//WORD_VAL raw;
 	BYTE i=0;
 	if (start>stop){
@@ -281,7 +281,7 @@ void GetEEPRomData(BYTE start,BYTE stop,BYTE * data){
 }
 
 void SetEEPRomData(BYTE start,BYTE stop,BYTE * data){
-	println_I("Setting eeprom page: ");p_ul_I(start);print_I(" to ");p_ul_I(stop);
+	println_I("Setting eeprom page: ");p_int_I(start);print_I(" to ");p_int_I(stop);
 	//WORD_VAL raw;
 	BYTE i=0;
 	if (start>=stop)

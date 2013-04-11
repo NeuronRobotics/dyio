@@ -6,7 +6,7 @@ void buttonCheck(BYTE code){
 //	StartCritical();
 //	EndCritical();
 	if (_RB0==1){
-		p_ul_E(code);print_E(" Reset Button Pressed from loop");
+		p_int_E(code);print_E(" Reset Button Pressed from loop");
 		SetColor(1,1,1);
 		U1CON = 0x0000;
 		DelayMs(100);

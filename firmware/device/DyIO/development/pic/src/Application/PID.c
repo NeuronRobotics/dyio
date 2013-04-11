@@ -211,7 +211,7 @@ float getPositionMine(int group){
 		return 0;
 
 	LONG pos = 0;
-	//print_I("\nGetting PID value from group: ");p_sl_I(chan->channel);print_I(" of mode: ");printMode(chan->inputMode);print_I(" From channel: ");p_ul_I(chan->inputChannel);print_I("\n");
+	//print_I("\nGetting PID value from group: ");p_int_I(chan->channel);print_I(" of mode: ");printMode(chan->inputMode);print_I(" From channel: ");p_int_I(chan->inputChannel);print_I("\n");
 	switch(dyPid[group].inputMode){
 	case IS_COUNTER_INPUT_INT:
 	case IS_COUNTER_INPUT_DIR:
@@ -261,11 +261,11 @@ void setOutputMine(int group, float v){
 		//if(!(RunEvery(&force[chan->channel])>0))
 			return;
 	}else{
-		print_I(" Setting PID output, was ");p_sl_I(dyPid[group].outVal);print_I(" is now: ");p_sl_I(set);print_I(" on DyIO chan: ");p_sl_I(dyPid[group].outputChannel);print_I(", ");
+		print_I(" Setting PID output, was ");p_int_I(dyPid[group].outVal);print_I(" is now: ");p_int_I(set);print_I(" on DyIO chan: ");p_int_I(dyPid[group].outputChannel);print_I(", ");
 	}
 	dyPid[group].outVal=set;
 
-	println_I("PID setting output for group: ");p_ul_I(group);
+	println_I("PID setting output for group: ");p_int_I(group);
 	SetChannelValueCoProc(dyPid[group].outputChannel,dyPid[group].outVal);
 	setPrintLevel(l);
 }

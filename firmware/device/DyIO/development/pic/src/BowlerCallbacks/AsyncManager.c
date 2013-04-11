@@ -29,12 +29,12 @@ void ProcessAsyncData(BowlerPacket * Packet){
 			//ADC_val[pin-8]=ana.Val;
 			if(ana.Val>=0 && ana.Val<1024)
 				SetValFromAsync(pin,ana.Val);//asyncData[pin].currentVal=ana.Val;
-			println_I("***Setting analog value: ");p_sl_I(pin);print_I(", ");p_ul_I(ana.Val);
+			println_I("***Setting analog value: ");p_int_I(pin);print_I(", ");p_int_I(ana.Val);
 		}
 		else if((mode == IS_DI) || (mode == IS_COUNTER_INPUT_HOME)|| (mode == IS_COUNTER_OUTPUT_HOME) || mode == IS_SERVO){
 			//DIG_val[pin]=Packet->use.data[1];
 			SetValFromAsync(pin,Packet->use.data[1]);//asyncData[pin].currentVal=Packet->use.data[1];
-			println_I("***Setting digital value: ");p_sl_I(pin);print_I(", ");p_ul_I(Packet->use.data[1]);//printStream(DIG_val,NUM_PINS);
+			println_I("***Setting digital value: ");p_int_I(pin);print_I(", ");p_int_I(Packet->use.data[1]);//printStream(DIG_val,NUM_PINS);
 		}else {
 			if(IsAsync(pin)){
 				println_I("Sending async packet, not digital or analog");
@@ -74,7 +74,7 @@ void ProcessAsyncData(BowlerPacket * Packet){
 //	println_I("***Setting All value: [");
 //	int i;
 //	for(i=0;i<NUM_PINS;i++){
-//		p_sl_I(asyncData[i].currentVal);print_I(" ");
+//		p_int_I(asyncData[i].currentVal);print_I(" ");
 //	}
 //	print_I("]");
 	setPrintLevel(l);

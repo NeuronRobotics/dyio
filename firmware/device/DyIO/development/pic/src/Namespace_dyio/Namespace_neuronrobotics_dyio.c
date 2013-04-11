@@ -172,7 +172,7 @@ BOOL neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet){
 			Packet->use.data[Packet->use.head.DataLegnth-4]='\0';
 			print_I((const char *)Packet->use.data);
 			print_I(" Num Bytes:");
-			p_sl_I(Packet->use.head.DataLegnth-4);
+			p_int_I(Packet->use.head.DataLegnth-4);
 			for(i=0;i<Packet->use.head.DataLegnth-4;i++){
 				tmpName[i]=Packet->use.data[i];
 			}

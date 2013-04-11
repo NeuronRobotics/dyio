@@ -35,7 +35,7 @@ BOOL getPacket(BowlerPacket * packet){
 #if defined(USE_DMA)
 	int numAdded = updateUartDmaRx();
 	if(numAdded>0){
-		println_I("getPacket DMA added ");p_sl_I(numAdded);
+		println_I("getPacket DMA added ");p_int_I(numAdded);
 		printFiFoState_I(&store,downstream.stream);
 	}
 #endif
@@ -47,7 +47,7 @@ BOOL getPacket(BowlerPacket * packet){
 }
 
 void addCoProcByte(BYTE b){
-	//print_I("[");p_sl_I(b);print_I("]");
+	//print_I("[");p_int_I(b);print_I("]");
 	BYTE err;
 	FifoAddByte(&store,b,&err);
 }
@@ -106,7 +106,7 @@ void startUartCoProc(){
 	int actual = UARTSetDataRate(UART2, GetPeripheralClock(), INTERNAL_BAUD );
 	float percent = (((float)INTERNAL_BAUD)/((float) actual))*100.0f;
 	if(actual!=INTERNAL_BAUD){
-		println_E("###Uart baud not what was set!! Actual=");p_sl_E(actual);print_E(" desired=");p_sl_E(INTERNAL_BAUD);print_E(" %");p_fl_E(percent);
+		println_E("###Uart baud not what was set!! Actual=");p_int_E(actual);print_E(" desired=");p_int_E(INTERNAL_BAUD);print_E(" %");p_fl_E(percent);
 	}
 	UARTEnable(UART2, UART_ENABLE_FLAGS(
 			UART_PERIPHERAL |
@@ -213,7 +213,7 @@ void SendPacketToCoProc(BowlerPacket * Packet){
 			return;
 		}
 		println_E("##Failed sending to co-proc after reset also!!:");
-		p_sl_E(ret);
+		p_int_E(ret);
 		ERR(Packet,0x55,ret);
 		lastWasError = TRUE;
 		//Reset();
@@ -221,7 +221,7 @@ void SendPacketToCoProc(BowlerPacket * Packet){
 
 	Packet->use.head.ResponseFlag = 1;
 	processing=FALSE;
-	//println_I("Coproc transaction took: ");p_fl_I(getMs()-start);print_I(" after try count: ");p_sl_I(i);
+	//println_I("Coproc transaction took: ");p_fl_I(getMs()-start);print_I(" after try count: ");p_int_I(i);
 }
 
 BYTE sendPacket(BowlerPacket * Packet){
@@ -247,9 +247,9 @@ BYTE sendPacket(BowlerPacket * Packet){
 		//int dots=0;
 		while (RunEvery(&wait)<=0){
 //			print_I("\nCurrent time=");p_fl_I(getMs()/1000);
-//			print_I("\tCurrent ticks=");p_sl_I(TickGet());
-//			print_I("\tCurrent Lower ticks=");p_sl_I(TickGetLower());
-//			print_I("\tCurrent Upper ticks=");p_sl_I(TickGetUpper());
+//			print_I("\tCurrent ticks=");p_int_I(TickGet());
+//			print_I("\tCurrent Lower ticks=");p_int_I(TickGetLower());
+//			print_I("\tCurrent Upper ticks=");p_int_I(TickGetUpper());
 
 			if(getPacket(&downstream)){
 				//println_I("Got packet from getPacket");
@@ -402,7 +402,7 @@ BOOL SendPacketUARTCoProc(BYTE * packet,WORD size){
 	RunEveryData wait={getMs(),500};
 //	Print_Level l = getPrintLevel();
 //	setPrintLevelInfoPrint();
-//	println_I("SendPacketUARTCoProc ");p_sl_I(size);print_I(" Bytes [");
+//	println_I("SendPacketUARTCoProc ");p_int_I(size);print_I(" Bytes [");
 	for (i=0;i<size;i++){
 		do{
 			//print_I("_");
