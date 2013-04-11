@@ -19,7 +19,7 @@ void initAdvancedAsync(){
 	if(isInit == TRUE)
 		return;
 	isInit=TRUE;
-	println_I((const char*)"Initializing Advanced Async");
+	//println_I((const char*)"Initializing Advanced Async");
 	int i;
 	for (i=0;i<GetNumberOfIOChannels();i++){
 		startAdvancedAsyncDefault(i);
@@ -216,7 +216,7 @@ BOOL pushAsyncReady( BYTE pin){
 		//println_I("Time to do something");
 		switch(getBcsIoDataTable()[pin].PIN.asyncDatatype&0x0F){
 		case AUTOSAMP:
-			println_I("Auto samp ");p_int_I(pin);
+			//println_I("Auto samp ");p_int_I(pin);
 			getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal = getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal;
 
 			return TRUE;
@@ -244,13 +244,13 @@ BOOL pushAsyncReady( BYTE pin){
 						( last <(aval-db)) ) &&
 					(aval >=db)
 					){
-				println_I("deadband");p_int_I(pin);
+				//println_I("deadband");p_int_I(pin);
 				getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal=aval;
 				return TRUE;
 			}
 			break;
 		case THRESHHOLD:
-			println_I("treshhold");p_int_I(pin);
+			//println_I("treshhold");p_int_I(pin);
 			aval = getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal;
 			last = getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal;
 			db = getBcsIoDataTable()[pin].PIN.asyncDatathreshholdval;

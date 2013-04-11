@@ -46,7 +46,6 @@
 					<fileInfo id="0.702444624.2077198970" name="Namespace_bcs_io.c" rcbsApplicability="disable" resourcePath="common/src/Namespace_bcs_io/Namespace_bcs_io.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.570594938" name="Bcs_IO_AdvancedAsync.c" rcbsApplicability="disable" resourcePath="common/src/Namespace_bcs_io/Bcs_IO_AdvancedAsync.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1051167662" name="Abstract_bcs_io.c" rcbsApplicability="disable" resourcePath="common/src/Namespace_bcs_io/Abstract_bcs_io.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.1156447476" name="Debug_DyIO.c" rcbsApplicability="disable" resourcePath="common/src/main/Debug_DyIO.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1928737996" name="CartesianController.c" rcbsApplicability="disable" resourcePath="pic/src/Application/CartesianController.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1507709394" name="PID.c" rcbsApplicability="disable" resourcePath="pic/src/Application/PID.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1465490269" name="DyIOMain.c" rcbsApplicability="disable" resourcePath="pic/src/DyIOMain.c" toolsToInvoke=""/>
