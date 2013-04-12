@@ -12,7 +12,7 @@ dyioUpdate:update
 	if (test -d ../DyIO/); then 	rsync -avz --exclude=.svn* --exclude=.project --exclude=.cproject --exclude=Makefile ../DyIO/* 				./; fi	
 update:
 	echo Updating...
-	if (!(test -d ../NR-Clib/));				then cd ..;svn co http://nr-sdk.googlecode.com/svn/trunk/firmware/library/NR-Clib/development/ NR-Clib;					fi
+	if (!(test -d ../NR-Clib/));				then cd ..;svn co https://nr-sdk.googlecode.com/svn/trunk/firmware/library/NR-Clib/development/ NR-Clib;					fi
 	if (test -d ../NR-Clib/);					then cd ../NR-Clib/;svn update;					fi
 	if (test -d ../NR-Clib/);					then cd ../NR-Clib/Platform;make pic32MX440F128H;		fi
 	if (test -d ../NR-Clib/);					then cd ../NR-Clib/Platform;make AVR644p;				fi
