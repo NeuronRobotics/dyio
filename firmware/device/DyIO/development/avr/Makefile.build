@@ -23,26 +23,29 @@ DFILES := $(CFILES:%.c=%.d)
 
 all:clean release debug
 	echo AVR Build OK!
-
+	avr-size --format=avr --mcu=$(DEVICEA) $(OUTPUTDIR)/output.elf
+	avr-size --format=avr --mcu=$(DEVICEA) $(OUTPUTDIR_DEBUG)/output.elf
+	
 release: $(OFILES)
 	rm -rf $(OUTPUTDIR)
 	mkdir -p $(OUTPUTDIR)
 	$(LINK)  -mmcu=$(DEVICEA) $(OFILES) -lNRLIB -o $(OUTPUTDIR)output.elf
 	cd $(OUTPUTDIR); $(BIN2HEXAVR) -R .eeprom -O ihex output.elf  "output.hex"
-	cd $(OUTPUTDIR); avr-size --format=avr --mcu=$(DEVICEA) output.elf
+	
 	
 debug: $(OFILES)
 	rm -rf $(OUTPUTDIR_DEBUG)
 	mkdir -p $(OUTPUTDIR_DEBUG)
 	$(LINK)  -mmcu=$(DEVICEA) $(OFILES) -lNRLIB_debug -o $(OUTPUTDIR_DEBUG)output.elf
 	cd $(OUTPUTDIR_DEBUG); $(BIN2HEXAVR) -R .eeprom -O ihex output.elf  "output.hex"
-	cd $(OUTPUTDIR_DEBUG); avr-size --format=avr --mcu=$(DEVICEA) output.elf
+	
 	
 size:all
 	cp ../NR-Clib/lib/AVR/atmega644p/libNRLIB_debug.a output/o/
 	cd output/o/;ar x libNRLIB_debug.a
 	sh size.sh
 	avr-size --format=avr --mcu=$(DEVICEA) $(OUTPUTDIR)/output.elf
+	avr-size --format=avr --mcu=$(DEVICEA) $(OUTPUTDIR_DEBUG)/output.elf
 	
 %.o: %.c
 	$(CC) -c $< -o $@
