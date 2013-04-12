@@ -155,7 +155,6 @@ void InitilizePidController(AbsPID  groups [],
                             float (*getPositionPtr)(int),
                             void (*setOutputPtr)(int,float),
                             int (*resetPositionPtr)(int,int),
-                            BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet),
                             void (*onPidConfigurePtr)(int),
                             PidLimitEvent * (*checkPIDLimitEventsPtr)(BYTE group));
 /**
@@ -171,23 +170,23 @@ BOOL isPidEnabled(BYTE i);
 BYTE SetPIDTimed(BYTE chan,INT32 val,float ms);
 BYTE SetPID(BYTE chan,INT32 val);
 int GetPIDPosition(BYTE chan);
-void printPIDvals(int i);
+
 BYTE ZeroPID(BYTE chan);
 /**
  * Runs both Control and Coms
  */
-void RunPID(void);
+void RunPID(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
 /**
  * THis function runs the Comunication for the PID controller
  */
-void RunPIDComs();
+void RunPIDComs(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
 /**
  * This runs the get input/math/set output for the PID controller
  */
 void RunPIDControl();
 void RunPDVel(BYTE chan);
-void pushPID(BYTE chan, INT32 value, float time);
-void pushPIDLimitEvent(PidLimitEvent * event);
+void pushPID(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet),BYTE chan, INT32 value, float time);
+void pushPIDLimitEvent(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet),PidLimitEvent * event);
 
 /***
  * This is a getter for the interpolation state
@@ -208,5 +207,7 @@ BOOL processPIDPost(BowlerPacket * Packet);
 BOOL processPIDCrit(BowlerPacket * Packet);
 
 NAMESPACE_LIST * getBcsPidNamespace();
+
+AbsPID * getPidGroupDataTable();
 
 #endif /* ABSTRACTPID_H_ */

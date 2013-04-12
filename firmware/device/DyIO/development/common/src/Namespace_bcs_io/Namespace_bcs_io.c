@@ -11,8 +11,6 @@
 
 const char ioNSName[] = "bcs.io.*;0.3;;";
 
-
-static BowlerPacket packetTemp;
 BOOL bcsIoAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
 
 	int i;
@@ -23,11 +21,11 @@ BOOL bcsIoAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(Bo
 		}
 	}
 	if(update){
-		populateGACV(&packetTemp);
-		packetTemp.use.head.Method=BOWLER_ASYN;
+		populateGACV(Packet);
+		Packet->use.head.Method=BOWLER_ASYN;
 		FixPacket(Packet);
 		if(pidAsyncCallbackPtr!=NULL)
-			pidAsyncCallbackPtr(& packetTemp);
+			pidAsyncCallbackPtr(Packet);
 	}
 
     return FALSE;
