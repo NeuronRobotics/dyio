@@ -49,6 +49,7 @@ size:all
 	
 %.o: %.c
 	$(CC) -c $< -o $@
+	mkdir -p output/o/
 	cp $@ output/o/
 clean:
 	 rm -rf $(OFILES) $(DFILES)

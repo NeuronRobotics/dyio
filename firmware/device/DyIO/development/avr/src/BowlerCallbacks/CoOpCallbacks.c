@@ -98,8 +98,8 @@ void setAnv(BYTE pin, UINT16 val);
 //BYTE DI_PUSH_val[24];
 //UINT16 ADC_val[8];
 #define ANALOG_DEAD_BAND 1
-BOOL ack=FALSE;
-RunEveryData asyncSched = {0,10.0};
+//BOOL ack=FALSE;
+//RunEveryData asyncSched = {0,10.0};
 #define blockTime 24.0f
 #define blockInc1 (blockTime/3.0f)
 #define blockInc2 (blockInc1+blockInc1)
