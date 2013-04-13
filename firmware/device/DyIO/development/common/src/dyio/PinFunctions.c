@@ -4,7 +4,7 @@
 
 
 
-DATA_STRUCT DATA[NUM_PINS];
+static DATA_STRUCT DATA[NUM_PINS];
 
 void InitPinFunction(void){
 	int i;
