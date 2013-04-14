@@ -57,7 +57,10 @@ BOOL checkDigital(){
 			if(mode == IS_SERVO){
 				SetValFromAsync(i,GetServoPos(i));
 			}else{
-				SetValFromAsync(i,GetDIO(i));
+				if(GetValFromAsync(i) != GetDIO(i)){
+					SetValFromAsync(i,GetDIO(i));
+					printAsync();
+				}
 			}
 		}
 	}

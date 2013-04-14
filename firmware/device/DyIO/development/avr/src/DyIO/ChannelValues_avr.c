@@ -90,7 +90,7 @@ BOOL GetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data){
 		}
 		if(isSingleByteMode(mode)){
 			//mask the time into the data byte
-			 data[0] = getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal & 0x000000ff;
+			 data[0] = getBcsIoDataTable()[pin].PIN.asyncDataCurrentVal & 0x000000ff;
 		}
 		return TRUE;
 	}

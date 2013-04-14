@@ -141,14 +141,14 @@ typedef union  _FUNCTION_MAP
 		INT32 previousValue;
 		BYTE previousConfiguration;
 		BYTE  previousChannelMode;
-		INT32			asyncDatapreviousVal;
-		INT32			asyncDatacurrentVal;
-		BYTE		asyncDatatype;
+		INT32			asyncDataPreviousVal;
+		INT32			asyncDataCurrentVal;
+		BYTE		asyncDataType;
 		BYTE 		asyncDataenabled;
 		INT32 	asyncDatadeadBandval;
 		INT32 	asyncDatathreshholdval;
 		BYTE asyncDatathreshholdedge;
-		RunEveryData 	asyncDatatime;
+		RunEveryData 	asyncDataTime;
 	} PIN_MAP;
 
 

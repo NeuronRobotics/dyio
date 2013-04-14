@@ -42,7 +42,7 @@ BOOL neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCa
 	int i;
 	for(i=0;i<GetNumberOfIOChannels();i++){
 		if(GetChannelMode(i)==IS_COUNTER_INPUT_INT || GetChannelMode(i)==IS_COUNTER_OUTPUT_INT){
-			getBcsIoDataTable()[i].PIN.asyncDatacurrentVal = GetCounterByChannel(i);
+			getBcsIoDataTable()[i].PIN.asyncDataCurrentVal = GetCounterByChannel(i);
 		}
 	}
 	if (RunEvery(&ppm)>0)

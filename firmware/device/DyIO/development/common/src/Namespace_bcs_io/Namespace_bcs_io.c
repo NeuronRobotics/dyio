@@ -16,7 +16,7 @@ BOOL bcsIoAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(Bo
 	int i;
 	BOOL update=FALSE;
 	for(i=0;i<GetNumberOfIOChannels();i++){
-		if(ASYN_RDY(i)){
+		if(pushAsyncReady(i)){
 			update=TRUE;
 		}
 	}
@@ -24,9 +24,10 @@ BOOL bcsIoAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(Bo
 		populateGACV(Packet);
 		Packet->use.head.Method=BOWLER_ASYN;
 		FixPacket(Packet);
-		//println_I("bcs_io Async");
-		if(pidAsyncCallbackPtr!=NULL)
+		println_I("bcs_io Async");
+		if(pidAsyncCallbackPtr!=NULL){
 			pidAsyncCallbackPtr(Packet);
+		}
 	}
 
     return FALSE;

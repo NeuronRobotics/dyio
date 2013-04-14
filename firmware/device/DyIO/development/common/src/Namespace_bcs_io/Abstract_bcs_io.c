@@ -476,12 +476,14 @@ void printConfigurations(){
 }
 void printAsync(){
 	int i;
-	println_I("Async Data");
+	println_I("Async Data ");p_fl_I(getMs());
 	for(i=0;i<GetNumberOfIOChannels();i++){
 		println_I("\t# ");p_int_I(i);
-		print_I("\tCurrent ");p_int_I(getBcsIoDataTable()[i].PIN.asyncDatacurrentVal);
-		print_I("\tPrevious ");p_int_I(getBcsIoDataTable()[i].PIN.asyncDatapreviousVal);
-
+		print_I("\tCurrent ");p_int_I(getBcsIoDataTable()[i].PIN.asyncDataCurrentVal);
+		print_I("\tPrevious ");p_int_I(getBcsIoDataTable()[i].PIN.asyncDataPreviousVal);
+		print_I("\tMode ");printAsyncType(getBcsIoDataTable()[i].PIN.asyncDataType);
+		print_I("\tIteration ");p_fl_I(getBcsIoDataTable()[i].PIN.asyncDataTime.setPoint);
+		print_I("\tLast ");p_fl_I(getBcsIoDataTable()[i].PIN.asyncDataTime.MsTime);
 	}
 }
 
