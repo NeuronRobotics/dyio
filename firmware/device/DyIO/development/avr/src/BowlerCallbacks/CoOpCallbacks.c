@@ -228,9 +228,7 @@ void UserRun(void){
 	}
 }
 
-void AsynAck(void){
-	ack=TRUE;
-}
+
 BOOL getDig(BYTE pin){
 	return GetValFromAsync(pin);
 }

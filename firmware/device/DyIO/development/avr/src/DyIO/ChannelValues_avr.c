@@ -164,7 +164,7 @@ BOOL GetChannelValue(BowlerPacket * Packet){
 	//int i;
 	UINT16 val=GetChanVal(pin);
 	if(IsAsync(pin)){
-		AsynAck();
+		//AsynAck();
 	}
 	Packet->use.head.Method=BOWLER_POST;
 	if ((mode == IS_DC_MOTOR_VEL)||(mode == IS_DC_MOTOR_DIR)||(mode == IS_DO)|| (mode == IS_PWM)|| (mode == IS_SERVO) || (mode == IS_DI) ||(mode == IS_COUNTER_OUTPUT_HOME)||(mode == IS_COUNTER_INPUT_HOME)){

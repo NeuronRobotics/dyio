@@ -13,7 +13,7 @@ RunEveryData vel={0,100};
 BOOL bcsPidDypidAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
 
 	if (RunEvery(&pid)>0){
-		RunPID();
+		RunPIDControl();
 	}
 #if defined(USE_VELOCITY)
 	if (RunEvery(&vel)>0){

@@ -12,8 +12,6 @@ static DYIO_PID 		dyPid[NUM_PID_GROUPS];
 static PD_VEL 			vel[NUM_PID_GROUPS];
 static PidLimitEvent	limits[NUM_PID_GROUPS];
 
-extern DATA_STRUCT * DATA __attribute__ ((section (".scs_global_var")));
-
 #define DYPID_NON_USED 0xff
 
 float getPositionMine(int group);
@@ -99,7 +97,7 @@ void InitPID(void){
 							&getPositionMine,
 							&setOutputMine,
 							&resetPositionMine,
-							&asyncCallback,
+							//&asyncCallback,
 							&onPidConfigureMine,
 							&checkPIDLimitEventsMine);
 
@@ -236,7 +234,7 @@ void setOutputMine(int group, float v){
 	Print_Level l = getPrintLevel();
 	setPrintLevelNoPrint();
 	int val = (int)(v);
-	BYTE center = DATA[dyPid[group].outputChannel].PIN.currentConfiguration;
+	BYTE center = getBcsIoDataTable()[dyPid[group].outputChannel].PIN.currentConfiguration;
 
 	if(dyPid[group].outputMode == IS_SERVO){
 		val += center;
