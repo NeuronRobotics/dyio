@@ -229,10 +229,6 @@ BOOL pushAsyncReady( BYTE pin){
 				printfDEBUG_BYTE('\t',INFO_PRINT);
 				p_int_I(getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal);
 				getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal = getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal;
-				printfDEBUG_BYTE('\t',INFO_PRINT);
-				p_int_I(getBcsIoDataTable()[pin].PIN.asyncDatapreviousVal);
-				printfDEBUG_BYTE('\t',INFO_PRINT);
-				p_int_I(getBcsIoDataTable()[pin].PIN.asyncDatacurrentVal);
 				return TRUE;
 			}
 			break;
@@ -287,7 +283,7 @@ void populateGACV(BowlerPacket * Packet){
 	Packet->use.head.MessageID=37;
 	int i;
 	for(i=0;i<GetNumberOfIOChannels();i++){
-		s.Val= getBcsIoDataTable()[i].PIN.currentValue;
+		s.Val= getBcsIoDataTable()[i].PIN.asyncDatacurrentVal;
 		Packet->use.data[(i*4)+0]=s.byte.FB;
 		Packet->use.data[(i*4)+1]=s.byte.TB;
 		Packet->use.data[(i*4)+2]=s.byte.SB;

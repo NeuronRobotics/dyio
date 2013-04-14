@@ -24,9 +24,8 @@ void sendHeader(BYTE legnth,char * rpc){
 }
 
 BOOL avrAsyncCallbackPtr(BowlerPacket *Packet){
-	//println_I("<<Async\n\r");printPacket(Packet,INFO_PRINT);
 	FixPacket(Packet);
-	println_I("<<Fixed\n\r");printPacket(Packet,INFO_PRINT);
+	//println_I("<<Async\n\r");printPacket(Packet,INFO_PRINT);
 	int i;
 	for(i=0;i<Packet->use.head.DataLegnth+BowlerHeaderSize;i++){
 		send(Packet->stream[i]);
@@ -61,7 +60,7 @@ void PushAllAdcVal(){
 	sendHeader(4+16,"aasn");
 	int i=0;
 	for(i=8;i<16;i++){
-		an.Val=getAnv(i);
+		an.Val=GetValFromAsync(i);
 		send(an.byte.SB);
 		send(an.byte.LB);
 	}
@@ -94,7 +93,7 @@ void PushAllDiVal(){
 	sendHeader(4+24,"dasn");
 	int i=0;
 	for(i=0;i<24;i++){
-		send(getDig(i));
+		send(GetValFromAsync(i));
 	}
 	//FlagBusy_IO=0;
 	//_delay_us(800);
