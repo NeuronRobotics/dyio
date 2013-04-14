@@ -59,7 +59,7 @@ BOOL checkDigital(){
 			}else{
 				if(GetValFromAsync(i) != GetDIO(i)){
 					SetValFromAsync(i,GetDIO(i));
-					printAsync();
+					//printAsync();
 				}
 			}
 		}

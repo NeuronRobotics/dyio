@@ -13,8 +13,8 @@
 //static AdvancedAsyncData asyncData[NUM_PINS];
 
 void ProcessAsyncData(BowlerPacket * Packet){
-	println_I("**Got Async Packet**");
-	printPacket(Packet,INFO_PRINT);
+	//println_I("**Got Async Packet**");
+	//printPacket(Packet,INFO_PRINT);
 
 	Print_Level l = getPrintLevel();
 	setPrintLevelInfoPrint();

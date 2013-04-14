@@ -24,7 +24,7 @@ BOOL bcsIoAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(Bo
 		populateGACV(Packet);
 		Packet->use.head.Method=BOWLER_ASYN;
 		FixPacket(Packet);
-		println_I("bcs_io Async");
+		//println_I("bcs_io Async");
 		if(pidAsyncCallbackPtr!=NULL){
 			pidAsyncCallbackPtr(Packet);
 		}
