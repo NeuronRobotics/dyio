@@ -51,16 +51,19 @@ void CheckSwitches(void){
 		}
 	//}
 	if(up){
-		print_I("\nPushing upstream Power Packet bank 0: ");p_int_I(bankState[0]);print_I(" bank 1: ");p_int_I(bankState[1]);print_I(" \nPower Code 0: ");p_int_I(GetRawVoltageCode(0));print_I(" \nPower Code 1 : ");p_int_I(GetRawVoltageCode(1));print_I(" \nRaw: ");p_fl_I(GetRawVoltage());
+		println_I("Pushing upstream Power Packet bank 0: ");p_int_I(bankState[0]);print_I(" bank 1: ");p_int_I(bankState[1]);
+		println_I("Power Code 0: ");p_int_I(GetRawVoltageCode(0));
+		println_I("Power Code 1 : ");p_int_I(GetRawVoltageCode(1));
+		println_I("Raw: ");p_fl_I(GetRawVoltage());
 		UpstreamPushPowerChange();
 	}
 }
 
 BYTE IsRegulated(float voltage){
 	float raw = GetRawVoltage();//adding the voltage drop across the diaode
-	if((voltage < raw+.01)&&(voltage > raw-.01))
+	if((voltage < raw+10)&&(voltage > raw-10))
 		return FALSE;
-	if ((voltage<(RawVoltageMin))&&(voltage>(4.4))){//USB spec is 5.25v to 4.4v.
+	if ((voltage<(RawVoltageMin))&&(voltage>(FiveVoltADC))){//USB spec is 5.25v to 4.4v.
 		return TRUE;
 	}
 	return FALSE;

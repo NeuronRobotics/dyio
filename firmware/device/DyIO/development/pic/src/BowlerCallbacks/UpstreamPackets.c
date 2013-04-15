@@ -90,7 +90,7 @@ void UpstreamPushPowerChange(void){
 	LoadCorePacket(& packetTemp);
 	POWER(& packetTemp);
 	packetTemp.use.head.MessageID=3;
-	 packetTemp.use.head.Method=BOWLER_ASYN;
+	packetTemp.use.head.Method=BOWLER_ASYN;
 	PutBowlerPacket(& packetTemp);
 	UpdateAVRLED();
 }
@@ -101,7 +101,7 @@ void POWER(BowlerPacket * packet){
 	packet->use.head.RPC=GetRPCValue("_pwr");
 	packet->use.data[0]=isRegulated_0();
 	packet->use.data[1]=isRegulated_1();
-	raw.Val=(WORD)(GetRawVoltage()*1000);
+	raw.Val=(WORD)(GetRawVoltage());
 	packet->use.data[2]=raw.byte.SB;
 	packet->use.data[3]=raw.byte.LB;
 	packet->use.head.DataLegnth=8;

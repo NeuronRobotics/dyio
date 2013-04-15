@@ -6,14 +6,14 @@
  */
 
 #include "UserApp.h"
-float getVolt(BYTE chan);
+UINT32 getDyIOVoltage(BYTE chan);
 
 BOOL init = FALSE;
 #define AVG_SIZE 20
 
 typedef struct __attribute__((__packed__)) _ROLLINGAVG
 {
-	float rawAvg[AVG_SIZE];
+	UINT32 rawAvg[AVG_SIZE];
 	float avgSum;
 	BYTE avgIndex;
 	BYTE adcChan;
@@ -25,14 +25,15 @@ float lastLowTime=0;
 
 static BOOL lockOutRail = FALSE;
 static BOOL externalLock=FALSE;
-float calc(ROLLINGAVG * avg){
-	float v=getVolt(avg->adcChan);
-	avg->avgSum+=v;
-	avg->rawAvg[avg->avgIndex ++]=v;
-	if (avg->avgIndex == AVG_SIZE)
-		avg->avgIndex=0;
-	avg->avgSum-=(float)avg->rawAvg[avg->avgIndex];
-	return (avg->avgSum/AVG_SIZE);
+INT32 calc(ROLLINGAVG * avg){
+	UINT32 v=getDyIOVoltage(avg->adcChan);
+//	avg->avgSum+=v;
+//	avg->rawAvg[avg->avgIndex ++]=v;
+//	if (avg->avgIndex == AVG_SIZE)
+//		avg->avgIndex=0;
+//	avg->avgSum-=(float)avg->rawAvg[avg->avgIndex];
+//	return (avg->avgSum/AVG_SIZE);
+	return v;
 }
 void InitADC(void){
 	if(init==TRUE)
@@ -74,7 +75,6 @@ void lockServos(){
 #define flux 200
 RunEveryData lockOutTimeout;
 BYTE GetRawVoltageCode(BYTE bank){
-	BYTE back;
 
 	float rv =GetRawVoltage();
 	if(lockOutRail == FALSE){
@@ -103,20 +103,19 @@ BYTE GetRawVoltageCode(BYTE bank){
 	}else{
 		rv = GetRail1Voltage();
 	}
-	if(rv>RawVoltageMin-1.5){
+	if(rv>RawVoltageMin){
 		lastHighTime = getMs();
 		if(externalLock==TRUE)
 			return 3;
-		back=1;
+		return 1;
 	}else {
 		lastLowTime = getMs();
-		if(rv<3.0 && externalLock==FALSE){
-			back=2;
+		if(rv<3000 && externalLock==FALSE){
+			return 2;
 		}else{
-			back=0;
+			return 0;
 		}
 	}
-	return back;
 }
 
 float GetRawVoltage(void){
@@ -135,29 +134,10 @@ float GetRail1Voltage(void){
 	return calc(&adc[1]);
 }
 
-float getVolt(BYTE chan){
+UINT32 getDyIOVoltage(BYTE chan){
 	InitADC();
-//	AD1CHSbits.CH0SA = chan;
-//	AD1CON1bits.SAMP = 1;
-//	Delay10us(5);
-//	AD1CON1bits.SAMP = 0;
-//	RUN_EVERY timeout = {getMs(),2};
-//	while (AD1CON1bits.DONE == 0 && RunEvery(&timeout)==0){
-//		// Wait for ADC to finish
-//		buttonCheck(2);
-//	}
-//	if(AD1CON1bits.DONE == 1){
-//		//init = FALSE;
-//		return 0;
-//	}
-//	AD1CHS =0;
-//	WORD tmp = ADC1BUF0;
-//	float back = ((float)tmp)*0.017283951;
-//	println_I("Voltage on chan:");
-//	p_int_I(chan);
-//	print_I(" is ");
-//	p_int_I(tmp);
-//	print_I(" is scaled to ");
-//	p_fl_I(back);
-	return getAdcVoltage(chan, 10);
+	float scale = 16.283951;
+	UINT32 raw = getAdcRaw(chan, 5);
+	UINT32 volt = (UINT32)(((float)raw)*scale);
+	return volt;
 }

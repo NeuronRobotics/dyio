@@ -7,7 +7,7 @@
 #include "UserApp.h"
 
 const unsigned char dyioNSName[] = "neuronrobotics.dyio.*;0.3;;";
-RunEveryData syncVolt={0,2000};
+RunEveryData syncVolt={0,200};
 RunEveryData ppm={0,50};
 
 BOOL pwr=FALSE;
@@ -51,7 +51,19 @@ BOOL neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCa
 
 
 //	if ((RunEvery(&syncVolt)>0)){
-//		UpdateAVRLED();
+//		//UpdateAVRLED();
+//		println_I("Voltages\n");
+//		int i;
+//		for(i=12;i<16;i++){
+//			UINT32 val = getDyIOVoltage(i);
+//			println_I("\t# ");p_int_I(i);
+//			print_I("\t");p_int_I(val);
+//			print_I("\t");p_int_I(getAdcRaw(i, 5));
+////			UINT32_UNION tmp;
+////			tmp.Val = val;
+////			printStream_I(tmp.v,4);
+////			println_I(" ");
+//		}
 //	}
 	CheckSwitches();
 
