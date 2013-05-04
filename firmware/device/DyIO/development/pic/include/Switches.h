@@ -7,9 +7,9 @@
 
 #ifndef SWITCHES_H_
 #define SWITCHES_H_
-#define FiveVoltADC		 4700
+#define FiveVoltADC		 4500
 #define RailDeadZone	 300
-#define RawVoltageMin	 5500
+#define RawVoltageMin	 4900
 
 BYTE IsRegulated(float voltage);
 #if defined(LAST_DEV_BOARD)

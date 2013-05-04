@@ -72,7 +72,7 @@ void unlockServos(){
 void lockServos(){
 	externalLock=TRUE;
 }
-#define flux 200
+#define timeOfVoltageflux .2
 RunEveryData lockOutTimeout;
 BYTE GetRawVoltageCode(BYTE bank){
 
@@ -83,11 +83,15 @@ BYTE GetRawVoltageCode(BYTE bank){
 		float diffHigh = (current-lastHighTime);
 		if((current>lastLowTime) && (current>lastHighTime)){
 			if((lastHighTime != 0) &&  (lastLowTime != 0)){
-				if((diffLow<flux) && (diffHigh<flux)){
+				if((diffLow<timeOfVoltageflux) && (diffHigh<timeOfVoltageflux)){
 					lockOutRail=TRUE;
 					lockOutTimeout.MsTime=current;
 					lockOutTimeout.setPoint=1000;
 					UpstreamPushPowerChange();
+					println_I("Power fluctuation detected\n");
+					println_I("Current Time: ");p_fl_I(current);
+					println_I("Last low time: ");p_fl_I(lastLowTime);print_I(", ");p_fl_I(diffLow);
+					println_I("Last high time : ");p_fl_I(lastHighTime);print_I(", ");p_fl_I(diffHigh);
 				}
 			}
 		}
@@ -95,6 +99,7 @@ BYTE GetRawVoltageCode(BYTE bank){
 		if(RunEvery(&lockOutTimeout)>0){
 			lockOutRail = FALSE;
 			UpstreamPushPowerChange();
+			println_I("Power fluctuation Reset");
 		}
 		return 0;
 	}

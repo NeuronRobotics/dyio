@@ -14,18 +14,12 @@ static float volt;
 
 
 void CheckSwitches(void){
+
+	Print_Level l = getPrintLevel();
+	setPrintLevelInfoPrint();
 	switched=0;
 	volt = GetRawVoltage();
 	BOOL up = FALSE;
-
-	//println_I("Voltage on raw:");
-	//p_fl_I(volt);
-
-	//println_I("Voltage on bank0:");
-	//p_fl_I(GetRail0Voltage());
-
-	//println_I("Voltage on bank1:");
-	//p_fl_I(GetRail1Voltage());
 
 	BYTE reg = isRegulated_0();
 	if (bankState[0] != reg ){
@@ -40,27 +34,35 @@ void CheckSwitches(void){
 		up=TRUE;
 	}
 
-	//if(! (bankState[1] == 1 && bankState[0] ==1 ) ){
-		if ((lastVolt>RawVoltageMin) && (volt<RawVoltageMin)){
-			up=TRUE;
-			lastVolt = volt;
-		}
-		if ((lastVolt<RawVoltageMin) && (volt>RawVoltageMin)){
-			up=TRUE;
-			lastVolt = volt;
-		}
-	//}
+	if ((lastVolt>RawVoltageMin) && (volt<RawVoltageMin)){
+		up=TRUE;
+		lastVolt = volt;
+	}
+	if ((lastVolt<RawVoltageMin) && (volt>RawVoltageMin)){
+		up=TRUE;
+		lastVolt = volt;
+	}
+
 	if(up){
+		println_I("\nVoltage on raw:   \t");
+		p_fl_I(volt);
+
+		println_I("Voltage on bank0: \t");
+		p_fl_I(GetRail0Voltage());
+
+		println_I("Voltage on bank1:\t");
+		p_fl_I(GetRail1Voltage());
 		println_I("Pushing upstream Power Packet bank 0: ");p_int_I(bankState[0]);print_I(" bank 1: ");p_int_I(bankState[1]);
 		println_I("Power Code 0: ");p_int_I(GetRawVoltageCode(0));
 		println_I("Power Code 1 : ");p_int_I(GetRawVoltageCode(1));
 		println_I("Raw: ");p_fl_I(GetRawVoltage());
 		UpstreamPushPowerChange();
 	}
+	setPrintLevel(l);
 }
 
 BYTE IsRegulated(float voltage){
-	float raw = GetRawVoltage();//adding the voltage drop across the diaode
+	float raw = GetRawVoltage()-130;//adding the voltage drop across the diaode
 	if((voltage < raw+10)&&(voltage > raw-10))
 		return FALSE;
 	if ((voltage<(RawVoltageMin))&&(voltage>(FiveVoltADC))){//USB spec is 5.25v to 4.4v.

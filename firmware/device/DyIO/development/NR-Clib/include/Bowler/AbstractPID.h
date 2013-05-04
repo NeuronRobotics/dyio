@@ -72,8 +72,9 @@ typedef struct _AbsPID
         unsigned char   	useIndexLatch;
         float			CurrentState;
         float			PreviousError;
-        unsigned int            integralCircularBufferIndex;
+        //unsigned int            integralCircularBufferIndex;
         float	 		integralTotal;
+        float                     integralSize;
         float			Output;
         // This must be in MS
         float			PreviousTime;
@@ -86,7 +87,8 @@ typedef struct _AbsPID
 			float		D;
 		} K;
         INTERPOLATE_DATA interpolate;
-        float  			IntegralCircularBuffer[IntegralSize];
+        //float  			IntegralCircularBuffer[IntegralSize];
+        
 } AbsPID;
 
 typedef struct _DYIO_PID
