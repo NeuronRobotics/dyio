@@ -124,24 +124,24 @@ static RPC_LIST internal_save_g={	BOWLER_GET,// Method
 
 static RPC_LIST internal_pwr_p={	BOWLER_POST,// Method
                                 "_pwr",//RPC as string
-                                &internalProcessor_g,//function pointer to a packet parsinf function
+                                &internalProcessor_p,//function pointer to a packet parsinf function
                                 NULL //Termination
 };
 static RPC_LIST internal_eepd_p={	BOWLER_POST,// Method
                                 "eepd",//RPC as string
-                                &internalProcessor_g,//function pointer to a packet parsinf function
+                                &internalProcessor_p,//function pointer to a packet parsinf function
                                 NULL //Termination
 };
 
 
 static RPC_LIST internal_mac_c={	BOWLER_CRIT,// Method
                                 "_mac",//RPC as string
-                                &internalProcessor_g,//function pointer to a packet parsinf function
+                                &internalProcessor_c,//function pointer to a packet parsinf function
                                 NULL //Termination
 };
 static RPC_LIST internal_pwr_c={	BOWLER_CRIT,// Method
                                 "_pwr",//RPC as string
-                                &internalProcessor_g,//function pointer to a packet parsinf function
+                                &internalProcessor_c,//function pointer to a packet parsinf function
                                 NULL //Termination
 };
 
