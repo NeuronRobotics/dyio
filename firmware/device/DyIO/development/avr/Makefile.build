@@ -41,11 +41,13 @@ debug: $(OFILES)
 	
 	
 size:all
+	rm -rf output/o/*
 	cp ../NR-Clib/lib/AVR/atmega644p/libNRLIB_debug.a output/o/
 	cd output/o/;ar x libNRLIB_debug.a
 	sh size.sh
 	avr-size --format=avr --mcu=$(DEVICEA) $(OUTPUTDIR)/output.elf
 	avr-size --format=avr --mcu=$(DEVICEA) $(OUTPUTDIR_DEBUG)/output.elf
+	
 	
 %.o: %.c
 	$(CC) -c $< -o $@

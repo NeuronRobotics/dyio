@@ -21,12 +21,22 @@ BOOL bcsIoSetmodeAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallback
 static RPC_LIST bcsIoSetmode_schm_p={	BOWLER_POST,// Method
                                 "schm",//RPC as string
                                 &AbstractSetChannelMode,//function pointer to a packet parsinf function
-                                NULL //Termination
+                                ((const char [1]){
+													0}),// Calling arguments
+								BOWLER_POST,// response method
+								( (const char [1]){
+													0}),// Response arguments
+								NULL //Termination
 };
 static RPC_LIST bcsIoSetmode_sacm_p={	BOWLER_POST,// Method
                                 "sacm",//RPC as string
                                 &AbstractSetAllChannelMode,//function pointer to a packet parsinf function
-                                NULL //Termination
+                                ((const char [1]){
+													0}),// Calling arguments
+								BOWLER_POST,// response method
+								( (const char [1]){
+													0}),// Response arguments
+								NULL //Termination
 };
 
 

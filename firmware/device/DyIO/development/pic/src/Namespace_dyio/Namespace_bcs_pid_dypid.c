@@ -55,13 +55,23 @@ BOOL bcsPidDypidProcessor_c(BowlerPacket * Packet){
 static RPC_LIST bcsPidDypid_dpid_g={	BOWLER_GET,// Method
                                 "dpid",//RPC as string
                                 &bcsPidDypidProcessor_g,//function pointer to a packet parsinf function
-                                NULL //Termination
+                                ((const char [1]){
+													0}),// Calling arguments
+								BOWLER_POST,// response method
+								( (const char [1]){
+													0}),// Response arguments
+								NULL //Termination
 };
 
 static RPC_LIST bcsPidDypid_dpid_c={	BOWLER_CRIT,// Method
                                 "dpid",//RPC as string
                                 &bcsPidDypidProcessor_c,//function pointer to a packet parsinf function
-                                NULL //Termination
+                                ((const char [1]){
+                                													0}),// Calling arguments
+                                								BOWLER_POST,// response method
+                                								( (const char [1]){
+                                													0}),// Response arguments
+                                								NULL //Termination
 };
 
 static NAMESPACE_LIST bcsPidDypid ={	dypidNSName,// The string defining the namespace

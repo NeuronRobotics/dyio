@@ -28,7 +28,7 @@
 #define RPCDataStart 			15
 #define RPCCodeStart 			BowlerHeaderSize
 
-#define PRINT_BAUD 					115200
+#define PRINT_BAUD 			115200
 
 #define INTERNAL_BAUD 				230400
 //#define INTERNAL_BAUD 				115200
@@ -39,10 +39,19 @@
 
 //Method Codes
 #define BOWLER_STATUS 					0x00
-#define BOWLER_GET						0x10
+#define BOWLER_GET					0x10
 #define BOWLER_POST  					0x20
 #define BOWLER_CRIT 	 				0x30
 #define BOWLER_ASYN 	 				0x40
+
+#define BOWLER_I08      8 // 8 bit integer
+#define BOWLER_I16      16//16 bit integer
+#define BOWLER_I32      32//32 bit integer
+#define BOWLER_STR      37// first byte is number of values, next is byte values
+#define BOWLER_I32STR   38// first byte is number of values, next is 32 bit values
+#define BOWLER_ASCII    39// ASCII string, null terminated
+#define BOWLER_FIXED100    41// ASCII string, null terminated
+#define BOWLER_FIXED1K    42// ASCII string, null terminated
 
 #if !defined(__GENERIC_TYPE_DEFS_H_)
 	typedef enum _BOOL { FALSE = 0, TRUE } BOOL;    /* Undefined size */

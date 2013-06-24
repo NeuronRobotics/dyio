@@ -169,6 +169,7 @@ BYTE SetAllCoProcValues(){
 			tmp = getBcsIoDataTable()[i].PIN.currentValue ;
 			getBcsIoDataTable()[i].PIN.previousValue =getBcsIoDataTable()[i].PIN.currentValue ;
 			set32bit(& packetTemp,tmp,i*4);
+			packetTemp.use.head.DataLegnth +=4;
 		}
 		SendPacketToCoProc(& packetTemp);
 	}

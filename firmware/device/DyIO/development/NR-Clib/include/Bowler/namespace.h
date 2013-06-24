@@ -21,6 +21,13 @@ typedef struct  _RPC_LIST{
 	const char * rpc;
 	//This is the callback function pointer for execution of the method
 	packetEventCallback * callback;
+        //This is the array of argument data types
+	const char * arguments;
+        //This is the bowler method for this RPC
+	BYTE responseMethod;
+        //This is the array of argument data types
+	const char * responseArguments;
+        
 	//This is the linked list field
 	struct _RPC_LIST * next;
 } RPC_LIST;
@@ -39,10 +46,12 @@ typedef struct _NAMESPACE_LIST{
 
 
 RPC_LIST * getRpcByID(NAMESPACE_LIST * namespace,unsigned long  rpcId, BYTE bowlerMethod);
+RPC_LIST * getRpcByIndex(NAMESPACE_LIST * namespace,BYTE index);
 void addNamespaceToList(NAMESPACE_LIST * newNs);
 void addRpcToNamespace(NAMESPACE_LIST * namespace,RPC_LIST * rpc );
 NAMESPACE_LIST * getNamespaceAtIndex(int index);
 BYTE getNumberOfNamespaces();
+BYTE getNumberOfRpcs(int namespaceIndex);
 
 void RunNamespaceAsync(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
 

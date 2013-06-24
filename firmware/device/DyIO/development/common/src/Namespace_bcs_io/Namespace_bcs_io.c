@@ -11,7 +11,7 @@
 
 const char ioNSName[] = "bcs.io.*;0.3;;";
 
-BOOL bcsIoAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
+BOOL bcsIoAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *)){
 
 	int i;
 	BOOL update=FALSE;
@@ -37,73 +37,138 @@ BOOL bcsIoAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(Bo
 static RPC_LIST bcsIo_gchm_g={	BOWLER_GET,// Method
 		(const char*)"gchm",//RPC as string
                                 &GetChannelModeFromPacket,//function pointer to a packet parsing function
-                                NULL //Termination
+                                ((const char [1]){
+													0}),// Calling arguments
+								BOWLER_POST,// response method
+								( (const char [1]){
+													0}),// Response arguments
+								NULL //Termination
 };
 
 static RPC_LIST bcsIo_gacm_g={	BOWLER_GET,// Method
 		(const char*) "gacm",//RPC as string
                                 &GetAllChannelModeFromPacket,//function pointer to a packet parsing function
-                                NULL //Termination
+                                ((const char [1]){
+													0}),// Calling arguments
+								BOWLER_POST,// response method
+								( (const char [1]){
+													0}),// Response arguments
+								NULL //Termination
 };
 
 static RPC_LIST bcsIo_gchv_g={	BOWLER_GET,// Method
 		(const char*) "gchv",//RPC as string
                                 &GetChanelValueFromPacket,//function pointer to a packet parsing function
-                                NULL //Termination
+                                ((const char [1]){
+													0}),// Calling arguments
+								BOWLER_POST,// response method
+								( (const char [1]){
+													0}),// Response arguments
+								NULL //Termination
 };
 static RPC_LIST bcsIo_gacv_g={	BOWLER_GET,// Method
 		(const char*) "gacv",//RPC as string
                                 &GetAllChanelValueFromPacket,//function pointer to a packet parsing function
-                                NULL //Termination
+                                ((const char [1]){
+													0}),// Calling arguments
+								BOWLER_POST,// response method
+								( (const char [1]){
+													0}),// Response arguments
+								NULL //Termination
 };
 static RPC_LIST bcsIo_asyn_g={	BOWLER_GET,// Method
 		(const char*) "asyn",//RPC as string
                                 &GetAsyncFromPacket,//function pointer to a packet parsing function
-                                NULL //Termination
+                                ((const char [1]){
+													0}),// Calling arguments
+								BOWLER_POST,// response method
+								( (const char [1]){
+													0}),// Response arguments
+								NULL //Termination
 };
 static RPC_LIST bcsIo_gchc_g={	BOWLER_GET,// Method
 		(const char*) "gchc",//RPC as string
                                 &GetIOChannelCountFromPacket,//function pointer to a packet parsing function
-                                NULL //Termination
+                                ((const char [1]){
+													0}),// Calling arguments
+								BOWLER_POST,// response method
+								( (const char [1]){
+													0}),// Response arguments
+								NULL //Termination
 };
 static RPC_LIST bcsIo_gcml_g={	BOWLER_GET,// Method
 		(const char*)"gcml",//RPC as string
                                 &getFunctionList,//function pointer to a packet parsing function
-                                NULL //Termination
+                                ((const char [1]){
+													0}),// Calling arguments
+								BOWLER_POST,// response method
+								( (const char [1]){
+													0}),// Response arguments
+								NULL //Termination
 };
 //POST
 static RPC_LIST bcsIo_schv_p={	BOWLER_POST,// Method
 		(const char*) "schv",//RPC as string
                                 &SetChanelValueFromPacket,//function pointer to a packet parsing function
-                                NULL //Termination
+                                ((const char [1]){
+													0}),// Calling arguments
+								BOWLER_POST,// response method
+								( (const char [1]){
+													0}),// Response arguments
+								NULL //Termination
 };
 static RPC_LIST bcsIo_sacv_p={	BOWLER_POST,// Method
 		(const char*) "sacv",//RPC as string
                                 &SetAllChannelValueFromPacket,//function pointer to a packet parsing function
-                                NULL //Termination
+                                ((const char [1]){
+													0}),// Calling arguments
+								BOWLER_POST,// response method
+								( (const char [1]){
+													0}),// Response arguments
+								NULL //Termination
 };
 static RPC_LIST bcsIo_asyn_p={	BOWLER_POST,// Method
 		(const char*) "asyn",//RPC as string
                                 &SetAsyncFromPacket,//function pointer to a packet parsing function
-                                NULL //Termination
+                                ((const char [1]){
+													0}),// Calling arguments
+								BOWLER_POST,// response method
+								( (const char [1]){
+													0}),// Response arguments
+								NULL //Termination
 };
 //CRIT
 static RPC_LIST bcsIo_cchn_c={	BOWLER_CRIT,// Method
 		(const char*) "cchn",//RPC as string
                                 &ConfigureChannelFromPacket,//function pointer to a packet parsing function
-                                NULL //Termination
+                                ((const char [1]){
+													0}),// Calling arguments
+								BOWLER_POST,// response method
+								( (const char [1]){
+													0}),// Response arguments
+								NULL //Termination
 };
 //@Depricated
 	static RPC_LIST bcsIo_schv_c={	BOWLER_CRIT,// Method
 			(const char*)"schv",//RPC as string
 									&ConfigureChannelFromPacket,//function pointer to a packet parsing function
-									NULL //Termination
+									((const char [1]){
+													0}),// Calling arguments
+								BOWLER_POST,// response method
+								( (const char [1]){
+													0}),// Response arguments
+								NULL //Termination
 	};
 //@Depricated
 static RPC_LIST bcsIo_asyn_c={	BOWLER_CRIT,// Method
 		(const char*)"asyn",//RPC as string
                                 &configAdvancedAsync,//function pointer to a packet parsing function
-                                NULL //Termination
+                                ((const char [1]){
+													0}),// Calling arguments
+								BOWLER_POST,// response method
+								( (const char [1]){
+													0}),// Response arguments
+								NULL //Termination
 };
 
 //Namespace

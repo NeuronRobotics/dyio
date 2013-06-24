@@ -60,7 +60,7 @@ BOOL setMode(BYTE pin,BYTE mode){
 		return TRUE;
 	}
 	ClearPinState(pin);
-	//println_I("Pin :");p_int_I(pin);print_I(" is mode: ");printMode(mode);
+	println_I("Pin :");p_int_I(pin);print_I(" is mode: ");printMode(mode,INFO_PRINT);
 	//BYTE pwm,dir;
 	if (mode == NO_CHANGE){
 		return TRUE;

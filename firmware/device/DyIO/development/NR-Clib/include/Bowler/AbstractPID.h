@@ -74,7 +74,7 @@ typedef struct _AbsPID
         float			PreviousError;
         //unsigned int            integralCircularBufferIndex;
         float	 		integralTotal;
-        float                     integralSize;
+        float                   integralSize;
         float			Output;
         // This must be in MS
         float			PreviousTime;

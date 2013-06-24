@@ -234,7 +234,7 @@ BYTE sendPacket(BowlerPacket * Packet){
 	}
 	Packet->use.head.ProtocolRevision=BOWLER_VERSION;
 	SetCRC(Packet);
-	println_I(">>TX CoProc\n");printPacket(Packet,INFO_PRINT);
+	//println_I(">>TX CoProc\n");printPacket(Packet,INFO_PRINT);
 	int packetSize = BowlerHeaderSize + Packet->use.head.DataLegnth;
 
 	PushCoProcAsync();//clear out any packets before begining
@@ -421,7 +421,7 @@ BOOL SendPacketUARTCoProc(BYTE * packet,WORD size){
 			return FALSE;
 		}
 		//Delay10us(2);
-		print_I(" 0x");prHEX8(packet[i],INFO_PRINT);
+		//print_I(" 0x");prHEX8(packet[i],INFO_PRINT);
 	}
 	//println_I("] Sending to co proc Done ");
 	FLAG_ASYNC=FLAG_OK;

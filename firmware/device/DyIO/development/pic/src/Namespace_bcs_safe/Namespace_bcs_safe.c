@@ -57,12 +57,22 @@ BOOL bcsSafeProcessor_p(BowlerPacket * Packet){
 static RPC_LIST bcsSafe_safe_g={	BOWLER_GET,// Method
                                 "safe",//RPC as string
                                 &bcsSafeProcessor_g,//function pointer to a packet parsinf function
-                                NULL //Termination
+                                ((const char [1]){
+													0}),// Calling arguments
+								BOWLER_POST,// response method
+								( (const char [1]){
+													0}),// Response arguments
+								NULL //Termination
 };
 static RPC_LIST bcsSafe_safe_p={	BOWLER_POST,// Method
                                 "safe",//RPC as string
                                 &bcsSafeProcessor_p,//function pointer to a packet parsinf function
-                                NULL //Termination
+                                ((const char [1]){
+													0}),// Calling arguments
+								BOWLER_POST,// response method
+								( (const char [1]){
+													0}),// Response arguments
+								NULL //Termination
 };
 
 
