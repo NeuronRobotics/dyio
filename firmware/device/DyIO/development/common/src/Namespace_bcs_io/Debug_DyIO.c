@@ -29,12 +29,18 @@ const char *  printModeStrings[]={
 		"IS_PPM_IN"
 };
 
+int mystrlen(char * s){
+	int i=0;
+	while(s[i++]);
+	return i;
+}
+
 const char * unknown = "UNKNOWN";
 void printMode(BYTE mode, Print_Level l){
 	int i=0;
 	if(maxNumCharsInModes==0){
 		for(i=0;i<IO_MODE_MAX;i++){
-			int len = strlen(printModeStrings[i]);
+			int len = mystrlen(printModeStrings[i]);
 			if (len>maxNumCharsInModes)
 				maxNumCharsInModes = len;
 		}
@@ -44,10 +50,10 @@ void printMode(BYTE mode, Print_Level l){
 		int spaces;
 		if(mode>=IO_MODE_MAX){
 			print(unknown,l);
-			spaces = maxNumCharsInModes - strlen(unknown);
+			spaces = maxNumCharsInModes - mystrlen(unknown);
 		}else{
 			print(printModeStrings[mode],l);
-			spaces = maxNumCharsInModes - strlen(printModeStrings[mode]);
+			spaces = maxNumCharsInModes - mystrlen(printModeStrings[mode]);
 		}
 		if (spaces>0){
 			for (i=0;i<spaces;i++){

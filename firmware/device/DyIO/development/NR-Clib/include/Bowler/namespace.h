@@ -7,7 +7,6 @@
 
 #ifndef NAMESPACE_H_
 #define NAMESPACE_H_
-#include <stdio.h>
 
 #define USE_LINKED_LIST_NAMESPACE
 

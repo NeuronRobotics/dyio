@@ -22,6 +22,7 @@ OFILES := $(CFILES:%.c=%.o)
 DFILES := $(CFILES:%.c=%.d)
 
 all:clean release debug
+	
 	echo AVR Build OK!
 	avr-size --format=avr --mcu=$(DEVICEA) $(OUTPUTDIR)/output.elf
 	avr-size --format=avr --mcu=$(DEVICEA) $(OUTPUTDIR_DEBUG)/output.elf
@@ -41,17 +42,17 @@ debug: $(OFILES)
 	
 	
 size:all
-	rm -rf output/o/*
 	cp ../NR-Clib/lib/AVR/atmega644p/libNRLIB_debug.a output/o/
 	cd output/o/;ar x libNRLIB_debug.a
 	sh size.sh
 	avr-size --format=avr --mcu=$(DEVICEA) $(OUTPUTDIR)/output.elf
+	avr-size  --mcu=$(DEVICEA) $(OUTPUTDIR)/output.elf	
 	avr-size --format=avr --mcu=$(DEVICEA) $(OUTPUTDIR_DEBUG)/output.elf
-	
-	
+	avr-size --mcu=$(DEVICEA) $(OUTPUTDIR_DEBUG)/output.elf
 %.o: %.c
 	$(CC) -c $< -o $@
 	mkdir -p output/o/
 	cp $@ output/o/
 clean:
-	 rm -rf $(OFILES) $(DFILES)
+	rm -rf output/o/*
+	rm -rf $(OFILES) $(DFILES)

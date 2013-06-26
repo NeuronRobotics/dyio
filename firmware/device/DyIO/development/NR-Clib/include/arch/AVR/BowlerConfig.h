@@ -21,9 +21,8 @@
 	#include "reg_structs.h"
 	#include <util/delay.h>
 	#include <avr/io.h>
-	#include <string.h>
 	#include <avr/interrupt.h>
-	#include <avr/pgmspace.h>
+	#include <string.h>
 
 #if !defined(__AVR_ATmega324P__)
 	#define USE_DYN_RPC
