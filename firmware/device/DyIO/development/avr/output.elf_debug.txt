@@ -1,0 +1,177 @@
+
+output/atmega644p_debug//output.elf:     file format elf32-avr
+
+SYMBOL TABLE:
+008009e2 l    d  .bss	00000000 .bss
+008009e2 l     O .bss	00000408 DATA
+00800dea l     O .bss	00000002 NumberOfIOChannels
+00800dec l     O .bss	00000002 dataPtr
+00800df1 l     O .bss	00000001 namespcaedAdded
+00800df2 l     O .bss	00000001 __compound_literal.0
+00800df3 l     O .bss	00000001 __compound_literal.1
+00800df4 l     O .bss	00000001 __compound_literal.2
+00800df5 l     O .bss	00000001 __compound_literal.3
+00800df6 l     O .bss	00000001 __compound_literal.4
+00800df7 l     O .bss	00000001 __compound_literal.5
+00800df8 l     O .bss	00000001 __compound_literal.6
+00800df9 l     O .bss	00000001 __compound_literal.7
+00800dfa l     O .bss	00000001 __compound_literal.8
+00800dfb l     O .bss	00000001 __compound_literal.9
+00800dfc l     O .bss	00000001 __compound_literal.10
+00800dfd l     O .bss	00000001 __compound_literal.11
+00800dfe l     O .bss	00000001 __compound_literal.12
+00800dff l     O .bss	00000001 __compound_literal.13
+00800e00 l     O .bss	00000001 __compound_literal.14
+00800e01 l     O .bss	00000001 __compound_literal.15
+00800e02 l     O .bss	00000001 __compound_literal.16
+00800e03 l     O .bss	00000001 __compound_literal.17
+00800e04 l     O .bss	00000001 __compound_literal.18
+00800e05 l     O .bss	00000001 __compound_literal.19
+00800e06 l     O .bss	00000001 __compound_literal.20
+00800e07 l     O .bss	00000001 __compound_literal.21
+00800e08 l     O .bss	00000001 __compound_literal.22
+00800e09 l     O .bss	00000001 __compound_literal.23
+00800e0a l     O .bss	00000001 __compound_literal.24
+00800e0b l     O .bss	00000001 __compound_literal.25
+00800e0c l     O .bss	00000001 namespcaedAdded
+00800e0d l     O .bss	00000001 __compound_literal.0
+00800e0e l     O .bss	00000001 __compound_literal.1
+00800e0f l     O .bss	00000001 __compound_literal.2
+00800e10 l     O .bss	00000001 __compound_literal.3
+00800e11 l     O .bss	00000078 Packet
+00800e9f l     O .bss	00000014 privateRXUART
+00800e8c l     O .bss	00000013 store
+00800eb3 l     O .bss	00000001 zone
+00800eb4 l     O .bss	00000001 namespcaedAdded
+00800eb5 l     O .bss	00000013 store
+00800ecc l     O .bss	00000004 TimerOFcount
+00800ec8 l     O .bss	00000004 TimerOFcountUpper
+00800ed0 l     O .bss	00000078 privateRXCom
+00800f4b l     O .bss	00000001 DebugINIT
+00800f49 l     O .bss	00000002 sendToStream
+00800f4c l     O .bss	00000001 namespcaedAdded
+00800f4d l     O .bss	00000001 namespcaedAdded
+00800f50 l     O .bss	00000004 time
+00800f54 l     O .bss	00000004 PID_Temp
+00800f5a l     O .bss	00000002 chan
+00800f58 l     O .bss	00000002 val
+00800f5c l     O .bss	00000004 lastPacketTime
+00800f60 g     O .bss	00000002 getAllChanelValueHWPtr
+00800def g     O .bss	00000002 maxNumCharsInModes
+00800f6a g     O .bss	00000002 setChanelModeHWPtr
+00800dee g     O .bss	00000001 isInit
+00800f62 g     O .bss	00000002 getChanelValueHWPtr
+008010ee g     O .bss	00000002 resetPosition
+008010f0 g     O .bss	00000002 MathCalculationVelocity
+00800f64 g     O .bss	00000002 setAllChanelValueHWPtr
+00800f66 g     O .bss	00000002 setChanelValueHWPtr
+00800f68 g     O .bss	00000002 configChannelHWPtr
+008010f2 g     O .bss	00000002 velData
+008010f4 g     O .bss	00000002 MathCalculationPosition
+00801100 g       .bss	00000000 __bss_end
+00800e8b g     O .bss	00000001 powerOverRide
+00800f4e g     O .bss	00000002 number_of_pid_groups
+008010f6 g     O .bss	00000002 onPidConfigure
+00800f48 g     O .bss	00000001 level
+00800f6e g     O .bss	00000180 velocity
+008009e2 g       .bss	00000000 __bss_start
+00800e8a g     O .bss	00000001 b0OK
+00800f6c g     O .bss	00000001 dir
+008010f8 g     O .bss	00000002 pidGroups
+008010fa g     O .bss	00000002 setOutput
+00800f6d g     O .bss	00000001 pwm
+00800e89 g     O .bss	00000001 b1OK
+008010fc g     O .bss	00000002 getPosition
+008010fe g     O .bss	00000002 checkPIDLimitEvents
+
+
+
+output/atmega644p_debug//output.elf:     file format elf32-avr
+
+SYMBOL TABLE:
+00800100 l    d  .data	00000000 .data
+00800138 l     O .data	0000000c bcsIo_gchm_g
+00800130 l     O .data	00000008 bcsIo
+00800144 l     O .data	0000000c bcsIo_gacm_g
+00800150 l     O .data	0000000c bcsIo_gchv_g
+0080015c l     O .data	0000000c bcsIo_gacv_g
+00800168 l     O .data	0000000c bcsIo_asyn_g
+00800174 l     O .data	0000000c bcsIo_gchc_g
+00800180 l     O .data	0000000c bcsIo_gcml_g
+0080018c l     O .data	0000000c bcsIo_schv_p
+00800198 l     O .data	0000000c bcsIo_sacv_p
+008001a4 l     O .data	0000000c bcsIo_asyn_p
+008001b0 l     O .data	0000000c bcsIo_cchn_c
+008001bc l     O .data	0000000c bcsIo_schv_c
+008001c8 l     O .data	0000000c bcsIo_asyn_c
+008001dc l     O .data	0000000c bcsIoSetmode_schm_p
+008001d4 l     O .data	00000008 bcsIoSetmode
+008001e8 l     O .data	0000000c bcsIoSetmode_sacm_p
+008001f4 l     O .data	00000008 block0
+008001fc l     O .data	00000008 block1
+00800204 l     O .data	00000008 block2
+00800220 l     O .data	0000000c internal_eepd_g
+00800218 l     O .data	00000008 internalNamespace
+0080022c l     O .data	0000000c internal_rev_g
+00800238 l     O .data	0000000c internal_save_g
+00800244 l     O .data	0000000c internal_pwr_p
+00800250 l     O .data	0000000c internal_eepd_p
+0080025c l     O .data	0000000c internal_pwr_c
+00800268 l     O .data	0000000c internal_mac_c
+0080034f l     O .data	0000000c packet
+0080035b l     O .data	0000000d ver
+00800368 l     O .data	0000000a mac
+00800372 l     O .data	0000000c meth
+00800398 l     O .data	00000009 unknown
+008003a1 l     O .data	00000015 id
+008003b6 l     O .data	0000000f dataSise
+008003c5 l     O .data	0000000f crcval
+008003ed l     O .data	00000009 nodata
+008003d4 l     O .data	0000000e rpc
+008003e2 l     O .data	0000000b dval
+0080038f l     O .data	00000009 crit
+00800385 l     O .data	00000004 get
+0080037e l     O .data	00000007 stat
+00800389 l     O .data	00000006 post
+008003f6 l     O .data	0000000f streamsize
+0080027a l     O .data	00000008 bcsCore
+00800282 l     O .data	0000000c bcsCore_png
+0080028e l     O .data	0000000c bcsCore_nms
+0080029a l     O .data	00000002 __compound_literal.0
+0080029c l     O .data	00000003 __compound_literal.1
+008002a7 l     O .data	0000000c bcsRpc__RPC
+0080029f l     O .data	00000008 bcsRpc
+008002b3 l     O .data	0000000c bcsRpc_ARGS
+00800416 l     O .data	00000010 rpcNSName
+008002bf l     O .data	00000003 __compound_literal.0
+008002c2 l     O .data	00000005 __compound_literal.1
+008002c7 l     O .data	00000003 __compound_literal.2
+008002ca l     O .data	00000007 __compound_literal.3
+00800100 g     O .data	00000002 unknown
+0080020e g     O .data	00000001 b0lock
+0080020c g     O .data	00000001 print
+0080033f g     O .data	00000010 AsciiHex
+00800274 g     O .data	00000006 MyMAC
+0080020f g     O .data	00000001 startup
+00800339 g     O .data	00000006 Broadcast
+00800405 g     O .data	00000011 coreName
+008002d1 g     O .data	00000002 zone
+00800210 g     O .data	00000008 vel
+008002e2 g     O .data	00000017 setModeNSName
+008009e2 g       .data	00000000 __data_end
+008002d3 g     O .data	0000000f ioNSName
+00800426 g     O .data	00000008 __thenan_sf
+00800102 g     O .data	0000002e printModeStrings
+0080020d g     O .data	00000001 b1lock
+008009e2 g       .data	00000000 _edata
+0080031a g     O .data	0000001f internalNSName
+008002f9 g     O .data	00000021 startmessage
+00800100 g       .data	00000000 __data_start
+
+
+
+output/atmega644p_debug//output.elf:     file format elf32-avr
+
+SYMBOL TABLE:
+
+

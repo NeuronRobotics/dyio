@@ -10,9 +10,11 @@ EXT_FUSE      	= 0xff
 CCA             = $(GCCA) $(DYIO_VER) -mmcu=$(DEVICEA) -DF_CPU=$(CPU_SPD) $(INCLUDES)
 CC				= $(CCA)
 
-LINK 			= $(GCCA)  -L ../NR-Clib/lib/AVR/$(DEVICEA)/ 
+LINK 			= $(GCCA) -lm -L ../NR-Clib/lib/AVR/$(DEVICEA)/ 
 OUTPUTDIR       =output/$(DEVICEA)/
 OUTPUTDIR_DEBUG =output/$(DEVICEA)_debug/
+
+OBJDUMP = avr-objdump -t -l
 
 CFILES := $(wildcard ../common/src/*/*.c) \
 $(wildcard src/*.c) \
@@ -47,8 +49,14 @@ size:all
 	sh size.sh
 	avr-size --format=avr --mcu=$(DEVICEA) $(OUTPUTDIR)/output.elf
 	avr-size  --mcu=$(DEVICEA) $(OUTPUTDIR)/output.elf	
+	$(OBJDUMP) -j .bss $(OUTPUTDIR)/output.elf > output.elf.txt
+	$(OBJDUMP) -j .data $(OUTPUTDIR)/output.elf >> output.elf.txt
+	$(OBJDUMP) -j .noinit $(OUTPUTDIR)/output.elf >> output.elf.txt
 	avr-size --format=avr --mcu=$(DEVICEA) $(OUTPUTDIR_DEBUG)/output.elf
 	avr-size --mcu=$(DEVICEA) $(OUTPUTDIR_DEBUG)/output.elf
+	$(OBJDUMP) -j .bss $(OUTPUTDIR_DEBUG)/output.elf > output.elf_debug.txt
+	$(OBJDUMP) -j .data $(OUTPUTDIR_DEBUG)/output.elf >> output.elf_debug.txt
+	$(OBJDUMP) -j .noinit $(OUTPUTDIR_DEBUG)/output.elf >> output.elf_debug.txt
 %.o: %.c
 	$(CC) -c $< -o $@
 	mkdir -p output/o/

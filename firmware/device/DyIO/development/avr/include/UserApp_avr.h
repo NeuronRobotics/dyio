@@ -9,7 +9,7 @@
 #define USERAPP_H_
 
 //#define WPIRBE
-
+#include <math.h>
 #include "Bowler/Bowler.h"
 #include "Namespace/Namespace_bcs_io.h"
 #include "Namespace/Namespace_bcs_io_setmode.h"
