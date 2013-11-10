@@ -64,6 +64,13 @@
 	#define initButton() 	_TRISD6  = INPUT;_TRISD7  = INPUT;_TRISD13 = INPUT;CNPUESET=0x00098000;
 	#define isPressed()		( _RD6==0 || _RD7==0 || _RD13==0)
 	#define setLed(a,b,c) 	_RD0=a;_RD1=b;_RD2=c;
+
+#elif defined(SERVOSTRUDER)
+		#define initLed()		_TRISD0 = OUTPUT;_TRISD11 = OUTPUT;_TRISD10 = OUTPUT;
+		#define initButton() 	((_TRISF5)=1)
+		#define isPressed()		(_RF5 == 0)
+	#define setLed(a,b,c) 	LATDbits.LATD10=a;LATDbits.LATD11=b;LATDbits.LATD0=c
+
 #else
 #error No Board defined in for bootloader
 #endif

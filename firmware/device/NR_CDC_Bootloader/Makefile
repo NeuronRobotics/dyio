@@ -12,8 +12,8 @@ PK2    = pk2cmd -P -R -M -F
 
 HEX    = NR_CDC_Bootloader.hex
 
-CC     = $(GCCP) $(DYIO_VER) -I../DyIO/common/include -s -I../NR-Clib/include/ -I./include/ -c
-LL     = $(GCCP)  -s -L../NR-Clib/lib/PIC32/$(DEVICE) -Wl,--script="elf32pic32mx.ld" 
+CC     = $(GCCP) $(DYIO_VER) -I../DyIO/common/include -I../NR-Clib/include/ -I./include/ -c
+LL     = $(GCCP)  -s -L../NR-Clib/lib/PIC32/$(DEVICE) 
 LFLAG_DYIO 	=  -L$(PWD)/../NR-Clib/lib/PIC32/32MX440F128H/
 LFLAG_UBW_O	=  -L$(PWD)/../NR-Clib/lib/PIC32/32MX460F512L
 LFLAG_UBW_N	=  -L$(PWD)/../NR-Clib/lib/PIC32/32MX795F512L
@@ -21,7 +21,7 @@ CCFLAGS = ''
 HEXCONVERT = $(BIN2HEX) -v -a
 
 
-ELF    = NR_CDC_Bootloader.elf
+ELF    = NR_CDC_Bootloader_Struder.elf
 
 all:dyio
 		
@@ -30,6 +30,13 @@ dyio:
 	$(CC) -mprocessor=32MX440F128H  -DDYIO  src/flash.c -o "release/flash.o"  $(FLAGS)
 	$(CC) -mprocessor=32MX440F128H  -DDYIO  src/led.c -o "release/led.o"  $(FLAGS)
 	$(CC) -mprocessor=32MX440F128H  -DDYIO  src/AVRInterface.c -o "release/AVRInterface.o"  $(FLAGS)
+	$(LL) $(LFLAG_DYIO) -mprocessor=32MX440F128H  "release/main.o" "release/led.o" "release/flash.o" "release/AVRInterface.o"  -lNRLIB  -o DyIO_$(ELF) $(LLFLAGS)
+	$(HEXCONVERT) DyIO_$(ELF)
+servostruder:
+	$(CC) -mprocessor=32MX440F128H  -DSERVOSTRUDER  src/main.c -o "release/main.o"  $(FLAGS)
+	$(CC) -mprocessor=32MX440F128H  -DSERVOSTRUDER  src/flash.c -o "release/flash.o"  $(FLAGS)
+	$(CC) -mprocessor=32MX440F128H  -DSERVOSTRUDER  src/led.c -o "release/led.o"  $(FLAGS)
+	$(CC) -mprocessor=32MX440F128H  -DSERVOSTRUDER  src/AVRInterface.c -o "release/AVRInterface.o"  $(FLAGS)
 	$(LL) $(LFLAG_DYIO) -mprocessor=32MX440F128H  "release/main.o" "release/led.o" "release/flash.o" "release/AVRInterface.o"  -lNRLIB  -o DyIO_$(ELF) $(LLFLAGS)
 	$(HEXCONVERT) DyIO_$(ELF)
 ubw_old:
