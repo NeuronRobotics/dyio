@@ -38,6 +38,8 @@ pub:main
 	rm -rf FirmwarePublish/Release/legacy/*.xml
 	rm -rf FirmwarePublish/Dev/*.xml;
 	#Release
+	$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 	 -output=FirmwarePublish/Release/dyio-$(REVISION)_NO_AVR.xml
+	
 	$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 		-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Release/dyio-$(REVISION).xml
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/bluetooth/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Release/dyio-bluetooth-$(REVISION).xml
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 		-core=1,avr_atmegaXX4p,2,avr/output/atmega324p/output.hex -output=FirmwarePublish/Release/legacy/dyio-$(REVISION)_legacy.xml
