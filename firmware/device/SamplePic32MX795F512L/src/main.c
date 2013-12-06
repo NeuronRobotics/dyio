@@ -8,7 +8,7 @@
 /******************************************************************************
  * Software License Agreement
  *
- * Copyright © 2011 Microchip Technology Inc.  All rights reserved.
+ * Copyright ï¿½ 2011 Microchip Technology Inc.  All rights reserved.
  * Microchip licenses to you the right to use, modify, copy and distribute
  * Software only when embedded on a Microchip microcontroller or digital
  * signal controller, which is integrated into your product or third party
@@ -76,6 +76,19 @@ BYTE UserCriticalRPCs(BowlerPacket *Packet){
 #define isPressed()	( _RD6==0 || _RD7==0 || _RD13==0)
 #define setLed(a,b,c) 	_RD0=a;_RD1=b;_RD2=c;
 
+
+BYTE SPITransceve(BYTE b){
+    SpiChnPutC(2, b);		// send data on the master channel, SPI1
+    Delay1us(10);
+    return SpiChnGetC(2);	// get the received data
+}
+BYTE get(BYTE b){
+	BYTE back = SPITransceve(b);
+        //Delay10us(60);
+	return back;
+}
+
+
 int main(void) {
     Bowler_Init();
     char * dev = "NR Sample Serial Port";
@@ -113,8 +126,19 @@ int main(void) {
         }else{
             if(!_RD6){
                 int size=0;
+                float sum=getAdcVoltage(0,10);// reads ADC channel 0 to a variable. Takes 10 samples
+                OpenSPI2(   CLK_POL_ACTIVE_HIGH\
+                            |SPI_MODE8_ON|ENABLE_SDO_PIN|SLAVE_ENABLE_OFF|SPI_CKE_OFF\
+                            |MASTER_ENABLE_ON|SEC_PRESCAL_3_1|PRI_PRESCAL_4_1
+                            , SPI_ENABLE); // set u master
+
+
+                SPITransceve(0xff);
+
+
                 while(start[size++]);//Calculates the length of the null terminated string
                 USBPutArray((BYTE *)start, size);
+
             }
             if(!_RD7){
                 //This is how to run a bowler server on the USB and serial port
@@ -128,6 +152,5 @@ int main(void) {
 
     }
 }
-
 
 
