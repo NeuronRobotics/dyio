@@ -81,10 +81,6 @@ int main(void) {
     char * dev = "NR Sample Serial Port";
     char * ser = "FF00FF00FF00";
     usb_CDC_Serial_Init(dev,ser,0x04D8,0x0001);
-    //Add local call backs for packets
-    setMethodCallback(BOWLER_GET,UserGetRPCs);
-    setMethodCallback(BOWLER_POST,UserPostRPCs);
-    setMethodCallback(BOWLER_CRIT,UserCriticalRPCs);
     //Declare a packet
     BowlerPacket Packet;
     //Declare a storage data for a periodic event
