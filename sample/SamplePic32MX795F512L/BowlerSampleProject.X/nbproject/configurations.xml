@@ -4,8 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <logicalFolder name="Bowler" displayName="Bowler" projectFiles="true">
-      </logicalFolder>
       <logicalFolder name="include" displayName="include" projectFiles="true">
         <logicalFolder name="arch" displayName="arch" projectFiles="true">
           <logicalFolder name="AVR" displayName="AVR" projectFiles="true">
@@ -19,6 +17,47 @@
             </logicalFolder>
           </logicalFolder>
         </logicalFolder>
+        <logicalFolder name="Bowler" displayName="Bowler" projectFiles="true">
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include/Bowler/Namespace_bcs_core.h</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include/Bowler/RPC_Process.h</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include/Bowler/BowlerServerHardwareAbstraction.h</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include/Bowler/Scheduler.h</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include/Bowler/BowlerRPCRegestration.h</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include/Bowler/Defines.h</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include/Bowler/Bowler_Struct_Def.h</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include/Bowler/Bowler.h</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include/Bowler/Debug.h</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include/Bowler/AbstractPID.h</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include/Bowler/Bowler_Server.h</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include/Bowler/FIFO.h</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include/Bowler/Bowler_Helper.h</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include/Bowler/namespace.h</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include/Bowler/BowlerTransport.h</itemPath>
+        </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="pic32" displayName="pic32" projectFiles="true">
+        <logicalFolder name="USB" displayName="USB" projectFiles="true">
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include/arch/pic32/USB/usb_hal.h</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include/arch/pic32/USB/usb_hal_pic32.h</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include/arch/pic32/USB/usb_function_cdc.h</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include/arch/pic32/USB/usb.h</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include/arch/pic32/USB/usb_fifo.h</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include/arch/pic32/USB/usb_ch9.h</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include/arch/pic32/USB/usb_device.h</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include/arch/pic32/USB/usb_common.h</itemPath>
+        </logicalFolder>
+        <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include/arch/pic32/HardwareProfile.h</itemPath>
+        <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include/arch/pic32/BowlerConfig.h</itemPath>
+        <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include/arch/pic32/FlashStorage.h</itemPath>
+        <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include/arch/pic32/Delay.h</itemPath>
+        <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include/arch/pic32/Compiler.h</itemPath>
+        <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include/arch/pic32/Pizo.h</itemPath>
+        <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include/arch/pic32/GenericTypeDefs.h</itemPath>
+        <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include/arch/pic32/LED.h</itemPath>
+        <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include/arch/pic32/Tick.h</itemPath>
+        <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include/arch/pic32/UART.h</itemPath>
+        <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include/arch/pic32/EthHardware.h</itemPath>
+        <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include/arch/pic32/usb_config.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -28,38 +67,44 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <logicalFolder name="src" displayName="BowlerStack" projectFiles="true">
-        <itemPath>../BowlerStack/src/Namespace_bcs_rpc.c</itemPath>
-        <itemPath>../BowlerStack/src/Bowler_RPC_Process.c</itemPath>
-        <itemPath>../BowlerStack/src/AbstractPID.c</itemPath>
-        <itemPath>../BowlerStack/src/Scheduler.c</itemPath>
-        <itemPath>../BowlerStack/src/Namespace_bcs_core.c</itemPath>
-        <itemPath>../BowlerStack/src/Bowler_Transport.c</itemPath>
-        <itemPath>../BowlerStack/src/Bowler_Server.c</itemPath>
-        <itemPath>../BowlerStack/src/FIFO.c</itemPath>
-        <itemPath>../BowlerStack/src/Debug.c</itemPath>
-        <itemPath>../BowlerStack/src/Bowler_Stack_Callback.c</itemPath>
-        <itemPath>../BowlerStack/src/Namespace_bcs_pid.c</itemPath>
-        <itemPath>../BowlerStack/src/Bowler_Helper.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="pic32" displayName="Drivers" projectFiles="true">
-        <logicalFolder name="usb" displayName="usb" projectFiles="true">
-          <itemPath>../Platform/src/pic32/usb/usb_interrupt.c</itemPath>
-          <itemPath>../Platform/src/pic32/usb/usb_device.c</itemPath>
-          <itemPath>../Platform/src/pic32/usb/usb_fifo.c</itemPath>
-          <itemPath>../Platform/src/pic32/usb/usb_descriptors.c</itemPath>
-          <itemPath>../Platform/src/pic32/usb/usb_callback.c</itemPath>
-          <itemPath>../Platform/src/pic32/usb/usb_function_cdc.c</itemPath>
+      <logicalFolder name="BowlerStack" displayName="BowlerStack" projectFiles="true">
+        <logicalFolder name="include" displayName="include" projectFiles="true">
+          <logicalFolder name="Bowler" displayName="Bowler" projectFiles="true">
+          </logicalFolder>
         </logicalFolder>
-        <itemPath>../Platform/src/pic32/Bowler_UART_HAL.c</itemPath>
-        <itemPath>../Platform/src/pic32/Bowler_USB_HAL.c</itemPath>
-        <itemPath>../Platform/src/pic32/LED.c</itemPath>
-        <itemPath>../Platform/src/pic32/Tick.c</itemPath>
-        <itemPath>../Platform/src/pic32/Delay.c</itemPath>
-        <itemPath>../Platform/src/pic32/HAL_P32.c</itemPath>
-        <itemPath>../Platform/src/pic32/ADC.c</itemPath>
-        <itemPath>../Platform/src/pic32/UART.c</itemPath>
-        <itemPath>../Platform/src/pic32/FlashStorage.c</itemPath>
+        <logicalFolder name="src" displayName="src" projectFiles="true">
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/src/Namespace_bcs_rpc.c</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/src/Bowler_RPC_Process.c</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/src/AbstractPID.c</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/src/Scheduler.c</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/src/Namespace_bcs_core.c</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/src/Bowler_Transport.c</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/src/Bowler_Server.c</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/src/FIFO.c</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/src/Debug.c</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/src/Bowler_Stack_Callback.c</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/src/Namespace_bcs_pid.c</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/src/Bowler_Helper.c</itemPath>
+        </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="pic32" displayName="pic32" projectFiles="true">
+        <logicalFolder name="usb" displayName="usb" projectFiles="true">
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/src/pic32/usb/usb_interrupt.c</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/src/pic32/usb/usb_device.c</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/src/pic32/usb/usb_fifo.c</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/src/pic32/usb/usb_descriptors.c</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/src/pic32/usb/usb_callback.c</itemPath>
+          <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/src/pic32/usb/usb_function_cdc.c</itemPath>
+        </logicalFolder>
+        <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/src/pic32/Bowler_UART_HAL.c</itemPath>
+        <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/src/pic32/Bowler_USB_HAL.c</itemPath>
+        <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/src/pic32/LED.c</itemPath>
+        <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/src/pic32/Tick.c</itemPath>
+        <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/src/pic32/Delay.c</itemPath>
+        <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/src/pic32/HAL_P32.c</itemPath>
+        <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/src/pic32/ADC.c</itemPath>
+        <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/src/pic32/UART.c</itemPath>
+        <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/src/pic32/FlashStorage.c</itemPath>
       </logicalFolder>
       <itemPath>../src/main.c</itemPath>
     </logicalFolder>
@@ -71,10 +116,8 @@
   </logicalFolder>
   <sourceRootList>
     <Elem>../src</Elem>
-    <Elem>../Platform/src/pic32</Elem>
-    <Elem>../BowlerStack/src</Elem>
-    <Elem>../BowlerStack/include</Elem>
-    <Elem>../Platform/include</Elem>
+    <Elem>../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack</Elem>
+    <Elem>../../../../c-bowler/firmware/library/NR-Clib/development/Platform</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -116,8 +159,9 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../BowlerStack/include;../src;../Platform/include"/>
+                  value="../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include;../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include"/>
         <property key="generate-16-bit-code" value="false"/>
+        <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="false"/>
         <property key="make-warnings-into-errors" value="false"/>
         <property key="optimization-level" value=""/>
@@ -137,7 +181,8 @@
         <property key="exclude-floating-point-library" value="false"/>
         <property key="expand-macros" value="false"/>
         <property key="extra-include-directories-for-assembler" value=""/>
-        <property key="extra-include-directories-for-preprocessor" value=""/>
+        <property key="extra-include-directories-for-preprocessor"
+                  value="../../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include;../../../../c-bowler/firmware/library/NR-Clib/development/Platform/include/arch/pic32"/>
         <property key="false-conditionals" value="false"/>
         <property key="keep-locals" value="false"/>
         <property key="list-assembly" value="false"/>
@@ -157,6 +202,7 @@
         <property key="extra-lib-directories" value=""/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-cross-reference-file" value="false"/>
+        <property key="generate-micro-compressed-code" value="false"/>
         <property key="heap-size" value=""/>
         <property key="input-libraries" value=""/>
         <property key="linker-symbols" value=""/>
@@ -184,6 +230,7 @@
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories" value=""/>
         <property key="generate-16-bit-code" value="false"/>
+        <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="false"/>
         <property key="make-warnings-into-errors" value="false"/>
         <property key="optimization-level" value=""/>
