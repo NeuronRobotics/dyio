@@ -30,10 +30,6 @@ Archive member included because of file (symbol)
                               build/default/production/_ext/1360937237/main.o (SpiChnPutC)
 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
                               /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o) (_SpiMapTbl)
-/home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_open_spi2_lib_legacy.o)
-                              build/default/production/_ext/1360937237/main.o (OpenSPI2)
-/home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_brg_tbl_lib_legacy.o)
-                              /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_open_spi2_lib_legacy.o) (_SpiBrgConvTbl)
 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
                               build/default/production/_ext/1271783508/FlashStorage.o (NVMErasePage)
 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
@@ -117,70 +113,69 @@ Microchip PIC32 Memory-Usage Report
 kseg0 Program-Memory Usage
 section                    address  length [bytes]      (dec)  Description
 -------                 ----------  -------------------------  -----------
-.text                   0x9d000008         0xcab4       51892  App's exec code 
-.rodata                 0x9d00cabc          0x7d4        2004  Read-only const 
-.text                   0x9d00d290         0x14ec        5356  App's exec code 
-.dinit                  0x9d00e77c          0x568        1384   
-.text                   0x9d00ece4          0xe9c        3740  App's exec code 
-.rodata                 0x9d00fb80          0x460        1120  Read-only const 
-.text                   0x9d00ffe0         0x1600        5632  App's exec code 
-.rodata                 0x9d0115e0          0x1b4         436  Read-only const 
-.text                   0x9d011794          0x4c0        1216  App's exec code 
-.text._NVMOperation     0x9d011c54          0x114         276   
-.rodata                 0x9d011d68           0xd0         208  Read-only const 
-.text.general_exception 0x9d011e38           0xd0         208   
-.text                   0x9d011f08          0x218         536  App's exec code 
-.rodata                 0x9d012120          0x108         264  Read-only const 
-.text.UARTEnable        0x9d012228           0x80         128   
-.rodata                 0x9d0122a8           0x68         104  Read-only const 
-.text.SpiChnGetC        0x9d012310           0x60          96   
-.text.SpiChnPutC        0x9d012370           0x60          96   
-.text.OpenSPI2          0x9d0123d0           0x60          96   
-.rodata                 0x9d012430           0x5c          92  Read-only const 
-.text.UARTSetDataRate   0x9d01248c           0x5c          92   
-.text.INTEnable         0x9d0124e8           0x58          88   
-.rodata                 0x9d012540          0x13c         316  Read-only const 
-.text                   0x9d01267c           0x48          72  App's exec code 
-.rodata                 0x9d0126c4           0x44          68  Read-only const 
-.text.PORTSetPinsDigita 0x9d012708           0x40          64   
-.text.UARTGetDataRate   0x9d012748           0x40          64   
-.rodata                 0x9d012788           0x3c          60  Read-only const 
-.text.INTSetVectorPrior 0x9d0127c4           0x3c          60   
-.text.INTSetVectorSubPr 0x9d012800           0x3c          60   
-.text.UARTConfigure     0x9d01283c           0x3c          60   
-.text.UARTSetAddress    0x9d012878           0x3c          60   
-.text.UARTWatchForAddre 0x9d0128b4           0x38          56   
-.rodata                 0x9d0128ec           0x34          52  Read-only const 
-.text.INTEnableSystemMu 0x9d012920           0x34          52   
-.text.NVMWriteWord      0x9d012954           0x34          52   
-.text.INTGetVectorPrior 0x9d012988           0x30          48   
-.text.INTGetVectorSubPr 0x9d0129b8           0x30          48   
-.text.INTClearFlag      0x9d0129e8           0x2c          44   
-.text.INTSetFlag        0x9d012a14           0x2c          44   
-.text.INTGetFlag        0x9d012a40           0x2c          44   
-.text.INTGetEnable      0x9d012a6c           0x2c          44   
-.text.NVMErasePage      0x9d012a98           0x2c          44   
-.text.PORTClearBits     0x9d012ac4           0x28          40   
-.text.PORTSetBits       0x9d012aec           0x28          40   
-.text.UARTSetFifoMode   0x9d012b14           0x28          40   
-.text.UARTSetLineContro 0x9d012b3c           0x28          40   
-.rodata                 0x9d012b64           0x20          32  Read-only const 
-.text.SpiChnReadC       0x9d012b84           0x20          32   
-.text.SpiChnWriteC      0x9d012ba4           0x20          32   
-.rodata                 0x9d012bc4           0x38          56  Read-only const 
-.text.SpiChnBuffer      0x9d012bfc           0x1c          28   
-.text.INTRestoreInterru 0x9d012c18           0x1c          28   
-.text                   0x9d012c34           0x18          24  App's exec code 
-.rodata                 0x9d012c4c           0x2c          44  Read-only const 
-.text                   0x9d012c78           0x10          16  App's exec code 
-.rodata                 0x9d012c88            0xc          12  Read-only const 
-.text._bootstrap_except 0x9d012c94            0xc          12   
-.text._on_reset         0x9d012ca0            0x8           8   
-.text._on_bootstrap     0x9d012ca8            0x8           8   
-.text.INTEnableInterrup 0x9d012cb0            0x8           8   
-.text.INTDisableInterru 0x9d012cb8            0x8           8   
-.rodata                 0x9d012cc0            0x4           4  Read-only const 
-      Total kseg0_program_mem used  :     0x12cbc       76988  14.7% of 0x80000
+.text                   0x9d000008         0xcce0       52448  App's exec code 
+.rodata                 0x9d00cce8          0x7d4        2004  Read-only const 
+.text                   0x9d00d4bc         0x14ec        5356  App's exec code 
+.dinit                  0x9d00e9a8          0x568        1384   
+.text                   0x9d00ef10          0xa24        2596  App's exec code 
+.rodata                 0x9d00f934          0x460        1120  Read-only const 
+.text                   0x9d00fd94         0x1840        6208  App's exec code 
+.rodata                 0x9d0115d4          0x1b4         436  Read-only const 
+.text                   0x9d011788          0x670        1648  App's exec code 
+.text._NVMOperation     0x9d011df8          0x114         276   
+.rodata                 0x9d011f0c           0xd0         208  Read-only const 
+.text.general_exception 0x9d011fdc           0xd0         208   
+.text                   0x9d0120ac          0x16c         364  App's exec code 
+.rodata                 0x9d012218           0x88         136  Read-only const 
+.text.UARTEnable        0x9d0122a0           0x80         128   
+.rodata                 0x9d012320           0x68         104  Read-only const 
+.text.SpiChnGetC        0x9d012388           0x60          96   
+.text.SpiChnPutC        0x9d0123e8           0x60          96   
+.rodata                 0x9d012448           0x5c          92  Read-only const 
+.text.UARTSetDataRate   0x9d0124a4           0x5c          92   
+.text.INTEnable         0x9d012500           0x58          88   
+.rodata                 0x9d012558          0x13c         316  Read-only const 
+.text                   0x9d012694           0x48          72  App's exec code 
+.rodata                 0x9d0126dc           0x44          68  Read-only const 
+.text.PORTSetPinsDigita 0x9d012720           0x40          64   
+.text.UARTGetDataRate   0x9d012760           0x40          64   
+.rodata                 0x9d0127a0           0x3c          60  Read-only const 
+.text.INTSetVectorPrior 0x9d0127dc           0x3c          60   
+.text.INTSetVectorSubPr 0x9d012818           0x3c          60   
+.text.UARTConfigure     0x9d012854           0x3c          60   
+.text.UARTSetAddress    0x9d012890           0x3c          60   
+.text.UARTWatchForAddre 0x9d0128cc           0x38          56   
+.rodata                 0x9d012904           0x34          52  Read-only const 
+.text.INTEnableSystemMu 0x9d012938           0x34          52   
+.text.NVMWriteWord      0x9d01296c           0x34          52   
+.text.INTGetVectorPrior 0x9d0129a0           0x30          48   
+.text.INTGetVectorSubPr 0x9d0129d0           0x30          48   
+.text.INTClearFlag      0x9d012a00           0x2c          44   
+.text.INTSetFlag        0x9d012a2c           0x2c          44   
+.text.INTGetFlag        0x9d012a58           0x2c          44   
+.text.INTGetEnable      0x9d012a84           0x2c          44   
+.text.NVMErasePage      0x9d012ab0           0x2c          44   
+.text.PORTClearBits     0x9d012adc           0x28          40   
+.text.PORTSetBits       0x9d012b04           0x28          40   
+.text.UARTSetFifoMode   0x9d012b2c           0x28          40   
+.text.UARTSetLineContro 0x9d012b54           0x28          40   
+.rodata                 0x9d012b7c           0x20          32  Read-only const 
+.text.SpiChnReadC       0x9d012b9c           0x20          32   
+.text.SpiChnWriteC      0x9d012bbc           0x20          32   
+.rodata                 0x9d012bdc           0x38          56  Read-only const 
+.text.SpiChnBuffer      0x9d012c14           0x1c          28   
+.text.INTRestoreInterru 0x9d012c30           0x1c          28   
+.text                   0x9d012c4c           0x18          24  App's exec code 
+.rodata                 0x9d012c64           0x2c          44  Read-only const 
+.text                   0x9d012c90           0x10          16  App's exec code 
+.rodata                 0x9d012ca0            0xc          12  Read-only const 
+.text._bootstrap_except 0x9d012cac            0xc          12   
+.text._on_reset         0x9d012cb8            0x8           8   
+.text._on_bootstrap     0x9d012cc0            0x8           8   
+.text.INTEnableInterrup 0x9d012cc8            0x8           8   
+.text.INTDisableInterru 0x9d012cd0            0x8           8   
+.rodata                 0x9d012cd8            0x4           4  Read-only const 
+      Total kseg0_program_mem used  :     0x12cd4       77012  14.7% of 0x80000
 
 kseg0 Boot-Memory Usage
 section                    address  length [bytes]      (dec)  Description
@@ -203,7 +198,7 @@ section                    address  length [bytes]      (dec)  Description
 .bev_excpt              0xbfc00380           0x10          16  BEV-Exception 
          Total kseg1_boot_mem used  :       0x204         516  44.2% of 0x490
         --------------------------------------------------------------------------
-         Total Program Memory used  :     0x12ee8       77544  14.6% of 0x81e00
+         Total Program Memory used  :     0x12f00       77568  14.6% of 0x81e00
         --------------------------------------------------------------------------
 
 
@@ -260,7 +255,7 @@ Discarded input sections
  .reginfo       0x00000000       0x18 build/default/production/_ext/464348676/Namespace_bcs_pid.o
  .pdr           0x00000000       0x40 build/default/production/_ext/464348676/Namespace_bcs_pid.o
  .reginfo       0x00000000       0x18 build/default/production/_ext/464348676/Bowler_Helper.o
- .pdr           0x00000000      0x1e0 build/default/production/_ext/464348676/Bowler_Helper.o
+ .pdr           0x00000000      0x280 build/default/production/_ext/464348676/Bowler_Helper.o
  .reginfo       0x00000000       0x18 build/default/production/_ext/161057953/usb_interrupt.o
  .pdr           0x00000000        0x0 build/default/production/_ext/161057953/usb_interrupt.o
  .reginfo       0x00000000       0x18 build/default/production/_ext/161057953/usb_device.o
@@ -327,10 +322,6 @@ Discarded input sections
  .pdr           0x00000000       0x60 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
  .reginfo       0x00000000       0x18 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
  .pdr           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
- .reginfo       0x00000000       0x18 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_open_spi2_lib_legacy.o)
- .pdr           0x00000000       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_open_spi2_lib_legacy.o)
- .reginfo       0x00000000       0x18 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_brg_tbl_lib_legacy.o)
- .pdr           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_brg_tbl_lib_legacy.o)
  .reginfo       0x00000000       0x18 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
  .pdr           0x00000000       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
  .reginfo       0x00000000       0x18 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
@@ -969,8 +960,6 @@ END GROUP
  .comment       0x00000000       0x52 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
  .comment       0x00000000       0x52 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
  .comment       0x00000000       0x52 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
- .comment       0x00000000       0x52 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_open_spi2_lib_legacy.o)
- .comment       0x00000000       0x52 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_brg_tbl_lib_legacy.o)
  .comment       0x00000000       0x52 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
  .comment       0x00000000       0x52 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
  .comment       0x00000000       0x52 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
@@ -993,7 +982,7 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x650
+.debug_aranges  0x00000000      0x630
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x20 build/default/production/_ext/464348676/Namespace_bcs_rpc.o
@@ -1070,26 +1059,24 @@ END GROUP
  .debug_aranges
                 0x000004c8       0x30 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
  .debug_aranges
-                0x000004f8       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_open_spi2_lib_legacy.o)
+                0x000004f8       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
  .debug_aranges
-                0x00000518       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
+                0x00000518       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
  .debug_aranges
-                0x00000538       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
+                0x00000538       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
  .debug_aranges
-                0x00000558       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
+                0x00000558       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_pins_digital_out_lib.o)
  .debug_aranges
-                0x00000578       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_pins_digital_out_lib.o)
+                0x00000578       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_clear_bits_lib.o)
  .debug_aranges
-                0x00000598       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_clear_bits_lib.o)
+                0x00000598       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_bits_lib.o)
  .debug_aranges
-                0x000005b8       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_bits_lib.o)
+                0x000005b8       0x58 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
  .debug_aranges
-                0x000005d8       0x58 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
- .debug_aranges
-                0x00000630       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_restore_interrupts_lib.o)
+                0x00000610       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_restore_interrupts_lib.o)
 
 .debug_pubnames
-                0x00000000     0x1c6d
+                0x00000000     0x1c8e
  *(.debug_pubnames)
  .debug_pubnames
                 0x00000000       0x3f build/default/production/_ext/464348676/Namespace_bcs_rpc.o
@@ -1112,79 +1099,77 @@ END GROUP
  .debug_pubnames
                 0x00000934       0x48 build/default/production/_ext/464348676/Namespace_bcs_pid.o
  .debug_pubnames
-                0x0000097c       0xf6 build/default/production/_ext/464348676/Bowler_Helper.o
+                0x0000097c      0x136 build/default/production/_ext/464348676/Bowler_Helper.o
  .debug_pubnames
-                0x00000a72      0x3d5 build/default/production/_ext/161057953/usb_device.o
+                0x00000ab2      0x3d5 build/default/production/_ext/161057953/usb_device.o
  .debug_pubnames
-                0x00000e47       0xe7 build/default/production/_ext/161057953/usb_fifo.o
+                0x00000e87       0xe7 build/default/production/_ext/161057953/usb_fifo.o
  .debug_pubnames
-                0x00000f2e       0xc2 build/default/production/_ext/161057953/usb_descriptors.o
+                0x00000f6e       0xc2 build/default/production/_ext/161057953/usb_descriptors.o
  .debug_pubnames
-                0x00000ff0       0xfc build/default/production/_ext/161057953/usb_callback.o
+                0x00001030       0xfc build/default/production/_ext/161057953/usb_callback.o
  .debug_pubnames
-                0x000010ec      0x1b1 build/default/production/_ext/161057953/usb_function_cdc.o
+                0x0000112c      0x1b1 build/default/production/_ext/161057953/usb_function_cdc.o
  .debug_pubnames
-                0x0000129d       0xe8 build/default/production/_ext/1271783508/Bowler_UART_HAL.o
+                0x000012dd       0xe8 build/default/production/_ext/1271783508/Bowler_UART_HAL.o
  .debug_pubnames
-                0x00001385       0x4c build/default/production/_ext/1271783508/Bowler_USB_HAL.o
+                0x000013c5       0x4c build/default/production/_ext/1271783508/Bowler_USB_HAL.o
  .debug_pubnames
-                0x000013d1       0x50 build/default/production/_ext/1271783508/LED.o
+                0x00001411       0x50 build/default/production/_ext/1271783508/LED.o
  .debug_pubnames
-                0x00001421       0x8d build/default/production/_ext/1271783508/Tick.o
+                0x00001461       0x8d build/default/production/_ext/1271783508/Tick.o
  .debug_pubnames
-                0x000014ae       0x5d build/default/production/_ext/1271783508/Delay.o
+                0x000014ee       0x5d build/default/production/_ext/1271783508/Delay.o
  .debug_pubnames
-                0x0000150b       0xf6 build/default/production/_ext/1271783508/HAL_P32.o
+                0x0000154b       0xf6 build/default/production/_ext/1271783508/HAL_P32.o
  .debug_pubnames
-                0x00001601       0x52 build/default/production/_ext/1271783508/ADC.o
+                0x00001641       0x52 build/default/production/_ext/1271783508/ADC.o
  .debug_pubnames
-                0x00001653       0x4e build/default/production/_ext/1271783508/UART.o
+                0x00001693       0x4e build/default/production/_ext/1271783508/UART.o
  .debug_pubnames
-                0x000016a1       0xcd build/default/production/_ext/1271783508/FlashStorage.o
+                0x000016e1       0xcd build/default/production/_ext/1271783508/FlashStorage.o
  .debug_pubnames
-                0x0000176e       0x6a build/default/production/_ext/1360937237/main.o
+                0x000017ae       0x6a build/default/production/_ext/1360937237/main.o
  .debug_pubnames
-                0x000017d8       0x5a build/default/production/_ext/1360937237/NamespaceSample.o
+                0x00001818       0x5a build/default/production/_ext/1360937237/NamespaceSample.o
  .debug_pubnames
-                0x00001832       0x24 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/libgcc.a(floatunsisf.o)
+                0x00001872       0x24 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/libgcc.a(floatunsisf.o)
  .debug_pubnames
-                0x00001856       0x33 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-bootstrap-exception-handler.o)
+                0x00001896       0x33 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-bootstrap-exception-handler.o)
  .debug_pubnames
-                0x00001889       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-reset.o)
+                0x000018c9       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-reset.o)
  .debug_pubnames
-                0x000018a9       0x24 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-bootstrap.o)
+                0x000018e9       0x24 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-bootstrap.o)
  .debug_pubnames
-                0x000018cd       0x2a /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_interrupts_lib.o)
+                0x0000190d       0x2a /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_interrupts_lib.o)
  .debug_pubnames
-                0x000018f7       0x2b /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_disable_interrupts_lib.o)
+                0x00001937       0x2b /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_disable_interrupts_lib.o)
  .debug_pubnames
-                0x00001922       0x36 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_mv_int_lib.o)
+                0x00001962       0x36 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_mv_int_lib.o)
  .debug_pubnames
-                0x00001958       0xca /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
+                0x00001998       0xca /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
  .debug_pubnames
-                0x00001a22       0x31 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
+                0x00001a62       0x31 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
  .debug_pubnames
-                0x00001a53       0x43 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
+                0x00001a93       0x43 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
  .debug_pubnames
-                0x00001a96       0x1f /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_open_spi2_lib_legacy.o)
+                0x00001ad6       0x23 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
  .debug_pubnames
-                0x00001ab5       0x23 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
+                0x00001af9       0x24 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
  .debug_pubnames
-                0x00001ad8       0x24 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
+                0x00001b1d       0x23 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
  .debug_pubnames
-                0x00001afc       0x23 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
+                0x00001b40       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_pins_digital_out_lib.o)
  .debug_pubnames
-                0x00001b1f       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_pins_digital_out_lib.o)
+                0x00001b6c       0x24 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_clear_bits_lib.o)
  .debug_pubnames
-                0x00001b4b       0x24 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_clear_bits_lib.o)
+                0x00001b90       0x22 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_bits_lib.o)
  .debug_pubnames
-                0x00001b6f       0x22 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_bits_lib.o)
+                0x00001bb2       0xb1 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
  .debug_pubnames
-                0x00001b91       0xb1 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
- .debug_pubnames
-                0x00001c42       0x2b /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_restore_interrupts_lib.o)
+                0x00001c63       0x2b /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_restore_interrupts_lib.o)
 
-.debug_info     0x00000000    0x32c60
+.debug_info     0x00000000    0x33012
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000     0x1a64 build/default/production/_ext/464348676/Namespace_bcs_rpc.o
  .debug_info    0x00001a64     0x1966 build/default/production/_ext/464348676/Bowler_RPC_Process.o
@@ -1197,48 +1182,46 @@ END GROUP
  .debug_info    0x0000c708     0x1f08 build/default/production/_ext/464348676/Debug.o
  .debug_info    0x0000e610     0x11bd build/default/production/_ext/464348676/Bowler_Stack_Callback.o
  .debug_info    0x0000f7cd     0x19f6 build/default/production/_ext/464348676/Namespace_bcs_pid.o
- .debug_info    0x000111c3     0x191b build/default/production/_ext/464348676/Bowler_Helper.o
- .debug_info    0x00012ade     0x11bc build/default/production/_ext/161057953/usb_interrupt.o
- .debug_info    0x00013c9a     0x4072 build/default/production/_ext/161057953/usb_device.o
- .debug_info    0x00017d0c     0x1d4e build/default/production/_ext/161057953/usb_fifo.o
- .debug_info    0x00019a5a     0x18e4 build/default/production/_ext/161057953/usb_descriptors.o
- .debug_info    0x0001b33e     0x1ea8 build/default/production/_ext/161057953/usb_callback.o
- .debug_info    0x0001d1e6     0x2f36 build/default/production/_ext/161057953/usb_function_cdc.o
- .debug_info    0x0002011c     0x2ba2 build/default/production/_ext/1271783508/Bowler_UART_HAL.o
- .debug_info    0x00022cbe     0x12af build/default/production/_ext/1271783508/Bowler_USB_HAL.o
- .debug_info    0x00023f6d     0x13cf build/default/production/_ext/1271783508/LED.o
- .debug_info    0x0002533c     0x16b7 build/default/production/_ext/1271783508/Tick.o
- .debug_info    0x000269f3     0x12cf build/default/production/_ext/1271783508/Delay.o
- .debug_info    0x00027cc2     0x1b1f build/default/production/_ext/1271783508/HAL_P32.o
- .debug_info    0x000297e1     0x1de3 build/default/production/_ext/1271783508/ADC.o
- .debug_info    0x0002b5c4     0x1b87 build/default/production/_ext/1271783508/UART.o
- .debug_info    0x0002d14b     0x184f build/default/production/_ext/1271783508/FlashStorage.o
- .debug_info    0x0002e99a     0x18ef build/default/production/_ext/1360937237/main.o
- .debug_info    0x00030289     0x18d1 build/default/production/_ext/1360937237/NamespaceSample.o
- .debug_info    0x00031b5a      0x146 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/libgcc.a(floatunsisf.o)
- .debug_info    0x00031ca0       0xcb /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-bootstrap-exception-handler.o)
- .debug_info    0x00031d6b       0xa5 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-reset.o)
- .debug_info    0x00031e10       0xad /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-bootstrap.o)
- .debug_info    0x00031ebd       0xc9 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_interrupts_lib.o)
- .debug_info    0x00031f86       0xcb /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_disable_interrupts_lib.o)
- .debug_info    0x00032051       0xd1 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_mv_int_lib.o)
- .debug_info    0x00032122      0x1ab /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
- .debug_info    0x000322cd       0xe4 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
- .debug_info    0x000323b1      0x100 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
- .debug_info    0x000324b1        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
- .debug_info    0x000324b1       0xbd /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_open_spi2_lib_legacy.o)
- .debug_info    0x0003256e        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_brg_tbl_lib_legacy.o)
- .debug_info    0x0003256e       0xbb /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
- .debug_info    0x00032629       0xdc /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
- .debug_info    0x00032705       0xbb /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
- .debug_info    0x000327c0       0xd1 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_pins_digital_out_lib.o)
- .debug_info    0x00032891       0xbf /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_clear_bits_lib.o)
- .debug_info    0x00032950       0xbb /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_bits_lib.o)
- .debug_info    0x00032a0b        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(_ports_tbl_libp.o)
- .debug_info    0x00032a0b      0x18a /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
- .debug_info    0x00032b95       0xcb /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_restore_interrupts_lib.o)
+ .debug_info    0x000111c3     0x1bcc build/default/production/_ext/464348676/Bowler_Helper.o
+ .debug_info    0x00012d8f     0x11bc build/default/production/_ext/161057953/usb_interrupt.o
+ .debug_info    0x00013f4b     0x4072 build/default/production/_ext/161057953/usb_device.o
+ .debug_info    0x00017fbd     0x1d4e build/default/production/_ext/161057953/usb_fifo.o
+ .debug_info    0x00019d0b     0x18e4 build/default/production/_ext/161057953/usb_descriptors.o
+ .debug_info    0x0001b5ef     0x1ea8 build/default/production/_ext/161057953/usb_callback.o
+ .debug_info    0x0001d497     0x2f36 build/default/production/_ext/161057953/usb_function_cdc.o
+ .debug_info    0x000203cd     0x2ba2 build/default/production/_ext/1271783508/Bowler_UART_HAL.o
+ .debug_info    0x00022f6f     0x12af build/default/production/_ext/1271783508/Bowler_USB_HAL.o
+ .debug_info    0x0002421e     0x13cf build/default/production/_ext/1271783508/LED.o
+ .debug_info    0x000255ed     0x16b7 build/default/production/_ext/1271783508/Tick.o
+ .debug_info    0x00026ca4     0x12cf build/default/production/_ext/1271783508/Delay.o
+ .debug_info    0x00027f73     0x1b1f build/default/production/_ext/1271783508/HAL_P32.o
+ .debug_info    0x00029a92     0x1de3 build/default/production/_ext/1271783508/ADC.o
+ .debug_info    0x0002b875     0x1b87 build/default/production/_ext/1271783508/UART.o
+ .debug_info    0x0002d3fc     0x184f build/default/production/_ext/1271783508/FlashStorage.o
+ .debug_info    0x0002ec4b     0x18dd build/default/production/_ext/1360937237/main.o
+ .debug_info    0x00030528     0x1aa1 build/default/production/_ext/1360937237/NamespaceSample.o
+ .debug_info    0x00031fc9      0x146 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/libgcc.a(floatunsisf.o)
+ .debug_info    0x0003210f       0xcb /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-bootstrap-exception-handler.o)
+ .debug_info    0x000321da       0xa5 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-reset.o)
+ .debug_info    0x0003227f       0xad /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-bootstrap.o)
+ .debug_info    0x0003232c       0xc9 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_interrupts_lib.o)
+ .debug_info    0x000323f5       0xcb /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_disable_interrupts_lib.o)
+ .debug_info    0x000324c0       0xd1 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_mv_int_lib.o)
+ .debug_info    0x00032591      0x1ab /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
+ .debug_info    0x0003273c       0xe4 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
+ .debug_info    0x00032820      0x100 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
+ .debug_info    0x00032920        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
+ .debug_info    0x00032920       0xbb /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
+ .debug_info    0x000329db       0xdc /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
+ .debug_info    0x00032ab7       0xbb /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
+ .debug_info    0x00032b72       0xd1 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_pins_digital_out_lib.o)
+ .debug_info    0x00032c43       0xbf /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_clear_bits_lib.o)
+ .debug_info    0x00032d02       0xbb /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_bits_lib.o)
+ .debug_info    0x00032dbd        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(_ports_tbl_libp.o)
+ .debug_info    0x00032dbd      0x18a /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
+ .debug_info    0x00032f47       0xcb /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_restore_interrupts_lib.o)
 
-.debug_abbrev   0x00000000     0x4338
+.debug_abbrev   0x00000000     0x4326
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x251 build/default/production/_ext/464348676/Namespace_bcs_rpc.o
  .debug_abbrev  0x00000251      0x256 build/default/production/_ext/464348676/Bowler_RPC_Process.o
@@ -1267,32 +1250,30 @@ END GROUP
  .debug_abbrev  0x0000355d      0x1db build/default/production/_ext/1271783508/ADC.o
  .debug_abbrev  0x00003738      0x231 build/default/production/_ext/1271783508/UART.o
  .debug_abbrev  0x00003969      0x20f build/default/production/_ext/1271783508/FlashStorage.o
- .debug_abbrev  0x00003b78      0x240 build/default/production/_ext/1360937237/main.o
- .debug_abbrev  0x00003db8      0x242 build/default/production/_ext/1360937237/NamespaceSample.o
- .debug_abbrev  0x00003ffa       0x61 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/libgcc.a(floatunsisf.o)
- .debug_abbrev  0x0000405b       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-bootstrap-exception-handler.o)
- .debug_abbrev  0x00004080       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-reset.o)
- .debug_abbrev  0x000040a5       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-bootstrap.o)
- .debug_abbrev  0x000040ca       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_interrupts_lib.o)
- .debug_abbrev  0x000040ef       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_disable_interrupts_lib.o)
- .debug_abbrev  0x00004114       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_mv_int_lib.o)
- .debug_abbrev  0x00004139       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
- .debug_abbrev  0x0000415e       0x34 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
- .debug_abbrev  0x00004192       0x34 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
- .debug_abbrev  0x000041c6        0x1 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
- .debug_abbrev  0x000041c7       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_open_spi2_lib_legacy.o)
- .debug_abbrev  0x000041ec        0x1 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_brg_tbl_lib_legacy.o)
- .debug_abbrev  0x000041ed       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
- .debug_abbrev  0x00004212       0x34 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
- .debug_abbrev  0x00004246       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
- .debug_abbrev  0x0000426b       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_pins_digital_out_lib.o)
- .debug_abbrev  0x00004290       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_clear_bits_lib.o)
- .debug_abbrev  0x000042b5       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_bits_lib.o)
- .debug_abbrev  0x000042da        0x1 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(_ports_tbl_libp.o)
- .debug_abbrev  0x000042db       0x38 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
- .debug_abbrev  0x00004313       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_restore_interrupts_lib.o)
+ .debug_abbrev  0x00003b78      0x254 build/default/production/_ext/1360937237/main.o
+ .debug_abbrev  0x00003dcc      0x242 build/default/production/_ext/1360937237/NamespaceSample.o
+ .debug_abbrev  0x0000400e       0x61 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/libgcc.a(floatunsisf.o)
+ .debug_abbrev  0x0000406f       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-bootstrap-exception-handler.o)
+ .debug_abbrev  0x00004094       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-reset.o)
+ .debug_abbrev  0x000040b9       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-bootstrap.o)
+ .debug_abbrev  0x000040de       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_interrupts_lib.o)
+ .debug_abbrev  0x00004103       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_disable_interrupts_lib.o)
+ .debug_abbrev  0x00004128       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_mv_int_lib.o)
+ .debug_abbrev  0x0000414d       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
+ .debug_abbrev  0x00004172       0x34 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
+ .debug_abbrev  0x000041a6       0x34 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
+ .debug_abbrev  0x000041da        0x1 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
+ .debug_abbrev  0x000041db       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
+ .debug_abbrev  0x00004200       0x34 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
+ .debug_abbrev  0x00004234       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
+ .debug_abbrev  0x00004259       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_pins_digital_out_lib.o)
+ .debug_abbrev  0x0000427e       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_clear_bits_lib.o)
+ .debug_abbrev  0x000042a3       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_bits_lib.o)
+ .debug_abbrev  0x000042c8        0x1 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(_ports_tbl_libp.o)
+ .debug_abbrev  0x000042c9       0x38 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
+ .debug_abbrev  0x00004301       0x25 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_restore_interrupts_lib.o)
 
-.debug_line     0x00000000     0x5d88
+.debug_line     0x00000000     0x5d47
  *(.debug_line)
  .debug_line    0x00000000      0x2c1 build/default/production/_ext/464348676/Namespace_bcs_rpc.o
  .debug_line    0x000002c1      0x2a4 build/default/production/_ext/464348676/Bowler_RPC_Process.o
@@ -1305,48 +1286,46 @@ END GROUP
  .debug_line    0x0000179b      0x3e0 build/default/production/_ext/464348676/Debug.o
  .debug_line    0x00001b7b      0x15c build/default/production/_ext/464348676/Bowler_Stack_Callback.o
  .debug_line    0x00001cd7      0x281 build/default/production/_ext/464348676/Namespace_bcs_pid.o
- .debug_line    0x00001f58      0x29e build/default/production/_ext/464348676/Bowler_Helper.o
- .debug_line    0x000021f6      0x15c build/default/production/_ext/161057953/usb_interrupt.o
- .debug_line    0x00002352      0x6c5 build/default/production/_ext/161057953/usb_device.o
- .debug_line    0x00002a17      0x3a8 build/default/production/_ext/161057953/usb_fifo.o
- .debug_line    0x00002dbf      0x2e8 build/default/production/_ext/161057953/usb_descriptors.o
- .debug_line    0x000030a7      0x329 build/default/production/_ext/161057953/usb_callback.o
- .debug_line    0x000033d0      0x3dd build/default/production/_ext/161057953/usb_function_cdc.o
- .debug_line    0x000037ad      0x33b build/default/production/_ext/1271783508/Bowler_UART_HAL.o
- .debug_line    0x00003ae8      0x246 build/default/production/_ext/1271783508/Bowler_USB_HAL.o
- .debug_line    0x00003d2e      0x258 build/default/production/_ext/1271783508/LED.o
- .debug_line    0x00003f86      0x2d1 build/default/production/_ext/1271783508/Tick.o
- .debug_line    0x00004257      0x251 build/default/production/_ext/1271783508/Delay.o
- .debug_line    0x000044a8      0x3ae build/default/production/_ext/1271783508/HAL_P32.o
- .debug_line    0x00004856      0x28a build/default/production/_ext/1271783508/ADC.o
- .debug_line    0x00004ae0      0x290 build/default/production/_ext/1271783508/UART.o
- .debug_line    0x00004d70      0x339 build/default/production/_ext/1271783508/FlashStorage.o
- .debug_line    0x000050a9      0x1f9 build/default/production/_ext/1360937237/main.o
- .debug_line    0x000052a2      0x225 build/default/production/_ext/1360937237/NamespaceSample.o
- .debug_line    0x000054c7       0x6d /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/libgcc.a(floatunsisf.o)
- .debug_line    0x00005534       0x89 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-bootstrap-exception-handler.o)
- .debug_line    0x000055bd       0x76 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-reset.o)
- .debug_line    0x00005633       0x7a /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-bootstrap.o)
- .debug_line    0x000056ad       0x72 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_interrupts_lib.o)
- .debug_line    0x0000571f       0x73 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_disable_interrupts_lib.o)
- .debug_line    0x00005792       0x6e /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_mv_int_lib.o)
- .debug_line    0x00005800       0x64 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
- .debug_line    0x00005864       0x7b /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
- .debug_line    0x000058df       0x7b /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
- .debug_line    0x0000595a        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
- .debug_line    0x0000595a       0x71 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_open_spi2_lib_legacy.o)
- .debug_line    0x000059cb        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_brg_tbl_lib_legacy.o)
- .debug_line    0x000059cb       0x6b /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
- .debug_line    0x00005a36       0xc0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
- .debug_line    0x00005af6       0x6b /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
- .debug_line    0x00005b61       0x78 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_pins_digital_out_lib.o)
- .debug_line    0x00005bd9       0x6e /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_clear_bits_lib.o)
- .debug_line    0x00005c47       0x6c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_bits_lib.o)
- .debug_line    0x00005cb3        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(_ports_tbl_libp.o)
- .debug_line    0x00005cb3       0x62 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
- .debug_line    0x00005d15       0x73 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_restore_interrupts_lib.o)
+ .debug_line    0x00001f58      0x2d0 build/default/production/_ext/464348676/Bowler_Helper.o
+ .debug_line    0x00002228      0x15c build/default/production/_ext/161057953/usb_interrupt.o
+ .debug_line    0x00002384      0x6c5 build/default/production/_ext/161057953/usb_device.o
+ .debug_line    0x00002a49      0x3a8 build/default/production/_ext/161057953/usb_fifo.o
+ .debug_line    0x00002df1      0x2e8 build/default/production/_ext/161057953/usb_descriptors.o
+ .debug_line    0x000030d9      0x329 build/default/production/_ext/161057953/usb_callback.o
+ .debug_line    0x00003402      0x3dd build/default/production/_ext/161057953/usb_function_cdc.o
+ .debug_line    0x000037df      0x33b build/default/production/_ext/1271783508/Bowler_UART_HAL.o
+ .debug_line    0x00003b1a      0x246 build/default/production/_ext/1271783508/Bowler_USB_HAL.o
+ .debug_line    0x00003d60      0x258 build/default/production/_ext/1271783508/LED.o
+ .debug_line    0x00003fb8      0x2d1 build/default/production/_ext/1271783508/Tick.o
+ .debug_line    0x00004289      0x251 build/default/production/_ext/1271783508/Delay.o
+ .debug_line    0x000044da      0x3ae build/default/production/_ext/1271783508/HAL_P32.o
+ .debug_line    0x00004888      0x28a build/default/production/_ext/1271783508/ADC.o
+ .debug_line    0x00004b12      0x290 build/default/production/_ext/1271783508/UART.o
+ .debug_line    0x00004da2      0x339 build/default/production/_ext/1271783508/FlashStorage.o
+ .debug_line    0x000050db      0x1e4 build/default/production/_ext/1360937237/main.o
+ .debug_line    0x000052bf      0x238 build/default/production/_ext/1360937237/NamespaceSample.o
+ .debug_line    0x000054f7       0x6d /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/libgcc.a(floatunsisf.o)
+ .debug_line    0x00005564       0x89 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-bootstrap-exception-handler.o)
+ .debug_line    0x000055ed       0x76 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-reset.o)
+ .debug_line    0x00005663       0x7a /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-bootstrap.o)
+ .debug_line    0x000056dd       0x72 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_interrupts_lib.o)
+ .debug_line    0x0000574f       0x73 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_disable_interrupts_lib.o)
+ .debug_line    0x000057c2       0x6e /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_mv_int_lib.o)
+ .debug_line    0x00005830       0x64 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
+ .debug_line    0x00005894       0x7b /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
+ .debug_line    0x0000590f       0x7b /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
+ .debug_line    0x0000598a        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
+ .debug_line    0x0000598a       0x6b /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
+ .debug_line    0x000059f5       0xc0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
+ .debug_line    0x00005ab5       0x6b /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
+ .debug_line    0x00005b20       0x78 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_pins_digital_out_lib.o)
+ .debug_line    0x00005b98       0x6e /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_clear_bits_lib.o)
+ .debug_line    0x00005c06       0x6c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_bits_lib.o)
+ .debug_line    0x00005c72        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(_ports_tbl_libp.o)
+ .debug_line    0x00005c72       0x62 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
+ .debug_line    0x00005cd4       0x73 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_restore_interrupts_lib.o)
 
-.debug_frame    0x00000000     0x209c
+.debug_frame    0x00000000     0x2104
  *(.debug_frame)
  .debug_frame   0x00000000       0x64 build/default/production/_ext/464348676/Namespace_bcs_rpc.o
  .debug_frame   0x00000064       0x4c build/default/production/_ext/464348676/Bowler_RPC_Process.o
@@ -1358,44 +1337,43 @@ END GROUP
  .debug_frame   0x0000080c      0x1f4 build/default/production/_ext/464348676/FIFO.o
  .debug_frame   0x00000a00      0x208 build/default/production/_ext/464348676/Debug.o
  .debug_frame   0x00000c08       0x48 build/default/production/_ext/464348676/Namespace_bcs_pid.o
- .debug_frame   0x00000c50      0x1bc build/default/production/_ext/464348676/Bowler_Helper.o
- .debug_frame   0x00000e0c      0x310 build/default/production/_ext/161057953/usb_device.o
- .debug_frame   0x0000111c      0x164 build/default/production/_ext/161057953/usb_fifo.o
- .debug_frame   0x00001280       0x64 build/default/production/_ext/161057953/usb_descriptors.o
- .debug_frame   0x000012e4      0x128 build/default/production/_ext/161057953/usb_callback.o
- .debug_frame   0x0000140c       0xf0 build/default/production/_ext/161057953/usb_function_cdc.o
- .debug_frame   0x000014fc      0x148 build/default/production/_ext/1271783508/Bowler_UART_HAL.o
- .debug_frame   0x00001644       0x64 build/default/production/_ext/1271783508/Bowler_USB_HAL.o
- .debug_frame   0x000016a8       0x9c build/default/production/_ext/1271783508/LED.o
- .debug_frame   0x00001744       0xdc build/default/production/_ext/1271783508/Tick.o
- .debug_frame   0x00001820       0x9c build/default/production/_ext/1271783508/Delay.o
- .debug_frame   0x000018bc      0x144 build/default/production/_ext/1271783508/HAL_P32.o
- .debug_frame   0x00001a00       0x64 build/default/production/_ext/1271783508/ADC.o
- .debug_frame   0x00001a64       0x48 build/default/production/_ext/1271783508/UART.o
- .debug_frame   0x00001aac      0x128 build/default/production/_ext/1271783508/FlashStorage.o
- .debug_frame   0x00001bd4       0xbc build/default/production/_ext/1360937237/main.o
- .debug_frame   0x00001c90       0x64 build/default/production/_ext/1360937237/NamespaceSample.o
- .debug_frame   0x00001cf4       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/libgcc.a(floatunsisf.o)
- .debug_frame   0x00001d1c       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-bootstrap-exception-handler.o)
- .debug_frame   0x00001d3c       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-reset.o)
- .debug_frame   0x00001d5c       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-bootstrap.o)
- .debug_frame   0x00001d7c       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_interrupts_lib.o)
- .debug_frame   0x00001d9c       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_disable_interrupts_lib.o)
- .debug_frame   0x00001dbc       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_mv_int_lib.o)
- .debug_frame   0x00001de4       0xa0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
- .debug_frame   0x00001e84       0x30 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
- .debug_frame   0x00001eb4       0x40 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
- .debug_frame   0x00001ef4       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_open_spi2_lib_legacy.o)
- .debug_frame   0x00001f14       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
- .debug_frame   0x00001f3c       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
- .debug_frame   0x00001f64       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
- .debug_frame   0x00001f8c       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_pins_digital_out_lib.o)
- .debug_frame   0x00001fac       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_clear_bits_lib.o)
- .debug_frame   0x00001fcc       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_bits_lib.o)
- .debug_frame   0x00001fec       0x90 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
- .debug_frame   0x0000207c       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_restore_interrupts_lib.o)
+ .debug_frame   0x00000c50      0x248 build/default/production/_ext/464348676/Bowler_Helper.o
+ .debug_frame   0x00000e98      0x310 build/default/production/_ext/161057953/usb_device.o
+ .debug_frame   0x000011a8      0x164 build/default/production/_ext/161057953/usb_fifo.o
+ .debug_frame   0x0000130c       0x64 build/default/production/_ext/161057953/usb_descriptors.o
+ .debug_frame   0x00001370      0x128 build/default/production/_ext/161057953/usb_callback.o
+ .debug_frame   0x00001498       0xf0 build/default/production/_ext/161057953/usb_function_cdc.o
+ .debug_frame   0x00001588      0x148 build/default/production/_ext/1271783508/Bowler_UART_HAL.o
+ .debug_frame   0x000016d0       0x64 build/default/production/_ext/1271783508/Bowler_USB_HAL.o
+ .debug_frame   0x00001734       0x9c build/default/production/_ext/1271783508/LED.o
+ .debug_frame   0x000017d0       0xdc build/default/production/_ext/1271783508/Tick.o
+ .debug_frame   0x000018ac       0x9c build/default/production/_ext/1271783508/Delay.o
+ .debug_frame   0x00001948      0x144 build/default/production/_ext/1271783508/HAL_P32.o
+ .debug_frame   0x00001a8c       0x64 build/default/production/_ext/1271783508/ADC.o
+ .debug_frame   0x00001af0       0x48 build/default/production/_ext/1271783508/UART.o
+ .debug_frame   0x00001b38      0x128 build/default/production/_ext/1271783508/FlashStorage.o
+ .debug_frame   0x00001c60       0xb8 build/default/production/_ext/1360937237/main.o
+ .debug_frame   0x00001d18       0x64 build/default/production/_ext/1360937237/NamespaceSample.o
+ .debug_frame   0x00001d7c       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/libgcc.a(floatunsisf.o)
+ .debug_frame   0x00001da4       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-bootstrap-exception-handler.o)
+ .debug_frame   0x00001dc4       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-reset.o)
+ .debug_frame   0x00001de4       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-bootstrap.o)
+ .debug_frame   0x00001e04       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_interrupts_lib.o)
+ .debug_frame   0x00001e24       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_disable_interrupts_lib.o)
+ .debug_frame   0x00001e44       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_mv_int_lib.o)
+ .debug_frame   0x00001e6c       0xa0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
+ .debug_frame   0x00001f0c       0x30 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
+ .debug_frame   0x00001f3c       0x40 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
+ .debug_frame   0x00001f7c       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
+ .debug_frame   0x00001fa4       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
+ .debug_frame   0x00001fcc       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
+ .debug_frame   0x00001ff4       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_pins_digital_out_lib.o)
+ .debug_frame   0x00002014       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_clear_bits_lib.o)
+ .debug_frame   0x00002034       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_bits_lib.o)
+ .debug_frame   0x00002054       0x90 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
+ .debug_frame   0x000020e4       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_restore_interrupts_lib.o)
 
-.debug_str      0x00000000     0x26be
+.debug_str      0x00000000     0x26c5
  *(.debug_str)
  .debug_str     0x00000000      0x138 build/default/production/_ext/464348676/Namespace_bcs_rpc.o
  .debug_str     0x00000138      0x12f build/default/production/_ext/464348676/Bowler_RPC_Process.o
@@ -1408,46 +1386,44 @@ END GROUP
  .debug_str     0x000009b5      0x153 build/default/production/_ext/464348676/Debug.o
  .debug_str     0x00000b08      0x12f build/default/production/_ext/464348676/Bowler_Stack_Callback.o
  .debug_str     0x00000c37      0x12f build/default/production/_ext/464348676/Namespace_bcs_pid.o
- .debug_str     0x00000d66      0x136 build/default/production/_ext/464348676/Bowler_Helper.o
- .debug_str     0x00000e9c      0x12f build/default/production/_ext/161057953/usb_interrupt.o
- .debug_str     0x00000fcb      0x2f8 build/default/production/_ext/161057953/usb_device.o
- .debug_str     0x000012c3      0x167 build/default/production/_ext/161057953/usb_fifo.o
- .debug_str     0x0000142a      0x164 build/default/production/_ext/161057953/usb_descriptors.o
- .debug_str     0x0000158e      0x144 build/default/production/_ext/161057953/usb_callback.o
- .debug_str     0x000016d2      0x218 build/default/production/_ext/161057953/usb_function_cdc.o
- .debug_str     0x000018ea      0x14d build/default/production/_ext/1271783508/Bowler_UART_HAL.o
- .debug_str     0x00001a37      0x12f build/default/production/_ext/1271783508/Bowler_USB_HAL.o
- .debug_str     0x00001b66      0x12f build/default/production/_ext/1271783508/LED.o
- .debug_str     0x00001c95      0x138 build/default/production/_ext/1271783508/Tick.o
- .debug_str     0x00001dcd      0x12f build/default/production/_ext/1271783508/Delay.o
- .debug_str     0x00001efc      0x136 build/default/production/_ext/1271783508/HAL_P32.o
- .debug_str     0x00002032      0x1ac build/default/production/_ext/1271783508/ADC.o
- .debug_str     0x000021de      0x12f build/default/production/_ext/1271783508/UART.o
- .debug_str     0x0000230d      0x12f build/default/production/_ext/1271783508/FlashStorage.o
- .debug_str     0x0000243c      0x153 build/default/production/_ext/1360937237/main.o
- .debug_str     0x0000258f      0x12f build/default/production/_ext/1360937237/NamespaceSample.o
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/libgcc.a(floatunsisf.o)
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-bootstrap-exception-handler.o)
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-reset.o)
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-bootstrap.o)
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_interrupts_lib.o)
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_disable_interrupts_lib.o)
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_mv_int_lib.o)
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_open_spi2_lib_legacy.o)
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_brg_tbl_lib_legacy.o)
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_pins_digital_out_lib.o)
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_clear_bits_lib.o)
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_bits_lib.o)
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(_ports_tbl_libp.o)
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
- .debug_str     0x000026be        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_restore_interrupts_lib.o)
+ .debug_str     0x00000d66      0x13d build/default/production/_ext/464348676/Bowler_Helper.o
+ .debug_str     0x00000ea3      0x12f build/default/production/_ext/161057953/usb_interrupt.o
+ .debug_str     0x00000fd2      0x2f8 build/default/production/_ext/161057953/usb_device.o
+ .debug_str     0x000012ca      0x167 build/default/production/_ext/161057953/usb_fifo.o
+ .debug_str     0x00001431      0x164 build/default/production/_ext/161057953/usb_descriptors.o
+ .debug_str     0x00001595      0x144 build/default/production/_ext/161057953/usb_callback.o
+ .debug_str     0x000016d9      0x218 build/default/production/_ext/161057953/usb_function_cdc.o
+ .debug_str     0x000018f1      0x14d build/default/production/_ext/1271783508/Bowler_UART_HAL.o
+ .debug_str     0x00001a3e      0x12f build/default/production/_ext/1271783508/Bowler_USB_HAL.o
+ .debug_str     0x00001b6d      0x12f build/default/production/_ext/1271783508/LED.o
+ .debug_str     0x00001c9c      0x138 build/default/production/_ext/1271783508/Tick.o
+ .debug_str     0x00001dd4      0x12f build/default/production/_ext/1271783508/Delay.o
+ .debug_str     0x00001f03      0x136 build/default/production/_ext/1271783508/HAL_P32.o
+ .debug_str     0x00002039      0x1ac build/default/production/_ext/1271783508/ADC.o
+ .debug_str     0x000021e5      0x12f build/default/production/_ext/1271783508/UART.o
+ .debug_str     0x00002314      0x12f build/default/production/_ext/1271783508/FlashStorage.o
+ .debug_str     0x00002443      0x149 build/default/production/_ext/1360937237/main.o
+ .debug_str     0x0000258c      0x139 build/default/production/_ext/1360937237/NamespaceSample.o
+ .debug_str     0x000026c5        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/libgcc.a(floatunsisf.o)
+ .debug_str     0x000026c5        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-bootstrap-exception-handler.o)
+ .debug_str     0x000026c5        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-reset.o)
+ .debug_str     0x000026c5        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-bootstrap.o)
+ .debug_str     0x000026c5        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_interrupts_lib.o)
+ .debug_str     0x000026c5        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_disable_interrupts_lib.o)
+ .debug_str     0x000026c5        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_mv_int_lib.o)
+ .debug_str     0x000026c5        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
+ .debug_str     0x000026c5        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
+ .debug_str     0x000026c5        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
+ .debug_str     0x000026c5        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
+ .debug_str     0x000026c5        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
+ .debug_str     0x000026c5        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
+ .debug_str     0x000026c5        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
+ .debug_str     0x000026c5        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_pins_digital_out_lib.o)
+ .debug_str     0x000026c5        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_clear_bits_lib.o)
+ .debug_str     0x000026c5        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_bits_lib.o)
+ .debug_str     0x000026c5        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(_ports_tbl_libp.o)
+ .debug_str     0x000026c5        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
+ .debug_str     0x000026c5        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_restore_interrupts_lib.o)
 
 .debug_loc      0x00000000       0x5d
  *(.debug_loc)
@@ -1469,7 +1445,7 @@ END GROUP
  *(.debug_varnames)
 
 .debug_pubtypes
-                0x00000000     0x2d20
+                0x00000000     0x2de9
  *(.debug_pubtypes)
  .debug_pubtypes
                 0x00000000      0x1f7 build/default/production/_ext/464348676/Namespace_bcs_rpc.o
@@ -1494,45 +1470,45 @@ END GROUP
  .debug_pubtypes
                 0x0000107b      0x1c9 build/default/production/_ext/464348676/Namespace_bcs_pid.o
  .debug_pubtypes
-                0x00001244      0x1bc build/default/production/_ext/464348676/Bowler_Helper.o
+                0x00001244      0x214 build/default/production/_ext/464348676/Bowler_Helper.o
  .debug_pubtypes
-                0x00001400       0xe7 build/default/production/_ext/161057953/usb_interrupt.o
+                0x00001458       0xe7 build/default/production/_ext/161057953/usb_interrupt.o
  .debug_pubtypes
-                0x000014e7      0x2b1 build/default/production/_ext/161057953/usb_device.o
+                0x0000153f      0x2b1 build/default/production/_ext/161057953/usb_device.o
  .debug_pubtypes
-                0x00001798      0x1ed build/default/production/_ext/161057953/usb_fifo.o
+                0x000017f0      0x1ed build/default/production/_ext/161057953/usb_fifo.o
  .debug_pubtypes
-                0x00001985      0x12e build/default/production/_ext/161057953/usb_descriptors.o
+                0x000019dd      0x12e build/default/production/_ext/161057953/usb_descriptors.o
  .debug_pubtypes
-                0x00001ab3      0x191 build/default/production/_ext/161057953/usb_callback.o
+                0x00001b0b      0x191 build/default/production/_ext/161057953/usb_callback.o
  .debug_pubtypes
-                0x00001c44      0x260 build/default/production/_ext/161057953/usb_function_cdc.o
+                0x00001c9c      0x260 build/default/production/_ext/161057953/usb_function_cdc.o
  .debug_pubtypes
-                0x00001ea4      0x19f build/default/production/_ext/1271783508/Bowler_UART_HAL.o
+                0x00001efc      0x19f build/default/production/_ext/1271783508/Bowler_UART_HAL.o
  .debug_pubtypes
-                0x00002043      0x10c build/default/production/_ext/1271783508/Bowler_USB_HAL.o
+                0x0000209b      0x10c build/default/production/_ext/1271783508/Bowler_USB_HAL.o
  .debug_pubtypes
-                0x0000214f       0xf0 build/default/production/_ext/1271783508/LED.o
+                0x000021a7       0xf0 build/default/production/_ext/1271783508/LED.o
  .debug_pubtypes
-                0x0000223f       0xf1 build/default/production/_ext/1271783508/Tick.o
+                0x00002297       0xf1 build/default/production/_ext/1271783508/Tick.o
  .debug_pubtypes
-                0x00002330       0xfa build/default/production/_ext/1271783508/Delay.o
+                0x00002388       0xfa build/default/production/_ext/1271783508/Delay.o
  .debug_pubtypes
-                0x0000242a      0x1c5 build/default/production/_ext/1271783508/HAL_P32.o
+                0x00002482      0x1c5 build/default/production/_ext/1271783508/HAL_P32.o
  .debug_pubtypes
-                0x000025ef      0x152 build/default/production/_ext/1271783508/ADC.o
+                0x00002647      0x152 build/default/production/_ext/1271783508/ADC.o
  .debug_pubtypes
-                0x00002741      0x113 build/default/production/_ext/1271783508/UART.o
+                0x00002799      0x113 build/default/production/_ext/1271783508/UART.o
  .debug_pubtypes
-                0x00002854      0x133 build/default/production/_ext/1271783508/FlashStorage.o
+                0x000028ac      0x133 build/default/production/_ext/1271783508/FlashStorage.o
  .debug_pubtypes
-                0x00002987      0x19c build/default/production/_ext/1360937237/main.o
+                0x000029df      0x1fb build/default/production/_ext/1360937237/main.o
  .debug_pubtypes
-                0x00002b23      0x1c9 build/default/production/_ext/1360937237/NamespaceSample.o
+                0x00002bda      0x1db build/default/production/_ext/1360937237/NamespaceSample.o
  .debug_pubtypes
-                0x00002cec       0x34 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/libgcc.a(floatunsisf.o)
+                0x00002db5       0x34 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/libgcc.a(floatunsisf.o)
 
-.debug_ranges   0x00000000      0x1e0
+.debug_ranges   0x00000000      0x1d0
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x18 build/default/production/_ext/464348676/Bowler_Transport.o
  .debug_ranges  0x00000018       0x18 build/default/production/_ext/161057953/usb_device.o
@@ -1545,15 +1521,14 @@ END GROUP
  .debug_ranges  0x00000090       0x50 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
  .debug_ranges  0x000000e0       0x18 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
  .debug_ranges  0x000000f8       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
- .debug_ranges  0x00000118       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_open_spi2_lib_legacy.o)
- .debug_ranges  0x00000128       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
- .debug_ranges  0x00000138       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
- .debug_ranges  0x00000148       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
- .debug_ranges  0x00000158       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_pins_digital_out_lib.o)
- .debug_ranges  0x00000168       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_clear_bits_lib.o)
- .debug_ranges  0x00000178       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_bits_lib.o)
- .debug_ranges  0x00000188       0x48 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
- .debug_ranges  0x000001d0       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_restore_interrupts_lib.o)
+ .debug_ranges  0x00000118       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
+ .debug_ranges  0x00000128       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
+ .debug_ranges  0x00000138       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
+ .debug_ranges  0x00000148       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_pins_digital_out_lib.o)
+ .debug_ranges  0x00000158       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_clear_bits_lib.o)
+ .debug_ranges  0x00000168       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_bits_lib.o)
+ .debug_ranges  0x00000178       0x48 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
+ .debug_ranges  0x000001c0       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_restore_interrupts_lib.o)
 
 .gnu.attributes
                 0x00000000       0x10
@@ -1639,27 +1614,23 @@ END GROUP
  .gnu.attributes
                 0x00000270       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
  .gnu.attributes
-                0x00000280       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_open_spi2_lib_legacy.o)
+                0x00000280       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
  .gnu.attributes
-                0x00000290       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_brg_tbl_lib_legacy.o)
+                0x00000290       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
  .gnu.attributes
-                0x000002a0       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
+                0x000002a0       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
  .gnu.attributes
-                0x000002b0       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
+                0x000002b0       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_pins_digital_out_lib.o)
  .gnu.attributes
-                0x000002c0       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
+                0x000002c0       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_clear_bits_lib.o)
  .gnu.attributes
-                0x000002d0       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_pins_digital_out_lib.o)
+                0x000002d0       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_bits_lib.o)
  .gnu.attributes
-                0x000002e0       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_clear_bits_lib.o)
+                0x000002e0       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(_ports_tbl_libp.o)
  .gnu.attributes
-                0x000002f0       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_bits_lib.o)
+                0x000002f0       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
  .gnu.attributes
-                0x00000300       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(_ports_tbl_libp.o)
- .gnu.attributes
-                0x00000310       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
- .gnu.attributes
-                0x00000320       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_restore_interrupts_lib.o)
+                0x00000300       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_restore_interrupts_lib.o)
 OUTPUT(dist/default/production/BowlerSampleProject.X.production.elf elf32-tradlittlemips)
 LOAD stack
 LOAD data_init
@@ -1785,437 +1756,417 @@ LOAD data_init
 
 .mdebug.abi32%z28
                 0x00000000        0x0
- .mdebug.abi32  0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_brg_tbl_lib_legacy.o)
+ .mdebug.abi32  0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
 
 .bss%z29        0x00000000        0x0
- .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_brg_tbl_lib_legacy.o)
+ .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
 
 .data%z30       0x00000000        0x0
- .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_brg_tbl_lib_legacy.o)
+ .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
 
 .mdebug.abi32%z31
                 0x00000000        0x0
- .mdebug.abi32  0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_open_spi2_lib_legacy.o)
+ .mdebug.abi32  0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
 
 .bss%z32        0x00000000        0x0
- .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_open_spi2_lib_legacy.o)
+ .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
 
 .data%z33       0x00000000        0x0
- .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_open_spi2_lib_legacy.o)
+ .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
 
 .mdebug.abi32%z34
                 0x00000000        0x0
- .mdebug.abi32  0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
+ .mdebug.abi32  0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
 
 .bss%z35        0x00000000        0x0
- .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
+ .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
 
 .data%z36       0x00000000        0x0
- .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
+ .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
 
 .mdebug.abi32%z37
                 0x00000000        0x0
- .mdebug.abi32  0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
+ .mdebug.abi32  0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
 
 .bss%z38        0x00000000        0x0
- .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
+ .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
 
 .data%z39       0x00000000        0x0
- .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
+ .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
 
 .mdebug.abi32%z40
                 0x00000000        0x0
- .mdebug.abi32  0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
+ .mdebug.abi32  0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_mv_int_lib.o)
 
 .bss%z41        0x00000000        0x0
- .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
+ .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_mv_int_lib.o)
 
 .data%z42       0x00000000        0x0
- .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
+ .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_mv_int_lib.o)
 
 .mdebug.abi32%z43
                 0x00000000        0x0
- .mdebug.abi32  0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
+ .mdebug.abi32  0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_disable_interrupts_lib.o)
 
 .bss%z44        0x00000000        0x0
- .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
+ .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_disable_interrupts_lib.o)
 
 .data%z45       0x00000000        0x0
- .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
+ .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_disable_interrupts_lib.o)
 
 .mdebug.abi32%z46
                 0x00000000        0x0
- .mdebug.abi32  0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_mv_int_lib.o)
-
-.bss%z47        0x00000000        0x0
- .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_mv_int_lib.o)
-
-.data%z48       0x00000000        0x0
- .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_mv_int_lib.o)
-
-.mdebug.abi32%z49
-                0x00000000        0x0
- .mdebug.abi32  0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_disable_interrupts_lib.o)
-
-.bss%z50        0x00000000        0x0
- .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_disable_interrupts_lib.o)
-
-.data%z51       0x00000000        0x0
- .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_disable_interrupts_lib.o)
-
-.mdebug.abi32%z52
-                0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_interrupts_lib.o)
 
-.bss%z53        0x00000000        0x0
+.bss%z47        0x00000000        0x0
  .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_interrupts_lib.o)
 
-.data%z54       0x00000000        0x0
+.data%z48       0x00000000        0x0
  .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_interrupts_lib.o)
 
-.bss%z55        0x00000000        0x0
+.bss%z49        0x00000000        0x0
  .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/./proc/32MX795F512L/processor.o
 
-.data%z56       0x00000000        0x0
+.data%z50       0x00000000        0x0
  .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/./proc/32MX795F512L/processor.o
 
-.bss%z57        0x00000000        0x0
+.bss%z51        0x00000000        0x0
  .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libm.a(fp32.o)
 
-.data%z58       0x00000000        0x0
+.data%z52       0x00000000        0x0
  .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libm.a(fp32.o)
 
-.bss%z59        0x00000000        0x0
+.bss%z53        0x00000000        0x0
  .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-nmi-handler.o)
 
-.data%z60       0x00000000        0x0
+.data%z54       0x00000000        0x0
  .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-nmi-handler.o)
 
-.mdebug.abi32%z61
+.mdebug.abi32%z55
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-bootstrap.o)
 
-.bss%z62        0x00000000        0x0
+.bss%z56        0x00000000        0x0
  .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-bootstrap.o)
 
-.data%z63       0x00000000        0x0
+.data%z57       0x00000000        0x0
  .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-bootstrap.o)
 
-.mdebug.abi32%z64
+.mdebug.abi32%z58
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-reset.o)
 
-.bss%z65        0x00000000        0x0
+.bss%z59        0x00000000        0x0
  .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-reset.o)
 
-.data%z66       0x00000000        0x0
+.data%z60       0x00000000        0x0
  .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-reset.o)
 
-.mdebug.abi32%z67
+.mdebug.abi32%z61
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-bootstrap-exception-handler.o)
 
-.bss%z68        0x00000000        0x0
+.bss%z62        0x00000000        0x0
  .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-bootstrap-exception-handler.o)
 
-.data%z69       0x00000000        0x0
+.data%z63       0x00000000        0x0
  .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-bootstrap-exception-handler.o)
 
-.bss%z70        0x00000000        0x0
+.bss%z64        0x00000000        0x0
  .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(general-exception.o)
 
-.data%z71       0x00000000        0x0
+.data%z65       0x00000000        0x0
  .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(general-exception.o)
 
-.bss%z72        0x00000000        0x0
+.bss%z66        0x00000000        0x0
  .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(memset.o)
 
-.data%z73       0x00000000        0x0
+.data%z67       0x00000000        0x0
  .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(memset.o)
 
-.mdebug.abi32%z74
+.mdebug.abi32%z68
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/libgcc.a(floatunsisf.o)
 
-.bss%z75        0x00000000        0x0
+.bss%z69        0x00000000        0x0
  .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/libgcc.a(floatunsisf.o)
 
-.data%z76       0x00000000        0x0
+.data%z70       0x00000000        0x0
  .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/libgcc.a(floatunsisf.o)
 
-.mdebug.abi32%z77
+.mdebug.abi32%z71
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/1360937237/NamespaceSample.o
 
-.bss%z78        0x00000000        0x0
+.bss%z72        0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/1360937237/NamespaceSample.o
 
-.mdebug.abi32%z79
+.mdebug.abi32%z73
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/1360937237/main.o
 
-.bss%z80        0x00000000        0x0
+.bss%z74        0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/1360937237/main.o
 
-.data%z81       0x00000000        0x0
+.data%z75       0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/1360937237/main.o
 
-.mdebug.abi32%z82
+.mdebug.abi32%z76
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/1271783508/FlashStorage.o
 
-.bss%z83        0x00000000        0x0
+.bss%z77        0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/1271783508/FlashStorage.o
 
-.data%z84       0x00000000        0x0
+.data%z78       0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/1271783508/FlashStorage.o
 
-.mdebug.abi32%z85
+.mdebug.abi32%z79
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/1271783508/UART.o
 
-.bss%z86        0x00000000        0x0
+.bss%z80        0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/1271783508/UART.o
 
-.data%z87       0x00000000        0x0
+.data%z81       0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/1271783508/UART.o
 
-.mdebug.abi32%z88
+.mdebug.abi32%z82
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/1271783508/ADC.o
 
-.bss%z89        0x00000000        0x0
+.bss%z83        0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/1271783508/ADC.o
 
-.data%z90       0x00000000        0x0
+.data%z84       0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/1271783508/ADC.o
 
-.mdebug.abi32%z91
+.mdebug.abi32%z85
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/1271783508/HAL_P32.o
 
-.data%z92       0x00000000        0x0
+.data%z86       0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/1271783508/HAL_P32.o
 
-.mdebug.abi32%z93
+.mdebug.abi32%z87
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/1271783508/Delay.o
 
-.bss%z94        0x00000000        0x0
+.bss%z88        0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/1271783508/Delay.o
 
-.data%z95       0x00000000        0x0
+.data%z89       0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/1271783508/Delay.o
 
-.mdebug.abi32%z96
+.mdebug.abi32%z90
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/1271783508/Tick.o
 
-.bss%z97        0x00000000        0x0
+.bss%z91        0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/1271783508/Tick.o
 
-.data%z98       0x00000000        0x0
+.data%z92       0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/1271783508/Tick.o
 
-.mdebug.abi32%z99
+.mdebug.abi32%z93
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/1271783508/LED.o
 
-.bss%z100       0x00000000        0x0
+.bss%z94        0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/1271783508/LED.o
 
-.data%z101      0x00000000        0x0
+.data%z95       0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/1271783508/LED.o
 
-.mdebug.abi32%z102
+.mdebug.abi32%z96
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/1271783508/Bowler_USB_HAL.o
 
-.bss%z103       0x00000000        0x0
+.bss%z97        0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/1271783508/Bowler_USB_HAL.o
 
-.data%z104      0x00000000        0x0
+.data%z98       0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/1271783508/Bowler_USB_HAL.o
 
-.mdebug.abi32%z105
+.mdebug.abi32%z99
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/1271783508/Bowler_UART_HAL.o
 
-.data%z106      0x00000000        0x0
+.data%z100      0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/1271783508/Bowler_UART_HAL.o
 
-.mdebug.abi32%z107
+.mdebug.abi32%z101
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/161057953/usb_function_cdc.o
 
-.bss%z108       0x00000000        0x0
+.bss%z102       0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/161057953/usb_function_cdc.o
 
-.data%z109      0x00000000        0x0
+.data%z103      0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/161057953/usb_function_cdc.o
 
-.mdebug.abi32%z110
+.mdebug.abi32%z104
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/161057953/usb_callback.o
 
-.bss%z111       0x00000000        0x0
+.bss%z105       0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/161057953/usb_callback.o
 
-.data%z112      0x00000000        0x0
+.data%z106      0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/161057953/usb_callback.o
 
-.mdebug.abi32%z113
+.mdebug.abi32%z107
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/161057953/usb_descriptors.o
 
-.bss%z114       0x00000000        0x0
+.bss%z108       0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/161057953/usb_descriptors.o
 
-.mdebug.abi32%z115
+.mdebug.abi32%z109
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/161057953/usb_fifo.o
 
-.data%z116      0x00000000        0x0
+.data%z110      0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/161057953/usb_fifo.o
 
-.mdebug.abi32%z117
+.mdebug.abi32%z111
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/161057953/usb_device.o
 
-.bss%z118       0x00000000        0x0
+.bss%z112       0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/161057953/usb_device.o
 
-.data%z119      0x00000000        0x0
+.data%z113      0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/161057953/usb_device.o
 
-.mdebug.abi32%z120
+.mdebug.abi32%z114
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/161057953/usb_interrupt.o
 
-.bss%z121       0x00000000        0x0
+.bss%z115       0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/161057953/usb_interrupt.o
 
-.data%z122      0x00000000        0x0
+.data%z116      0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/161057953/usb_interrupt.o
 
-.mdebug.abi32%z123
+.mdebug.abi32%z117
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/464348676/Bowler_Helper.o
 
-.bss%z124       0x00000000        0x0
+.bss%z118       0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/464348676/Bowler_Helper.o
 
-.data%z125      0x00000000        0x0
+.data%z119      0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/464348676/Bowler_Helper.o
 
-.mdebug.abi32%z126
+.mdebug.abi32%z120
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/464348676/Namespace_bcs_pid.o
 
-.bss%z127       0x00000000        0x0
+.bss%z121       0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/464348676/Namespace_bcs_pid.o
 
-.mdebug.abi32%z128
+.mdebug.abi32%z122
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/464348676/Bowler_Stack_Callback.o
 
-.bss%z129       0x00000000        0x0
+.bss%z123       0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/464348676/Bowler_Stack_Callback.o
 
-.data%z130      0x00000000        0x0
+.data%z124      0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/464348676/Bowler_Stack_Callback.o
 
-.mdebug.abi32%z131
+.mdebug.abi32%z125
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/464348676/Debug.o
 
-.bss%z132       0x00000000        0x0
+.bss%z126       0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/464348676/Debug.o
 
-.data%z133      0x00000000        0x0
+.data%z127      0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/464348676/Debug.o
 
-.mdebug.abi32%z134
+.mdebug.abi32%z128
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/464348676/FIFO.o
 
-.bss%z135       0x00000000        0x0
+.bss%z129       0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/464348676/FIFO.o
 
-.data%z136      0x00000000        0x0
+.data%z130      0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/464348676/FIFO.o
 
-.mdebug.abi32%z137
+.mdebug.abi32%z131
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/464348676/Bowler_Server.o
 
-.bss%z138       0x00000000        0x0
+.bss%z132       0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/464348676/Bowler_Server.o
 
-.data%z139      0x00000000        0x0
+.data%z133      0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/464348676/Bowler_Server.o
 
-.mdebug.abi32%z140
+.mdebug.abi32%z134
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/464348676/Bowler_Transport.o
 
-.bss%z141       0x00000000        0x0
+.bss%z135       0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/464348676/Bowler_Transport.o
 
-.data%z142      0x00000000        0x0
+.data%z136      0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/464348676/Bowler_Transport.o
 
-.mdebug.abi32%z143
+.mdebug.abi32%z137
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/464348676/Namespace_bcs_core.o
 
-.bss%z144       0x00000000        0x0
+.bss%z138       0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/464348676/Namespace_bcs_core.o
 
-.mdebug.abi32%z145
+.mdebug.abi32%z139
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/464348676/Scheduler.o
 
-.bss%z146       0x00000000        0x0
+.bss%z140       0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/464348676/Scheduler.o
 
-.data%z147      0x00000000        0x0
+.data%z141      0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/464348676/Scheduler.o
 
-.mdebug.abi32%z148
+.mdebug.abi32%z142
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/464348676/AbstractPID.o
 
-.bss%z149       0x00000000        0x0
+.bss%z143       0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/464348676/AbstractPID.o
 
-.data%z150      0x00000000        0x0
+.data%z144      0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/464348676/AbstractPID.o
 
-.mdebug.abi32%z151
+.mdebug.abi32%z145
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/464348676/Bowler_RPC_Process.o
 
-.bss%z152       0x00000000        0x0
+.bss%z146       0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/464348676/Bowler_RPC_Process.o
 
-.data%z153      0x00000000        0x0
+.data%z147      0x00000000        0x0
  .data          0x00000000        0x0 build/default/production/_ext/464348676/Bowler_RPC_Process.o
 
-.mdebug.abi32%z154
+.mdebug.abi32%z148
                 0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 build/default/production/_ext/464348676/Namespace_bcs_rpc.o
 
-.bss%z155       0x00000000        0x0
+.bss%z149       0x00000000        0x0
  .bss           0x00000000        0x0 build/default/production/_ext/464348676/Namespace_bcs_rpc.o
 
-.bss%z156       0x00000000        0x0
+.bss%z150       0x00000000        0x0
  .bss           0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/crt0.o
 
-.data%z157      0x00000000        0x0
+.data%z151      0x00000000        0x0
  .data          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/crt0.o
 
-.text           0x9d000008     0xcab4
+.text           0x9d000008     0xcce0
  .text          0x9d000008     0x35fc build/default/production/_ext/464348676/AbstractPID.o
                 0x9d000008                getPidGroupDataTable
                 0x9d00002c                isPidEnabled
@@ -2331,579 +2282,571 @@ LOAD data_init
                 0x9d00a274                FifoGetPacketCount
                 0x9d00a32c                FifoGetPacketSpaceAvailible
                 0x9d00a37c                FifoGetPacket
- .text          0x9d00a46c      0xb74 build/default/production/_ext/161057953/usb_function_cdc.o
-                0x9d00a46c                USBCheckCDCRequest
-                0x9d00a8ec                CDCInitEP
-                0x9d00a97c                getsUSBUSART
-                0x9d00aaa8                USBUSARTRxIsReady
-                0x9d00ab04                putUSBUSART
-                0x9d00aba4                putsUSBUSART
-                0x9d00ac90                putrsUSBUSART
-                0x9d00ad78                CDCTxService
- .text          0x9d00afe0      0x968 build/default/production/_ext/464348676/Bowler_Helper.o
-                0x9d00afe0                LoadCorePacket
-                0x9d00b0ac                CalcCRC
-                0x9d00b124                CheckCRC
-                0x9d00b184                SetCRC
-                0x9d00b1cc                GetRPCValue
-                0x9d00b240                READY
-                0x9d00b2dc                ERR
-                0x9d00b378                SetPacketLegnth
-                0x9d00b3b8                GetPacketLegnth
-                0x9d00b3ec                DataLegnthFromPacket
-                0x9d00b418                copyPacket
-                0x9d00b494                Bytes2Int32
-                0x9d00b4fc                CheckAddress
-                0x9d00b584                interpolate
-                0x9d00b880                bound
- .text          0x9d00b948      0x8ec /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libm.a(fp32.o)
-                0x9d00b948                __subsf3
-                0x9d00b948                fpsub
-                0x9d00b950                fpadd
-                0x9d00b950                __addsf3
-                0x9d00bbbc                fpmul
-                0x9d00bbbc                __mulsf3
-                0x9d00bd74                __divsf3
-                0x9d00bd74                fpdiv
-                0x9d00bfa0                litofp
-                0x9d00bfa0                sitofp
-                0x9d00bfa0                __floatsisf
-                0x9d00bffc                ultofp
-                0x9d00bffc                uitofp
-                0x9d00c048                fptosi
-                0x9d00c048                fptoli
-                0x9d00c048                __fixsfsi
-                0x9d00c0c0                __fixunssfsi
-                0x9d00c0c0                fptoul
-                0x9d00c0c0                fptoui
-                0x9d00c134                __gesf2
-                0x9d00c134                fpcmp
-                0x9d00c134                __lesf2
-                0x9d00c134                __ltsf2
-                0x9d00c134                __gtsf2
-                0x9d00c134                __eqsf2
-                0x9d00c134                __nesf2
-                0x9d00c1c8                fabsf
-                0x9d00c1c8                fpfabs
-                0x9d00c1d8                __negsf2
-                0x9d00c1e8                fpnan
-                0x9d00c1e8                nanf
- .text          0x9d00c234      0x888 build/default/production/_ext/464348676/Namespace_bcs_core.o
-                0x9d00c234                getNumberOfNamespaces
-                0x9d00c2a8                getNumberOfRpcs
-                0x9d00c344                getNamespaceAtIndex
-                0x9d00c400                _png
-                0x9d00c468                _nms
-                0x9d00c668                addRpcToNamespace
-                0x9d00c764                addNamespaceToList
-                0x9d00c82c                getRpcByID
-                0x9d00c8f4                getRpcByIndex
-                0x9d00c9a4                RunNamespaceAsync
-                0x9d00ca48                getBcsCoreNamespace
+ .text          0x9d00a46c      0xb94 build/default/production/_ext/464348676/Bowler_Helper.o
+                0x9d00a46c                LoadCorePacket
+                0x9d00a538                CalcCRC
+                0x9d00a5b0                CheckCRC
+                0x9d00a610                SetCRC
+                0x9d00a658                GetRPCValue
+                0x9d00a6cc                READY
+                0x9d00a768                ERR
+                0x9d00a804                SetPacketLegnth
+                0x9d00a844                GetPacketLegnth
+                0x9d00a878                DataLegnthFromPacket
+                0x9d00a8a4                copyPacket
+                0x9d00a920                Bytes2Int32
+                0x9d00a988                CheckAddress
+                0x9d00aa10                interpolate
+                0x9d00ad0c                bound
+                0x9d00add4                set8bit
+                0x9d00ae1c                set16bit
+                0x9d00ae84                set32bit
+                0x9d00af18                get32bit
+                0x9d00afa4                get16bit
+ .text          0x9d00b000      0xb74 build/default/production/_ext/161057953/usb_function_cdc.o
+                0x9d00b000                USBCheckCDCRequest
+                0x9d00b480                CDCInitEP
+                0x9d00b510                getsUSBUSART
+                0x9d00b63c                USBUSARTRxIsReady
+                0x9d00b698                putUSBUSART
+                0x9d00b738                putsUSBUSART
+                0x9d00b824                putrsUSBUSART
+                0x9d00b90c                CDCTxService
+ .text          0x9d00bb74      0x8ec /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libm.a(fp32.o)
+                0x9d00bb74                __subsf3
+                0x9d00bb74                fpsub
+                0x9d00bb7c                fpadd
+                0x9d00bb7c                __addsf3
+                0x9d00bde8                fpmul
+                0x9d00bde8                __mulsf3
+                0x9d00bfa0                __divsf3
+                0x9d00bfa0                fpdiv
+                0x9d00c1cc                litofp
+                0x9d00c1cc                sitofp
+                0x9d00c1cc                __floatsisf
+                0x9d00c228                ultofp
+                0x9d00c228                uitofp
+                0x9d00c274                fptosi
+                0x9d00c274                fptoli
+                0x9d00c274                __fixsfsi
+                0x9d00c2ec                __fixunssfsi
+                0x9d00c2ec                fptoul
+                0x9d00c2ec                fptoui
+                0x9d00c360                __gesf2
+                0x9d00c360                fpcmp
+                0x9d00c360                __lesf2
+                0x9d00c360                __ltsf2
+                0x9d00c360                __gtsf2
+                0x9d00c360                __eqsf2
+                0x9d00c360                __nesf2
+                0x9d00c3f4                fabsf
+                0x9d00c3f4                fpfabs
+                0x9d00c404                __negsf2
+                0x9d00c414                fpnan
+                0x9d00c414                nanf
+ .text          0x9d00c460      0x888 build/default/production/_ext/464348676/Namespace_bcs_core.o
+                0x9d00c460                getNumberOfNamespaces
+                0x9d00c4d4                getNumberOfRpcs
+                0x9d00c570                getNamespaceAtIndex
+                0x9d00c62c                _png
+                0x9d00c694                _nms
+                0x9d00c894                addRpcToNamespace
+                0x9d00c990                addNamespaceToList
+                0x9d00ca58                getRpcByID
+                0x9d00cb20                getRpcByIndex
+                0x9d00cbd0                RunNamespaceAsync
+                0x9d00cc74                getBcsCoreNamespace
 
-.rodata         0x9d00cabc      0x7d4
- .rodata        0x9d00cabc      0x7d4 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
-                0x9d00cabc                __IntSrcTbl
-                0x9d00cfd8                __IntVectorTbl
+.rodata         0x9d00cce8      0x7d4
+ .rodata        0x9d00cce8      0x7d4 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
+                0x9d00cce8                __IntSrcTbl
+                0x9d00d204                __IntVectorTbl
 
-.text           0x9d00d290     0x14ec
- .text          0x9d00d290      0x7a0 build/default/production/_ext/161057953/usb_fifo.o
-                0x9d00d290                GotUSBData
-                0x9d00d2b8                GetPICUSBFifo
-                0x9d00d2dc                SetPICUSBFifo
-                0x9d00d32c                usb_CDC_Serial_Init
-                0x9d00d3fc                USBGetArray
-                0x9d00d4a4                waitForTxToBeFree
-                0x9d00d5d4                flush
-                0x9d00d688                isUSBActave
-                0x9d00d6b0                forceOpenUSB
-                0x9d00d6d8                USBPutArray
-                0x9d00d8ec                GetNumUSBBytes
-                0x9d00d930                usb_Buffer_Update
- .text          0x9d00da30      0x6e4 build/default/production/_ext/464348676/Bowler_Transport.o
-                0x9d00da30                allign
-                0x9d00dba8                _getBowlerPacket
-                0x9d00defc                GetBowlerPacket
-                0x9d00df40                GetBowlerPacketDebug
-                0x9d00df84                getNumBytes
-                0x9d00dfc0                getStream
-                0x9d00e014                FixPacket
-                0x9d00e0a0                PutBowlerPacket
- .text          0x9d00e114      0x668 build/default/production/_ext/1271783508/FlashStorage.o
-                0x9d00e114                FlashLoad
-                0x9d00e18c                FlashSync
-                0x9d00e22c                FlashSetMac
-                0x9d00e2ec                FlashSetName
-                0x9d00e374                FlashGetMac
-                0x9d00e45c                FlashGetName
-                0x9d00e4dc                FlashGetBlRev
-                0x9d00e55c                FlashGetFwRev
-                0x9d00e5dc                FlashSetFwRev
-                0x9d00e6ac                FlashSetBlRev
+.text           0x9d00d4bc     0x14ec
+ .text          0x9d00d4bc      0x7a0 build/default/production/_ext/161057953/usb_fifo.o
+                0x9d00d4bc                GotUSBData
+                0x9d00d4e4                GetPICUSBFifo
+                0x9d00d508                SetPICUSBFifo
+                0x9d00d558                usb_CDC_Serial_Init
+                0x9d00d628                USBGetArray
+                0x9d00d6d0                waitForTxToBeFree
+                0x9d00d800                flush
+                0x9d00d8b4                isUSBActave
+                0x9d00d8dc                forceOpenUSB
+                0x9d00d904                USBPutArray
+                0x9d00db18                GetNumUSBBytes
+                0x9d00db5c                usb_Buffer_Update
+ .text          0x9d00dc5c      0x6e4 build/default/production/_ext/464348676/Bowler_Transport.o
+                0x9d00dc5c                allign
+                0x9d00ddd4                _getBowlerPacket
+                0x9d00e128                GetBowlerPacket
+                0x9d00e16c                GetBowlerPacketDebug
+                0x9d00e1b0                getNumBytes
+                0x9d00e1ec                getStream
+                0x9d00e240                FixPacket
+                0x9d00e2cc                PutBowlerPacket
+ .text          0x9d00e340      0x668 build/default/production/_ext/1271783508/FlashStorage.o
+                0x9d00e340                FlashLoad
+                0x9d00e3b8                FlashSync
+                0x9d00e458                FlashSetMac
+                0x9d00e518                FlashSetName
+                0x9d00e5a0                FlashGetMac
+                0x9d00e688                FlashGetName
+                0x9d00e708                FlashGetBlRev
+                0x9d00e788                FlashGetFwRev
+                0x9d00e808                FlashSetFwRev
+                0x9d00e8d8                FlashSetBlRev
 
-.dinit          0x9d00e77c      0x568
- .dinit         0x9d00e77c      0x568 data_init
+.dinit          0x9d00e9a8      0x568
+ .dinit         0x9d00e9a8      0x568 data_init
 
-.text           0x9d00ece4      0xe9c
- .text          0x9d00ece4      0x528 build/default/production/_ext/464348676/Namespace_bcs_rpc.o
-                0x9d00ece4                _rpc
-                0x9d00eeb8                _rpcArgs
-                0x9d00f198                getBcsRpcNamespace
- .text          0x9d00f20c      0x4fc build/default/production/_ext/1271783508/Bowler_UART_HAL.o
-                0x9d00f20c                GotUARTData
-                0x9d00f234                GetPICUARTFifo
-                0x9d00f258                SetPICUARTFifo
-                0x9d00f284                newByteUartHal
-                0x9d00f304                U1_ISR
-                0x9d00f420                CalcBaud
-                0x9d00f47c                Pic32UARTSetBaud
-                0x9d00f58c                Pic32UART_HAL_INIT
-                0x9d00f5ec                Pic32UARTGetArray
-                0x9d00f650                Pic32Get_UART_Byte_Count
-                0x9d00f68c                Pic32UARTPutArray
- .text          0x9d00f708      0x478 build/default/production/_ext/1360937237/main.o
-                0x9d00f708                UserGetRPCs
-                0x9d00f730                UserPostRPCs
-                0x9d00f758                UserCriticalRPCs
-                0x9d00f780                SPITransceve
-                0x9d00f7e0                get
-                0x9d00f828                main
+.text           0x9d00ef10      0xa24
+ .text          0x9d00ef10      0x528 build/default/production/_ext/464348676/Namespace_bcs_rpc.o
+                0x9d00ef10                _rpc
+                0x9d00f0e4                _rpcArgs
+                0x9d00f3c4                getBcsRpcNamespace
+ .text          0x9d00f438      0x4fc build/default/production/_ext/1271783508/Bowler_UART_HAL.o
+                0x9d00f438                GotUARTData
+                0x9d00f460                GetPICUARTFifo
+                0x9d00f484                SetPICUARTFifo
+                0x9d00f4b0                newByteUartHal
+                0x9d00f530                U1_ISR
+                0x9d00f64c                CalcBaud
+                0x9d00f6a8                Pic32UARTSetBaud
+                0x9d00f7b8                Pic32UART_HAL_INIT
+                0x9d00f818                Pic32UARTGetArray
+                0x9d00f87c                Pic32Get_UART_Byte_Count
+                0x9d00f8b8                Pic32UARTPutArray
 
-.rodata         0x9d00fb80      0x460
- .rodata        0x9d00fb80      0x460 build/default/production/_ext/1271783508/HAL_P32.o
+.rodata         0x9d00f934      0x460
+ .rodata        0x9d00f934      0x460 build/default/production/_ext/1271783508/HAL_P32.o
 
-.text           0x9d00ffe0     0x1600
- .text          0x9d00ffe0      0x440 build/default/production/_ext/1271783508/ADC.o
-                0x9d00ffe0                InitADCHardware
-                0x9d0102a0                getAdcRaw
-                0x9d0103b0                getAdcVoltage
- .text          0x9d010420      0x3a0 build/default/production/_ext/464348676/Bowler_Server.o
-                0x9d010420                Bowler_Init
-                0x9d010470                process
-                0x9d010634                Bowler_Server_Static
-                0x9d0106a0                Bowler_Server
- .text          0x9d0107c0      0x2cc build/default/production/_ext/161057953/usb_callback.o
-                0x9d0107c0                USBCBSuspend
-                0x9d0107e0                USBCBWakeFromSuspend
-                0x9d010800                USBCB_SOF_Handler
-                0x9d010820                USBCBErrorHandler
-                0x9d010840                USBCBCheckOtherReq
-                0x9d010870                USBCBStdSetDscHandler
-                0x9d010890                USBCBInitEP
-                0x9d0108c0                USBCBSendResume
-                0x9d010928                USER_USB_CALLBACK_EVENT_HANDLER
-                0x9d010a5c                mySetLineCodingHandler
- .text          0x9d010a8c      0x2bc build/default/production/_ext/464348676/Bowler_RPC_Process.o
-                0x9d010a8c                getLastPacketTime
-                0x9d010b04                Process_Self_Packet
- .text          0x9d010d48      0x2b8 build/default/production/_ext/1271783508/Tick.o
-                0x9d010d48                TickInit
-                0x9d010de4                TickGet
-                0x9d010e24                TickGetUpper
-                0x9d010e48                TickGetLower
-                0x9d010e6c                MyTickConvertToMilliseconds
-                0x9d010ec4                TickGetMS
-                0x9d010f54                Timer1Handler
- .text          0x9d011000      0x208 build/default/production/_ext/1271783508/UART.o
-                0x9d011000                Write32UART2
-                0x9d011108                Write32UART1
- .text          0x9d011208      0x204 build/default/production/_ext/1271783508/LED.o
-                0x9d011208                InitLEDS
-                0x9d011274                SetGreen
-                0x9d0112d8                SetRed
-                0x9d01133c                SetBlue
-                0x9d0113a0                SetColor
- .text          0x9d01140c      0x1d4 build/default/production/_ext/1271783508/Delay.o
-                0x9d01140c                DelayMs
-                0x9d0114a0                DelayPreServo
-                0x9d011504                DelayIncServo
-                0x9d011524                Delay10us
-                0x9d01157c                Delay1us
+.text           0x9d00fd94     0x1840
+ .text          0x9d00fd94      0x440 build/default/production/_ext/1271783508/ADC.o
+                0x9d00fd94                InitADCHardware
+                0x9d010054                getAdcRaw
+                0x9d010164                getAdcVoltage
+ .text          0x9d0101d4      0x3a0 build/default/production/_ext/464348676/Bowler_Server.o
+                0x9d0101d4                Bowler_Init
+                0x9d010224                process
+                0x9d0103e8                Bowler_Server_Static
+                0x9d010454                Bowler_Server
+ .text          0x9d010574      0x2cc build/default/production/_ext/161057953/usb_callback.o
+                0x9d010574                USBCBSuspend
+                0x9d010594                USBCBWakeFromSuspend
+                0x9d0105b4                USBCB_SOF_Handler
+                0x9d0105d4                USBCBErrorHandler
+                0x9d0105f4                USBCBCheckOtherReq
+                0x9d010624                USBCBStdSetDscHandler
+                0x9d010644                USBCBInitEP
+                0x9d010674                USBCBSendResume
+                0x9d0106dc                USER_USB_CALLBACK_EVENT_HANDLER
+                0x9d010810                mySetLineCodingHandler
+ .text          0x9d010840      0x2bc build/default/production/_ext/464348676/Bowler_RPC_Process.o
+                0x9d010840                getLastPacketTime
+                0x9d0108b8                Process_Self_Packet
+ .text          0x9d010afc      0x2b8 build/default/production/_ext/1271783508/Tick.o
+                0x9d010afc                TickInit
+                0x9d010b98                TickGet
+                0x9d010bd8                TickGetUpper
+                0x9d010bfc                TickGetLower
+                0x9d010c20                MyTickConvertToMilliseconds
+                0x9d010c78                TickGetMS
+                0x9d010d08                Timer1Handler
+ .text          0x9d010db4      0x240 build/default/production/_ext/1360937237/main.o
+                0x9d010db4                UserGetRPCs
+                0x9d010ddc                UserPostRPCs
+                0x9d010e04                UserCriticalRPCs
+                0x9d010e2c                SPITransceve
+                0x9d010e8c                get
+                0x9d010ed4                main
+ .text          0x9d010ff4      0x208 build/default/production/_ext/1271783508/UART.o
+                0x9d010ff4                Write32UART2
+                0x9d0110fc                Write32UART1
+ .text          0x9d0111fc      0x204 build/default/production/_ext/1271783508/LED.o
+                0x9d0111fc                InitLEDS
+                0x9d011268                SetGreen
+                0x9d0112cc                SetRed
+                0x9d011330                SetBlue
+                0x9d011394                SetColor
+ .text          0x9d011400      0x1d4 build/default/production/_ext/1271783508/Delay.o
+                0x9d011400                DelayMs
+                0x9d011494                DelayPreServo
+                0x9d0114f8                DelayIncServo
+                0x9d011518                Delay10us
+                0x9d011570                Delay1us
 
-.rodata         0x9d0115e0      0x1b4
- .rodata        0x9d0115e0      0x1b4 build/default/production/_ext/464348676/Debug.o
-                0x9d0115e0                AsciiHex
-                0x9d0116c0                errorColor
-                0x9d0116c8                clearErrorColor
+.rodata         0x9d0115d4      0x1b4
+ .rodata        0x9d0115d4      0x1b4 build/default/production/_ext/464348676/Debug.o
+                0x9d0115d4                AsciiHex
+                0x9d0116b4                errorColor
+                0x9d0116bc                clearErrorColor
 
-.text           0x9d011794      0x4c0
- .text          0x9d011794      0x1a8 build/default/production/_ext/464348676/Namespace_bcs_pid.o
-                0x9d011794                pidAsyncEventCallbackLocal
-                0x9d0117d8                getBcsPidNamespace
- .text          0x9d01193c      0x190 build/default/production/_ext/464348676/Scheduler.o
-                0x9d01193c                RunEvery
- .text          0x9d011acc      0x188 build/default/production/_ext/161057953/usb_descriptors.o
-                0x9d011acc                WriteUSBSerialNumber
-                0x9d011b68                SetUSB_VID_PID
-                0x9d011bb8                WriteUSBDeviceString
+.text           0x9d011788      0x670
+ .text          0x9d011788      0x1b0 build/default/production/_ext/1360937237/NamespaceSample.o
+                0x9d011788                sampleAsyncEventCallback
+                0x9d0117b4                onSamplePost
+                0x9d0118dc                getBcsSampleNamespace
+ .text          0x9d011938      0x1a8 build/default/production/_ext/464348676/Namespace_bcs_pid.o
+                0x9d011938                pidAsyncEventCallbackLocal
+                0x9d01197c                getBcsPidNamespace
+ .text          0x9d011ae0      0x190 build/default/production/_ext/464348676/Scheduler.o
+                0x9d011ae0                RunEvery
+ .text          0x9d011c70      0x188 build/default/production/_ext/161057953/usb_descriptors.o
+                0x9d011c70                WriteUSBSerialNumber
+                0x9d011d0c                SetUSB_VID_PID
+                0x9d011d5c                WriteUSBDeviceString
 
 .text._NVMOperation
-                0x9d011c54      0x114
+                0x9d011df8      0x114
  .text._NVMOperation
-                0x9d011c54      0x114 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
-                0x9d011c54                _NVMOperation
+                0x9d011df8      0x114 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
+                0x9d011df8                _NVMOperation
 
-.rodata         0x9d011d68       0xd0
- .rodata        0x9d011d68       0xd0 build/default/production/_ext/464348676/Bowler_Transport.o
+.rodata         0x9d011f0c       0xd0
+ .rodata        0x9d011f0c       0xd0 build/default/production/_ext/464348676/Bowler_Transport.o
 
 .text.general_exception
-                0x9d011e38       0xd0
+                0x9d011fdc       0xd0
  .text.general_exception
-                0x9d011e38       0xd0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(general-exception.o)
-                0x9d011e38                _general_exception_context
+                0x9d011fdc       0xd0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(general-exception.o)
+                0x9d011fdc                _general_exception_context
 
-.text           0x9d011f08      0x218
- .text          0x9d011f08       0xc4 build/default/production/_ext/1271783508/Bowler_USB_HAL.o
-                0x9d011f08                GetPacketUSB
-                0x9d011f54                SendPacketUSB
-                0x9d011f9c                Get_USB_Byte_Count
- .text          0x9d011fcc       0xac build/default/production/_ext/1360937237/NamespaceSample.o
-                0x9d011fcc                sampleAsyncEventCallback
-                0x9d011ff8                onSamplePost
-                0x9d01201c                getBcsSampleNamespace
- .text          0x9d012078       0xa8 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(memset.o)
-                0x9d012078                memset
+.text           0x9d0120ac      0x16c
+ .text          0x9d0120ac       0xc4 build/default/production/_ext/1271783508/Bowler_USB_HAL.o
+                0x9d0120ac                GetPacketUSB
+                0x9d0120f8                SendPacketUSB
+                0x9d012140                Get_USB_Byte_Count
+ .text          0x9d012170       0xa8 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(memset.o)
+                0x9d012170                memset
 
-.rodata         0x9d012120      0x108
- .rodata        0x9d012120       0x88 build/default/production/_ext/464348676/AbstractPID.o
- .rodata        0x9d0121a8       0x80 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_brg_tbl_lib_legacy.o)
-                0x9d0121a8                _SpiBrgConvTbl
+.rodata         0x9d012218       0x88
+ .rodata        0x9d012218       0x88 build/default/production/_ext/464348676/AbstractPID.o
 
 .text.UARTEnable
-                0x9d012228       0x80
+                0x9d0122a0       0x80
  .text.UARTEnable
-                0x9d012228       0x80 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
-                0x9d012228                UARTEnable
+                0x9d0122a0       0x80 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
+                0x9d0122a0                UARTEnable
 
-.rodata         0x9d0122a8       0x68
- .rodata        0x9d0122a8       0x68 build/default/production/_ext/464348676/FIFO.o
+.rodata         0x9d012320       0x68
+ .rodata        0x9d012320       0x68 build/default/production/_ext/464348676/FIFO.o
 
 .text.SpiChnGetC
-                0x9d012310       0x60
+                0x9d012388       0x60
  .text.SpiChnGetC
-                0x9d012310       0x60 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
-                0x9d012310                SpiChnGetC
+                0x9d012388       0x60 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
+                0x9d012388                SpiChnGetC
 
 .text.SpiChnPutC
-                0x9d012370       0x60
+                0x9d0123e8       0x60
  .text.SpiChnPutC
-                0x9d012370       0x60 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
-                0x9d012370                SpiChnPutC
+                0x9d0123e8       0x60 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
+                0x9d0123e8                SpiChnPutC
 
-.text.OpenSPI2  0x9d0123d0       0x60
- .text.OpenSPI2
-                0x9d0123d0       0x60 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_open_spi2_lib_legacy.o)
-                0x9d0123d0                OpenSPI2
-
-.rodata         0x9d012430       0x5c
- .rodata        0x9d012430       0x5c build/default/production/_ext/464348676/Bowler_Server.o
-                0x9d012430                Broadcast
+.rodata         0x9d012448       0x5c
+ .rodata        0x9d012448       0x5c build/default/production/_ext/464348676/Bowler_Server.o
+                0x9d012448                Broadcast
 
 .text.UARTSetDataRate
-                0x9d01248c       0x5c
+                0x9d0124a4       0x5c
  .text.UARTSetDataRate
-                0x9d01248c       0x5c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
-                0x9d01248c                UARTSetDataRate
+                0x9d0124a4       0x5c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
+                0x9d0124a4                UARTSetDataRate
 
 .text.INTEnable
-                0x9d0124e8       0x58
+                0x9d012500       0x58
  .text.INTEnable
-                0x9d0124e8       0x58 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
-                0x9d0124e8                INTEnable
+                0x9d012500       0x58 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
+                0x9d012500                INTEnable
 
-.rodata         0x9d012540      0x13c
- .rodata        0x9d012540       0x54 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(_ports_tbl_libp.o)
-                0x9d012540                PortRegTbl
- .rodata        0x9d012594       0x50 build/default/production/_ext/464348676/Namespace_bcs_pid.o
- .rodata        0x9d0125e4       0x4c build/default/production/_ext/464348676/Bowler_RPC_Process.o
- .rodata        0x9d012630       0x4c build/default/production/_ext/464348676/Namespace_bcs_core.o
-                0x9d012630                coreName
+.rodata         0x9d012558      0x13c
+ .rodata        0x9d012558       0x54 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(_ports_tbl_libp.o)
+                0x9d012558                PortRegTbl
+ .rodata        0x9d0125ac       0x50 build/default/production/_ext/464348676/Namespace_bcs_pid.o
+ .rodata        0x9d0125fc       0x4c build/default/production/_ext/464348676/Bowler_RPC_Process.o
+ .rodata        0x9d012648       0x4c build/default/production/_ext/464348676/Namespace_bcs_core.o
+                0x9d012648                coreName
 
-.text           0x9d01267c       0x48
- .text          0x9d01267c       0x48 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/libgcc.a(floatunsisf.o)
-                0x9d01267c                __floatunsisf
+.text           0x9d012694       0x48
+ .text          0x9d012694       0x48 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/libgcc.a(floatunsisf.o)
+                0x9d012694                __floatunsisf
 
-.rodata         0x9d0126c4       0x44
- .rodata        0x9d0126c4       0x44 build/default/production/_ext/161057953/usb_function_cdc.o
+.rodata         0x9d0126dc       0x44
+ .rodata        0x9d0126dc       0x44 build/default/production/_ext/161057953/usb_function_cdc.o
 
 .text.PORTSetPinsDigitalOut
-                0x9d012708       0x40
+                0x9d012720       0x40
  .text.PORTSetPinsDigitalOut
-                0x9d012708       0x40 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_pins_digital_out_lib.o)
-                0x9d012708                PORTSetPinsDigitalOut
+                0x9d012720       0x40 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_pins_digital_out_lib.o)
+                0x9d012720                PORTSetPinsDigitalOut
 
 .text.UARTGetDataRate
-                0x9d012748       0x40
+                0x9d012760       0x40
  .text.UARTGetDataRate
-                0x9d012748       0x40 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
-                0x9d012748                UARTGetDataRate
+                0x9d012760       0x40 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
+                0x9d012760                UARTGetDataRate
 
-.rodata         0x9d012788       0x3c
- .rodata        0x9d012788       0x3c build/default/production/_ext/1360937237/main.o
+.rodata         0x9d0127a0       0x3c
+ .rodata        0x9d0127a0       0x3c build/default/production/_ext/1360937237/main.o
 
 .text.INTSetVectorPriority
-                0x9d0127c4       0x3c
+                0x9d0127dc       0x3c
  .text.INTSetVectorPriority
-                0x9d0127c4       0x3c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
-                0x9d0127c4                INTSetVectorPriority
+                0x9d0127dc       0x3c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
+                0x9d0127dc                INTSetVectorPriority
 
 .text.INTSetVectorSubPriority
-                0x9d012800       0x3c
+                0x9d012818       0x3c
  .text.INTSetVectorSubPriority
-                0x9d012800       0x3c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
-                0x9d012800                INTSetVectorSubPriority
+                0x9d012818       0x3c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
+                0x9d012818                INTSetVectorSubPriority
 
 .text.UARTConfigure
-                0x9d01283c       0x3c
+                0x9d012854       0x3c
  .text.UARTConfigure
-                0x9d01283c       0x3c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
-                0x9d01283c                UARTConfigure
+                0x9d012854       0x3c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
+                0x9d012854                UARTConfigure
 
 .text.UARTSetAddress
-                0x9d012878       0x3c
+                0x9d012890       0x3c
  .text.UARTSetAddress
-                0x9d012878       0x3c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
-                0x9d012878                UARTSetAddress
+                0x9d012890       0x3c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
+                0x9d012890                UARTSetAddress
 
 .text.UARTWatchForAddress
-                0x9d0128b4       0x38
+                0x9d0128cc       0x38
  .text.UARTWatchForAddress
-                0x9d0128b4       0x38 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
-                0x9d0128b4                UARTWatchForAddress
+                0x9d0128cc       0x38 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
+                0x9d0128cc                UARTWatchForAddress
 
-.rodata         0x9d0128ec       0x34
- .rodata        0x9d0128ec       0x34 build/default/production/_ext/161057953/usb_fifo.o
+.rodata         0x9d012904       0x34
+ .rodata        0x9d012904       0x34 build/default/production/_ext/161057953/usb_fifo.o
 
 .text.INTEnableSystemMultiVectoredInt
-                0x9d012920       0x34
+                0x9d012938       0x34
  .text.INTEnableSystemMultiVectoredInt
-                0x9d012920       0x34 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_mv_int_lib.o)
-                0x9d012920                INTEnableSystemMultiVectoredInt
+                0x9d012938       0x34 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_mv_int_lib.o)
+                0x9d012938                INTEnableSystemMultiVectoredInt
 
 .text.NVMWriteWord
-                0x9d012954       0x34
+                0x9d01296c       0x34
  .text.NVMWriteWord
-                0x9d012954       0x34 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
-                0x9d012954                NVMWriteWord
+                0x9d01296c       0x34 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
+                0x9d01296c                NVMWriteWord
 
 .text.INTGetVectorPriority
-                0x9d012988       0x30
+                0x9d0129a0       0x30
  .text.INTGetVectorPriority
-                0x9d012988       0x30 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
-                0x9d012988                INTGetVectorPriority
+                0x9d0129a0       0x30 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
+                0x9d0129a0                INTGetVectorPriority
 
 .text.INTGetVectorSubPriority
-                0x9d0129b8       0x30
+                0x9d0129d0       0x30
  .text.INTGetVectorSubPriority
-                0x9d0129b8       0x30 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
-                0x9d0129b8                INTGetVectorSubPriority
+                0x9d0129d0       0x30 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
+                0x9d0129d0                INTGetVectorSubPriority
 
 .text.INTClearFlag
-                0x9d0129e8       0x2c
+                0x9d012a00       0x2c
  .text.INTClearFlag
-                0x9d0129e8       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
-                0x9d0129e8                INTClearFlag
+                0x9d012a00       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
+                0x9d012a00                INTClearFlag
 
 .text.INTSetFlag
-                0x9d012a14       0x2c
+                0x9d012a2c       0x2c
  .text.INTSetFlag
-                0x9d012a14       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
-                0x9d012a14                INTSetFlag
+                0x9d012a2c       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
+                0x9d012a2c                INTSetFlag
 
 .text.INTGetFlag
-                0x9d012a40       0x2c
+                0x9d012a58       0x2c
  .text.INTGetFlag
-                0x9d012a40       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
-                0x9d012a40                INTGetFlag
+                0x9d012a58       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
+                0x9d012a58                INTGetFlag
 
 .text.INTGetEnable
-                0x9d012a6c       0x2c
+                0x9d012a84       0x2c
  .text.INTGetEnable
-                0x9d012a6c       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
-                0x9d012a6c                INTGetEnable
+                0x9d012a84       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
+                0x9d012a84                INTGetEnable
 
 .text.NVMErasePage
-                0x9d012a98       0x2c
+                0x9d012ab0       0x2c
  .text.NVMErasePage
-                0x9d012a98       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
-                0x9d012a98                NVMErasePage
+                0x9d012ab0       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
+                0x9d012ab0                NVMErasePage
 
 .text.PORTClearBits
-                0x9d012ac4       0x28
+                0x9d012adc       0x28
  .text.PORTClearBits
-                0x9d012ac4       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_clear_bits_lib.o)
-                0x9d012ac4                PORTClearBits
+                0x9d012adc       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_clear_bits_lib.o)
+                0x9d012adc                PORTClearBits
 
 .text.PORTSetBits
-                0x9d012aec       0x28
+                0x9d012b04       0x28
  .text.PORTSetBits
-                0x9d012aec       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_bits_lib.o)
-                0x9d012aec                PORTSetBits
+                0x9d012b04       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_bits_lib.o)
+                0x9d012b04                PORTSetBits
 
 .text.UARTSetFifoMode
-                0x9d012b14       0x28
+                0x9d012b2c       0x28
  .text.UARTSetFifoMode
-                0x9d012b14       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
-                0x9d012b14                UARTSetFifoMode
+                0x9d012b2c       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
+                0x9d012b2c                UARTSetFifoMode
 
 .text.UARTSetLineControl
-                0x9d012b3c       0x28
+                0x9d012b54       0x28
  .text.UARTSetLineControl
-                0x9d012b3c       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
-                0x9d012b3c                UARTSetLineControl
+                0x9d012b54       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
+                0x9d012b54                UARTSetLineControl
 
-.rodata         0x9d012b64       0x20
- .rodata        0x9d012b64       0x20 build/default/production/_ext/464348676/Namespace_bcs_rpc.o
+.rodata         0x9d012b7c       0x20
+ .rodata        0x9d012b7c       0x20 build/default/production/_ext/464348676/Namespace_bcs_rpc.o
 
 .text.SpiChnReadC
-                0x9d012b84       0x20
+                0x9d012b9c       0x20
  .text.SpiChnReadC
-                0x9d012b84       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
-                0x9d012b84                SpiChnReadC
+                0x9d012b9c       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
+                0x9d012b9c                SpiChnReadC
 
 .text.SpiChnWriteC
-                0x9d012ba4       0x20
+                0x9d012bbc       0x20
  .text.SpiChnWriteC
-                0x9d012ba4       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
-                0x9d012ba4                SpiChnWriteC
+                0x9d012bbc       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
+                0x9d012bbc                SpiChnWriteC
 
-.rodata         0x9d012bc4       0x38
- .rodata        0x9d012bc4       0x1c build/default/production/_ext/464348676/Bowler_Helper.o
- .rodata        0x9d012be0       0x1c build/default/production/_ext/1360937237/NamespaceSample.o
+.rodata         0x9d012bdc       0x38
+ .rodata        0x9d012bdc       0x1c build/default/production/_ext/464348676/Bowler_Helper.o
+ .rodata        0x9d012bf8       0x1c build/default/production/_ext/1360937237/NamespaceSample.o
 
 .text.SpiChnBuffer
-                0x9d012bfc       0x1c
+                0x9d012c14       0x1c
  .text.SpiChnBuffer
-                0x9d012bfc       0x1c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
-                0x9d012bfc                SpiChnBuffer
+                0x9d012c14       0x1c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
+                0x9d012c14                SpiChnBuffer
 
 .text.INTRestoreInterrupts
-                0x9d012c18       0x1c
+                0x9d012c30       0x1c
  .text.INTRestoreInterrupts
-                0x9d012c18       0x1c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_restore_interrupts_lib.o)
-                0x9d012c18                INTRestoreInterrupts
+                0x9d012c30       0x1c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_restore_interrupts_lib.o)
+                0x9d012c30                INTRestoreInterrupts
 
-.text           0x9d012c34       0x18
- .text          0x9d012c34       0x18 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-nmi-handler.o)
-                0x9d012c34                _nmi_handler
+.text           0x9d012c4c       0x18
+ .text          0x9d012c4c       0x18 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-nmi-handler.o)
+                0x9d012c4c                _nmi_handler
 
-.rodata         0x9d012c4c       0x2c
- .rodata        0x9d012c4c       0x18 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
-                0x9d012c4c                uartReg
- .rodata        0x9d012c64       0x14 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
-                0x9d012c64                _SpiMapTbl
+.rodata         0x9d012c64       0x2c
+ .rodata        0x9d012c64       0x18 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
+                0x9d012c64                uartReg
+ .rodata        0x9d012c7c       0x14 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
+                0x9d012c7c                _SpiMapTbl
 
-.text           0x9d012c78       0x10
- .text          0x9d012c78       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/crt0.o
-                0x9d012c80                __crt0_exit
+.text           0x9d012c90       0x10
+ .text          0x9d012c90       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/crt0.o
+                0x9d012c98                __crt0_exit
 
-.rodata         0x9d012c88        0xc
- .rodata        0x9d012c88        0xc build/default/production/_ext/1271783508/Tick.o
+.rodata         0x9d012ca0        0xc
+ .rodata        0x9d012ca0        0xc build/default/production/_ext/1271783508/Tick.o
 
 .text._bootstrap_exception_handler
-                0x9d012c94        0xc
+                0x9d012cac        0xc
  .text._bootstrap_exception_handler
-                0x9d012c94        0xc /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-bootstrap-exception-handler.o)
-                0x9d012c94                _bootstrap_exception_handler
+                0x9d012cac        0xc /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-bootstrap-exception-handler.o)
+                0x9d012cac                _bootstrap_exception_handler
 
 .text._on_reset
-                0x9d012ca0        0x8
+                0x9d012cb8        0x8
  .text._on_reset
-                0x9d012ca0        0x8 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-reset.o)
-                0x9d012ca0                _on_reset
+                0x9d012cb8        0x8 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-reset.o)
+                0x9d012cb8                _on_reset
 
 .text._on_bootstrap
-                0x9d012ca8        0x8
+                0x9d012cc0        0x8
  .text._on_bootstrap
-                0x9d012ca8        0x8 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-bootstrap.o)
-                0x9d012ca8                _on_bootstrap
+                0x9d012cc0        0x8 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-bootstrap.o)
+                0x9d012cc0                _on_bootstrap
 
 .text.INTEnableInterrupts
-                0x9d012cb0        0x8
+                0x9d012cc8        0x8
  .text.INTEnableInterrupts
-                0x9d012cb0        0x8 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_interrupts_lib.o)
-                0x9d012cb0                INTEnableInterrupts
+                0x9d012cc8        0x8 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_interrupts_lib.o)
+                0x9d012cc8                INTEnableInterrupts
 
 .text.INTDisableInterrupts
-                0x9d012cb8        0x8
+                0x9d012cd0        0x8
  .text.INTDisableInterrupts
-                0x9d012cb8        0x8 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_disable_interrupts_lib.o)
-                0x9d012cb8                INTDisableInterrupts
+                0x9d012cd0        0x8 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_disable_interrupts_lib.o)
+                0x9d012cd0                INTDisableInterrupts
 
-.rodata         0x9d012cc0        0x4
- .rodata        0x9d012cc0        0x4 build/default/production/_ext/1271783508/ADC.o
+.rodata         0x9d012cd8        0x4
+ .rodata        0x9d012cd8        0x4 build/default/production/_ext/1271783508/ADC.o
 
-.text%z158      0x00000000        0x0
+.text%z152      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_restore_interrupts_lib.o)
 
-.text%z159      0x00000000        0x0
+.text%z153      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(uart_lib.o)
 
-.text%z160      0x00000000        0x0
+.text%z154      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(_ports_tbl_libp.o)
 
-.text%z161      0x00000000        0x0
+.text%z155      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_bits_lib.o)
 
-.text%z162      0x00000000        0x0
+.text%z156      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_clear_bits_lib.o)
 
-.text%z163      0x00000000        0x0
+.text%z157      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(port_set_pins_digital_out_lib.o)
 
-.text%z164      0x00000000        0x0
+.text%z158      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_write_word_lib.o)
 
-.text%z165      0x00000000        0x0
+.text%z159      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_operation_lib.o)
 
-.text%z166      0x00000000        0x0
+.text%z160      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(nvm_erase_page_lib.o)
 
-.text%z167      0x00000000        0x0
- .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_brg_tbl_lib_legacy.o)
-
-.text%z168      0x00000000        0x0
- .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_open_spi2_lib_legacy.o)
-
-.text%z169      0x00000000        0x0
+.text%z161      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_map_tbl_libp.o)
 
-.text%z170      0x00000000        0x0
+.text%z162      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_putc_lib.o)
 
-.text%z171      0x00000000        0x0
+.text%z163      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(spi_chn_getc_lib.o)
 
-.text%z172      0x00000000        0x0
+.text%z164      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_tbl_lib.o)
 
-.text%z173      0x00000000        0x0
+.text%z165      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_mv_int_lib.o)
 
-.text%z174      0x00000000        0x0
+.text%z166      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_disable_interrupts_lib.o)
 
-.text%z175      0x00000000        0x0
+.text%z167      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX795F512L.a(int_enable_interrupts_lib.o)
 
-.text%z176      0x00000000        0x0
+.text%z168      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/./proc/32MX795F512L/processor.o
 
-.text%z177      0x00000000        0x0
+.text%z169      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-bootstrap.o)
 
-.text%z178      0x00000000        0x0
+.text%z170      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-reset.o)
 
-.text%z179      0x00000000        0x0
+.text%z171      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-bootstrap-exception-handler.o)
 
-.text%z180      0x00000000        0x0
+.text%z172      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(general-exception.o)
 
-.text%z181      0x00000000        0x0
+.text%z173      0x00000000        0x0
  .text          0x00000000        0x0 build/default/production/_ext/161057953/usb_interrupt.o
 
-.text%z182      0x00000000        0x0
+.text%z174      0x00000000        0x0
  .text          0x00000000        0x0 build/default/production/_ext/464348676/Bowler_Stack_Callback.o
