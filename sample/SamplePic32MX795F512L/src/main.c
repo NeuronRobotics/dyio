@@ -76,6 +76,7 @@ BYTE UserCriticalRPCs(BowlerPacket *Packet){
 #define isPressed()	( _RD6==0 || _RD7==0 || _RD13==0)
 #define setLed(a,b,c) 	_RD0=a;_RD1=b;_RD2=c;
 
+#define server_mode
 
 BYTE SPITransceve(BYTE b){
     SpiChnPutC(2, b);		// send data on the master channel, SPI1
@@ -104,8 +105,17 @@ int main(void) {
     initButton();
     initLed();
     const char * start = "Demo_Program!\r\n";
-    while (1){
 
+    addNamespaceToList((NAMESPACE_LIST *)getBcsSampleNamespace());
+
+    
+    while (1){
+#if defined(server_mode)
+                //This is how to run a bowler server on the USB and serial port
+                //Keep checking the server in the main loop
+                //You can add custom code here for co-operative operation
+                Bowler_Server(&Packet, FALSE);
+#else
         //Do something with the buttons
         if(!isPressed()){
             //For direct access to the USB, you can access the USB API directly
@@ -149,8 +159,9 @@ int main(void) {
             //mirror the buttons on the LED's
             setLed(!_RD6,!_RD7,!_RD13);
         }
-
+#endif
     }
+
 }
 
 

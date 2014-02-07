@@ -107,6 +107,7 @@
         <itemPath>../../../../c-bowler/firmware/library/NR-Clib/development/Platform/src/pic32/FlashStorage.c</itemPath>
       </logicalFolder>
       <itemPath>../src/main.c</itemPath>
+      <itemPath>../src/NamespaceSample.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
