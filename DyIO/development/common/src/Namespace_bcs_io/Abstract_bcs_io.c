@@ -412,38 +412,6 @@ BOOL getFunctionList(BowlerPacket * Packet){
 	return TRUE;
 }
 
-void set8bit(BowlerPacket * Packet,BYTE val, BYTE offset){
-	Packet->use.data[0+offset]=val;
-}
-void set16bit(BowlerPacket * Packet,INT16 val, BYTE offset){
-	UINT16_UNION wval;
-	wval.Val=val;
-	Packet->use.data[0+offset]=wval.byte.SB;
-	Packet->use.data[1+offset]=wval.byte.LB;
-}
-void set32bit(BowlerPacket * Packet,INT32 val, BYTE offset){
-	INT32_UNION lval;
-	lval.Val=val;
-	Packet->use.data[0+offset]=lval.byte.FB;
-	Packet->use.data[1+offset]=lval.byte.TB;
-	Packet->use.data[2+offset]=lval.byte.SB;
-	Packet->use.data[3+offset]=lval.byte.LB;
-}
-INT32 get32bit(BowlerPacket * Packet, BYTE offset){
-	INT32_UNION lval;
-	lval.byte.FB=Packet->use.data[0+offset];
-	lval.byte.TB=Packet->use.data[1+offset];
-	lval.byte.SB=Packet->use.data[2+offset];
-	lval.byte.LB=Packet->use.data[3+offset];
-	return lval.Val;
-}
-
-INT32 get16bit(BowlerPacket * Packet, BYTE offset){
-	UINT16_UNION wval;
-	wval.byte.SB=Packet->use.data[0+offset];
-	wval.byte.LB=Packet->use.data[1+offset];
-	return wval.Val;
-}
 
 void printValues(){
 	int i;

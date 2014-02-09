@@ -1,0 +1,8 @@
+/ADC.o
+/DCMotorDriver.o
+/EEPROM.o
+/IO.o
+/PWM.o
+/Servo.o
+/SPISlave.o
+/UARTPassThrough.o
