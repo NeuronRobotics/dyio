@@ -419,7 +419,7 @@ void printValues(){
 	for(i=0;i<GetNumberOfIOChannels();i++){
 		println_I("\t# ");p_int_I(i);
 		print_I("\tCurrent ");p_int_I(getBcsIoDataTable()[i].PIN.currentValue);
-		print_I("\tPrevious ");p_int_I(getBcsIoDataTable()[i].PIN.previousValue);
+		//print_I("\tPrevious ");p_int_I(getBcsIoDataTable()[i].PIN.previousValue);
 	}
 }
 
@@ -429,7 +429,7 @@ void printModes(){
 	for(i=0;i<GetNumberOfIOChannels();i++){
 		println_I("\t# ");p_int_I(i);
 		print_I("\tCurrent ");printMode(getBcsIoDataTable()[i].PIN.currentChannelMode,INFO_PRINT);
-		print_I("\tPrevious ");printMode(getBcsIoDataTable()[i].PIN.previousChannelMode,INFO_PRINT);
+		//print_I("\tPrevious ");printMode(getBcsIoDataTable()[i].PIN.previousChannelMode,INFO_PRINT);
 	}
 }
 
@@ -438,8 +438,8 @@ void printConfigurations(){
 	println_I("Configurations");
 	for(i=0;i<GetNumberOfIOChannels();i++){
 		println_I("\t# ");p_int_I(i);
-		print_I("\tCurrent ");p_int_I(getBcsIoDataTable()[i].PIN.currentConfiguration);
-		print_I("\tPrevious ");p_int_I(getBcsIoDataTable()[i].PIN.previousConfiguration);
+		//print_I("\tCurrent ");p_int_I(getBcsIoDataTable()[i].PIN.currentConfiguration);
+		//print_I("\tPrevious ");p_int_I(getBcsIoDataTable()[i].PIN.previousConfiguration);
 	}
 }
 void printAsync(){

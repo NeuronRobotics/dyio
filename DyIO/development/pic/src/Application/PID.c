@@ -234,14 +234,14 @@ void setOutputMine(int group, float v){
 	Print_Level l = getPrintLevel();
 	setPrintLevelNoPrint();
 	int val = (int)(v);
-	BYTE center = getBcsIoDataTable()[dyPid[group].outputChannel].PIN.currentConfiguration;
+	//BYTE center = getBcsIoDataTable()[dyPid[group].outputChannel].PIN.currentConfiguration;
 
 	if(dyPid[group].outputMode == IS_SERVO){
-		val += center;
-		if (val>190)
-			val=190;
-		if(val<25)
-			val=25;
+		val += 128;
+		if (val>254)
+			val=254;
+		if(val<0)
+			val=0;
 	}else if(dyPid[group].outputMode == IS_DO){
 		if(val>0)
 			val=1;

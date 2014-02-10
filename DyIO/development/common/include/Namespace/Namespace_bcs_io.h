@@ -110,9 +110,8 @@ case IS_PPM_IN:
 #define ASYN				0x6e797361 // 'asyn'  Set/Get asynchronous mode
 #define GCHC				0x63686367 // 'gchc'  Get Channel Count
 #define GCML				0x6c6d6367 // 'gcml'  Get channel Mode List
-typedef union  _FUNCTION_MAP
+typedef struct __attribute__((__packed__)) _FUNCTION_MAP
 	{
-		struct{
 			unsigned HAS_ANALOG_IN			:1;
 			unsigned HAS_PWM				:1;
 			unsigned HAS_UART_T				:1;
@@ -128,19 +127,11 @@ typedef union  _FUNCTION_MAP
 			unsigned HAS_COUNTER_OUTPUT_H	:1;
 			unsigned HAS_DC_MOTOR			:1;
 			unsigned HAS_PPM				:1;
-			unsigned unused					:16;
-		};
-		UINT32 b;
 	} FUNCTION_MAP;
-	typedef struct  _PIN_MAP
+	typedef struct __attribute__((__packed__))  _PIN_MAP
 	{
 		INT32 currentValue;
-		BYTE  currentConfiguration;
 		BYTE  currentChannelMode;
-		//Used to detect any hardware state change and synchronize
-		INT32 previousValue;
-		BYTE previousConfiguration;
-		BYTE  previousChannelMode;
 		INT32			asyncDataPreviousVal;
 		INT32			asyncDataCurrentVal;
 		BYTE		asyncDataType;
@@ -150,6 +141,18 @@ typedef union  _FUNCTION_MAP
 		BYTE asyncDatathreshholdedge;
 		RunEveryData 	asyncDataTime;
 	} PIN_MAP;
+
+	typedef struct __attribute__((__packed__))  _Downstream_Data
+		{
+
+
+			BYTE  currentConfiguration;
+
+			//Used to detect any hardware state change and synchronize
+			INT32 previousValue;
+			BYTE previousConfiguration;
+			BYTE  previousChannelMode;
+		} Downstream_Data;
 
 
 

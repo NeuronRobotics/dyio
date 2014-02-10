@@ -12,6 +12,8 @@ BYTE isAscii(char * str);
 BOOL bankA=TRUE,bankB=TRUE;
 BYTE batteryCode0=0,batteryCode1=0;
 
+static Downstream_Data down[NUM_PINS];
+
 void LoadDefaultValues(){
 	LoadCorePacket(& packetTemp);
 	packetTemp.use.head.Method=BOWLER_GET;
@@ -19,7 +21,7 @@ void LoadDefaultValues(){
 	SendPacketToCoProc(& packetTemp);
 	BYTE i;
 	for (i=0;i<GetNumberOfIOChannels();i++){
-		getBcsIoDataTable()[i].PIN.currentConfiguration=packetTemp.use.data[i];
+		//getBcsIoDataTable()[i].PIN.currentConfiguration=packetTemp.use.data[i];
 	}
 }
 
@@ -125,7 +127,7 @@ BYTE SetCoProcMode(BYTE PIN,BYTE mode){
 	packetTemp.use.data[2]=(IsAsync(PIN))?1:0;
 	packetTemp.use.head.DataLegnth=7;
 	SendPacketToCoProc(& packetTemp);
-	getBcsIoDataTable()[PIN].PIN.previousChannelMode=mode;
+	down[PIN].previousChannelMode=mode;
 	return FALSE;
 }
 
@@ -133,7 +135,7 @@ BYTE SetAllCoProcMode(){
 	int i=0;
 	BOOL send = FALSE;
 	for(i=0;i<GetNumberOfIOChannels();i++){
-		if(getBcsIoDataTable()[i].PIN.currentChannelMode != getBcsIoDataTable()[i].PIN.previousChannelMode ){
+		if(getBcsIoDataTable()[i].PIN.currentChannelMode != down[i].previousChannelMode ){
 			 send=TRUE;
 		}
 	}
@@ -144,7 +146,7 @@ BYTE SetAllCoProcMode(){
 		packetTemp.use.head.DataLegnth = 4;
 		for(i=0;i<GetNumberOfIOChannels();i++){
 			packetTemp.use.data[i]=getBcsIoDataTable()[i].PIN.currentChannelMode ;
-			getBcsIoDataTable()[i].PIN.previousChannelMode =getBcsIoDataTable()[i].PIN.currentChannelMode ;
+			down[i].previousChannelMode =getBcsIoDataTable()[i].PIN.currentChannelMode ;
 			packetTemp.use.head.DataLegnth++;
 		}
 		SendPacketToCoProc(& packetTemp);
@@ -155,7 +157,7 @@ BYTE SetAllCoProcValues(){
 	int i=0;
 	BOOL send = FALSE;
 	for(i=0;i<GetNumberOfIOChannels();i++){
-		if(getBcsIoDataTable()[i].PIN.currentValue != getBcsIoDataTable()[i].PIN.previousValue ){
+		if(getBcsIoDataTable()[i].PIN.currentValue != down[i].previousValue ){
 			 send=TRUE;
 		}
 	}
@@ -167,7 +169,7 @@ BYTE SetAllCoProcValues(){
 		packetTemp.use.head.DataLegnth = 4;
 		for(i=0;i<GetNumberOfIOChannels();i++){
 			tmp = getBcsIoDataTable()[i].PIN.currentValue ;
-			getBcsIoDataTable()[i].PIN.previousValue =getBcsIoDataTable()[i].PIN.currentValue ;
+			down[i].previousValue =getBcsIoDataTable()[i].PIN.currentValue ;
 			set32bit(& packetTemp,tmp,i*4);
 			packetTemp.use.head.DataLegnth +=4;
 		}
@@ -390,7 +392,7 @@ void SyncModes(void){
 	GetAllModes(& packetTemp);
 	for (i=0;i<24;i++){
 		getBcsIoDataTable()[i].PIN.currentChannelMode=packetTemp.use.data[i];
-		getBcsIoDataTable()[i].PIN.previousChannelMode=packetTemp.use.data[i];
+		down[i].previousChannelMode=packetTemp.use.data[i];
 	}
 }
 

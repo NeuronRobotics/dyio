@@ -56,9 +56,7 @@ void InitPinModes(void){
 
 
 BOOL setMode(BYTE pin,BYTE mode){
-	if (mode == getBcsIoDataTable()[pin].PIN.previousChannelMode){
-		return TRUE;
-	}
+
 	ClearPinState(pin);
 	println_I("Pin :");p_int_I(pin);print_I(" is mode: ");printMode(mode,INFO_PRINT);
 	//BYTE pwm,dir;
@@ -136,5 +134,4 @@ void configPinMode(BYTE pin,BYTE mode,BYTE tris,BYTE io){
 	SetDIO(pin,io);
 	getBcsIoDataTable()[pin].PIN.currentChannelMode = mode;
 	EEWriteMode(pin,mode);
-	getBcsIoDataTable()[pin].PIN.previousChannelMode = mode;
 }
