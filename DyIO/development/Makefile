@@ -1,28 +1,32 @@
 -include common/Version.mk
 REVISION=$(MAJOR_VER).$(MINOR_VER).$(FIRMWARE_VER)
 PUB=java -jar FirmwarePublish/Publish.jar -revision=$(REVISION)
+WORKSPACE=../../../
+NRCLIB_LOCATION=$(WORKSPACE)/c-bowler/firmware/library/NR-Clib/
+PIC_COMPILER=xc32-v1.00-linux-installer.run
+
 
 all: pub
 	echo DyIO Firmware built OK!
 upload:svnupdate update all commit
-	if (test -d ../NR-Clib/);then cd ../NR-Clib/;make commit;	fi
+	if (test -d $(NRCLIB_LOCATION)/);then cd $(NRCLIB_LOCATION)/;make commit;	fi
 	echo upload ok
 dyioUpdate:update
 	#used for cloning from the DyIO sources for a fork
 	if (test -d ../DyIO/); then 	rsync -avz --exclude=.svn* --exclude=.project --exclude=.cproject --exclude=Makefile ../DyIO/* 				./; fi	
 update:
 	echo Updating...
-	if (!(test -d ../NR-Clib/));				then cd ..;svn co https://nr-sdk.googlecode.com/svn/trunk/firmware/library/NR-Clib/development/ NR-Clib;					fi
-	if (test -d ../NR-Clib/);					then cd ../NR-Clib/;svn update;					fi
-	if (test -d ../NR-Clib/);					then cd ../NR-Clib/Platform;make pic32MX440F128H;		fi
-	if (test -d ../NR-Clib/);					then cd ../NR-Clib/Platform;make AVR644p;				fi
-	if (test -d ../NR-Clib/);					then cd ../NR-Clib/Platform;make AVR324p;				fi
-	if (test -d ../NR-Clib/Platform/include/); 	then rsync -avz --exclude=.svn*						../NR-Clib/Platform/include/* 				NR-Clib/include;			fi
-	if (test -d ../NR-Clib/BowlerStack/); 		then rsync -avz --exclude=.svn*						../NR-Clib/BowlerStack/include/* 			NR-Clib/include;			fi
+	if (!(test -d $(NRCLIB_LOCATION)/));				then cd $(WORKSPACE);git clone https://github.com/NeuronRobotics/c-bowler.git;					fi
+	if (test -d $(NRCLIB_LOCATION)/);					then cd $(NRCLIB_LOCATION)/;git pull;					fi
+	if (test -d $(NRCLIB_LOCATION)/);					then cd $(NRCLIB_LOCATION)/Platform;make pic32MX440F128H;		fi
+	if (test -d $(NRCLIB_LOCATION)/);					then cd $(NRCLIB_LOCATION)/Platform;make AVR644p;				fi
+	if (test -d $(NRCLIB_LOCATION)/);					then cd $(NRCLIB_LOCATION)/Platform;make AVR324p;				fi
+	if (test -d $(NRCLIB_LOCATION)/Platform/include/); 	then rsync -avz --exclude=.svn*						$(NRCLIB_LOCATION)/Platform/include/* 				NR-Clib/include;			fi
+	if (test -d $(NRCLIB_LOCATION)/BowlerStack/); 		then rsync -avz --exclude=.svn*						$(NRCLIB_LOCATION)/BowlerStack/include/* 			NR-Clib/include;			fi
 	
-	if (test -d ../NR-Clib/lib/AVR); 			then rsync -avz --exclude=.svn* --exclude=*.r*   	../NR-Clib/lib/AVR/* 						NR-Clib/lib/AVR/;				fi
-	if (test -d ../NR-Clib/lib/PIC32);			then rsync -avz --exclude=.svn* --exclude=*.r*   	../NR-Clib/lib/PIC32/32MX440F128H/*			NR-Clib/lib/PIC32/32MX440F128H/;				fi
-	if (test -d ../NR-Clib/toolchain/); 		then rsync -avz --exclude=.svn*  					../NR-Clib/toolchain/* 						NR-Clib/toolchain;		fi
+	if (test -d $(NRCLIB_LOCATION)/lib/AVR); 			then rsync -avz --exclude=.svn* --exclude=*.r*   	$(NRCLIB_LOCATION)/lib/AVR/* 						NR-Clib/lib/AVR/;				fi
+	if (test -d $(NRCLIB_LOCATION)/lib/PIC32);			then rsync -avz --exclude=.svn* --exclude=*.r*   	$(NRCLIB_LOCATION)/lib/PIC32/32MX440F128H/*			NR-Clib/lib/PIC32/32MX440F128H/;				fi
+	if (test -d $(NRCLIB_LOCATION)/toolchain/); 		then rsync -avz --exclude=.svn*  					$(NRCLIB_LOCATION)/toolchain/* 						NR-Clib/toolchain;		fi
 	echo Done Updating...
 svnupdate:
 	svn update
@@ -55,3 +59,10 @@ pub:main
 clean:
 	make -C pic clean
 	make -C avr clean
+	
+setup:
+	sudo apt-get install -y --force-yes avr-libc gcc-avr lib32z1 lib32ncurses5 lib32bz2-1.0
+	wget https://nr-sdk.googlecode.com/svn/trunk/firmware/tools/$(PIC_COMPILER)
+	sudo chmod +x $(PIC_COMPILER)
+	sudo ./$(PIC_COMPILER)
+	sudo rm $(PIC_COMPILER)*
