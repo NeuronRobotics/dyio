@@ -29,7 +29,7 @@ const char *  printModeStrings[]={
 		"IS_PPM_IN"
 };
 
-int mystrlen(char * s){
+int mystrlen(const char * s){
 	int i=0;
 	while(s[i++]);
 	return i;
@@ -37,6 +37,7 @@ int mystrlen(char * s){
 
 const char * unknown = "UNKNOWN";
 void printMode(BYTE mode, Print_Level l){
+	return;
 	int i=0;
 	if(maxNumCharsInModes==0){
 		for(i=0;i<IO_MODE_MAX;i++){
