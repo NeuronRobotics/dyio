@@ -2,7 +2,7 @@
 UNAME := $(shell uname)
 
 ifeq ($(UNAME), Linux)
-PICTOOLCHAIN    = /home/opt/microchip/xc32/v1.00/bin/
+PICTOOLCHAIN    = /opt/microchip/xc32/v1.00/bin/
 else
 
 endif

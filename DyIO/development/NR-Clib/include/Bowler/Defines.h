@@ -17,6 +17,7 @@
  */
 #ifndef DEFINES_H_
 #define DEFINES_H_
+
 #include <stddef.h>
 #define BOWLER_VERSION			3
 #define BowlerHeaderSize		11
@@ -132,5 +133,8 @@ typedef union _UINT32_UNION
     } byte;
 
 } UINT32_UNION;
+#if !defined(NULL)
+	#define NULL 0
+#endif
 
 #endif /* DEFINES_H_ */

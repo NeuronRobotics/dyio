@@ -2,7 +2,7 @@
 REVISION=$(MAJOR_VER).$(MINOR_VER).$(FIRMWARE_VER)
 PUB=java -jar FirmwarePublish/Publish.jar -revision=$(REVISION)
 WORKSPACE=../../../
-NRCLIB_LOCATION=$(WORKSPACE)/c-bowler/firmware/library/NR-Clib/
+NRCLIB_LOCATION=$(WORKSPACE)/c-bowler/firmware/library/NR-Clib/development/
 PIC_COMPILER=xc32-v1.00-linux-installer.run
 
 
@@ -38,6 +38,8 @@ main:coproc
 coproc:
 	make -C avr all
 pub:main
+	mkdir -p FirmwarePublish/Release/
+	mkdir -p FirmwarePublish/Dev/
 	rm -rf FirmwarePublish/Release/*.xml; 
 	rm -rf FirmwarePublish/Release/legacy/*.xml
 	rm -rf FirmwarePublish/Dev/*.xml;
@@ -52,16 +54,16 @@ pub:main
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p_debug/output.hex -output=FirmwarePublish/Dev/dyio-DEV-AVRDEBUG-$(REVISION)
 	$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p_debug/output.hex -output=FirmwarePublish/Dev/dyio-DEV-AVRDEBUG-PICDEBUG-$(REVISION)
 	$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Dev/dyio-DEV-PICDEBUG-$(REVISION)
-	if(rm ../NRSDK/fw/*); then echo OK; fi
+
 	#cp FirmwarePublish/Dev/dyio* ../NRSDK/fw/
 	#cp FirmwarePublish/Release/*.xml ../NRConsole/src/com/neuronrobotics/nrconsole/plugin/bootloader/fw/
-	nr-console
+	#nr-console
 clean:
 	make -C pic clean
 	make -C avr clean
 	
 setup:
-	sudo apt-get install -y --force-yes avr-libc gcc-avr lib32z1 lib32ncurses5 lib32bz2-1.0
+	sudo apt-get install -y --force-yes avr-libc gcc-avr lib32z1 lib32ncurses5 lib32bz2-1.0 git build-essential
 	wget https://nr-sdk.googlecode.com/svn/trunk/firmware/tools/$(PIC_COMPILER)
 	sudo chmod +x $(PIC_COMPILER)
 	sudo ./$(PIC_COMPILER)

@@ -11,7 +11,7 @@ void InitializeDyIODataTableManager(){
 	InitByteFifo(&storeTx,privateSerialTX,BOWLER_PacketSize);
 
 }
-RUN_EVERY printData = {0,10000};
+RunEveryData printData = {0,10000};
 void SyncDataTable(){
 	PushCoProcAsync();
 	SetAllCoProcMode();

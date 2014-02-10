@@ -18,11 +18,11 @@
 #ifndef BOWLERCONFIG_H_
 #define BOWLERCONFIG_H_
 
-	#include "reg_structs.h"
-	#include <util/delay.h>
-	#include <avr/io.h>
-	#include <avr/interrupt.h>
-	#include <string.h>
+#include "reg_structs.h"
+#include <util/delay.h>
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <string.h>
 
 #if !defined(__AVR_ATmega324P__)
 	#define USE_DYN_RPC

@@ -66,7 +66,7 @@ typedef struct _RUN_EVERY{
 	float MsTime;
 	//The time from the start time to loop over
 	float setPoint;
-} RUN_EVERY,RunEveryData;
+} RunEveryData;
 
 /**
  * RunEvery

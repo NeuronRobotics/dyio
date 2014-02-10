@@ -99,7 +99,7 @@ void EnableDebugTerminal(void);
 /**
  * print the null terminated string with a newline inserted at the begining of the string
  */
-#define println_E(A) printfDEBUG(A,ERROR_PRINT)
+#define println_E(A) printfDEBUG(A,ERROR_PRINT);
 
 #define printStream_E(A,B) printByteArray(A,B,ERROR_PRINT);
 

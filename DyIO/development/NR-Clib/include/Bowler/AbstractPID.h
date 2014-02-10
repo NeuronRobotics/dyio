@@ -9,6 +9,7 @@
 #define ABSTRACTPID_H_
 #include "Bowler_Helper.h"
 #include "namespace.h"
+#include "Scheduler.h"
 
 #define IntegralSize  10
 
@@ -38,6 +39,16 @@ typedef enum _PidLimitType {
 	CONTROLLER_ERROR=(0x04)
 }PidLimitType;
 
+typedef enum _PidCalibrationType {
+        CALIBRARTION_Uncalibrated  =(0),
+	CALIBRARTION_DONE  =(1),
+        CALIBRARTION_hysteresis  =(2),
+        CALIBRARTION_home_up  =(3),
+        CALIBRARTION_home_down  =(4)
+}PidCalibrationType;
+
+
+
 typedef struct  _PidLimitEvent{
 	int group;
 	PidLimitType type;
@@ -55,6 +66,12 @@ typedef struct  _PidLimitEvent{
 		float 		I;
 		float		D;
 	} AdsPID_ConFIG;
+
+        typedef enum _CAL_STATE {
+                forward  = 0,
+                backward = 1,
+                done     = 2
+            }CAL_STATE;
 /**
  * This is the storage struct for all the information needed to run the PID calculation
  * Note that this has no assumptions on the type of inputs or type of outputs
@@ -76,6 +93,7 @@ typedef struct _AbsPID
         float	 		integralTotal;
         float                   integralSize;
         float			Output;
+        float			OutputSet;
         // This must be in MS
         float			PreviousTime;
         unsigned char           Async;
@@ -87,7 +105,23 @@ typedef struct _AbsPID
 			float		D;
 		} K;
         INTERPOLATE_DATA interpolate;
-        //float  			IntegralCircularBuffer[IntegralSize];
+        PidCalibrationType calibrationState;
+        struct{
+            int upperHistoresis;
+            int lowerHistoresis;
+            int stop;
+            BOOL calibrating;
+            BOOL calibrated;
+            CAL_STATE state;
+            int dummy;
+            RunEveryData timer;
+        }calibration;
+        struct{
+
+            RunEveryData timer;
+            float homingStallBound;
+            float previousValue;
+        }homing;
         
 } AbsPID;
 
@@ -211,5 +245,13 @@ BOOL processPIDCrit(BowlerPacket * Packet);
 NAMESPACE_LIST * getBcsPidNamespace();
 
 AbsPID * getPidGroupDataTable();
+
+void SetPIDCalibrateionState(int group, PidCalibrationType state);
+
+PidCalibrationType GetPIDCalibrateionState(int group);
+
+int getUpperPidHistoresis(int group);
+int getLowerPidHistoresis(int group);
+int getPidStop(int group);
 
 #endif /* ABSTRACTPID_H_ */

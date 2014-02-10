@@ -54,4 +54,16 @@ float interpolate(INTERPOLATE_DATA * data, float currentTime);
 
 BOOL bound(float target, float actual, float plus, float minus);
 
+
+void set8bit(BowlerPacket * Packet,BYTE val, BYTE offset);
+
+void set16bit(BowlerPacket * Packet,INT16 val, BYTE offset);
+
+void set32bit(BowlerPacket * Packet,INT32 val, BYTE offset);
+
+INT32 get32bit(BowlerPacket * Packet, BYTE offset);
+
+INT32 get16bit(BowlerPacket * Packet, BYTE offset);
+
+
 #endif /* BOWLER_HELPER_H_ */
