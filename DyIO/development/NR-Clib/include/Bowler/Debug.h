@@ -23,7 +23,8 @@ typedef enum _Print_Level{
 	NO_PRINT=0,
 	ERROR_PRINT=1,
 	WARN_PRINT=2,
-	INFO_PRINT=3
+	//DEBUG_PRINT=3,
+	INFO_PRINT=4
 }Print_Level;
 
 #define setPrintLevelNoPrint() setPrintLevel(NO_PRINT)

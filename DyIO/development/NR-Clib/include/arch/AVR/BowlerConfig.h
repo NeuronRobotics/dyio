@@ -18,7 +18,6 @@
 #ifndef BOWLERCONFIG_H_
 #define BOWLERCONFIG_H_
 
-
 #include "reg_structs.h"
 #include <util/delay.h>
 #include <avr/io.h>

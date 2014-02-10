@@ -30,7 +30,10 @@ void InitilizeBcsIoSetmode(BOOL (*setChanelModeHWPtrLocal)(BYTE,BYTE)){
 BOOL SetChannelMode(BYTE chan,BYTE mode){
 	if(setChanelModeHWPtr == NULL)
 		return FALSE;
-	//println_I("Abstract_bcs_io_setmode Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_int_I(chan);
+#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
+	println_I("Abstract_bcs_io_setmode Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_int_I(chan);
+#endif
+
 	BOOL ok = setChanelModeHWPtr(chan,mode);
 	getBcsIoDataTable()[chan].PIN.currentChannelMode = mode;
 	if(IsAsync(chan))

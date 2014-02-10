@@ -95,7 +95,7 @@ void UserInit(void){
 	//setPrintStream(&USBPutArray);
 	setPrintLevelInfoPrint();
 	println_I("\n\nStarting PIC initialization");
-	DelayMs(1000);
+	//DelayMs(1000);
 	hardwareInit();
 	println_I("Hardware Init done");
 
@@ -118,16 +118,17 @@ void UserInit(void){
 
 	lockServos();
 	setPrintLevelInfoPrint();
-	println_I("###Starting PIC In Debug Mode###\n");// All printfDEBUG functions do not need to be removed from code if debug is disabled
-	//setPrintLevelErrorPrint();
-	println_E("Error level printing");
-	println_W("Warning level printing");
-	println_I("Info level printing");
+
 	BOOL brown = getEEBrownOutDetect();
 	setCoProcBrownOutMode(brown);
 	setBrownOutDetect(brown);
 
 
-
+	println_I("###Starting PIC In Debug Mode###\n");// All printfDEBUG functions do not need to be removed from code if debug is disabled
+	DelayMs(1000);
+	//setPrintLevelErrorPrint();
+	println_E("Error level printing");
+	println_W("Warning level printing");
+	println_I("Info level printing");
 }
 

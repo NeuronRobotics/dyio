@@ -390,7 +390,7 @@ void SyncModes(void){
 
 	BYTE i;
 	GetAllModes(& packetTemp);
-	for (i=0;i<24;i++){
+	for (i=0;i<NUM_PINS;i++){
 		getBcsIoDataTable()[i].PIN.currentChannelMode=packetTemp.use.data[i];
 		down[i].previousChannelMode=packetTemp.use.data[i];
 	}
