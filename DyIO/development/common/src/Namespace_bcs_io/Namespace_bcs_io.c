@@ -15,16 +15,18 @@ BOOL bcsIoAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(Bo
 
 	int i;
 	BOOL update=FALSE;
+	println_W("Async ");print_W(ioNSName);
 	for(i=0;i<GetNumberOfIOChannels();i++){
 		if(pushAsyncReady(i)){
 			update=TRUE;
+			print_W(" ");p_int_W(i);
 		}
 	}
 	if(update){
 		populateGACV(Packet);
 		Packet->use.head.Method=BOWLER_ASYN;
 		FixPacket(Packet);
-		//println_I("bcs_io Async");
+
 		if(pidAsyncCallbackPtr!=NULL){
 			pidAsyncCallbackPtr(Packet);
 		}

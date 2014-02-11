@@ -20,10 +20,11 @@ static BowlerPacket Packet;
 void MyServer(){
 	// Run the Bowler Stack Namespace iteration of all async packets
 	// Pass in  the function pointer to push the packets upstream
-	println_I("Async");
+
 	RunNamespaceAsync(&Packet,&PutBowlerPacket);
 	println_I("Server");
 	Bowler_Server((BowlerPacket *) &Packet, FALSE);
+
 }
 
 void runDyIOMain(void){
