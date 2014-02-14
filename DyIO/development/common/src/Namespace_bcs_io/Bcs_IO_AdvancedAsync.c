@@ -136,7 +136,7 @@ BOOL configAdvancedAsync(BowlerPacket * Packet){
 
 
 void startAdvancedAsyncDefault(BYTE pin){
-	println_I("Starting advanced async on channel: ");p_int_I(pin);
+	//println_I("Starting advanced async on channel: ");p_int_I(pin);
 	getBcsIoDataTable()[pin].PIN.asyncDataCurrentVal=1;
 	getBcsIoDataTable()[pin].PIN.asyncDataPreviousVal=1;
 	getBcsIoDataTable()[pin].PIN.asyncDataTime.MsTime=getMs();
@@ -157,10 +157,10 @@ void startAdvancedAsyncDefault(BYTE pin){
 		getBcsIoDataTable()[pin].PIN.asyncDatadeadBandval=10;
 		break;
 	}
-	println_I("Async Type set to: ");printAsyncType(getBcsIoDataTable()[pin].PIN.asyncDataType);
-	print_I(" on pin# ");p_int_I(pin);print_I(" Pointer ");p_int_I(&getBcsIoDataTable()[pin].PIN.asyncDataTime);
+	//println_I("Async Type set to: ");printAsyncType(getBcsIoDataTable()[pin].PIN.asyncDataType);
+	//print_I(" on pin# ");p_int_I(pin);print_I(" Pointer ");//p_int_I(&getBcsIoDataTable()[pin].PIN.asyncDataTime);
 	RunEvery(&getBcsIoDataTable()[pin].PIN.asyncDataTime);
-	println_I("Async OK");
+	//println_I("Async OK");
 }
 
 

@@ -3,7 +3,7 @@ REVISION=$(MAJOR_VER).$(MINOR_VER).$(FIRMWARE_VER)
 PUB=java -jar FirmwarePublish/Publish.jar -revision=$(REVISION)
 WORKSPACE=../../../
 NRCLIB_LOCATION=$(WORKSPACE)/c-bowler/firmware/library/NR-Clib/development/
-PIC_COMPILER=xc32-v1.00-linux-installer.run
+PIC_COMPILER=xc32-v1.00-linux
 
 
 all: pubDebug
@@ -33,15 +33,15 @@ svnupdate:
 commit:
 	svn commit -m="Building the DyIO"
 	cd ../NRSDK/fw; svn commit -m="Building the DyIO"
-main:
+main:update
 	make -C pic all
-	make -C avr all
+	#make -C avr all
 	
 	
 pubDebug:main
 	mkdir -p FirmwarePublish/Dev/
 	rm -rf FirmwarePublish/Dev/*.xml;
-	$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	 -output=FirmwarePublish/Dev/dyio-PICDEBUG-$(REVISION)_NO_AVR.xml
+	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	 -output=FirmwarePublish/Dev/dyio-PICDEBUG-$(REVISION)_NO_AVR.xml
 	#Debug
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Dev/dyio-DEV-$(REVISION)
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p_debug/output.hex -output=FirmwarePublish/Dev/dyio-DEV-AVRDEBUG-$(REVISION)
@@ -53,7 +53,7 @@ pub:main
 	rm -rf FirmwarePublish/Release/*.xml; 
 	rm -rf FirmwarePublish/Release/legacy/*.xml
 
-	$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 		-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Release/dyio-$(REVISION).xml
+	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 		-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Release/dyio-$(REVISION).xml
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/bluetooth/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Release/dyio-bluetooth-$(REVISION).xml
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 		-core=1,avr_atmegaXX4p,2,avr/output/atmega324p/output.hex -output=FirmwarePublish/Release/legacy/dyio-$(REVISION)_legacy.xml
 
@@ -64,8 +64,8 @@ clean:
 	sudo rm $(PIC_COMPILER)*
 setup:
 	sudo apt-get install -y --force-yes avr-libc gcc-avr lib32z1 lib32ncurses5 lib32bz2-1.0 git build-essential
-	wget http://ww1.microchip.com/downloads/en/DeviceDoc/xc32-v1.00-linux.zip
-	unzip xc32-v1.00-linux.zip
-	sudo chmod +x $(PIC_COMPILER).run
-	sudo ./$(PIC_COMPILER).run
+	wget http://ww1.microchip.com/downloads/en/DeviceDoc/$(PIC_COMPILER).zip
+	unzip $(PIC_COMPILER).zip
+	sudo chmod +x $(PIC_COMPILER)-installer.run
+	sudo ./$(PIC_COMPILER)-installer.run
 	

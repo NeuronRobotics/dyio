@@ -18,7 +18,7 @@
 
 #include "UserApp_avr.h"
 
-const char startmessage[]  = "\n\n###Starting AVR In Debug Mode\n";
+char startmessage[]  = "\n\n###Starting AVR In Debug Mode\n";
 void UserInit(void){
 	StartCritical();
 	setPrintLevelInfoPrint();

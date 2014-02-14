@@ -209,4 +209,7 @@ void printPIDvals(int i);
 	void printBowlerPacketDEBUG(BowlerPacket * packet,Print_Level l);
 	void printfDEBUG_BYTE(char b,Print_Level l);
 #endif
+
+	BOOL okToPrint(Print_Level l);
+	void setColor(Print_Level l);
 #endif /* DEBUG_H_ */

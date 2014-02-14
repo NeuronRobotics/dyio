@@ -5,11 +5,12 @@ INCLUDES	    = -I../NR-Clib/include/ -I./include/ -I ../common/include -I ../NR-
 
 -include ../NR-Clib/toolchain/pic32/toolchain.mk
 -include ../common/Version.mk
+LINK_DIR=../NR-Clib/lib/PIC32/$(DEVICEP)/
 DEVICEP 		= 32MX440F128H
 DEFINES			= -DUSE_VELOCITY $(DYIO_VER)
 CCP     		= $(GCCP) -mprocessor=$(DEVICEP) $(INCLUDES)  -I$(PICTOOLCHAIN)../pic32mx/include $(DEFINES)
-LINK 			= $(GCCP) -mprocessor=$(DEVICEP) -L ../NR-Clib/lib/PIC32/$(DEVICEP)/ 
-LFLAFS          = -Wl,--script="elf32pic32mx.ld",--defsym=__MPLAB_BUILD=1,--gc-sections,--report-mem
+LINK 			= $(GCCP) -mprocessor=$(DEVICEP) -L$(LINK_DIR) 
+LFLAFS          = -Wl,--script="elf32pic32mx.ld",--defsym=__MPLAB_BUILD=1,--report-mem
 
 CFILES :=	$(wildcard ../common/src/*/*.c) \
 			$(wildcard src/*.c) \
@@ -19,7 +20,8 @@ CFILES :=	$(wildcard ../common/src/*/*.c) \
 OFILES := 	$(CFILES:%.c=%.o)
 
     
-all:clean release debug bluetooth clean
+#all:clean release debug bluetooth clean
+all: clean debug size
 	echo PIC Build OK!
 
 release:buildSpecificClean $(OFILES)
@@ -45,3 +47,12 @@ buildSpecificClean:
 	$(CCP) -c $< -o $@
 clean:
 	 rm -rf $(OFILES)
+	 
+size:
+	mkdir -p output/o/
+	cp $(LINK_DIR)libNRLIB_debug.a output/o/
+	cd output/o/;xc32-ar x libNRLIB_debug.a
+	sh size.sh
+	xc32-size output/debug/output.elf
+
+

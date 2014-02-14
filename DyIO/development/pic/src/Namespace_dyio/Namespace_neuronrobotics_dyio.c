@@ -6,7 +6,7 @@
  */
 #include "UserApp.h"
 
-const unsigned char dyioNSName[] = "neuronrobotics.dyio.*;0.3;;";
+char dyioNSName[] = "neuronrobotics.dyio.*;0.3;;";
 RunEveryData syncVolt={0,200};
 RunEveryData ppm={0,50};
 
@@ -182,7 +182,7 @@ BOOL neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet){
 			}
 			println_I("Setting name: ");
 			Packet->use.data[Packet->use.head.DataLegnth-4]='\0';
-			print_I((const char *)Packet->use.data);
+			print_I(Packet->use.data);
 			print_I(" Num Bytes:");
 			p_int_I(Packet->use.head.DataLegnth-4);
 			for(i=0;i<Packet->use.head.DataLegnth-4;i++){
