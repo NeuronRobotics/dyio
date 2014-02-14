@@ -9,7 +9,7 @@
 #include "Bowler/Bowler.h"
 #include "Namespace/Namespace_bcs_io.h"
 
-const char ioNSName[] = "bcs.io.*;0.3;;";
+char ioNSName[] = "bcs.io.*;0.3;;";
 
 BOOL bcsIoAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *)){
 
