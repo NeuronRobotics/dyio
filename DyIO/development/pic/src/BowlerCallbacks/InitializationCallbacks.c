@@ -43,8 +43,8 @@ void hardwareInit(){
 	}
 	//Must initialize IO before hardware
 	InitPins();
-//	println_I("Adding IO Namespace");
-//	addNamespaceToList((NAMESPACE_LIST * )get_bcsIoNamespace());
+	println_I("Adding IO Namespace");
+	addNamespaceToList((NAMESPACE_LIST * )get_bcsIoNamespace());
 	println_I("Adding IO.Setmode Namespace");
 	addNamespaceToList((NAMESPACE_LIST * )get_bcsIoSetmodeNamespace());
 	println_I("Adding DyIO Namespace");

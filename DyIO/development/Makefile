@@ -61,10 +61,11 @@ pub:main
 clean:
 	make -C pic clean
 	make -C avr clean
-	
+	sudo rm $(PIC_COMPILER)*
 setup:
 	sudo apt-get install -y --force-yes avr-libc gcc-avr lib32z1 lib32ncurses5 lib32bz2-1.0 git build-essential
-	wget https://nr-sdk.googlecode.com/svn/trunk/firmware/tools/$(PIC_COMPILER)
-	sudo chmod +x $(PIC_COMPILER)
-	sudo ./$(PIC_COMPILER)
-	sudo rm $(PIC_COMPILER)*
+	wget http://ww1.microchip.com/downloads/en/DeviceDoc/xc32-v1.00-linux.zip
+	unzip xc32-v1.00-linux.zip
+	sudo chmod +x $(PIC_COMPILER).run
+	sudo ./$(PIC_COMPILER).run
+	
