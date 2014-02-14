@@ -162,12 +162,12 @@ void printfDEBUG_BYTE(char b,Print_Level l);
 /**
  * print the null terminated string with a newline inserted at the begining of the string
  */
-void printfDEBUG(const char *str,Print_Level l);
+void printfDEBUG( char *str,Print_Level l);
 
 /**
  * print the null terminated string with no new lines
  */
-void printfDEBUG_NNL(const char *str,Print_Level l);
+void printfDEBUG_NNL(char *str,Print_Level l);
 
 /**
  * print the ascii of a signed long/int. No new line

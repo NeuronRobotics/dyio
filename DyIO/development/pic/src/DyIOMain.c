@@ -22,7 +22,6 @@ void MyServer(){
 	// Pass in  the function pointer to push the packets upstream
 
 	RunNamespaceAsync(&Packet,&PutBowlerPacket);
-	println_I("Server");
 	Bowler_Server((BowlerPacket *) &Packet, FALSE);
 
 }

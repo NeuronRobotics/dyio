@@ -23,7 +23,8 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <string.h>
-
+#include <avr/pgmspace.h>
+#include "Bowler/Debug.h"
 #if !defined(__AVR_ATmega324P__)
 	#define USE_DYN_RPC
 #endif
@@ -62,5 +63,22 @@ void WriteAVRUART1(BYTE val);
 void AVR_Bowler_HAL_Init(void);
 #define Bowler_HAL_Init() AVR_Bowler_HAL_Init()
 #define SetColor(a,b,c)
+
+void showString (PGM_P s,Print_Level l,char newLine);
+
+#undef print
+#undef println
+
+/**
+ * print the null terminated string with no new lines
+ */
+#define print(A,B) showString(PSTR(A),B,0)
+
+/**
+ * print the null terminated string with a newline inserted at the begining of the string
+ */
+#define println(A,B) showString(PSTR(A),B,1)
+
+
 
 #endif /* BOWLERCONFIG_H_ */

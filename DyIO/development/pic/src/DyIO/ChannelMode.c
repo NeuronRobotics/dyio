@@ -15,6 +15,7 @@ BOOL brownOutDetect = TRUE;
 void InitPinStates(void){
 	SyncModes();
 	println_I("Modes synced, initializing channels");
+	initAdvancedAsync();
 	int i;
 	for (i=0;i<GetNumberOfIOChannels();i++){
 		//DelayMs(10);

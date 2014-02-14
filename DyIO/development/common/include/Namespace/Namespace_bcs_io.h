@@ -9,7 +9,7 @@
 #define NAMESPACE_BCS_IO_H_
 #include "Bowler/Bowler.h"
 #include "AsyncManager.h"
-
+#include "Bowler/Scheduler.h"
 /*
  * This is the case statements for using the DyIO channel modes in a switch statement
 case IS_DI:
@@ -111,57 +111,56 @@ case IS_PPM_IN:
 #define GCHC				0x63686367 // 'gchc'  Get Channel Count
 #define GCML				0x6c6d6367 // 'gcml'  Get channel Mode List
 typedef struct __attribute__((__packed__)) _FUNCTION_MAP
-	{
-			unsigned HAS_ANALOG_IN			:1;
-			unsigned HAS_PWM				:1;
-			unsigned HAS_UART_T				:1;
-			unsigned HAS_UART_R				:1;
-			unsigned HAS_SPI_C				:1;
-			unsigned HAS_SPI_O				:1;
-			unsigned HAS_SPI_I				:1;
-			unsigned HAS_COUNTER_INPUT_D	:1;
-			unsigned HAS_COUNTER_OUTPUT_D	:1;
-			unsigned HAS_COUNTER_INPUT_I	:1;
-			unsigned HAS_COUNTER_OUTPUT_I	:1;
-			unsigned HAS_COUNTER_INPUT_H	:1;
-			unsigned HAS_COUNTER_OUTPUT_H	:1;
-			unsigned HAS_DC_MOTOR			:1;
-			unsigned HAS_PPM				:1;
-	} FUNCTION_MAP;
-	typedef struct __attribute__((__packed__))  _PIN_MAP
-	{
-		INT32 currentValue;
-		BYTE  currentChannelMode;
-		INT32			asyncDataPreviousVal;
-		INT32			asyncDataCurrentVal;
-		BYTE		asyncDataType;
-		BYTE 		asyncDataenabled;
-		INT32 	asyncDatadeadBandval;
-		INT32 	asyncDatathreshholdval;
-		BYTE asyncDatathreshholdedge;
-		RunEveryData 	asyncDataTime;
-	} PIN_MAP;
+{
+		unsigned HAS_ANALOG_IN			:1;
+		unsigned HAS_PWM				:1;
+		unsigned HAS_UART_T				:1;
+		unsigned HAS_UART_R				:1;
+		unsigned HAS_SPI_C				:1;
+		unsigned HAS_SPI_O				:1;
+		unsigned HAS_SPI_I				:1;
+		unsigned HAS_COUNTER_INPUT_D	:1;
+		unsigned HAS_COUNTER_OUTPUT_D	:1;
+		unsigned HAS_COUNTER_INPUT_I	:1;
+		unsigned HAS_COUNTER_OUTPUT_I	:1;
+		unsigned HAS_COUNTER_INPUT_H	:1;
+		unsigned HAS_COUNTER_OUTPUT_H	:1;
+		unsigned HAS_DC_MOTOR			:1;
+		unsigned HAS_PPM				:1;
+} FUNCTION_MAP;
 
-	typedef struct __attribute__((__packed__))  _Downstream_Data
-		{
+typedef struct __attribute__((__packed__))  _PIN_MAP
+{
+	INT32 currentValue;
+	BYTE  currentChannelMode;
+	INT32			asyncDataPreviousVal;
+	INT32			asyncDataCurrentVal;
+	BYTE		asyncDataType;
+	BYTE 		asyncDataenabled;
+	INT32 	asyncDatadeadBandval;
+	INT32 	asyncDatathreshholdval;
+	BYTE asyncDatathreshholdedge;
+	RunEveryData 	asyncDataTime;
+} PIN_MAP;
+
+typedef struct __attribute__((__packed__))  _Downstream_Data
+{
 
 
-			BYTE  currentConfiguration;
+	BYTE  currentConfiguration;
 
-			//Used to detect any hardware state change and synchronize
-			INT32 previousValue;
-			BYTE previousConfiguration;
-			BYTE  previousChannelMode;
-		} Downstream_Data;
+	//Used to detect any hardware state change and synchronize
+	INT32 previousValue;
+	BYTE previousConfiguration;
+	BYTE  previousChannelMode;
+} Downstream_Data;
 
 
 
 typedef struct _DATA
 {
-	//STORAGE self;
 	PIN_MAP PIN;
 	FUNCTION_MAP FUNCTION;
-	//AdvancedAsyncData asyncData;
 } DATA_STRUCT;
 
 void set8bit(BowlerPacket * Packet,BYTE val, BYTE offset);

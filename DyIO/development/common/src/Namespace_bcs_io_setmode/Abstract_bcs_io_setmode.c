@@ -8,7 +8,7 @@
 #include "Namespace/Namespace_bcs_io_setmode.h"
 
 
-BOOL (*setChanelModeHWPtr)(BYTE,BYTE);
+BOOL (*setChanelModeHWPtr)(BYTE,BYTE)=NULL;
 /*
  * Initialize SetMode hardware interface functions
  */
@@ -28,16 +28,25 @@ void InitilizeBcsIoSetmode(BOOL (*setChanelModeHWPtrLocal)(BYTE,BYTE)){
  * Returns true if successful
  */
 BOOL SetChannelMode(BYTE chan,BYTE mode){
-	if(setChanelModeHWPtr == NULL)
+	if(setChanelModeHWPtr == NULL){
+		println_E("Set mode pointer not set!")
 		return FALSE;
+	}
 #if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
 	println_I("Abstract_bcs_io_setmode Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_int_I(chan);
 #endif
 
 	BOOL ok = setChanelModeHWPtr(chan,mode);
+#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
+	print_I(" Hardware ok");
+#endif
 	getBcsIoDataTable()[chan].PIN.currentChannelMode = mode;
-	if(IsAsync(chan))
+	if(IsAsync(chan)){
+#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
+		print_I(" Restarting async");
+#endif
 		startAdvancedAsyncDefault(chan);
+	}
 	return ok;
 }
 
