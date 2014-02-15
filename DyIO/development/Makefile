@@ -16,6 +16,8 @@ dyioUpdate:update
 	if (test -d ../DyIO/); then 	rsync -avz --exclude=.svn* --exclude=.project --exclude=.cproject --exclude=Makefile ../DyIO/* 				./; fi	
 update:
 	echo Updating...
+	rm -rf $(NRCLIB_LOCATION)/lib/AVR/*
+	rm -rf $(NRCLIB_LOCATION)/lib/PIC32/32MX440F128H/*
 	if (!(test -d $(NRCLIB_LOCATION)/));				then cd $(WORKSPACE);git clone https://github.com/NeuronRobotics/c-bowler.git;					fi
 	if (test -d $(NRCLIB_LOCATION)/);					then cd $(NRCLIB_LOCATION)/;git pull;					fi
 	if (test -d $(NRCLIB_LOCATION)/);					then cd $(NRCLIB_LOCATION)/Platform;make pic32MX440F128H;		fi
@@ -33,15 +35,15 @@ svnupdate:
 commit:
 	svn commit -m="Building the DyIO"
 	cd ../NRSDK/fw; svn commit -m="Building the DyIO"
-main:update
+main:
 	make -C pic all
-	#make -C avr all
+	make -C avr all
 	
 	
 pubDebug:main
 	mkdir -p FirmwarePublish/Dev/
 	rm -rf FirmwarePublish/Dev/*.xml;
-	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	 -output=FirmwarePublish/Dev/dyio-PICDEBUG-$(REVISION)_NO_AVR.xml
+	$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	 -output=FirmwarePublish/Dev/dyio-PICDEBUG-$(REVISION)_NO_AVR.xml
 	#Debug
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Dev/dyio-DEV-$(REVISION)
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p_debug/output.hex -output=FirmwarePublish/Dev/dyio-DEV-AVRDEBUG-$(REVISION)
