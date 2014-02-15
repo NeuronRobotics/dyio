@@ -84,10 +84,10 @@ void hardwareInit(){
 	EndCritical();
 	INTEnableSystemMultiVectoredInt();
 
-	initBluetooth();
-	if(!hasBluetooth()){
-		Pic32UARTSetBaud( 115200 );
-	}
+//	initBluetooth();
+//	if(!hasBluetooth()){
+//		Pic32UARTSetBaud( 115200 );
+//	}
 
 }
 

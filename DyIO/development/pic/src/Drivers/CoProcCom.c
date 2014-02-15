@@ -16,7 +16,7 @@ void dealWithAsyncPacket(BowlerPacket * Packet);
 void uartErrorCheck();
 
 
-static BYTE privateRX[BOWLER_PacketSize*10];
+static BYTE privateRX[BOWLER_PacketSize];
 static BYTE_FIFO_STORAGE store;
 static BOOL lastWasError = FALSE;
 static BOOL init=FALSE;
@@ -150,18 +150,18 @@ void initCoProcUART(){
 void uartErrorCheck(){
 	int err = UART2GetErrors();
 	if(err ){
-		if(err & _U2STA_FERR_MASK){
-			println_E("\n\n\nFraming error");
-		}
-		else if(err & _U2STA_OERR_MASK){
-			println_E("\n\n\n\nOverflow error");
-		}
-		else if(err & _U2STA_PERR_MASK){
-			println_E("\n\n\n\nPARITY error");
-		}
-		else {
-			println_E("\n\n\n\nUnknown UART error");
-		}
+//		if(err & _U2STA_FERR_MASK){
+//			println_E("\n\n\nFraming error");
+//		}
+//		else if(err & _U2STA_OERR_MASK){
+//			println_E("\n\n\n\nOverflow error");
+//		}
+//		else if(err & _U2STA_PERR_MASK){
+//			println_E("\n\n\n\nPARITY error");
+//		}
+//		else {
+//			println_E("\n\n\n\nUnknown UART error");
+//		}
 		UART2ClearAllErrors();
 	}
 }
@@ -202,7 +202,7 @@ void SendPacketToCoProc(BowlerPacket * Packet){
 
 
 	if (i==MAX_RETRY){
-		println_E("############Five times failed, co-proc reset: ");printPacket(Packet,ERROR_PRINT);
+		println_E("#Five times failed, co-proc reset: ");printPacket(Packet,ERROR_PRINT);
 		SetColor(1,0,0);
 		initCoProcCom();
 		PowerCycleAVR();
@@ -212,11 +212,10 @@ void SendPacketToCoProc(BowlerPacket * Packet){
 			println_W("##SUCCESS! OK after AVR reset");
 			return;
 		}
-		println_E("##Failed sending to co-proc after reset also!!:");
-		p_int_E(ret);
+		//println_E("##Failed sending to co-proc after reset also!!:");
+		//p_int_E(ret);
 		ERR(Packet,0x55,ret);
 		lastWasError = TRUE;
-		//Reset();
 	}
 
 	Packet->use.head.ResponseFlag = 1;
@@ -240,7 +239,7 @@ BYTE sendPacket(BowlerPacket * Packet){
 	PushCoProcAsync();//clear out any packets before begining
 	float packStartTime=getMs();
 	if (SendPacketUARTCoProc(Packet->stream,packetSize)){
-		println_I("Coproc Send took: ");p_fl_I(getMs()-packStartTime);
+		//println_I("Coproc Send took: ");p_fl_I(getMs()-packStartTime);
 
 		packStartTime=getMs();
 		RunEveryData wait={getMs(),DELAY_TIMEOUT};
@@ -254,8 +253,8 @@ BYTE sendPacket(BowlerPacket * Packet){
 			if(getPacket(&downstream)){
 				//println_I("Got packet from getPacket");
 				if( downstream.use.head.Method == BOWLER_ASYN){
-					println_I("Packet was async");
-					println_I("<<ASYNC\n");printPacket(&downstream,INFO_PRINT);
+					//println_I("Packet was async");
+					//println_I("<<ASYNC\n");printPacket(&downstream,INFO_PRINT);
 					dealWithAsyncPacket(&downstream);
 					//wait.MsTime += 2;
 				}else{
@@ -268,7 +267,7 @@ BYTE sendPacket(BowlerPacket * Packet){
 					}else{
 
 						copyPacket(&downstream,Packet);
-						println_I("<<RX CoProc\n");printPacket(Packet,INFO_PRINT);
+						//println_I("<<RX CoProc\n");printPacket(Packet,INFO_PRINT);
 						return 0;//Got a synchronus packet
 					}
 				}
@@ -276,13 +275,13 @@ BYTE sendPacket(BowlerPacket * Packet){
 
 			buttonCheck(4);
 		}
-		println_E("############Response Timed Out, took: ");p_fl_E(getMs()-packStartTime);
+		println_E("#Response Timed Out, took: ");p_fl_E(getMs()-packStartTime);
 		print_E(" ms to send:\n");printPacket(Packet,ERROR_PRINT);
 		printFiFoState_E(&store,downstream.stream);
 		PushCoProcAsync();//clear out any packets
 		return 2;
 	}else{
-		println_E("@@@@@@@@@@@@Transmit Timed Out, took: ");p_fl_E(getMs()-packStartTime);print_E(" ms");
+		println_E("@Transmit Timed Out, took: ");p_fl_E(getMs()-packStartTime);print_E(" ms");
 		return 1;
 	}
 }

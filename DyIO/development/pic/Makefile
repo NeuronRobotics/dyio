@@ -10,7 +10,8 @@ DEVICEP 		= 32MX440F128H
 DEFINES			= -DUSE_VELOCITY $(DYIO_VER)
 CCP     		= $(GCCP) -mprocessor=$(DEVICEP) $(INCLUDES)  -I$(PICTOOLCHAIN)../pic32mx/include $(DEFINES)
 LINK 			= $(GCCP) -mprocessor=$(DEVICEP) -L$(LINK_DIR) 
-LFLAFS          = -Wl,--script="elf32pic32mx.ld",--defsym=__MPLAB_BUILD=1
+#LFLAFS          = -Wl,--script="elf32pic32mx.ld",--defsym=__MPLAB_BUILD=1,--report-mem
+LFLAFS          = -Wl,--script="elf32pic32mx.ld",--defsym=__MPLAB_BUILD=1,--report-mem
 
 CFILES :=	$(wildcard ../common/src/*/*.c) \
 			$(wildcard src/*.c) \
@@ -20,7 +21,7 @@ CFILES :=	$(wildcard ../common/src/*/*.c) \
 OFILES := 	$(CFILES:%.c=%.o)
 
     
-all:clean release debug clean
+all:clean release debug size
 #all: clean debug size
 	echo PIC Build OK!
 
@@ -45,13 +46,13 @@ buildSpecificClean:
 
 %.o: %.c
 	$(CCP) -c $< -o $@
-	xc32-size --no-split $@
+	cp $@ output/o/
 clean:
 	 rm -rf $(OFILES)
-	 
+	 mkdir -p output/o/
+	 rm  -rf output/o/*
 size:
-	mkdir -p output/o/
-	rm  -rf output/o/*
+	cp $(CFILES) output/o/
 	cp $(LINK_DIR)libNRLIB_debug.a output/o/
 	cd output/o/;xc32-ar x libNRLIB_debug.a
 	sh size.sh
