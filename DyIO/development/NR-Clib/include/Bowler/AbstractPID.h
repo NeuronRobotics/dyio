@@ -199,6 +199,8 @@ void InitilizePidController(AbsPID  groups [],
  */
 void SetControllerMath( void (*math)(AbsPID * ,float ));
 
+int getNumberOfPidChannels();
+
 void SetPIDEnabled(BYTE index, BOOL enabled);
 
 BOOL isPidEnabled(BYTE i);
@@ -245,6 +247,8 @@ BOOL processPIDCrit(BowlerPacket * Packet);
 NAMESPACE_LIST * getBcsPidNamespace();
 
 AbsPID * getPidGroupDataTable();
+PD_VEL  * getPidVelocityDataTable();
+void pushAllPIDPositions(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
 
 void SetPIDCalibrateionState(int group, PidCalibrationType state);
 
@@ -253,5 +257,16 @@ PidCalibrationType GetPIDCalibrateionState(int group);
 int getUpperPidHistoresis(int group);
 int getLowerPidHistoresis(int group);
 int getPidStop(int group);
+
+float getMs();
+
+void updatePidAsync();
+void pidReset(BYTE chan,INT32 val);
+float pidResetNoStop(BYTE chan,INT32 val);
+void pushAllPIDPositions(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
+
+CAL_STATE pidHysterisis(int group);
+
+void OnPidConfigure(int v);
 
 #endif /* ABSTRACTPID_H_ */
