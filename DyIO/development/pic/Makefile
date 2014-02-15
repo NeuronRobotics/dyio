@@ -46,13 +46,14 @@ buildSpecificClean:
 
 %.o: %.c
 	$(CCP) -c $< -o $@
-	cp $@ output/o/
 clean:
 	 rm -rf $(OFILES)
 	 mkdir -p output/o/
 	 rm  -rf output/o/*
 size:
-	cp $(CFILES) output/o/
+	mkdir -p output/o/
+	rm  -rf output/o/*
+	cp $(OFILES) output/o/
 	cp $(LINK_DIR)libNRLIB_debug.a output/o/
 	cd output/o/;xc32-ar x libNRLIB_debug.a
 	sh size.sh
