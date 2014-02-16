@@ -65,9 +65,11 @@ clean:
 	make -C avr clean
 	sudo rm $(PIC_COMPILER)*
 setup:
+	sudo rm $(PIC_COMPILER)*
 	sudo apt-get install -y --force-yes avr-libc gcc-avr lib32z1 lib32ncurses5 lib32bz2-1.0 git build-essential
-	wget http://ww1.microchip.com/downloads/en/DeviceDoc/$(PIC_COMPILER).zip
-	unzip $(PIC_COMPILER).zip
+	#wget http://ww1.microchip.com/downloads/en/DeviceDoc/$(PIC_COMPILER).zip
+	#unzip $(PIC_COMPILER).zip
+	wget https://nr-sdk.googlecode.com/svn/trunk/firmware/tools/$(PIC_COMPILER)-installer.run
 	sudo chmod +x $(PIC_COMPILER)-installer.run
 	sudo ./$(PIC_COMPILER)-installer.run
 	
