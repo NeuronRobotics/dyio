@@ -12,7 +12,7 @@
 #define StartStorePhysical			0x1D01EFFF
 #define EndStorePhysical			0x1D01FFFF
 
-#define StartStoreVirtual			0x9D009000
+#define StartStoreVirtual			0x9D01EFFF
 
 #define LOCKBYTE					37
 
