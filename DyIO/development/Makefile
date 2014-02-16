@@ -67,6 +67,8 @@ clean:
 	make -C pic clean
 	make -C avr clean
 	sudo rm $(PIC_COMPILER)*
+	
+	
 setup:
 	sudo rm -rf $(PIC_COMPILER)*
 	#64 bit
