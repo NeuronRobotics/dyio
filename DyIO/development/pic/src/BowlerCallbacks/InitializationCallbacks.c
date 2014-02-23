@@ -19,6 +19,7 @@ extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 
 void hardwareInit(){
 	StartCritical();
+	println_I("Getting MAC from flash");
 	FlashGetMac(MyMAC.v);
 	char macStr[13];
 	int j=0,i=0;

@@ -136,7 +136,7 @@ BOOL configAdvancedAsync(BowlerPacket * Packet){
 
 
 void startAdvancedAsyncDefault(BYTE pin){
-	//println_I("Starting advanced async on channel: ");p_int_I(pin);
+	println_I("Starting advanced async on channel: ");p_int_I(pin);
 	getBcsIoDataTable()[pin].PIN.asyncDataCurrentVal=1;
 	getBcsIoDataTable()[pin].PIN.asyncDataPreviousVal=1;
 	getBcsIoDataTable()[pin].PIN.asyncDataTime.MsTime=getMs();
@@ -157,10 +157,14 @@ void startAdvancedAsyncDefault(BYTE pin){
 		getBcsIoDataTable()[pin].PIN.asyncDatadeadBandval=10;
 		break;
 	}
-	//println_I("Async Type set to: ");printAsyncType(getBcsIoDataTable()[pin].PIN.asyncDataType);
-	//print_I(" on pin# ");p_int_I(pin);print_I(" Pointer ");//p_int_I(&getBcsIoDataTable()[pin].PIN.asyncDataTime);
-	RunEvery(&getBcsIoDataTable()[pin].PIN.asyncDataTime);
-	//println_I("Async OK");
+	RunEveryData timer = getBcsIoDataTable()[pin].PIN.asyncDataTime;
+//	println_I("Async Type set to: ");printAsyncType(getBcsIoDataTable()[pin].PIN.asyncDataType);
+//	print_I(" on pin# ");p_int_I(pin);
+//	print_I(" Pointer ");p_int_I(&getBcsIoDataTable()[pin].PIN.asyncDataTime);
+//	print_I(" Data ");p_int_I(timer.MsTime);
+//	print_I(" Data ");p_int_I(timer.setPoint);
+	RunEvery(&timer);
+	println_I("Async OK");
 }
 
 
@@ -195,11 +199,11 @@ BOOL pushAsyncReady( BYTE pin){
 	INT32 db;
 	//int i=pin;
 	EndCritical();
-	RunEveryData * tRef=&getBcsIoDataTable()[pin].PIN.asyncDataTime;
-	println_I("Checking timer \nMsTime: ");p_fl_I(tRef->MsTime);
-	print_I(" \nSetpoint: ");p_fl_I(tRef->setPoint);
+	RunEveryData  tRef=getBcsIoDataTable()[pin].PIN.asyncDataTime;
+	println_I("Checking timer \nMsTime: ");p_fl_I(tRef.MsTime);
+	print_I(" \nSetpoint: ");p_fl_I(tRef.setPoint);
 	print_I(" \nCurrentTime: ");p_fl_I(getMs());
-	float timeout = RunEvery(tRef);
+	float timeout = RunEvery(&tRef);
 	print_I(" \nTimeout: ");p_fl_I(timeout);
 	if(timeout !=0){
 		println_I("Time to do something");
