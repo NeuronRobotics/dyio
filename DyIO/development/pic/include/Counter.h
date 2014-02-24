@@ -42,15 +42,12 @@ typedef struct __attribute__((__packed__)) _COUNTER
 	INTERPOLATE_DATA interpolate;
 } COUNTER;
 
-typedef union __attribute__((__packed__)) _COUNTER_PINS
+typedef struct __attribute__((__packed__)) _COUNTER_PINS
 {
-	struct{
+
 		BYTE INT;
 		BYTE DIR;
 		BYTE HOME;
-	};
-	BYTE b[3];
-
 } COUNTER_PINS;
 
 void runCounterGroup(BYTE group);

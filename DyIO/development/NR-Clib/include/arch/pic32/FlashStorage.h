@@ -9,20 +9,16 @@
 #define FLASHSTORAGE_H_
 
 #define FLASH_PAGE_SIZE 				0x1000
-#define StartStorePhysical			0x1D01EFFF
-#define EndStorePhysical			0x1D01FFFF
+#define StartStorePhysical		    0x1D009000
+//#define StartStorePhysical	    0x1D01F000
+#define StartStoreVirtual			(StartStorePhysical+0x80000000)
 
-#define StartStoreVirtual			0x9D009000
 
 #define LOCKBYTE					37
 
 #define FLASHSTORE					20
 
-typedef union __attribute__((__packed__)) _FLASH
-{
-	UINT32 stream[FLASHSTORE];
-	struct
-	{
+typedef struct _dataPayload{
 		BYTE   mac [6];
 		char   name[17];
 		BYTE   lock;
@@ -30,9 +26,12 @@ typedef union __attribute__((__packed__)) _FLASH
 		BYTE   fwSet;
 		BYTE   bl[3];
 		BYTE   fw[3];
-		BYTE   pad [(FLASHSTORE*4)-6-17-1-1-1-3-3];
-	} data;
+	}dataPayload;
 
+typedef union __attribute__((__packed__)) _FLASH
+{
+	UINT32 stream[sizeof(dataPayload)];
+	dataPayload data;
 } FLASH_STORE;
 
 BYTE FlashSetMac(BYTE * mac);

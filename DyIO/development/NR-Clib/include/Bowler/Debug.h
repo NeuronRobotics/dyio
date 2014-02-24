@@ -18,7 +18,7 @@
 
 #ifndef DEBUG_H_
 #define DEBUG_H_
-
+#include "Defines.h"
 typedef enum _Print_Level{
 	NO_PRINT=0,
 	ERROR_PRINT=1,

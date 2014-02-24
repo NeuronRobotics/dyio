@@ -44,7 +44,7 @@
 	#define USE_USB
 
 	WORD Get_HAL_Byte_Count();
-
+void disableSerialComs(BOOL state);
 #define Bowler_HAL_Init Pic32_Bowler_HAL_Init
 void SetPICUARTFifo(BYTE_FIFO_STORAGE * s);
 void SendPacketUSB(BYTE * packet,WORD size);

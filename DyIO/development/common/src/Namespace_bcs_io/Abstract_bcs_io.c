@@ -30,9 +30,7 @@ void InitilizeBcsIo(int numPins,
 	if(numPins < 1
 	){
 		setPrintLevelErrorPrint();
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
 		println_E("Failed IO sanity check: failed initialization channels #");p_int_E(numPins);
-#endif
 		//println_E("Failed IO sanity check: failed initialization channels #");p_int_E(numPins);
 		//FAIL sanity check
 		while(1);

@@ -15,23 +15,24 @@ BOOL bcsIoAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(Bo
 
 	int i;
 	BOOL update=FALSE;
-	println_W("PIC Async ");print_W(ioNSName);
+	println_W("Async ");print_W(ioNSName);
 	for(i=0;i<GetNumberOfIOChannels();i++){
-		println_W("Checking ");p_int_W(i);
+		//println_W("Checking ");p_int_W(i);
 		if(pushAsyncReady(i)){
 			update=TRUE;
 		}
 	}
 	if(update){
+		println_I(__FILE__);println_I("Async: ");
 		populateGACV(Packet);
 		Packet->use.head.Method=BOWLER_ASYN;
 		FixPacket(Packet);
-
+		printBowlerPacketDEBUG(Packet,INFO_PRINT);
 		if(pidAsyncCallbackPtr!=NULL){
 			pidAsyncCallbackPtr(Packet);
 		}
 	}
-
+	println_W("Done ");print_W(ioNSName);
     return FALSE;
 }
 

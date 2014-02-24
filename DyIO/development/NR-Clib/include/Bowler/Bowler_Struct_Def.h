@@ -19,16 +19,14 @@
 #ifndef BOWLERSTRUCTDEF_H_
 #define BOWLERSTRUCTDEF_H_
 
-	typedef union _RPC_VALUE {
-		  unsigned char ASCII[4];
-		  unsigned long int		   value;
-	}RPC_VALUE;
+//	typedef union _RPC_VALUE {
+//		  unsigned char ASCII[4];
+//		  unsigned long int		   value;
+//	}RPC_VALUE;
 #if !defined(__STACK_TSK_H) && !defined(_SOCKET_H_)
-	typedef union _MAC_ADDR
+	typedef struct _MAC_ADDR
 	{
-		struct{
-			unsigned char v[6];
-		};
+		unsigned char v[6];
 	} MAC_ADDR;
 #endif
 	typedef struct __attribute__((__packed__)) _HEADER

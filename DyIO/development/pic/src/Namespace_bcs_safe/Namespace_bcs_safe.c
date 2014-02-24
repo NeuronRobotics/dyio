@@ -13,7 +13,7 @@ const char safeNSName[] = "bcs.safe.*;0.3;;";
 
 
 BOOL bcsSafeAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
-
+	println_W("Async ");print_W(safeNSName);
 
     return FALSE;
 }

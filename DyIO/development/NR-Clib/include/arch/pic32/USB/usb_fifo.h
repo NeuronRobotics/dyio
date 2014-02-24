@@ -18,7 +18,7 @@
 
 #define USB_BUFFER_SIZE BOWLER_PacketSize
 
-BYTE_FIFO_STORAGE  * GetPICUSBFifo(void);
+//BYTE_FIFO_STORAGE  * GetPICUSBFifo(void);
 
 BOOL GotUSBData(void);
 

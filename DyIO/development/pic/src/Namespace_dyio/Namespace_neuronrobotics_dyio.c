@@ -36,7 +36,7 @@ BOOL getHeartBeatLock(){
 
 
 BOOL neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
-
+	println_W("Async ");print_W(dyioNSName);
 	buttonCheck(7);
 
 	int i;
@@ -84,7 +84,7 @@ BOOL neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCa
 	SyncDataTable();
 
 	SetColor((isLocked() )?1:0,(isActive() && !isLocked())?1:0,1);
-
+	println_W("Done ");print_W(dyioNSName);
     return FALSE;
 }
 

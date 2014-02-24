@@ -29,7 +29,7 @@ update:
 	if (test -d $(NRCLIB_LOCATION)/lib/AVR); 			then rsync -avz --exclude=.svn* --exclude=*.r*   	$(NRCLIB_LOCATION)/lib/AVR/* 							NR-Clib/lib/AVR/;				fi
 	if (test -d $(NRCLIB_LOCATION)/lib/PIC32);			then rsync -avz --exclude=.svn* --exclude=*.r*   	$(NRCLIB_LOCATION)/lib/PIC32/32MX440F128H/*				NR-Clib/lib/PIC32/32MX440F128H/;				fi
 	if (test -d $(NRCLIB_LOCATION)/toolchain/); 		then rsync -avz --exclude=.svn*  					$(NRCLIB_LOCATION)/toolchain/* 							NR-Clib/toolchain;		fi
-	#if (test -d $(NRCLIB_LOCATION)/toolchain/); 		then rsync -avz --exclude=.svn*  					$(NRCLIB_LOCATION)/toolchain/pic32/bootloader-app/*.ld	pic/;		fi
+	if (test -d $(NRCLIB_LOCATION)/toolchain/); 		then rsync -avz --exclude=.svn*  					$(NRCLIB_LOCATION)/toolchain/pic32/bootloader-app/*.ld	pic/;		fi
 	
 	echo Done Updating...
 	

@@ -114,15 +114,15 @@ typedef struct _AbsPID
             BOOL calibrated;
             CAL_STATE state;
             int dummy;
-            RunEveryData timer;
+            //RunEveryData timer;
         }calibration;
         struct{
 
-            RunEveryData timer;
+            //RunEveryData timer;
             float homingStallBound;
             float previousValue;
         }homing;
-        
+        RunEveryData timer;
 } AbsPID;
 
 typedef struct _DYIO_PID
@@ -185,7 +185,7 @@ BOOL ProcessPIDPacket(BowlerPacket * Packet);
  * @param resetPositionPtr function pointer to the re-set position function
  * @param pidAsyncCallbackPtr function pointer to push an async value
  */
-void InitilizePidController(AbsPID  groups [],
+void InitilizePidController(AbsPID * groups ,
                             PD_VEL * vel,
                             int numberOfGroups,
                             float (*getPositionPtr)(int),

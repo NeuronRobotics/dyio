@@ -35,8 +35,9 @@ void hardwareInit(){
 #else
 	char * dev = "DyIO v.3";
 #endif
-
+	Pic32_Bowler_HAL_Init();
 	usb_CDC_Serial_Init(dev,macStr,0x04D8,0x3742);
+
 	mInitSwitch();
 
 	for (i=0;i<6;i++){

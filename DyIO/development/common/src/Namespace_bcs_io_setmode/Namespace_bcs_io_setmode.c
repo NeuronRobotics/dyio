@@ -7,13 +7,13 @@
 #include "Bowler/Bowler.h"
 #include "Namespace/Namespace_bcs_io_setmode.h"
 
-const char setModeNSName[] = "bcs.io.setmode.*;0.3;;";
+char setModeNSName[] = "bcs.io.setmode.*;0.3;;";
 
 
 
 BOOL bcsIoSetmodeAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
 	//no async
-
+	println_W("No Async ");print_W(setModeNSName);
     return FALSE;
 }
 

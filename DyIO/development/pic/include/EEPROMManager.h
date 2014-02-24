@@ -31,14 +31,13 @@ typedef struct  _pid_vales
 	};
 } pid_vales;
 
-typedef union _EESTORAGE
+typedef struct _EESTORAGE
 {
-	struct
-	{
+
 		BYTE lockByte;
 		pid_vales pid[NUM_PID_GROUPS];
 		BYTE end;
-	};
+
 } EESTORAGE;
 
 void readPPMLink(BYTE * vals);
