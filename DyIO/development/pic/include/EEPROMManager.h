@@ -13,21 +13,26 @@
 #define DATASTART 22
 #define DATAVALID 37
 #include "Bowler/AbstractPID.h"
+struct _local_pid{
+        unsigned 					:5;
+        unsigned		Async		:1;
+        unsigned		Polarity	:1;
+        unsigned		Enabled 	:1;
+        unsigned 		char inputMode;
+        unsigned 		char inputChannel;
+        unsigned 		char outputMode;
+        unsigned 		char outputChannel;
+        struct{
+            double P;
+            double I;
+            double D;
+        }K;
+};
 typedef struct  _pid_vales
 {
 	union{
-		struct{
-			unsigned 					:5;
-			unsigned		Async		:1;
-			unsigned		Polarity	:1;
-			unsigned		Enabled 	:1;
-			unsigned 		char inputMode;
-			unsigned 		char inputChannel;
-			unsigned 		char outputMode;
-			unsigned 		char outputChannel;
-			AdsPID_ConFIG 	K;
-		};
-		BYTE stream[5+sizeof(AdsPID_ConFIG )];
+		struct _local_pid data;
+		BYTE stream[sizeof(struct _local_pid)];
 	};
 } pid_vales;
 
@@ -47,8 +52,8 @@ void setEEBrownOutDetect(BOOL b);
 BOOL getEEBrownOutDetect();
 
 void LoadEEstore(void);
-void WritePIDvalues(AbsPID * pid, DYIO_PID * dy);
-void LoadPIDvals(AbsPID * pid, DYIO_PID * dy);
+void WritePIDvalues(AbsPID * pid, DYIO_PID * dy,int group);
+void LoadPIDvals(AbsPID * pid, DYIO_PID * dy,int group);
 
 BOOL GetName(char * name);
 void SetName(char * name);

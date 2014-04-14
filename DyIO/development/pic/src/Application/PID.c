@@ -72,20 +72,19 @@ void InitPID(void){
 		dyPid[i].inputMode=0;
 		dyPid[i].outputMode=0;
 
-		pidGroups[i].Enabled=FALSE;
-		pidGroups[i].channel = i;
+		pidGroups[i].config.Enabled=FALSE;
 		vel[i].enabled=FALSE;
-		vel[i].K.P=.1;
+		pidGroups[i].config.V.P=.1;
 		limits[i].type=NO_LIMIT;
 
-		LoadPIDvals(&pidGroups[i],&dyPid[i]);
+		LoadPIDvals(&pidGroups[i],&dyPid[i],i);
 		if(		dyPid[i].inputChannel==DYPID_NON_USED ||
 				dyPid[i].outputChannel==DYPID_NON_USED  ||
 				dyPid[i].outputChannel==dyPid[i].inputChannel)
 		{
 			dyPid[i].inputChannel=DYPID_NON_USED;
 			dyPid[i].outputChannel=DYPID_NON_USED;
-			WritePIDvalues(&pidGroups[i],&dyPid[i]);
+			WritePIDvalues(&pidGroups[i],&dyPid[i],i);
 		}
 		force[i].MsTime=0;
 		force[i].setPoint=200;
@@ -103,7 +102,7 @@ void InitPID(void){
 
 	for (i=0;i<NUM_PID_GROUPS;i++){
 		printPIDvals(i);
-		if(pidGroups[i].Enabled){
+		if(pidGroups[i].config.Enabled){
 			initPIDChans(i);
 			println_I("Resetting PID channel from init");
 			int value = 0;
@@ -134,7 +133,7 @@ BYTE ConfigDyPID(BowlerPacket * Packet){
 
 	initPIDChans(chan);
 
-	WritePIDvalues(&pidGroups[chan],&dyPid[chan]);
+	WritePIDvalues(&pidGroups[chan],&dyPid[chan],chan);
 	return TRUE;
 }
 
@@ -151,7 +150,7 @@ BYTE GetPIDGroup(BYTE channel){
 	case IS_DI:
 		for(i=0;i<NUM_PID_GROUPS;i++){
 			if(dyPid[i].inputChannel == channel){
-				if(pidGroups[i].Enabled || vel[i].enabled )
+				if(pidGroups[i].config.Enabled || vel[i].enabled )
 					return i;
 			}
 		}
@@ -163,7 +162,7 @@ BYTE GetPIDGroup(BYTE channel){
 	case IS_DO:
 		for(i=0;i<NUM_PID_GROUPS;i++){
 			if(dyPid[i].outputChannel == channel){
-				if(pidGroups[i].Enabled || vel[i].enabled)
+				if(pidGroups[i].config.Enabled || vel[i].enabled)
 					return i;
 			}
 		}
@@ -175,7 +174,7 @@ BYTE GetPIDGroup(BYTE channel){
 }
 
 void onPidConfigureMine(int group){
-	WritePIDvalues(&pidGroups[group],&dyPid[group]);
+	WritePIDvalues(&pidGroups[group],&dyPid[group],group);
 }
 
 void trigerPIDLimit(BYTE chan,PidLimitType type,INT32  tick){
@@ -205,7 +204,7 @@ int resetPositionMine(int group, int current){
 
 float getPositionMine(int group){
 	if(dyPid[group].inputChannel==DYPID_NON_USED||
-			((pidGroups[group].Enabled == FALSE) && (vel[group].enabled==FALSE)))
+			((pidGroups[group].config.Enabled == FALSE) && (vel[group].enabled==FALSE)))
 		return 0;
 
 	LONG pos = 0;
@@ -229,7 +228,7 @@ float getPositionMine(int group){
 void setOutputMine(int group, float v){
 
 	if( dyPid[group].outputChannel==DYPID_NON_USED||
-			((pidGroups[group].Enabled == FALSE) && (vel[group].enabled==FALSE)))
+			((pidGroups[group].config.Enabled == FALSE) && (vel[group].enabled==FALSE)))
 		return;
 	Print_Level l = getPrintLevel();
 	setPrintLevelNoPrint();

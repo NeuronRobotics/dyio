@@ -137,7 +137,7 @@
 			#pragma config FPLLMUL = MUL_20, FPLLIDIV = DIV_2, FPLLODIV = DIV_1, FWDTEN = OFF
 			//#pragma config POSCMOD = OFF, FNOSC = FRCPLL, FPBDIV = DIV_1
 			#pragma config POSCMOD = HS, FNOSC = PRIPLL, FPBDIV = DIV_1
-			#pragma config FCKSM = CSDCMD, IESO = ON, PWP = OFF, DEBUG = OFF
+			#pragma config FCKSM = CSDCMD, IESO = ON, PWP = OFF
 			#pragma config FSOSCEN = OFF, CP = OFF, BWP = OFF, ICESEL = ICS_PGx1
 		#elif defined( __32MX360F512L__)
 			#pragma config FPLLMUL = MUL_20, FPLLIDIV = DIV_2, FPLLODIV = DIV_1, FWDTEN = OFF

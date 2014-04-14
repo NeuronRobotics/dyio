@@ -26,41 +26,41 @@ void LoadEEstore(void){
 	}
 	println_I("Done loading eeprom data");
 }
-void LoadPIDvals(AbsPID * pid, DYIO_PID * dy){
+void LoadPIDvals(AbsPID * pid, DYIO_PID * dy,int group){
 	LoadEEstore();
-	BYTE i = pid->channel;
-	if(pidEEPRomVal[i].outputChannel==pidEEPRomVal[i].inputChannel)
+	BYTE i = group;
+	if(pidEEPRomVal[i].data.outputChannel==pidEEPRomVal[i].data.inputChannel)
 		return;
-	if(pidEEPRomVal[i].outputChannel>=GetNumberOfIOChannels() ||pidEEPRomVal[i].inputChannel>=GetNumberOfIOChannels() )
+	if(pidEEPRomVal[i].data.outputChannel>=GetNumberOfIOChannels() ||pidEEPRomVal[i].data.inputChannel>=GetNumberOfIOChannels() )
 		return;
-	if(pidEEPRomVal[i].outputMode==pidEEPRomVal[i].inputMode)
+	if(pidEEPRomVal[i].data.outputMode==pidEEPRomVal[i].data.inputMode)
 		return;
 	println_I("Using values for chan: ");p_int_I(i);
-	pid->Enabled=pidEEPRomVal[i].Enabled;
-	pid->Polarity=pidEEPRomVal[i].Polarity;
-	//pidChans->Async=pidEEPRomVal[i].Async;
-	dy->inputMode=pidEEPRomVal[i].inputMode;
-	dy->outputMode=pidEEPRomVal[i].outputMode;
-	dy->outputChannel=pidEEPRomVal[i].outputChannel;
-	dy->inputChannel=pidEEPRomVal[i].inputChannel;
+	pid->config.Enabled=pidEEPRomVal[i].data.Enabled;
+	pid->config.Polarity=pidEEPRomVal[i].data.Polarity;
+	//pidChans->Async=pidEEPRomVal[i].data.Async;
+	dy->inputMode=pidEEPRomVal[i].data.inputMode;
+	dy->outputMode=pidEEPRomVal[i].data.outputMode;
+	dy->outputChannel=pidEEPRomVal[i].data.outputChannel;
+	dy->inputChannel=pidEEPRomVal[i].data.inputChannel;
 
-	pid->K.P=pidEEPRomVal[i].K.P;
-	pid->K.I=pidEEPRomVal[i].K.I;
-	pid->K.D=pidEEPRomVal[i].K.D;
+	pid->config.K.P=pidEEPRomVal[i].data.K.P;
+	pid->config.K.I=pidEEPRomVal[i].data.K.I;
+	pid->config.K.D=pidEEPRomVal[i].data.K.D;
 }
 
-void WritePIDvalues(AbsPID * pid, DYIO_PID * dy){
-	BYTE i = pid->channel;
-	pidEEPRomVal[i].Enabled= pid->Enabled;
-	pidEEPRomVal[i].Polarity=pid->Polarity;
-	pidEEPRomVal[i].Async=pid->Async;
-	pidEEPRomVal[i].inputMode=dy->inputMode;
-	pidEEPRomVal[i].outputMode=dy->outputMode;
-	pidEEPRomVal[i].inputChannel=dy->inputChannel;
-	pidEEPRomVal[i].outputChannel=dy->outputChannel;
-	pidEEPRomVal[i].K.P=pid->K.P;
-	pidEEPRomVal[i].K.I=pid->K.I;
-	pidEEPRomVal[i].K.D=pid->K.D;
+void WritePIDvalues(AbsPID * pid, DYIO_PID * dy,int group){
+	BYTE i = group;
+	pidEEPRomVal[i].data.Enabled= pid->config.Enabled;
+	pidEEPRomVal[i].data.Polarity=pid->config.Polarity;
+	pidEEPRomVal[i].data.Async=pid->config.Async;
+	pidEEPRomVal[i].data.inputMode=dy->inputMode;
+	pidEEPRomVal[i].data.outputMode=dy->outputMode;
+	pidEEPRomVal[i].data.inputChannel=dy->inputChannel;
+	pidEEPRomVal[i].data.outputChannel=dy->outputChannel;
+	pidEEPRomVal[i].data.K.P=pid->config.K.P;
+	pidEEPRomVal[i].data.K.I=pid->config.K.I;
+	pidEEPRomVal[i].data.K.D=pid->config.K.D;
 	SetEEPRomData((pidValSize*i),(pidValSize*i)+pidValSize,pidEEPRomVal[i].stream);
 }
 void writePPMLink(BYTE * vals){

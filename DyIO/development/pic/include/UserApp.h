@@ -34,7 +34,7 @@
 #include "EEPROMManager.h"
 #include "SPI.h"
 #include "AVRInterface.h"
-#include "FlashStorage.h"
+#include "arch/pic32/FlashStorage.h"
 #include "SerialPassThrough.h"
 #include "PPMReader.h"
 #include "CartesianController.h"
