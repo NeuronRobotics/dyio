@@ -17,7 +17,7 @@ BOOL isInit=FALSE;
 
 void initAdvancedAsync(){
 	if(isInit == TRUE){
-		println_W("All ready initialized advanced async");
+		//println_W("All ready initialized advanced async");
 		return;
 	}
 	println_W("Initializing advanced async");

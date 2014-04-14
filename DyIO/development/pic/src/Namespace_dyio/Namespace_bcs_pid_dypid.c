@@ -11,17 +11,17 @@ RunEveryData pid={0,30};
 RunEveryData vel={0,100};
 
 BOOL bcsPidDypidAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
-	println_W("Async ");print_W(dypidNSName);
+	//println_W("Async ");print_W(dypidNSName);
 	if (RunEvery(&pid)>0){
 		RunPIDControl();
 	}
-	println_I("Run Velocity ");
+	//println_I("Run Velocity ");
 #if defined(USE_VELOCITY)
 	if (RunEvery(&vel)>0){
 		RunVel();
 	}
 #endif
-	println_W("Done ");print_W(dypidNSName);
+	//println_W("Done ");print_W(dypidNSName);
     return FALSE;
 }
 
