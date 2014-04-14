@@ -127,7 +127,7 @@ void UserInit(void){
 
 
 	println_I("###Starting PIC In Debug Mode###\n");// All printfDEBUG functions do not need to be removed from code if debug is disabled
-	DelayMs(1000);
+	//DelayMs(1000);
 	//setPrintLevelErrorPrint();
 	println_E("Error level printing");
 	println_W("Warning level printing");
