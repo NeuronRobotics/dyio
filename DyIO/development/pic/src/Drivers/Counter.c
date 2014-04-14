@@ -18,7 +18,7 @@ COUNTER Counter[NUM_COUNTER_GROUPS];
 /**
  * This is the mapping between a counter group and its associated DyIO channels
  */
-COUNTER_PINS pinmap[]={ {{17,16,3}},{{19,18,2}},{{21,20,1}},{{23,22,0}}  };
+COUNTER_PINS pinmap[]={ {17,16,3},{19,18,2},{21,20,1},{23,22,0}  };
 
 void RunCounter(void){
 	BYTE iIndex;
