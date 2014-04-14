@@ -135,7 +135,6 @@
 			#pragma config FSOSCEN  = OFF           // Secondary Oscillator Enable (KLO was off)
 		*/
 			#pragma config FPLLMUL = MUL_20, FPLLIDIV = DIV_2, FPLLODIV = DIV_1, FWDTEN = OFF
-			//#pragma config POSCMOD = OFF, FNOSC = FRCPLL, FPBDIV = DIV_1
 			#pragma config POSCMOD = HS, FNOSC = PRIPLL, FPBDIV = DIV_1
 			#pragma config FCKSM = CSDCMD, IESO = ON, PWP = OFF
 			#pragma config FSOSCEN = OFF, CP = OFF, BWP = OFF, ICESEL = ICS_PGx1
@@ -234,14 +233,14 @@
 #endif
 
 #if !defined(RED_LED_TRIS)
-	#define RED_LED_TRIS		(_TRISB3)	//
-	#define RED_LED_IO			(_RB3)
+	#define RED_LED_TRIS		(_TRISD10)	//
+	#define RED_LED_IO			(_RD10)
 
-	#define GREEN_LED_TRIS		(_TRISB2)	//
-	#define GREEN_LED_IO		(_RB2)
+	#define GREEN_LED_TRIS		(_TRISD11)	//
+	#define GREEN_LED_IO		(_RD11)
 
-	#define BLUE_LED_TRIS		(_TRISB1)	//
-	#define BLUE_LED_IO			(_RB1)
+	#define BLUE_LED_TRIS		(_TRISD0)	//
+	#define BLUE_LED_IO			(_RD0)
 	#define startLED()			 AD1CHS = 0x0000;AD1PCFG = 0xFFFF;AD1CON1 = 0x0000;AD1CON2 = 0x0000;AD1CON3 = 0x0000;AD1CSSL = 0x0000;PORTSetPinsDigitalOut(IOPORT_B,BIT_1|BIT_2|BIT_3)
 	#define SET_RED(a)			(a==0?PORTSetBits(IOPORT_B,BIT_3):PORTClearBits(IOPORT_B,BIT_3))
 	#define SET_GREEN(a)		(a==0?PORTSetBits(IOPORT_B,BIT_2):PORTClearBits(IOPORT_B,BIT_2))
@@ -285,6 +284,10 @@
 	#define ConfigUARTRXTristate()	UART1RX_TRIS=INPUT;UART2RX_TRIS=INPUT;
 	#define InitBankLEDs()
 	//#define InitDS_IO()
+
+#define configsw _RF5
+#define configswtris _TRISF5
+
 
 #endif
 

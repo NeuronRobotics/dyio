@@ -9,10 +9,9 @@
 #define FLASHSTORAGE_H_
 
 #define FLASH_PAGE_SIZE 				0x1000
-#define StartStorePhysical		    0x1D009000
-//#define StartStorePhysical	    0x1D01F000
-#define StartStoreVirtual			(StartStorePhysical+0x80000000)
-
+#define BootloaderStartStorePhysical        0x1D009000//End of the bootloader page
+#define VirtualAddress                      (0x80000000)
+#define DefaultStartStorePhysical            0x1D01F000//end of the chip
 
 #define LOCKBYTE					37
 
@@ -43,5 +42,7 @@ BYTE FlashSetBlRev(BYTE * mac);
 void FlashGetBlRev(BYTE * mac);
 BYTE FlashSetFwRev(BYTE * mac);
 void FlashGetFwRev(BYTE * mac);
+
+void FlashSwitchMemoryToBootloader();
 
 #endif /* FLASHSTORAGE_H_ */
