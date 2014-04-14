@@ -6,7 +6,7 @@
  */
 #include "UserApp.h"
 
-const char dypidNSName[] = "bcs.pid.dypid.*;0.3;;";
+char dypidNSName[] = "bcs.pid.dypid.*;0.3;;";
 RunEveryData pid={0,30};
 RunEveryData vel={0,100};
 

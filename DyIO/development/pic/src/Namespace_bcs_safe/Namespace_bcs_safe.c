@@ -9,7 +9,7 @@ int getHeartBeatTime();
 BOOL getHeartBeatLock();
 void setHeartBeatState( BOOL hb, int time);
 
-const char safeNSName[] = "bcs.safe.*;0.3;;";
+char safeNSName[] = "bcs.safe.*;0.3;;";
 
 
 BOOL bcsSafeAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
