@@ -38,25 +38,21 @@ BOOL bcsIoAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(Bo
 
 // GET structures
 static RPC_LIST bcsIo_gchm_g={	BOWLER_GET,// Method
-		(const char*)"gchm",//RPC as string
+                                (const char*)"gchm",//RPC as string
                                 &GetChannelModeFromPacket,//function pointer to a packet parsing function
-                                ((const char [1]){
-													0}),// Calling arguments
-								BOWLER_POST,// response method
-								( (const char [1]){
-													0}),// Response arguments
-								NULL //Termination
+                                ((const char [1]){0}),// Calling arguments
+                                BOWLER_POST,// response method
+                                ( (const char [1]){0}),// Response arguments
+                                NULL //Termination
 };
 
 static RPC_LIST bcsIo_gacm_g={	BOWLER_GET,// Method
-		(const char*) "gacm",//RPC as string
+                                (const char*) "gacm",//RPC as string
                                 &GetAllChannelModeFromPacket,//function pointer to a packet parsing function
-                                ((const char [1]){
-													0}),// Calling arguments
-								BOWLER_POST,// response method
-								( (const char [1]){
-													0}),// Response arguments
-								NULL //Termination
+                                ((const char [1]){0}),// Calling arguments
+                                BOWLER_POST,// response method
+                                ( (const char [1]){0}),// Response arguments
+                                NULL //Termination
 };
 
 static RPC_LIST bcsIo_gchv_g={	BOWLER_GET,// Method
