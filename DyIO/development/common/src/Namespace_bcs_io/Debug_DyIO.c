@@ -37,7 +37,7 @@ int mystrlen(const char * s){
 
 //char * unknown = "UNKNOWN";
 void printMode(BYTE mode, Print_Level l){
-	print(" Mode 0x",l);prHEX8(mode,l);
+	print_nnl(" Mode 0x",l);prHEX8(mode,l);
 	return;
 //	int i=0;
 //	if(maxNumCharsInModes==0){

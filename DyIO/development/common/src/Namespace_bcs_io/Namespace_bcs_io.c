@@ -36,6 +36,8 @@ BOOL bcsIoAsyncEventCallback(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(Bo
     return FALSE;
 }
 
+
+
 // GET structures
 static RPC_LIST bcsIo_gchm_g={	BOWLER_GET,// Method
                                 (const char*)"gchm",//RPC as string
@@ -56,27 +58,23 @@ static RPC_LIST bcsIo_gacm_g={	BOWLER_GET,// Method
 };
 
 static RPC_LIST bcsIo_gchv_g={	BOWLER_GET,// Method
-		(const char*) "gchv",//RPC as string
+                                (const char*) "gchv",//RPC as string
                                 &GetChanelValueFromPacket,//function pointer to a packet parsing function
-                                ((const char [1]){
-													0}),// Calling arguments
-								BOWLER_POST,// response method
-								( (const char [1]){
-													0}),// Response arguments
-								NULL //Termination
+                                ((const char [1]){0}),// Calling arguments
+                                BOWLER_POST,// response method
+                                ( (const char [1]){0}),// Response arguments
+                                NULL //Termination
 };
 static RPC_LIST bcsIo_gacv_g={	BOWLER_GET,// Method
-		(const char*) "gacv",//RPC as string
+                                (const char*) "gacv",//RPC as string
                                 &GetAllChanelValueFromPacket,//function pointer to a packet parsing function
-                                ((const char [1]){
-													0}),// Calling arguments
-								BOWLER_POST,// response method
-								( (const char [1]){
-													0}),// Response arguments
-								NULL //Termination
+                                ((const char [1]){0}),// Calling arguments
+                                BOWLER_POST,// response method
+                                ( (const char [1]){0}),// Response arguments
+                                NULL //Termination
 };
 static RPC_LIST bcsIo_asyn_g={	BOWLER_GET,// Method
-		(const char*) "asyn",//RPC as string
+                                (const char*) "asyn",//RPC as string
                                 &GetAsyncFromPacket,//function pointer to a packet parsing function
                                 ((const char [1]){
 													0}),// Calling arguments
