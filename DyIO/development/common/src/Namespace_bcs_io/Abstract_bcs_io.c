@@ -156,8 +156,9 @@ BOOL GetChannelModeFromPacket(BowlerPacket * Packet){
 BOOL GetAllChannelModeFromPacket(BowlerPacket * Packet){
 	int i;
 	Packet->use.head.Method=BOWLER_POST;
+        Packet->use.data[0]=GetNumberOfIOChannels();
 	for (i=0;i<GetNumberOfIOChannels();i++){
-		Packet->use.data[i]=GetChannelMode(i);
+		Packet->use.data[1+i]=GetChannelMode(i);
 	}
 	Packet->use.head.DataLegnth=4+GetNumberOfIOChannels();
 	FixPacket(Packet);
@@ -284,16 +285,10 @@ BOOL GetChanelValueFromPacket(BowlerPacket * Packet){
 		}else{
 			return FALSE;
 		}
-		if(isSingleByteMode(mode)){
-			set8bit(Packet,data, 1);
-			numValues=1;
-		}else if(isTwoByteMode(mode)){
-			set16bit(Packet,data, 1);
-			numValues=2;
-		}else{
-			set32bit(Packet,data, 1);
-			numValues=4;
-		}
+
+                set32bit(Packet,data, 1);
+                numValues=4;
+		
 
 	}
 	Packet->use.head.DataLegnth = 4+1+numValues;
