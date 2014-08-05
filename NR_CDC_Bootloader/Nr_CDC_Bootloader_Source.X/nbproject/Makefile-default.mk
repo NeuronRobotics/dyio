@@ -95,50 +95,50 @@ ${OBJECTDIR}/_ext/1360937237/led.o: ../src/led.c  nbproject/Makefile-${CND_CONF}
 	@${MKDIR} ${OBJECTDIR}/_ext/1360937237 
 	@${RM} ${OBJECTDIR}/_ext/1360937237/led.o.d 
 	@${RM} ${OBJECTDIR}/_ext/1360937237/led.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1360937237/led.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1360937237/led.o.d" -o ${OBJECTDIR}/_ext/1360937237/led.o ../src/led.c   
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1360937237/led.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../include" -I"../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include" -I"../../../c-bowler/firmware/library/NR-Clib/development/Platform/include" -MMD -MF "${OBJECTDIR}/_ext/1360937237/led.o.d" -o ${OBJECTDIR}/_ext/1360937237/led.o ../src/led.c    -DDYIO
 	
 ${OBJECTDIR}/_ext/1360937237/AVRInterface.o: ../src/AVRInterface.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/1360937237 
 	@${RM} ${OBJECTDIR}/_ext/1360937237/AVRInterface.o.d 
 	@${RM} ${OBJECTDIR}/_ext/1360937237/AVRInterface.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1360937237/AVRInterface.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1360937237/AVRInterface.o.d" -o ${OBJECTDIR}/_ext/1360937237/AVRInterface.o ../src/AVRInterface.c   
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1360937237/AVRInterface.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../include" -I"../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include" -I"../../../c-bowler/firmware/library/NR-Clib/development/Platform/include" -MMD -MF "${OBJECTDIR}/_ext/1360937237/AVRInterface.o.d" -o ${OBJECTDIR}/_ext/1360937237/AVRInterface.o ../src/AVRInterface.c    -DDYIO
 	
 ${OBJECTDIR}/_ext/1360937237/main.o: ../src/main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/1360937237 
 	@${RM} ${OBJECTDIR}/_ext/1360937237/main.o.d 
 	@${RM} ${OBJECTDIR}/_ext/1360937237/main.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1360937237/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1360937237/main.o.d" -o ${OBJECTDIR}/_ext/1360937237/main.o ../src/main.c   
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1360937237/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../include" -I"../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include" -I"../../../c-bowler/firmware/library/NR-Clib/development/Platform/include" -MMD -MF "${OBJECTDIR}/_ext/1360937237/main.o.d" -o ${OBJECTDIR}/_ext/1360937237/main.o ../src/main.c    -DDYIO
 	
 ${OBJECTDIR}/_ext/1360937237/flash.o: ../src/flash.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/1360937237 
 	@${RM} ${OBJECTDIR}/_ext/1360937237/flash.o.d 
 	@${RM} ${OBJECTDIR}/_ext/1360937237/flash.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1360937237/flash.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1360937237/flash.o.d" -o ${OBJECTDIR}/_ext/1360937237/flash.o ../src/flash.c   
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1360937237/flash.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1 -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../include" -I"../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include" -I"../../../c-bowler/firmware/library/NR-Clib/development/Platform/include" -MMD -MF "${OBJECTDIR}/_ext/1360937237/flash.o.d" -o ${OBJECTDIR}/_ext/1360937237/flash.o ../src/flash.c    -DDYIO
 	
 else
 ${OBJECTDIR}/_ext/1360937237/led.o: ../src/led.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/1360937237 
 	@${RM} ${OBJECTDIR}/_ext/1360937237/led.o.d 
 	@${RM} ${OBJECTDIR}/_ext/1360937237/led.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1360937237/led.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1360937237/led.o.d" -o ${OBJECTDIR}/_ext/1360937237/led.o ../src/led.c   
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1360937237/led.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../include" -I"../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include" -I"../../../c-bowler/firmware/library/NR-Clib/development/Platform/include" -MMD -MF "${OBJECTDIR}/_ext/1360937237/led.o.d" -o ${OBJECTDIR}/_ext/1360937237/led.o ../src/led.c    -DDYIO
 	
 ${OBJECTDIR}/_ext/1360937237/AVRInterface.o: ../src/AVRInterface.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/1360937237 
 	@${RM} ${OBJECTDIR}/_ext/1360937237/AVRInterface.o.d 
 	@${RM} ${OBJECTDIR}/_ext/1360937237/AVRInterface.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1360937237/AVRInterface.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1360937237/AVRInterface.o.d" -o ${OBJECTDIR}/_ext/1360937237/AVRInterface.o ../src/AVRInterface.c   
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1360937237/AVRInterface.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../include" -I"../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include" -I"../../../c-bowler/firmware/library/NR-Clib/development/Platform/include" -MMD -MF "${OBJECTDIR}/_ext/1360937237/AVRInterface.o.d" -o ${OBJECTDIR}/_ext/1360937237/AVRInterface.o ../src/AVRInterface.c    -DDYIO
 	
 ${OBJECTDIR}/_ext/1360937237/main.o: ../src/main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/1360937237 
 	@${RM} ${OBJECTDIR}/_ext/1360937237/main.o.d 
 	@${RM} ${OBJECTDIR}/_ext/1360937237/main.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1360937237/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1360937237/main.o.d" -o ${OBJECTDIR}/_ext/1360937237/main.o ../src/main.c   
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1360937237/main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../include" -I"../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include" -I"../../../c-bowler/firmware/library/NR-Clib/development/Platform/include" -MMD -MF "${OBJECTDIR}/_ext/1360937237/main.o.d" -o ${OBJECTDIR}/_ext/1360937237/main.o ../src/main.c    -DDYIO
 	
 ${OBJECTDIR}/_ext/1360937237/flash.o: ../src/flash.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/1360937237 
 	@${RM} ${OBJECTDIR}/_ext/1360937237/flash.o.d 
 	@${RM} ${OBJECTDIR}/_ext/1360937237/flash.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1360937237/flash.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1360937237/flash.o.d" -o ${OBJECTDIR}/_ext/1360937237/flash.o ../src/flash.c   
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1360937237/flash.o.d" $(SILENT) -rsi ${MP_CC_DIR}../  -c ${MP_CC}  $(MP_EXTRA_CC_PRE)  -g -x c -c -mprocessor=$(MP_PROCESSOR_OPTION) -I"../include" -I"../../../c-bowler/firmware/library/NR-Clib/development/BowlerStack/include" -I"../../../c-bowler/firmware/library/NR-Clib/development/Platform/include" -MMD -MF "${OBJECTDIR}/_ext/1360937237/flash.o.d" -o ${OBJECTDIR}/_ext/1360937237/flash.o ../src/flash.c    -DDYIO
 	
 endif
 
