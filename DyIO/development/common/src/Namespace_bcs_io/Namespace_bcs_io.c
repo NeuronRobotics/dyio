@@ -104,11 +104,15 @@ static RPC_LIST bcsIo_gacv_g = {BOWLER_GET, // Method
 static RPC_LIST bcsIo_asyn_g = {BOWLER_GET, // Method
     (const char*) "asyn", //RPC as string
     &GetAsyncFromPacket, //function pointer to a packet parsing function
-    ((const char [1]) {
+    ((const char [2]) {
+
+        BOWLER_I08, // channel
         0
     }), // Calling arguments
     BOWLER_POST, // response method
-    ((const char [1]) {
+    ((const char [3]) {
+        BOWLER_I08, // channel
+        BOWLER_I08, // Async mode for given channel
         0
     }), // Response arguments
     NULL //Termination
@@ -131,11 +135,14 @@ static RPC_LIST bcsIo_gchc_g = {BOWLER_GET, // Method
 static RPC_LIST bcsIo_gcml_g = {BOWLER_GET, // Method
     (const char*) "gcml", //RPC as string
     &getFunctionList, //function pointer to a packet parsing function
-    ((const char [1]) {
+    ((const char [2]) {
+
+        BOWLER_I08, // channel
         0
     }), // Calling arguments
     BOWLER_POST, // response method
-    ((const char [1]) {
+    ((const char [2]) {
+        BOWLER_STR,
         0
     }), // Response arguments
     NULL //Termination
