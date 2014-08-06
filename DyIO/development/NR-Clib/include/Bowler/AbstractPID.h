@@ -53,8 +53,8 @@ typedef struct  _PidLimitEvent{
 	int group;
 	PidLimitType type;
 	float time;
-	INT32 value;
-	INT32 latchTickError;
+	signed long int value;
+	signed long int latchTickError;
 //	BOOL stopOnIndex;
 }PidLimitEvent;
 
@@ -93,14 +93,15 @@ typedef struct _AbsPID_Config{
     int lowerHistoresis;
     int stop;
     PidCalibrationType calibrationState;
+    float offset;
+
+    float buffer[5];
+    
 }AbsPID_Config;
 
 typedef struct _AbsPID
 {
-    union{
-        unsigned long int raw [ sizeof(AbsPID_Config)] ;
-        AbsPID_Config config;
-    };
+
         //unsigned char           channel;
         float 			SetPoint;
         float			CurrentState;
@@ -116,8 +117,8 @@ typedef struct _AbsPID
         float                   lastPushedTime;
         INTERPOLATE_DATA interpolate;
         struct{
-            BOOL calibrating;
-            BOOL calibrated;
+            unsigned char calibrating;
+            unsigned char calibrated;
             CAL_STATE state;
             //RunEveryData timer;
         }calibration;
@@ -127,6 +128,10 @@ typedef struct _AbsPID
             float previousValue;
         }homing;
         RunEveryData timer;
+        //union{
+        //  unsigned int raw [ sizeof(AbsPID_Config)/4] ;
+            AbsPID_Config config;
+        //};
 } AbsPID;
 
 typedef struct _DYIO_PID
@@ -142,7 +147,7 @@ typedef struct _PD_VEL
 {
         BOOL enabled;
         float unitsPerSeCond;
-        INT32 lastPosition;
+        signed long int lastPosition;
         float lastVelocity;
         float lastTime;
         float currentOutputVel;
@@ -228,6 +233,7 @@ void StartPDVel(BYTE chan,INT32 unitsPerSeCond,float ms);
 void pushPID(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet),BYTE chan, INT32 value, float time);
 void pushPIDLimitEvent(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet),PidLimitEvent * event);
 
+void checkLinkHomingStatus(int group);
 /***
  * This is a getter for the interpolation state
  */
@@ -248,8 +254,8 @@ BOOL processPIDCrit(BowlerPacket * Packet);
 
 NAMESPACE_LIST * getBcsPidNamespace();
 
-AbsPID * getPidGroupDataTable();
-PD_VEL  * getPidVelocityDataTable();
+AbsPID * getPidGroupDataTable(int group);
+PD_VEL  * getPidVelocityDataTable(int group);
 void pushAllPIDPositions(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
 
 void SetPIDCalibrateionState(int group, PidCalibrationType state);
@@ -268,6 +274,9 @@ float pidResetNoStop(BYTE chan,INT32 val);
 void pushAllPIDPositions(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
 
 CAL_STATE pidHysterisis(int group);
+void startHomingLink(int group, PidCalibrationType type);
+void runPidHysterisisCalibration(int group);
+BOOL processRunAutoCal(BowlerPacket * Packet);
 
 void OnPidConfigure(int v);
 

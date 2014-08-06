@@ -71,7 +71,7 @@ void EnableDebugTerminal(void);
 /**
  * print the null terminated string with no new lines
  */
-#define print(A,B) printfDEBUG_NNL(A,B)
+#define print_nnl(A,B) printfDEBUG_NNL(A,B)
 
 /**
  * print the null terminated string with a newline inserted at the begining of the string

@@ -19,9 +19,10 @@
 #define USB_BUFFER_SIZE BOWLER_PacketSize
 
 //BYTE_FIFO_STORAGE  * GetPICUSBFifo(void);
+void printBufferState(BYTE_FIFO_STORAGE  * s);
 
 BOOL GotUSBData(void);
-
+BYTE_FIFO_STORAGE  * GetPICUSBFifo(void);
 void SetPICUSBFifo(BYTE_FIFO_STORAGE  * s);
 
 void usb_CDC_Serial_Init(char * DevStr,char * SerialStr,UINT16 vid,UINT16 pid);

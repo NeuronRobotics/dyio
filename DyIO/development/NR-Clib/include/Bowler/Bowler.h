@@ -40,11 +40,13 @@
 #elif defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644PA__) || defined(__AVR_ATmega324P__)
 	#include "arch/AVR/BowlerConfig.h"
 #elif defined (__i386__) || defined (__ia64__) || defined (__amd64__)
-	#include "arch/native/BowlerConfig.h"
+	#include "arch/native/BowlerConfig.h"+
+#elif defined(__MICROBLAZE__)
+	#include "arch/xilinx/BowlerConfig.h"
 #else
-	//#error Unknown archetecture!! See Bowler.h
-	#warning this is a hacky work around
-	#include "arch/NXP/BowlerConfig.h"
+	#error Unknown archetecture!! See Bowler.h
+	//#warning this is a hacky work around
+	//#include "arch/NXP/BowlerConfig.h"
 #endif
 
 #include "BowlerServerHardwareAbstraction.h"
