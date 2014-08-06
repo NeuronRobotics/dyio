@@ -56,11 +56,17 @@ BOOL bcsPidDypidProcessor_c(BowlerPacket * Packet) {
 static RPC_LIST bcsPidDypid_dpid_g = {BOWLER_GET, // Method
     "dpid", //RPC as string
     &bcsPidDypidProcessor_g, //function pointer to a packet parsinf function
-    ((const char [1]) {
+    ((const char [2]) {
+        BOWLER_I08, // group
         0
     }), // Calling arguments
     BOWLER_POST, // response method
-    ((const char [1]) {
+    ((const char [6]) {
+        BOWLER_I08, // group
+        BOWLER_I08, // input channel
+        BOWLER_I08, // input mode
+        BOWLER_I08, // output channel
+        BOWLER_I08, // output mode
         0
     }), // Response arguments
     NULL //Termination
@@ -69,9 +75,14 @@ static RPC_LIST bcsPidDypid_dpid_g = {BOWLER_GET, // Method
 static RPC_LIST bcsPidDypid_dpid_c = {BOWLER_CRIT, // Method
     "dpid", //RPC as string
     &bcsPidDypidProcessor_c, //function pointer to a packet parsinf function
-    ((const char [1]) {
+        ((const char [6]) {
+        BOWLER_I08, // group
+        BOWLER_I08, // input channel
+        BOWLER_I08, // input mode
+        BOWLER_I08, // output channel
+        BOWLER_I08, // output mode
         0
-    }), // Calling arguments
+    }), // Response arguments
     BOWLER_POST, // response method
     ((const char [1]) {
         0
