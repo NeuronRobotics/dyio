@@ -186,9 +186,11 @@ static RPC_LIST bcsIo_sacv_p = {BOWLER_POST, // Method
 static RPC_LIST bcsIo_asyn_p = {BOWLER_POST, // Method
     (const char*) "asyn", //RPC as string
     &SetAsyncFromPacket, //function pointer to a packet parsing function
-    ((const char [1]) {
+    ((const char [3]) {
+        BOWLER_I08, // channel
+        BOWLER_I08, // async mode
         0
-    }), // Calling arguments
+    }), // Response arguments
     BOWLER_POST, // response method
     ((const char [1]) {
         0
