@@ -75,7 +75,7 @@ static RPC_LIST bcsPidDypid_dpid_g = {BOWLER_GET, // Method
 static RPC_LIST bcsPidDypid_dpid_c = {BOWLER_CRIT, // Method
     "dpid", //RPC as string
     &bcsPidDypidProcessor_c, //function pointer to a packet parsinf function
-        ((const char [6]) {
+    ((const char [6]) {
         BOWLER_I08, // group
         BOWLER_I08, // input channel
         BOWLER_I08, // input mode

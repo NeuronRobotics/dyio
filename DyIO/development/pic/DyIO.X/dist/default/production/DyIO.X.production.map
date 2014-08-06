@@ -185,85 +185,85 @@ kseg0 Program-Memory Usage
 section                    address  length [bytes]      (dec)  Description
 -------                 ----------  -------------------------  -----------
 .text                   0x9d000008         0xb1f0       45552  App's exec code 
-.dinit                  0x9d00b1f8          0xbac        2988   
-.text                   0x9d00bda4         0x6c38       27704  App's exec code 
-.rodata                 0x9d0129dc          0x528        1320  Read-only const 
-.text                   0x9d012f04         0x389c       14492  App's exec code 
-.rodata                 0x9d0167a0          0x2ac         684  Read-only const 
-.text                   0x9d016a4c          0x774        1908  App's exec code 
-.rodata                 0x9d0171c0          0x250         592  Read-only const 
-.text                   0x9d017410          0xa78        2680  App's exec code 
-.rodata                 0x9d017e88          0x510        1296  Read-only const 
-.text                   0x9d018398          0x300         768  App's exec code 
-.rodata                 0x9d018698          0x170         368  Read-only const 
-.text                   0x9d018808          0x2d4         724  App's exec code 
-.rodata                 0x9d018adc          0x164         356  Read-only const 
-.text                   0x9d018c40          0x15c         348  App's exec code 
-.rodata                 0x9d018d9c          0x154         340  Read-only const 
-.text._NVMOperation     0x9d018ef0          0x114         276   
-.rodata                 0x9d019004          0x208         520  Read-only const 
-.text                   0x9d01920c          0x1c4         452  App's exec code 
-.rodata                 0x9d0193d0           0xd0         208  Read-only const 
-.text.general_exception 0x9d0194a0           0xd0         208   
-.text                   0x9d019570          0x174         372  App's exec code 
-.rodata                 0x9d0196e4          0x2b8         696  Read-only const 
-.text                   0x9d01999c           0xa0         160  App's exec code 
-.rodata                 0x9d019a3c          0x1dc         476  Read-only const 
-.text                   0x9d019c18           0x98         152  App's exec code 
-.rodata                 0x9d019cb0          0x1a4         420  Read-only const 
-.text                   0x9d019e54           0x84         132  App's exec code 
-.rodata                 0x9d019ed8          0x100         256  Read-only const 
-.text.UARTEnable        0x9d019fd8           0x80         128   
-.rodata                 0x9d01a058           0x7c         124  Read-only const 
-.text                   0x9d01a0d4           0x78         120  App's exec code 
-.text.SoftReset         0x9d01a14c           0x78         120   
-.text                   0x9d01a1c4          0x134         308  App's exec code 
-.text.OpenSPI2          0x9d01a2f8           0x60          96   
-.text.UARTSetDataRate   0x9d01a358           0x5c          92   
-.rodata                 0x9d01a3b4          0x108         264  Read-only const 
-.text.INTEnable         0x9d01a4bc           0x58          88   
-.rodata                 0x9d01a514          0x180         384  Read-only const 
-.text                   0x9d01a694           0x48          72  App's exec code 
-.rodata                 0x9d01a6dc           0x8c         140  Read-only const 
-.text.PORTSetPinsDigita 0x9d01a768           0x40          64   
-.text.UARTGetDataRate   0x9d01a7a8           0x40          64   
-.rodata                 0x9d01a7e8           0x3c          60  Read-only const 
-.text.INTSetVectorPrior 0x9d01a824           0x3c          60   
-.text.INTSetVectorSubPr 0x9d01a860           0x3c          60   
-.text.UARTConfigure     0x9d01a89c           0x3c          60   
-.text.UARTSetAddress    0x9d01a8d8           0x3c          60   
-.text.UARTWatchForAddre 0x9d01a914           0x38          56   
-.rodata                 0x9d01a94c           0x34          52  Read-only const 
-.text                   0x9d01a980           0x34          52  App's exec code 
-.text.INTEnableSystemMu 0x9d01a9b4           0x34          52   
-.text.NVMWriteWord      0x9d01a9e8           0x34          52   
-.text.INTGetVectorPrior 0x9d01aa1c           0x30          48   
-.text.INTGetVectorSubPr 0x9d01aa4c           0x30          48   
-.rodata                 0x9d01aa7c           0x2c          44  Read-only const 
-.text.INTClearFlag      0x9d01aaa8           0x2c          44   
-.text.INTSetFlag        0x9d01aad4           0x2c          44   
-.text.INTGetFlag        0x9d01ab00           0x2c          44   
-.text.INTGetEnable      0x9d01ab2c           0x2c          44   
-.text.NVMErasePage      0x9d01ab58           0x2c          44   
-.text                   0x9d01ab84           0x50          80  App's exec code 
-.text.PORTClearBits     0x9d01abd4           0x28          40   
-.text.PORTSetBits       0x9d01abfc           0x28          40   
-.text.UARTSetFifoMode   0x9d01ac24           0x28          40   
-.text.UARTSetLineContro 0x9d01ac4c           0x28          40   
-.rodata                 0x9d01ac74           0x64         100  Read-only const 
-.text.getcSPI2          0x9d01acd8           0x20          32   
-.text.INTRestoreInterru 0x9d01acf8           0x1c          28   
-.rodata                 0x9d01ad14           0x18          24  Read-only const 
-.text                   0x9d01ad2c           0x28          40  App's exec code 
-.rodata                 0x9d01ad54           0x1c          28  Read-only const 
-.text._bootstrap_except 0x9d01ad70            0xc          12   
-.rodata                 0x9d01ad7c           0x10          16  Read-only const 
-.text._on_reset         0x9d01ad8c            0x8           8   
-.text._on_bootstrap     0x9d01ad94            0x8           8   
-.text.INTEnableInterrup 0x9d01ad9c            0x8           8   
-.text.INTDisableInterru 0x9d01ada4            0x8           8   
-.rodata                 0x9d01adac            0x8           8  Read-only const 
-      Total kseg0_program_mem used  :     0x1adac      109996  83.9% of 0x20000
+.dinit                  0x9d00b1f8          0xbc0        3008   
+.text                   0x9d00bdb8         0x6c38       27704  App's exec code 
+.rodata                 0x9d0129f0          0x528        1320  Read-only const 
+.text                   0x9d012f18         0x389c       14492  App's exec code 
+.rodata                 0x9d0167b4          0x2ac         684  Read-only const 
+.text                   0x9d016a60          0x774        1908  App's exec code 
+.rodata                 0x9d0171d4          0x250         592  Read-only const 
+.text                   0x9d017424          0xa78        2680  App's exec code 
+.rodata                 0x9d017e9c          0x510        1296  Read-only const 
+.text                   0x9d0183ac          0x300         768  App's exec code 
+.rodata                 0x9d0186ac          0x170         368  Read-only const 
+.text                   0x9d01881c          0x2d4         724  App's exec code 
+.rodata                 0x9d018af0          0x164         356  Read-only const 
+.text                   0x9d018c54          0x15c         348  App's exec code 
+.rodata                 0x9d018db0          0x154         340  Read-only const 
+.text._NVMOperation     0x9d018f04          0x114         276   
+.rodata                 0x9d019018          0x208         520  Read-only const 
+.text                   0x9d019220          0x1c4         452  App's exec code 
+.rodata                 0x9d0193e4           0xd0         208  Read-only const 
+.text.general_exception 0x9d0194b4           0xd0         208   
+.text                   0x9d019584          0x174         372  App's exec code 
+.rodata                 0x9d0196f8          0x2b8         696  Read-only const 
+.text                   0x9d0199b0           0xa0         160  App's exec code 
+.rodata                 0x9d019a50          0x1dc         476  Read-only const 
+.text                   0x9d019c2c           0x98         152  App's exec code 
+.rodata                 0x9d019cc4          0x1a4         420  Read-only const 
+.text                   0x9d019e68           0x84         132  App's exec code 
+.rodata                 0x9d019eec          0x100         256  Read-only const 
+.text.UARTEnable        0x9d019fec           0x80         128   
+.rodata                 0x9d01a06c           0x7c         124  Read-only const 
+.text                   0x9d01a0e8           0x78         120  App's exec code 
+.text.SoftReset         0x9d01a160           0x78         120   
+.text                   0x9d01a1d8          0x134         308  App's exec code 
+.text.OpenSPI2          0x9d01a30c           0x60          96   
+.text.UARTSetDataRate   0x9d01a36c           0x5c          92   
+.rodata                 0x9d01a3c8          0x108         264  Read-only const 
+.text.INTEnable         0x9d01a4d0           0x58          88   
+.rodata                 0x9d01a528          0x180         384  Read-only const 
+.text                   0x9d01a6a8           0x48          72  App's exec code 
+.rodata                 0x9d01a6f0           0x8c         140  Read-only const 
+.text.PORTSetPinsDigita 0x9d01a77c           0x40          64   
+.text.UARTGetDataRate   0x9d01a7bc           0x40          64   
+.rodata                 0x9d01a7fc           0x3c          60  Read-only const 
+.text.INTSetVectorPrior 0x9d01a838           0x3c          60   
+.text.INTSetVectorSubPr 0x9d01a874           0x3c          60   
+.text.UARTConfigure     0x9d01a8b0           0x3c          60   
+.text.UARTSetAddress    0x9d01a8ec           0x3c          60   
+.text.UARTWatchForAddre 0x9d01a928           0x38          56   
+.rodata                 0x9d01a960           0x34          52  Read-only const 
+.text                   0x9d01a994           0x34          52  App's exec code 
+.text.INTEnableSystemMu 0x9d01a9c8           0x34          52   
+.text.NVMWriteWord      0x9d01a9fc           0x34          52   
+.text.INTGetVectorPrior 0x9d01aa30           0x30          48   
+.text.INTGetVectorSubPr 0x9d01aa60           0x30          48   
+.rodata                 0x9d01aa90           0x2c          44  Read-only const 
+.text.INTClearFlag      0x9d01aabc           0x2c          44   
+.text.INTSetFlag        0x9d01aae8           0x2c          44   
+.text.INTGetFlag        0x9d01ab14           0x2c          44   
+.text.INTGetEnable      0x9d01ab40           0x2c          44   
+.text.NVMErasePage      0x9d01ab6c           0x2c          44   
+.text                   0x9d01ab98           0x50          80  App's exec code 
+.text.PORTClearBits     0x9d01abe8           0x28          40   
+.text.PORTSetBits       0x9d01ac10           0x28          40   
+.text.UARTSetFifoMode   0x9d01ac38           0x28          40   
+.text.UARTSetLineContro 0x9d01ac60           0x28          40   
+.rodata                 0x9d01ac88           0x64         100  Read-only const 
+.text.getcSPI2          0x9d01acec           0x20          32   
+.text.INTRestoreInterru 0x9d01ad0c           0x1c          28   
+.rodata                 0x9d01ad28           0x18          24  Read-only const 
+.text                   0x9d01ad40           0x28          40  App's exec code 
+.rodata                 0x9d01ad68           0x1c          28  Read-only const 
+.text._bootstrap_except 0x9d01ad84            0xc          12   
+.rodata                 0x9d01ad90           0x10          16  Read-only const 
+.text._on_reset         0x9d01ada0            0x8           8   
+.text._on_bootstrap     0x9d01ada8            0x8           8   
+.text.INTEnableInterrup 0x9d01adb0            0x8           8   
+.text.INTDisableInterru 0x9d01adb8            0x8           8   
+.rodata                 0x9d01adc0            0x8           8  Read-only const 
+      Total kseg0_program_mem used  :     0x1adc0      110016  83.9% of 0x20000
 
 kseg0 Boot-Memory Usage
 section                    address  length [bytes]      (dec)  Description
@@ -292,18 +292,18 @@ section                    address  length [bytes]      (dec)  Description
 .bev_excpt              0xbfc00380           0x10          16  BEV-Exception 
          Total kseg1_boot_mem used  :       0x204         516  44.2% of 0x490
         --------------------------------------------------------------------------
-         Total Program Memory used  :     0x1b008      110600  79.7% of 0x21e00
+         Total Program Memory used  :     0x1b01c      110620  79.7% of 0x21e00
         --------------------------------------------------------------------------
 
 
 kseg1 Data-Memory Usage
 section                    address  length [bytes]      (dec)  Description
 -------                 ----------  -------------------------  -----------
-.sdata                  0xa0000000          0x154         340  Small init data 
-.sbss                   0xa0000154          0x21c         540  Small uninit data 
-.data                   0xa0000370           0x60          96  Initialized data 
-.data                   0xa00003d0           0x18          24  Initialized data 
-.bss                    0xa00003e8           0x18          24  Uninitialized data 
+.sdata                  0xa0000000          0x168         360  Small init data 
+.sbss                   0xa0000168          0x210         528  Small uninit data 
+.data                   0xa0000378           0x60          96  Initialized data 
+.data                   0xa00003d8           0x18          24  Initialized data 
+.data                   0xa00003f0            0xc          12  Initialized data 
 .bss                    0xa0000400          0x3f8        1016  Uninitialized data 
 .bss                    0xa00007f8         0x1654        5716  Uninitialized data 
 .data                   0xa0001e4c          0x328         808  Initialized data 
@@ -311,18 +311,18 @@ section                    address  length [bytes]      (dec)  Description
 .data                   0xa00024dc          0x1d8         472  Initialized data 
 .bss                    0xa00026b4           0xa0         160  Uninitialized data 
 .data                   0xa0002754          0x14c         332  Initialized data 
-.data                   0xa00028a0            0xc          12  Initialized data 
-         Total kseg1_data_mem used  :      0x28ac       10412  31.8% of 0x8000
+.bss                    0xa00028a0           0x18          24  Uninitialized data 
+         Total kseg1_data_mem used  :      0x28b4       10420  31.8% of 0x8000
         --------------------------------------------------------------------------
-            Total Data Memory used  :      0x28ac       10412  31.8% of 0x8000
+            Total Data Memory used  :      0x28b4       10420  31.8% of 0x8000
         --------------------------------------------------------------------------
 
 
 Dynamic Data-Memory Reservation
 section                    address  length [bytes]      (dec)  Description
 -------                 ----------  -------------------------  -----------
-heap                    0xa00028b0              0           0  Reserved for heap 
-stack                   0xa00028c8         0x5728       22312  Reserved for stack 
+heap                    0xa00028c0              0           0  Reserved for heap 
+stack                   0xa00028d8         0x5720       22304  Reserved for stack 
 
         --------------------------------------------------------------------------
 
@@ -947,7 +947,7 @@ END GROUP
  *(.got.plt)
  *(.got)
 
-.sdata          0xa0000000      0x154
+.sdata          0xa0000000      0x168
                 0xa0000000                _sdata_begin = .
  *(.sdata .sdata.* .gnu.linkonce.s.*)
  .sdata         0xa0000000       0x50 build/default/production/_ext/805493626/Namespace_bcs_io.o
@@ -963,141 +963,141 @@ END GROUP
  .sdata         0xa0000088       0x18 build/default/production/_ext/321196743/Namespace_neuronrobotics_dyio.o
                 0xa0000088                syncVolt
                 0xa0000090                ppm
- .sdata         0xa00000a0       0x10 build/default/production/_ext/321196743/Namespace_bcs_pid_dypid.o
+ .sdata         0xa00000a0       0x24 build/default/production/_ext/321196743/Namespace_bcs_pid_dypid.o
                 0xa00000a0                pid
                 0xa00000a8                vel
- .sdata         0xa00000b0        0x8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_core.o)
- .sdata         0xa00000b8        0x8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Bowler_Server.o)
-                0xa00000b8                MyMAC
- .sdata         0xa00000c0       0x54 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_pid.o)
- .sdata         0xa0000114        0x4 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_fifo.o)
- .sdata         0xa0000118       0x10 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(FlashStorage.o)
-                0xa0000118                defMac
-                0xa0000120                MEMORY_BASE
-                0xa0000124                VirtualBase
- .sdata         0xa0000128       0x18 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_rpc.o)
- .sdata         0xa0000140        0x4 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(PidRpc.o)
-                0xa0000140                zone
- .sdata         0xa0000144        0x8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(PidAsync.o)
- .sdata         0xa000014c        0x8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_descriptors.o)
-                0xa000014c                sd000
-                0xa0000150                USB_CD_Ptr
-                0xa0000154                _sdata_end = .
+ .sdata         0xa00000c4        0x8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_core.o)
+ .sdata         0xa00000cc        0x8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Bowler_Server.o)
+                0xa00000cc                MyMAC
+ .sdata         0xa00000d4       0x54 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_pid.o)
+ .sdata         0xa0000128        0x4 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_fifo.o)
+ .sdata         0xa000012c       0x10 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(FlashStorage.o)
+                0xa000012c                defMac
+                0xa0000134                MEMORY_BASE
+                0xa0000138                VirtualBase
+ .sdata         0xa000013c       0x18 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_rpc.o)
+ .sdata         0xa0000154        0x4 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(PidRpc.o)
+                0xa0000154                zone
+ .sdata         0xa0000158        0x8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(PidAsync.o)
+ .sdata         0xa0000160        0x8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_descriptors.o)
+                0xa0000160                sd000
+                0xa0000164                USB_CD_Ptr
+                0xa0000168                _sdata_end = .
 
 .lit8
  *(.lit8)
 
 .lit4
  *(.lit4)
-                0xa0000154                . = ALIGN (0x4)
-                0xa0000154                _data_end = .
-                0xa0000154                _bss_begin = .
+                0xa0000168                . = ALIGN (0x4)
+                0xa0000168                _data_end = .
+                0xa0000168                _bss_begin = .
 
-.sbss           0xa0000154      0x21c
-                0xa0000154                _sbss_begin = .
+.sbss           0xa0000168      0x210
+                0xa0000168                _sbss_begin = .
  *(.dynsbss)
  *(.sbss .sbss.* .gnu.linkonce.sb.*)
- .sbss          0xa0000154        0x4 build/default/production/_ext/805493626/Debug_DyIO.o
-                0xa0000154                maxNumCharsInModes
- .sbss          0xa0000158       0x20 build/default/production/_ext/805493626/Namespace_bcs_io.o
- .sbss          0xa0000178        0x8 build/default/production/_ext/805493626/Abstract_bcs_io.o
- .sbss          0xa0000180        0x4 build/default/production/_ext/805493626/Bcs_IO_AdvancedAsync.o
-                0xa0000180                isInit
- .sbss          0xa0000184        0x4 build/default/production/_ext/1051272628/Abstract_bcs_io_setmode.o
-                0xa0000184                setChanelModeHWPtr
- .sbss          0xa0000188        0xc build/default/production/_ext/1051272628/Namespace_bcs_io_setmode.o
- .sbss          0xa0000194        0x1 build/default/production/_ext/1978776677/InitializationCallbacks.o
-                0xa0000194                SaveTheState
- .sbss          0xa0000195        0x2 build/default/production/_ext/1978776677/DownStreamPackets.o
-                0xa0000195                batteryCode0
-                0xa0000196                batteryCode1
- *fill*         0xa0000197        0x1 00
- .sbss          0xa0000198       0x10 build/default/production/_ext/990863823/Switches.o
- .sbss          0xa00001a8       0x10 build/default/production/_ext/990863823/CoProcCom.o
-                0xa00001b4                coProcRunning
- .sbss          0xa00001b8       0x14 build/default/production/_ext/990863823/ADC.o
-                0xa00001b8                init
-                0xa00001bc                lastHighTime
-                0xa00001c0                lastLowTime
- .sbss          0xa00001cc        0x1 build/default/production/_ext/990863823/EEPROMMannager.o
-                0xa00001cc                loadEEDone
- *fill*         0xa00001cd        0x3 00
- .sbss          0xa00001d0        0xc build/default/production/_ext/990863823/PPMReader.o
- .sbss          0xa00001dc       0x14 build/default/production/_ext/1281821416/Namespace_bcs_safe.o
- .sbss          0xa00001f0       0x38 build/default/production/_ext/321196743/Namespace_neuronrobotics_dyio.o
-                0xa00001f0                pwr
- .sbss          0xa0000228       0x14 build/default/production/_ext/321196743/Namespace_bcs_pid_dypid.o
- .sbss          0xa000023c        0x4 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_core.o)
- .sbss          0xa0000240        0x4 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Bowler_Server.o)
- .sbss          0xa0000244        0xc ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Debug.o)
-                0xa0000244                level
- .sbss          0xa0000250        0x4 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_pid.o)
- .sbss          0xa0000254        0xc ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(AbstractPID.o)
-                0xa0000254                number_of_pid_groups
- .sbss          0xa0000260       0x10 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_fifo.o)
- .sbss          0xa0000270        0x4 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(ADC.o)
-                0xa0000270                ADCMask
- .sbss          0xa0000274       0x18 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(HAL_P32.o)
- .sbss          0xa000028c        0x4 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(FlashStorage.o)
-                0xa000028c                streamSize
- .sbss          0xa0000290        0x8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Bowler_UART_HAL.o)
- .sbss          0xa0000298        0x8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Tick.o)
- .sbss          0xa00002a0        0x8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(UART.o)
-                0xa00002a0                useUart2
-                0xa00002a4                useUart1
- .sbss          0xa00002a8        0x4 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_rpc.o)
- .sbss          0xa00002ac        0x2 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_callback.o)
+ .sbss          0xa0000168        0x4 build/default/production/_ext/805493626/Debug_DyIO.o
+                0xa0000168                maxNumCharsInModes
+ .sbss          0xa000016c       0x20 build/default/production/_ext/805493626/Namespace_bcs_io.o
+ .sbss          0xa000018c        0x8 build/default/production/_ext/805493626/Abstract_bcs_io.o
+ .sbss          0xa0000194        0x4 build/default/production/_ext/805493626/Bcs_IO_AdvancedAsync.o
+                0xa0000194                isInit
+ .sbss          0xa0000198        0x4 build/default/production/_ext/1051272628/Abstract_bcs_io_setmode.o
+                0xa0000198                setChanelModeHWPtr
+ .sbss          0xa000019c        0xc build/default/production/_ext/1051272628/Namespace_bcs_io_setmode.o
+ .sbss          0xa00001a8        0x1 build/default/production/_ext/1978776677/InitializationCallbacks.o
+                0xa00001a8                SaveTheState
+ .sbss          0xa00001a9        0x2 build/default/production/_ext/1978776677/DownStreamPackets.o
+                0xa00001a9                batteryCode0
+                0xa00001aa                batteryCode1
+ *fill*         0xa00001ab        0x1 00
+ .sbss          0xa00001ac       0x10 build/default/production/_ext/990863823/Switches.o
+ .sbss          0xa00001bc       0x10 build/default/production/_ext/990863823/CoProcCom.o
+                0xa00001c8                coProcRunning
+ .sbss          0xa00001cc       0x14 build/default/production/_ext/990863823/ADC.o
+                0xa00001cc                init
+                0xa00001d0                lastHighTime
+                0xa00001d4                lastLowTime
+ .sbss          0xa00001e0        0x1 build/default/production/_ext/990863823/EEPROMMannager.o
+                0xa00001e0                loadEEDone
+ *fill*         0xa00001e1        0x3 00
+ .sbss          0xa00001e4        0xc build/default/production/_ext/990863823/PPMReader.o
+ .sbss          0xa00001f0       0x14 build/default/production/_ext/1281821416/Namespace_bcs_safe.o
+ .sbss          0xa0000204       0x38 build/default/production/_ext/321196743/Namespace_neuronrobotics_dyio.o
+                0xa0000204                pwr
+ .sbss          0xa000023c        0x8 build/default/production/_ext/321196743/Namespace_bcs_pid_dypid.o
+ .sbss          0xa0000244        0x4 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_core.o)
+ .sbss          0xa0000248        0x4 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Bowler_Server.o)
+ .sbss          0xa000024c        0xc ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Debug.o)
+                0xa000024c                level
+ .sbss          0xa0000258        0x4 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_pid.o)
+ .sbss          0xa000025c        0xc ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(AbstractPID.o)
+                0xa000025c                number_of_pid_groups
+ .sbss          0xa0000268       0x10 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_fifo.o)
+ .sbss          0xa0000278        0x4 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(ADC.o)
+                0xa0000278                ADCMask
+ .sbss          0xa000027c       0x18 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(HAL_P32.o)
+ .sbss          0xa0000294        0x4 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(FlashStorage.o)
+                0xa0000294                streamSize
+ .sbss          0xa0000298        0x8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Bowler_UART_HAL.o)
+ .sbss          0xa00002a0        0x8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Tick.o)
+ .sbss          0xa00002a8        0x8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(UART.o)
+                0xa00002a8                useUart2
+                0xa00002ac                useUart1
+ .sbss          0xa00002b0        0x4 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_rpc.o)
+ .sbss          0xa00002b4        0x2 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_callback.o)
  *(.scommon)
- *fill*         0xa00002ae        0x2 00
- .scommon       0xa00002b0       0x14 build/default/production/_ext/805493626/Abstract_bcs_io.o
-                0xa00002b0                getAllChanelValueHWPtr
-                0xa00002b4                getChanelValueHWPtr
-                0xa00002b8                setAllChanelValueHWPtr
-                0xa00002bc                setChanelValueHWPtr
-                0xa00002c0                configChannelHWPtr
- .scommon       0xa00002c4        0x8 build/default/production/_ext/990863823/ADC.o
-                0xa00002c4                lockOutTimeout
- .scommon       0xa00002cc       0x1c ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(AbstractPID.o)
-                0xa00002cc                resetPosition
-                0xa00002d0                MathCalculationVelocity
-                0xa00002d4                setOutputLocal
-                0xa00002d8                MathCalculationPosition
-                0xa00002dc                onPidConfigureLocal
-                0xa00002e0                getPosition
-                0xa00002e4                checkPIDLimitEvents
- .scommon       0xa00002e8       0x41 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_device.o)
-                0xa00002e8                pDst
-                0xa00002ec                USBDeviceState
-                0xa00002f0                controlTransferState
-                0xa00002f4                USBInMaxPacketSize
-                0xa00002fc                inPipes
-                0xa0000304                BothEP0OutUOWNsSet
-                0xa0000308                pBDTEntryEP0OutNext
-                0xa000030c                SetupPkt
-                0xa0000314                shortPacketStatus
-                0xa0000318                pBDTEntryEP0OutCurrent
-                0xa000031c                USBActiveConfiguration
-                0xa0000320                RemoteWakeup
-                0xa0000324                USTATcopy
-                0xa0000328                USBAlternateInterface
- *fill*         0xa0000329        0x3 00
- .scommon       0xa000032c        0x4 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(FlashStorage.o)
-                0xa000032c                stream
- .scommon       0xa0000330       0x40 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_function_cdc.o)
-                0xa0000330                control_signal_bitmap
-                0xa0000334                cdc_tx_len
-                0xa0000338                pCDCSrc
-                0xa000033c                CDCDataOutHandle
-                0xa0000340                cdc_rx_len
-                0xa0000344                line_coding
-                0xa000034c                BaudRateGen
-                0xa0000350                CDCDataInHandle
-                0xa0000354                cdc_notice
-                0xa000035c                cdc_trf_state
-                0xa0000360                pCDCDst
-                0xa0000364                cdc_mem_type
-                0xa0000368                dummy_encapsulated_cmd_response
-                0xa0000370                _sbss_end = .
+ *fill*         0xa00002b6        0x2 00
+ .scommon       0xa00002b8       0x14 build/default/production/_ext/805493626/Abstract_bcs_io.o
+                0xa00002b8                getAllChanelValueHWPtr
+                0xa00002bc                getChanelValueHWPtr
+                0xa00002c0                setAllChanelValueHWPtr
+                0xa00002c4                setChanelValueHWPtr
+                0xa00002c8                configChannelHWPtr
+ .scommon       0xa00002cc        0x8 build/default/production/_ext/990863823/ADC.o
+                0xa00002cc                lockOutTimeout
+ .scommon       0xa00002d4       0x1c ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(AbstractPID.o)
+                0xa00002d4                resetPosition
+                0xa00002d8                MathCalculationVelocity
+                0xa00002dc                setOutputLocal
+                0xa00002e0                MathCalculationPosition
+                0xa00002e4                onPidConfigureLocal
+                0xa00002e8                getPosition
+                0xa00002ec                checkPIDLimitEvents
+ .scommon       0xa00002f0       0x41 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_device.o)
+                0xa00002f0                pDst
+                0xa00002f4                USBDeviceState
+                0xa00002f8                controlTransferState
+                0xa00002fc                USBInMaxPacketSize
+                0xa0000304                inPipes
+                0xa000030c                BothEP0OutUOWNsSet
+                0xa0000310                pBDTEntryEP0OutNext
+                0xa0000314                SetupPkt
+                0xa000031c                shortPacketStatus
+                0xa0000320                pBDTEntryEP0OutCurrent
+                0xa0000324                USBActiveConfiguration
+                0xa0000328                RemoteWakeup
+                0xa000032c                USTATcopy
+                0xa0000330                USBAlternateInterface
+ *fill*         0xa0000331        0x3 00
+ .scommon       0xa0000334        0x4 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(FlashStorage.o)
+                0xa0000334                stream
+ .scommon       0xa0000338       0x40 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_function_cdc.o)
+                0xa0000338                control_signal_bitmap
+                0xa000033c                cdc_tx_len
+                0xa0000340                pCDCSrc
+                0xa0000344                CDCDataOutHandle
+                0xa0000348                cdc_rx_len
+                0xa000034c                line_coding
+                0xa0000354                BaudRateGen
+                0xa0000358                CDCDataInHandle
+                0xa000035c                cdc_notice
+                0xa0000364                cdc_trf_state
+                0xa0000368                pCDCDst
+                0xa000036c                cdc_mem_type
+                0xa0000370                dummy_encapsulated_cmd_response
+                0xa0000378                _sbss_end = .
 
 .bss            0xa0000400      0x3f8
  *(.dynbss)
@@ -2383,8 +2383,8 @@ OUTPUT(dist/default/production/DyIO.X.production.elf elf32-tradlittlemips)
 LOAD stack
 LOAD data_init
 
-.stack          0xa00028c8      0x400
- .stack         0xa00028c8      0x400 stack
+.stack          0xa00028d8      0x400
+ .stack         0xa00028d8      0x400 stack
 
 .bss            0xa00007f8     0x1654
  .bss           0xa00007f8      0x688 build/default/production/_ext/1825615050/PID.o
@@ -2418,9 +2418,9 @@ LOAD data_init
 .bss            0xa00026b4       0xa0
  .bss           0xa00026b4       0xa0 build/default/production/_ext/990863823/EEPROMMannager.o
 
-.data           0xa0000370       0x60
- .data          0xa0000370       0x60 build/default/production/_ext/1051272628/Namespace_bcs_io_setmode.o
-                0xa0000370                setModeNSName
+.data           0xa0000378       0x60
+ .data          0xa0000378       0x60 build/default/production/_ext/1051272628/Namespace_bcs_io_setmode.o
+                0xa0000378                setModeNSName
 
 .data           0xa0002754      0x14c
  .data          0xa0002754       0x60 build/default/production/_ext/321196743/Namespace_bcs_pid_dypid.o
@@ -2430,15 +2430,15 @@ LOAD data_init
  .data          0xa0002810       0x48 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_core.o)
  .data          0xa0002858       0x48 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_rpc.o)
 
-.data           0xa00003d0       0x18
- .data          0xa00003d0       0x18 build/default/production/_ext/990863823/PPMReader.o
+.data           0xa00003d8       0x18
+ .data          0xa00003d8       0x18 build/default/production/_ext/990863823/PPMReader.o
 
-.bss            0xa00003e8       0x18
- .bss           0xa00003e8       0x18 build/default/production/_ext/990863823/PPMReader.o
+.bss            0xa00028a0       0x18
+ .bss           0xa00028a0       0x18 build/default/production/_ext/990863823/PPMReader.o
 
-.data           0xa00028a0        0xc
- .data          0xa00028a0        0xc build/default/production/_ext/990863823/Counter.o
-                0xa00028a0                pinmap
+.data           0xa00003f0        0xc
+ .data          0xa00003f0        0xc build/default/production/_ext/990863823/Counter.o
+                0xa00003f0                pinmap
 
 .mdebug.abi32%z1
                 0x00000000        0x0
@@ -3383,797 +3383,797 @@ LOAD data_init
                 0x9d00aff4                newByte
                 0x9d00b0b0                My_U2_ISR
 
-.dinit          0x9d00b1f8      0xbac
- .dinit         0x9d00b1f8      0xbac data_init
+.dinit          0x9d00b1f8      0xbc0
+ .dinit         0x9d00b1f8      0xbc0 data_init
 
-.text           0x9d00bda4     0x6c38
- .text          0x9d00bda4      0xa90 build/default/production/_ext/990863823/PPMReader.o
-                0x9d00bda4                RunPPMCheck
-                0x9d00c12c                runPPMEvent
-                0x9d00c334                clearPPM
-                0x9d00c3c4                startPPM
-                0x9d00c488                GetPPMDataToPacket
-                0x9d00c5b8                ConfigPPMFromArray
-                0x9d00c68c                ConfigPPM
-                0x9d00c778                GetPPMDataToArray
- .text          0x9d00c834      0xa80 build/default/production/_ext/1020318379/ChannelValues.o
-                0x9d00c834                SetChanelValueHW
-                0x9d00cac8                GetChanelValueHW
-                0x9d00cd8c                SetAllChanelValueHW
-                0x9d00cf00                GetAllChanelValueHW
-                0x9d00d06c                ConfigureChannelHW
-                0x9d00d188                SetChanVal
- .text          0x9d00d2b4      0x958 build/default/production/_ext/321196743/Namespace_neuronrobotics_dyio.o
-                0x9d00d2b4                UpdateAVRLED
-                0x9d00d2dc                setHeartBeatState
-                0x9d00d318                getHeartBeatTime
-                0x9d00d348                getHeartBeatLock
-                0x9d00d36c                neuronRoboticsDyIOAsyncEventCallback
-                0x9d00d5b8                neuronRoboticsDyIOProcessor_g
-                0x9d00d824                neuronRoboticsDyIOProcessor_p
-                0x9d00d84c                neuronRoboticsDyIOProcessor_c
-                0x9d00db38                get_neuronRoboticsDyIONamespace
- .text          0x9d00dc0c      0x8ec /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libm.a(fp32.o)
-                0x9d00dc0c                __subsf3
-                0x9d00dc0c                fpsub
-                0x9d00dc14                fpadd
-                0x9d00dc14                __addsf3
-                0x9d00de80                __mulsf3
-                0x9d00de80                fpmul
-                0x9d00e038                __divsf3
-                0x9d00e038                fpdiv
-                0x9d00e264                sitofp
-                0x9d00e264                __floatsisf
-                0x9d00e264                litofp
-                0x9d00e2c0                uitofp
-                0x9d00e2c0                ultofp
-                0x9d00e30c                __fixsfsi
-                0x9d00e30c                fptoli
-                0x9d00e30c                fptosi
-                0x9d00e384                fptoui
-                0x9d00e384                __fixunssfsi
-                0x9d00e384                fptoul
-                0x9d00e3f8                __lesf2
-                0x9d00e3f8                __nesf2
-                0x9d00e3f8                __gtsf2
-                0x9d00e3f8                __eqsf2
-                0x9d00e3f8                __ltsf2
-                0x9d00e3f8                fpcmp
-                0x9d00e3f8                __gesf2
-                0x9d00e48c                fabsf
-                0x9d00e48c                fpfabs
-                0x9d00e49c                __negsf2
-                0x9d00e4ac                fpnan
-                0x9d00e4ac                nanf
- .text          0x9d00e4f8      0x814 build/default/production/_ext/990863823/ADC.o
-                0x9d00e4f8                calc
-                0x9d00e540                InitADC
-                0x9d00e710                isLocked
-                0x9d00e734                isActive
-                0x9d00e758                unlockServos
-                0x9d00e77c                lockServos
-                0x9d00e7a4                GetRawVoltageCode
-                0x9d00eb70                GetRawVoltage
-                0x9d00ebb4                GetRawVoltagePostFuse
-                0x9d00ebf8                GetRail0Voltage
-                0x9d00ec3c                GetRail1Voltage
-                0x9d00ec80                getDyIOVoltage
- .text          0x9d00ed0c      0x7d0 build/default/production/_ext/990863823/EEPROMMannager.o
-                0x9d00ed0c                LoadEEstore
-                0x9d00ee24                LoadPIDvals
-                0x9d00f148                WritePIDvalues
-                0x9d00f3c0                writePPMLink
-                0x9d00f400                readPPMLink
-                0x9d00f440                setEEBrownOutDetect
-                0x9d00f494                getEEBrownOutDetect
- .text          0x9d00f4dc      0x7b0 build/default/production/_ext/108654538/PinFunctions.o
-                0x9d00f4dc                InitPinFunction
- .text          0x9d00fc8c      0x760 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(AbstractPID.o)
-                0x9d00fc8d                RunAbstractPIDCalc
-                0x9d00fd65                OnPidConfigure
-                0x9d00fd75                getNumberOfPidChannels
-                0x9d00fd7d                getPidVelocityDataTable
-                0x9d00fda5                getPidGroupDataTable
-                0x9d00fdd1                isPidEnabled
-                0x9d00fde1                SetPIDEnabled
-                0x9d00fdf5                SetControllerMath
-                0x9d00fe0d                SetPIDCalibrateionState
-                0x9d00fe1d                GetPIDCalibrateionState
-                0x9d00fe2d                ClearPID
-                0x9d00fe51                GetPIDPosition
-                0x9d00fe71                setPIDConstants
-                0x9d00fe99                InitAbsPIDWithPosition
-                0x9d00fec1                InitAbsPID
-                0x9d00fed9                pidResetNoStop
-                0x9d00ffb5                SetPIDTimed
-                0x9d0100c1                SetPID
-                0x9d0100d5                isPIDInterpolating
-                0x9d0100f5                isPIDArrivedAtSetpoint
-                0x9d010129                RunPIDComs
-                0x9d010161                setOutput
-                0x9d010211                RunPIDControl
-                0x9d0102e1                RunPID
-                0x9d0102f9                pidReset
-                0x9d010359                ZeroPID
-                0x9d010369                InitilizePidController
- .text          0x9d0103ec      0x720 build/default/production/_ext/1978776677/UpstreamPackets.o
-                0x9d0103ec                pushDummy
-                0x9d010508                PushAllAsync
-                0x9d0105c8                PushCounterChange
-                0x9d0106e4                PushADCval
-                0x9d010800                PushDIval
-                0x9d010904                UpstreamPushPowerChange
-                0x9d0109a0                POWER
-                0x9d010a88                pushPPMPacket
- .text          0x9d010b0c      0x6f0 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Debug.o)
-                0x9d010b0d                sendToStreamMine
-                0x9d010b39                setPrintStream
-                0x9d010b49                sendToStreamLocal
-                0x9d010b69                getPrintLevel
-                0x9d010b71                setPrintLevel
-                0x9d010b85                okToprint
-                0x9d010bad                GetLowNib
-                0x9d010bbd                GetHighNib
-                0x9d010bcd                sendStr
-                0x9d010be9                setColor
-                0x9d010c25                printfDEBUG_BYTE
-                0x9d010c45                printfDEBUG_NNL
-                0x9d010c65                printfDEBUG
-                0x9d010c8d                ultoaMINE
-                0x9d010cd9                printfDEBUG_INT
-                0x9d010d31                printByteArray
-                0x9d010db9                printBowlerPacketDEBUG
-                0x9d011039                printfDEBUG_FL
-                0x9d0110a9                printPIDvals
- .text          0x9d0111fc      0x6c8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(PidRpc.o)
-                0x9d0111fd                GetConfigPDVelocity
-                0x9d01124d                ConfigPDVelovity
-                0x9d0112a5                GetConfigPID
-                0x9d0113b9                ConfigPID
-                0x9d011565                processPIDGet
-                0x9d011655                processPIDPost
-                0x9d0117a5                processPIDCrit
-                0x9d011899                ProcessPIDPacket
- .text          0x9d0118c4      0x5f8 build/default/production/_ext/1978776677/AsyncManager.o
-                0x9d0118c4                ProcessAsyncData
-                0x9d011dd0                isAnalog
-                0x9d011e4c                dealWithAsyncPacket
- .text          0x9d011ebc      0x5e8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_fifo.o)
-                0x9d011ebd                GotUSBData
-                0x9d011ecd                printBufferState
-                0x9d012105                GetPICUSBFifo
-                0x9d012159                SetPICUSBFifo
-                0x9d0121a9                waitForTxToBeFree
-                0x9d012231                flush
-                0x9d012275                isUSBActave
-                0x9d01227d                forceOpenUSB
-                0x9d012289                usb_Buffer_Update
-                0x9d0122fd                GetNumUSBBytes
-                0x9d012319                usb_CDC_Serial_Init
-                0x9d012369                USBPutArray
-                0x9d012459                USBGetArray
- .text          0x9d0124a4      0x538 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_function_cdc.o)
-                0x9d0124a5                USBCheckCDCRequest
-                0x9d0126bd                CDCInitEP
-                0x9d012715                USBUSARTRxIsReady
-                0x9d01272d                getsUSBUSART
-                0x9d0127a9                putUSBUSART
-                0x9d0127f9                putsUSBUSART
-                0x9d012855                putrsUSBUSART
-                0x9d0128b5                CDCTxService
+.text           0x9d00bdb8     0x6c38
+ .text          0x9d00bdb8      0xa90 build/default/production/_ext/990863823/PPMReader.o
+                0x9d00bdb8                RunPPMCheck
+                0x9d00c140                runPPMEvent
+                0x9d00c348                clearPPM
+                0x9d00c3d8                startPPM
+                0x9d00c49c                GetPPMDataToPacket
+                0x9d00c5cc                ConfigPPMFromArray
+                0x9d00c6a0                ConfigPPM
+                0x9d00c78c                GetPPMDataToArray
+ .text          0x9d00c848      0xa80 build/default/production/_ext/1020318379/ChannelValues.o
+                0x9d00c848                SetChanelValueHW
+                0x9d00cadc                GetChanelValueHW
+                0x9d00cda0                SetAllChanelValueHW
+                0x9d00cf14                GetAllChanelValueHW
+                0x9d00d080                ConfigureChannelHW
+                0x9d00d19c                SetChanVal
+ .text          0x9d00d2c8      0x958 build/default/production/_ext/321196743/Namespace_neuronrobotics_dyio.o
+                0x9d00d2c8                UpdateAVRLED
+                0x9d00d2f0                setHeartBeatState
+                0x9d00d32c                getHeartBeatTime
+                0x9d00d35c                getHeartBeatLock
+                0x9d00d380                neuronRoboticsDyIOAsyncEventCallback
+                0x9d00d5cc                neuronRoboticsDyIOProcessor_g
+                0x9d00d838                neuronRoboticsDyIOProcessor_p
+                0x9d00d860                neuronRoboticsDyIOProcessor_c
+                0x9d00db4c                get_neuronRoboticsDyIONamespace
+ .text          0x9d00dc20      0x8ec /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libm.a(fp32.o)
+                0x9d00dc20                __subsf3
+                0x9d00dc20                fpsub
+                0x9d00dc28                fpadd
+                0x9d00dc28                __addsf3
+                0x9d00de94                __mulsf3
+                0x9d00de94                fpmul
+                0x9d00e04c                __divsf3
+                0x9d00e04c                fpdiv
+                0x9d00e278                sitofp
+                0x9d00e278                __floatsisf
+                0x9d00e278                litofp
+                0x9d00e2d4                uitofp
+                0x9d00e2d4                ultofp
+                0x9d00e320                __fixsfsi
+                0x9d00e320                fptoli
+                0x9d00e320                fptosi
+                0x9d00e398                fptoui
+                0x9d00e398                __fixunssfsi
+                0x9d00e398                fptoul
+                0x9d00e40c                __lesf2
+                0x9d00e40c                __nesf2
+                0x9d00e40c                __gtsf2
+                0x9d00e40c                __eqsf2
+                0x9d00e40c                __ltsf2
+                0x9d00e40c                fpcmp
+                0x9d00e40c                __gesf2
+                0x9d00e4a0                fabsf
+                0x9d00e4a0                fpfabs
+                0x9d00e4b0                __negsf2
+                0x9d00e4c0                fpnan
+                0x9d00e4c0                nanf
+ .text          0x9d00e50c      0x814 build/default/production/_ext/990863823/ADC.o
+                0x9d00e50c                calc
+                0x9d00e554                InitADC
+                0x9d00e724                isLocked
+                0x9d00e748                isActive
+                0x9d00e76c                unlockServos
+                0x9d00e790                lockServos
+                0x9d00e7b8                GetRawVoltageCode
+                0x9d00eb84                GetRawVoltage
+                0x9d00ebc8                GetRawVoltagePostFuse
+                0x9d00ec0c                GetRail0Voltage
+                0x9d00ec50                GetRail1Voltage
+                0x9d00ec94                getDyIOVoltage
+ .text          0x9d00ed20      0x7d0 build/default/production/_ext/990863823/EEPROMMannager.o
+                0x9d00ed20                LoadEEstore
+                0x9d00ee38                LoadPIDvals
+                0x9d00f15c                WritePIDvalues
+                0x9d00f3d4                writePPMLink
+                0x9d00f414                readPPMLink
+                0x9d00f454                setEEBrownOutDetect
+                0x9d00f4a8                getEEBrownOutDetect
+ .text          0x9d00f4f0      0x7b0 build/default/production/_ext/108654538/PinFunctions.o
+                0x9d00f4f0                InitPinFunction
+ .text          0x9d00fca0      0x760 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(AbstractPID.o)
+                0x9d00fca1                RunAbstractPIDCalc
+                0x9d00fd79                OnPidConfigure
+                0x9d00fd89                getNumberOfPidChannels
+                0x9d00fd91                getPidVelocityDataTable
+                0x9d00fdb9                getPidGroupDataTable
+                0x9d00fde5                isPidEnabled
+                0x9d00fdf5                SetPIDEnabled
+                0x9d00fe09                SetControllerMath
+                0x9d00fe21                SetPIDCalibrateionState
+                0x9d00fe31                GetPIDCalibrateionState
+                0x9d00fe41                ClearPID
+                0x9d00fe65                GetPIDPosition
+                0x9d00fe85                setPIDConstants
+                0x9d00fead                InitAbsPIDWithPosition
+                0x9d00fed5                InitAbsPID
+                0x9d00feed                pidResetNoStop
+                0x9d00ffc9                SetPIDTimed
+                0x9d0100d5                SetPID
+                0x9d0100e9                isPIDInterpolating
+                0x9d010109                isPIDArrivedAtSetpoint
+                0x9d01013d                RunPIDComs
+                0x9d010175                setOutput
+                0x9d010225                RunPIDControl
+                0x9d0102f5                RunPID
+                0x9d01030d                pidReset
+                0x9d01036d                ZeroPID
+                0x9d01037d                InitilizePidController
+ .text          0x9d010400      0x720 build/default/production/_ext/1978776677/UpstreamPackets.o
+                0x9d010400                pushDummy
+                0x9d01051c                PushAllAsync
+                0x9d0105dc                PushCounterChange
+                0x9d0106f8                PushADCval
+                0x9d010814                PushDIval
+                0x9d010918                UpstreamPushPowerChange
+                0x9d0109b4                POWER
+                0x9d010a9c                pushPPMPacket
+ .text          0x9d010b20      0x6f0 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Debug.o)
+                0x9d010b21                sendToStreamMine
+                0x9d010b4d                setPrintStream
+                0x9d010b5d                sendToStreamLocal
+                0x9d010b7d                getPrintLevel
+                0x9d010b85                setPrintLevel
+                0x9d010b99                okToprint
+                0x9d010bc1                GetLowNib
+                0x9d010bd1                GetHighNib
+                0x9d010be1                sendStr
+                0x9d010bfd                setColor
+                0x9d010c39                printfDEBUG_BYTE
+                0x9d010c59                printfDEBUG_NNL
+                0x9d010c79                printfDEBUG
+                0x9d010ca1                ultoaMINE
+                0x9d010ced                printfDEBUG_INT
+                0x9d010d45                printByteArray
+                0x9d010dcd                printBowlerPacketDEBUG
+                0x9d01104d                printfDEBUG_FL
+                0x9d0110bd                printPIDvals
+ .text          0x9d011210      0x6c8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(PidRpc.o)
+                0x9d011211                GetConfigPDVelocity
+                0x9d011261                ConfigPDVelovity
+                0x9d0112b9                GetConfigPID
+                0x9d0113cd                ConfigPID
+                0x9d011579                processPIDGet
+                0x9d011669                processPIDPost
+                0x9d0117b9                processPIDCrit
+                0x9d0118ad                ProcessPIDPacket
+ .text          0x9d0118d8      0x5f8 build/default/production/_ext/1978776677/AsyncManager.o
+                0x9d0118d8                ProcessAsyncData
+                0x9d011de4                isAnalog
+                0x9d011e60                dealWithAsyncPacket
+ .text          0x9d011ed0      0x5e8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_fifo.o)
+                0x9d011ed1                GotUSBData
+                0x9d011ee1                printBufferState
+                0x9d012119                GetPICUSBFifo
+                0x9d01216d                SetPICUSBFifo
+                0x9d0121bd                waitForTxToBeFree
+                0x9d012245                flush
+                0x9d012289                isUSBActave
+                0x9d012291                forceOpenUSB
+                0x9d01229d                usb_Buffer_Update
+                0x9d012311                GetNumUSBBytes
+                0x9d01232d                usb_CDC_Serial_Init
+                0x9d01237d                USBPutArray
+                0x9d01246d                USBGetArray
+ .text          0x9d0124b8      0x538 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_function_cdc.o)
+                0x9d0124b9                USBCheckCDCRequest
+                0x9d0126d1                CDCInitEP
+                0x9d012729                USBUSARTRxIsReady
+                0x9d012741                getsUSBUSART
+                0x9d0127bd                putUSBUSART
+                0x9d01280d                putsUSBUSART
+                0x9d012869                putrsUSBUSART
+                0x9d0128c9                CDCTxService
 
-.rodata         0x9d0129dc      0x528
- .rodata        0x9d0129dc      0x528 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_tbl_lib.o)
-                0x9d0129dc                __IntSrcTbl
-                0x9d012cdc                __IntVectorTbl
+.rodata         0x9d0129f0      0x528
+ .rodata        0x9d0129f0      0x528 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_tbl_lib.o)
+                0x9d0129f0                __IntSrcTbl
+                0x9d012cf0                __IntVectorTbl
 
-.text           0x9d012f04     0x389c
- .text          0x9d012f04      0x4ec build/default/production/_ext/1978776677/InitializationCallbacks.o
-                0x9d012f04                hardwareInit
-                0x9d0132c0                UserInit
- .text          0x9d0133f0      0x4ec ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(HAL_P32.o)
-                0x9d0133f0                _general_exception_handler
-                0x9d0136b9                disableSerialComs
-                0x9d0136c9                Pic32_Bowler_HAL_Init
-                0x9d013769                Get_HAL_Packet
-                0x9d0137bd                Send_HAL_Packet
-                0x9d0137e9                Get_HAL_Byte_Count
-                0x9d013851                GetBowlerPacket_arch
-                0x9d013895                putStream
-                0x9d0138a5                getMs
-                0x9d0138b1                putCharDebug
-                0x9d0138bd                startScheduler
-                0x9d0138c9                EnableDebugTerminal
- .text          0x9d0138dc      0x498 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(PidHysteresis.o)
-                0x9d0138dd                incrementHistoresis
-                0x9d0138f1                decrementHistoresis
-                0x9d013905                calcCenter
-                0x9d01392d                checkCalibration
-                0x9d013969                getUpperPidHistoresis
-                0x9d01397d                getLowerPidHistoresis
-                0x9d013991                getPidStop
-                0x9d0139a5                runPidHysterisisCalibration
-                0x9d013a41                processRunAutoCal
-                0x9d013a5d                pidHysterisis
-                0x9d013c4d                startHomingLink
-                0x9d013cc9                checkLinkHomingStatus
- .text          0x9d013d74      0x494 build/default/production/_ext/1020318379/ChannelMode.o
-                0x9d013d74                InitPinStates
-                0x9d013e2c                setBrownOutDetect
-                0x9d013e6c                getBrownOutDetect
-                0x9d013e90                setMode
- .text          0x9d014208      0x490 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(FlashStorage.o)
-                0x9d014209                FlashSwitchMemoryToBootloader
-                0x9d014221                SetFlashData
-                0x9d01424d                FlashLoad
-                0x9d01429d                FlashSync
-                0x9d014529                FlashSetMac
-                0x9d014561                FlashSetName
-                0x9d014589                FlashGetMac
-                0x9d0145cd                FlashGetName
-                0x9d0145f1                FlashGetBlRev
-                0x9d014611                FlashGetFwRev
-                0x9d014631                FlashSetFwRev
-                0x9d014665                FlashSetBlRev
- .text          0x9d014698      0x48c build/default/production/_ext/990863823/Switches.o
-                0x9d014698                CheckSwitches
-                0x9d0149d0                IsRegulated
- .text          0x9d014b24      0x484 build/default/production/_ext/990863823/SPI.o
-                0x9d014b24                InitSPI
-                0x9d014c0c                StopSPI
-                0x9d014d2c                isSPI
-                0x9d014d78                GetByteSPI
-                0x9d014ddc                SendPacketToSPIFromArray
-                0x9d014f08                SendPacketToSPI
- .text          0x9d014fa8      0x3b8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Bowler_Server.o)
-                0x9d014fa9                getLastPacketTime
-                0x9d014fd1                Process_Self_Packet
-                0x9d0151a9                Bowler_Init
-                0x9d0151c9                process
-                0x9d0152ad                Bowler_Server_Static
-                0x9d0152c9                Bowler_Server
- .text          0x9d015360      0x3b4 build/default/production/_ext/990863823/AVRInterface.o
-                0x9d015360                getCmd
-                0x9d0153e8                writeLowFuse
-                0x9d015434                writeHighFuse
-                0x9d015480                PowerCycleAVR
-                0x9d0154cc                HoldAVRReset
-                0x9d015524                ReleaseAVRReset
-                0x9d015588                writeAVRTempFlashPageLowByte
-                0x9d015628                writeAVRTempFlashPageHighByte
-                0x9d0156c8                writeExtendedFuse
- .text          0x9d015714      0x39c build/default/production/_ext/1051272628/Abstract_bcs_io_setmode.o
-                0x9d015714                InitilizeBcsIoSetmode
-                0x9d015768                SetChannelMode
-                0x9d0158b4                SetAllChannelModes
-                0x9d01595c                AbstractSetChannelMode
-                0x9d015a18                AbstractSetAllChannelMode
- .text          0x9d015ab0      0x38c ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(FIFO.o)
-                0x9d015ab1                lockFifo
-                0x9d015ab5                unLockFifo
-                0x9d015ab9                clearByteFifo
-                0x9d015ad5                InitByteFifo
-                0x9d015b0d                ReadFirstByte
-                0x9d015b19                calcByteCount
-                0x9d015b3d                FifoGetByteCount
-                0x9d015b49                FifoAddByte
-                0x9d015bc1                getByte
-                0x9d015bfd                FifoGetByteStream
-                0x9d015c55                FifoReadByteStream
-                0x9d015ca5                printFiFoState
-                0x9d015d19                InitPacketFifo
-                0x9d015d4d                FifoGetPacketCount
-                0x9d015d71                FifoAddPacket
-                0x9d015ded                FifoGetPacketSpaceAvailible
-                0x9d015dfd                FifoGetPacket
- .text          0x9d015e3c      0x358 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Bowler_Helper.o)
-                0x9d015e3d                CalcCRC
-                0x9d015e55                CheckCRC
-                0x9d015e69                SetCRC
-                0x9d015e79                GetRPCValue
-                0x9d015e95                LoadCorePacket
-                0x9d015ed9                READY
-                0x9d015f21                ERR
-                0x9d015f69                SetPacketLegnth
-                0x9d015f71                GetPacketLegnth
-                0x9d015f79                DataLegnthFromPacket
-                0x9d015f7d                copyPacket
-                0x9d015f99                Bytes2Int32
-                0x9d015fb1                CheckAddress
-                0x9d015fd9                interpolate
-                0x9d0160fd                bound
-                0x9d016139                set8bit
-                0x9d016141                set16bit
-                0x9d01614d                set32bit
-                0x9d016165                get32bit
-                0x9d016185                get16bit
- .text          0x9d016194      0x31c ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(PidVelocity.o)
-                0x9d016195                RunPDVel
-                0x9d0163e5                RunVel
-                0x9d016411                StartPDVel
- .text          0x9d0164b0      0x2f0 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(PidAsync.o)
-                0x9d0164b1                pushAllPIDPositions
-                0x9d016529                updatePidAsync
-                0x9d016595                pushPIDLimitEvent
-                0x9d0166cd                pushPID
+.text           0x9d012f18     0x389c
+ .text          0x9d012f18      0x4ec build/default/production/_ext/1978776677/InitializationCallbacks.o
+                0x9d012f18                hardwareInit
+                0x9d0132d4                UserInit
+ .text          0x9d013404      0x4ec ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(HAL_P32.o)
+                0x9d013404                _general_exception_handler
+                0x9d0136cd                disableSerialComs
+                0x9d0136dd                Pic32_Bowler_HAL_Init
+                0x9d01377d                Get_HAL_Packet
+                0x9d0137d1                Send_HAL_Packet
+                0x9d0137fd                Get_HAL_Byte_Count
+                0x9d013865                GetBowlerPacket_arch
+                0x9d0138a9                putStream
+                0x9d0138b9                getMs
+                0x9d0138c5                putCharDebug
+                0x9d0138d1                startScheduler
+                0x9d0138dd                EnableDebugTerminal
+ .text          0x9d0138f0      0x498 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(PidHysteresis.o)
+                0x9d0138f1                incrementHistoresis
+                0x9d013905                decrementHistoresis
+                0x9d013919                calcCenter
+                0x9d013941                checkCalibration
+                0x9d01397d                getUpperPidHistoresis
+                0x9d013991                getLowerPidHistoresis
+                0x9d0139a5                getPidStop
+                0x9d0139b9                runPidHysterisisCalibration
+                0x9d013a55                processRunAutoCal
+                0x9d013a71                pidHysterisis
+                0x9d013c61                startHomingLink
+                0x9d013cdd                checkLinkHomingStatus
+ .text          0x9d013d88      0x494 build/default/production/_ext/1020318379/ChannelMode.o
+                0x9d013d88                InitPinStates
+                0x9d013e40                setBrownOutDetect
+                0x9d013e80                getBrownOutDetect
+                0x9d013ea4                setMode
+ .text          0x9d01421c      0x490 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(FlashStorage.o)
+                0x9d01421d                FlashSwitchMemoryToBootloader
+                0x9d014235                SetFlashData
+                0x9d014261                FlashLoad
+                0x9d0142b1                FlashSync
+                0x9d01453d                FlashSetMac
+                0x9d014575                FlashSetName
+                0x9d01459d                FlashGetMac
+                0x9d0145e1                FlashGetName
+                0x9d014605                FlashGetBlRev
+                0x9d014625                FlashGetFwRev
+                0x9d014645                FlashSetFwRev
+                0x9d014679                FlashSetBlRev
+ .text          0x9d0146ac      0x48c build/default/production/_ext/990863823/Switches.o
+                0x9d0146ac                CheckSwitches
+                0x9d0149e4                IsRegulated
+ .text          0x9d014b38      0x484 build/default/production/_ext/990863823/SPI.o
+                0x9d014b38                InitSPI
+                0x9d014c20                StopSPI
+                0x9d014d40                isSPI
+                0x9d014d8c                GetByteSPI
+                0x9d014df0                SendPacketToSPIFromArray
+                0x9d014f1c                SendPacketToSPI
+ .text          0x9d014fbc      0x3b8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Bowler_Server.o)
+                0x9d014fbd                getLastPacketTime
+                0x9d014fe5                Process_Self_Packet
+                0x9d0151bd                Bowler_Init
+                0x9d0151dd                process
+                0x9d0152c1                Bowler_Server_Static
+                0x9d0152dd                Bowler_Server
+ .text          0x9d015374      0x3b4 build/default/production/_ext/990863823/AVRInterface.o
+                0x9d015374                getCmd
+                0x9d0153fc                writeLowFuse
+                0x9d015448                writeHighFuse
+                0x9d015494                PowerCycleAVR
+                0x9d0154e0                HoldAVRReset
+                0x9d015538                ReleaseAVRReset
+                0x9d01559c                writeAVRTempFlashPageLowByte
+                0x9d01563c                writeAVRTempFlashPageHighByte
+                0x9d0156dc                writeExtendedFuse
+ .text          0x9d015728      0x39c build/default/production/_ext/1051272628/Abstract_bcs_io_setmode.o
+                0x9d015728                InitilizeBcsIoSetmode
+                0x9d01577c                SetChannelMode
+                0x9d0158c8                SetAllChannelModes
+                0x9d015970                AbstractSetChannelMode
+                0x9d015a2c                AbstractSetAllChannelMode
+ .text          0x9d015ac4      0x38c ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(FIFO.o)
+                0x9d015ac5                lockFifo
+                0x9d015ac9                unLockFifo
+                0x9d015acd                clearByteFifo
+                0x9d015ae9                InitByteFifo
+                0x9d015b21                ReadFirstByte
+                0x9d015b2d                calcByteCount
+                0x9d015b51                FifoGetByteCount
+                0x9d015b5d                FifoAddByte
+                0x9d015bd5                getByte
+                0x9d015c11                FifoGetByteStream
+                0x9d015c69                FifoReadByteStream
+                0x9d015cb9                printFiFoState
+                0x9d015d2d                InitPacketFifo
+                0x9d015d61                FifoGetPacketCount
+                0x9d015d85                FifoAddPacket
+                0x9d015e01                FifoGetPacketSpaceAvailible
+                0x9d015e11                FifoGetPacket
+ .text          0x9d015e50      0x358 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Bowler_Helper.o)
+                0x9d015e51                CalcCRC
+                0x9d015e69                CheckCRC
+                0x9d015e7d                SetCRC
+                0x9d015e8d                GetRPCValue
+                0x9d015ea9                LoadCorePacket
+                0x9d015eed                READY
+                0x9d015f35                ERR
+                0x9d015f7d                SetPacketLegnth
+                0x9d015f85                GetPacketLegnth
+                0x9d015f8d                DataLegnthFromPacket
+                0x9d015f91                copyPacket
+                0x9d015fad                Bytes2Int32
+                0x9d015fc5                CheckAddress
+                0x9d015fed                interpolate
+                0x9d016111                bound
+                0x9d01614d                set8bit
+                0x9d016155                set16bit
+                0x9d016161                set32bit
+                0x9d016179                get32bit
+                0x9d016199                get16bit
+ .text          0x9d0161a8      0x31c ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(PidVelocity.o)
+                0x9d0161a9                RunPDVel
+                0x9d0163f9                RunVel
+                0x9d016425                StartPDVel
+ .text          0x9d0164c4      0x2f0 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(PidAsync.o)
+                0x9d0164c5                pushAllPIDPositions
+                0x9d01653d                updatePidAsync
+                0x9d0165a9                pushPIDLimitEvent
+                0x9d0166e1                pushPID
 
-.rodata         0x9d0167a0      0x2ac
- .rodata        0x9d0167a0      0x2ac build/default/production/_ext/805493626/Abstract_bcs_io.o
+.rodata         0x9d0167b4      0x2ac
+ .rodata        0x9d0167b4      0x2ac build/default/production/_ext/805493626/Abstract_bcs_io.o
 
-.text           0x9d016a4c      0x774
- .text          0x9d016a4c      0x298 build/default/production/_ext/805493626/Namespace_bcs_io.o
-                0x9d016a4c                bcsIoAsyncEventCallback
-                0x9d016b60                get_bcsIoNamespace
- .text          0x9d016ce4      0x280 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(BowlerPacketParser.o)
-                0x9d016ce5                getNumBytes
-                0x9d016cf5                getStream
-                0x9d016d0d                allign
-                0x9d016da5                _getBowlerPacket
-                0x9d016f05                GetBowlerPacketDebug
-                0x9d016f11                GetBowlerPacket
-                0x9d016f1d                FixPacket
-                0x9d016f41                PutBowlerPacket
- .text          0x9d016f64      0x25c ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(ADC.o)
-                0x9d016f65                InitADCHardware
-                0x9d017119                getAdcRaw
-                0x9d0171a1                getAdcVoltage
+.text           0x9d016a60      0x774
+ .text          0x9d016a60      0x298 build/default/production/_ext/805493626/Namespace_bcs_io.o
+                0x9d016a60                bcsIoAsyncEventCallback
+                0x9d016b74                get_bcsIoNamespace
+ .text          0x9d016cf8      0x280 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(BowlerPacketParser.o)
+                0x9d016cf9                getNumBytes
+                0x9d016d09                getStream
+                0x9d016d21                allign
+                0x9d016db9                _getBowlerPacket
+                0x9d016f19                GetBowlerPacketDebug
+                0x9d016f25                GetBowlerPacket
+                0x9d016f31                FixPacket
+                0x9d016f55                PutBowlerPacket
+ .text          0x9d016f78      0x25c ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(ADC.o)
+                0x9d016f79                InitADCHardware
+                0x9d01712d                getAdcRaw
+                0x9d0171b5                getAdcVoltage
 
-.rodata         0x9d0171c0      0x250
- .rodata        0x9d0171c0      0x250 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(HAL_P32.o)
+.rodata         0x9d0171d4      0x250
+ .rodata        0x9d0171d4      0x250 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(HAL_P32.o)
 
-.text           0x9d017410      0xa78
- .text          0x9d017410      0x24c ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_core.o)
-                0x9d017411                _png
-                0x9d017441                addRpcToNamespace
-                0x9d017485                getRpcByID
-                0x9d0174b1                getRpcByIndex
-                0x9d0174c9                getBcsCoreNamespace
-                0x9d017501                RunNamespaceAsync
-                0x9d017525                addNamespaceToList
-                0x9d017565                getNumberOfNamespaces
-                0x9d017581                getNamespaceAtIndex
-                0x9d0175ad                _nms
-                0x9d01763d                getNumberOfRpcs
- .text          0x9d01765c      0x23c ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Bowler_UART_HAL.o)
-                0x9d01765d                GotUARTData
-                0x9d01766d                GetPICUARTFifo
-                0x9d017675                SetPICUARTFifo
-                0x9d01767d                newByteUartHal
-                0x9d0176a8                U1_ISR
-                0x9d017795                CalcBaud
-                0x9d0177ad                Pic32UARTSetBaud
-                0x9d017831                Pic32UART_HAL_INIT
-                0x9d01783d                Pic32UARTGetArray
-                0x9d017861                Pic32Get_UART_Byte_Count
-                0x9d017875                Pic32UARTPutArray
- .text          0x9d017898      0x200 build/default/production/_ext/321196743/Namespace_bcs_pid_dypid.o
-                0x9d017898                bcsPidDypidAsyncEventCallback
-                0x9d017914                bcsPidDypidProcessor_g
-                0x9d017978                bcsPidDypidProcessor_c
-                0x9d017a24                get_bcsPidDypidNamespace
- .text          0x9d017a98      0x1fc build/default/production/_ext/1281821416/Namespace_bcs_safe.o
-                0x9d017a98                bcsSafeAsyncEventCallback
-                0x9d017ac4                bcsSafeProcessor_g
-                0x9d017b70                bcsSafeProcessor_p
-                0x9d017c20                get_bcsSafeNamespace
- .text          0x9d017c94      0x1f4 build/default/production/_ext/990863823/DyIODataTableManager.o
-                0x9d017c94                InitializeDyIODataTableManager
-                0x9d017cf4                SyncDataTable
-                0x9d017d58                SetNewConfigurationDataTable
-                0x9d017d84                LoadSerialTxData
-                0x9d017e18                GetSerialRxData
+.text           0x9d017424      0xa78
+ .text          0x9d017424      0x24c ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_core.o)
+                0x9d017425                _png
+                0x9d017455                addRpcToNamespace
+                0x9d017499                getRpcByID
+                0x9d0174c5                getRpcByIndex
+                0x9d0174dd                getBcsCoreNamespace
+                0x9d017515                RunNamespaceAsync
+                0x9d017539                addNamespaceToList
+                0x9d017579                getNumberOfNamespaces
+                0x9d017595                getNamespaceAtIndex
+                0x9d0175c1                _nms
+                0x9d017651                getNumberOfRpcs
+ .text          0x9d017670      0x23c ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Bowler_UART_HAL.o)
+                0x9d017671                GotUARTData
+                0x9d017681                GetPICUARTFifo
+                0x9d017689                SetPICUARTFifo
+                0x9d017691                newByteUartHal
+                0x9d0176bc                U1_ISR
+                0x9d0177a9                CalcBaud
+                0x9d0177c1                Pic32UARTSetBaud
+                0x9d017845                Pic32UART_HAL_INIT
+                0x9d017851                Pic32UARTGetArray
+                0x9d017875                Pic32Get_UART_Byte_Count
+                0x9d017889                Pic32UARTPutArray
+ .text          0x9d0178ac      0x200 build/default/production/_ext/321196743/Namespace_bcs_pid_dypid.o
+                0x9d0178ac                bcsPidDypidAsyncEventCallback
+                0x9d017928                bcsPidDypidProcessor_g
+                0x9d01798c                bcsPidDypidProcessor_c
+                0x9d017a38                get_bcsPidDypidNamespace
+ .text          0x9d017aac      0x1fc build/default/production/_ext/1281821416/Namespace_bcs_safe.o
+                0x9d017aac                bcsSafeAsyncEventCallback
+                0x9d017ad8                bcsSafeProcessor_g
+                0x9d017b84                bcsSafeProcessor_p
+                0x9d017c34                get_bcsSafeNamespace
+ .text          0x9d017ca8      0x1f4 build/default/production/_ext/990863823/DyIODataTableManager.o
+                0x9d017ca8                InitializeDyIODataTableManager
+                0x9d017d08                SyncDataTable
+                0x9d017d6c                SetNewConfigurationDataTable
+                0x9d017d98                LoadSerialTxData
+                0x9d017e2c                GetSerialRxData
 
-.rodata         0x9d017e88      0x510
- .rodata        0x9d017e88      0x1c0 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Debug.o)
-                0x9d018018                AsciiHex
-                0x9d018028                errorColor
-                0x9d018030                infoColor
-                0x9d018038                warningColor
-                0x9d018040                clearErrorColor
- .rodata        0x9d018048      0x1b0 build/default/production/_ext/990863823/CoProcCom.o
- .rodata        0x9d0181f8      0x1a0 build/default/production/_ext/805493626/Bcs_IO_AdvancedAsync.o
+.rodata         0x9d017e9c      0x510
+ .rodata        0x9d017e9c      0x1c0 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Debug.o)
+                0x9d01802c                AsciiHex
+                0x9d01803c                errorColor
+                0x9d018044                infoColor
+                0x9d01804c                warningColor
+                0x9d018054                clearErrorColor
+ .rodata        0x9d01805c      0x1b0 build/default/production/_ext/990863823/CoProcCom.o
+ .rodata        0x9d01820c      0x1a0 build/default/production/_ext/805493626/Bcs_IO_AdvancedAsync.o
 
-.text           0x9d018398      0x300
- .text          0x9d018398      0x18c build/default/production/_ext/1360937237/DyIOMain.o
-                0x9d018398                buttonCheck
-                0x9d018434                MyServer
-                0x9d0184c4                runDyIOMain
- .text          0x9d018524      0x174 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Tick.o)
-                0x9d018525                TickInit
-                0x9d018585                TickGetUpper
-                0x9d01858d                TickGetLower
-                0x9d018595                TickGet
-                0x9d0185ad                MyTickConvertToMilliseconds
-                0x9d0185cd                TickGetMS
-                0x9d018608                Timer1Handler
+.text           0x9d0183ac      0x300
+ .text          0x9d0183ac      0x18c build/default/production/_ext/1360937237/DyIOMain.o
+                0x9d0183ac                buttonCheck
+                0x9d018448                MyServer
+                0x9d0184d8                runDyIOMain
+ .text          0x9d018538      0x174 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Tick.o)
+                0x9d018539                TickInit
+                0x9d018599                TickGetUpper
+                0x9d0185a1                TickGetLower
+                0x9d0185a9                TickGet
+                0x9d0185c1                MyTickConvertToMilliseconds
+                0x9d0185e1                TickGetMS
+                0x9d01861c                Timer1Handler
 
-.rodata         0x9d018698      0x170
- .rodata        0x9d018698      0x170 build/default/production/_ext/1978776677/InitializationCallbacks.o
-                0x9d018698                MY_MAC_ADDRESS
+.rodata         0x9d0186ac      0x170
+ .rodata        0x9d0186ac      0x170 build/default/production/_ext/1978776677/InitializationCallbacks.o
+                0x9d0186ac                MY_MAC_ADDRESS
 
-.text           0x9d018808      0x2d4
- .text          0x9d018808      0x16c ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_rpc.o)
-                0x9d018809                _rpcArgs
-                0x9d0188bd                _rpc
-                0x9d01893d                getBcsRpcNamespace
- .text          0x9d018974      0x168 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(memcpy.o)
-                0x9d018974                memcpy
+.text           0x9d01881c      0x2d4
+ .text          0x9d01881c      0x16c ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_rpc.o)
+                0x9d01881d                _rpcArgs
+                0x9d0188d1                _rpc
+                0x9d018951                getBcsRpcNamespace
+ .text          0x9d018988      0x168 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(memcpy.o)
+                0x9d018988                memcpy
 
-.rodata         0x9d018adc      0x164
- .rodata        0x9d018adc      0x164 build/default/production/_ext/1978776677/DownStreamPackets.o
+.rodata         0x9d018af0      0x164
+ .rodata        0x9d018af0      0x164 build/default/production/_ext/1978776677/DownStreamPackets.o
 
-.text           0x9d018c40      0x15c
- .text          0x9d018c40      0x15c build/default/production/_ext/1020318379/Pin_State.o
-                0x9d018c40                InitPins
+.text           0x9d018c54      0x15c
+ .text          0x9d018c54      0x15c build/default/production/_ext/1020318379/Pin_State.o
+                0x9d018c54                InitPins
 
-.rodata         0x9d018d9c      0x154
- .rodata        0x9d018d9c      0x154 build/default/production/_ext/1020318379/ChannelMode.o
+.rodata         0x9d018db0      0x154
+ .rodata        0x9d018db0      0x154 build/default/production/_ext/1020318379/ChannelMode.o
 
 .text._NVMOperation
-                0x9d018ef0      0x114
+                0x9d018f04      0x114
  .text._NVMOperation
-                0x9d018ef0      0x114 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(nvm_operation_lib.o)
-                0x9d018ef0                _NVMOperation
+                0x9d018f04      0x114 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(nvm_operation_lib.o)
+                0x9d018f04                _NVMOperation
 
-.rodata         0x9d019004      0x208
- .rodata        0x9d019004      0x110 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(PidHysteresis.o)
- .rodata        0x9d019114       0xf8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_fifo.o)
+.rodata         0x9d019018      0x208
+ .rodata        0x9d019018      0x110 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(PidHysteresis.o)
+ .rodata        0x9d019128       0xf8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_fifo.o)
 
-.text           0x9d01920c      0x1c4
- .text          0x9d01920c       0xe4 build/default/production/_ext/805493626/Debug_DyIO.o
-                0x9d01920c                mystrlen
-                0x9d019268                printMode
- .text          0x9d0192f0       0xe0 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_pid.o)
-                0x9d0192f1                pidAsyncEventCallbackLocal
-                0x9d019301                getBcsPidNamespace
+.text           0x9d019220      0x1c4
+ .text          0x9d019220       0xe4 build/default/production/_ext/805493626/Debug_DyIO.o
+                0x9d019220                mystrlen
+                0x9d01927c                printMode
+ .text          0x9d019304       0xe0 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_pid.o)
+                0x9d019305                pidAsyncEventCallbackLocal
+                0x9d019315                getBcsPidNamespace
 
-.rodata         0x9d0193d0       0xd0
- .rodata        0x9d0193d0       0xd0 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(BowlerPacketParser.o)
+.rodata         0x9d0193e4       0xd0
+ .rodata        0x9d0193e4       0xd0 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(BowlerPacketParser.o)
 
 .text.general_exception
-                0x9d0194a0       0xd0
+                0x9d0194b4       0xd0
  .text.general_exception
-                0x9d0194a0       0xd0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(general-exception.o)
-                0x9d0194a0                _general_exception_context
+                0x9d0194b4       0xd0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(general-exception.o)
+                0x9d0194b4                _general_exception_context
 
-.text           0x9d019570      0x174
- .text          0x9d019570       0xbc ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(LED.o)
-                0x9d019571                InitLEDS
-                0x9d0195b5                SetGreen
-                0x9d0195d1                SetRed
-                0x9d0195ed                SetBlue
-                0x9d019609                SetColor
- .text          0x9d01962c       0xb8 build/default/production/_ext/1825615050/CartesianController.o
-                0x9d01962c                CartesianControllerInit
-                0x9d01964c                CartesianControllerCoOp
-                0x9d01966c                CartesianControllerGetPacket
-                0x9d019694                CartesianControllerPostPacket
-                0x9d0196bc                CartesianControllerCriticalPacket
+.text           0x9d019584      0x174
+ .text          0x9d019584       0xbc ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(LED.o)
+                0x9d019585                InitLEDS
+                0x9d0195c9                SetGreen
+                0x9d0195e5                SetRed
+                0x9d019601                SetBlue
+                0x9d01961d                SetColor
+ .text          0x9d019640       0xb8 build/default/production/_ext/1825615050/CartesianController.o
+                0x9d019640                CartesianControllerInit
+                0x9d019660                CartesianControllerCoOp
+                0x9d019680                CartesianControllerGetPacket
+                0x9d0196a8                CartesianControllerPostPacket
+                0x9d0196d0                CartesianControllerCriticalPacket
 
-.rodata         0x9d0196e4      0x2b8
- .rodata        0x9d0196e4       0xb8 build/default/production/_ext/990863823/ADC.o
- .rodata        0x9d01979c       0xac build/default/production/_ext/1978776677/AsyncManager.o
- .rodata        0x9d019848       0xac build/default/production/_ext/990863823/Switches.o
- .rodata        0x9d0198f4       0xa8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Bowler_Server.o)
-                0x9d019994                Broadcast
+.rodata         0x9d0196f8      0x2b8
+ .rodata        0x9d0196f8       0xb8 build/default/production/_ext/990863823/ADC.o
+ .rodata        0x9d0197b0       0xac build/default/production/_ext/1978776677/AsyncManager.o
+ .rodata        0x9d01985c       0xac build/default/production/_ext/990863823/Switches.o
+ .rodata        0x9d019908       0xa8 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Bowler_Server.o)
+                0x9d0199a8                Broadcast
 
-.text           0x9d01999c       0xa0
- .text          0x9d01999c       0xa0 build/default/production/_ext/1051272628/Namespace_bcs_io_setmode.o
-                0x9d01999c                bcsIoSetmodeAsyncEventCallback
-                0x9d0199c8                get_bcsIoSetmodeNamespace
+.text           0x9d0199b0       0xa0
+ .text          0x9d0199b0       0xa0 build/default/production/_ext/1051272628/Namespace_bcs_io_setmode.o
+                0x9d0199b0                bcsIoSetmodeAsyncEventCallback
+                0x9d0199dc                get_bcsIoSetmodeNamespace
 
-.rodata         0x9d019a3c      0x1dc
- .rodata        0x9d019a3c       0xa0 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(AbstractPID.o)
- .rodata        0x9d019adc       0xa0 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(FlashStorage.o)
- .rodata        0x9d019b7c       0x9c build/default/production/_ext/1825615050/PID.o
+.rodata         0x9d019a50      0x1dc
+ .rodata        0x9d019a50       0xa0 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(AbstractPID.o)
+ .rodata        0x9d019af0       0xa0 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(FlashStorage.o)
+ .rodata        0x9d019b90       0x9c build/default/production/_ext/1825615050/PID.o
 
-.text           0x9d019c18       0x98
- .text          0x9d019c18       0x98 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_callback.o)
-                0x9d019c19                USBCBSuspend
-                0x9d019c1d                USBCBWakeFromSuspend
-                0x9d019c21                USBCB_SOF_Handler
-                0x9d019c25                USBCBErrorHandler
-                0x9d019c29                USBCBCheckOtherReq
-                0x9d019c35                USBCBStdSetDscHandler
-                0x9d019c39                USBCBInitEP
-                0x9d019c45                USBCBSendResume
-                0x9d019c75                USER_USB_CALLBACK_EVENT_HANDLER
-                0x9d019c9d                mySetLineCodingHandler
+.text           0x9d019c2c       0x98
+ .text          0x9d019c2c       0x98 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_callback.o)
+                0x9d019c2d                USBCBSuspend
+                0x9d019c31                USBCBWakeFromSuspend
+                0x9d019c35                USBCB_SOF_Handler
+                0x9d019c39                USBCBErrorHandler
+                0x9d019c3d                USBCBCheckOtherReq
+                0x9d019c49                USBCBStdSetDscHandler
+                0x9d019c4d                USBCBInitEP
+                0x9d019c59                USBCBSendResume
+                0x9d019c89                USER_USB_CALLBACK_EVENT_HANDLER
+                0x9d019cb1                mySetLineCodingHandler
 
-.rodata         0x9d019cb0      0x1a4
- .rodata        0x9d019cb0       0x90 build/default/production/_ext/805493626/Namespace_bcs_io.o
- .rodata        0x9d019d40       0x90 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(PidVelocity.o)
- .rodata        0x9d019dd0       0x84 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(FIFO.o)
+.rodata         0x9d019cc4      0x1a4
+ .rodata        0x9d019cc4       0x90 build/default/production/_ext/805493626/Namespace_bcs_io.o
+ .rodata        0x9d019d54       0x90 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(PidVelocity.o)
+ .rodata        0x9d019de4       0x84 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(FIFO.o)
 
-.text           0x9d019e54       0x84
- .text          0x9d019e54       0x84 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Delay.o)
-                0x9d019e55                DelayIncServo
-                0x9d019e59                Delay10us
-                0x9d019e71                DelayPreServo
-                0x9d019e91                DelayMs
-                0x9d019ebd                Delay1us
+.text           0x9d019e68       0x84
+ .text          0x9d019e68       0x84 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Delay.o)
+                0x9d019e69                DelayIncServo
+                0x9d019e6d                Delay10us
+                0x9d019e85                DelayPreServo
+                0x9d019ea5                DelayMs
+                0x9d019ed1                Delay1us
 
-.rodata         0x9d019ed8      0x100
- .rodata        0x9d019ed8       0x80 build/default/production/_ext/1051272628/Abstract_bcs_io_setmode.o
- .rodata        0x9d019f58       0x80 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(spi_brg_tbl_lib_legacy.o)
-                0x9d019f58                _SpiBrgConvTbl
+.rodata         0x9d019eec      0x100
+ .rodata        0x9d019eec       0x80 build/default/production/_ext/1051272628/Abstract_bcs_io_setmode.o
+ .rodata        0x9d019f6c       0x80 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(spi_brg_tbl_lib_legacy.o)
+                0x9d019f6c                _SpiBrgConvTbl
 
 .text.UARTEnable
-                0x9d019fd8       0x80
+                0x9d019fec       0x80
  .text.UARTEnable
-                0x9d019fd8       0x80 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(uart_lib.o)
-                0x9d019fd8                UARTEnable
+                0x9d019fec       0x80 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(uart_lib.o)
+                0x9d019fec                UARTEnable
 
-.rodata         0x9d01a058       0x7c
- .rodata        0x9d01a058       0x7c build/default/production/_ext/990863823/SPI.o
+.rodata         0x9d01a06c       0x7c
+ .rodata        0x9d01a06c       0x7c build/default/production/_ext/990863823/SPI.o
 
-.text           0x9d01a0d4       0x78
- .text          0x9d01a0d4       0x78 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(UART.o)
-                0x9d01a0d5                Write32UART2
-                0x9d01a111                Write32UART1
+.text           0x9d01a0e8       0x78
+ .text          0x9d01a0e8       0x78 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(UART.o)
+                0x9d01a0e9                Write32UART2
+                0x9d01a125                Write32UART1
 
 .text.SoftReset
-                0x9d01a14c       0x78
+                0x9d01a160       0x78
  .text.SoftReset
-                0x9d01a14c       0x78 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(soft_reset_lib.o)
-                0x9d01a14c                SoftReset
+                0x9d01a160       0x78 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(soft_reset_lib.o)
+                0x9d01a160                SoftReset
 
-.text           0x9d01a1c4      0x134
- .text          0x9d01a1c4       0x68 build/default/production/_ext/990863823/SerialPassThrough.o
-                0x9d01a1c4                SendToSerialPassThrough
- .text          0x9d01a22c       0x68 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Scheduler.o)
-                0x9d01a22d                RunEvery
- .text          0x9d01a294       0x64 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_descriptors.o)
-                0x9d01a295                WriteUSBSerialNumber
-                0x9d01a2c1                SetUSB_VID_PID
-                0x9d01a2cd                WriteUSBDeviceString
+.text           0x9d01a1d8      0x134
+ .text          0x9d01a1d8       0x68 build/default/production/_ext/990863823/SerialPassThrough.o
+                0x9d01a1d8                SendToSerialPassThrough
+ .text          0x9d01a240       0x68 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Scheduler.o)
+                0x9d01a241                RunEvery
+ .text          0x9d01a2a8       0x64 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_descriptors.o)
+                0x9d01a2a9                WriteUSBSerialNumber
+                0x9d01a2d5                SetUSB_VID_PID
+                0x9d01a2e1                WriteUSBDeviceString
 
-.text.OpenSPI2  0x9d01a2f8       0x60
+.text.OpenSPI2  0x9d01a30c       0x60
  .text.OpenSPI2
-                0x9d01a2f8       0x60 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(spi_open_spi2_lib_legacy.o)
-                0x9d01a2f8                OpenSPI2
+                0x9d01a30c       0x60 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(spi_open_spi2_lib_legacy.o)
+                0x9d01a30c                OpenSPI2
 
 .text.UARTSetDataRate
-                0x9d01a358       0x5c
+                0x9d01a36c       0x5c
  .text.UARTSetDataRate
-                0x9d01a358       0x5c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(uart_lib.o)
-                0x9d01a358                UARTSetDataRate
+                0x9d01a36c       0x5c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(uart_lib.o)
+                0x9d01a36c                UARTSetDataRate
 
-.rodata         0x9d01a3b4      0x108
- .rodata        0x9d01a3b4       0x58 build/default/production/_ext/990863823/Counter.o
- .rodata        0x9d01a40c       0x58 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Bowler_Helper.o)
- .rodata        0x9d01a464       0x58 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_pid.o)
+.rodata         0x9d01a3c8      0x108
+ .rodata        0x9d01a3c8       0x58 build/default/production/_ext/990863823/Counter.o
+ .rodata        0x9d01a420       0x58 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Bowler_Helper.o)
+ .rodata        0x9d01a478       0x58 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_pid.o)
 
 .text.INTEnable
-                0x9d01a4bc       0x58
+                0x9d01a4d0       0x58
  .text.INTEnable
-                0x9d01a4bc       0x58 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_tbl_lib.o)
-                0x9d01a4bc                INTEnable
+                0x9d01a4d0       0x58 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_tbl_lib.o)
+                0x9d01a4d0                INTEnable
 
-.rodata         0x9d01a514      0x180
- .rodata        0x9d01a514       0x54 build/default/production/_ext/1360937237/DyIOMain.o
- .rodata        0x9d01a568       0x50 build/default/production/_ext/1020318379/Pin_State.o
- .rodata        0x9d01a5b8       0x4c ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_core.o)
-                0x9d01a5e8                coreName
- .rodata        0x9d01a604       0x48 build/default/production/_ext/990863823/AVRInterface.o
- .rodata        0x9d01a64c       0x48 build/default/production/_ext/990863823/EEPROMMannager.o
+.rodata         0x9d01a528      0x180
+ .rodata        0x9d01a528       0x54 build/default/production/_ext/1360937237/DyIOMain.o
+ .rodata        0x9d01a57c       0x50 build/default/production/_ext/1020318379/Pin_State.o
+ .rodata        0x9d01a5cc       0x4c ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_core.o)
+                0x9d01a5fc                coreName
+ .rodata        0x9d01a618       0x48 build/default/production/_ext/990863823/AVRInterface.o
+ .rodata        0x9d01a660       0x48 build/default/production/_ext/990863823/EEPROMMannager.o
 
-.text           0x9d01a694       0x48
- .text          0x9d01a694       0x48 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/libgcc.a(floatunsisf.o)
-                0x9d01a694                __floatunsisf
+.text           0x9d01a6a8       0x48
+ .text          0x9d01a6a8       0x48 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/libgcc.a(floatunsisf.o)
+                0x9d01a6a8                __floatunsisf
 
-.rodata         0x9d01a6dc       0x8c
- .rodata        0x9d01a6dc       0x48 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(_ports_tbl_libp.o)
-                0x9d01a6dc                PortRegTbl
- .rodata        0x9d01a724       0x44 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_function_cdc.o)
+.rodata         0x9d01a6f0       0x8c
+ .rodata        0x9d01a6f0       0x48 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(_ports_tbl_libp.o)
+                0x9d01a6f0                PortRegTbl
+ .rodata        0x9d01a738       0x44 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(usb_function_cdc.o)
 
 .text.PORTSetPinsDigitalOut
-                0x9d01a768       0x40
+                0x9d01a77c       0x40
  .text.PORTSetPinsDigitalOut
-                0x9d01a768       0x40 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(port_set_pins_digital_out_lib.o)
-                0x9d01a768                PORTSetPinsDigitalOut
+                0x9d01a77c       0x40 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(port_set_pins_digital_out_lib.o)
+                0x9d01a77c                PORTSetPinsDigitalOut
 
 .text.UARTGetDataRate
-                0x9d01a7a8       0x40
+                0x9d01a7bc       0x40
  .text.UARTGetDataRate
-                0x9d01a7a8       0x40 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(uart_lib.o)
-                0x9d01a7a8                UARTGetDataRate
+                0x9d01a7bc       0x40 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(uart_lib.o)
+                0x9d01a7bc                UARTGetDataRate
 
-.rodata         0x9d01a7e8       0x3c
- .rodata        0x9d01a7e8       0x3c build/default/production/_ext/321196743/Namespace_neuronrobotics_dyio.o
+.rodata         0x9d01a7fc       0x3c
+ .rodata        0x9d01a7fc       0x3c build/default/production/_ext/321196743/Namespace_neuronrobotics_dyio.o
 
 .text.INTSetVectorPriority
-                0x9d01a824       0x3c
+                0x9d01a838       0x3c
  .text.INTSetVectorPriority
-                0x9d01a824       0x3c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_tbl_lib.o)
-                0x9d01a824                INTSetVectorPriority
+                0x9d01a838       0x3c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_tbl_lib.o)
+                0x9d01a838                INTSetVectorPriority
 
 .text.INTSetVectorSubPriority
-                0x9d01a860       0x3c
+                0x9d01a874       0x3c
  .text.INTSetVectorSubPriority
-                0x9d01a860       0x3c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_tbl_lib.o)
-                0x9d01a860                INTSetVectorSubPriority
+                0x9d01a874       0x3c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_tbl_lib.o)
+                0x9d01a874                INTSetVectorSubPriority
 
 .text.UARTConfigure
-                0x9d01a89c       0x3c
+                0x9d01a8b0       0x3c
  .text.UARTConfigure
-                0x9d01a89c       0x3c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(uart_lib.o)
-                0x9d01a89c                UARTConfigure
+                0x9d01a8b0       0x3c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(uart_lib.o)
+                0x9d01a8b0                UARTConfigure
 
 .text.UARTSetAddress
-                0x9d01a8d8       0x3c
+                0x9d01a8ec       0x3c
  .text.UARTSetAddress
-                0x9d01a8d8       0x3c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(uart_lib.o)
-                0x9d01a8d8                UARTSetAddress
+                0x9d01a8ec       0x3c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(uart_lib.o)
+                0x9d01a8ec                UARTSetAddress
 
 .text.UARTWatchForAddress
-                0x9d01a914       0x38
+                0x9d01a928       0x38
  .text.UARTWatchForAddress
-                0x9d01a914       0x38 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(uart_lib.o)
-                0x9d01a914                UARTWatchForAddress
+                0x9d01a928       0x38 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(uart_lib.o)
+                0x9d01a928                UARTWatchForAddress
 
-.rodata         0x9d01a94c       0x34
- .rodata        0x9d01a94c       0x34 build/default/production/_ext/990863823/PPMReader.o
+.rodata         0x9d01a960       0x34
+ .rodata        0x9d01a960       0x34 build/default/production/_ext/990863823/PPMReader.o
 
-.text           0x9d01a980       0x34
- .text          0x9d01a980       0x34 build/default/production/_ext/1360937237/Main.o
-                0x9d01a980                main
+.text           0x9d01a994       0x34
+ .text          0x9d01a994       0x34 build/default/production/_ext/1360937237/Main.o
+                0x9d01a994                main
 
 .text.INTEnableSystemMultiVectoredInt
-                0x9d01a9b4       0x34
+                0x9d01a9c8       0x34
  .text.INTEnableSystemMultiVectoredInt
-                0x9d01a9b4       0x34 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_enable_mv_int_lib.o)
-                0x9d01a9b4                INTEnableSystemMultiVectoredInt
+                0x9d01a9c8       0x34 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_enable_mv_int_lib.o)
+                0x9d01a9c8                INTEnableSystemMultiVectoredInt
 
 .text.NVMWriteWord
-                0x9d01a9e8       0x34
+                0x9d01a9fc       0x34
  .text.NVMWriteWord
-                0x9d01a9e8       0x34 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(nvm_write_word_lib.o)
-                0x9d01a9e8                NVMWriteWord
+                0x9d01a9fc       0x34 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(nvm_write_word_lib.o)
+                0x9d01a9fc                NVMWriteWord
 
 .text.INTGetVectorPriority
-                0x9d01aa1c       0x30
+                0x9d01aa30       0x30
  .text.INTGetVectorPriority
-                0x9d01aa1c       0x30 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_tbl_lib.o)
-                0x9d01aa1c                INTGetVectorPriority
+                0x9d01aa30       0x30 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_tbl_lib.o)
+                0x9d01aa30                INTGetVectorPriority
 
 .text.INTGetVectorSubPriority
-                0x9d01aa4c       0x30
+                0x9d01aa60       0x30
  .text.INTGetVectorSubPriority
-                0x9d01aa4c       0x30 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_tbl_lib.o)
-                0x9d01aa4c                INTGetVectorSubPriority
+                0x9d01aa60       0x30 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_tbl_lib.o)
+                0x9d01aa60                INTGetVectorSubPriority
 
-.rodata         0x9d01aa7c       0x2c
- .rodata        0x9d01aa7c       0x2c build/default/production/_ext/1978776677/UpstreamPackets.o
+.rodata         0x9d01aa90       0x2c
+ .rodata        0x9d01aa90       0x2c build/default/production/_ext/1978776677/UpstreamPackets.o
 
 .text.INTClearFlag
-                0x9d01aaa8       0x2c
+                0x9d01aabc       0x2c
  .text.INTClearFlag
-                0x9d01aaa8       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_tbl_lib.o)
-                0x9d01aaa8                INTClearFlag
+                0x9d01aabc       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_tbl_lib.o)
+                0x9d01aabc                INTClearFlag
 
 .text.INTSetFlag
-                0x9d01aad4       0x2c
+                0x9d01aae8       0x2c
  .text.INTSetFlag
-                0x9d01aad4       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_tbl_lib.o)
-                0x9d01aad4                INTSetFlag
+                0x9d01aae8       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_tbl_lib.o)
+                0x9d01aae8                INTSetFlag
 
 .text.INTGetFlag
-                0x9d01ab00       0x2c
+                0x9d01ab14       0x2c
  .text.INTGetFlag
-                0x9d01ab00       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_tbl_lib.o)
-                0x9d01ab00                INTGetFlag
+                0x9d01ab14       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_tbl_lib.o)
+                0x9d01ab14                INTGetFlag
 
 .text.INTGetEnable
-                0x9d01ab2c       0x2c
+                0x9d01ab40       0x2c
  .text.INTGetEnable
-                0x9d01ab2c       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_tbl_lib.o)
-                0x9d01ab2c                INTGetEnable
+                0x9d01ab40       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_tbl_lib.o)
+                0x9d01ab40                INTGetEnable
 
 .text.NVMErasePage
-                0x9d01ab58       0x2c
+                0x9d01ab6c       0x2c
  .text.NVMErasePage
-                0x9d01ab58       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(nvm_erase_page_lib.o)
-                0x9d01ab58                NVMErasePage
+                0x9d01ab6c       0x2c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(nvm_erase_page_lib.o)
+                0x9d01ab6c                NVMErasePage
 
-.text           0x9d01ab84       0x50
- .text          0x9d01ab84       0x28 build/default/production/_ext/1020318379/ChannelConfig.o
-                0x9d01ab84                ConfigChannel
- .text          0x9d01abac       0x28 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Bowler_USB_HAL.o)
-                0x9d01abad                GetPacketUSB
-                0x9d01abbd                SendPacketUSB
-                0x9d01abc9                Get_USB_Byte_Count
+.text           0x9d01ab98       0x50
+ .text          0x9d01ab98       0x28 build/default/production/_ext/1020318379/ChannelConfig.o
+                0x9d01ab98                ConfigChannel
+ .text          0x9d01abc0       0x28 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Bowler_USB_HAL.o)
+                0x9d01abc1                GetPacketUSB
+                0x9d01abd1                SendPacketUSB
+                0x9d01abdd                Get_USB_Byte_Count
 
 .text.PORTClearBits
-                0x9d01abd4       0x28
+                0x9d01abe8       0x28
  .text.PORTClearBits
-                0x9d01abd4       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(port_clear_bits_lib.o)
-                0x9d01abd4                PORTClearBits
+                0x9d01abe8       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(port_clear_bits_lib.o)
+                0x9d01abe8                PORTClearBits
 
 .text.PORTSetBits
-                0x9d01abfc       0x28
+                0x9d01ac10       0x28
  .text.PORTSetBits
-                0x9d01abfc       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(port_set_bits_lib.o)
-                0x9d01abfc                PORTSetBits
+                0x9d01ac10       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(port_set_bits_lib.o)
+                0x9d01ac10                PORTSetBits
 
 .text.UARTSetFifoMode
-                0x9d01ac24       0x28
+                0x9d01ac38       0x28
  .text.UARTSetFifoMode
-                0x9d01ac24       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(uart_lib.o)
-                0x9d01ac24                UARTSetFifoMode
+                0x9d01ac38       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(uart_lib.o)
+                0x9d01ac38                UARTSetFifoMode
 
 .text.UARTSetLineControl
-                0x9d01ac4c       0x28
+                0x9d01ac60       0x28
  .text.UARTSetLineControl
-                0x9d01ac4c       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(uart_lib.o)
-                0x9d01ac4c                UARTSetLineControl
+                0x9d01ac60       0x28 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(uart_lib.o)
+                0x9d01ac60                UARTSetLineControl
 
-.rodata         0x9d01ac74       0x64
- .rodata        0x9d01ac74       0x24 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(PidRpc.o)
- .rodata        0x9d01ac98       0x20 build/default/production/_ext/1020318379/ChannelValues.o
- .rodata        0x9d01acb8       0x20 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_rpc.o)
+.rodata         0x9d01ac88       0x64
+ .rodata        0x9d01ac88       0x24 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(PidRpc.o)
+ .rodata        0x9d01acac       0x20 build/default/production/_ext/1020318379/ChannelValues.o
+ .rodata        0x9d01accc       0x20 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(Namespace_bcs_rpc.o)
 
-.text.getcSPI2  0x9d01acd8       0x20
+.text.getcSPI2  0x9d01acec       0x20
  .text.getcSPI2
-                0x9d01acd8       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(spi_getc_spi2_lib_legacy.o)
-                0x9d01acd8                getcSPI2
+                0x9d01acec       0x20 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(spi_getc_spi2_lib_legacy.o)
+                0x9d01acec                getcSPI2
 
 .text.INTRestoreInterrupts
-                0x9d01acf8       0x1c
+                0x9d01ad0c       0x1c
  .text.INTRestoreInterrupts
-                0x9d01acf8       0x1c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_restore_interrupts_lib.o)
-                0x9d01acf8                INTRestoreInterrupts
+                0x9d01ad0c       0x1c /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_restore_interrupts_lib.o)
+                0x9d01ad0c                INTRestoreInterrupts
 
-.rodata         0x9d01ad14       0x18
- .rodata        0x9d01ad14       0x18 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(PidAsync.o)
+.rodata         0x9d01ad28       0x18
+ .rodata        0x9d01ad28       0x18 ../../../../../c-bowler/firmware/library/NR-Clib/development/c-bowler.X/dist/default/production/c-bowler.X.a(PidAsync.o)
 
-.text           0x9d01ad2c       0x28
- .text          0x9d01ad2c       0x18 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-nmi-handler.o)
-                0x9d01ad2c                _nmi_handler
- .text          0x9d01ad44       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/crt0.o
-                0x9d01ad4c                __crt0_exit
+.text           0x9d01ad40       0x28
+ .text          0x9d01ad40       0x18 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-nmi-handler.o)
+                0x9d01ad40                _nmi_handler
+ .text          0x9d01ad58       0x10 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/crt0.o
+                0x9d01ad60                __crt0_exit
 
-.rodata         0x9d01ad54       0x1c
- .rodata        0x9d01ad54       0x10 build/default/production/_ext/1051272628/Namespace_bcs_io_setmode.o
- .rodata        0x9d01ad64        0xc build/default/production/_ext/805493626/Debug_DyIO.o
+.rodata         0x9d01ad68       0x1c
+ .rodata        0x9d01ad68       0x10 build/default/production/_ext/1051272628/Namespace_bcs_io_setmode.o
+ .rodata        0x9d01ad78        0xc build/default/production/_ext/805493626/Debug_DyIO.o
 
 .text._bootstrap_exception_handler
-                0x9d01ad70        0xc
+                0x9d01ad84        0xc
  .text._bootstrap_exception_handler
-                0x9d01ad70        0xc /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-bootstrap-exception-handler.o)
-                0x9d01ad70                _bootstrap_exception_handler
+                0x9d01ad84        0xc /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-bootstrap-exception-handler.o)
+                0x9d01ad84                _bootstrap_exception_handler
 
-.rodata         0x9d01ad7c       0x10
- .rodata        0x9d01ad7c        0x8 build/default/production/_ext/1281821416/Namespace_bcs_safe.o
- .rodata        0x9d01ad84        0x8 build/default/production/_ext/321196743/Namespace_bcs_pid_dypid.o
+.rodata         0x9d01ad90       0x10
+ .rodata        0x9d01ad90        0x8 build/default/production/_ext/1281821416/Namespace_bcs_safe.o
+ .rodata        0x9d01ad98        0x8 build/default/production/_ext/321196743/Namespace_bcs_pid_dypid.o
 
 .text._on_reset
-                0x9d01ad8c        0x8
+                0x9d01ada0        0x8
  .text._on_reset
-                0x9d01ad8c        0x8 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-reset.o)
-                0x9d01ad8c                _on_reset
+                0x9d01ada0        0x8 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-reset.o)
+                0x9d01ada0                _on_reset
 
 .text._on_bootstrap
-                0x9d01ad94        0x8
+                0x9d01ada8        0x8
  .text._on_bootstrap
-                0x9d01ad94        0x8 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-bootstrap.o)
-                0x9d01ad94                _on_bootstrap
+                0x9d01ada8        0x8 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libc.a(default-on-bootstrap.o)
+                0x9d01ada8                _on_bootstrap
 
 .text.INTEnableInterrupts
-                0x9d01ad9c        0x8
+                0x9d01adb0        0x8
  .text.INTEnableInterrupts
-                0x9d01ad9c        0x8 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_enable_interrupts_lib.o)
-                0x9d01ad9c                INTEnableInterrupts
+                0x9d01adb0        0x8 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_enable_interrupts_lib.o)
+                0x9d01adb0                INTEnableInterrupts
 
 .text.INTDisableInterrupts
-                0x9d01ada4        0x8
+                0x9d01adb8        0x8
  .text.INTDisableInterrupts
-                0x9d01ada4        0x8 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_disable_interrupts_lib.o)
-                0x9d01ada4                INTDisableInterrupts
+                0x9d01adb8        0x8 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_disable_interrupts_lib.o)
+                0x9d01adb8                INTDisableInterrupts
 
-.rodata         0x9d01adac        0x8
- .rodata        0x9d01adac        0x8 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(uart_lib.o)
-                0x9d01adac                uartReg
+.rodata         0x9d01adc0        0x8
+ .rodata        0x9d01adc0        0x8 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(uart_lib.o)
+                0x9d01adc0                uartReg
 
 .text%z240      0x00000000        0x0
  .text          0x00000000        0x0 /home/opt/microchip/xc32/v1.00/bin/../lib/gcc/pic32mx/4.5.1/../../../../pic32mx/lib/libmchp_peripheral_32MX440F128H.a(int_restore_interrupts_lib.o)
