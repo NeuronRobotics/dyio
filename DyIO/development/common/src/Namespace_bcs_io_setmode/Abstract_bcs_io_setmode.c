@@ -95,7 +95,7 @@ BOOL AbstractSetChannelMode(BowlerPacket * Packet){
 BOOL AbstractSetAllChannelMode(BowlerPacket * Packet){
 	int i=0;
 	for(i=0;i<GetNumberOfIOChannels();i++){
-		SetChannelMode(i,Packet->use.data[i]);
+		SetChannelMode(i,Packet->use.data[i+1]);
 	}
 	return TRUE;
 }
