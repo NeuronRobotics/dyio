@@ -130,7 +130,7 @@ BYTE GetChannelMode(BYTE chan) {
     return getBcsIoDataTable()[chan].PIN.currentChannelMode;
 }
 
-DATA_STRUCT * getBcsIoDataTable() {
+DATA_STRUCT * getBcsIoDataTable(int pin) {
     if (dataPtr == NULL) {
         setPrintLevelErrorPrint();
 #if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
@@ -140,7 +140,7 @@ DATA_STRUCT * getBcsIoDataTable() {
         //FAIL sanity check
         while (1);
     }
-    return dataPtr;
+    return &dataPtr[pin];
 }
 
 BOOL GetChannelModeFromPacket(BowlerPacket * Packet) {

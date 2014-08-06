@@ -193,7 +193,7 @@ BYTE GetChannelMode(BYTE chan);
 /**
  * Retrevie the pointer to the datatable
  */
-DATA_STRUCT * getBcsIoDataTable();
+DATA_STRUCT * getBcsIoDataTable(int pin);
 
 NAMESPACE_LIST * get_bcsIoNamespace();
 
