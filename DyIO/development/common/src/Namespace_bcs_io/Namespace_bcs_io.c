@@ -202,7 +202,9 @@ static RPC_LIST bcsIo_asyn_p = {BOWLER_POST, // Method
 static RPC_LIST bcsIo_cchn_c = {BOWLER_CRIT, // Method
     (const char*) "cchn", //RPC as string
     &ConfigureChannelFromPacket, //function pointer to a packet parsing function
-    ((const char [1]) {
+    ((const char [3]) {
+        BOWLER_I08, // channel
+        BOWLER_I32STR, // values
         0
     }), // Calling arguments
     BOWLER_POST, // response method
@@ -215,8 +217,11 @@ static RPC_LIST bcsIo_cchn_c = {BOWLER_CRIT, // Method
 
 static RPC_LIST bcsIo_schv_c = {BOWLER_CRIT, // Method
     (const char*) "schv", //RPC as string
-    &ConfigureChannelFromPacket, //function pointer to a packet parsing function
-    ((const char [1]) {
+
+    &SetChanelValueFromPacket, //function pointer to a packet parsing function
+    ((const char [3]) {
+        BOWLER_I08, // channel
+        BOWLER_I32STR, // values
         0
     }), // Calling arguments
     BOWLER_POST, // response method
@@ -230,7 +235,12 @@ static RPC_LIST bcsIo_schv_c = {BOWLER_CRIT, // Method
 static RPC_LIST bcsIo_asyn_c = {BOWLER_CRIT, // Method
     (const char*) "asyn", //RPC as string
     &configAdvancedAsync, //function pointer to a packet parsing function
-    ((const char [1]) {
+    ((const char [6]) {
+        BOWLER_I08, // channel
+        BOWLER_I08, // type
+        BOWLER_I32, // time in ms
+        BOWLER_I32, // compare value
+        BOWLER_I08, // threshhold direction
         0
     }), // Calling arguments
     BOWLER_POST, // response method

@@ -214,7 +214,6 @@ BOOL SetChanelValueFromPacket(BowlerPacket * Packet) {
         } else {
             time = 0;
         }
-
         getBcsIoDataTable()[pin].PIN.currentValue = data;
         if (setChanelValueHWPtr != NULL)
             setChanelValueHWPtr(pin, 1, &data, (float) time);
