@@ -49,7 +49,7 @@ typedef enum _PidCalibrationType {
 
 
 
-typedef struct  _PidLimitEvent{
+typedef struct __attribute__((__packed__))  _PidLimitEvent{
 	int group;
 	PidLimitType type;
 	float time;
@@ -72,7 +72,7 @@ typedef struct  _PidLimitEvent{
  * It also has no assumptions on the time step it is run over. It stores previous time and
  * will calculate scaling based on that and the current time
  */
-typedef struct _AbsPID_Config{
+typedef struct __attribute__((__packed__)) _AbsPID_Config{
 
     unsigned char           Enabled;
     unsigned char           Polarity;
@@ -80,12 +80,12 @@ typedef struct _AbsPID_Config{
     unsigned char 		stopOnIndex;
     unsigned char   	useIndexLatch;
     unsigned char           Async;
-    struct {
+    struct __attribute__((__packed__)){
             float		P;
             float 		I;
             float		D;
     } K;
-    struct {
+    struct __attribute__((__packed__)) {
             float		P;
             float		D;
     } V;
@@ -99,7 +99,7 @@ typedef struct _AbsPID_Config{
     
 }AbsPID_Config;
 
-typedef struct _AbsPID
+typedef struct __attribute__((__packed__)) _AbsPID
 {
 
         //unsigned char           channel;
@@ -134,7 +134,7 @@ typedef struct _AbsPID
         //};
 } AbsPID;
 
-typedef struct _DYIO_PID
+typedef struct __attribute__((__packed__)) _DYIO_PID
 {
         unsigned char inputMode;
         unsigned char inputChannel;
@@ -143,7 +143,7 @@ typedef struct _DYIO_PID
         unsigned char outVal;
 } DYIO_PID;
 
-typedef struct _PD_VEL
+typedef struct __attribute__((__packed__)) _PD_VEL
 {
         BOOL enabled;
         float unitsPerSeCond;

@@ -24,7 +24,7 @@
 //		  unsigned long int		   value;
 //	}RPC_VALUE;
 #if !defined(__STACK_TSK_H) && !defined(_SOCKET_H_)
-	typedef struct _MAC_ADDR
+	typedef struct __attribute__((__packed__)) _MAC_ADDR
 	{
 		unsigned char v[6];
 	} MAC_ADDR;

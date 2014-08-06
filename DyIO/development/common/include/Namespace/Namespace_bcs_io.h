@@ -157,7 +157,7 @@ typedef struct __attribute__((__packed__))  _Downstream_Data
 
 
 
-typedef struct _DATA
+typedef struct __attribute__((__packed__)) _DATA
 {
 	PIN_MAP PIN;
 	FUNCTION_MAP FUNCTION;
@@ -194,6 +194,12 @@ BYTE GetChannelMode(BYTE chan);
  * Retrevie the pointer to the datatable
  */
 DATA_STRUCT * getBcsIoDataTable(int pin);
+
+/**
+ * retrive the scheduler
+ */
+
+RunEveryData * getPinsScheduler(int pin);
 
 NAMESPACE_LIST * get_bcsIoNamespace();
 

@@ -130,6 +130,10 @@ BYTE GetChannelMode(BYTE pin) {
     return getBcsIoDataTable(pin)->PIN.currentChannelMode;
 }
 
+RunEveryData * getPinsScheduler(int pin){
+	return & dataPtr[pin].PIN.asyncDataTime;
+}
+
 DATA_STRUCT * getBcsIoDataTable(int pin) {
     if (dataPtr == NULL) {
         setPrintLevelErrorPrint();
