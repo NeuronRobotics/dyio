@@ -152,11 +152,16 @@ static RPC_LIST bcsIo_gcml_g = {BOWLER_GET, // Method
 static RPC_LIST bcsIo_schv_p = {BOWLER_POST, // Method
     (const char*) "schv", //RPC as string
     &SetChanelValueFromPacket, //function pointer to a packet parsing function
-    ((const char [1]) {
+    ((const char [4]) {
+        BOWLER_I08, // channel
+        BOWLER_I32, // value
+        BOWLER_I32, // time in ms
         0
     }), // Calling arguments
     BOWLER_POST, // response method
-    ((const char [1]) {
+    ((const char [3]) {
+        BOWLER_I08, // code
+        BOWLER_I08, // trace
         0
     }), // Response arguments
     NULL //Termination
@@ -165,11 +170,14 @@ static RPC_LIST bcsIo_schv_p = {BOWLER_POST, // Method
 static RPC_LIST bcsIo_sacv_p = {BOWLER_POST, // Method
     (const char*) "sacv", //RPC as string
     &SetAllChannelValueFromPacket, //function pointer to a packet parsing function
-    ((const char [1]) {
+    ((const char [2]) {
+        BOWLER_STR,
         0
     }), // Calling arguments
     BOWLER_POST, // response method
-    ((const char [1]) {
+    ((const char [3]) {
+        BOWLER_I08, // code
+        BOWLER_I08, // trace
         0
     }), // Response arguments
     NULL //Termination
