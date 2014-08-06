@@ -34,7 +34,7 @@ static RPC_LIST bcsIoSetmode_schm_p = {BOWLER_POST, // Method
 static RPC_LIST bcsIoSetmode_sacm_p = {BOWLER_POST, // Method
     "sacm", //RPC as string
     &AbstractSetAllChannelMode, //function pointer to a packet parsinf function
-    ((const char [1]) {
+    ((const char [2]) {
         BOWLER_STR,
         0
     }), // Calling arguments
