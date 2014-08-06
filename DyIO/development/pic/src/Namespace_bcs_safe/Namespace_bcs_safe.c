@@ -60,7 +60,9 @@ static RPC_LIST bcsSafe_safe_g = {BOWLER_GET, // Method
         0
     }), // Calling arguments
     BOWLER_POST, // response method
-    ((const char [1]) {
+    ((const char [3]) {
+        BOWLER_I08,// heartbeat lockout
+        BOWLER_I16,// heartbeet time
         0
     }), // Response arguments
     NULL //Termination
@@ -69,11 +71,15 @@ static RPC_LIST bcsSafe_safe_g = {BOWLER_GET, // Method
 static RPC_LIST bcsSafe_safe_p = {BOWLER_POST, // Method
     "safe", //RPC as string
     &bcsSafeProcessor_p, //function pointer to a packet parsinf function
-    ((const char [1]) {
+    ((const char [3]) {
+        BOWLER_I08,// heartbeat lockout
+        BOWLER_I16,// heartbeet time
         0
-    }), // Calling arguments
+    }), // Response arguments
     BOWLER_POST, // response method
-    ((const char [1]) {
+    ((const char [3]) {
+        BOWLER_I08, // code
+        BOWLER_I08, // trace
         0
     }), // Response arguments
     NULL //Termination
