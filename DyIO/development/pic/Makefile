@@ -11,7 +11,7 @@ DEFINES			= -DUSE_VELOCITY $(DYIO_VER)
 CCP     		= $(GCCP) -mprocessor=$(DEVICEP) $(INCLUDES)  -I$(PICTOOLCHAIN)../pic32mx/include $(DEFINES)
 LINK 			= $(GCCP) -mprocessor=$(DEVICEP) -L$(LINK_DIR) 
 #LFLAFS          = -Wl,--script="elf32pic32mx.ld",--defsym=__MPLAB_BUILD=1,--report-mem
-LFLAFS          = -Wl,--script="elf32pic32mx.ld",--defsym=__MPLAB_BUILD=1,--report-mem
+LFLAFS          = -Wl,--script="elf32pic32mx.ld",--defsym=__MPLAB_BUILD=1,--report-mem -Map="../dyio.map" 
 
 CFILES :=	$(wildcard ../common/src/*/*.c) \
 			$(wildcard src/*.c) \
