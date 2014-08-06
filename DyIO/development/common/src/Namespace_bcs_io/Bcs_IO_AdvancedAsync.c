@@ -157,13 +157,11 @@ void startAdvancedAsyncDefault(BYTE pin){
 		getBcsIoDataTable(pin)->PIN.asyncDatadeadBandval=10;
 		break;
 	}
-	RunEveryData timer = getBcsIoDataTable(pin)->PIN.asyncDataTime;
-//	println_I("Async Type set to: ");printAsyncType(getBcsIoDataTable(pin)->PIN.asyncDataType);
-//	print_I(" on pin# ");p_int_I(pin);
-//	print_I(" Pointer ");p_int_I(&getBcsIoDataTable(pin)->PIN.asyncDataTime);
-//	print_I(" Data ");p_int_I(timer.MsTime);
-//	print_I(" Data ");p_int_I(timer.setPoint);
-	RunEvery(&timer);
+	println_I("Async Type set to: ");printAsyncType(getBcsIoDataTable(pin)->PIN.asyncDataType);
+	print_I(" on pin# ");p_int_I(pin);
+	print_I(" Pointer ");p_int_I((int)&getBcsIoDataTable(pin)->PIN.asyncDataTime);
+
+	RunEvery(&getBcsIoDataTable(pin)->PIN.asyncDataTime);
 	println_I("Async OK");
 }
 
