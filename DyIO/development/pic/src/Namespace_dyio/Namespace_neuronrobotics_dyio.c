@@ -42,7 +42,7 @@ BOOL neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCa
     int i;
     for (i = 0; i < GetNumberOfIOChannels(); i++) {
         if (GetChannelMode(i) == IS_COUNTER_INPUT_INT || GetChannelMode(i) == IS_COUNTER_OUTPUT_INT) {
-            getBcsIoDataTable()[i].PIN.asyncDataCurrentVal = GetCounterByChannel(i);
+            getBcsIoDataTable(i)->PIN.asyncDataCurrentVal = GetCounterByChannel(i);
         }
     }
     if (RunEvery(&ppm) > 0)
@@ -287,7 +287,7 @@ static RPC_LIST neuronRoboticsDyIO__pwr_c = {BOWLER_CRIT, // Method
 static RPC_LIST neuronRoboticsDyIO_info_c = {BOWLER_CRIT, // Method
     "info", //RPC as string
     &neuronRoboticsDyIOProcessor_c, //function pointer to a packet parsinf function
-    ((const char [1]) {
+    ((const char [2]) {
         BOWLER_ASCII,
         0
     }), // Calling arguments

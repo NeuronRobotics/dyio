@@ -70,7 +70,7 @@ void ProcessAsyncData(BowlerPacket * Packet){
 		int val;
 		for(i=0;i<GetNumberOfIOChannels();i++){
 			val = get32bit(Packet, i*4);
-			if(getBcsIoDataTable()[i].PIN.asyncDataCurrentVal!=val){
+			if(getBcsIoDataTable(i)->PIN.asyncDataCurrentVal!=val){
 				println_I("Data on Pin ");p_int_I(i);print_I(" to val ");p_int_I(val);
 				SetValFromAsync(i,val);//
 			}

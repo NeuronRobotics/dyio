@@ -81,27 +81,27 @@ void SetPowerState1(BOOL railOk,BOOL regulated){
 	}
 }
 BOOL print = 0xff;
-void SetServoPos(BYTE PIN,BYTE val,float time){
+void SetServoPos(BYTE pin,BYTE val,float time){
 	if(time<30)
 		time=0;
-	velocity[PIN].setTime=time;
-	velocity[PIN].set=(float)val;
-	velocity[PIN].start=(float)getBcsIoDataTable()[PIN].PIN.asyncDataCurrentVal;
-	velocity[PIN].startTime=getMs();
-	if (val==getBcsIoDataTable()[PIN].PIN.asyncDataCurrentVal){
-		velocity[PIN].setTime=0;
+	velocity[pin].setTime=time;
+	velocity[pin].set=(float)val;
+	velocity[pin].start=(float)getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
+	velocity[pin].startTime=getMs();
+	if (val==getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal){
+		velocity[pin].setTime=0;
 	}
-	if(PIN<12){
+	if(pin<12){
 		b0lock=FALSE;
 	}else{
 		b1lock=FALSE;
 	}
-	if(GetChannelMode(PIN)!=IS_SERVO)
+	if(GetChannelMode(pin)!=IS_SERVO)
 		return;
-	print = PIN;
+	print = pin;
 }
-BYTE GetServoPos(BYTE PIN){
-	return getBcsIoDataTable()[PIN].PIN.asyncDataCurrentVal;
+BYTE GetServoPos(BYTE pin){
+	return getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
 }
 
 void RunServo(BYTE block){
@@ -127,7 +127,7 @@ void RunServo(BYTE block){
 	for (j=0;j<256;j++){
 		//check all servo positions
 		for (xIndex=start; xIndex < stop ;xIndex++){
-			if (j == getBcsIoDataTable()[xIndex].PIN.asyncDataCurrentVal){
+			if (j == getBcsIoDataTable(xIndex)->PIN.asyncDataCurrentVal){
 				//turn off if it is time to turn off
 				pinOff(xIndex);
 			}
@@ -196,7 +196,7 @@ void runLinearInterpolationServo(BYTE blockStart,BYTE blockEnd){
 				ip=SERVO_BOUND;
 			}
 			int tmp = (int)ip;
-			getBcsIoDataTable()[i].PIN.asyncDataCurrentVal=  tmp;
+			getBcsIoDataTable(i)->PIN.asyncDataCurrentVal=  tmp;
 		}
 	}
 

@@ -56,7 +56,7 @@ BYTE GetDCMotor(BYTE pin){
 		return 0;
 	}
 	setPwmDir(pin);
-	return getBcsIoDataTable()[pin].PIN.currentValue;
+	return getBcsIoDataTable(pin)->PIN.currentValue;
 }
 void SetDCMotor(BYTE pin,BYTE vel){
 	if (!(	pinHasFunction(pin,IS_DC_MOTOR_DIR) ||
@@ -67,7 +67,7 @@ void SetDCMotor(BYTE pin,BYTE vel){
 
 	int tmp = vel-128;
 
-	getBcsIoDataTable()[pwm].PIN.currentValue = vel;
+	getBcsIoDataTable(pwm)->PIN.currentValue = vel;
 
 	if(tmp>0){
 		SetDIO(dir,0);

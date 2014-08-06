@@ -105,14 +105,14 @@ BYTE InitPWM(BYTE channel){
 	return TRUE;
 }
 
-void SetPWM(BYTE channel,BYTE val){
-	if(   !(  GetChannelMode(channel) == IS_PWM
-			||GetChannelMode(channel) == IS_DC_MOTOR_DIR
-			||GetChannelMode(channel) == IS_DC_MOTOR_VEL) ){
+void SetPWM(BYTE pin,BYTE val){
+	if(   !(  GetChannelMode(pin) == IS_PWM
+			||GetChannelMode(pin) == IS_DC_MOTOR_DIR
+			||GetChannelMode(pin) == IS_DC_MOTOR_VEL) ){
 		return;
 	}
-	enable(channel);
-	switch (channel){
+	enable(pin);
+	switch (pin){
 	case 6:
 		OCR0A =val;
 		break;
@@ -126,11 +126,11 @@ void SetPWM(BYTE channel,BYTE val){
 		OCR2B =val;
 		break;
 	}
-	getBcsIoDataTable()[channel].PIN.currentValue = val;
+	getBcsIoDataTable(pin)->PIN.currentValue = val;
 }
 
 BYTE GetPWM(BYTE pin){
 	if (GetChannelMode(pin) != IS_PWM)
 		return 0;
-	return getBcsIoDataTable()[pin].PIN.currentValue;
+	return getBcsIoDataTable(pin)->PIN.currentValue;
 }

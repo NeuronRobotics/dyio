@@ -17,13 +17,13 @@ void InitPinModes(void){
 		SetDIO(i,0);
 		SetPWM(i,EEReadValue(i));
 		SetServoPos(i,EEReadValue(i),0);
-		//getBcsIoDataTable()[i].PIN.previousChannelMode=NO_CHANGE;
+		//getBcsIoDataTable(i)->PIN.previousChannelMode=NO_CHANGE;
 		mode=EEReadMode(i);
 		if((mode < 2)||(mode >=IO_MODE_MAX)){
 			EEWriteMode(i,IS_DI);
 			mode = EEReadMode(i);
 		}
-		getBcsIoDataTable()[i].PIN.currentChannelMode = mode;
+		getBcsIoDataTable(i)->PIN.currentChannelMode = mode;
 		setMode(i,EEReadMode(i));
 	}
 	startup = FALSE;
@@ -132,6 +132,6 @@ void configPinMode(BYTE pin,BYTE mode,BYTE tris,BYTE io){
 	ClearPinState(pin);
 	SetPinTris(pin,tris);
 	SetDIO(pin,io);
-	getBcsIoDataTable()[pin].PIN.currentChannelMode = mode;
+	getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
 	EEWriteMode(pin,mode);
 }

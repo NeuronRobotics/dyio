@@ -116,18 +116,18 @@ int GetNumberOfIOChannels() {
     return NumberOfIOChannels;
 }
 
-BYTE GetChannelMode(BYTE chan) {
-    if (chan < 0 || chan > GetNumberOfIOChannels()) {
+BYTE GetChannelMode(BYTE pin) {
+    if (pin < 0 || pin > GetNumberOfIOChannels()) {
         setPrintLevelErrorPrint();
 #if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
         println_E("Failed IO sanity check: channel number out of bounds # ");
-        p_int_E(chan);
+        p_int_E(pin);
 #endif
         //FAIL sanity check
         while (1);
     }
     //Strip off the internally stored High Bit
-    return getBcsIoDataTable()[chan].PIN.currentChannelMode;
+    return getBcsIoDataTable(pin)->PIN.currentChannelMode;
 }
 
 DATA_STRUCT * getBcsIoDataTable(int pin) {
@@ -214,7 +214,7 @@ BOOL SetChanelValueFromPacket(BowlerPacket * Packet) {
         } else {
             time = 0;
         }
-        getBcsIoDataTable()[pin].PIN.currentValue = data;
+        getBcsIoDataTable(pin)->PIN.currentValue = data;
         if (setChanelValueHWPtr != NULL)
             setChanelValueHWPtr(pin, 1, &data, (float) time);
         READY(Packet, 2, 3);
@@ -236,7 +236,7 @@ BOOL SetAllChannelValueFromPacket(BowlerPacket * Packet) {
         time.byte.LB = Packet->use.data[3];
         for (i = 0; i < GetNumberOfIOChannels(); i++) {
             tmp = get32bit(Packet, i * 4);
-            getBcsIoDataTable()[i].PIN.currentValue = tmp;
+            getBcsIoDataTable(i)->PIN.currentValue = tmp;
             data[i] = tmp;
         }
         setAllChanelValueHWPtr(data, time.Val);
@@ -291,7 +291,7 @@ BOOL GetAllChanelValueFromPacket(BowlerPacket * Packet) {
         getAllChanelValueHWPtr((INT32 *) Packet->use.data);
         for (i = 0; i < GetNumberOfIOChannels(); i++) {
             tmp = data[i];
-            getBcsIoDataTable()[i].PIN.currentValue = tmp;
+            getBcsIoDataTable(i)->PIN.currentValue = tmp;
             set32bit(Packet, tmp, i * 4);
         }
         Packet->use.head.DataLegnth = 4 + GetNumberOfIOChannels()*4;
@@ -312,7 +312,7 @@ BOOL ConfigureChannelFromPacket(BowlerPacket * Packet) {
             int numVals = (Packet->use.head.DataLegnth - (4 + 1)) / 4;
             for (i = 0; i < numVals; i++) {
                 tmp = get32bit(Packet, (i * 4) + 1);
-                getBcsIoDataTable()[i].PIN.currentValue = tmp;
+                getBcsIoDataTable(i)->PIN.currentValue = tmp;
                 data[i] = tmp;
             }
             configChannelHWPtr(pin, numVals, (INT32 *) (Packet->use.data + 1));
@@ -335,42 +335,42 @@ BOOL pinHasFunction(BYTE pin, BYTE function) {
         case IS_DO:
             return TRUE;
         case IS_ANALOG_IN:
-            return getBcsIoDataTable()[pin].FUNCTION.HAS_ANALOG_IN;
+            return getBcsIoDataTable(pin)->FUNCTION.HAS_ANALOG_IN;
         case IS_ANALOG_OUT:
             return FALSE;
-            //return getBcsIoDataTable()[pin].FUNCTION.HAS_ANALOG_OUT;
+            //return getBcsIoDataTable(pin)->FUNCTION.HAS_ANALOG_OUT;
         case IS_PWM:
-            return getBcsIoDataTable()[pin].FUNCTION.HAS_PWM;
+            return getBcsIoDataTable(pin)->FUNCTION.HAS_PWM;
         case IS_SERVO:
             return TRUE;
         case IS_UART_TX:
-            return getBcsIoDataTable()[pin].FUNCTION.HAS_UART_T;
+            return getBcsIoDataTable(pin)->FUNCTION.HAS_UART_T;
         case IS_UART_RX:
-            return getBcsIoDataTable()[pin].FUNCTION.HAS_UART_R;
+            return getBcsIoDataTable(pin)->FUNCTION.HAS_UART_R;
         case IS_SPI_MOSI:
-            return getBcsIoDataTable()[pin].FUNCTION.HAS_SPI_O;
+            return getBcsIoDataTable(pin)->FUNCTION.HAS_SPI_O;
         case IS_SPI_MISO:
-            return getBcsIoDataTable()[pin].FUNCTION.HAS_SPI_I;
+            return getBcsIoDataTable(pin)->FUNCTION.HAS_SPI_I;
         case IS_SPI_SCK:
-            return getBcsIoDataTable()[pin].FUNCTION.HAS_SPI_C;
+            return getBcsIoDataTable(pin)->FUNCTION.HAS_SPI_C;
         case IS_COUNTER_INPUT_INT:
-            return getBcsIoDataTable()[pin].FUNCTION.HAS_COUNTER_INPUT_I;
+            return getBcsIoDataTable(pin)->FUNCTION.HAS_COUNTER_INPUT_I;
         case IS_COUNTER_INPUT_DIR:
-            return getBcsIoDataTable()[pin].FUNCTION.HAS_COUNTER_INPUT_D;
+            return getBcsIoDataTable(pin)->FUNCTION.HAS_COUNTER_INPUT_D;
         case IS_COUNTER_INPUT_HOME:
-            return getBcsIoDataTable()[pin].FUNCTION.HAS_COUNTER_INPUT_H;
+            return getBcsIoDataTable(pin)->FUNCTION.HAS_COUNTER_INPUT_H;
         case IS_COUNTER_OUTPUT_INT:
-            return getBcsIoDataTable()[pin].FUNCTION.HAS_COUNTER_OUTPUT_I;
+            return getBcsIoDataTable(pin)->FUNCTION.HAS_COUNTER_OUTPUT_I;
         case IS_COUNTER_OUTPUT_DIR:
-            return getBcsIoDataTable()[pin].FUNCTION.HAS_COUNTER_OUTPUT_D;
+            return getBcsIoDataTable(pin)->FUNCTION.HAS_COUNTER_OUTPUT_D;
         case IS_COUNTER_OUTPUT_HOME:
-            return getBcsIoDataTable()[pin].FUNCTION.HAS_COUNTER_OUTPUT_H;
+            return getBcsIoDataTable(pin)->FUNCTION.HAS_COUNTER_OUTPUT_H;
         case IS_DC_MOTOR_VEL:
-            return getBcsIoDataTable()[pin].FUNCTION.HAS_PWM;
+            return getBcsIoDataTable(pin)->FUNCTION.HAS_PWM;
         case IS_DC_MOTOR_DIR:
-            return getBcsIoDataTable()[pin].FUNCTION.HAS_DC_MOTOR;
+            return getBcsIoDataTable(pin)->FUNCTION.HAS_DC_MOTOR;
         case IS_PPM_IN:
-            return getBcsIoDataTable()[pin].FUNCTION.HAS_PPM;
+            return getBcsIoDataTable(pin)->FUNCTION.HAS_PPM;
         default:
             return FALSE;
     }
@@ -399,8 +399,8 @@ void printValues() {
         println_I("\t# ");
         p_int_I(i);
         print_I("\tCurrent ");
-        p_int_I(getBcsIoDataTable()[i].PIN.currentValue);
-        //print_I("\tPrevious ");p_int_I(getBcsIoDataTable()[i].PIN.previousValue);
+        p_int_I(getBcsIoDataTable(i)->PIN.currentValue);
+        //print_I("\tPrevious ");p_int_I(getBcsIoDataTable(i)->PIN.previousValue);
     }
 }
 
@@ -411,8 +411,8 @@ void printModes() {
         println_I("\t# ");
         p_int_I(i);
         print_I("\tCurrent ");
-        printMode(getBcsIoDataTable()[i].PIN.currentChannelMode, INFO_PRINT);
-        //print_I("\tPrevious ");printMode(getBcsIoDataTable()[i].PIN.previousChannelMode,INFO_PRINT);
+        printMode(getBcsIoDataTable(i)->PIN.currentChannelMode, INFO_PRINT);
+        //print_I("\tPrevious ");printMode(getBcsIoDataTable(i)->PIN.previousChannelMode,INFO_PRINT);
     }
 }
 
@@ -422,8 +422,8 @@ void printConfigurations() {
     for (i = 0; i < GetNumberOfIOChannels(); i++) {
         println_I("\t# ");
         p_int_I(i);
-        //print_I("\tCurrent ");p_int_I(getBcsIoDataTable()[i].PIN.currentConfiguration);
-        //print_I("\tPrevious ");p_int_I(getBcsIoDataTable()[i].PIN.previousConfiguration);
+        //print_I("\tCurrent ");p_int_I(getBcsIoDataTable(i)->PIN.currentConfiguration);
+        //print_I("\tPrevious ");p_int_I(getBcsIoDataTable(i)->PIN.previousConfiguration);
     }
 }
 
@@ -435,15 +435,15 @@ void printAsync() {
         println_I("\t# ");
         p_int_I(i);
         print_I("\tCurrent ");
-        p_int_I(getBcsIoDataTable()[i].PIN.asyncDataCurrentVal);
+        p_int_I(getBcsIoDataTable(i)->PIN.asyncDataCurrentVal);
         print_I("\tPrevious ");
-        p_int_I(getBcsIoDataTable()[i].PIN.asyncDataPreviousVal);
+        p_int_I(getBcsIoDataTable(i)->PIN.asyncDataPreviousVal);
         print_I("\tMode ");
-        printAsyncType(getBcsIoDataTable()[i].PIN.asyncDataType);
+        printAsyncType(getBcsIoDataTable(i)->PIN.asyncDataType);
         print_I("\tIteration ");
-        p_fl_I(getBcsIoDataTable()[i].PIN.asyncDataTime.setPoint);
+        p_fl_I(getBcsIoDataTable(i)->PIN.asyncDataTime.setPoint);
         print_I("\tLast ");
-        p_fl_I(getBcsIoDataTable()[i].PIN.asyncDataTime.MsTime);
+        p_fl_I(getBcsIoDataTable(i)->PIN.asyncDataTime.MsTime);
     }
 }
 
