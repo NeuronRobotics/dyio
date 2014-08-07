@@ -140,7 +140,7 @@ typedef struct __attribute__((__packed__))  _PIN_MAP
 	INT32 	asyncDatadeadBandval;
 	INT32 	asyncDatathreshholdval;
 	BYTE asyncDatathreshholdedge;
-	RunEveryData 	asyncDataTime;
+	
 } PIN_MAP;
 
 typedef struct __attribute__((__packed__))  _Downstream_Data
@@ -161,6 +161,7 @@ typedef struct __attribute__((__packed__)) _DATA
 {
 	PIN_MAP PIN;
 	FUNCTION_MAP FUNCTION;
+        RunEveryData 	asyncDataTime;
 } DATA_STRUCT;
 
 void set8bit(BowlerPacket * Packet,BYTE val, BYTE offset);

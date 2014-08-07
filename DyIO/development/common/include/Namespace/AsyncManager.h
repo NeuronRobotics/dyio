@@ -21,6 +21,8 @@ void ProcessAsyncData(BowlerPacket * Packet);
 //int GetAnalogValFromAsync(BYTE pin);
 void SetValFromAsync(int pin, int value);
 int GetValFromAsync(int pin);
+int GetDigitalValFromAsync(BYTE pin);
+
 //int  GetDigitalValFromAsync(BYTE pin);
 void RunAsync(void);
 void StopAsync(void);

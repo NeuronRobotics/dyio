@@ -179,7 +179,7 @@ void initCoProcCom(){
 
 
 void SendPacketToCoProc(BowlerPacket * Packet){
-	float start = getMs();
+	//float start = getMs();
 
 	processing=TRUE;
 	if(init == FALSE){

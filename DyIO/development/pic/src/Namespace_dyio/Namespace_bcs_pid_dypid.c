@@ -26,7 +26,7 @@ BOOL bcsPidDypidAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCallbackP
 }
 
 BOOL bcsPidDypidProcessor_g(BowlerPacket * Packet) {
-    BYTE temp0;
+    //BYTE temp0;
     switch (Packet->use.head.RPC) {
         case DPID:
             GetConfigDyPID(Packet);
@@ -38,7 +38,7 @@ BOOL bcsPidDypidProcessor_g(BowlerPacket * Packet) {
 }
 
 BOOL bcsPidDypidProcessor_c(BowlerPacket * Packet) {
-    BYTE temp0;
+    //BYTE temp0;
     BYTE zone = 4;
     switch (Packet->use.head.RPC) {
         case DPID:

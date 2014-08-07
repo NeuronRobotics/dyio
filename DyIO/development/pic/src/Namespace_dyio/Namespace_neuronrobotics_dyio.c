@@ -89,7 +89,7 @@ BOOL neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCa
 }
 
 BOOL neuronRoboticsDyIOProcessor_g(BowlerPacket * Packet) {
-    int zone = 1;
+    //int zone = 1;
     char tmpName[17];
     int i;
     BYTE rev[3];
@@ -143,7 +143,7 @@ BOOL neuronRoboticsDyIOProcessor_g(BowlerPacket * Packet) {
 }
 
 BOOL neuronRoboticsDyIOProcessor_p(BowlerPacket * Packet) {
-    BYTE temp0;
+    //BYTE temp0;
     switch (Packet->use.head.RPC) {
 
         default:
@@ -183,7 +183,7 @@ BOOL neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet) {
                 }
             println_I("Setting name: ");
             Packet->use.data[Packet->use.head.DataLegnth - 4] = '\0';
-            print_I(Packet->use.data);
+            //print_I(Packet->use.data);
             print_I(" Num Bytes:");
             p_int_I(Packet->use.head.DataLegnth - 4);
             for (i = 0; i < Packet->use.head.DataLegnth - 4; i++) {

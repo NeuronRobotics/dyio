@@ -4,7 +4,7 @@ static BYTE privateSerialRX[BOWLER_PacketSize];
 static BYTE privateSerialTX[BOWLER_PacketSize];
 static BYTE_FIFO_STORAGE storeRx;
 static BYTE_FIFO_STORAGE storeTx;
-static BowlerPacket dataTableSync;
+//static BowlerPacket dataTableSync;
 
 void InitializeDyIODataTableManager(){
 	InitByteFifo(&storeRx,privateSerialRX,BOWLER_PacketSize);
@@ -41,8 +41,8 @@ BOOL LoadSerialTxData(BYTE numValues,BYTE * data){
 }
 
 BYTE GetSerialRxData(BYTE * data){
-	int i;
-	BYTE err;
+	//int i;
+	//BYTE err;
 	BYTE numValues = FifoGetByteCount(&storeRx);
 	if(numValues>0)
 		numValues = FifoGetByteStream(&storeRx,data,numValues);

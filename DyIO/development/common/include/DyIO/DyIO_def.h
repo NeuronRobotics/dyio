@@ -74,4 +74,16 @@ void InitPinFunction(void);
 BOOL pinHasFunction(BYTE pin, BYTE function);
 void runDyIOMain(void);
 
+NAMESPACE_LIST * get_neuronRoboticsDyIONamespace();
+NAMESPACE_LIST * get_bcsPidDypidNamespace() ;
+
+NAMESPACE_LIST * get_bcsSafeNamespace();
+void setCoProcBrownOutMode(BOOL b);
+BYTE SetAllCoProcValues();
+BOOL LoadSerialTxData(BYTE numValues,BYTE * data);
+BYTE GetSerialRxData(BYTE * data);
+void SetNewConfigurationDataTable(BYTE pin, INT32 value);
+void SyncDataTable();
+
+
 #endif /* DYIO_DEF_H_ */

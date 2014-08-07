@@ -6,7 +6,6 @@
  */
 #include "UserApp.h"
 
-
 /**
  * Set Channel Values
  * This function takes a
@@ -16,42 +15,42 @@
  * @param ms the time for the transition to take
  *
  */
-BOOL SetChanelValueHW(BYTE pin,BYTE numValues,INT32 * data, float ms){
-	BYTE mode = GetChannelMode(pin);
-	if(isStremChannelMode(mode)){
-		BYTE * bData = (BYTE *)data;
-		switch(mode){
-		case IS_SPI_MOSI:
-		case IS_SPI_MISO:
-		case IS_SPI_SCK:
-			SendPacketToSPIFromArray(numValues,bData);
-			return TRUE;
-		case IS_UART_TX:
-		case IS_UART_RX:
-			LoadSerialTxData( numValues,bData);
-			return TRUE;
-		case IS_PPM_IN:
-			ConfigPPMFromArray(bData);
-			return TRUE;
-		}
-	}else{
-		switch(mode){
-		case IS_COUNTER_INPUT_INT:
-		case IS_COUNTER_INPUT_DIR:
-		case IS_COUNTER_OUTPUT_INT:
-		case IS_COUNTER_OUTPUT_DIR:
-			SetChanVal(pin,data[0],ms);
-			return TRUE;
-		}
-		if(isSingleByteMode(mode)){
-			INT32 time = (INT32)ms;
-			//mask the time into the data byte
-			getBcsIoDataTable(pin)->PIN.currentValue = (time<<16)|(data[0]&0x000000ff);
-		}
-		return TRUE;
-	}
+BOOL SetChanelValueHW(BYTE pin, BYTE numValues, INT32 * data, float ms) {
+    BYTE mode = GetChannelMode(pin);
+    if (isStremChannelMode(mode)) {
+        BYTE * bData = (BYTE *) data;
+        switch (mode) {
+            case IS_SPI_MOSI:
+            case IS_SPI_MISO:
+            case IS_SPI_SCK:
+                SendPacketToSPIFromArray(numValues, bData);
+                return TRUE;
+            case IS_UART_TX:
+            case IS_UART_RX:
+                LoadSerialTxData(numValues, bData);
+                return TRUE;
+            case IS_PPM_IN:
+                ConfigPPMFromArray(bData);
+                return TRUE;
+        }
+    } else {
+        switch (mode) {
+            case IS_COUNTER_INPUT_INT:
+            case IS_COUNTER_INPUT_DIR:
+            case IS_COUNTER_OUTPUT_INT:
+            case IS_COUNTER_OUTPUT_DIR:
+                SetChanVal(pin, data[0], ms);
+                return TRUE;
+        }
+        if (isSingleByteMode(mode)) {
+            INT32 time = (INT32) ms;
+            //mask the time into the data byte
+            getBcsIoDataTable(pin)->PIN.currentValue = (time << 16) | (data[0]&0x000000ff);
+        }
+        return TRUE;
+    }
 
-
+    return FALSE;
 }
 
 /**
@@ -59,43 +58,45 @@ BOOL SetChanelValueHW(BYTE pin,BYTE numValues,INT32 * data, float ms){
  * This function takes a pin index, a number of values to be delt with, and an array of data values
  * Data is stored into numValues and data
  */
-BOOL GetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data){
-	BYTE mode = GetChannelMode(pin);
-	if(isStremChannelMode(mode)){
-		BYTE * bData = (BYTE *)data;
-		switch(mode){
-		case IS_SPI_MOSI:
-		case IS_SPI_MISO:
-		case IS_SPI_SCK:
-			SendPacketToSPIFromArray(numValues[0],bData);
-			return TRUE;
-		case IS_UART_TX:
-		case IS_UART_RX:
-			 numValues[0] = GetSerialRxData( bData);
-			return TRUE;
-		case IS_PPM_IN:
-			numValues[0] = GetPPMDataToArray(bData);
-			return TRUE;
-		}
-	}else{
-		numValues[0]=1;
-		switch(mode){
-		case IS_COUNTER_INPUT_INT:
-		case IS_COUNTER_INPUT_DIR:
-			data[0] = GetCounterByChannel(pin);
-			return TRUE;
-		case IS_COUNTER_OUTPUT_INT:
-		case IS_COUNTER_OUTPUT_DIR:
-			data[0] = GetCounterOutput(pin);
-			return TRUE;
-		}
-		if(isSingleByteMode(mode)){
-			//mask the time into the data byte
-			 data[0] = getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal & 0x000000ff;
-		}
-		return TRUE;
-	}
+BOOL GetChanelValueHW(BYTE pin, BYTE * numValues, INT32 * data) {
+    BYTE mode = GetChannelMode(pin);
+    if (isStremChannelMode(mode)) {
+        BYTE * bData = (BYTE *) data;
+        switch (mode) {
+            case IS_SPI_MOSI:
+            case IS_SPI_MISO:
+            case IS_SPI_SCK:
+                SendPacketToSPIFromArray(numValues[0], bData);
+                return TRUE;
+            case IS_UART_TX:
+            case IS_UART_RX:
+                numValues[0] = GetSerialRxData(bData);
+                return TRUE;
+            case IS_PPM_IN:
+                numValues[0] = GetPPMDataToArray(bData);
+                return TRUE;
+        }
+    } else {
+        numValues[0] = 1;
+        switch (mode) {
+            case IS_COUNTER_INPUT_INT:
+            case IS_COUNTER_INPUT_DIR:
+                data[0] = GetCounterByChannel(pin);
+                return TRUE;
+            case IS_COUNTER_OUTPUT_INT:
+            case IS_COUNTER_OUTPUT_DIR:
+                data[0] = GetCounterOutput(pin);
+                return TRUE;
+        }
+        if (isSingleByteMode(mode)) {
+            //mask the time into the data byte
+            data[0] = getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal & 0x000000ff;
+        }
+        return TRUE;
+    }
+    return FALSE;
 }
+
 /**
  * Set Channel Values
  * This function takes a
@@ -103,13 +104,13 @@ BOOL GetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data){
  * @param ms the time for the transition to take
  *
  */
-BOOL SetAllChanelValueHW(INT32 * data, float ms){
-	int i;
-	for(i=0;i<GetNumberOfIOChannels();i++){
-		if(!isStremChannelMode(GetChannelMode(i)))
-			SetChanelValueHW(i,1,& data[i], ms);
-	}
-	return TRUE;
+BOOL SetAllChanelValueHW(INT32 * data, float ms) {
+    int i;
+    for (i = 0; i < GetNumberOfIOChannels(); i++) {
+        if (!isStremChannelMode(GetChannelMode(i)))
+            SetChanelValueHW(i, 1, & data[i], ms);
+    }
+    return TRUE;
 }
 
 /**
@@ -117,14 +118,14 @@ BOOL SetAllChanelValueHW(INT32 * data, float ms){
  * This function takes a pin index, a number of values to be delt with, and an array of data values
  * Data is stored into numValues and data
  */
-BOOL GetAllChanelValueHW(INT32 * data){
-	int i;
-	BYTE numValues;
-	for(i=0;i<GetNumberOfIOChannels();i++){
-		if(!isStremChannelMode(GetChannelMode(i)))
-			GetChanelValueHW(i,&numValues,& data[i]);
-	}
-	return TRUE;
+BOOL GetAllChanelValueHW(INT32 * data) {
+    int i;
+    BYTE numValues;
+    for (i = 0; i < GetNumberOfIOChannels(); i++) {
+        if (!isStremChannelMode(GetChannelMode(i)))
+            GetChanelValueHW(i, &numValues, & data[i]);
+    }
+    return TRUE;
 }
 
 /**
@@ -134,29 +135,29 @@ BOOL GetAllChanelValueHW(INT32 * data){
  * @param data the array of values to use in the configuration step
  */
 
-BOOL ConfigureChannelHW(BYTE pin,BYTE numValues,INT32 * data){
-	if(!isStremChannelMode(GetChannelMode(pin)))
-		SetNewConfigurationDataTable( pin, data[0]);
-	return TRUE;
+BOOL ConfigureChannelHW(BYTE pin, BYTE numValues, INT32 * data) {
+    if (!isStremChannelMode(GetChannelMode(pin)))
+        SetNewConfigurationDataTable(pin, data[0]);
+    return TRUE;
 }
 
-BOOL SetChanVal(BYTE pin,INT32 bval, float time){
-	BYTE mode = GetChannelMode(pin);
-	switch (mode){
-	case IS_COUNTER_INPUT_INT:
-	case IS_COUNTER_INPUT_DIR:
-		println_I("Counter input ");
-		printMode(mode,INFO_PRINT);
-		SetCounterInput(pin,bval);
-		return TRUE;
-	case IS_COUNTER_OUTPUT_INT:
-	case IS_COUNTER_OUTPUT_DIR:
-		println_I("Counter output ");
-		printMode(mode,INFO_PRINT);
-		SetCounterOutput(pin,bval,time);
-		return TRUE;
-	}
-	return TRUE;
+BOOL SetChanVal(BYTE pin, INT32 bval, float time) {
+    BYTE mode = GetChannelMode(pin);
+    switch (mode) {
+        case IS_COUNTER_INPUT_INT:
+        case IS_COUNTER_INPUT_DIR:
+            println_I("Counter input ");
+            printMode(mode, INFO_PRINT);
+            SetCounterInput(pin, bval);
+            return TRUE;
+        case IS_COUNTER_OUTPUT_INT:
+        case IS_COUNTER_OUTPUT_DIR:
+            println_I("Counter output ");
+            printMode(mode, INFO_PRINT);
+            SetCounterOutput(pin, bval, time);
+            return TRUE;
+    }
+    return TRUE;
 }
 
 //BOOL GetChannelValue(BowlerPacket * Packet){

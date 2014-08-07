@@ -131,7 +131,7 @@ BYTE GetChannelMode(BYTE pin) {
 }
 
 RunEveryData * getPinsScheduler(int pin){
-	return & dataPtr[pin].PIN.asyncDataTime;
+	return & dataPtr[pin].asyncDataTime;
 }
 
 DATA_STRUCT * getBcsIoDataTable(int pin) {
@@ -445,9 +445,9 @@ void printAsync() {
         print_I("\tMode ");
         printAsyncType(getBcsIoDataTable(i)->PIN.asyncDataType);
         print_I("\tIteration ");
-        p_fl_I(getBcsIoDataTable(i)->PIN.asyncDataTime.setPoint);
+        p_fl_I(getBcsIoDataTable(i)->asyncDataTime.setPoint);
         print_I("\tLast ");
-        p_fl_I(getBcsIoDataTable(i)->PIN.asyncDataTime.MsTime);
+        p_fl_I(getBcsIoDataTable(i)->asyncDataTime.MsTime);
     }
 }
 
