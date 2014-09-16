@@ -10,7 +10,7 @@ char dypidNSName[] = "bcs.pid.dypid.*;0.3;;";
 RunEveryData pid = {0, 30};
 RunEveryData vel = {0, 100};
 
-BOOL bcsPidDypidAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {
+boolean bcsPidDypidAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {
     //println_W("Async ");print_W(dypidNSName);
     if (RunEvery(&pid) > 0) {
         RunPIDControl();
@@ -22,24 +22,24 @@ BOOL bcsPidDypidAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCallbackP
     }
 #endif
     //println_W("Done ");print_W(dypidNSName);
-    return FALSE;
+    return false; 
 }
 
-BOOL bcsPidDypidProcessor_g(BowlerPacket * Packet) {
-    //BYTE temp0;
+boolean bcsPidDypidProcessor_g(BowlerPacket * Packet) {
+    //uint8_t temp0;
     switch (Packet->use.head.RPC) {
         case DPID:
             GetConfigDyPID(Packet);
             break;
         default:
-            return FALSE;
+            return false; 
     }
-    return TRUE;
+    return true; 
 }
 
-BOOL bcsPidDypidProcessor_c(BowlerPacket * Packet) {
-    //BYTE temp0;
-    BYTE zone = 4;
+boolean bcsPidDypidProcessor_c(BowlerPacket * Packet) {
+    //uint8_t temp0;
+    uint8_t zone = 4;
     switch (Packet->use.head.RPC) {
         case DPID:
             if (ConfigDyPID(Packet)) {
@@ -48,9 +48,9 @@ BOOL bcsPidDypidProcessor_c(BowlerPacket * Packet) {
                 ERR(Packet, zone, 1);
             break;
         default:
-            return FALSE;
+            return false; 
     }
-    return TRUE;
+    return true; 
 }
 
 static RPC_LIST bcsPidDypid_dpid_g = {BOWLER_GET, // Method
@@ -96,7 +96,7 @@ static NAMESPACE_LIST bcsPidDypid = {dypidNSName, // The string defining the nam
     NULL// no initial elements to the other namesapce field.
 };
 
-static BOOL namespcaedAdded = FALSE;
+static boolean namespcaedAdded = false; 
 
 NAMESPACE_LIST * get_bcsPidDypidNamespace() {
     if (!namespcaedAdded) {
@@ -105,7 +105,7 @@ NAMESPACE_LIST * get_bcsPidDypidNamespace() {
         addRpcToNamespace(&bcsPidDypid, & bcsPidDypid_dpid_g);
         addRpcToNamespace(&bcsPidDypid, & bcsPidDypid_dpid_c);
 
-        namespcaedAdded = TRUE;
+        namespcaedAdded = true; 
     }
 
     return &bcsPidDypid; //Return pointer to the struct

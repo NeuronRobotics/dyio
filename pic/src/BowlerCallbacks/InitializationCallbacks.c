@@ -7,13 +7,13 @@
 
 #include "UserApp.h"
 
-//BYTE InputState[NUM_PINS];
+//uint8_t InputState[NUM_PINS];
 
-BYTE SaveTheState=0;
+uint8_t SaveTheState=0;
 
 #define mInitSwitch()      (_TRISB0)=1;
 
-const BYTE MY_MAC_ADDRESS[]={0x74,0xf7,0x26,0x01,0x01,0x01};
+const uint8_t MY_MAC_ADDRESS[]={0x74,0xf7,0x26,0x01,0x01,0x01};
 
 extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 
@@ -77,7 +77,7 @@ void hardwareInit(){
 	InitADC();
 
 
-	BYTE rev [] = {MAJOR_REV,MINOR_REV,FIRMWARE_VERSION};
+	uint8_t rev [] = {MAJOR_REV,MINOR_REV,FIRMWARE_VERSION};
 	FlashSetFwRev(rev);
 
 	//Starts co-proc uart
@@ -121,7 +121,7 @@ void UserInit(void){
 	lockServos();
 	setPrintLevelInfoPrint();
 
-	BOOL brown = getEEBrownOutDetect();
+	boolean brown = getEEBrownOutDetect();
 	setCoProcBrownOutMode(brown);
 	setBrownOutDetect(brown);
 

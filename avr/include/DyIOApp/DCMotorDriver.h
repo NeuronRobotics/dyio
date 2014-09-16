@@ -8,9 +8,9 @@
 #ifndef DCMOTORDRIVER_H_
 #define DCMOTORDRIVER_H_
 
-BOOL InitDCMotor(BYTE pin);
-void ClearDCMotor(BYTE pin);
-BYTE GetDCMotor(BYTE pin);
-void SetDCMotor(BYTE pin,BYTE vel);
+boolean InitDCMotor(uint8_t pin);
+void ClearDCMotor(uint8_t pin);
+uint8_t GetDCMotor(uint8_t pin);
+void SetDCMotor(uint8_t pin,uint8_t vel);
 
 #endif /* DCMOTORDRIVER_H_ */

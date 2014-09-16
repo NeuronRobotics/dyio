@@ -7,15 +7,15 @@
 
 #ifndef COPROCCOM_H_
 #define COPROCCOM_H_
-void addCoProcByte(BYTE b);
-BOOL isProcessing();
+void addCoProcByte(uint8_t b);
+boolean isProcessing();
 void startUartCoProc();
 void initCoProcCom(void);
 void SendPacketToCoProc(BowlerPacket * Packet);
 
-void GetPacketUARTCoProc(BYTE *packet,WORD size);
-WORD Get_UART_Byte_CountCoProc(void);
-BOOL SendPacketUARTCoProc(BYTE * packet,WORD size);
+void GetPacketUARTCoProc(uint8_t *packet,uint16_t size);
+uint16_t Get_UART_Byte_CountCoProc(void);
+boolean SendPacketUARTCoProc(uint8_t * packet,uint16_t size);
 
 
 

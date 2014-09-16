@@ -14,22 +14,22 @@ static DmaChannel	chn = DMA_CHANNEL1;	// DMA channel to use for our example
 
 static int dmaReadPointer = 0;
 
-static BYTE private[DMA_SIZE*2];
+static uint8_t private[DMA_SIZE*2];
 
-static BOOL running=FALSE;
+static boolean running=false; 
 
 void closeDma(){
 	FLAG_ASYNC=FLAG_BLOCK;
 	DmaChnAbortTxfer(chn);
 	DmaChnClrEvFlags(chn,DMA_EV_ALL_EVNTS);
-	running=FALSE;
+	running=false; 
 }
 
 void startUartDma(){
 	if(running)
 		return;
 	FLAG_ASYNC=FLAG_BLOCK;
-	running=TRUE;
+	running=true; 
 	println_I("startUartDma");
 
 	dmaReadPointer = 0;
@@ -77,7 +77,7 @@ int pushContents(){
 	int from = dmaReadPointer;
 	int to = DmaChnGetDstPnt(chn);
 
-	BOOL reset=FALSE;
+	boolean reset=false; 
 	if(to>(DMA_SIZE/2)){
 		DelayMs(1);
 		to = DmaChnGetDstPnt(chn);
@@ -96,7 +96,7 @@ int pushContents(){
     	}
       	DmaChnSetTxfer(chn, (void*)&U2RXREG, private, 1, DMA_SIZE, 1);
       	DmaChnEnable(chn);
-    	reset=TRUE;
+    	reset=true; 
 	}
 	if(to>from ){
 		if(to<0||to>DMA_SIZE||from<0||from>DMA_SIZE){

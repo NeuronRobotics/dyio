@@ -11,7 +11,7 @@
 static BowlerPacket packetTemp;
 extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 
-void pushDummy(BYTE numData){
+void pushDummy(uint8_t numData){
 	LoadCorePacket(& packetTemp);
 	packetTemp.use.head.Method=BOWLER_ASYN;
 	packetTemp.use.head.RPC=GetRPCValue("test");
@@ -39,7 +39,7 @@ void PushAllAsync(){
 	println_I("Sending All Async: ");printPacket(&packetTemp,INFO_PRINT);
 	setPrintLevel(l);
 }
-void PushCounterChange(BYTE pin,LONG state){
+void PushCounterChange(uint8_t pin,LONG state){
 	SetColor(0,1,0);
 	INT32_UNION s;
 	s.Val= state;
@@ -55,7 +55,7 @@ void PushCounterChange(BYTE pin,LONG state){
 	packetTemp.use.head.MessageID=5;
 	PutBowlerPacket(& packetTemp);
 }
-void PushADCval(BYTE pin,UINT16 val){
+void PushADCval(uint8_t pin,uint16_t val){
 	if(val>1024 || val<0)
 		return;
 	UINT16_UNION an;
@@ -71,7 +71,7 @@ void PushADCval(BYTE pin,UINT16 val){
 	packetTemp.use.head.MessageID=5;
 	PutBowlerPacket(& packetTemp);
 }
-void PushDIval(BYTE pin,BYTE val){
+void PushDIval(uint8_t pin,uint8_t val){
 	if(val>1 || val<0)
 		return;
 	SetColor(0,1,0);

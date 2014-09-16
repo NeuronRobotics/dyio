@@ -28,8 +28,8 @@ static RunEveryData block1 = {blockInc1,blockTime};
 static RunEveryData block2 = {blockInc2,blockTime};
 
 
-void initPinState(BYTE i){
-	BYTE mode =GetChannelMode(i);
+void initPinState(uint8_t i){
+	uint8_t mode =GetChannelMode(i);
 	if ((mode == IS_ANALOG_IN) ){
 		SetValFromAsync(i,GetADC(i));
 	}else if(((mode == IS_DI) )  || ((mode == IS_COUNTER_INPUT_HOME)||(mode == IS_COUNTER_OUTPUT_HOME))){
@@ -39,20 +39,20 @@ void initPinState(BYTE i){
 	}
 }
 
-BOOL checkAnalog(){
+boolean checkAnalog(){
 	int i=0;
 	for(i=8;i<16;i++){
 		if ((GetChannelMode(i) == IS_ANALOG_IN) ){
 			SetValFromAsync(i, GetADC(i));
 		}
 	}
-	return TRUE;
+	return true; 
 }
-BOOL checkDigital(){
+boolean checkDigital(){
 	int i;
 	for(i=0;i<GetNumberOfIOChannels();i++){
-		BYTE mode = GetChannelMode(i);
-		BOOL run = (((mode == IS_DI) )  || ((mode == IS_COUNTER_INPUT_HOME)||(mode == IS_COUNTER_OUTPUT_HOME) || (mode == IS_SERVO)));
+		uint8_t mode = GetChannelMode(i);
+		boolean run = (((mode == IS_DI) )  || ((mode == IS_COUNTER_INPUT_HOME)||(mode == IS_COUNTER_OUTPUT_HOME) || (mode == IS_SERVO)));
 		if (run){
 			if(mode == IS_SERVO){
 				SetValFromAsync(i,GetServoPos(i));
@@ -64,7 +64,7 @@ BOOL checkDigital(){
 			}
 		}
 	}
-	return TRUE;
+	return true; 
 }
 
 void resetBlocks(){

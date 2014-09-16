@@ -11,15 +11,15 @@
 
 char ioNSName[] = "bcs.io.*;0.3;;";
 
-BOOL bcsIoAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCallbackPtr)(BowlerPacket *)) {
+boolean bcsIoAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCallbackPtr)(BowlerPacket *)) {
 
     int i;
-    BOOL update = FALSE;
+    boolean update = false; 
     //println_W("Async ");print_W(ioNSName);
     for (i = 0; i < GetNumberOfIOChannels(); i++) {
         //println_W("Checking ");p_int_W(i);
         if (pushAsyncReady(i)) {
-            update = TRUE;
+            update = true; 
         }
     }
     if (update) {
@@ -34,7 +34,7 @@ BOOL bcsIoAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCallbackPtr)(Bo
         }
     }
     //println_W("Done ");print_W(ioNSName);
-    return FALSE;
+    return false; 
 }
 
 
@@ -260,11 +260,11 @@ static NAMESPACE_LIST bcsIo = {ioNSName, // The string defining the namespace
 
 
 
-static BOOL namespcaedAdded = FALSE;
+static boolean namespcaedAdded = false; 
 
 NAMESPACE_LIST * get_bcsIoNamespace() {
     if (!namespcaedAdded) {
-        namespcaedAdded = TRUE;
+        namespcaedAdded = true; 
         //Add the RPC structs to the namespace
         //GET
         addRpcToNamespace(&bcsIo, & bcsIo_gchm_g);

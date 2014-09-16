@@ -17,15 +17,15 @@ void InitPins(void){
 	for(i=0;i<GetNumberOfIOChannels();i++){
 		initPinState(i);
 		configAdvancedAsyncNotEqual(i,10);
-		setAsyncLocal(i,TRUE);
+		setAsyncLocal(i,true) ;
 	}
 	//println_I(/*PSTR*/("DONE pin initialization"));
 }
 
 
-void ClearPinState(BYTE pin){
+void ClearPinState(uint8_t pin){
 
-	BYTE current = GetChannelMode(pin);
+	uint8_t current = GetChannelMode(pin);
 
 	ClearPWM(pin);
 	ClearADC(pin);

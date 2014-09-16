@@ -7,8 +7,8 @@
 
 #include "UserApp.h"
 
-static BYTE switched;
-static BYTE bankState[2];
+static uint8_t switched;
+static uint8_t bankState[2];
 static float lastVolt=0;
 static float volt;
 
@@ -19,27 +19,27 @@ void CheckSwitches(void){
 	setPrintLevelInfoPrint();
 	switched=0;
 	volt = GetRawVoltage();
-	BOOL up = FALSE;
+	boolean up = false; 
 
-	BYTE reg = isRegulated_0();
+	uint8_t reg = isRegulated_0();
 	if (bankState[0] != reg ){
 		bankState[0]=reg;
-		up=TRUE;
+		up=true; 
 	}
 
 
 	reg = isRegulated_1();
 	if (bankState[1] != reg){
 		bankState[1] = reg;
-		up=TRUE;
+		up=true; 
 	}
 
 	if ((lastVolt>RawVoltageMin) && (volt<RawVoltageMin)){
-		up=TRUE;
+		up=true; 
 		lastVolt = volt;
 	}
 	if ((lastVolt<RawVoltageMin) && (volt>RawVoltageMin)){
-		up=TRUE;
+		up=true; 
 		lastVolt = volt;
 	}
 
@@ -61,12 +61,12 @@ void CheckSwitches(void){
 	setPrintLevel(l);
 }
 
-BYTE IsRegulated(float voltage){
+uint8_t IsRegulated(float voltage){
 	float raw = GetRawVoltage()-130;//adding the voltage drop across the diaode
 	if((voltage < raw+10)&&(voltage > raw-10))
-		return FALSE;
+		return false; 
 	if ((voltage<(RawVoltageMin))&&(voltage>(FiveVoltADC))){//USB spec is 5.25v to 4.4v.
-		return TRUE;
+		return true; 
 	}
-	return FALSE;
+	return false; 
 }

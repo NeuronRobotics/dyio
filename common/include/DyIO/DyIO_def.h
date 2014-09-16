@@ -66,23 +66,23 @@
 
 
 
-BOOL ConfigChannel(BowlerPacket * Packet);
-void ClearPinState(BYTE pin);
+boolean ConfigChannel(BowlerPacket * Packet);
+void ClearPinState(uint8_t pin);
 void InitPins(void);
 void InitPinFunction(void);
 
-BOOL pinHasFunction(BYTE pin, BYTE function);
+boolean pinHasFunction(uint8_t pin, uint8_t function);
 void runDyIOMain(void);
 
 NAMESPACE_LIST * get_neuronRoboticsDyIONamespace();
 NAMESPACE_LIST * get_bcsPidDypidNamespace() ;
 
 NAMESPACE_LIST * get_bcsSafeNamespace();
-void setCoProcBrownOutMode(BOOL b);
-BYTE SetAllCoProcValues();
-BOOL LoadSerialTxData(BYTE numValues,BYTE * data);
-BYTE GetSerialRxData(BYTE * data);
-void SetNewConfigurationDataTable(BYTE pin, INT32 value);
+void setCoProcBrownOutMode(boolean b);
+uint8_t SetAllCoProcValues();
+boolean LoadSerialTxData(uint8_t numValues,uint8_t * data);
+uint8_t GetSerialRxData(uint8_t * data);
+void SetNewConfigurationDataTable(uint8_t pin, int32_t value);
 void SyncDataTable();
 
 

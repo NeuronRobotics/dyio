@@ -13,13 +13,13 @@
 void pushPPMPacket(void);
 void runPPMEvent(void);
 void RunPPMCheck(void);
-void clearPPM(BYTE chan);
-void startPPM(BYTE chan);
+void clearPPM(uint8_t chan);
+void startPPM(uint8_t chan);
 
-void ConfigPPMFromArray(BYTE * data);
+void ConfigPPMFromArray(uint8_t * data);
 
 void GetPPMDataToPacket(BowlerPacket * Packet);
 void ConfigPPM(BowlerPacket * Packet);
-int GetPPMDataToArray(BYTE * data);
+int GetPPMDataToArray(uint8_t * data);
 
 #endif /* PPMREADER_H_ */

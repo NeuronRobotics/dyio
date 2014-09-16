@@ -6,14 +6,14 @@
  */
 
 #include "UserApp.h"
-static BYTE ppmData[]={128,128,128,128,128,128};
-static BYTE ppmLastSent[]={255,255,255,255,255,255};
-static BYTE ppmLink[]={255,255,255,255,255,255};
-static UINT32 ppmDataTmp[]={128,128,128,128,128,128};
-static UINT32 ppmStart[NUM_PPM_CHAN];
-static BYTE ppmIndex = 0;
-static UINT32 bufferStart=0;
-static UINT32 buffTime = (TICKS_PER_SECOND/1000)*6;
+static uint8_t ppmData[]={128,128,128,128,128,128};
+static uint8_t ppmLastSent[]={255,255,255,255,255,255};
+static uint8_t ppmLink[]={255,255,255,255,255,255};
+static uint32_t ppmDataTmp[]={128,128,128,128,128,128};
+static uint32_t ppmStart[NUM_PPM_CHAN];
+static uint8_t ppmIndex = 0;
+static uint32_t bufferStart=0;
+static uint32_t buffTime = (TICKS_PER_SECOND/1000)*6;
 
 void configPin23Int();
 
@@ -31,7 +31,7 @@ void RunPPMCheck(void){
 		return;
 	}
 	int i;
-	BOOL up = FALSE;
+	boolean up = false; 
 	for(i=0;i<NUM_PPM_CHAN;i++){
 		float fTime =MyTickConvertToMilliseconds(((float)ppmDataTmp[i])+(((float)TickGetUpper())*((float) 4294967295ul )));
 		if(fTime>.9 && fTime<2.2){
@@ -40,12 +40,12 @@ void RunPPMCheck(void){
 				fVal=254;
 			if(fVal<0)
 				fVal=0;
-			BYTE time =((BYTE) fVal);
+			uint8_t time =((BYTE) fVal);
 
 			if((time>(ppmData[i]+3)) || (time<(ppmData[i]-3))){
 				ppmData[i]=time;
 				//setHeartBeatState( FALSE, 0);
-				up=TRUE;
+				up=true; 
 			}
 		}
 	}
@@ -72,8 +72,8 @@ void RunPPMCheck(void){
 }
 
 void runPPMEvent(void){
-	BYTE pinState = CHAN3P1;
-	UINT32 now = TickGet();
+	uint8_t pinState = CHAN3P1;
+	uint32_t now = TickGet();
 	if(pinState){
 		mINT4SetEdgeMode(0);
 	}else{
@@ -109,14 +109,14 @@ void runPPMEvent(void){
 	}
 }
 
-void clearPPM(BYTE chan){
+void clearPPM(uint8_t chan){
 	if((chan == 23) && (GetChannelMode(23)==IS_PPM_IN)){
 		CloseINT4();
 		CHAN3P1_tris=INPUT;
 	}
 }
 
-void startPPM(BYTE chan){
+void startPPM(uint8_t chan){
 	int i;
 	if(chan == 23){
 //		ConfigINT4(EXT_INT_ENABLE | FALLING_EDGE_INT | EXT_INT_PRI_5);
@@ -150,7 +150,7 @@ void GetPPMDataToPacket(BowlerPacket * Packet){
 	SetCRC(Packet);
 }
 
-void ConfigPPMFromArray(BYTE * data){
+void ConfigPPMFromArray(uint8_t * data){
 	int i;
 	for(i=0;i<NUM_PPM_CHAN;i++){
 		ppmLink[i]=data[i];
@@ -177,7 +177,7 @@ void ConfigPPM(BowlerPacket * Packet){
 	READY(Packet,66,0);
 }
 
-int GetPPMDataToArray(BYTE * data){
+int GetPPMDataToArray(uint8_t * data){
 	int i;
 	for(i=0;i<NUM_PPM_CHAN;i++){
 		data[i]=ppmData[i];

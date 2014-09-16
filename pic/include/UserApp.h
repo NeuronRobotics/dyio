@@ -49,11 +49,11 @@ void UserInit(void);
 void UserRun(void);
 
 void UpdateAVRLED(void);
-void setHeartBeatState( BOOL hb, int time);
+void setHeartBeatState( boolean hb, int time);
 int getHeartBeatTime();
-BOOL getHeartBeatLock();
+boolean getHeartBeatLock();
 
-void buttonCheck(BYTE code);
+void buttonCheck(uint8_t code);
 void MyServer();
 
 #endif /* USERAPP_H_ */

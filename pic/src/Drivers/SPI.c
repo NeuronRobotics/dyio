@@ -20,7 +20,7 @@ void InitSPI(void){
 	SetCoProcMode(2,IS_SPI_MOSI);
 }
 
-void StopSPI(BYTE pin){
+void StopSPI(uint8_t pin){
 	if (isSPI(GetChannelMode(pin))){
 		CloseSPI2();
 		_RG6=1;
@@ -34,24 +34,24 @@ void StopSPI(BYTE pin){
 		SetCoProcMode(2,IS_DI);
 	}
 }
-BOOL isSPI(BYTE mode){
+boolean isSPI(uint8_t mode){
 	switch(mode){
 	case IS_SPI_MOSI:
 	case IS_SPI_MISO:
 	case IS_SPI_SCK:
-		return TRUE;
+		return true; 
 	}
-	return FALSE;
+	return false; 
 }
 
-BYTE GetByteSPI(BYTE b){
+uint8_t GetByteSPI(uint8_t b){
 	InitSPI();
 	putcSPI2(b);	// Start sending
 	return getcSPI2();
 }
 
-void SendPacketToSPIFromArray(BYTE numBytes,BYTE * data){
-	BYTE ss = data[0];
+void SendPacketToSPIFromArray(uint8_t numBytes,uint8_t * data){
+	uint8_t ss = data[0];
 	if(ss<3){
 		println_I("invalid SS pin");
 		return;
@@ -59,7 +59,7 @@ void SendPacketToSPIFromArray(BYTE numBytes,BYTE * data){
 	if(!SetCoProcMode(ss,IS_DO))
 		SetChannelValueCoProc(ss,1);
 	SetChannelValueCoProc(ss,0);
-	BYTE i;
+	uint8_t i;
 	for (i=0;i<numBytes;i++){
 		data[i+1]=GetByteSPI(data[i+1]);
 	}

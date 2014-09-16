@@ -6,11 +6,11 @@
  */
 #include "UserApp.h"
 
-BOOL setMode(BYTE pin,BYTE mode);
+boolean setMode(uint8_t pin,uint8_t mode);
 
 void SyncModes(void);
 
-BOOL brownOutDetect = TRUE;
+boolean brownOutDetect = true; 
 
 void InitPinStates(void){
 	SyncModes();
@@ -23,17 +23,17 @@ void InitPinStates(void){
 	}
 }
 
-void setBrownOutDetect(BOOL b){
+void setBrownOutDetect(boolean b){
 	brownOutDetect = b;
 	setEEBrownOutDetect(b);
 }
-BOOL getBrownOutDetect(){
+boolean getBrownOutDetect(){
 	return brownOutDetect;
 }
 
-BOOL setMode(BYTE pin,BYTE mode){
+boolean setMode(uint8_t pin,uint8_t mode){
 	println_I("Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_int_I(pin);
-	//BYTE currentMode = GetChannelMode(pin);
+	//uint8_t currentMode = GetChannelMode(pin);
 	ClearCounter(pin);
 	StopSPI(pin);
 	clearPPM(pin);
@@ -46,7 +46,7 @@ BOOL setMode(BYTE pin,BYTE mode){
 		}else{
 			if(getBrownOutDetect()){
 				print_I(" Servo Mode could not be set, voltage invalid");
-				return FALSE;
+				return false; 
 			}else{
 				print_I(" Servo Mode set|");
 				break;
@@ -56,36 +56,36 @@ BOOL setMode(BYTE pin,BYTE mode){
 	case IS_SPI_MOSI:
 	case IS_SPI_MISO:
 	case IS_SPI_SCK:
-		if( pinHasFunction(pin, mode) != FALSE){
+		if( pinHasFunction(pin, mode) != false) {
 			print_I("|Mode is now SPI");
 			InitSPI();
 			break;
 		}else{
-			return FALSE;
+			return false; 
 		}
 		break;
 	case IS_COUNTER_INPUT_INT:
 	case IS_COUNTER_INPUT_DIR:
 	case IS_COUNTER_INPUT_HOME:
-		if(pinHasFunction(pin, mode) != FALSE){
+		if(pinHasFunction(pin, mode) != false) {
 			print_I("|Mode is now Counter Input");
 			StartCounterInput(pin);
 			break;
 		}else{
 			print_I(", Counter Input not availible");
-			return FALSE;
+			return false; 
 		}
 		break;
 	case IS_COUNTER_OUTPUT_INT:
 	case IS_COUNTER_OUTPUT_DIR:
 	case IS_COUNTER_OUTPUT_HOME:
-		if(pinHasFunction(pin, mode) != FALSE){
+		if(pinHasFunction(pin, mode) != false) {
 			print_I("|Mode is now Counter Output");
 			StartCounterOutput(pin);
 			break;
 		}else{
 			print_I(", Counter Output not availible");
-			return FALSE;
+			return false; 
 		}
 		break;
 	case IS_PPM_IN:
@@ -94,21 +94,21 @@ BOOL setMode(BYTE pin,BYTE mode){
 		break;
 	}
 	print_I(" \tMode set");
-	return TRUE;
+	return true; 
 }
 
 
 
 
 /*
-BOOL SetChannelMode(BowlerPacket * Packet){
+boolean SetChannelMode(BowlerPacket * Packet){
 
-	BYTE pin =Packet->use.getBcsIoDataTable()[0];
+	uint8_t pin =Packet->use.getBcsIoDataTable()[0];
 
-	BYTE mode=Packet->use.getBcsIoDataTable()[1];
+	uint8_t mode=Packet->use.getBcsIoDataTable()[1];
 
 	if(Packet->use.head.getBcsIoDataTable()Legnth == 7){
-		isAsync[pin] = Packet->use.getBcsIoDataTable()[2]?TRUE:FALSE;
+		isAsync[pin] = Packet->use.getBcsIoDataTable()[2]?TRUE:false; 
 	}
 
 	if(setMode(pin,mode)){
@@ -122,15 +122,15 @@ BOOL SetChannelMode(BowlerPacket * Packet){
 		READY(Packet,4,33);
 		if(isAsync[pin])
 			startAdvancedAsyncDefault(pin);
-		return TRUE;
+		return true; 
 	}else{
 		println_E("Mode Invalid!");
-		return FALSE;
+		return false; 
 	}
 
 }
 
-BOOL SetAllChannelMode(BowlerPacket * Packet){
+boolean SetAllChannelMode(BowlerPacket * Packet){
 	SendPacketToCoProc(Packet);
 	SyncModes();
 	int i=0;
@@ -138,7 +138,7 @@ BOOL SetAllChannelMode(BowlerPacket * Packet){
 		if(IsAsync(i))
 			startAdvancedAsyncDefault(i);
 	}
-	return TRUE;
+	return true; 
 }
 */
 

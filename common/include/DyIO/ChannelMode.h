@@ -16,13 +16,13 @@ void InitPinStates(void);
 /**
  * Helper macro to return the mode with the async flag stripped off
  */
-BYTE GetChannelMode(BYTE chan);
+uint8_t GetChannelMode(uint8_t chan);
 
 /**
  * Sets the modes from an incoming packet
  */
-BOOL SetChannelModeFromPacket(BowlerPacket * Packet);
-BOOL SetAllChannelModeFromPacket(BowlerPacket * Packet);
+boolean SetChannelModeFromPacket(BowlerPacket * Packet);
+boolean SetAllChannelModeFromPacket(BowlerPacket * Packet);
 
 
 
@@ -30,7 +30,7 @@ BOOL SetAllChannelModeFromPacket(BowlerPacket * Packet);
  * Checks to see if the channel is set to async mode
  * @return if it is async
  */
-BOOL IsAsync(BYTE channel);
+boolean IsAsync(uint8_t channel);
 
 /**
  * This Function is used to alter the mode of the pin (See DYIO_def.h for modes)
@@ -40,11 +40,11 @@ BOOL IsAsync(BYTE channel);
  * @param mode the mode to set the pin to
  * @return If the mode change was successfull
  */
-BOOL setMode(BYTE pin,BYTE mode);
+boolean setMode(uint8_t pin,uint8_t mode);
 
 
 /**
  * Private method
  */
-void configPinMode(BYTE pin,BYTE mode,BYTE tris,BYTE io);
+void configPinMode(uint8_t pin,uint8_t mode,uint8_t tris,uint8_t io);
 #endif /* CHANNELMODE_H_ */

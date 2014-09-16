@@ -10,8 +10,8 @@
 void PushSerial(void);
 void PushAllAdcVal();
 void PushAllDiVal();
-void PushADCval(BYTE pin,UINT16 val);
-void PushDIval(BYTE pin,BYTE val);
+void PushADCval(uint8_t pin,uint16_t val);
+void PushDIval(uint8_t pin,uint8_t val);
 
 
 

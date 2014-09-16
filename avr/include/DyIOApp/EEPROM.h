@@ -9,16 +9,16 @@
 #define EEPROM_H_
 #include <avr/eeprom.h>
 void EEInitMAC(void);
-BOOL ProvisionMAC(BYTE * m);
+boolean ProvisionMAC(uint8_t * m);
 
-void EEWriteMode(BYTE pin,BYTE mode);
-void EEWriteValue(UINT16 pin,BYTE value);
-BYTE EEReadValue(UINT16 pin);
-BYTE EEReadMode(BYTE pin);
+void EEWriteMode(uint8_t pin,uint8_t mode);
+void EEWriteValue(uint16_t pin,uint8_t value);
+uint8_t EEReadValue(uint16_t pin);
+uint8_t EEReadMode(uint8_t pin);
 
-UINT32 EEReadBaud(void);
-void EEWriteBaud(UINT32 val);
-void EEWriteData(UINT16 addr,BYTE data);
-BYTE EEReadData(UINT16 addr);
+uint32_t EEReadBaud(void);
+void EEWriteBaud(uint32_t val);
+void EEWriteData(uint16_t addr,uint8_t data);
+uint8_t EEReadData(uint16_t addr);
 
 #endif /* EEPROM_H_ */

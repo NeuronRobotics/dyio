@@ -10,17 +10,17 @@ void CartesianControllerInit(void){
 void CartesianControllerCoOp(void){
 
 }
-BOOL CartesianControllerGetPacket(BowlerPacket * Packet){
+boolean CartesianControllerGetPacket(BowlerPacket * Packet){
 	//No packets caught, return false
-	return FALSE;
+	return false; 
 }
 
-BOOL CartesianControllerPostPacket(BowlerPacket * Packet){
+boolean CartesianControllerPostPacket(BowlerPacket * Packet){
 	//No packets caught, return false
-	return FALSE;
+	return false; 
 }
 
-BOOL CartesianControllerCriticalPacket(BowlerPacket * Packet){
+boolean CartesianControllerCriticalPacket(BowlerPacket * Packet){
 	//No packets caught, return false
-	return FALSE;
+	return false; 
 }

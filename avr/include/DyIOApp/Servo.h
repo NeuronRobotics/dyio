@@ -20,19 +20,19 @@
 
 #define BLOCK_SIZE 8
 
-void SetPowerState0(BOOL railOk,BOOL regulated);
-void SetPowerState1(BOOL railOk,BOOL regulated);
-void setPowerOverride(BOOL set);
+void SetPowerState0(boolean railOk,boolean regulated);
+void SetPowerState1(boolean railOk,boolean regulated);
+void setPowerOverride(boolean set);
 /**
  * SetServoPos
  * @param PIN the DyIO pin to use
  * @param val the position to set the servo to
  * @param time the time in Ms for the travil to take
  */
-void SetServoPos(BYTE PIN,BYTE val,float time);
-BYTE GetServoPos(BYTE PIN);
-void RunServo(BYTE block);
-void InitServo(BYTE pin);
+void SetServoPos(uint8_t PIN,uint8_t val,float time);
+uint8_t GetServoPos(uint8_t PIN);
+void RunServo(uint8_t block);
+void InitServo(uint8_t pin);
 void DelayPreServo(void);
 
 #endif /* SERVO_H_ */

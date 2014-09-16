@@ -14,12 +14,12 @@ static pid_vales pidEEPRomVal[NUM_PID_GROUPS];
 #define BROWNOUT_START  (PPM_END+1)
 #define BROWNOUT_END 	(BROWNOUT_START+1)
 
-BYTE loadEEDone=FALSE;
+uint8_t loadEEDone=false; 
 void LoadEEstore(void){
 	if(loadEEDone)
 		return;
 	println_I("Loading eeprom data");
-	loadEEDone=TRUE;
+	loadEEDone=true; 
 	int i;
 	for (i=0;i<NUM_PID_GROUPS;i++){
 		GetEEPRomData((pidValSize*i),(pidValSize*i)+pidValSize,pidEEPRomVal[i].stream);
@@ -28,7 +28,7 @@ void LoadEEstore(void){
 }
 void LoadPIDvals(AbsPID * pid, DYIO_PID * dy,int group){
 	LoadEEstore();
-	BYTE i = group;
+	uint8_t i = group;
 	if(pidEEPRomVal[i].data.outputChannel==pidEEPRomVal[i].data.inputChannel)
 		return;
 	if(pidEEPRomVal[i].data.outputChannel>=GetNumberOfIOChannels() ||pidEEPRomVal[i].data.inputChannel>=GetNumberOfIOChannels() )
@@ -50,7 +50,7 @@ void LoadPIDvals(AbsPID * pid, DYIO_PID * dy,int group){
 }
 
 void WritePIDvalues(AbsPID * pid, DYIO_PID * dy,int group){
-	BYTE i = group;
+	uint8_t i = group;
 	pidEEPRomVal[i].data.Enabled= pid->config.Enabled;
 	pidEEPRomVal[i].data.Polarity=pid->config.Polarity;
 	pidEEPRomVal[i].data.Async=pid->config.Async;
@@ -63,19 +63,19 @@ void WritePIDvalues(AbsPID * pid, DYIO_PID * dy,int group){
 	pidEEPRomVal[i].data.K.D=pid->config.K.D;
 	SetEEPRomData((pidValSize*i),(pidValSize*i)+pidValSize,pidEEPRomVal[i].stream);
 }
-void writePPMLink(BYTE * vals){
+void writePPMLink(uint8_t * vals){
 	SetEEPRomData(PID_VAL_END,PID_VAL_END+NUM_PPM_CHAN,vals);
 }
-void readPPMLink(BYTE * vals){
+void readPPMLink(uint8_t * vals){
 	GetEEPRomData(PID_VAL_END,PID_VAL_END+NUM_PPM_CHAN,vals);
 }
 
-void setEEBrownOutDetect(BOOL b){
-	BYTE tmp = b?1:0;
+void setEEBrownOutDetect(boolean b){
+	uint8_t tmp = b?1:0;
 	SetEEPRomData(BROWNOUT_START,BROWNOUT_END,&tmp);
 }
-BOOL getEEBrownOutDetect(){
-	BYTE tmp =0;
+boolean getEEBrownOutDetect(){
+	uint8_t tmp =0;
 	GetEEPRomData(BROWNOUT_START,BROWNOUT_END,&tmp);
 	return tmp;
 }

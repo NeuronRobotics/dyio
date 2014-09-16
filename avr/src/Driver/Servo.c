@@ -19,38 +19,38 @@
 #include "UserApp_avr.h"
 
 
-BOOL powerOverRide = FALSE;
+boolean powerOverRide = false; 
 
 INTERPOLATE_DATA velocity[NUM_PINS];
-void runLinearInterpolationServo(BYTE blockStart,BYTE blockEnd);
+void runLinearInterpolationServo(uint8_t blockStart,uint8_t blockEnd);
 
 
-BYTE pinOn(BYTE pin);
-void pinOff(BYTE pin);
+uint8_t pinOn(uint8_t pin);
+void pinOff(uint8_t pin);
 
-void InitServo(BYTE PIN){
+void InitServo(uint8_t PIN){
 	//println_I("Starting servo");
 	ClearPinState(PIN);
 	SetPinTris(PIN,OUTPUT);
 	//DATA.PIN[PIN].State=IS_SERVO;
 }
 
-void setPowerOverride(BOOL set){
+void setPowerOverride(boolean set){
 	powerOverRide = set;
 }
 
-BYTE b0OK=FALSE;
-BYTE b1OK=FALSE;
-BYTE b0lock=TRUE;
-BYTE b1lock=TRUE;
+uint8_t b0OK=false; 
+uint8_t b1OK=false; 
+uint8_t b0lock=true; 
+uint8_t b1lock=true; 
 
-void SetPowerState0(BOOL railOk,BOOL regulated){
-	b0OK=FALSE;
+void SetPowerState0(boolean railOk,boolean regulated){
+	b0OK=false; 
 	if (regulated == 1){
 		Bank0Green();
 	}else {
 		if(railOk==2 ||  railOk==1){
-			b0OK=TRUE;
+			b0OK=true; 
 		}
 		if(railOk ==1 ||railOk ==3  ){
 			Bank0Red();
@@ -58,12 +58,12 @@ void SetPowerState0(BOOL railOk,BOOL regulated){
 			Bank0Off();
 		}
 		if(railOk == 3||railOk == 0 ){
-			b0lock=TRUE;
+			b0lock=true; 
 		}
 	}
 }
-void SetPowerState1(BOOL railOk,BOOL regulated){
-	b1OK=FALSE;
+void SetPowerState1(boolean railOk,boolean regulated){
+	b1OK=false; 
 	if (regulated==1){
 		Bank1Green();
 	}else {
@@ -73,15 +73,15 @@ void SetPowerState1(BOOL railOk,BOOL regulated){
 			Bank1Off();
 		}
 		if(railOk==2 ||  railOk==1){
-			b1OK=TRUE;
+			b1OK=true; 
 		}
 		if(railOk == 3 ||railOk == 0 ){
-			b1lock=TRUE;
+			b1lock=true; 
 		}
 	}
 }
-BOOL print = 0xff;
-void SetServoPos(BYTE pin,BYTE val,float time){
+boolean print = 0xff;
+void SetServoPos(uint8_t pin,uint8_t val,float time){
 	if(time<30)
 		time=0;
 	velocity[pin].setTime=time;
@@ -92,32 +92,32 @@ void SetServoPos(BYTE pin,BYTE val,float time){
 		velocity[pin].setTime=0;
 	}
 	if(pin<12){
-		b0lock=FALSE;
+		b0lock=false; 
 	}else{
-		b1lock=FALSE;
+		b1lock=false; 
 	}
 	if(GetChannelMode(pin)!=IS_SERVO)
 		return;
 	print = pin;
 }
-BYTE GetServoPos(BYTE pin){
+uint8_t GetServoPos(uint8_t pin){
 	return getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
 }
 
-void RunServo(BYTE block){
+void RunServo(uint8_t block){
 
 	//disableDebug();
-	UINT16 j;
-	BYTE xIndex;
+	uint16_t j;
+	uint8_t xIndex;
 	//return;
-	BYTE start=block*BLOCK_SIZE;
-	BYTE stop=(block*BLOCK_SIZE)+BLOCK_SIZE;
+	uint8_t start=block*BLOCK_SIZE;
+	uint8_t stop=(block*BLOCK_SIZE)+BLOCK_SIZE;
 
 	runLinearInterpolationServo(start,stop);
 	FlagBusy_IO=1;
 	//Short delay to allow any stray transactions to finish
 	_delay_us(800);
-	BYTE num=0;
+	uint8_t num=0;
 	for (j=start;j<stop;j++){
 		num+=pinOn(j);
 	}
@@ -149,15 +149,15 @@ void RunServo(BYTE block){
 	//enableDebug();
 }
 
-BYTE pinOn(BYTE pin){
+uint8_t pinOn(uint8_t pin){
 	if(GetChannelMode(pin)==IS_SERVO){
 		if((pin > 11)){
-			if(		(b1OK==FALSE && !powerOverRide) ||
-					b1lock == TRUE){
+			if(		(b1OK==false && !powerOverRide) ||
+					b1lock == true) {
 				return 0;
 			}
-		}else if(	(b0OK==FALSE && !powerOverRide)||
-					b0lock == TRUE){
+		}else if(	(b0OK==false && !powerOverRide)||
+					b0lock == true) {
 			return 0;
 		}
 
@@ -167,22 +167,22 @@ BYTE pinOn(BYTE pin){
 	return 0;
 }
 
-void pinOff(BYTE pin){
+void pinOff(uint8_t pin){
 	if(GetChannelMode(pin)==IS_SERVO){
 		SetDIO(pin,OFF);
 	}
 }
 
 void DelayPreServo(void){
-	volatile UINT32 _dcnt = 290;
+	volatile uint32_t _dcnt = 290;
 	while (_dcnt--);
 }
 
-void runLinearInterpolationServo(BYTE blockStart,BYTE blockEnd){
-	BYTE i;
+void runLinearInterpolationServo(uint8_t blockStart,uint8_t blockEnd){
+	uint8_t i;
 	for (i=blockStart;i<blockEnd;i++){
 		if(GetChannelMode(i)==IS_SERVO){
-			INT32 ip = interpolate(&velocity[i],getMs());
+			int32_t ip = interpolate(&velocity[i],getMs());
 			if(ip>(255- SERVO_BOUND)){
 	#if ! defined(__AVR_ATmega324P__)
 				println_I("Servo Upper out of bounds! got=");p_int_I(ip);print_I(" on time=");p_fl_I(velocity[i].setTime);

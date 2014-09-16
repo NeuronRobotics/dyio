@@ -9,7 +9,7 @@
 
 extern DATA_STRUCT DATA;
 
-BYTE GetDIO(BYTE PIN){
+uint8_t GetDIO(uint8_t PIN){
 	switch (PIN){
 #if !defined(WPIRBE)
 	case 0:
@@ -67,7 +67,7 @@ BYTE GetDIO(BYTE PIN){
 	return 0;
 }
 
-void SetDIO(BYTE PIN,BYTE state){
+void SetDIO(uint8_t PIN,uint8_t state){
 	switch (PIN){
 #if !defined(WPIRBE)
 	case 0:
@@ -156,7 +156,7 @@ void SetDIO(BYTE PIN,BYTE state){
 		return;
 	}
 }
-void SetPinTris(BYTE PIN,BYTE state){
+void SetPinTris(uint8_t PIN,uint8_t state){
 	switch (PIN){
 #if !defined(WPIRBE)
 	case 0:

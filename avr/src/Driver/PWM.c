@@ -20,7 +20,7 @@
 
 #define HIGHSPEED
 
-void ClearPWM(BYTE channel){
+void ClearPWM(uint8_t channel){
 	////println_I("Clearing PWM from pin:");
 	////printfDEBUG_UL(channel);
 	// Sets the compare channel to normal operation
@@ -40,7 +40,7 @@ void ClearPWM(BYTE channel){
 	}
 }
 
-void enable(BYTE channel){
+void enable(uint8_t channel){
 	if(   !(  GetChannelMode(channel) == IS_PWM
 				||GetChannelMode(channel) == IS_DC_MOTOR_DIR
 				||GetChannelMode(channel) == IS_DC_MOTOR_VEL) ){
@@ -91,9 +91,9 @@ void enable(BYTE channel){
 	}
 }
 
-BYTE InitPWM(BYTE channel){
+uint8_t InitPWM(uint8_t channel){
 	if (pinHasFunction(channel,IS_PWM)){
-		return FALSE;
+		return false; 
 	}
 	configPinMode(channel,IS_PWM,OUTPUT,OFF);
 	//println_I("Initializing PWM from pin:");
@@ -102,10 +102,10 @@ BYTE InitPWM(BYTE channel){
 	//DATA.PIN[channel].State=IS_PWM;
 	enable(channel);
 	SetPWM(channel,EEReadValue(channel));
-	return TRUE;
+	return true; 
 }
 
-void SetPWM(BYTE pin,BYTE val){
+void SetPWM(uint8_t pin,uint8_t val){
 	if(   !(  GetChannelMode(pin) == IS_PWM
 			||GetChannelMode(pin) == IS_DC_MOTOR_DIR
 			||GetChannelMode(pin) == IS_DC_MOTOR_VEL) ){
@@ -129,7 +129,7 @@ void SetPWM(BYTE pin,BYTE val){
 	getBcsIoDataTable(pin)->PIN.currentValue = val;
 }
 
-BYTE GetPWM(BYTE pin){
+uint8_t GetPWM(uint8_t pin){
 	if (GetChannelMode(pin) != IS_PWM)
 		return 0;
 	return getBcsIoDataTable(pin)->PIN.currentValue;

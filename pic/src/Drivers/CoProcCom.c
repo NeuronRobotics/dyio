@@ -9,29 +9,29 @@
 #define MAX_RETRY 5
 #define DELAY_TIMEOUT 500
 
-BOOL valadateRPC(int response,int sent);
-BYTE sendPacket(BowlerPacket * Packet);
-BOOL clearToSend(void);
+boolean valadateRPC(int response,int sent);
+uint8_t sendPacket(BowlerPacket * Packet);
+boolean clearToSend(void);
 void dealWithAsyncPacket(BowlerPacket * Packet);
 void uartErrorCheck();
 
 
-static BYTE privateRX[BOWLER_PacketSize];
+static uint8_t privateRX[BOWLER_PacketSize];
 static BYTE_FIFO_STORAGE store;
-static BOOL lastWasError = FALSE;
-static BOOL init=FALSE;
-static BOOL processing=FALSE;
+static boolean lastWasError = false; 
+static boolean init=false; 
+static boolean processing=false; 
 static BowlerPacket downstream;
 static BowlerPacket asyncPacket;
 
 
 //extern DATA_STRUCT DATA;
 //extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
-//static BOOL addJunk = FALSE;
-//BYTE GetCoProcSingleByte(void);
-//DWORD CalcBaud(DWORD Baud);
+//static boolean addJunk = false; 
+//uint8_t GetCoProcSingleByte(void);
+//uint32_t CalcBaud(uint32_t Baud);
 
-BOOL getPacket(BowlerPacket * packet){
+boolean getPacket(BowlerPacket * packet){
 #if defined(USE_DMA)
 	int numAdded = updateUartDmaRx();
 	if(numAdded>0){
@@ -39,16 +39,16 @@ BOOL getPacket(BowlerPacket * packet){
 		printFiFoState_I(&store,downstream.stream);
 	}
 #endif
-	BOOL b = _getBowlerPacket(packet,& store,TRUE);
+	boolean b = _getBowlerPacket(packet,& store,true) ;
 	if(b){
 		//println_I("Returning packet");
 	}
 	return b;
 }
 
-void addCoProcByte(BYTE b){
+void addCoProcByte(uint8_t b){
 	//print_I("[");p_int_I(b);print_I("]");
-	BYTE err;
+	uint8_t err;
 	FifoAddByte(&store,b,&err);
 }
 
@@ -56,7 +56,7 @@ void addCoProcByte(BYTE b){
 
 void PushCoProcAsync(void){
 	BowlerPacket * Packet=&asyncPacket;
-	while (getPacket(Packet)==TRUE){
+	while (getPacket(Packet)==true) {
 		buttonCheck(6);
 		if(Packet->use.head.MessageID!=0){
 			dealWithAsyncPacket(Packet);
@@ -67,11 +67,11 @@ void PushCoProcAsync(void){
 	}
 }
 
-BOOL isProcessing(){
+boolean isProcessing(){
 	return processing;
 }
 
-BOOL coProcRunning = FALSE;
+boolean coProcRunning = false; 
 //void stopUartCoProc(){
 //	//Disable first to clear
 //	INTEnable(INT_SOURCE_UART(UART2)		, INT_DISABLED);
@@ -84,11 +84,11 @@ BOOL coProcRunning = FALSE;
 //	INTClearFlag(INT_SOURCE_UART_RX(UART2));
 //	INTClearFlag(INT_SOURCE_UART(UART2));
 //	CloseUART2();
-//	coProcRunning = FALSE;
+//	coProcRunning = false; 
 //}
 
 void startUartCoProc(){
-	if(coProcRunning == TRUE)
+	if(coProcRunning == true) 
 		return;
 
 	println_I("startUartCoProc");
@@ -118,12 +118,12 @@ void startUartCoProc(){
 
 	INTSetVectorPriority(INT_VECTOR_UART(UART2), INT_PRIORITY_LEVEL_7);
 	INTSetVectorSubPriority(INT_VECTOR_UART(UART2), INT_SUB_PRIORITY_LEVEL_0);
-	coProcRunning = TRUE;
+	coProcRunning = true; 
 }
 
 void initCoProcUART(){
 	println_I("initCoProcUART");
-	coProcRunning =FALSE;
+	coProcRunning =false; 
 #if defined(USE_DMA)
 	closeDma();
 #endif
@@ -168,7 +168,7 @@ void uartErrorCheck(){
 
 void initCoProcCom(){
 	println_I("initCoProcCom");
-	init = TRUE;
+	init = true; 
 	StartCritical();
 	InitByteFifo(&store,privateRX,sizeof(privateRX));
 	EndCritical();
@@ -181,15 +181,15 @@ void initCoProcCom(){
 void SendPacketToCoProc(BowlerPacket * Packet){
 	//float start = getMs();
 
-	processing=TRUE;
-	if(init == FALSE){
+	processing=true; 
+	if(init == false) {
 		println_I("SendPacketToCoProc Co-proc initializing..");
 		initCoProcCom();
 	}
 
 	//
-	BYTE i=0;
-	BYTE ret=0;
+	uint8_t i=0;
+	uint8_t ret=0;
 	int rpc = Packet->use.head.RPC;
 	do{
 		ret=sendPacket(Packet);
@@ -215,17 +215,17 @@ void SendPacketToCoProc(BowlerPacket * Packet){
 		//println_E("##Failed sending to co-proc after reset also!!:");
 		//p_int_E(ret);
 		ERR(Packet,0x55,ret);
-		lastWasError = TRUE;
+		lastWasError = true; 
 	}
 
 	Packet->use.head.ResponseFlag = 1;
-	processing=FALSE;
+	processing=false; 
 	//println_I("Coproc transaction took: ");p_fl_I(getMs()-start);print_I(" after try count: ");p_int_I(i);
 }
 
-BYTE sendPacket(BowlerPacket * Packet){
+uint8_t sendPacket(BowlerPacket * Packet){
 	println_I("sendPacket");
-	BYTE i;
+	uint8_t i;
 	//int serIndex;
 
 	for(i=0;i<6;i++){
@@ -286,118 +286,118 @@ BYTE sendPacket(BowlerPacket * Packet){
 	}
 }
 
-BOOL valadateRPC(int response,int sent){
+boolean valadateRPC(int response,int sent){
 	switch(sent){
 	case GACM:
 		switch(response){
 		case GACM:
-			return TRUE;
+			return true; 
 		default:
-			return FALSE;
+			return false; 
 		}
 	case GCHM:
 		switch(response){
 		case GCHM:
-			return TRUE;
+			return true; 
 		default:
-			return FALSE;
+			return false; 
 		}
 	case GCHV:
 		switch(response){
 		case GCHV:
 		case _ERR:
-			return TRUE;
+			return true; 
 		default:
-			return FALSE;
+			return false; 
 		}
 	case EEPD:
 		switch(response){
 		case EEPD:
 		case _ERR:
-			return TRUE;
+			return true; 
 		default:
-			return FALSE;
+			return false; 
 		}
 	case _REV:
 		switch(response){
 		case _REV:
 		case _ERR:
-			return TRUE;
+			return true; 
 		default:
-			return FALSE;
+			return false; 
 		}
 	case SAVE:
 		switch(response){
 		case SAVE:
-			return TRUE;
+			return true; 
 		default:
-			return FALSE;
+			return false; 
 		}
 	case SCHM:
 		switch(response){
 		case SCHM:
 		case _ERR:
-			return TRUE;
+			return true; 
 		default:
-			return FALSE;
+			return false; 
 		}
 	case SACM:
 		switch(response){
 		case SACM:
 		case _ERR:
-			return TRUE;
+			return true; 
 		default:
-			return FALSE;
+			return false; 
 		}
 	case SCHV:
 		switch(response){
 		case _RDY:
 		case _ERR:
-			return TRUE;
+			return true; 
 		default:
-			return FALSE;
+			return false; 
 		}
 	case SACV:
 		switch(response){
 		case _RDY:
 		case _ERR:
-			return TRUE;
+			return true; 
 		default:
-			return FALSE;
+			return false; 
 		}
 	case _PWR:
 		switch(response){
 		case _PWR:
-			return TRUE;
+			return true; 
 		default:
-			return FALSE;
+			return false; 
 		}
 	case CCHN:
 		switch(response){
 		case _RDY:
 		case _ERR:
-			return TRUE;
+			return true; 
 		default:
-			return FALSE;
+			return false; 
 		}
 	case _MAC:
 		switch(response){
 		case _RDY:
 		case _ERR:
-			return TRUE;
+			return true; 
 		default:
-			return FALSE;
+			return false; 
 		}
 	default:
 		println_E("Method unknown");
-		return TRUE;
+		return true; 
 	}
 }
 
 
-BOOL SendPacketUARTCoProc(BYTE * packet,WORD size){
+boolean SendPacketUARTCoProc(uint8_t * packet,uint16_t size){
 	FLAG_ASYNC=FLAG_BLOCK;
-	WORD i;
+	uint16_t i;
 	RunEveryData wait={getMs(),500};
 //	Print_Level l = getPrintLevel();
 //	setPrintLevelInfoPrint();
@@ -409,15 +409,15 @@ BOOL SendPacketUARTCoProc(BYTE * packet,WORD size){
 				//print_I("X");
 				FLAG_ASYNC=FLAG_OK;
 				//setPrintLevel(l);
-				return FALSE;
+				return false; 
 			}
 			buttonCheck(3);
-		}while ( clearToSend() == FALSE);
+		}while ( clearToSend() == false) ;
 		if(!Write32UART2(packet[i])){
 			println_E("ERROR Write failed!!");
 			initCoProcUART();
 			//setPrintLevel(l);
-			return FALSE;
+			return false; 
 		}
 		//Delay10us(2);
 		//print_I(" 0x");prHEX8(packet[i],INFO_PRINT);
@@ -425,13 +425,13 @@ BOOL SendPacketUARTCoProc(BYTE * packet,WORD size){
 	//println_I("] Sending to co proc Done ");
 	FLAG_ASYNC=FLAG_OK;
 //	setPrintLevel(l);
-	return TRUE;
+	return true; 
 }
 
-BOOL clearToSend(void){
+boolean clearToSend(void){
 	if (FLAG_BUSY!=0)
-		return FALSE;
-	return TRUE;
+		return false; 
+	return true; 
 }
 //#define SHORTISR
 void newByte(){

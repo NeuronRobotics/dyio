@@ -10,19 +10,19 @@ char dyioNSName[] = "neuronrobotics.dyio.*;0.3;;";
 RunEveryData syncVolt = {0, 200};
 RunEveryData ppm = {0, 50};
 
-BOOL pwr = FALSE;
+boolean pwr = false; 
 
-static BOOL heartBeatLock = TRUE;
+static boolean heartBeatLock = true; 
 static int heartBeatLockTime = 1;
 
 
 extern MAC_ADDR MyMAC __attribute__((section(".scs_global_var")));
 
 void UpdateAVRLED(void) {
-    pwr = TRUE;
+    pwr = true; 
 }
 
-void setHeartBeatState(BOOL hb, int time) {
+void setHeartBeatState(boolean hb, int time) {
     heartBeatLock = hb;
     heartBeatLockTime = time * 2;
 }
@@ -31,11 +31,11 @@ int getHeartBeatTime() {
     return heartBeatLockTime / 2;
 }
 
-BOOL getHeartBeatLock() {
+boolean getHeartBeatLock() {
     return heartBeatLock;
 }
 
-BOOL neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {
+boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {
     //println_W("Async ");print_W(dyioNSName);
     buttonCheck(7);
 
@@ -55,7 +55,7 @@ BOOL neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCa
     //		println_I("Voltages\n");
     //		int i;
     //		for(i=12;i<16;i++){
-    //			UINT32 val = getDyIOVoltage(i);
+    //			uint32_t val = getDyIOVoltage(i);
     //			println_I("\t# ");p_int_I(i);
     //			print_I("\t");p_int_I(val);
     //			print_I("\t");p_int_I(getAdcRaw(i, 5));
@@ -69,7 +69,7 @@ BOOL neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCa
 
     if (pwr) {
         DownstreamPowerChange();
-        pwr = FALSE;
+        pwr = false; 
     }
 
     float now = getMs();
@@ -85,14 +85,14 @@ BOOL neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCa
 
     SetColor((isLocked()) ? 1 : 0, (isActive() && !isLocked()) ? 1 : 0, 1);
     //println_W("Done ");print_W(dyioNSName);
-    return FALSE;
+    return false; 
 }
 
-BOOL neuronRoboticsDyIOProcessor_g(BowlerPacket * Packet) {
+boolean neuronRoboticsDyIOProcessor_g(BowlerPacket * Packet) {
     //int zone = 1;
     char tmpName[17];
     int i;
-    BYTE rev[3];
+    uint8_t rev[3];
     switch (Packet->use.head.RPC) {
         case _PWR:
             POWER(Packet);
@@ -137,23 +137,23 @@ BOOL neuronRoboticsDyIOProcessor_g(BowlerPacket * Packet) {
             break;
 
         default:
-            return FALSE;
+            return false; 
     }
-    return TRUE;
+    return true; 
 }
 
-BOOL neuronRoboticsDyIOProcessor_p(BowlerPacket * Packet) {
-    //BYTE temp0;
+boolean neuronRoboticsDyIOProcessor_p(BowlerPacket * Packet) {
+    //uint8_t temp0;
     switch (Packet->use.head.RPC) {
 
         default:
-            return FALSE;
+            return false; 
     }
-    return TRUE;
+    return true; 
 }
 
-BOOL neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet) {
-    BYTE zone = 3;
+boolean neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet) {
+    uint8_t zone = 3;
     char tmpName[17];
     int i;
     switch (Packet->use.head.RPC) {
@@ -193,9 +193,9 @@ BOOL neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet) {
             READY(Packet, zone, 4);
             break;
         default:
-            return FALSE;
+            return false; 
     }
-    return TRUE;
+    return true; 
 }
 
 static RPC_LIST neuronRoboticsDyIO__rev_g = {BOWLER_GET, // Method
@@ -306,7 +306,7 @@ static NAMESPACE_LIST neuronRoboticsDyIO = {dyioNSName, // The string defining t
     NULL// no initial elements to the other namesapce field.
 };
 
-static BOOL namespcaedAdded = FALSE;
+static boolean namespcaedAdded = false; 
 
 NAMESPACE_LIST * get_neuronRoboticsDyIONamespace() {
     if (!namespcaedAdded) {
@@ -320,7 +320,7 @@ NAMESPACE_LIST * get_neuronRoboticsDyIONamespace() {
         addRpcToNamespace(&neuronRoboticsDyIO, & neuronRoboticsDyIO__pwr_c);
         addRpcToNamespace(&neuronRoboticsDyIO, & neuronRoboticsDyIO_info_c);
 
-        namespcaedAdded = TRUE;
+        namespcaedAdded = true; 
     }
 
     return &neuronRoboticsDyIO; //Return pointer to the struct

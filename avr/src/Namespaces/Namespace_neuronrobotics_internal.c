@@ -10,18 +10,18 @@ const char internalNSName[] = "neuronrobotics.internal*;0.3;;";
 
 RunEveryData vel={0,1000};
 
-static BYTE zone;
-BOOL internalAsyncEventCallback(BowlerPacket* Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
+static uint8_t zone;
+boolean internalAsyncEventCallback(BowlerPacket* Packet,boolean (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
 	checkDigital();
 	checkAnalog();
-    return FALSE;
+    return false; 
 }
 
-BOOL internalProcessor_g(BowlerPacket * Packet){
+boolean internalProcessor_g(BowlerPacket * Packet){
 	zone = 4;
-	UINT16 i;
-	UINT16  start;
-	UINT16 end;
+	uint16_t i;
+	uint16_t  start;
+	uint16_t end;
 	//UINT16_UNION adc;
 	switch (Packet->use.head.RPC){
 	case EEPD:
@@ -50,15 +50,15 @@ BOOL internalProcessor_g(BowlerPacket * Packet){
 		}
 		break;
 	default:
-		return FALSE;
+		return false; 
 	}
-	return TRUE;
+	return true; 
 }
-BOOL internalProcessor_p(BowlerPacket * Packet){
+boolean internalProcessor_p(BowlerPacket * Packet){
 	zone = 5;
-	UINT16 start;
-	UINT16  end;
-	UINT16 i;
+	uint16_t start;
+	uint16_t  end;
+	uint16_t i;
 	switch (Packet->use.head.RPC){
 	case _PWR:
 
@@ -78,12 +78,12 @@ BOOL internalProcessor_p(BowlerPacket * Packet){
 		break;
 
 	default:
-		return FALSE;
+		return false; 
 	}
-	return TRUE;
+	return true; 
 }
 
-BOOL internalProcessor_c(BowlerPacket * Packet){
+boolean internalProcessor_c(BowlerPacket * Packet){
 
 	switch (Packet->use.head.RPC){
 	case _MAC:
@@ -98,9 +98,9 @@ BOOL internalProcessor_c(BowlerPacket * Packet){
 		setPowerOverride(Packet->use.data[0]);
 		break;
 	default:
-		return FALSE;
+		return false; 
 	}
-	return TRUE;
+	return true; 
 }
 
 
@@ -150,7 +150,7 @@ static NAMESPACE_LIST internalNamespace ={	internalNSName,// The string defining
                                 NULL// no initial elements to the other namesapce field.
 };
 
-static BOOL namespcaedAdded = FALSE;
+static boolean namespcaedAdded = false; 
 NAMESPACE_LIST * get_internalNamespace(){
 	if(!namespcaedAdded){
                 //POST
@@ -165,7 +165,7 @@ NAMESPACE_LIST * get_internalNamespace(){
                 addRpcToNamespace(&internalNamespace,& internal_pwr_c);
                 addRpcToNamespace(&internalNamespace,& internal_mac_c);
 
-                namespcaedAdded =TRUE;
+                namespcaedAdded =true; 
 	}
 
 	return &internalNamespace;//Return pointer to the struct

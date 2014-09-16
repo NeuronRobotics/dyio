@@ -32,35 +32,35 @@ typedef struct  _pid_vales
 {
 	union{
 		struct _local_pid data;
-		BYTE stream[sizeof(struct _local_pid)];
+		uint8_t stream[sizeof(struct _local_pid)];
 	};
 } pid_vales;
 
 typedef struct _EESTORAGE
 {
 
-		BYTE lockByte;
+		uint8_t lockByte;
 		pid_vales pid[NUM_PID_GROUPS];
-		BYTE end;
+		uint8_t end;
 
 } EESTORAGE;
 
-void readPPMLink(BYTE * vals);
-void writePPMLink(BYTE * vals);
+void readPPMLink(uint8_t * vals);
+void writePPMLink(uint8_t * vals);
 
-void setEEBrownOutDetect(BOOL b);
-BOOL getEEBrownOutDetect();
+void setEEBrownOutDetect(boolean b);
+boolean getEEBrownOutDetect();
 
 void LoadEEstore(void);
 void WritePIDvalues(AbsPID * pid, DYIO_PID * dy,int group);
 void LoadPIDvals(AbsPID * pid, DYIO_PID * dy,int group);
 
-BOOL GetName(char * name);
+boolean GetName(char * name);
 void SetName(char * name);
-BOOL GetLockCode(char * name);
+boolean GetLockCode(char * name);
 void SetLockCode(char * code);
-void SetEEPRomData(BYTE start,BYTE stop,BYTE * data);
-void GetEEPRomData(BYTE start,BYTE stop,BYTE * data);
+void SetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data);
+void GetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data);
 
 
 #endif /* EEPROMMANAGER_H_ */

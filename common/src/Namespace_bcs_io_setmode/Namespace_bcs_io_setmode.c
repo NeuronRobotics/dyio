@@ -9,10 +9,10 @@
 
 char setModeNSName[] = "bcs.io.setmode.*;0.3;;";
 
-BOOL bcsIoSetmodeAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {
+boolean bcsIoSetmodeAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {
     //no async
     //println_W("No Async ");print_W(setModeNSName);
-    return FALSE;
+    return false; 
 }
 
 static RPC_LIST bcsIoSetmode_schm_p = {BOWLER_POST, // Method
@@ -52,7 +52,7 @@ static NAMESPACE_LIST bcsIoSetmode = {setModeNSName, // The string defining the 
     NULL// no initial elements to the other namesapce field.
 };
 
-static BOOL namespcaedAdded = FALSE;
+static boolean namespcaedAdded = false; 
 
 NAMESPACE_LIST * get_bcsIoSetmodeNamespace() {
     if (!namespcaedAdded) {
@@ -60,7 +60,7 @@ NAMESPACE_LIST * get_bcsIoSetmodeNamespace() {
         //Add the RPC structs to the namespace
         addRpcToNamespace(&bcsIoSetmode, & bcsIoSetmode_schm_p);
         addRpcToNamespace(&bcsIoSetmode, & bcsIoSetmode_sacm_p);
-        namespcaedAdded = TRUE;
+        namespcaedAdded = true; 
     }
 
     return &bcsIoSetmode; //Return pointer to the struct

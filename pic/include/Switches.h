@@ -11,7 +11,7 @@
 #define RailDeadZone	 300
 #define RawVoltageMin	 4900
 
-BYTE IsRegulated(float voltage);
+uint8_t IsRegulated(float voltage);
 #if defined(LAST_DEV_BOARD)
 	#define isRegulated_0() (_RD1)
 	#define isRegulated_1() (_RD6)

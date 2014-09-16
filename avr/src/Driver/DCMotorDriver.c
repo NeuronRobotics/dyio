@@ -7,9 +7,9 @@
 #include "UserApp_avr.h"
 
 
-BYTE pwm,dir;
+uint8_t pwm,dir;
 
-void setPwmDir(BYTE pin){
+void setPwmDir(uint8_t pin){
 	if(pin>7){
 		dir=pin;
 		pwm=dir-4;
@@ -19,10 +19,10 @@ void setPwmDir(BYTE pin){
 	}
 }
 
-BOOL InitDCMotor(BYTE pin){
+boolean InitDCMotor(uint8_t pin){
 	if (!(	pinHasFunction(pin,IS_DC_MOTOR_DIR) ||
 			pinHasFunction(pin,IS_DC_MOTOR_VEL))){
-		return FALSE;
+		return false; 
 	}
 	setPwmDir(pin);
 
@@ -31,10 +31,10 @@ BOOL InitDCMotor(BYTE pin){
 
 	SetDCMotor(pwm,128);
 
-	return TRUE;
+	return true; 
 }
 
-void ClearDCMotor(BYTE pin){
+void ClearDCMotor(uint8_t pin){
 	if (!(	pinHasFunction(pin,IS_DC_MOTOR_DIR) ||
 			pinHasFunction(pin,IS_DC_MOTOR_VEL))){
 		return;
@@ -50,7 +50,7 @@ void ClearDCMotor(BYTE pin){
 
 
 }
-BYTE GetDCMotor(BYTE pin){
+uint8_t GetDCMotor(uint8_t pin){
 	if (!(	pinHasFunction(pin,IS_DC_MOTOR_DIR) ||
 			pinHasFunction(pin,IS_DC_MOTOR_VEL))){
 		return 0;
@@ -58,7 +58,7 @@ BYTE GetDCMotor(BYTE pin){
 	setPwmDir(pin);
 	return getBcsIoDataTable(pin)->PIN.currentValue;
 }
-void SetDCMotor(BYTE pin,BYTE vel){
+void SetDCMotor(uint8_t pin,uint8_t vel){
 	if (!(	pinHasFunction(pin,IS_DC_MOTOR_DIR) ||
 			pinHasFunction(pin,IS_DC_MOTOR_VEL))){
 		return;

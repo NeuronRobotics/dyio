@@ -14,9 +14,9 @@
 #define AVR_LOW			0xf7
 #define AVR_HIGH		0xd1
 #define AVR_EXT			0xff
-//static BYTE progmode []						={0xAC,0x53,0x00,0x00};
+//static uint8_t progmode []						={0xAC,0x53,0x00,0x00};
 
-void getCmd(BYTE comand, BYTE addrHigh, BYTE addrLow, BYTE data) {
+void getCmd(uint8_t comand, uint8_t addrHigh, uint8_t addrLow, uint8_t data) {
 	GetByteSPI(comand);
 	GetByteSPI(addrHigh);
 	GetByteSPI(addrLow);
@@ -59,24 +59,24 @@ void ReleaseAVRReset(void){
 	println_I("Release AVR in reset");
 }
 
-BOOL writeAVRTempFlashPageLowByte(BYTE data, BYTE address){
+boolean writeAVRTempFlashPageLowByte(uint8_t data, uint8_t address){
 	GetByteSPI(0x40);
 	GetByteSPI(0x00);
 	GetByteSPI(address);
-	BYTE result = GetByteSPI(data);
+	uint8_t result = GetByteSPI(data);
 	DelayMs(10);
-	if (result==address) return TRUE;
-	return FALSE;
+	if (result==address) return true; 
+	return false; 
 }
 
-BOOL writeAVRTempFlashPageHighByte(BYTE data, BYTE address){
+boolean writeAVRTempFlashPageHighByte(uint8_t data, uint8_t address){
 	GetByteSPI(0x48);
 	GetByteSPI(0x00);
 	GetByteSPI(address);
-	BYTE result = GetByteSPI(data);
+	uint8_t result = GetByteSPI(data);
 	DelayMs(10);
-	if (result==address) return TRUE;
-	return FALSE;
+	if (result==address) return true; 
+	return false; 
 
 }
 

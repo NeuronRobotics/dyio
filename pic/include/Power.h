@@ -11,15 +11,15 @@
 #define RAW_POWER 1
 #define REGULATED 0
 
-WORD GetRailVoltage(void);
-BYTE GetSwitchPosition(BYTE chan);
+uint16_t GetRailVoltage(void);
+uint8_t GetSwitchPosition(uint8_t chan);
 /**
  * Sets the current brown out mode
  */
-void setBrownOutDetect(BOOL b);
+void setBrownOutDetect(boolean b);
 /**
  * gets the current brown out mode
  */
-BOOL getBrownOutDetect();
+boolean getBrownOutDetect();
 
 #endif /* POWER_H_ */

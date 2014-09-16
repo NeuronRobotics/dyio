@@ -19,20 +19,20 @@ void setOutputMine(int group, float val);
 int resetPositionMine(int group, int target);
 //void pidAsyncCallbackMine();
 void onPidConfigureMine(int);
-PidLimitEvent * checkPIDLimitEventsMine(BYTE group);
+PidLimitEvent * checkPIDLimitEventsMine(uint8_t group);
 
 
 
 static RunEveryData force[NUM_PID_GROUPS];
 
 void fail(){
-	while(TRUE){
+	while(true) {
 		SetColor(1,1,0);
 		buttonCheck(1);
 	}
 }
 
-void initPIDChans(BYTE group){
+void initPIDChans(uint8_t group){
 
 	if(dyPid[group].inputChannel==DYPID_NON_USED || dyPid[group].outputChannel==DYPID_NON_USED)
 		return;
@@ -57,14 +57,14 @@ void initPIDChans(BYTE group){
 		pidGroups[group].SetPoint=0;
 	}
 }
-BOOL asyncCallback(BowlerPacket *Packet){
+boolean asyncCallback(BowlerPacket *Packet){
     PutBowlerPacket(Packet);// This only works with USB and UART
-    return TRUE;
+    return true; 
 }
 void InitPID(void){
 
-	BYTE i;
-	//WORD loop;
+	uint8_t i;
+	//uint16_t loop;
 	for (i=0;i<NUM_PID_GROUPS;i++){
 		//DyPID values
 		dyPid[i].inputChannel=DYPID_NON_USED;
@@ -72,8 +72,8 @@ void InitPID(void){
 		dyPid[i].inputMode=0;
 		dyPid[i].outputMode=0;
 
-		pidGroups[i].config.Enabled=FALSE;
-		vel[i].enabled=FALSE;
+		pidGroups[i].config.Enabled=false; 
+		vel[i].enabled=false; 
 		pidGroups[i].config.V.P=.1;
 		limits[i].type=NO_LIMIT;
 
@@ -115,7 +115,7 @@ void InitPID(void){
 }
 
 void GetConfigDyPID(BowlerPacket * Packet){
-	BYTE chan = Packet->use.data[0];
+	uint8_t chan = Packet->use.data[0];
 	Packet->use.data[1]=dyPid[chan].inputChannel;// =Packet->use.data[1];
 	Packet->use.data[2]=dyPid[chan].inputMode ;//Packet->use.data[2];
 	Packet->use.data[3]=dyPid[chan].outputChannel;//Packet->use.data[3];
@@ -124,8 +124,8 @@ void GetConfigDyPID(BowlerPacket * Packet){
 	Packet->use.head.Method=BOWLER_POST;
 
 }
-BYTE ConfigDyPID(BowlerPacket * Packet){
-	BYTE chan = Packet->use.data[0];
+uint8_t ConfigDyPID(BowlerPacket * Packet){
+	uint8_t chan = Packet->use.data[0];
 	dyPid[chan].inputChannel =Packet->use.data[1];
 	dyPid[chan].inputMode =Packet->use.data[2];
 	dyPid[chan].outputChannel =Packet->use.data[3];
@@ -134,14 +134,14 @@ BYTE ConfigDyPID(BowlerPacket * Packet){
 	initPIDChans(chan);
 
 	WritePIDvalues(&pidGroups[chan],&dyPid[chan],chan);
-	return TRUE;
+	return true; 
 }
 
 
 
-BYTE GetPIDGroup(BYTE channel){
-	BYTE mode = GetChannelMode(channel);
-	BYTE i;
+uint8_t GetPIDGroup(uint8_t channel){
+	uint8_t mode = GetChannelMode(channel);
+	uint8_t i;
 	switch(mode){
 	case IS_COUNTER_INPUT_INT:
 	case IS_COUNTER_INPUT_DIR:
@@ -177,14 +177,14 @@ void onPidConfigureMine(int group){
 	WritePIDvalues(&pidGroups[group],&dyPid[group],group);
 }
 
-void trigerPIDLimit(BYTE chan,PidLimitType type,INT32  tick){
+void trigerPIDLimit(uint8_t chan,PidLimitType type,int32_t  tick){
 	limits[chan].group=chan;
 	limits[chan].type=type;
 	limits[chan].value=tick;
 	limits[chan].time=getMs();
 }
 
-PidLimitEvent * checkPIDLimitEventsMine(BYTE group){
+PidLimitEvent * checkPIDLimitEventsMine(uint8_t group){
 	return & limits[group];
 }
 
@@ -204,7 +204,7 @@ int resetPositionMine(int group, int current){
 
 float getPositionMine(int group){
 	if(dyPid[group].inputChannel==DYPID_NON_USED||
-			((pidGroups[group].config.Enabled == FALSE) && (vel[group].enabled==FALSE)))
+			((pidGroups[group].config.Enabled == false)  && (vel[group].enabled==false) ))
 		return 0;
 
 	LONG pos = 0;
@@ -228,12 +228,12 @@ float getPositionMine(int group){
 void setOutputMine(int group, float v){
 
 	if( dyPid[group].outputChannel==DYPID_NON_USED||
-			((pidGroups[group].config.Enabled == FALSE) && (vel[group].enabled==FALSE)))
+			((pidGroups[group].config.Enabled == false)  && (vel[group].enabled==false) ))
 		return;
 	Print_Level l = getPrintLevel();
 	setPrintLevelNoPrint();
 	int val = (int)(v);
-	//BYTE center = getBcsIoDataTable()[dyPid[group].outputChannel].PIN.currentConfiguration;
+	//uint8_t center = getBcsIoDataTable()[dyPid[group].outputChannel].PIN.currentConfiguration;
 
 	if(dyPid[group].outputMode == IS_SERVO){
 		val += 128;

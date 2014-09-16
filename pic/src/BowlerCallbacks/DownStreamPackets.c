@@ -7,10 +7,10 @@
 
 #include "UserApp.h"
 static BowlerPacket packetTemp;
-BYTE isAscii(char * str);
+uint8_t isAscii(char * str);
 
-BOOL bankA=TRUE,bankB=TRUE;
-BYTE batteryCode0=0,batteryCode1=0;
+boolean bankA=TRUE,bankB=true; 
+uint8_t batteryCode0=0,batteryCode1=0;
 
 static Downstream_Data down[NUM_PINS];
 
@@ -19,13 +19,13 @@ void LoadDefaultValues(){
 	packetTemp.use.head.Method=BOWLER_GET;
 	packetTemp.use.head.RPC=GetRPCValue("save");
 	SendPacketToCoProc(& packetTemp);
-	BYTE i;
+	uint8_t i;
 	for (i=0;i<GetNumberOfIOChannels();i++){
 		//getBcsIoDataTable(i)->PIN.currentConfiguration=packetTemp.use.data[i];
 	}
 }
 
-//void SetCoProcLED(BOOL a, BOOL b, int batt){
+//void SetCoProcLED(boolean a, boolean b, int batt){
 //	LoadCorePacket(& packetTemp);
 //	POWER(& packetTemp);
 //	packetTemp.use.data[0]=a;
@@ -35,7 +35,7 @@ void LoadDefaultValues(){
 //	SendPacketToCoProc(& packetTemp);
 //}
 
-void setCoProcBrownOutMode(BOOL b){
+void setCoProcBrownOutMode(boolean b){
 	LoadCorePacket(& packetTemp);
 	packetTemp.use.head.Method=BOWLER_CRIT;
 	packetTemp.use.head.RPC=GetRPCValue("_pwr");
@@ -115,9 +115,9 @@ void CheckRev(void){
 	}
 }
 
-BYTE SetCoProcMode(BYTE pin,BYTE mode){
+uint8_t SetCoProcMode(uint8_t pin,uint8_t mode){
 	if(getBcsIoDataTable(pin)->PIN.currentChannelMode == mode)
-		return TRUE;
+		return true; 
 	getBcsIoDataTable(pin)->PIN.currentChannelMode=mode;
 	LoadCorePacket(& packetTemp);
 	packetTemp.use.head.Method=BOWLER_POST;
@@ -128,15 +128,15 @@ BYTE SetCoProcMode(BYTE pin,BYTE mode){
 	packetTemp.use.head.DataLegnth=7;
 	SendPacketToCoProc(& packetTemp);
 	down[pin].previousChannelMode=mode;
-	return FALSE;
+	return false; 
 }
 
-BYTE SetAllCoProcMode(){
+uint8_t SetAllCoProcMode(){
 	int i=0;
-	BOOL send = FALSE;
+	boolean send = false; 
 	for(i=0;i<GetNumberOfIOChannels();i++){
 		if(getBcsIoDataTable(i)->PIN.currentChannelMode != down[i].previousChannelMode ){
-			 send=TRUE;
+			 send=true; 
 		}
 	}
 	if(send){
@@ -151,17 +151,17 @@ BYTE SetAllCoProcMode(){
 		}
 		SendPacketToCoProc(& packetTemp);
 	}
-	return TRUE;
+	return true; 
 }
-BYTE SetAllCoProcValues(){
+uint8_t SetAllCoProcValues(){
 	int i=0;
-	BOOL send = FALSE;
+	boolean send = false; 
 	for(i=0;i<GetNumberOfIOChannels();i++){
 		if(getBcsIoDataTable(i)->PIN.currentValue != down[i].previousValue ){
-			 send=TRUE;
+			 send=true; 
 		}
 	}
-	INT32 tmp;
+	int32_t tmp;
 	if(send){
 		LoadCorePacket(& packetTemp);
 		packetTemp.use.head.Method=BOWLER_POST;
@@ -175,11 +175,11 @@ BYTE SetAllCoProcValues(){
 		}
 		SendPacketToCoProc(& packetTemp);
 	}
-	return TRUE;
+	return true; 
 }
 
-void SetChannelValueCoProc(BYTE PIN,BYTE state){
-	BYTE retry = 0;
+void SetChannelValueCoProc(uint8_t PIN,uint8_t state){
+	uint8_t retry = 0;
 	do{
 		if(retry>0){
 			println_E("#*#*SetChannelValueCoProc did not return RDY pin: ");p_int_E(PIN);print_E(" mode: ");printMode(GetChannelMode(PIN),ERROR_PRINT);
@@ -201,7 +201,7 @@ void SetChannelValueCoProc(BYTE PIN,BYTE state){
 
 }
 
-BYTE GetChannelValueCoProc(BYTE PIN){
+uint8_t GetChannelValueCoProc(uint8_t PIN){
 	LoadCorePacket(& packetTemp);
 	packetTemp.use.head.Method=BOWLER_GET;
 	packetTemp.use.head.RPC=GetRPCValue("gchv");
@@ -214,7 +214,7 @@ BYTE GetChannelValueCoProc(BYTE PIN){
 	return packetTemp.use.data[1];
 }
 
-WORD GetADC(BYTE PIN){
+uint16_t GetADC(uint8_t PIN){
 	WORD_VAL v;
 	LoadCorePacket(& packetTemp);
 	packetTemp.use.head.Method=BOWLER_GET;
@@ -232,7 +232,7 @@ WORD GetADC(BYTE PIN){
 	return v.Val;
 }
 
-BOOL GetSerialStream(BowlerPacket * packet){
+boolean GetSerialStream(BowlerPacket * packet){
 	//WORD_VAL v;
 	LoadCorePacket(packet);
 	packet->use.head.Method=BOWLER_GET;
@@ -243,18 +243,18 @@ BOOL GetSerialStream(BowlerPacket * packet){
 	SendPacketToCoProc(packet);
 	packet->use.data[0]=17;
 	if (packet->use.head.RPC ==_ERR){
-		return FALSE;
+		return false; 
 	}
 	if (packet->use.head.DataLegnth>5){
-		return TRUE;
+		return true; 
 	}
-	return FALSE;
+	return false; 
 }
 
-void GetEEPRomData(BYTE start,BYTE stop,BYTE * data){
+void GetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
 	println_I("Getting eeprom page: ");p_int_I(start);print_I(" to ");p_int_I(stop);
 	//WORD_VAL raw;
-	BYTE i=0;
+	uint8_t i=0;
 	if (start>stop){
 		println_I("###ERROR, index for eeprom read bad!");
 		return;
@@ -283,10 +283,10 @@ void GetEEPRomData(BYTE start,BYTE stop,BYTE * data){
 	}
 }
 
-void SetEEPRomData(BYTE start,BYTE stop,BYTE * data){
+void SetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
 	println_I("Setting eeprom page: ");p_int_I(start);print_I(" to ");p_int_I(stop);
 	//WORD_VAL raw;
-	BYTE i=0;
+	uint8_t i=0;
 	if (start>=stop)
 		return;
 	LoadCorePacket(& packetTemp);
@@ -302,9 +302,9 @@ void SetEEPRomData(BYTE start,BYTE stop,BYTE * data){
 	SendPacketToCoProc(& packetTemp);
 }
 
-BOOL GetName(char * name){
+boolean GetName(char * name){
 	//WORD_VAL raw;
-	BYTE i=0;
+	uint8_t i=0;
 	LoadCorePacket(& packetTemp);
 	packetTemp.use.head.Method=BOWLER_GET;
 	packetTemp.use.head.RPC=GetRPCValue("eepd");
@@ -321,9 +321,9 @@ BOOL GetName(char * name){
 	return isAscii(name);
 }
 
-BOOL GetLockCode(char * code){
+boolean GetLockCode(char * code){
 	//WORD_VAL raw;
-	BYTE i=0;
+	uint8_t i=0;
 	LoadCorePacket(& packetTemp);
 	packetTemp.use.head.Method=BOWLER_GET;
 	packetTemp.use.head.RPC=GetRPCValue("eepd");
@@ -342,7 +342,7 @@ BOOL GetLockCode(char * code){
 
 void SetName(char * name){
 	//WORD_VAL raw;
-	BYTE i=0;
+	uint8_t i=0;
 	LoadCorePacket(& packetTemp);
 	packetTemp.use.head.Method=BOWLER_POST;
 	packetTemp.use.head.RPC=GetRPCValue("eepd");
@@ -360,7 +360,7 @@ void SetName(char * name){
 
 void SetLockCode(char * code){
 	//WORD_VAL raw;
-	BYTE i=0;
+	uint8_t i=0;
 	LoadCorePacket(& packetTemp);
 	packetTemp.use.head.Method=BOWLER_POST;
 	packetTemp.use.head.RPC=GetRPCValue("eepd");
@@ -376,19 +376,19 @@ void SetLockCode(char * code){
 	SendPacketToCoProc(& packetTemp);
 }
 
-BYTE isAscii(char * str){
+uint8_t isAscii(char * str){
 	if (str[0] < 48){
-		return FALSE;
+		return false; 
 	}
 	if(str[0] > 122){
-		return FALSE;
+		return false; 
 	}
-	return TRUE;
+	return true; 
 }
 
 void SyncModes(void){
 
-	BYTE i;
+	uint8_t i;
 	GetAllModes(& packetTemp);
 	for (i=0;i<NUM_PINS;i++){
 		getBcsIoDataTable(i)->PIN.currentChannelMode=packetTemp.use.data[i];

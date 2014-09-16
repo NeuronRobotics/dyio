@@ -15,23 +15,23 @@
  * @param ms the time for the transition to take
  *
  */
-BOOL SetChanelValueHW(BYTE pin, BYTE numValues, INT32 * data, float ms) {
-    BYTE mode = GetChannelMode(pin);
+boolean SetChanelValueHW(uint8_t pin, uint8_t numValues, int32_t * data, float ms) {
+    uint8_t mode = GetChannelMode(pin);
     if (isStremChannelMode(mode)) {
-        BYTE * bData = (BYTE *) data;
+        uint8_t * bData = (uint8_t *) data;
         switch (mode) {
             case IS_SPI_MOSI:
             case IS_SPI_MISO:
             case IS_SPI_SCK:
                 SendPacketToSPIFromArray(numValues, bData);
-                return TRUE;
+                return true; 
             case IS_UART_TX:
             case IS_UART_RX:
                 LoadSerialTxData(numValues, bData);
-                return TRUE;
+                return true; 
             case IS_PPM_IN:
                 ConfigPPMFromArray(bData);
-                return TRUE;
+                return true; 
         }
     } else {
         switch (mode) {
@@ -40,17 +40,17 @@ BOOL SetChanelValueHW(BYTE pin, BYTE numValues, INT32 * data, float ms) {
             case IS_COUNTER_OUTPUT_INT:
             case IS_COUNTER_OUTPUT_DIR:
                 SetChanVal(pin, data[0], ms);
-                return TRUE;
+                return true; 
         }
         if (isSingleByteMode(mode)) {
-            INT32 time = (INT32) ms;
+            int32_t time = (INT32) ms;
             //mask the time into the data byte
             getBcsIoDataTable(pin)->PIN.currentValue = (time << 16) | (data[0]&0x000000ff);
         }
-        return TRUE;
+        return true; 
     }
 
-    return FALSE;
+    return false; 
 }
 
 /**
@@ -58,23 +58,23 @@ BOOL SetChanelValueHW(BYTE pin, BYTE numValues, INT32 * data, float ms) {
  * This function takes a pin index, a number of values to be delt with, and an array of data values
  * Data is stored into numValues and data
  */
-BOOL GetChanelValueHW(BYTE pin, BYTE * numValues, INT32 * data) {
-    BYTE mode = GetChannelMode(pin);
+boolean GetChanelValueHW(uint8_t pin, uint8_t * numValues, int32_t * data) {
+    uint8_t mode = GetChannelMode(pin);
     if (isStremChannelMode(mode)) {
-        BYTE * bData = (BYTE *) data;
+        uint8_t * bData = (uint8_t *) data;
         switch (mode) {
             case IS_SPI_MOSI:
             case IS_SPI_MISO:
             case IS_SPI_SCK:
                 SendPacketToSPIFromArray(numValues[0], bData);
-                return TRUE;
+                return true; 
             case IS_UART_TX:
             case IS_UART_RX:
                 numValues[0] = GetSerialRxData(bData);
-                return TRUE;
+                return true; 
             case IS_PPM_IN:
                 numValues[0] = GetPPMDataToArray(bData);
-                return TRUE;
+                return true; 
         }
     } else {
         numValues[0] = 1;
@@ -82,19 +82,19 @@ BOOL GetChanelValueHW(BYTE pin, BYTE * numValues, INT32 * data) {
             case IS_COUNTER_INPUT_INT:
             case IS_COUNTER_INPUT_DIR:
                 data[0] = GetCounterByChannel(pin);
-                return TRUE;
+                return true; 
             case IS_COUNTER_OUTPUT_INT:
             case IS_COUNTER_OUTPUT_DIR:
                 data[0] = GetCounterOutput(pin);
-                return TRUE;
+                return true; 
         }
         if (isSingleByteMode(mode)) {
             //mask the time into the data byte
             data[0] = getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal & 0x000000ff;
         }
-        return TRUE;
+        return true; 
     }
-    return FALSE;
+    return false; 
 }
 
 /**
@@ -104,13 +104,13 @@ BOOL GetChanelValueHW(BYTE pin, BYTE * numValues, INT32 * data) {
  * @param ms the time for the transition to take
  *
  */
-BOOL SetAllChanelValueHW(INT32 * data, float ms) {
+boolean SetAllChanelValueHW(int32_t * data, float ms) {
     int i;
     for (i = 0; i < GetNumberOfIOChannels(); i++) {
         if (!isStremChannelMode(GetChannelMode(i)))
             SetChanelValueHW(i, 1, & data[i], ms);
     }
-    return TRUE;
+    return true; 
 }
 
 /**
@@ -118,14 +118,14 @@ BOOL SetAllChanelValueHW(INT32 * data, float ms) {
  * This function takes a pin index, a number of values to be delt with, and an array of data values
  * Data is stored into numValues and data
  */
-BOOL GetAllChanelValueHW(INT32 * data) {
+boolean GetAllChanelValueHW(int32_t * data) {
     int i;
-    BYTE numValues;
+    uint8_t numValues;
     for (i = 0; i < GetNumberOfIOChannels(); i++) {
         if (!isStremChannelMode(GetChannelMode(i)))
             GetChanelValueHW(i, &numValues, & data[i]);
     }
-    return TRUE;
+    return true; 
 }
 
 /**
@@ -135,35 +135,35 @@ BOOL GetAllChanelValueHW(INT32 * data) {
  * @param data the array of values to use in the configuration step
  */
 
-BOOL ConfigureChannelHW(BYTE pin, BYTE numValues, INT32 * data) {
+boolean ConfigureChannelHW(uint8_t pin, uint8_t numValues, int32_t * data) {
     if (!isStremChannelMode(GetChannelMode(pin)))
         SetNewConfigurationDataTable(pin, data[0]);
-    return TRUE;
+    return true; 
 }
 
-BOOL SetChanVal(BYTE pin, INT32 bval, float time) {
-    BYTE mode = GetChannelMode(pin);
+boolean SetChanVal(uint8_t pin, int32_t bval, float time) {
+    uint8_t mode = GetChannelMode(pin);
     switch (mode) {
         case IS_COUNTER_INPUT_INT:
         case IS_COUNTER_INPUT_DIR:
             println_I("Counter input ");
             printMode(mode, INFO_PRINT);
             SetCounterInput(pin, bval);
-            return TRUE;
+            return true; 
         case IS_COUNTER_OUTPUT_INT:
         case IS_COUNTER_OUTPUT_DIR:
             println_I("Counter output ");
             printMode(mode, INFO_PRINT);
             SetCounterOutput(pin, bval, time);
-            return TRUE;
+            return true; 
     }
-    return TRUE;
+    return true; 
 }
 
-//BOOL GetChannelValue(BowlerPacket * Packet){
-//	BOOL ret=FALSE;
-//	BYTE pin = Packet->use.data[0];
-//	BYTE mode = GetChannelMode(pin);
+//boolean GetChannelValue(BowlerPacket * Packet){
+//	boolean ret=false; 
+//	uint8_t pin = Packet->use.data[0];
+//	uint8_t mode = GetChannelMode(pin);
 //	switch(mode){
 //		case IS_SPI_MOSI:
 //		case IS_SPI_MISO:
@@ -173,7 +173,7 @@ BOOL SetChanVal(BYTE pin, INT32 bval, float time) {
 //			printMode(mode,INFO_PRINT);
 //			SendPacketToSPI(Packet);
 //			Packet->use.head.Method=BOWLER_POST;
-//			return TRUE;
+//			return true; 
 //		case IS_COUNTER_INPUT_INT:
 //		case IS_COUNTER_INPUT_DIR:
 //		case IS_COUNTER_INPUT_HOME:
@@ -182,7 +182,7 @@ BOOL SetChanVal(BYTE pin, INT32 bval, float time) {
 //			set32bit(Packet,GetCounterByChannel(pin));
 //			Packet->use.head.DataLegnth=9;
 //			Packet->use.head.Method=BOWLER_POST;
-//			return TRUE;
+//			return true; 
 //		case IS_COUNTER_OUTPUT_INT:
 //		case IS_COUNTER_OUTPUT_DIR:
 //		case IS_COUNTER_OUTPUT_HOME:
@@ -191,22 +191,22 @@ BOOL SetChanVal(BYTE pin, INT32 bval, float time) {
 //			set32bit(Packet,GetCounterOutput(pin));
 //			Packet->use.head.DataLegnth=9;
 //			Packet->use.head.Method=BOWLER_POST;
-//			return TRUE;
+//			return true; 
 //		case IS_PPM_IN:
 //			GetPPMDataToPacket(Packet);
-//			return TRUE;
+//			return true; 
 //		default:
 //			println_I("Get Mode not managed by PIC, sending to co-proc ");printMode(mode,INFO_PRINT);
 //			SendPacketToCoProc(Packet);
-//			return TRUE;
+//			return true; 
 //		}
 //}
 
-//BOOL SetAllChannelValue(BowlerPacket * Packet){
+//boolean SetAllChannelValue(BowlerPacket * Packet){
 //	//println_I("Setting all channel values");
 //	UINT32_UNION time;
 //	UINT32_UNION data;
-//	BYTE i;
+//	uint8_t i;
 //	time.byte.FB=Packet->use.data[0];
 //	time.byte.TB=Packet->use.data[1];
 //	time.byte.SB=Packet->use.data[2];
@@ -221,14 +221,14 @@ BOOL SetChanVal(BYTE pin, INT32 bval, float time) {
 //		}
 //	}
 //	SendPacketToCoProc(Packet);
-//	return TRUE;
+//	return true; 
 //}
 
 
-//BOOL SetChannelValue(BowlerPacket * Packet){
-//	BYTE pin = Packet->use.data[0];
-//	BYTE mode = GetChannelMode(pin);
-//	//BYTE bval;
+//boolean SetChannelValue(BowlerPacket * Packet){
+//	uint8_t pin = Packet->use.data[0];
+//	uint8_t mode = GetChannelMode(pin);
+//	//uint8_t bval;
 //	//INT32_UNION lval;
 //	//println_I("Attempting to set Channel...");
 //	switch(mode){
@@ -239,7 +239,7 @@ BOOL SetChanVal(BYTE pin, INT32 bval, float time) {
 //		//printMode(mode,INFO_PRINT);
 //		SendPacketToSPI(Packet);
 //		Packet->use.head.Method = BOWLER_POST;
-//		return TRUE;
+//		return true; 
 //	case IS_COUNTER_INPUT_INT:
 //	case IS_COUNTER_INPUT_DIR:
 //	case IS_COUNTER_INPUT_HOME:
@@ -247,14 +247,14 @@ BOOL SetChanVal(BYTE pin, INT32 bval, float time) {
 //	case IS_COUNTER_OUTPUT_DIR:
 //	case IS_COUNTER_OUTPUT_HOME:
 //		SetChanVal(pin,get32bit(Packet,1),get32bit(Packet,5));
-//		return TRUE;
+//		return true; 
 //	case IS_UART_TX:
 //	case IS_UART_RX:
 //		SendToSerialPassThrough(Packet);
-//		return TRUE;
+//		return true; 
 //	case IS_PPM_IN:
 //		ConfigPPM(Packet);
-//		return TRUE;
+//		return true; 
 //	default:
 //		println_I("Set Mode not managed by PIC, sending to co-proc ");
 //		printMode(mode,INFO_PRINT);
@@ -264,7 +264,7 @@ BOOL SetChanVal(BYTE pin, INT32 bval, float time) {
 //}
 
 
-//BOOL isASetableMode(BYTE mode){
+//boolean isASetableMode(uint8_t mode){
 //	switch(mode){
 //	case IS_COUNTER_INPUT_INT:
 //	case IS_COUNTER_INPUT_DIR:
@@ -272,7 +272,7 @@ BOOL SetChanVal(BYTE pin, INT32 bval, float time) {
 //	case IS_COUNTER_OUTPUT_INT:
 //	case IS_COUNTER_OUTPUT_DIR:
 //	case IS_COUNTER_OUTPUT_HOME:
-//		return TRUE;
+//		return true; 
 //	}
-//	return FALSE;
+//	return false; 
 //}

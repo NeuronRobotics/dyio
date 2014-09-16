@@ -9,7 +9,7 @@
 //extern DATA_STRUCT DATA;
 #define ADCINIT 0xFFFF
 //void runAsyncIO();
-//static BOOL isInit=FALSE;
+//static boolean isInit=false; 
 //static AdvancedAsyncData asyncData[NUM_PINS];
 
 void ProcessAsyncData(BowlerPacket * Packet){
@@ -20,8 +20,8 @@ void ProcessAsyncData(BowlerPacket * Packet){
 	setPrintLevelInfoPrint();
 
 	if (Packet->use.head.RPC==GCHV){
-		BYTE pin = Packet->use.data[0];
-		BYTE mode = GetChannelMode(pin);
+		uint8_t pin = Packet->use.data[0];
+		uint8_t mode = GetChannelMode(pin);
 		if(mode == IS_ANALOG_IN ){
 			UINT16_UNION ana;
 			ana.byte.SB = Packet->use.data[1];
@@ -44,8 +44,8 @@ void ProcessAsyncData(BowlerPacket * Packet){
 	}else if (Packet->use.head.RPC==AASN){
 		int i;
 		for(i=0;i<8;i++){
-			BYTE pin = i+8;
-			BYTE mode = GetChannelMode(pin);
+			uint8_t pin = i+8;
+			uint8_t mode = GetChannelMode(pin);
 			if(mode == IS_ANALOG_IN ){
 				UINT16_UNION ana;
 				ana.byte.SB = Packet->use.data[i*2];
@@ -58,7 +58,7 @@ void ProcessAsyncData(BowlerPacket * Packet){
 	}else if (Packet->use.head.RPC==DASN){
 		int i;
 		for(i=0;i<GetNumberOfIOChannels();i++){
-			BYTE mode = GetChannelMode(i);
+			uint8_t mode = GetChannelMode(i);
 			if((mode == IS_DI) || (mode == IS_COUNTER_INPUT_HOME)|| (mode == IS_COUNTER_OUTPUT_HOME)|| (mode == IS_SERVO)){
 				SetValFromAsync(i,Packet->use.data[i]);//asyncData[i].currentVal=Packet->use.data[i];
 			}
@@ -91,13 +91,13 @@ void ProcessAsyncData(BowlerPacket * Packet){
 
 
 
-BOOL isAnalog(BowlerPacket * Packet){
+boolean isAnalog(BowlerPacket * Packet){
 	if(		(Packet->use.head.RPC==GCHV) &&
 			(GetChannelMode(Packet->use.data[0])==IS_ANALOG_IN)
 			){
-		return TRUE;
+		return true; 
 	}
-	return FALSE;
+	return false; 
 }
 
 void dealWithAsyncPacket(BowlerPacket * Packet){

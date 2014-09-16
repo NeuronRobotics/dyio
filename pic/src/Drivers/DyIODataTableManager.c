@@ -1,7 +1,7 @@
 #include "UserApp.h"
 
-static BYTE privateSerialRX[BOWLER_PacketSize];
-static BYTE privateSerialTX[BOWLER_PacketSize];
+static uint8_t privateSerialRX[BOWLER_PacketSize];
+static uint8_t privateSerialTX[BOWLER_PacketSize];
 static BYTE_FIFO_STORAGE storeRx;
 static BYTE_FIFO_STORAGE storeTx;
 //static BowlerPacket dataTableSync;
@@ -27,23 +27,23 @@ void SyncDataTable(){
 
 }
 
-void SetNewConfigurationDataTable(BYTE pin, INT32 value){
+void SetNewConfigurationDataTable(uint8_t pin, int32_t value){
 
 }
 
-BOOL LoadSerialTxData(BYTE numValues,BYTE * data){
+boolean LoadSerialTxData(uint8_t numValues,uint8_t * data){
 	int i;
-	BYTE err;
+	uint8_t err;
 	for(i=0;i<numValues;i++){
 		FifoAddByte(&storeTx,data[i],&err);
 	}
-	return TRUE;
+	return true; 
 }
 
-BYTE GetSerialRxData(BYTE * data){
+uint8_t GetSerialRxData(uint8_t * data){
 	//int i;
-	//BYTE err;
-	BYTE numValues = FifoGetByteCount(&storeRx);
+	//uint8_t err;
+	uint8_t numValues = FifoGetByteCount(&storeRx);
 	if(numValues>0)
 		numValues = FifoGetByteStream(&storeRx,data,numValues);
 	return numValues;

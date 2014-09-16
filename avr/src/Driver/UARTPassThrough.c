@@ -14,14 +14,14 @@
 #endif
 
 
-static BYTE privateRXUART[UART_PASS_BUFF_SIZE];
+static uint8_t privateRXUART[UART_PASS_BUFF_SIZE];
 static BYTE_FIFO_STORAGE store;
 
-BOOL validBaud(UINT32 baud);
+boolean validBaud(uint32_t baud);
 
 void InitUART(void){
-	UINT32 baudrate = EEReadBaud();
-	if (validBaud(baudrate) == FALSE){
+	uint32_t baudrate = EEReadBaud();
+	if (validBaud(baudrate) == false) {
 		baudrate = 19200;
 		validBaud(baudrate);
 	}
@@ -38,7 +38,7 @@ void InitUART(void){
 	//println_I("Uart Initialization: ");
 	InitByteFifo(&store,privateRXUART,UART_PASS_BUFF_SIZE);
 }
-void StopUartPassThrough(BYTE pin){
+void StopUartPassThrough(uint8_t pin){
 	if (!(	pinHasFunction(pin,IS_UART_RX)||
 			pinHasFunction(pin,IS_UART_TX)
 		)){
@@ -54,11 +54,11 @@ void StopUartPassThrough(BYTE pin){
 	}
 }
 
-BOOL ConfigureUART(UINT32 baudrate){
+boolean ConfigureUART(uint32_t baudrate){
 	return validBaud(baudrate);
 }
 
-BOOL validBaud(UINT32 baud){
+boolean validBaud(uint32_t baud){
 	switch(baud){
 	case   2400:
 		UBRR1=479;
@@ -94,29 +94,29 @@ BOOL validBaud(UINT32 baud){
 		UBRR1=4;
 		break;
 	default:
-		return FALSE;
+		return false; 
 	}
 	EEWriteBaud(baud);
-	return TRUE;
+	return true; 
 }
 
 /**
  * Private helpers
  */
 ISR(USART1_RX_vect){
-	//BYTE read;
+	//uint8_t read;
 	//while ((UCSR0A & 0x80) == 0 );
 	//read = UDR1;
 	//AddBytePassThrough(read);
-	BYTE err;
+	uint8_t err;
 	FifoAddByte(&store,UDR1,&err);
 }
 
-void UARTGetArrayPassThrough(BYTE *packet,UINT16 size){
+void UARTGetArrayPassThrough(uint8_t *packet,uint16_t size){
 	FifoGetByteStream(&store,packet,size);
 }
 
-UINT16 Get_UART_Byte_CountPassThrough(void){
+uint16_t Get_UART_Byte_CountPassThrough(void){
 	return FifoGetByteCount(&store);
 }
 

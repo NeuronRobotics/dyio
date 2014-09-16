@@ -6,19 +6,19 @@
  */
 #include "UserApp.h"
 int getHeartBeatTime();
-BOOL getHeartBeatLock();
-void setHeartBeatState(BOOL hb, int time);
+boolean getHeartBeatLock();
+void setHeartBeatState(boolean hb, int time);
 
 char safeNSName[] = "bcs.safe.*;0.3;;";
 
-BOOL bcsSafeAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {
+boolean bcsSafeAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {
     //println_W("Async ");print_W(safeNSName);
 
-    return FALSE;
+    return false; 
 }
 
-BOOL bcsSafeProcessor_g(BowlerPacket * Packet) {
-    //BYTE temp0;
+boolean bcsSafeProcessor_g(BowlerPacket * Packet) {
+    //uint8_t temp0;
     UINT16_UNION timeUnion;
     switch (Packet->use.head.RPC) {
         case SAFE:
@@ -30,15 +30,15 @@ BOOL bcsSafeProcessor_g(BowlerPacket * Packet) {
             Packet->use.head.DataLegnth = 4 + 3;
             break;
         default:
-            return FALSE;
+            return false; 
     }
-    return TRUE;
+    return true; 
 }
 
-BOOL bcsSafeProcessor_p(BowlerPacket * Packet) {
-    //BYTE temp0;
+boolean bcsSafeProcessor_p(BowlerPacket * Packet) {
+    //uint8_t temp0;
     UINT16_UNION timeUnion;
-    BYTE zone = 5;
+    uint8_t zone = 5;
     switch (Packet->use.head.RPC) {
 
         case SAFE:
@@ -48,9 +48,9 @@ BOOL bcsSafeProcessor_p(BowlerPacket * Packet) {
             READY(Packet, zone, 7);
             break;
         default:
-            return FALSE;
+            return false; 
     }
-    return TRUE;
+    return true; 
 }
 
 static RPC_LIST bcsSafe_safe_g = {BOWLER_GET, // Method
@@ -93,7 +93,7 @@ static NAMESPACE_LIST bcsSafe = {safeNSName, // The string defining the namespac
     NULL// no initial elements to the other namesapce field.
 };
 
-static BOOL namespcaedAdded = FALSE;
+static boolean namespcaedAdded = false; 
 
 NAMESPACE_LIST * get_bcsSafeNamespace() {
     if (!namespcaedAdded) {
@@ -102,7 +102,7 @@ NAMESPACE_LIST * get_bcsSafeNamespace() {
         addRpcToNamespace(&bcsSafe, & bcsSafe_safe_g);
         addRpcToNamespace(&bcsSafe, & bcsSafe_safe_p);
 
-        namespcaedAdded = TRUE;
+        namespcaedAdded = true; 
     }
 
     return &bcsSafe; //Return pointer to the struct

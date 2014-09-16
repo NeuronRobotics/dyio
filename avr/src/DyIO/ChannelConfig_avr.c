@@ -6,12 +6,12 @@
  */
 #include "UserApp_avr.h"
 
-void SetNewConfigurationDataTable(BYTE pin, INT32 value){
+void SetNewConfigurationDataTable(uint8_t pin, int32_t value){
 
 }
 
-BOOL ConfigChannel(BowlerPacket * Packet){
-	BYTE mode = GetChannelMode(Packet->use.data[0]);
+boolean ConfigChannel(BowlerPacket * Packet){
+	uint8_t mode = GetChannelMode(Packet->use.data[0]);
 	if ((mode == IS_UART_TX) || (mode == IS_UART_RX)){
 		UINT32_UNION baudrate;
 		baudrate.byte.FB = Packet->use.data[1];
@@ -19,11 +19,11 @@ BOOL ConfigChannel(BowlerPacket * Packet){
 		baudrate.byte.SB = Packet->use.data[3];
 		baudrate.byte.LB = Packet->use.data[4];
 #if defined(DEBUG)
-		return TRUE;
+		return true; 
 #endif
 		return ConfigureUART(baudrate.Val);
 	}else{
-		return FALSE;
+		return false; 
 	}
 
 }

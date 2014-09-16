@@ -8,8 +8,8 @@
 #ifndef AVR_IO_H_
 #define AVR_IO_H_
 
-void SetPinTris(BYTE PIN,BYTE state);
-void SetDIO(BYTE PIN,BYTE state);
-BYTE GetDIO(BYTE PIN);
+void SetPinTris(uint8_t PIN,uint8_t state);
+void SetDIO(uint8_t PIN,uint8_t state);
+uint8_t GetDIO(uint8_t PIN);
 
 #endif /* AVR_IO_H_ */

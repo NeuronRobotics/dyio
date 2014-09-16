@@ -6,10 +6,10 @@
  */
 #include "UserApp_avr.h"
 
-BOOL startup = TRUE;
+boolean startup = true; 
 void InitPinModes(void){
-	BYTE i;
-	BYTE mode=0;
+	uint8_t i;
+	uint8_t mode=0;
 	for (i=0;i<24;i++){
 
 		//ClearPinState(i);
@@ -26,55 +26,55 @@ void InitPinModes(void){
 		getBcsIoDataTable(i)->PIN.currentChannelMode = mode;
 		setMode(i,EEReadMode(i));
 	}
-	startup = FALSE;
+	startup = false; 
 	//printModes();
 }
 
 
-//BYTE GetChannelMode(BYTE chan){
+//uint8_t GetChannelMode(uint8_t chan){
 //	return EEReadMode(chan) ;
 //}
-//BOOL SetChannelModeFromPacket(BowlerPacket * Packet){
-//	//BYTE isAsync;
-//	BYTE pin = Packet->use.data[0];
-//	BYTE mode = Packet->use.data[1];
+//boolean SetChannelModeFromPacket(BowlerPacket * Packet){
+//	//uint8_t isAsync;
+//	uint8_t pin = Packet->use.data[0];
+//	uint8_t mode = Packet->use.data[1];
 //	if(Packet->use.head.DataLegnth>6){
 
 //	}
 //	return setMode(pin,mode);
 //}
 //
-//BOOL SetAllChannelModeFromPacket(BowlerPacket * Packet){
-//	BYTE i;
+//boolean SetAllChannelModeFromPacket(BowlerPacket * Packet){
+//	uint8_t i;
 //	for (i=0;i<NUM_PINS;i++){
 //		if(!setMode(i,Packet->use.data[i])){
-//			return FALSE;
+//			return false; 
 //		}
 //	}
-//	return TRUE;
+//	return true; 
 //}
 
 
-BOOL setMode(BYTE pin,BYTE mode){
+boolean setMode(uint8_t pin,uint8_t mode){
 
 	ClearPinState(pin);
 	println_I("Pin :");p_int_I(pin);print_I(" is mode: ");printMode(mode,INFO_PRINT);
-	//BYTE pwm,dir;
+	//uint8_t pwm,dir;
 	if (mode == NO_CHANGE){
-		return TRUE;
+		return true; 
 	}
 	switch (mode){
 	case HIGH_IMPEDANCE:
 		ClearPinState(pin);
 		// Return here so as not to save this state to the eeprom
-		return TRUE;
+		return true; 
 	case IS_UART_TX:
 	case IS_UART_RX:
 		if(pin == 17 || pin == 16){
 			configPinMode(16,IS_UART_TX,OUTPUT,ON);
 			configPinMode(17,IS_UART_RX,INPUT,ON);
 			InitUART();
-			return TRUE;
+			return true; 
 		}
 		break;
 	case IS_SPI_MOSI:
@@ -84,33 +84,33 @@ BOOL setMode(BYTE pin,BYTE mode){
 			configPinMode(0,IS_SPI_SCK,INPUT,ON);
 			configPinMode(1,IS_SPI_MISO,INPUT,ON);
 			configPinMode(2,IS_SPI_MOSI,INPUT,ON);
-			return TRUE;
+			return true; 
 		}
 		break;
 	case IS_ANALOG_IN:
 		configPinMode(pin,mode,INPUT,OFF);
 		if(InitADC(pin)){
-			return TRUE;
+			return true; 
 		}
 		break;
 	case IS_PWM:
 		if(InitPWM(pin)){
-			return TRUE;
+			return true; 
 		}
-		return FALSE;
+		return false; 
 	case IS_DC_MOTOR_VEL:
 	case IS_DC_MOTOR_DIR:
 		if(InitDCMotor(pin)){
-			return TRUE;
+			return true; 
 		}
-		return FALSE;
+		return false; 
 	case IS_SERVO:
 		InitServo(pin);
 		configPinMode(pin,mode,OUTPUT,OFF);
-		return TRUE;
+		return true; 
 	case IS_DO:
 		configPinMode(pin,mode,OUTPUT,OFF);
-		return TRUE;
+		return true; 
 	case IS_DI:
 	case IS_PPM_IN:
 	case IS_COUNTER_OUTPUT_INT:
@@ -120,15 +120,15 @@ BOOL setMode(BYTE pin,BYTE mode){
 	case IS_COUNTER_INPUT_DIR:
 	case IS_COUNTER_INPUT_HOME:
 		configPinMode(pin,mode,INPUT,ON);
-		return TRUE;
+		return true; 
 	default:
 		configPinMode(pin,mode,INPUT,ON);
-		return TRUE;
+		return true; 
 	}
-	return FALSE;
+	return false; 
 }
 
-void configPinMode(BYTE pin,BYTE mode,BYTE tris,BYTE io){
+void configPinMode(uint8_t pin,uint8_t mode,uint8_t tris,uint8_t io){
 	ClearPinState(pin);
 	SetPinTris(pin,tris);
 	SetDIO(pin,io);

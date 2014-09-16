@@ -13,37 +13,37 @@
 #define ADCINIT 0xFFFF
 #define FASTIO
 
-BOOL isInit=FALSE;
+boolean isInit=false; 
 
 void initAdvancedAsync(){
-	if(isInit == TRUE){
+	if(isInit == true) {
 		//println_W("All ready initialized advanced async");
 		return;
 	}
 	println_W("Initializing advanced async");
-	isInit=TRUE;
+	isInit=true; 
 	int i;
 	for (i=0;i<GetNumberOfIOChannels();i++){
 		startAdvancedAsyncDefault(i);
 	}
 }
 
-void setAsync(BYTE pin,BOOL async){
-	BYTE mode = GetChannelMode(pin);
+void setAsync(uint8_t pin,boolean async){
+	uint8_t mode = GetChannelMode(pin);
 	getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
 	setAsyncLocal(pin,async);
 	startAdvancedAsyncDefault(pin);
 }
 
-void setAsyncLocal(BYTE channel,BOOL async){
+void setAsyncLocal(uint8_t channel,boolean async){
 	getBcsIoDataTable(channel)->PIN.asyncDataenabled=async;
 }
 
-BOOL IsAsync(BYTE channel){
+boolean IsAsync(uint8_t channel){
 	if (getBcsIoDataTable(channel)->PIN.asyncDataenabled){
-		return TRUE;
+		return true; 
 	}
-	BYTE mode=GetChannelMode(channel);
+	uint8_t mode=GetChannelMode(channel);
 	switch(mode){
 	case IS_UART_RX:
 	case IS_COUNTER_INPUT_HOME:
@@ -51,13 +51,13 @@ BOOL IsAsync(BYTE channel){
 	case IS_COUNTER_OUTPUT_INT:
 	case IS_COUNTER_INPUT_INT:
 	case IS_SERVO:
-		return TRUE;
+		return true; 
 	default:
-		return FALSE;
+		return false; 
 	}
 }
 
-void printAsyncType(BYTE t){
+void printAsyncType(uint8_t t){
 	switch(t){
 	case AUTOSAMP:
 		print_I("AUTOSAMP");return;
@@ -71,35 +71,35 @@ void printAsyncType(BYTE t){
 		print_I("UNKNOWN: "); p_int_I(t);return;
 	}
 }
-void configAdvancedAsyncNotEqual(BYTE pin,float time){
+void configAdvancedAsyncNotEqual(uint8_t pin,float time){
 	getBcsIoDataTable(pin)->asyncDataTime.MsTime=getMs();
 	getBcsIoDataTable(pin)->asyncDataTime.setPoint=time;
 	getBcsIoDataTable(pin)->PIN.asyncDataType = NOTEQUAL;
 }
-void configAdvancedAsyncDeadBand(BYTE pin,float time,INT32 deadbandSize){
+void configAdvancedAsyncDeadBand(uint8_t pin,float time,int32_t deadbandSize){
 	getBcsIoDataTable(pin)->asyncDataTime.MsTime=getMs();
 	getBcsIoDataTable(pin)->asyncDataTime.setPoint=time;
 	getBcsIoDataTable(pin)->PIN.asyncDataType = DEADBAND;
 	getBcsIoDataTable(pin)->PIN.asyncDatadeadBandval=deadbandSize;
 }
-void configAdvancedAsyncTreshhold(BYTE pin,float time,INT32 threshholdValue, BYTE edgeType){
+void configAdvancedAsyncTreshhold(uint8_t pin,float time,int32_t threshholdValue, uint8_t edgeType){
 	getBcsIoDataTable(pin)->asyncDataTime.MsTime=getMs();
 	getBcsIoDataTable(pin)->asyncDataTime.setPoint=time;
 	getBcsIoDataTable(pin)->PIN.asyncDataType = THRESHHOLD;
 	getBcsIoDataTable(pin)->PIN.asyncDatathreshholdval=threshholdValue;
 	getBcsIoDataTable(pin)->PIN.asyncDatathreshholdedge=edgeType;
 }
-void configAdvancedAsyncAutoSample(BYTE pin,float time){
+void configAdvancedAsyncAutoSample(uint8_t pin,float time){
 	getBcsIoDataTable(pin)->asyncDataTime.MsTime=getMs();
 	getBcsIoDataTable(pin)->asyncDataTime.setPoint=time;
 	getBcsIoDataTable(pin)->PIN.asyncDataType = AUTOSAMP;
 }
 
-BOOL configAdvancedAsync(BowlerPacket * Packet){
+boolean configAdvancedAsync(BowlerPacket * Packet){
 	INT32_UNION val;
 	INT32_UNION time;
-	BYTE pin = Packet->use.data[0];
-	BYTE type = Packet->use.data[1];
+	uint8_t pin = Packet->use.data[0];
+	uint8_t type = Packet->use.data[1];
 	time.byte.FB= Packet->use.data[2];
 	time.byte.TB= Packet->use.data[3];
 	time.byte.SB= Packet->use.data[4];
@@ -129,13 +129,13 @@ BOOL configAdvancedAsync(BowlerPacket * Packet){
 		ERR(Packet,45,0);
 		break;
 	}
-	setAsync(Packet->use.data[0],TRUE);
+	setAsync(Packet->use.data[0],true) ;
 	READY(Packet,45,0);
-	return TRUE;
+	return true; 
 }
 
 
-void startAdvancedAsyncDefault(BYTE pin){
+void startAdvancedAsyncDefault(uint8_t pin){
 	println_I("Starting advanced async on channel: ");p_int_I(pin);
 	getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal=1;
 	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=1;
@@ -173,7 +173,7 @@ int GetValFromAsync(int pin){
 	return getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
 }
 
-int GetDigitalValFromAsync(BYTE pin){
+int GetDigitalValFromAsync(uint8_t pin){
 	initAdvancedAsync();
 	if(GetChannelMode(pin)==IS_DI || GetChannelMode(pin)==IS_COUNTER_INPUT_HOME || GetChannelMode(pin)==IS_COUNTER_OUTPUT_HOME ){
 		return getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
@@ -182,16 +182,16 @@ int GetDigitalValFromAsync(BYTE pin){
 }
 
 
-BOOL pushAsyncReady( BYTE pin){
+boolean pushAsyncReady( uint8_t pin){
 	if(!IsAsync(pin)){
 		println_I("No asyinc on pin ");p_int_I(pin);print_I(" Mode 0x");prHEX8(GetChannelMode(pin),INFO_PRINT);
-		return FALSE;
+		return false; 
 	}
 	println_I("Has async ");p_int_I(pin);print_I(" Mode 0x");prHEX8(GetChannelMode(pin),INFO_PRINT);
 	initAdvancedAsync();
-	INT32 last;
-	INT32 aval;
-	INT32 db;
+	int32_t last;
+	int32_t aval;
+	int32_t db;
 	//int i=pin;
 	EndCritical();
 	RunEveryData * tRef=getPinsScheduler( pin);
@@ -207,7 +207,7 @@ BOOL pushAsyncReady( BYTE pin){
 			println_I("Auto samp ");p_int_I(pin);
 			getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal = getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
 
-			return TRUE;
+			return true; 
 		case NOTEQUAL:
 			//
 			if(getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal != getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal){
@@ -217,7 +217,7 @@ BOOL pushAsyncReady( BYTE pin){
 				printfDEBUG_BYTE('\t',INFO_PRINT);
 				p_int_I(getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal);
 				getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal = getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
-				return TRUE;
+				return true; 
 			}
 			break;
 		case DEADBAND:
@@ -230,7 +230,7 @@ BOOL pushAsyncReady( BYTE pin){
 					){
 				println_I("deadband");p_int_I(pin);
 				getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=aval;
-				return TRUE;
+				return true; 
 			}
 			break;
 		case THRESHHOLD:
@@ -242,12 +242,12 @@ BOOL pushAsyncReady( BYTE pin){
 			if(getBcsIoDataTable(pin)->PIN.asyncDatathreshholdedge == ASYN_RISING || getBcsIoDataTable(pin)->PIN.asyncDatathreshholdedge == ASYN_BOTH){
 				if(last<= db && aval>db){
 
-					return TRUE;
+					return true; 
 				}
 			}
 			if(getBcsIoDataTable(pin)->PIN.asyncDatathreshholdedge == ASYN_FALLING|| getBcsIoDataTable(pin)->PIN.asyncDatathreshholdedge == ASYN_BOTH){
 				if(last> db && aval<=db){
-					return TRUE;
+					return true; 
 				}
 			}
 			break;
@@ -259,7 +259,7 @@ BOOL pushAsyncReady( BYTE pin){
 	}else{
 		println_I("Nothing to do, returning");
 	}
-	return FALSE;
+	return false; 
 }
 
 void populateGACV(BowlerPacket * Packet){

@@ -8,29 +8,29 @@
 #ifndef ASYNCMANAGER_H_
 #define ASYNCMANAGER_H_
 
-//#define ASYN_RDY(i) ((pushAsyncReady(i)==TRUE)&&(IsAsync(i) == TRUE)&& (GetPIDGroup(i) == NOT_USED_IN_PID))
+//#define ASYN_RDY(i) ((pushAsyncReady(i)==true) &&(IsAsync(i) == true) && (GetPIDGroup(i) == NOT_USED_IN_PID))
 
-//#define ASYN_RDY(i) ((pushAsyncReady(i)==TRUE)&&(IsAsync(i) == TRUE))
+//#define ASYN_RDY(i) ((pushAsyncReady(i)==true) &&(IsAsync(i) == true) )
 
-BOOL IsAsync(BYTE channel);
+boolean IsAsync(uint8_t channel);
 
 void populateGACV(BowlerPacket * Packet);
 void initAdvancedAsync();
 
 void ProcessAsyncData(BowlerPacket * Packet);
-//int GetAnalogValFromAsync(BYTE pin);
+//int GetAnalogValFromAsync(uint8_t pin);
 void SetValFromAsync(int pin, int value);
 int GetValFromAsync(int pin);
-int GetDigitalValFromAsync(BYTE pin);
+int GetDigitalValFromAsync(uint8_t pin);
 
-//int  GetDigitalValFromAsync(BYTE pin);
+//int  GetDigitalValFromAsync(uint8_t pin);
 void RunAsync(void);
 void StopAsync(void);
 void StartAsync(void);
 void SyncSessionTime(float time);
 
-void setAsync(BYTE channel,BOOL async);
-void setAsyncLocal(BYTE channel,BOOL async);
+void setAsync(uint8_t channel,boolean async);
+void setAsyncLocal(uint8_t channel,boolean async);
 
 
 #define		NOTEQUAL 		0
@@ -49,19 +49,19 @@ typedef struct _AdvancedAsyncData{
 	INT32			currentVal;
 	RunEveryData 	time;
 	BYTE		type;
-	BYTE 		enabled;
+	uint8_t 		enabled;
 	struct{
-		INT32 	val;
+		int32_t 	val;
 	}deadBand;
 	struct{
-		INT32 	val;
-		BYTE edge;
+		int32_t 	val;
+		uint8_t edge;
 	}threshhold;
 }AdvancedAsyncData;
 
-BOOL pushAsyncReady( BYTE pin);
-void startAdvancedAsyncDefault(BYTE pin);
-void setAsyncLocal(BYTE channel,BOOL async);
-void configAdvancedAsyncNotEqual(BYTE pin,float time);
+boolean pushAsyncReady( uint8_t pin);
+void startAdvancedAsyncDefault(uint8_t pin);
+void setAsyncLocal(uint8_t channel,boolean async);
+void configAdvancedAsyncNotEqual(uint8_t pin,float time);
 
 #endif /* ASYNCMANAGER_H_ */

@@ -10,11 +10,11 @@
 
 void InitUART(void);
 
-BOOL ConfigureUART(UINT32 baudrate);
-void StopUartPassThrough(BYTE pin);
+boolean ConfigureUART(uint32_t baudrate);
+void StopUartPassThrough(uint8_t pin);
 
-void AddBytePassThrough(BYTE b);
-void UARTGetArrayPassThrough(BYTE *packet,UINT16 size);
-UINT16 Get_UART_Byte_CountPassThrough(void);
+void AddBytePassThrough(uint8_t b);
+void UARTGetArrayPassThrough(uint8_t *packet,uint16_t size);
+uint16_t Get_UART_Byte_CountPassThrough(void);
 
 #endif /* UARTPASSTHROUGH_H_ */

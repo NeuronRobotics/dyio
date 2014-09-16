@@ -2,7 +2,7 @@
 #include "Bowler/Bowler.h"
 #include "DyIO/DyIO_def.h"
 
-void buttonCheck(BYTE code){
+void buttonCheck(uint8_t code){
 //	StartCritical();
 //	EndCritical();
 	if (_RB0==1){
@@ -24,7 +24,7 @@ void MyServer(){
 	println_I("Main Loop 1");
 	RunNamespaceAsync(&Packet,&PutBowlerPacket);
 	println_I("Main Loop 2");
-	Bowler_Server((BowlerPacket *) &Packet, FALSE);
+	Bowler_Server((BowlerPacket *) &Packet, false) ;
 	println_I("Main Loop 3");
 }
 
