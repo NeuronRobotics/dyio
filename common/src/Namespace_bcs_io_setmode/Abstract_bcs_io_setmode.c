@@ -93,8 +93,9 @@ boolean AbstractSetChannelMode(BowlerPacket * Packet){
  * Returns true if all modes set OK
  */
 boolean AbstractSetAllChannelMode(BowlerPacket * Packet){
-	int i=0;
-	for(i=0;i<GetNumberOfIOChannels();i++){
+        // First byte is the number of channels
+	int i=1;
+	for(i=0;i<GetNumberOfIOChannels()+1;i++){
 		SetChannelMode(i,Packet->use.data[i+1]);
 	}
 	return true; 

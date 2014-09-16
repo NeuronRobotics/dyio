@@ -185,7 +185,7 @@ boolean pushAsyncReady( uint8_t pin){
 		//println_I("No asyinc on pin ");p_int_I(pin);print_I(" Mode 0x");prHEX8(GetChannelMode(pin),INFO_PRINT);
 		return false; 
 	}
-	println_I("Has async ");p_int_I(pin);print_I(" Mode 0x");prHEX8(GetChannelMode(pin),INFO_PRINT);
+//	println_I("Has async ");p_int_I(pin);print_I(" Mode 0x");prHEX8(GetChannelMode(pin),INFO_PRINT);
 	initAdvancedAsync();
 	int32_t last;
 	int32_t aval;
@@ -193,27 +193,27 @@ boolean pushAsyncReady( uint8_t pin){
 	//int i=pin;
 	EndCritical();
 	RunEveryData * tRef=getPinsScheduler( pin);
-	println_I("Checking timer \nMsTime: ");p_fl_I(tRef->MsTime);
-	print_I(" \nSetpoint: ");p_fl_I(tRef->setPoint);
-	print_I(" \nCurrentTime: ");p_fl_I(getMs());
+//	println_I("Checking timer \nMsTime: ");p_fl_I(tRef->MsTime);
+//	print_I(" \nSetpoint: ");p_fl_I(tRef->setPoint);
+//	print_I(" \nCurrentTime: ");p_fl_I(getMs());
 	float timeout = RunEvery(tRef);
-	print_I(" \nTimeout: ");p_fl_I(timeout);
+//	print_I(" \nTimeout: ");p_fl_I(timeout);
 	if(timeout !=0){
-		println_I("Time to do something");
+//		println_I("Time to do something");
 		switch(getBcsIoDataTable(pin)->PIN.asyncDataType&0x0F){
 		case AUTOSAMP:
-			println_I("Auto samp ");p_int_I(pin);
+//			println_I("Auto samp ");p_int_I(pin);
 			getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal = getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
 
 			return true; 
 		case NOTEQUAL:
 			//
 			if(getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal != getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal){
-				println_I("not equ ");p_int_I(pin);
-				printfDEBUG_BYTE('\t',INFO_PRINT);
-				p_int_I(getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal);
-				printfDEBUG_BYTE('\t',INFO_PRINT);
-				p_int_I(getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal);
+//				println_I("not equ ");p_int_I(pin);
+//				printfDEBUG_BYTE('\t',INFO_PRINT);
+//				p_int_I(getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal);
+//				printfDEBUG_BYTE('\t',INFO_PRINT);
+//				p_int_I(getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal);
 				getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal = getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
 				return true; 
 			}
@@ -226,13 +226,13 @@ boolean pushAsyncReady( uint8_t pin){
 						( last <(aval-db)) ) &&
 					(aval >=db)
 					){
-				println_I("deadband");p_int_I(pin);
+//				println_I("deadband");p_int_I(pin);
 				getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=aval;
 				return true; 
 			}
 			break;
 		case THRESHHOLD:
-			println_I("treshhold");p_int_I(pin);
+//			println_I("treshhold");p_int_I(pin);
 			aval = getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
 			last = getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal;
 			db = getBcsIoDataTable(pin)->PIN.asyncDatathreshholdval;
@@ -255,7 +255,7 @@ boolean pushAsyncReady( uint8_t pin){
 			break;
 		}
 	}else{
-		println_I("Nothing to do, returning");
+//		println_I("Nothing to do, returning");
 	}
 	return false; 
 }

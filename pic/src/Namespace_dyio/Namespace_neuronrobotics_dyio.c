@@ -6,7 +6,7 @@
  */
 #include "UserApp.h"
 
-char dyioNSName[] = "neuronrobotics.dyio.*;0.3;;";
+char dyioNSName[] = "neuronrobotics.dyio.*;1.0;;";
 RunEveryData syncVolt = {0, 200};
 RunEveryData ppm = {0, 50};
 
