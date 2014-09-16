@@ -11,7 +11,7 @@
 
 char ioNSName[] = "bcs.io.*;0.3;;";
 
-boolean bcsIoAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCallbackPtr)(BowlerPacket *)) {
+boolean bcsIoAsyncEventCallback(BowlerPacket *Packet, boolean (*pidAsyncCallbackPtr)(BowlerPacket *)) {
 
     int i;
     boolean update = false; 

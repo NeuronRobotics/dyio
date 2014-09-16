@@ -16,7 +16,7 @@ uint8_t GetChannelValueCoProc(uint8_t PIN);
 void PushAllAsync();
 void PushADCChange(uint8_t pin,uint16_t state);
 void PushDIOChange(uint8_t pin,uint8_t state);
-void PushCounterChange(uint8_t pin,LONG state);
+void PushCounterChange(uint8_t pin,int64_t state);
 boolean GetSerialStream(BowlerPacket * packet);
 
 void POWER(BowlerPacket * packet);

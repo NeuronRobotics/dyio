@@ -35,7 +35,7 @@ boolean getHeartBeatLock() {
     return heartBeatLock;
 }
 
-boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {
+boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {
     //println_W("Async ");print_W(dyioNSName);
     buttonCheck(7);
 

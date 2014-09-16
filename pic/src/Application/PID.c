@@ -207,7 +207,7 @@ float getPositionMine(int group){
 			((pidGroups[group].config.Enabled == false)  && (vel[group].enabled==false) ))
 		return 0;
 
-	LONG pos = 0;
+	int64_t pos = 0;
 	//print_I("\nGetting PID value from group: ");p_int_I(chan->channel);print_I(" of mode: ");printMode(chan->inputMode);print_I(" From channel: ");p_int_I(chan->inputChannel);print_I("\n");
 	switch(dyPid[group].inputMode){
 	case IS_COUNTER_INPUT_INT:

@@ -32,8 +32,8 @@
 
 typedef struct __attribute__((__packed__)) _COUNTER
 {
-	LONG SETPOINT;
-	LONG CURRENT;
+	int64_t SETPOINT;
+	int64_t CURRENT;
 	uint8_t STEP_INDEX;
 	uint8_t TimeOffset;
 	uint8_t TimeStep;
@@ -60,11 +60,11 @@ boolean StartCounterInput(uint8_t pin);
 void initCounterAsync(uint8_t chan,int32_t val);
 boolean StartCounterOutput(uint8_t pin);
 void RunCounter(void);
-boolean SetCounterInput(uint8_t chan,LONG val);
-LONG GetCounterByGroup(uint8_t chan);
-LONG GetCounterByChannel(uint8_t chan);
-boolean SetCounterOutput(uint8_t chan,LONG val, uint32_t ms);
-LONG GetCounterOutput(uint8_t chan);
+boolean SetCounterInput(uint8_t chan,int64_t val);
+int64_t GetCounterByGroup(uint8_t chan);
+int64_t GetCounterByChannel(uint8_t chan);
+boolean SetCounterOutput(uint8_t chan,int64_t val, uint32_t ms);
+int64_t GetCounterOutput(uint8_t chan);
 void SetupCounterTimer(void);
 
 uint8_t channelToCounterGroup(uint8_t pin);

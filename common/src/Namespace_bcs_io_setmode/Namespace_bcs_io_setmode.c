@@ -9,7 +9,7 @@
 
 char setModeNSName[] = "bcs.io.setmode.*;0.3;;";
 
-boolean bcsIoSetmodeAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {
+boolean bcsIoSetmodeAsyncEventCallback(BowlerPacket *Packet, boolean(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {
     //no async
     //println_W("No Async ");print_W(setModeNSName);
     return false; 
