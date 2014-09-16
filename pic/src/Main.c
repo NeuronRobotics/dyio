@@ -48,6 +48,9 @@
 #pragma config DEBUG    = OFF            // Background Debugger Enable
 
 #define SYS_FREQ 			(80000000L)
+#else
+
+#warning "Assuming bootloader mode!"
 
 #endif
 
