@@ -55,7 +55,7 @@ typedef struct __attribute__((__packed__))  _PidLimitEvent{
 	float time;
 	signed long int value;
 	signed long int latchTickError;
-//	BOOL stopOnIndex;
+//	boolean stopOnIndex;
 }PidLimitEvent;
 
 /**
@@ -145,7 +145,7 @@ typedef struct __attribute__((__packed__)) _DYIO_PID
 
 typedef struct __attribute__((__packed__)) _PD_VEL
 {
-        BOOL enabled;
+        boolean enabled;
         float unitsPerSeCond;
         signed long int lastPosition;
         float lastVelocity;
@@ -182,7 +182,7 @@ void InitAbsPID(AbsPID * state,float KP,float KI,float KD,float time);
  * Handle a PID packet.
  * @return True if the packet was processed, False if it was not  PID packet
  */
-BOOL ProcessPIDPacket(BowlerPacket * Packet);
+boolean ProcessPIDPacket(BowlerPacket * Packet);
 /**
  * @param groups a pointer the the array of PID groups
  * @param the number of PID groups
@@ -198,7 +198,7 @@ void InitilizePidController(AbsPID * groups ,
                             void (*setOutputPtr)(int,float),
                             int (*resetPositionPtr)(int,int),
                             void (*onPidConfigurePtr)(int),
-                            PidLimitEvent * (*checkPIDLimitEventsPtr)(BYTE group));
+                            PidLimitEvent * (*checkPIDLimitEventsPtr)(uint8_t group));
 /**
  * This sets a different set of control loop math.
  * @param math a function pointer to the math calculation to be used in place of the PID math
@@ -207,37 +207,37 @@ void SetControllerMath( void (*math)(AbsPID * ,float ));
 
 int getNumberOfPidChannels();
 
-void SetPIDEnabled(BYTE index, BOOL enabled);
+void SetPIDEnabled(uint8_t index, boolean enabled);
 
-BOOL isPidEnabled(BYTE i);
+boolean isPidEnabled(uint8_t i);
 
-BYTE SetPIDTimed(BYTE chan,INT32 val,float ms);
-BYTE SetPID(BYTE chan,INT32 val);
-int GetPIDPosition(BYTE chan);
+uint8_t SetPIDTimed(uint8_t chan,int32_t val,float ms);
+uint8_t SetPID(uint8_t chan,int32_t val);
+int GetPIDPosition(uint8_t chan);
 
-BYTE ZeroPID(BYTE chan);
+uint8_t ZeroPID(uint8_t chan);
 /**
  * Runs both Control and Coms
  */
-void RunPID(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
+void RunPID(BowlerPacket *Packet,boolean (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
 /**
  * THis function runs the Comunication for the PID controller
  */
-void RunPIDComs(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
+void RunPIDComs(BowlerPacket *Packet,boolean (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
 /**
  * This runs the get input/math/set output for the PID controller
  */
 void RunPIDControl();
-void RunPDVel(BYTE chan);
-void StartPDVel(BYTE chan,INT32 unitsPerSeCond,float ms);
-void pushPID(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet),BYTE chan, INT32 value, float time);
-void pushPIDLimitEvent(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet),PidLimitEvent * event);
+void RunPDVel(uint8_t chan);
+void StartPDVel(uint8_t chan,int32_t unitsPerSeCond,float ms);
+void pushPID(BowlerPacket *Packet,boolean (*pidAsyncCallbackPtr)(BowlerPacket *Packet),uint8_t chan, int32_t value, float time);
+void pushPIDLimitEvent(BowlerPacket *Packet,boolean (*pidAsyncCallbackPtr)(BowlerPacket *Packet),PidLimitEvent * event);
 
 void checkLinkHomingStatus(int group);
 /***
  * This is a getter for the interpolation state
  */
-BOOL isPIDInterpolating(int index);
+boolean isPIDInterpolating(int index);
 
 /**
  * This function checks the PID channel to see if it has settled at the setpoint plus or minus a bound
@@ -245,18 +245,18 @@ BOOL isPIDInterpolating(int index);
  * @param plusOrMinus
  * @return
  */
-BOOL isPIDArrivedAtSetpoint(int index, float plusOrMinus);
+boolean isPIDArrivedAtSetpoint(int index, float plusOrMinus);
 
-BOOL processPIDGet(BowlerPacket * Packet);
+boolean processPIDGet(BowlerPacket * Packet);
 
-BOOL processPIDPost(BowlerPacket * Packet);
-BOOL processPIDCrit(BowlerPacket * Packet);
+boolean processPIDPost(BowlerPacket * Packet);
+boolean processPIDCrit(BowlerPacket * Packet);
 
 NAMESPACE_LIST * getBcsPidNamespace();
 
 AbsPID * getPidGroupDataTable(int group);
 PD_VEL  * getPidVelocityDataTable(int group);
-void pushAllPIDPositions(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
+void pushAllPIDPositions(BowlerPacket *Packet,boolean (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
 
 void SetPIDCalibrateionState(int group, PidCalibrationType state);
 
@@ -269,14 +269,14 @@ int getPidStop(int group);
 float getMs();
 
 void updatePidAsync();
-void pidReset(BYTE chan,INT32 val);
-float pidResetNoStop(BYTE chan,INT32 val);
-void pushAllPIDPositions(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
+void pidReset(uint8_t chan,int32_t val);
+float pidResetNoStop(uint8_t chan,int32_t val);
+void pushAllPIDPositions(BowlerPacket *Packet,boolean (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
 
 CAL_STATE pidHysterisis(int group);
 void startHomingLink(int group, PidCalibrationType type);
 void runPidHysterisisCalibration(int group);
-BOOL processRunAutoCal(BowlerPacket * Packet);
+boolean processRunAutoCal(BowlerPacket * Packet);
 
 void OnPidConfigure(int v);
 

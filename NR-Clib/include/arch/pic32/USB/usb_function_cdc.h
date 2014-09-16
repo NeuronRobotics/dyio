@@ -218,7 +218,7 @@
 
 /******************************************************************************
     Function:
-        void CDCSetBaudRate(DWORD baudRate)
+        void CDCSetBaudRate(uint32_t baudRate)
         
     Summary:
         This macro is used set the baud rate reported back to the host during
@@ -240,7 +240,7 @@
         None
         
     Parameters:
-        DWORD baudRate - The desired baudrate
+        uint32_t baudRate - The desired baudrate
         
     Return Values:
         None
@@ -253,7 +253,7 @@
 
 /******************************************************************************
     Function:
-        void CDCSetCharacterFormat(BYTE charFormat)
+        void CDCSetCharacterFormat(uint8_t charFormat)
         
     Summary:
         This macro is used manually set the character format reported back to 
@@ -275,7 +275,7 @@
         None
         
     Parameters:
-        BYTE charFormat - number of stop bits.  Available options are:
+        uint8_t charFormat - number of stop bits.  Available options are:
          * NUM_STOP_BITS_1 - 1 Stop bit
          * NUM_STOP_BITS_1_5 - 1.5 Stop bits
          * NUM_STOP_BITS_2 - 2 Stop bits
@@ -294,7 +294,7 @@
 
 /******************************************************************************
     Function:
-        void CDCSetParity(BYTE parityType)
+        void CDCSetParity(uint8_t parityType)
         
     Summary:
         This function is used manually set the parity format reported back to 
@@ -316,7 +316,7 @@
         None
         
     Parameters:
-        BYTE parityType - Type of parity.  The options are the following:
+        uint8_t parityType - Type of parity.  The options are the following:
             * PARITY_NONE
             * PARITY_ODD
             * PARITY_EVEN
@@ -339,7 +339,7 @@
 
 /******************************************************************************
     Function:
-        void CDCSetDataSize(BYTE dataBits)
+        void CDCSetDataSize(uint8_t dataBits)
         
     Summary:
         This function is used manually set the number of data bits reported back 
@@ -361,7 +361,7 @@
         None
         
     Parameters:
-        BYTE dataBits - number of data bits.  The options are 5, 6, 7, 8, or 16.
+        uint8_t dataBits - number of data bits.  The options are 5, 6, 7, 8, or 16.
         
     Return Values:
         None
@@ -374,7 +374,7 @@
 
 /******************************************************************************
     Function:
-        void CDCSetLineCoding(DWORD baud, BYTE format, BYTE parity, BYTE dataSize)
+        void CDCSetLineCoding(uint32_t baud, uint8_t format, uint8_t parity, uint8_t dataSize)
         
     Summary:
         This function is used to manually set the data reported back 
@@ -396,18 +396,18 @@
         None
         
     Parameters:
-        DWORD baud - The desired baudrate
-        BYTE format - number of stop bits.  Available options are:
+        uint32_t baud - The desired baudrate
+        uint8_t format - number of stop bits.  Available options are:
          * NUM_STOP_BITS_1 - 1 Stop bit
          * NUM_STOP_BITS_1_5 - 1.5 Stop bits
          * NUM_STOP_BITS_2 - 2 Stop bits
-        BYTE parity - Type of parity.  The options are the following:
+        uint8_t parity - Type of parity.  The options are the following:
             * PARITY_NONE
             * PARITY_ODD
             * PARITY_EVEN
             * PARITY_MARK
             * PARITY_SPACE
-        BYTE dataSize - number of data bits.  The options are 5, 6, 7, 8, or 16.
+        uint8_t dataSize - number of data bits.  The options are 5, 6, 7, 8, or 16.
         
     Return Values:
         None
@@ -425,7 +425,7 @@
 
 /******************************************************************************
     Function:
-        BOOL USBUSARTIsTxTrfReady(void)
+        boolean USBUSARTIsTxTrfReady(void)
         
     Summary:
         This macro is used to check if the CDC class is ready
@@ -461,7 +461,7 @@
 
 /******************************************************************************
     Function:
-        void mUSBUSARTTxRam(BYTE *pData, BYTE len)
+        void mUSBUSARTTxRam(uint8_t *pData, uint8_t len)
     
     Description:
         Depricated in MCHPFSUSB v2.3.  This macro has been replaced by 
@@ -471,7 +471,7 @@
 
 /******************************************************************************
     Function:
-        void mUSBUSARTTxRam(BYTE *pData, BYTE len)
+        void mUSBUSARTTxRam(uint8_t *pData, uint8_t len)
         
     Description:
         Use this macro to transfer data located in data memory.
@@ -509,7 +509,7 @@
 
 /******************************************************************************
     Function:
-        void mUSBUSARTTxRom(rom BYTE *pData, BYTE len)
+        void mUSBUSARTTxRom(rom uint8_t *pData, uint8_t len)
         
     Description:
         Use this macro to transfer data located in program memory.
@@ -555,20 +555,20 @@ typedef union _LINE_CODING
 {
     struct
     {
-        BYTE _byte[LINE_CODING_LENGTH];
+        uint8_t _byte[LINE_CODING_LENGTH];
     };
     struct
     {
         DWORD_VAL   dwDTERate;          // Complex data structure
-        BYTE    bCharFormat;
-        BYTE    bParityType;
-        BYTE    bDataBits;
+        uint8_t    bCharFormat;
+        uint8_t    bParityType;
+        uint8_t    bDataBits;
     };
 } LINE_CODING;
 
 typedef union _CONTROL_SIGNAL_BITMAP
 {
-    BYTE _byte;
+    uint8_t _byte;
     struct
     {
         unsigned DTE_PRESENT:1;       // [0] Not Present  [1] Present
@@ -582,39 +582,39 @@ typedef union _CONTROL_SIGNAL_BITMAP
 /* Header Functional Descriptor */
 typedef struct __attribute__((packed)) _USB_CDC_HEADER_FN_DSC
 {
-    BYTE bFNLength;
-    BYTE bDscType;
-    BYTE bDscSubType;
-    WORD bcdCDC;
+    uint8_t bFNLength;
+    uint8_t bDscType;
+    uint8_t bDscSubType;
+    uint16_t bcdCDC;
 } USB_CDC_HEADER_FN_DSC;
 
 /* Abstract Control Management Functional Descriptor */
 typedef struct __attribute__((packed)) _USB_CDC_ACM_FN_DSC
 {
-    BYTE bFNLength;
-    BYTE bDscType;
-    BYTE bDscSubType;
-    BYTE bmCapabilities;
+    uint8_t bFNLength;
+    uint8_t bDscType;
+    uint8_t bDscSubType;
+    uint8_t bmCapabilities;
 } USB_CDC_ACM_FN_DSC;
 
 /* Union Functional Descriptor */
 typedef struct __attribute__((packed)) _USB_CDC_UNION_FN_DSC
 {
-    BYTE bFNLength;
-    BYTE bDscType;
-    BYTE bDscSubType;
-    BYTE bMasterIntf;
-    BYTE bSaveIntf0;
+    uint8_t bFNLength;
+    uint8_t bDscType;
+    uint8_t bDscSubType;
+    uint8_t bMasterIntf;
+    uint8_t bSaveIntf0;
 } USB_CDC_UNION_FN_DSC;
 
 /* Call Management Functional Descriptor */
 typedef struct __attribute__((packed)) _USB_CDC_CALL_MGT_FN_DSC
 {
-    BYTE bFNLength;
-    BYTE bDscType;
-    BYTE bDscSubType;
-    BYTE bmCapabilities;
-    BYTE bDataInterface;
+    uint8_t bFNLength;
+    uint8_t bDscType;
+    uint8_t bDscSubType;
+    uint8_t bmCapabilities;
+    uint8_t bDataInterface;
 } USB_CDC_CALL_MGT_FN_DSC;
 
 typedef union __attribute__((packed)) _CDC_NOTICE
@@ -625,27 +625,27 @@ typedef union __attribute__((packed)) _CDC_NOTICE
 } CDC_NOTICE, *PCDC_NOTICE;
 
 /** E X T E R N S ************************************************************/
-extern UINT16 cdc_rx_len;
+extern uint16_t cdc_rx_len;
 extern USB_HANDLE lastTransmission;
 
-extern BYTE cdc_trf_state;
+extern uint8_t cdc_trf_state;
 extern POINTER pCDCSrc;
-extern UINT16 cdc_tx_len;
-extern BYTE cdc_mem_type;
+extern uint16_t cdc_tx_len;
+extern uint8_t cdc_mem_type;
 
 extern volatile FAR CDC_NOTICE cdc_notice;
 extern LINE_CODING line_coding;
 
 extern volatile CTRL_TRF_SETUP SetupPkt;
-extern BYTE configDescriptor1[];
+extern uint8_t configDescriptor1[];
 
 /** Public Prototypes *************************************************/
 void USBCheckCDCRequest(void);
 void CDCInitEP(void);
-BOOL USBUSARTRxIsReady(void);
-BYTE getsUSBUSART(char *buffer, WORD len);
+boolean USBUSARTRxIsReady(void);
+uint8_t getsUSBUSART(char *buffer, uint16_t len);
 void putrsUSBUSART(const ROM char *data);
-void putUSBUSART(char *data, WORD Length);
+void putUSBUSART(char *data, uint16_t Length);
 void putsUSBUSART(char *data);
 void CDCTxService(void);
 void USBDeviceTasksLocal(void);

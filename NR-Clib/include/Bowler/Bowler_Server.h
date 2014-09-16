@@ -15,12 +15,12 @@ void Bowler_Init(void);
 /**
  * Run an instance of the server. THis uses static memory
  */
-BYTE Bowler_Server_Static(BowlerPacket * Packet,BYTE_FIFO_STORAGE * fifo);
+uint8_t Bowler_Server_Static(BowlerPacket * Packet,BYTE_FIFO_STORAGE * fifo);
 
 /**
  * Run an instance of the server. TThis assumes tight hardware integrations
  */
-BYTE Bowler_Server(BowlerPacket * Packet, BOOL debug);
+uint8_t Bowler_Server(BowlerPacket * Packet, boolean debug);
 
 
 

@@ -38,7 +38,7 @@ Print_Level getPrintLevel();
 /**
  * Lets you set a custom printstream function pointer
  */
-void setPrintStream(int (*sendToStreamPtr)(BYTE * ,int));
+void setPrintStream(int (*sendToStreamPtr)(uint8_t * ,int));
 
 void EnableDebugTerminal(void);
 ///**
@@ -210,6 +210,6 @@ void printPIDvals(int i);
 	void printfDEBUG_BYTE(char b,Print_Level l);
 #endif
 
-	BOOL okToPrint(Print_Level l);
+	boolean okToPrint(Print_Level l);
 	void setColor(Print_Level l);
 #endif /* DEBUG_H_ */

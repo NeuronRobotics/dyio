@@ -10,12 +10,12 @@
 
 #define USE_LINKED_LIST_NAMESPACE
 
-typedef BOOL packetEventCallback(BowlerPacket *);
-typedef BOOL asyncEventCallback(BowlerPacket *,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *));
+typedef boolean packetEventCallback(BowlerPacket *);
+typedef boolean asyncEventCallback(BowlerPacket *,boolean (*pidAsyncCallbackPtr)(BowlerPacket *));
 
 typedef struct  _RPC_LIST{
 	//This is the bowler method for this RPC
-	BYTE bowlerMethod;
+	uint8_t bowlerMethod;
 	//This is the 4 byte code for of the RPC
 	const char * rpc;
 	//This is the callback function pointer for execution of the method
@@ -23,7 +23,7 @@ typedef struct  _RPC_LIST{
         //This is the array of argument data types
 	const char * arguments;
         //This is the bowler method for this RPC
-	BYTE responseMethod;
+	uint8_t responseMethod;
         //This is the array of argument data types
 	const char * responseArguments;
         
@@ -44,15 +44,15 @@ typedef struct _NAMESPACE_LIST{
 
 
 
-RPC_LIST * getRpcByID(NAMESPACE_LIST * namespace,unsigned long  rpcId, BYTE bowlerMethod);
-RPC_LIST * getRpcByIndex(NAMESPACE_LIST * namespace,BYTE index);
+RPC_LIST * getRpcByID(NAMESPACE_LIST * namespace,unsigned long  rpcId, uint8_t bowlerMethod);
+RPC_LIST * getRpcByIndex(NAMESPACE_LIST * namespace,uint8_t index);
 void addNamespaceToList(NAMESPACE_LIST * newNs);
 void addRpcToNamespace(NAMESPACE_LIST * namespace,RPC_LIST * rpc );
 NAMESPACE_LIST * getNamespaceAtIndex(int index);
-BYTE getNumberOfNamespaces();
-BYTE getNumberOfRpcs(int namespaceIndex);
+uint8_t getNumberOfNamespaces();
+uint8_t getNumberOfRpcs(int namespaceIndex);
 
-void RunNamespaceAsync(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
+void RunNamespaceAsync(BowlerPacket *Packet,boolean (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
 
 
 //bcs.safe

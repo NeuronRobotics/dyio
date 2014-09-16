@@ -47,7 +47,7 @@
 
 // 1 byte
 #define BOWLER_I08      8 // 8 bit integer
-#define BOWLER_BOOL    43// a boolean value
+#define BOWLER_boolean    43// a boolean value
 //2 byte
 #define BOWLER_I16      16//16 bit integer
 //4 byte
@@ -62,14 +62,14 @@
 #define BOWLER_ASCII    39// ASCII string, null terminated
 
 
-#define B_TRUE 1
-#define B_FALSE 0
+#define true 1
+#define false 0
 typedef unsigned char			B_BOOL;
 #if !defined(__GENERIC_TYPE_DEFS_H_)
-//#define TRUE 1
-//#define FALSE 0
+//#define true 1
+//#define false 0
 //	typedef unsigned char			BOOL;
-        typedef enum _BOOL { FALSE = 0, TRUE } BOOL;    /* Undefined size */
+        typedef enum _boolean { false = 0, true } BOOL;    /* Undefined size */
 	typedef unsigned char			BYTE;
 	typedef signed int          	INT;
 	typedef signed char         	INT8;
@@ -85,36 +85,36 @@ typedef unsigned char			B_BOOL;
 #endif
 typedef union _INT16_UNION
 {
-	INT16 Val;
-    BYTE v[2];
+	int16_t Val;
+    uint8_t v[2];
     struct
     {
-        BYTE LB;
-        BYTE SB;
+        uint8_t LB;
+        uint8_t SB;
     } byte;
 } INT16_UNION;
 
 typedef union _UINT16_UNION
 {
-	UINT16 Val;
-    BYTE v[2];
+	uint16_t Val;
+    uint8_t v[2];
     struct
     {
-        BYTE LB;
-        BYTE SB;
+        uint8_t LB;
+        uint8_t SB;
     } byte;
 } UINT16_UNION;
 
 typedef union _INT32_UNION
 {
-	INT32 Val;
-    BYTE v[4];
+	int32_t Val;
+    uint8_t v[4];
     struct
     {
-        BYTE LB;
-        BYTE SB;
-        BYTE TB;
-        BYTE FB;
+        uint8_t LB;
+        uint8_t SB;
+        uint8_t TB;
+        uint8_t FB;
     } byte;
     float f;
 
@@ -122,8 +122,8 @@ typedef union _INT32_UNION
 /*
 typedef union _UINT64_UNION_DOUBLE
 {
-    UINT64 Val;
-    BYTE v[8];
+    uint64_t Val;
+    uint8_t v[8];
     struct
     {
         UINT32_UNION LI;
@@ -136,14 +136,14 @@ typedef union _UINT64_UNION_DOUBLE
 
 typedef union _UINT32_UNION
 {
-	UINT32 Val;
-    BYTE v[4];
+	uint32_t Val;
+    uint8_t v[4];
     struct
     {
-        BYTE LB;
-        BYTE SB;
-        BYTE TB;
-        BYTE FB;
+        uint8_t LB;
+        uint8_t SB;
+        uint8_t TB;
+        uint8_t FB;
     } byte;
 
 } UINT32_UNION;

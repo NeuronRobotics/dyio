@@ -163,8 +163,6 @@ void startAdvancedAsyncDefault(uint8_t pin){
 }
 
 
-
-
 void SetValFromAsync(int pin, int value){
 	getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal=value;
 }
@@ -184,7 +182,7 @@ int GetDigitalValFromAsync(uint8_t pin){
 
 boolean pushAsyncReady( uint8_t pin){
 	if(!IsAsync(pin)){
-		println_I("No asyinc on pin ");p_int_I(pin);print_I(" Mode 0x");prHEX8(GetChannelMode(pin),INFO_PRINT);
+		//println_I("No asyinc on pin ");p_int_I(pin);print_I(" Mode 0x");prHEX8(GetChannelMode(pin),INFO_PRINT);
 		return false; 
 	}
 	println_I("Has async ");p_int_I(pin);print_I(" Mode 0x");prHEX8(GetChannelMode(pin),INFO_PRINT);

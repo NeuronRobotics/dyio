@@ -207,7 +207,7 @@ Description:
 
 typedef union
 {
-    WORD UEP[16];
+    uint16_t UEP[16];
 } _UEP;
 
 #define UEP_STALL 0x0002
@@ -216,11 +216,11 @@ typedef union _POINTER
 {
     struct
     {
-        BYTE bLow;
-        BYTE bHigh;
+        uint8_t bLow;
+        uint8_t bHigh;
         //byte bUpper;
     };
-    WORD _word;                         // bLow & bHigh
+    uint16_t _word;                         // bLow & bHigh
     
     //pFunc _pFunc;                       // Usage: ptr.pFunc(); Init: ptr.pFunc = &<Function>;
 
@@ -288,14 +288,14 @@ typedef union _POINTER
 }    
 
 /********************************************************************
- * Function (macro): void USBClearInterruptFlag(register, BYTE if_flag_offset)
+ * Function (macro): void USBClearInterruptFlag(register, uint8_t if_flag_offset)
  *
  * PreCondition:    None
  *
  * Input:           
  *   register - the register mnemonic for the register holding the interrupt 
  *				flag to be "kleared"
- *   BYTE if_flag_offset - the bit position offset (for the interrupt flag to 
+ *   uint8_t if_flag_offset - the bit position offset (for the interrupt flag to 
  *							"klear") from the "right of the register"
  *
  * Output:          None
@@ -311,7 +311,7 @@ typedef union _POINTER
 
 /********************************************************************
     Function:
-        void DisableNonZeroEndpoints(UINT8 last_ep_num)
+        void DisableNonZeroEndpoints(uint8_t last_ep_num)
         
     Summary:
         Clears the control registers for the specified non-zero endpoints
@@ -320,7 +320,7 @@ typedef union _POINTER
         None
         
     Parameters:
-        UINT8 last_ep_num - the last endpoint number to clear.  This
+        uint8_t last_ep_num - the last endpoint number to clear.  This
         number should include all endpoints used in any configuration.
         
     Return Values:
@@ -331,8 +331,8 @@ typedef union _POINTER
  
  *******************************************************************/
 #define DisableNonZeroEndpoints(last_ep_num)          {\
-            UINT8 i;\
-            UINT32 *p = (UINT32*)&U1EP1;\
+            uint8_t i;\
+            uint32_t *p = (UINT32*)&U1EP1;\
             for(i=0;i<last_ep_num;i++)\
             {\
                 *p = 0;\
@@ -417,7 +417,7 @@ typedef union __attribute__ ((packed)) _BD_STAT
         unsigned            :2;
         unsigned    PID     :4;         //Packet Identifier
     };
-    WORD           Val;
+    uint16_t           Val;
 } BD_STAT;
 
 // BDT Entry Layout
@@ -426,23 +426,23 @@ typedef union __attribute__ ((packed))__BDT
     struct __attribute__ ((packed))
     {
         BD_STAT     STATUS;
-        WORD        CNT:10;
-        DWORD       ADR;                      //Buffer Address
+        uint16_t        CNT:10;
+        uint32_t       ADR;                      //Buffer Address
     };
     struct __attribute__ ((packed))
     {
-        DWORD       res  :16;
-        DWORD       count:10;
+        uint32_t       res  :16;
+        uint32_t       count:10;
     };
-    DWORD           w[2];
-    WORD            v[4];
-    QWORD           Val;
+    uint32_t           w[2];
+    uint16_t            v[4];
+    uint64_t           Val;
 } BDT_ENTRY;
 
 #if defined(USB_SUPPORT_DEVICE) | defined(USB_SUPPORT_OTG)
 #if !defined(USBDEVICE_C)
     //extern USB_VOLATILE USB_DEVICE_STATE USBDeviceState;
-    extern USB_VOLATILE BYTE USBActiveConfiguration;
+    extern USB_VOLATILE uint8_t USBActiveConfiguration;
     extern USB_VOLATILE IN_PIPE inPipes[1];
     extern USB_VOLATILE OUT_PIPE outPipes[1];
     extern volatile BDT_ENTRY *pBDTEntryIn[USB_MAX_EP_NUMBER+1];

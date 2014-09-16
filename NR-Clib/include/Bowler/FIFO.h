@@ -18,22 +18,22 @@
 #define FIFO_UNDERFLOW		4
 
 typedef struct _BYTE_FIFO_STORAGE{
-	UINT32 bufferSize;
-	BYTE * buffer;
-	UINT32 readPointer;
-	UINT32 writePointer;
-	UINT32 byteCount;
-	BOOL   mutex;
+	uint32_t bufferSize;
+	uint8_t * buffer;
+	uint32_t readPointer;
+	uint32_t writePointer;
+	uint32_t byteCount;
+	boolean   mutex;
 }BYTE_FIFO_STORAGE;
 
 
 
 
-void InitByteFifo(BYTE_FIFO_STORAGE * fifo,BYTE * buff,UINT32 size);
+void InitByteFifo(BYTE_FIFO_STORAGE * fifo,uint8_t * buff,uint32_t size);
 
-UINT32 calcByteCount(BYTE_FIFO_STORAGE * fifo);
+uint32_t calcByteCount(BYTE_FIFO_STORAGE * fifo);
 
-BYTE ReadFirstByte(BYTE_FIFO_STORAGE * fifo);
+uint8_t ReadFirstByte(BYTE_FIFO_STORAGE * fifo);
 
 /**
  *
@@ -46,49 +46,49 @@ BYTE ReadFirstByte(BYTE_FIFO_STORAGE * fifo);
  * @return returns the number of bytes in the fifo
  */
 
-UINT32 FifoGetByteCount(BYTE_FIFO_STORAGE * fifo);
+uint32_t FifoGetByteCount(BYTE_FIFO_STORAGE * fifo);
 
-UINT32 FifoAddByte(BYTE_FIFO_STORAGE * fifo,BYTE b, BYTE * errorCode);
+uint32_t FifoAddByte(BYTE_FIFO_STORAGE * fifo,uint8_t b, uint8_t * errorCode);
 
-void printFiFoState(BYTE_FIFO_STORAGE * fifo, BYTE * buffer,Print_Level l);
+void printFiFoState(BYTE_FIFO_STORAGE * fifo, uint8_t * buffer,Print_Level l);
 
 #define printFiFoState_E(A,B) printFiFoState(A, B,ERROR_PRINT)
 #define printFiFoState_W(A,B) printFiFoState(A, B,WARN_PRINT)
 #define printFiFoState_I(A,B) printFiFoState(A, B,INFO_PRINT)
 
-UINT32 FifoGetByteStream(BYTE_FIFO_STORAGE * fifo,BYTE *packet,UINT32 size);
+uint32_t FifoGetByteStream(BYTE_FIFO_STORAGE * fifo,uint8_t *packet,uint32_t size);
 
-UINT32 FifoReadByteStream(BYTE *packet,UINT32 size,BYTE_FIFO_STORAGE * fifo);
+uint32_t FifoReadByteStream(uint8_t *packet,uint32_t size,BYTE_FIFO_STORAGE * fifo);
 
 typedef struct _UINT32_FIFO_STORAGE{
-	UINT32 bufferSize;
-	UINT32 * buffer;
-	UINT32 readPointer;
-	UINT32 writePointer;
-	UINT32 count;
+	uint32_t bufferSize;
+	uint32_t * buffer;
+	uint32_t readPointer;
+	uint32_t writePointer;
+	uint32_t count;
 }UINT32_FIFO_STORAGE;
 
 /**
  * Packet FIFO
  */
 typedef struct _PACKET_FIFO_STORAGE{
-	UINT32 bufferSize;
+	uint32_t bufferSize;
 	BowlerPacket * buffer;
-	UINT32 readPointer;
-	UINT32 writePointer;
-	UINT32 byteCount;
-	BOOL   mutex;
+	uint32_t readPointer;
+	uint32_t writePointer;
+	uint32_t byteCount;
+	boolean   mutex;
 }PACKET_FIFO_STORAGE;
 
-void InitPacketFifo(PACKET_FIFO_STORAGE * fifo,BowlerPacket * buff,UINT32 size);
+void InitPacketFifo(PACKET_FIFO_STORAGE * fifo,BowlerPacket * buff,uint32_t size);
 
-UINT32 FifoAddPacket(PACKET_FIFO_STORAGE * fifo,BowlerPacket * toBeAdded);
+uint32_t FifoAddPacket(PACKET_FIFO_STORAGE * fifo,BowlerPacket * toBeAdded);
 
-UINT32 FifoGetPacketCount(PACKET_FIFO_STORAGE * fifo);
+uint32_t FifoGetPacketCount(PACKET_FIFO_STORAGE * fifo);
 
-UINT32 FifoGetPacketSpaceAvailible(PACKET_FIFO_STORAGE * fifo);
+uint32_t FifoGetPacketSpaceAvailible(PACKET_FIFO_STORAGE * fifo);
 
-UINT32 FifoGetPacket(PACKET_FIFO_STORAGE * fifo,BowlerPacket * retrived);
+uint32_t FifoGetPacket(PACKET_FIFO_STORAGE * fifo,BowlerPacket * retrived);
 
 
 

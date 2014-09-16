@@ -140,6 +140,7 @@ uint8_t SetAllCoProcMode(){
 		}
 	}
 	if(send){
+
 		LoadCorePacket(& packetTemp);
 		packetTemp.use.head.Method=BOWLER_POST;
 		packetTemp.use.head.RPC=GetRPCValue("sacm");
@@ -149,6 +150,7 @@ uint8_t SetAllCoProcMode(){
 			down[i].previousChannelMode =getBcsIoDataTable(i)->PIN.currentChannelMode ;
 			packetTemp.use.head.DataLegnth++;
 		}
+                println_I("Sending mode sync packet");printPacket(&packetTemp,INFO_PRINT);
 		SendPacketToCoProc(& packetTemp);
 	}
 	return true; 

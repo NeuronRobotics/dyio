@@ -18,30 +18,30 @@
 #define FLASHSTORE					20
 
 typedef struct _dataPayload{
-		BYTE   mac [6];
+		uint8_t   mac [6];
 		char   name[17];
-		BYTE   lock;
-		BYTE   blSet;
-		BYTE   fwSet;
-		BYTE   bl[3];
-		BYTE   fw[3];
+		uint8_t   lock;
+		uint8_t   blSet;
+		uint8_t   fwSet;
+		uint8_t   bl[3];
+		uint8_t   fw[3];
 	}dataPayload;
 
 typedef union __attribute__((__packed__)) _FLASH
 {
-	UINT32 stream[sizeof(dataPayload)];
+	uint32_t stream[sizeof(dataPayload)];
 	dataPayload data;
 } FLASH_STORE;
 
-BYTE FlashSetMac(BYTE * mac);
+uint8_t FlashSetMac(uint8_t * mac);
 void FlashSetName(char * name);
-void FlashGetMac(BYTE * mac);
+void FlashGetMac(uint8_t * mac);
 void FlashGetName(char * name);
 
-BYTE FlashSetBlRev(BYTE * mac);
-void FlashGetBlRev(BYTE * mac);
-BYTE FlashSetFwRev(BYTE * mac);
-void FlashGetFwRev(BYTE * mac);
+uint8_t FlashSetBlRev(uint8_t * mac);
+void FlashGetBlRev(uint8_t * mac);
+uint8_t FlashSetFwRev(uint8_t * mac);
+void FlashGetFwRev(uint8_t * mac);
 
 void FlashSwitchMemoryToBootloader();
 

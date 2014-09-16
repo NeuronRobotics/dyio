@@ -43,15 +43,15 @@
 	#define USE_UART
 	#define USE_USB
 
-	WORD Get_HAL_Byte_Count();
-void disableSerialComs(BOOL state);
+	uint16_t Get_HAL_Byte_Count();
+void disableSerialComs(boolean state);
 #define Bowler_HAL_Init Pic32_Bowler_HAL_Init
 void SetPICUARTFifo(BYTE_FIFO_STORAGE * s);
-void SendPacketUSB(BYTE * packet,WORD size);
+void SendPacketUSB(uint8_t * packet,uint16_t size);
 void Pic32_Bowler_HAL_Init(void);
 
 void FlashSync(void);
-void SetFlashData(UINT32 * s,UINT32 size);
+void SetFlashData(uint32_t * s,uint32_t size);
 void FlashLoad(void);
 
 

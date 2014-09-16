@@ -50,8 +50,8 @@
 #define Nop()					__asm__("nop\n\t")
 #define nop()					Nop()
 
-void WriteAVRUART0(BYTE val);
-void WriteAVRUART1(BYTE val);
+void WriteAVRUART0(uint8_t val);
+void WriteAVRUART1(uint8_t val);
 
 //#define WriteUART_COM 			WriteAVRUART0
 //#define WriteUART_DEBUG 		WriteAVRUART1

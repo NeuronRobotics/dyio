@@ -79,9 +79,9 @@
 	#define TickGetDiff(a, b)       ((a)-(b))
 #endif
 void TickInit(void);
-DWORD TickGet(void);
-DWORD TickGetUpper();
-DWORD TickGetLower();
+uint32_t TickGet(void);
+uint32_t TickGetUpper();
+uint32_t TickGetLower();
 
 float MyTickConvertToMilliseconds(float dwTickValue);
 float TickGetMS(void);
