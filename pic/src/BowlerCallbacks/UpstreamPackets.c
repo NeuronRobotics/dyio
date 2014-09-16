@@ -39,7 +39,7 @@ void PushAllAsync(){
 	println_I("Sending All Async: ");printPacket(&packetTemp,INFO_PRINT);
 	setPrintLevel(l);
 }
-void PushCounterChange(uint8_t pin,LONG state){
+void PushCounterChange(uint8_t pin,int64_t state){
 	SetColor(0,1,0);
 	INT32_UNION s;
 	s.Val= state;
@@ -101,7 +101,7 @@ void POWER(BowlerPacket * packet){
 	packet->use.head.RPC=GetRPCValue("_pwr");
 	packet->use.data[0]=isRegulated_0();
 	packet->use.data[1]=isRegulated_1();
-	raw.Val=(WORD)(GetRawVoltage());
+	raw.Val=(uint16_t)(GetRawVoltage());
 	packet->use.data[2]=raw.byte.SB;
 	packet->use.data[3]=raw.byte.LB;
 	packet->use.head.DataLegnth=8;

@@ -9,7 +9,7 @@
 static BowlerPacket packetTemp;
 uint8_t isAscii(char * str);
 
-boolean bankA=TRUE,bankB=true; 
+boolean bankA=true , bankB=true;
 uint8_t batteryCode0=0,batteryCode1=0;
 
 static Downstream_Data down[NUM_PINS];

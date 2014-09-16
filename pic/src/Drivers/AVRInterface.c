@@ -8,7 +8,7 @@
 
 	// acamilo:
 	// 		change fuses to f7
-	// 		SUT changed to LONG to increase oscilator stabalization time.
+	// 		SUT changed to int64_t to increase oscilator stabalization time.
 	// 		Oscilator drive method changed to FullSwing from Low Power.
 	// 		SEE DS section 8.4 (p. 34)
 #define AVR_LOW			0xf7

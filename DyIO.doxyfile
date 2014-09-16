@@ -1118,7 +1118,7 @@ COMPACT_RTF = NO
 # If the RTF_HYPERLINKS tag is set to YES, the RTF that is generated
 # will contain hyperlink fields. The RTF file will
 # contain links (just like the HTML output) instead of page references.
-# This makes the output suitable for online browsing using WORD or other
+# This makes the output suitable for online browsing using uint16_t or other
 # programs which support those fields.
 # Note: wordpad (write) and others do not support links.
 

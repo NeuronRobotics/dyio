@@ -105,7 +105,7 @@ void configPin23Int(){
 boolean StartCounterInput(uint8_t chan){
 
 	uint8_t group = channelToCounterGroup(chan);
-	LONG count = GetCounterByGroup(group);
+	int64_t count = GetCounterByGroup(group);
 	//println_I("Enabeling counter input channel:");p_int_I(group);
 	Counter[group].OutputEnabled=false; 
 	if (group > 3)
@@ -336,17 +336,17 @@ void setPinsByGroup(uint8_t group,uint8_t pin1,uint8_t pin2){
 		break;
 	}
 }
-LONG GetCounterByGroup(uint8_t group){
+int64_t GetCounterByGroup(uint8_t group){
 	return Counter[group].CURRENT;
 }
-LONG GetCounterByChannel(uint8_t channel){
+int64_t GetCounterByChannel(uint8_t channel){
 	return GetCounterByGroup(channelToCounterGroup(channel));
 }
-LONG GetCounterOutput(uint8_t chan){
+int64_t GetCounterOutput(uint8_t chan){
 	return Counter[channelToCounterGroup(chan)].CURRENT;
 }
 
-boolean SetCounterOutput(uint8_t chan,LONG val, uint32_t ms){
+boolean SetCounterOutput(uint8_t chan,int64_t val, uint32_t ms){
 	uint8_t group =channelToCounterGroup(chan);
 
 	//Counter[group].SETPOINT=val;
@@ -357,7 +357,7 @@ boolean SetCounterOutput(uint8_t chan,LONG val, uint32_t ms){
 
 	return true; 
 }
-boolean SetCounterInput(uint8_t chan,LONG val){
+boolean SetCounterInput(uint8_t chan,int64_t val){
 	Counter[channelToCounterGroup(chan)].CURRENT=val;
 	return true; 
 }
