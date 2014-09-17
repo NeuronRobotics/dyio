@@ -393,8 +393,14 @@ void SyncModes(void){
 	uint8_t i;
 	GetAllModes(& packetTemp);
 	for (i=0;i<NUM_PINS;i++){
-		getBcsIoDataTable(i)->PIN.currentChannelMode=packetTemp.use.data[i];
-		down[i].previousChannelMode=packetTemp.use.data[i];
+            if(packetTemp.use.data[i] == NO_CHANGE){
+                getBcsIoDataTable(i)->PIN.currentChannelMode=IS_DI;
+                down[i].previousChannelMode = NO_CHANGE;// force a sync later
+                println_E("FAULT: the mode was set to NO_CHANGE");
+            }else{
+                getBcsIoDataTable(i)->PIN.currentChannelMode=packetTemp.use.data[i];
+                down[i].previousChannelMode=packetTemp.use.data[i];
+            }
 	}
 }
 
