@@ -131,7 +131,7 @@ uint8_t GetChannelMode(uint8_t pin) {
 }
 
 RunEveryData * getPinsScheduler(int pin){
-	return & dataPtr[pin].asyncDataTime;
+	return & dataPtr[pin].asyncDataTimer;
 }
 
 DATA_STRUCT * getBcsIoDataTable(int pin) {
@@ -219,15 +219,16 @@ boolean SetChanelValueFromPacket(BowlerPacket * Packet) {
         ERR(Packet, 1, 3);
     } else {
         int32_t data = 0;
-        int32_t time = 0;
+        float time = 0;
 
         data = get32bit(Packet, 1);
 
-        time = get32bit(Packet, 5);
+        time = (float) get32bit(Packet, 5);
     
         getBcsIoDataTable(pin)->PIN.currentValue = data;
+        //println_W("Setting on pin=");p_int_W(pin); print_W(" value= ");p_int_W(data); print_W(" time= ");p_fl_W(time);
         if (setChanelValueHWPtr != NULL)
-            setChanelValueHWPtr(pin, 1, &data, (float) time);
+            setChanelValueHWPtr(pin, 1, &data,  time);
   
     }
     READY(Packet, 1, 3);
@@ -452,9 +453,9 @@ void printAsync() {
         print_I("\tMode ");
         printAsyncType(getBcsIoDataTable(i)->PIN.asyncDataType);
         print_I("\tIteration ");
-        p_fl_I(getBcsIoDataTable(i)->asyncDataTime.setPoint);
+        p_fl_I(getBcsIoDataTable(i)->asyncDataTimer.setPoint);
         print_I("\tLast ");
-        p_fl_I(getBcsIoDataTable(i)->asyncDataTime.MsTime);
+        p_fl_I(getBcsIoDataTable(i)->asyncDataTimer.MsTime);
     }
 }
 

@@ -14,6 +14,14 @@ uint8_t batteryCode0=0,batteryCode1=0;
 
 static Downstream_Data down[NUM_PINS];
 
+
+void forceValueDownstream(int8_t pin){
+      down[pin].changeValue =true;
+}
+void forceModeDownstream(int8_t pin){
+      down[pin].changeMode =true;
+}
+
 void LoadDefaultValues(){
 	LoadCorePacket(& packetTemp);
 	packetTemp.use.head.Method=BOWLER_GET;
@@ -22,6 +30,8 @@ void LoadDefaultValues(){
 	uint8_t i;
 	for (i=0;i<GetNumberOfIOChannels();i++){
 		//getBcsIoDataTable(i)->PIN.currentConfiguration=packetTemp.use.data[i];
+            down[i].changeMode =false;
+            down[i].changeValue =false;
 	}
 }
 
@@ -127,7 +137,7 @@ uint8_t SetCoProcMode(uint8_t pin,uint8_t mode){
 	packetTemp.use.data[2]=(IsAsync(pin))?1:0;
 	packetTemp.use.head.DataLegnth=7;
 	SendPacketToCoProc(& packetTemp);
-	down[pin].previousChannelMode=mode;
+	down[pin].changeMode=true;
 	return false; 
 }
 
@@ -135,7 +145,7 @@ uint8_t SetAllCoProcMode(){
 	int i=0;
 	boolean send = false; 
 	for(i=0;i<GetNumberOfIOChannels();i++){
-		if(getBcsIoDataTable(i)->PIN.currentChannelMode != down[i].previousChannelMode ){
+		if( down[i].changeMode ==true){
 			 send=true; 
 		}
 	}
@@ -147,7 +157,7 @@ uint8_t SetAllCoProcMode(){
 		packetTemp.use.head.DataLegnth = 4;
 		for(i=0;i<GetNumberOfIOChannels();i++){
 			packetTemp.use.data[i]=getBcsIoDataTable(i)->PIN.currentChannelMode ;
-			down[i].previousChannelMode =getBcsIoDataTable(i)->PIN.currentChannelMode ;
+			down[i].changeMode=false ;
 			packetTemp.use.head.DataLegnth++;
 		}
                 println_I("Sending mode sync packet");printPacket(&packetTemp,INFO_PRINT);
@@ -159,27 +169,29 @@ uint8_t SetAllCoProcValues(){
 	int i=0;
 	boolean send = false; 
 	for(i=0;i<GetNumberOfIOChannels();i++){
-		if(getBcsIoDataTable(i)->PIN.currentValue != down[i].previousValue ){
+		if( down[i].changeValue == true){
                     println_W("Pin Value Changed ");p_int_W(i);print_W(" to ");p_int_W(getBcsIoDataTable(i)->PIN.currentValue);
-			 send=true; 
+			 send=true;
+                         SetChannelValueCoProc(i,getBcsIoDataTable(i)->PIN.currentValue);
+                         down[i].changeValue =false ;
 		}
 	}
 	int32_t tmp;
-	if(send){
-		LoadCorePacket(& packetTemp);
-		packetTemp.use.head.Method=BOWLER_POST;
-		packetTemp.use.head.RPC=GetRPCValue("sacv");
-		packetTemp.use.head.DataLegnth = 4;
-		for(i=0;i<GetNumberOfIOChannels();i++){
-			tmp = getBcsIoDataTable(i)->PIN.currentValue ;
-			down[i].previousValue =getBcsIoDataTable(i)->PIN.currentValue ;
-			set32bit(& packetTemp,tmp,i*4);
-			packetTemp.use.head.DataLegnth +=4;
-		}
-                println_I("Syncing channel values ");printPacket(&packetTemp,INFO_PRINT);
-		SendPacketToCoProc(& packetTemp);
-	}
-	return true; 
+//	if(send){
+//		LoadCorePacket(& packetTemp);
+//		packetTemp.use.head.Method=BOWLER_POST;
+//		packetTemp.use.head.RPC=GetRPCValue("sacv");
+//		packetTemp.use.head.DataLegnth = 4;
+//		for(i=0;i<GetNumberOfIOChannels();i++){
+//			tmp = getBcsIoDataTable(i)->PIN.currentValue ;
+//			down[i].previousValue =getBcsIoDataTable(i)->PIN.currentValue ;
+//			set32bit(& packetTemp,tmp,i*4);
+//			packetTemp.use.head.DataLegnth +=4;
+//		}
+//                println_I("Syncing channel values ");printPacket(&packetTemp,INFO_PRINT);
+//		SendPacketToCoProc(& packetTemp);
+//	}
+//	return true;
 }
 
 void SetChannelValueCoProc(uint8_t PIN,uint8_t state){
@@ -397,11 +409,11 @@ void SyncModes(void){
 	for (i=0;i<NUM_PINS;i++){
             if(packetTemp.use.data[i] == NO_CHANGE){
                 getBcsIoDataTable(i)->PIN.currentChannelMode=IS_DI;
-                down[i].previousChannelMode = NO_CHANGE;// force a sync later
+                down[i].changeMode = true;// force a sync of the no valid mode
                 println_E("FAULT: the mode was set to NO_CHANGE");
             }else{
                 getBcsIoDataTable(i)->PIN.currentChannelMode=packetTemp.use.data[i];
-                down[i].previousChannelMode=packetTemp.use.data[i];
+                down[i].changeMode = false;
             }
 	}
 }

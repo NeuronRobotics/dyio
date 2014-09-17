@@ -72,26 +72,26 @@ void printAsyncType(uint8_t t){
 	}
 }
 void configAdvancedAsyncNotEqual(uint8_t pin,float time){
-	getBcsIoDataTable(pin)->asyncDataTime.MsTime=getMs();
-	getBcsIoDataTable(pin)->asyncDataTime.setPoint=time;
+	getBcsIoDataTable(pin)->asyncDataTimer.MsTime=getMs();
+	getBcsIoDataTable(pin)->asyncDataTimer.setPoint=time;
 	getBcsIoDataTable(pin)->PIN.asyncDataType = NOTEQUAL;
 }
 void configAdvancedAsyncDeadBand(uint8_t pin,float time,int32_t deadbandSize){
-	getBcsIoDataTable(pin)->asyncDataTime.MsTime=getMs();
-	getBcsIoDataTable(pin)->asyncDataTime.setPoint=time;
+	getBcsIoDataTable(pin)->asyncDataTimer.MsTime=getMs();
+	getBcsIoDataTable(pin)->asyncDataTimer.setPoint=time;
 	getBcsIoDataTable(pin)->PIN.asyncDataType = DEADBAND;
 	getBcsIoDataTable(pin)->PIN.asyncDatadeadBandval=deadbandSize;
 }
 void configAdvancedAsyncTreshhold(uint8_t pin,float time,int32_t threshholdValue, uint8_t edgeType){
-	getBcsIoDataTable(pin)->asyncDataTime.MsTime=getMs();
-	getBcsIoDataTable(pin)->asyncDataTime.setPoint=time;
+	getBcsIoDataTable(pin)->asyncDataTimer.MsTime=getMs();
+	getBcsIoDataTable(pin)->asyncDataTimer.setPoint=time;
 	getBcsIoDataTable(pin)->PIN.asyncDataType = THRESHHOLD;
 	getBcsIoDataTable(pin)->PIN.asyncDatathreshholdval=threshholdValue;
 	getBcsIoDataTable(pin)->PIN.asyncDatathreshholdedge=edgeType;
 }
 void configAdvancedAsyncAutoSample(uint8_t pin,float time){
-	getBcsIoDataTable(pin)->asyncDataTime.MsTime=getMs();
-	getBcsIoDataTable(pin)->asyncDataTime.setPoint=time;
+	getBcsIoDataTable(pin)->asyncDataTimer.MsTime=getMs();
+	getBcsIoDataTable(pin)->asyncDataTimer.setPoint=time;
 	getBcsIoDataTable(pin)->PIN.asyncDataType = AUTOSAMP;
 }
 
@@ -139,16 +139,16 @@ void startAdvancedAsyncDefault(uint8_t pin){
 	println_I("Starting advanced async on channel: ");p_int_I(pin);
 	getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal=1;
 	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=1;
-	getBcsIoDataTable(pin)->asyncDataTime.MsTime=getMs();
-	getBcsIoDataTable(pin)->asyncDataTime.setPoint=10;
+	getBcsIoDataTable(pin)->asyncDataTimer.MsTime=getMs();
+	getBcsIoDataTable(pin)->asyncDataTimer.setPoint=10;
 	getBcsIoDataTable(pin)->PIN.asyncDataType = NOTEQUAL;
-	print_W(" Mode 0x");prHEX8(GetChannelMode(pin),WARN_PRINT);
+        printMode(GetChannelMode(pin),INFO_PRINT);
 	switch(GetChannelMode(pin)){
 	case IS_DI:
 	case IS_COUNTER_INPUT_HOME:
 	case IS_COUNTER_OUTPUT_HOME:
 	case IS_SERVO:
-		getBcsIoDataTable(pin)->asyncDataTime.setPoint=5;
+		getBcsIoDataTable(pin)->asyncDataTimer.setPoint=5;
 		break;
 	case IS_ANALOG_IN:
 		getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal=ADCINIT;

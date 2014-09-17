@@ -7,6 +7,9 @@
 
 #ifndef PUSH_H_
 #define PUSH_H_
+
+void forceValueDownstream(int8_t pin);
+void forceModeDownstream(int8_t pin);
 void LoadDefaultValues();
 void LoadCorePacket(BowlerPacket * pack);
 void pushError(uint8_t zone,uint8_t trace);

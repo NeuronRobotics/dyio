@@ -150,9 +150,10 @@ typedef struct __attribute__((__packed__))  _Downstream_Data
 	uint8_t  currentConfiguration;
 
 	//Used to detect any hardware state change and synchronize
-	int32_t previousValue;
-	uint8_t previousConfiguration;
-	uint8_t  previousChannelMode;
+	boolean changeValue;
+	boolean changeConfiguration;
+	boolean changeMode;
+
 } Downstream_Data;
 
 
@@ -161,7 +162,7 @@ typedef struct __attribute__((__packed__)) _DATA
 {
 	PIN_MAP PIN;
 	FUNCTION_MAP FUNCTION;
-        RunEveryData 	asyncDataTime;
+        RunEveryData 	asyncDataTimer;
 } DATA_STRUCT;
 
 void set8bit(BowlerPacket * Packet,uint8_t val, uint8_t offset);

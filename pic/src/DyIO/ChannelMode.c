@@ -34,6 +34,7 @@ boolean getBrownOutDetect(){
 boolean setMode(uint8_t pin,uint8_t mode){
 	println_I("Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_int_I(pin);
 	//uint8_t currentMode = GetChannelMode(pin);
+        forceModeDownstream( pin);
 	ClearCounter(pin);
 	StopSPI(pin);
 	clearPPM(pin);
@@ -96,51 +97,6 @@ boolean setMode(uint8_t pin,uint8_t mode){
 	print_I(" \tMode set");
 	return true; 
 }
-
-
-
-
-/*
-boolean SetChannelMode(BowlerPacket * Packet){
-
-	uint8_t pin =Packet->use.getBcsIoDataTable()[0];
-
-	uint8_t mode=Packet->use.getBcsIoDataTable()[1];
-
-	if(Packet->use.head.getBcsIoDataTable()Legnth == 7){
-		isAsync[pin] = Packet->use.getBcsIoDataTable()[2]?TRUE:false; 
-	}
-
-	if(setMode(pin,mode)){
-		//println_I("Valid Mode, setting...");
-		//println_I("Sending Mode Set To Co Proc");
-
-		//ASYNC managed in EEPROM on co proc
-		SendPacketToCoProc(Packet);
-
-		SyncModes();
-		READY(Packet,4,33);
-		if(isAsync[pin])
-			startAdvancedAsyncDefault(pin);
-		return true; 
-	}else{
-		println_E("Mode Invalid!");
-		return false; 
-	}
-
-}
-
-boolean SetAllChannelMode(BowlerPacket * Packet){
-	SendPacketToCoProc(Packet);
-	SyncModes();
-	int i=0;
-	for(i=0;i<NUM_PINS;i++){
-		if(IsAsync(i))
-			startAdvancedAsyncDefault(i);
-	}
-	return true; 
-}
-*/
 
 
 

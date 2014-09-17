@@ -32,19 +32,16 @@ boolean SetChannelMode(uint8_t pin,uint8_t mode){
 		println_E("Set mode pointer not set!")
 		return false; 
 	}
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
 	println_I("Abstract_bcs_io_setmode Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_int_I(pin);
-#endif
 
 	boolean ok = setChanelModeHWPtr(pin,mode);
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
 	print_I(" Hardware ok");
-#endif
+
 	getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
 	if(IsAsync(pin)){
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
+
 		print_I(" Restarting async");
-#endif
+
 		startAdvancedAsyncDefault(pin);
 	}
 	return ok;

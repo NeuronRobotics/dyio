@@ -17,6 +17,9 @@
  */
 boolean SetChanelValueHW(uint8_t pin, uint8_t numValues, int32_t * data, float ms) {
     uint8_t mode = GetChannelMode(pin);
+
+    println_W("Setting on pin=");p_int_W(pin); print_W(" value= ");p_int_W(data[0]); print_W(" time= ");p_fl_W(ms);
+    forceValueDownstream( pin);
     if (isStremChannelMode(mode)) {
         uint8_t * bData = (uint8_t *) data;
         switch (mode) {
@@ -43,11 +46,12 @@ boolean SetChanelValueHW(uint8_t pin, uint8_t numValues, int32_t * data, float m
                 return true; 
         }
         if (isSingleByteMode(mode)) {
-            int32_t time = (INT32) ms;
+            int32_t time = ( int32_t ) ms;
             //mask the time into the data byte
             getBcsIoDataTable(pin)->PIN.currentValue = (time << 16) | (data[0]&0x000000ff);
+            return true;
         }
-        return true; 
+        
     }
 
     return false; 
@@ -143,6 +147,7 @@ boolean ConfigureChannelHW(uint8_t pin, uint8_t numValues, int32_t * data) {
 
 boolean SetChanVal(uint8_t pin, int32_t bval, float time) {
     uint8_t mode = GetChannelMode(pin);
+    forceValueDownstream( pin);
     switch (mode) {
         case IS_COUNTER_INPUT_INT:
         case IS_COUNTER_INPUT_DIR:
@@ -160,119 +165,3 @@ boolean SetChanVal(uint8_t pin, int32_t bval, float time) {
     return true; 
 }
 
-//boolean GetChannelValue(BowlerPacket * Packet){
-//	boolean ret=false; 
-//	uint8_t pin = Packet->use.data[0];
-//	uint8_t mode = GetChannelMode(pin);
-//	switch(mode){
-//		case IS_SPI_MOSI:
-//		case IS_SPI_MISO:
-//		case IS_SPI_SCK:
-//		//case IS_SPI_SS:
-//			println_I("SPI ");
-//			printMode(mode,INFO_PRINT);
-//			SendPacketToSPI(Packet);
-//			Packet->use.head.Method=BOWLER_POST;
-//			return true; 
-//		case IS_COUNTER_INPUT_INT:
-//		case IS_COUNTER_INPUT_DIR:
-//		case IS_COUNTER_INPUT_HOME:
-//			println_I("Counter input ");
-//			printMode(mode,INFO_PRINT);
-//			set32bit(Packet,GetCounterByChannel(pin));
-//			Packet->use.head.DataLegnth=9;
-//			Packet->use.head.Method=BOWLER_POST;
-//			return true; 
-//		case IS_COUNTER_OUTPUT_INT:
-//		case IS_COUNTER_OUTPUT_DIR:
-//		case IS_COUNTER_OUTPUT_HOME:
-//			println_I("Counter output ");
-//			printMode(mode,INFO_PRINT);
-//			set32bit(Packet,GetCounterOutput(pin));
-//			Packet->use.head.DataLegnth=9;
-//			Packet->use.head.Method=BOWLER_POST;
-//			return true; 
-//		case IS_PPM_IN:
-//			GetPPMDataToPacket(Packet);
-//			return true; 
-//		default:
-//			println_I("Get Mode not managed by PIC, sending to co-proc ");printMode(mode,INFO_PRINT);
-//			SendPacketToCoProc(Packet);
-//			return true; 
-//		}
-//}
-
-//boolean SetAllChannelValue(BowlerPacket * Packet){
-//	//println_I("Setting all channel values");
-//	UINT32_UNION time;
-//	UINT32_UNION data;
-//	uint8_t i;
-//	time.byte.FB=Packet->use.data[0];
-//	time.byte.TB=Packet->use.data[1];
-//	time.byte.SB=Packet->use.data[2];
-//	time.byte.LB=Packet->use.data[3];
-//	for(i=0;i<GetNumberOfIOChannels();i++){
-//		if(isASetableMode(GetChannelMode(i))){
-//			data.byte.FB=Packet->use.data[4+(i*4)];
-//			data.byte.TB=Packet->use.data[5+(i*4)];
-//			data.byte.SB=Packet->use.data[6+(i*4)];
-//			data.byte.LB=Packet->use.data[7+(i*4)];
-//			SetChanVal(i, data.Val, time.Val);
-//		}
-//	}
-//	SendPacketToCoProc(Packet);
-//	return true; 
-//}
-
-
-//boolean SetChannelValue(BowlerPacket * Packet){
-//	uint8_t pin = Packet->use.data[0];
-//	uint8_t mode = GetChannelMode(pin);
-//	//uint8_t bval;
-//	//INT32_UNION lval;
-//	//println_I("Attempting to set Channel...");
-//	switch(mode){
-//	case IS_SPI_MOSI:
-//	case IS_SPI_MISO:
-//	case IS_SPI_SCK:
-//		//println_I("SPI ");
-//		//printMode(mode,INFO_PRINT);
-//		SendPacketToSPI(Packet);
-//		Packet->use.head.Method = BOWLER_POST;
-//		return true; 
-//	case IS_COUNTER_INPUT_INT:
-//	case IS_COUNTER_INPUT_DIR:
-//	case IS_COUNTER_INPUT_HOME:
-//	case IS_COUNTER_OUTPUT_INT:
-//	case IS_COUNTER_OUTPUT_DIR:
-//	case IS_COUNTER_OUTPUT_HOME:
-//		SetChanVal(pin,get32bit(Packet,1),get32bit(Packet,5));
-//		return true; 
-//	case IS_UART_TX:
-//	case IS_UART_RX:
-//		SendToSerialPassThrough(Packet);
-//		return true; 
-//	case IS_PPM_IN:
-//		ConfigPPM(Packet);
-//		return true; 
-//	default:
-//		println_I("Set Mode not managed by PIC, sending to co-proc ");
-//		printMode(mode,INFO_PRINT);
-//		SendPacketToCoProc(Packet);
-//		return (Packet->use.head.RPC != _ERR);
-//	}
-//}
-
-
-//boolean isASetableMode(uint8_t mode){
-//	switch(mode){
-//	case IS_COUNTER_INPUT_INT:
-//	case IS_COUNTER_INPUT_DIR:
-//	case IS_COUNTER_INPUT_HOME:
-//	case IS_COUNTER_OUTPUT_INT:
-//	case IS_COUNTER_OUTPUT_DIR:
-//	case IS_COUNTER_OUTPUT_HOME:
-//		return true; 
-//	}
-//	return false; 
-//}
