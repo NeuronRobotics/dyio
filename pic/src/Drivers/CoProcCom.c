@@ -288,6 +288,13 @@ uint8_t sendPacket(BowlerPacket * Packet){
 
 boolean valadateRPC(int response,int sent){
 	switch(sent){
+        case GACV:
+		switch(response){
+		case GACV:
+			return true;
+		default:
+			return false;
+		}
 	case GACM:
 		switch(response){
 		case GACM:

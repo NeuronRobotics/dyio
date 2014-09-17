@@ -164,6 +164,7 @@ void startAdvancedAsyncDefault(uint8_t pin){
 
 
 void SetValFromAsync(int pin, int value){
+  
 	getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal=value;
 }
 

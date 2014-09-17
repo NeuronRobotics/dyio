@@ -29,7 +29,7 @@ void ProcessAsyncData(BowlerPacket * Packet){
 			//ADC_val[pin-8]=ana.Val;
 			if(ana.Val>=0 && ana.Val<1024)
 				SetValFromAsync(pin,ana.Val);//asyncData[pin].currentVal=ana.Val;
-			println_I("***Setting analog value: ");p_int_I(pin);print_I(", ");p_int_I(ana.Val);
+			println_W("***Setting analog value: ");p_int_W(pin);print_W(", ");p_int_W(ana.Val);
 		}
 		else if((mode == IS_DI) || (mode == IS_COUNTER_INPUT_HOME)|| (mode == IS_COUNTER_OUTPUT_HOME) || mode == IS_SERVO){
 			//DIG_val[pin]=Packet->use.data[1];
@@ -70,7 +70,7 @@ void ProcessAsyncData(BowlerPacket * Packet){
 		for(i=0;i<GetNumberOfIOChannels();i++){
 			val = get32bit(Packet, i*4);
 			if(getBcsIoDataTable(i)->PIN.asyncDataCurrentVal!=val){
-				println_I("Data on Pin ");p_int_I(i);print_I(" to val ");p_int_I(val);
+				println_W("Data on Pin ");p_int_W(i);print_W(" to val ");p_int_W(val);
 				SetValFromAsync(i,val);//
 			}
 		}
