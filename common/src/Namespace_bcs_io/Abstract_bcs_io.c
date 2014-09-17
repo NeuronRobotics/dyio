@@ -195,7 +195,7 @@ boolean GetIOChannelCountFromPacket(BowlerPacket * Packet) {
     return true; 
 }
 
-boolean SetChanelValueFromPacket(BowlerPacket * Packet) {
+boolean SetChanelStreamFromPacket(BowlerPacket * Packet) {
     uint8_t pin = Packet->use.data[0];
     uint8_t mode = GetChannelMode(pin);
     if (isStremChannelMode(mode)) {
@@ -206,24 +206,31 @@ boolean SetChanelValueFromPacket(BowlerPacket * Packet) {
                 Packet->use.head.DataLegnth - (4 + 1),
                 (int32_t *) (Packet->use.data + 1),
                 (float) 0);
-        READY(Packet, 1, 3);
+    } else {
+        ERR(Packet, 2, 3);
+    }
+    READY(Packet, 2, 3);
+    return true;
+}
+boolean SetChanelValueFromPacket(BowlerPacket * Packet) {
+    uint8_t pin = Packet->use.data[0];
+    uint8_t mode = GetChannelMode(pin);
+    if (isStremChannelMode(mode)) {
+        ERR(Packet, 1, 3);
     } else {
         int32_t data = 0;
         int32_t time = 0;
 
-
         data = get32bit(Packet, 1);
-        if (Packet->use.head.DataLegnth > (4 + 5)) {
-            time = get32bit(Packet, 5);
-        } else {
-            time = 0;
-        }
+
+        time = get32bit(Packet, 5);
+    
         getBcsIoDataTable(pin)->PIN.currentValue = data;
         if (setChanelValueHWPtr != NULL)
             setChanelValueHWPtr(pin, 1, &data, (float) time);
-        READY(Packet, 2, 3);
+  
     }
-
+    READY(Packet, 1, 3);
     return true; 
 }
 

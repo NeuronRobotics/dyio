@@ -19,7 +19,7 @@ void ProcessAsyncData(BowlerPacket * Packet){
 	Print_Level l = getPrintLevel();
 	setPrintLevelInfoPrint();
 
-	if (Packet->use.head.RPC==GCHV){
+	if (Packet->use.head.RPC==GetRPCValue("gchv")){
 		uint8_t pin = Packet->use.data[0];
 		uint8_t mode = GetChannelMode(pin);
 		if(mode == IS_ANALOG_IN ){
@@ -41,7 +41,7 @@ void ProcessAsyncData(BowlerPacket * Packet){
 				PutBowlerPacket(Packet);
 			}
 		}
-	}else if (Packet->use.head.RPC==AASN){
+	}else if (Packet->use.head.RPC==GetRPCValue("aasn")){
 		int i;
 		for(i=0;i<8;i++){
 			uint8_t pin = i+8;
@@ -55,17 +55,16 @@ void ProcessAsyncData(BowlerPacket * Packet){
 					SetValFromAsync(pin,ana.Val);//asyncData[pin].currentVal=ana.Val;
 			}
 		}
-	}else if (Packet->use.head.RPC==DASN){
+	}else if (Packet->use.head.RPC==GetRPCValue("dasn")){
 		int i;
 		for(i=0;i<GetNumberOfIOChannels();i++){
 			uint8_t mode = GetChannelMode(i);
 			if((mode == IS_DI) || (mode == IS_COUNTER_INPUT_HOME)|| (mode == IS_COUNTER_OUTPUT_HOME)|| (mode == IS_SERVO)){
 				SetValFromAsync(i,Packet->use.data[i]);//asyncData[i].currentVal=Packet->use.data[i];
 			}
-
 		}
 		//println_I("***Setting All Digital value: ");
-	}if (Packet->use.head.RPC==GetRPCValue("gacv")){
+	}else if (Packet->use.head.RPC==GetRPCValue("gacv")){
 		int i;
 		int val;
 		for(i=0;i<GetNumberOfIOChannels();i++){

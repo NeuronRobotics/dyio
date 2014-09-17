@@ -160,6 +160,7 @@ uint8_t SetAllCoProcValues(){
 	boolean send = false; 
 	for(i=0;i<GetNumberOfIOChannels();i++){
 		if(getBcsIoDataTable(i)->PIN.currentValue != down[i].previousValue ){
+                    println_W("Pin Value Changed ");p_int_W(i);print_W(" to ");p_int_W(getBcsIoDataTable(i)->PIN.currentValue);
 			 send=true; 
 		}
 	}
@@ -175,6 +176,7 @@ uint8_t SetAllCoProcValues(){
 			set32bit(& packetTemp,tmp,i*4);
 			packetTemp.use.head.DataLegnth +=4;
 		}
+                println_I("Syncing channel values ");printPacket(&packetTemp,INFO_PRINT);
 		SendPacketToCoProc(& packetTemp);
 	}
 	return true; 

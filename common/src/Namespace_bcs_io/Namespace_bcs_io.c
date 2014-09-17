@@ -81,7 +81,7 @@ static RPC_LIST bcsIo_gchv_g = {BOWLER_GET, // Method
     BOWLER_POST, // response method
     ((const char [3]) {
         BOWLER_I08, // channel
-        BOWLER_I32, // single byte value
+        BOWLER_I32, // value
         0
     }), // Response arguments
     NULL //Termination
@@ -149,6 +149,23 @@ static RPC_LIST bcsIo_gcml_g = {BOWLER_GET, // Method
 };
 //POST
 
+static RPC_LIST bcsIo_strm_p = {BOWLER_POST, // Method
+    (const char*) "strm", //RPC as string
+    &SetChanelStreamFromPacket, //function pointer to a packet parsing function
+    ((const char [4]) {
+        BOWLER_I08, // channel
+        BOWLER_I32STR, // value
+        0
+    }), // Calling arguments
+    BOWLER_POST, // response method
+    ((const char [3]) {
+        BOWLER_I08, // code
+        BOWLER_I08, // trace
+        0
+    }), // Response arguments
+    NULL //Termination
+};
+
 static RPC_LIST bcsIo_schv_p = {BOWLER_POST, // Method
     (const char*) "schv", //RPC as string
     &SetChanelValueFromPacket, //function pointer to a packet parsing function
@@ -197,8 +214,8 @@ static RPC_LIST bcsIo_asyn_p = {BOWLER_POST, // Method
     }), // Response arguments
     NULL //Termination
 };
-//CRIT
 
+//CRIT
 static RPC_LIST bcsIo_cchn_c = {BOWLER_CRIT, // Method
     (const char*) "cchn", //RPC as string
     &ConfigureChannelFromPacket, //function pointer to a packet parsing function
@@ -275,6 +292,7 @@ NAMESPACE_LIST * get_bcsIoNamespace() {
         addRpcToNamespace(&bcsIo, & bcsIo_gchc_g);
         addRpcToNamespace(&bcsIo, & bcsIo_gcml_g);
         //POST
+        addRpcToNamespace(&bcsIo, & bcsIo_strm_p);
         addRpcToNamespace(&bcsIo, & bcsIo_schv_p);
         addRpcToNamespace(&bcsIo, & bcsIo_sacv_p);
         addRpcToNamespace(&bcsIo, & bcsIo_asyn_p);
