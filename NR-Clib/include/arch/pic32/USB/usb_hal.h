@@ -86,6 +86,7 @@ Description:
 
 #ifndef _USB_HAL_H_
 #define _USB_HAL_H_
+
 //DOM-IGNORE-END
 
 #if defined(__18CXX)
@@ -105,7 +106,7 @@ Description:
 
 /*************************************************************************
     Function:
-        void USBHALSetBusAddress( uint8_t addr )
+        void USBHALSetBusAddress( BYTE addr )
         
     Description:
         This routine sets the address of the system on the USB
@@ -139,12 +140,12 @@ Description:
 
 #define USBHALSetBusAddress OTGCORE_SetDeviceAddr
 
-void USBHALSetBusAddress( uint8_t addr );
+void USBHALSetBusAddress( BYTE addr );
 
 
 /*************************************************************************
     Function:
-        void USBHALControlUsbResistors( uint8_t flags );
+        void USBHALControlUsbResistors( BYTE flags );
         
     Description:
         This routine enables or disables the USB pull-up or
@@ -159,7 +160,7 @@ void USBHALSetBusAddress( uint8_t addr );
         which resistors to enable or disable (see below).
 
     Return Values:
-        true if successful, false if not.
+        TRUE if successful, FALSE if not.
    
     Side Effects:
         The resistors are enabled as requested.
@@ -175,10 +176,10 @@ void USBHALSetBusAddress( uint8_t addr );
  This routine is implemented as a macro to a lower-level level routine.
  */
  #if defined(__18CXX)
-    void USBHALControlUsbResistors( uint8_t flags );
+    void USBHALControlUsbResistors( BYTE flags );
  #else
     #define USBHALControlUsbResistors OTGCORE_ControlUsbResistors
-    void USBHALControlUsbResistors( uint8_t flags );
+    void USBHALControlUsbResistors( BYTE flags );
 #endif
 
 /* USBHALControlUsbResistors flags */
@@ -201,7 +202,7 @@ void USBHALSetBusAddress( uint8_t addr );
 
 /*************************************************************************
     Function:
-       boolean USBHALSessionIsValid( void )
+       uint8_t USBHALSessionIsValid( void )
         
     Description:
         This routine determines if there is currently a valid
@@ -215,14 +216,14 @@ void USBHALSetBusAddress( uint8_t addr );
         None
         
     Return Values:
-        true if the session is currently valid, false if not.
+        TRUE if the session is currently valid, FALSE if not.
         
     Remarks:
         Only used for host and OTG support.
 
  *************************************************************************/
 
-boolean USBHALSessionIsValid( void );
+uint8_t USBHALSessionIsValid( void );
 
 
 /*************************************************************************
@@ -241,14 +242,14 @@ boolean USBHALSessionIsValid( void );
         cmd - Identifies desired command (see below).
         
     Return Values:
-        true if successful, false if not.
+        TRUE if successful, FALSE if not.
     
     Remarks:
         Only used for host and OTG support.
                   
  *************************************************************************/
 
-boolean USBHALControlBusPower( uint8_t cmd );
+uint8_t USBHALControlBusPower( BYTE cmd );
 
 /* USBHALControlBusPower Commands */
 #define USB_VBUS_DISCHARGE  0       // Dicharge Vbus via resistor
@@ -340,7 +341,7 @@ void USBHALHandleBusEvent ( void );
 
 /*************************************************************************
     Function:
-        boolean USBHALStallPipe( TRANSFER_FLAGS pipe )
+        uint8_t USBHALStallPipe( TRANSFER_FLAGS pipe )
         
     Description:
         This routine stalls the given endpoint.
@@ -357,7 +358,7 @@ void USBHALHandleBusEvent ( void );
         Note: Only ep_num and direction fields are required.
         
     Return Values:
-        true if able to stall endpoint, false if not.
+        TRUE if able to stall endpoint, FALSE if not.
         
     Side Effects:
         The endpoint will stall if additional data transfer is
@@ -376,12 +377,12 @@ void USBHALHandleBusEvent ( void );
 
 #define USBHALStallPipe OTGCORE_StallPipe
 
-boolean USBHALStallPipe( TRANSFER_FLAGS pipe );
+uint8_t USBHALStallPipe( TRANSFER_FLAGS pipe );
 
 
 /******************************************************************************
     Function:
-        boolean USBHALUnstallPipe( TRANSFER_FLAGS pipe )
+        uint8_t USBHALUnstallPipe( TRANSFER_FLAGS pipe )
         
     Description:
         This routine clears the stall condition for the given pipe.
@@ -396,7 +397,7 @@ boolean USBHALStallPipe( TRANSFER_FLAGS pipe );
                 pipe to unstall.
                 
     Return Values:
-        true if able to stall the pipe, false if not.
+        TRUE if able to stall the pipe, FALSE if not.
         
     Side Effects:
         The BSTALL and UOWN bits (and all other control bits) in
@@ -413,7 +414,7 @@ boolean USBHALStallPipe( TRANSFER_FLAGS pipe );
 
 #define USBHALUnstallPipe OTGCORE_UnstallPipe
 
-boolean USBHALUnstallPipe( TRANSFER_FLAGS pipe );
+uint8_t USBHALUnstallPipe( TRANSFER_FLAGS pipe );
 
 
 /**************************************************************************
@@ -447,12 +448,12 @@ boolean USBHALUnstallPipe( TRANSFER_FLAGS pipe );
 
 #define USBHALGetStalledEndpoints OTGCORE_GetStalledEndpoints
 
-uint16_t USBHALGetStalledEndpoints ( void );
+UINT16 USBHALGetStalledEndpoints ( void );
 
 
 /******************************************************************************
     Function:
-        boolean USBHALFlushPipe( TRANSFER_FLAGS pipe )
+        uint8_t USBHALFlushPipe( TRANSFER_FLAGS pipe )
         
     Description:
         This routine clears any pending transfers on the given
@@ -471,7 +472,7 @@ uint16_t USBHALGetStalledEndpoints ( void );
                 pipe to flush.
 
     Return Values:
-        true if successful, false if not.
+        TRUE if successful, FALSE if not.
 
     Side Effects:
         Transfer data for this pipe has been zero'd out.
@@ -484,7 +485,7 @@ uint16_t USBHALGetStalledEndpoints ( void );
         transfer has been terminated early by the host.
  *****************************************************************************/
 
-boolean USBHALFlushPipe( TRANSFER_FLAGS pipe );
+uint8_t USBHALFlushPipe( TRANSFER_FLAGS pipe );
 
 
 /**************************************************************************
@@ -527,8 +528,8 @@ boolean USBHALFlushPipe( TRANSFER_FLAGS pipe );
         size        Number of bytes of data to transfer.
 
     Return Values:
-        true if the HAL was able to successfully start the
-        data transfer, false if not.
+        TRUE if the HAL was able to successfully start the
+        data transfer, FALSE if not.
         
     Side Effects:
         The HAL has prepared to transfer the data on the USB.
@@ -544,7 +545,7 @@ boolean USBHALFlushPipe( TRANSFER_FLAGS pipe );
         
  *************************************************************************/
 
-boolean USBHALTransferData ( TRANSFER_FLAGS    flags,
+uint8_t USBHALTransferData ( TRANSFER_FLAGS    flags,
                           void             *buffer,
                           unsigned int      size      );
 
@@ -570,7 +571,7 @@ boolean USBHALTransferData ( TRANSFER_FLAGS    flags,
         flags - Configuration flags (see below)
 
     Return Values:
-        true if successful, false if not.
+        TRUE if successful, FALSE if not.
         
     Side Effects:
         The endpoint has been configured as desired.
@@ -584,7 +585,7 @@ boolean USBHALTransferData ( TRANSFER_FLAGS    flags,
         set all flags to 0.
  *************************************************************************/
 
-boolean USBHALSetEpConfiguration ( uint8_t ep_num, uint16_t max_pkt_size, uint16_t flags );
+uint8_t USBHALSetEpConfiguration ( BYTE ep_num, UINT16 max_pkt_size, UINT16 flags );
 
 /* Flags for USBHALSetEpConfiguration */
 #if defined(__18CXX)
@@ -624,7 +625,7 @@ boolean USBHALSetEpConfiguration ( uint8_t ep_num, uint16_t max_pkt_size, uint16
         flags -  Initialization flags
         
     Return Values:
-        true if successful, false if not.
+        TRUE if successful, FALSE if not.
 
     Side Effects:
         The USB HAL SW stack was initialized.
@@ -634,7 +635,7 @@ boolean USBHALSetEpConfiguration ( uint8_t ep_num, uint16_t max_pkt_size, uint16
         
  *************************************************************************/
 
-boolean USBHALInitialize ( unsigned long flags );
+uint8_t USBHALInitialize ( unsigned long flags );
 
 #endif  // _USB_HAL_H_
 /*************************************************************************

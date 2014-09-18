@@ -337,28 +337,28 @@ typedef union
 
 /***********************************************************************************/
 
-///* Alternate definitions */
-//typedef void                    VOID;
-//
-//typedef char                    CHAR8;
-//typedef unsigned char           UCHAR8;
-//
+/* Alternate definitions */
+typedef void                    VOID;
+
+typedef char                    CHAR8;
+typedef unsigned char           UCHAR8;
+
 typedef unsigned char           BYTE;                           /* 8-bit unsigned  */
-//typedef unsigned short int      WORD;                           /* 16-bit unsigned */
-//typedef unsigned long           DWORD;                          /* 32-bit unsigned */
-///* MPLAB C Compiler for PIC18 does not support 64-bit integers */
-//#if !defined(__18CXX)
-//__EXTENSION
-//typedef unsigned long long      QWORD;                          /* 64-bit unsigned */
-//#endif /* __18CXX */
-//typedef signed char             CHAR;                           /* 8-bit signed    */
-//typedef signed short int        SHORT;                          /* 16-bit signed   */
-//typedef signed long             LONG;                           /* 32-bit signed   */
-///* MPLAB C Compiler for PIC18 does not support 64-bit integers */
-//#if !defined(__18CXX)
-//__EXTENSION
-//typedef signed long long        LONGLONG;                       /* 64-bit signed   */
-//#endif /* __18CXX */
+typedef unsigned short int      WORD;                           /* 16-bit unsigned */
+typedef unsigned long           DWORD;                          /* 32-bit unsigned */
+/* MPLAB C Compiler for PIC18 does not support 64-bit integers */
+#if !defined(__18CXX)
+__EXTENSION
+typedef unsigned long long      QWORD;                          /* 64-bit unsigned */
+#endif /* __18CXX */
+typedef signed char             CHAR;                           /* 8-bit signed    */
+typedef signed short int        SHORT;                          /* 16-bit signed   */
+typedef signed long             LONG;                           /* 32-bit signed   */
+/* MPLAB C Compiler for PIC18 does not support 64-bit integers */
+#if !defined(__18CXX)
+__EXTENSION
+typedef signed long long        LONGLONG;                       /* 64-bit signed   */
+#endif /* __18CXX */
 typedef union
 {
     uint8_t Val;

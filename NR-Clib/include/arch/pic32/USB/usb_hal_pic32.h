@@ -207,7 +207,7 @@ Description:
 
 typedef union
 {
-    uint16_t UEP[16];
+    WORD UEP[16];
 } _UEP;
 
 #define UEP_STALL 0x0002
@@ -216,21 +216,21 @@ typedef union _POINTER
 {
     struct
     {
-        uint8_t bLow;
-        uint8_t bHigh;
+        BYTE bLow;
+        BYTE bHigh;
         //byte bUpper;
     };
-    uint16_t _word;                         // bLow & bHigh
+    WORD _word;                         // bLow & bHigh
     
     //pFunc _pFunc;                       // Usage: ptr.pFunc(); Init: ptr.pFunc = &<Function>;
 
-    uint8_t * bRam;                         // Ram byte pointer: 2 bytes pointer pointing
+    BYTE* bRam;                         // Ram byte pointer: 2 bytes pointer pointing
                                         // to 1 byte of data
-    uint16_t * wRam;                         // Ram word poitner: 2 bytes poitner pointing
+    WORD* wRam;                         // Ram word poitner: 2 bytes poitner pointing
                                         // to 2 bytes of data
 
-    ROM uint8_t * bRom;                     // Size depends on compiler setting
-    ROM uint16_t * wRom;
+    ROM BYTE* bRom;                     // Size depends on compiler setting
+    ROM WORD* wRom;
     //rom near byte* nbRom;               // Near = 2 bytes pointer
     //rom near word* nwRom;
     //rom far byte* fbRom;                // Far = 3 bytes pointer
@@ -240,7 +240,7 @@ typedef union _POINTER
  //******** Depricated: v2.2 - will be removed at some point of time ***
 #define _LS         0x00            // Use Low-Speed USB Mode
 #define _FS         0x00            // Use Full-Speed USB Mode
-#define _TRint32_t      0x00            // Use internal transceiver
+#define _TRINT      0x00            // Use internal transceiver
 #define _TREXT      0x00            // Use external transceiver
 #define _PUEN       0x00            // Use internal pull-up resistor
 #define _OEMON      0x00            // Use SIE output indicator
@@ -259,7 +259,7 @@ typedef union _POINTER
     #error "Unsupported ping pong mode for this device"
 #endif
 
-#define ConvertToPhysicalAddress(a) ((uint32_t )KVA_TO_PA(a))
+#define ConvertToPhysicalAddress(a) ((DWORD)KVA_TO_PA(a))
 #define ConvertToVirtualAddress(a)  PA_TO_KVA1(a)
 
 /****************************************************************
@@ -288,14 +288,14 @@ typedef union _POINTER
 }    
 
 /********************************************************************
- * Function (macro): void USBClearInterruptFlag(register, uint8_t if_flag_offset)
+ * Function (macro): void USBClearInterruptFlag(register, BYTE if_flag_offset)
  *
  * PreCondition:    None
  *
  * Input:           
  *   register - the register mnemonic for the register holding the interrupt 
  *				flag to be "kleared"
- *   uint8_t if_flag_offset - the bit position offset (for the interrupt flag to 
+ *   BYTE if_flag_offset - the bit position offset (for the interrupt flag to 
  *							"klear") from the "right of the register"
  *
  * Output:          None
@@ -311,7 +311,7 @@ typedef union _POINTER
 
 /********************************************************************
     Function:
-        void DisableNonZeroEndpoints(uint8_t last_ep_num)
+        void DisableNonZeroEndpoints(UINT8 last_ep_num)
         
     Summary:
         Clears the control registers for the specified non-zero endpoints
@@ -320,7 +320,7 @@ typedef union _POINTER
         None
         
     Parameters:
-        uint8_t last_ep_num - the last endpoint number to clear.  This
+        UINT8 last_ep_num - the last endpoint number to clear.  This
         number should include all endpoints used in any configuration.
         
     Return Values:
@@ -331,8 +331,8 @@ typedef union _POINTER
  
  *******************************************************************/
 #define DisableNonZeroEndpoints(last_ep_num)          {\
-            uint8_t i;\
-            uint32_t *p = (UINT32*)&U1EP1;\
+            UINT8 i;\
+            UINT32 *p = (UINT32*)&U1EP1;\
             for(i=0;i<last_ep_num;i++)\
             {\
                 *p = 0;\
@@ -417,7 +417,7 @@ typedef union __attribute__ ((packed)) _BD_STAT
         unsigned            :2;
         unsigned    PID     :4;         //Packet Identifier
     };
-    uint16_t           Val;
+    WORD           Val;
 } BD_STAT;
 
 // BDT Entry Layout
@@ -426,23 +426,23 @@ typedef union __attribute__ ((packed))__BDT
     struct __attribute__ ((packed))
     {
         BD_STAT     STATUS;
-        uint16_t        CNT:10;
-        uint32_t       ADR;                      //Buffer Address
+        WORD        CNT:10;
+        DWORD       ADR;                      //Buffer Address
     };
     struct __attribute__ ((packed))
     {
-        uint32_t       res  :16;
-        uint32_t       count:10;
+        DWORD       res  :16;
+        DWORD       count:10;
     };
-    uint32_t           w[2];
-    uint16_t            v[4];
-    uint64_t           Val;
+    DWORD           w[2];
+    WORD            v[4];
+    QWORD           Val;
 } BDT_ENTRY;
 
 #if defined(USB_SUPPORT_DEVICE) | defined(USB_SUPPORT_OTG)
 #if !defined(USBDEVICE_C)
     //extern USB_VOLATILE USB_DEVICE_STATE USBDeviceState;
-    extern USB_VOLATILE uint8_t USBActiveConfiguration;
+    extern USB_VOLATILE BYTE USBActiveConfiguration;
     extern USB_VOLATILE IN_PIPE inPipes[1];
     extern USB_VOLATILE OUT_PIPE outPipes[1];
     extern volatile BDT_ENTRY *pBDTEntryIn[USB_MAX_EP_NUMBER+1];

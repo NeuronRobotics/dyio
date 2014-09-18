@@ -25,21 +25,21 @@ boolean GotUSBData(void);
 BYTE_FIFO_STORAGE  * GetPICUSBFifo(void);
 void SetPICUSBFifo(BYTE_FIFO_STORAGE  * s);
 
-void usb_CDC_Serial_Init(char * DevStr,char * SerialStr,uint16_t vid,uint16_t pid);
-uint16_t USBGetArray(BYTE* stream, uint16_t count);
+void usb_CDC_Serial_Init(char * DevStr,char * SerialStr,UINT16 vid,UINT16 pid);
+WORD USBGetArray(BYTE* stream, WORD count);
 int USBPutArray(BYTE* stream, int Len);
-uint16_t GetNumUSBBytes(void);
+WORD GetNumUSBBytes(void);
 
 void WriteUSBDeviceString(char * b);
 void WriteUSBSerialNumber(char * b);
-void SetUSB_VID_PID(uint16_t vid,uint16_t pid);
+void SetUSB_VID_PID(WORD vid,WORD pid);
 
 void usb_Buffer_Update(void);
 
 /**
  * Checks to see if the USB port is opened by a host
  */
-uint8_t isUSBActave();
+BYTE isUSBActave();
 /**
  * Forces open the USB for transmit
  */

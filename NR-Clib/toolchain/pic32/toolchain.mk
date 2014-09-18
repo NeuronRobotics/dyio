@@ -13,7 +13,7 @@ else
 
 endif
 
-GCCP			=$(PICTOOLCHAIN)xc32-gcc -mips16 -O1 -s 
+GCCP			=$(PICTOOLCHAIN)xc32-gcc -mips16 -O1 -pack-struct -s 
 ARP				=$(PICTOOLCHAIN)xc32-ar
 BIN2HEX			=$(PICTOOLCHAIN)xc32-bin2hex
 #PICTOOLCHAIN    = /usr/local/bin/
