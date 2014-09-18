@@ -176,7 +176,7 @@ uint8_t SetAllCoProcValues(){
                          down[i].changeValue =false ;
 		}
 	}
-	int32_t tmp;
+	//int32_t tmp;
 //	if(send){
 //		LoadCorePacket(& packetTemp);
 //		packetTemp.use.head.Method=BOWLER_POST;

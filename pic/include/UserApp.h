@@ -55,5 +55,6 @@ boolean getHeartBeatLock();
 
 void buttonCheck(uint8_t code);
 void MyServer();
+void UserInit(void);
 
 #endif /* USERAPP_H_ */
