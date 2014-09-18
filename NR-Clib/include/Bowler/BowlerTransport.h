@@ -14,5 +14,6 @@ boolean GetBowlerPacket(BowlerPacket * Packet,BYTE_FIFO_STORAGE * fifo);
 boolean PutBowlerPacket(BowlerPacket * Packet);
 void FixPacket(BowlerPacket * Packet);
 boolean GetBowlerPacketDebug(BowlerPacket * Packet,BYTE_FIFO_STORAGE * fifo);
+boolean _getBowlerPacket(BowlerPacket * Packet,BYTE_FIFO_STORAGE * fifo, boolean debug);
 
 #endif /* BOWLERTRANSPORT_H_ */

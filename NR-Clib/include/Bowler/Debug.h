@@ -208,6 +208,7 @@ char GetHighNib(uint8_t b);
 
 void printPIDvals(int i);
 void printPIDvalsPointer(AbsPID * conf);
+void sendStr(const char *str) ;
 
 //Bowler Stack Specific:
 #if defined(BOWLERSTRUCTDEF_H_)

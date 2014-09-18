@@ -50,7 +50,7 @@
 #define SYS_FREQ 			(80000000L)
 #else
 
-#warning "Assuming bootloader mode!"
+//#warning "Assuming bootloader mode!"
 
 #endif
 
