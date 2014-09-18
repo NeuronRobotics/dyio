@@ -47,7 +47,7 @@ unsigned char SchedulerGetStep(unsigned char chan);
 unsigned char ClearForCom(void);
 
 /**
- * Retrurns true if the timer has timed out
+ * Retrurns B_B_true if the timer has timed out
  */
 unsigned char GetTimeoutState(void);
 void TimeoutCounterReset(void);

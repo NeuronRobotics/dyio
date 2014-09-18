@@ -36,7 +36,7 @@ boolean setMode(uint8_t pin,uint8_t mode){
 	//uint8_t currentMode = GetChannelMode(pin);
         forceModeDownstream( pin);
 	ClearCounter(pin);
-	StopSPI(pin);
+	StopDyIOSPI(pin);
 	clearPPM(pin);
 	print_I(" \tHardware Cleared");
 	switch (mode){

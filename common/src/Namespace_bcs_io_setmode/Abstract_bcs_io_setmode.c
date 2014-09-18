@@ -8,12 +8,12 @@
 #include "Namespace/Namespace_bcs_io_setmode.h"
 
 
-boolean (*setChanelModeHWPtr)(BYTE,BYTE)=NULL;
+boolean (*setChanelModeHWPtr)(uint8_t  ,uint8_t)=NULL;
 /*
  * Initialize SetMode hardware interface functions
  */
 
-void InitilizeBcsIoSetmode(boolean (*setChanelModeHWPtrLocal)(BYTE,BYTE)){
+void InitilizeBcsIoSetmode(boolean (*setChanelModeHWPtrLocal)(uint8_t  ,uint8_t)){
 	if(setChanelModeHWPtrLocal == NULL){
 		setPrintLevelErrorPrint();
 		//println_E("Failed IO.SETMODE sanity check: initialization");

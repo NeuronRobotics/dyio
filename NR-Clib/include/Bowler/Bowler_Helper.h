@@ -19,16 +19,16 @@
 #define BOWLER_HELPER_H_
 #include "Defines.h"
 #include "Bowler_Struct_Def.h"
-unsigned short int READY(BowlerPacket * Packet,uint8_t code,uint8_t trace);
-unsigned short int ERR(BowlerPacket * Packet,uint8_t code,uint8_t trace);
+uint16_t READY(BowlerPacket * Packet,uint8_t code,uint8_t trace);
+uint16_t ERR(BowlerPacket * Packet,uint8_t code,uint8_t trace);
 
-unsigned short int GetDataLegnth(uint8_t *buffer);
+uint16_t GetDataLegnth(uint8_t *buffer);
 
-unsigned short int SetPacketLegnth(BowlerPacket * Packet,uint8_t len);
-unsigned short int GetPacketLegnth(BowlerPacket * Packet);
+uint16_t SetPacketLegnth(BowlerPacket * Packet,uint8_t len);
+uint16_t GetPacketLegnth(BowlerPacket * Packet);
 
 
-unsigned long Bytes2Int32(uint8_t a,uint8_t b,uint8_t c,uint8_t d);
+uint32_t Bytes2Int32(uint8_t a,uint8_t b,uint8_t c,uint8_t d);
 
 unsigned long GetRPCValue(char * data);
 
@@ -41,14 +41,6 @@ void SetCRC(BowlerPacket * Packet);
 unsigned char CheckCRC(BowlerPacket * Packet);
 void copyPacket(BowlerPacket * from,BowlerPacket * to);
 
-
-typedef struct _INTERPOLATE_DATA
-{
-	float set;
-	float start;
-	float setTime;
-	float startTime;
-} INTERPOLATE_DATA;
 
 float interpolate(INTERPOLATE_DATA * data, float currentTime);
 

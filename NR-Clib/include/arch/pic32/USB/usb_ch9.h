@@ -594,7 +594,7 @@ This is used in the descriptors.
 
 #define _INTERRUPT        0x03            //Interrupt Transfer
 #if defined(__18CXX) || defined(__C30__)
-    #define _INT        0x03            //Interrupt Transfer
+    #define _int32_t        0x03            //Interrupt Transfer
 #endif
 
 /* Isochronous Endpoint Synchronization Type */

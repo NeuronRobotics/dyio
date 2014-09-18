@@ -48,7 +48,7 @@
  *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * Howard Schlunder		10/03/2006	Original, copied from old Compiler.h
  * Howard Schlunder		11/07/2007	Reorganized and simplified
- * Howard Schlunder		03/31/2010	Removed dependency on uint16_t and uint32_t typedefs
+ * Howard Schlunder		03/31/2010	Removed dependency on WORD and DWORD typedefs
  ********************************************************************/
 #ifndef __COMPILER_H
 #define __COMPILER_H
@@ -77,7 +77,6 @@
 	#if !defined(__C32__)
 		#define __C32__
 	#endif
-	#include "Bowler/Defines.h"
 	#include "GenericTypeDefs.h"
 	#include <p32xxxx.h>
 	#include <plib.h>

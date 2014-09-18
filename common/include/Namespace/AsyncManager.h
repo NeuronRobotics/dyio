@@ -45,10 +45,10 @@ void setAsyncLocal(uint8_t channel,boolean async);
 
 
 typedef struct _AdvancedAsyncData{
-	INT32			previousVal;
-	INT32			currentVal;
+	int32_t			previousVal;
+	int32_t			currentVal;
 	RunEveryData 	time;
-	BYTE		type;
+	uint8_t		type;
 	uint8_t 		enabled;
 	struct{
 		int32_t 	val;

@@ -51,26 +51,26 @@ boolean ProvisionMAC(uint8_t * m){
 
 void EEWriteMode(uint8_t pin,uint8_t mode){
 	if (EEReadMode(pin) != mode){
-		eeWriteByte((UINT16)(MODESTART+pin),mode);
+		eeWriteByte((uint16_t)(MODESTART+pin),mode);
 	}
 }
 
 uint8_t EEReadMode(uint8_t pin){
-	return eeReadByte((UINT16)(MODESTART+pin));
+	return eeReadByte((uint16_t)(MODESTART+pin));
 }
 
 
 void EEWriteValue(uint16_t pin,uint8_t value){
 	if (value == 255)
 		value = 254;
-	eeWriteByte((UINT16)(VALUESTART+pin),value);
+	eeWriteByte((uint16_t)(VALUESTART+pin),value);
 }
 
 uint8_t EEReadValue(uint16_t pin){
-	uint8_t val = eeReadByte((UINT16)(VALUESTART+pin));
+	uint8_t val = eeReadByte((uint16_t)(VALUESTART+pin));
 	if (val == 255)
 		EEWriteValue(pin,128);
-	return eeReadByte((UINT16)(VALUESTART+pin));
+	return eeReadByte((uint16_t)(VALUESTART+pin));
 }
 
 uint32_t EEReadBaud(void){

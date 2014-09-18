@@ -133,9 +133,9 @@ typedef struct __attribute__((__packed__))  _PIN_MAP
 {
 	int32_t currentValue;
 	uint8_t  currentChannelMode;
-	INT32			asyncDataPreviousVal;
-	INT32			asyncDataCurrentVal;
-	BYTE		asyncDataType;
+	int32_t			asyncDataPreviousVal;
+	int32_t			asyncDataCurrentVal;
+	uint8_t		asyncDataType;
 	uint8_t 		asyncDataenabled;
 	int32_t 	asyncDatadeadBandval;
 	int32_t 	asyncDatathreshholdval;
@@ -212,11 +212,11 @@ NAMESPACE_LIST * get_bcsIoNamespace();
  */
 void InitilizeBcsIo(int numPins,
 					DATA_STRUCT * dataPtrLocal,
-					boolean (*setChanelValueHWPtrLocal)(BYTE,BYTE,int32_t *,float),
-					boolean (*getChanelValueHWPtrLocal)(BYTE,BYTE*,int32_t *),
+					boolean (*setChanelValueHWPtrLocal)(uint8_t,uint8_t,int32_t *,float),
+					boolean (*getChanelValueHWPtrLocal)(uint8_t,uint8_t*,int32_t *),
 					boolean (*setAllChanelValueHWPtrLocal)(int32_t *,float),
 					boolean (*getAllChanelValueHWPtrLocal)(int32_t *),
-					boolean (*configChannelHWPtrLocal)(BYTE,BYTE,int32_t *)
+					boolean (*configChannelHWPtrLocal)(uint8_t,uint8_t,int32_t *)
 );
 
 //These are the Hardware interface functions that need to be declared and passed in for Initilaize
@@ -237,7 +237,7 @@ boolean SetChanelValueHW(uint8_t pin,uint8_t numValues,int32_t * data, float ms)
  * This function takes a pin index, a number of values to be delt with, and an array of data values
  * Data is stored into numValues and data
  */
-boolean GetChanelValueHW(uint8_t pin,uint8_t * numValues,int32_t * data);
+boolean GetChanelValueHW(uint8_t pin,uint8_t*  numValues,int32_t * data);
 /**
  * Set Channel Values
  * This function takes a

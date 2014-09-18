@@ -16,7 +16,7 @@ void sendHeader(uint8_t legnth,char * rpc){
 	send(BOWLER_ASYN);
 	send((0x80|0));//Set the response flag and set an async ID
 	send(legnth);
-	uint8_t crc =(BYTE) (BOWLER_VERSION+BOWLER_ASYN+(0x80|0)+legnth);
+	uint8_t crc =(uint8_t ) (BOWLER_VERSION+BOWLER_ASYN+(0x80|0)+legnth);
 	send(crc);
 	for(i=0;i<4;i++){
 		send(rpc[i]);//rpc bytes

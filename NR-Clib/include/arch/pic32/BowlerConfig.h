@@ -29,6 +29,7 @@
 
 	#include "USB/usb_fifo.h"
 	#include <plib.h>
+        #include "bootloader/Namespace_bcs_bootloader.h"
 
 
 	#define StartCritical()  INTDisableInterrupts();
@@ -54,7 +55,20 @@ void FlashSync(void);
 void SetFlashData(uint32_t * s,uint32_t size);
 void FlashLoad(void);
 
+void setPicIOTristateInput(char port,int pin);
+void setPicIOTristateOutput(char port,int pin);
+void setPicIOTristate(boolean state,char port,int pin);
 
+void setPicIOPin(boolean state,char port,int pin);
+boolean getPicIOPin(char port,int pin);
+
+
+#define     ioPortB(s,p)  if(s){PORTBSET=(1<<p);}else{ PORTBCLR=(1<<p);}
+#define     ioPortC(s,p)  if(s){PORTCSET=(1<<p);}else{ PORTCCLR=(1<<p);}
+#define     ioPortD(s,p)  if(s){PORTDSET=(1<<p);}else{ PORTDCLR=(1<<p);}
+#define     ioPortE(s,p)  if(s){PORTESET=(1<<p);}else{ PORTECLR=(1<<p);}
+#define     ioPortF(s,p)  if(s){PORTFSET=(1<<p);}else{ PORTFCLR=(1<<p);}
+#define     ioPortG(s,p)  if(s){PORTGSET=(1<<p);}else{ PORTGCLR=(1<<p);}
 
 
 #endif /* BOWLERCONFIG_H_ */

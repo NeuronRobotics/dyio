@@ -224,13 +224,13 @@ typedef union _POINTER
     
     //pFunc _pFunc;                       // Usage: ptr.pFunc(); Init: ptr.pFunc = &<Function>;
 
-    BYTE* bRam;                         // Ram byte pointer: 2 bytes pointer pointing
+    uint8_t * bRam;                         // Ram byte pointer: 2 bytes pointer pointing
                                         // to 1 byte of data
-    WORD* wRam;                         // Ram word poitner: 2 bytes poitner pointing
+    uint16_t * wRam;                         // Ram word poitner: 2 bytes poitner pointing
                                         // to 2 bytes of data
 
-    ROM BYTE* bRom;                     // Size depends on compiler setting
-    ROM WORD* wRom;
+    ROM uint8_t * bRom;                     // Size depends on compiler setting
+    ROM uint16_t * wRom;
     //rom near byte* nbRom;               // Near = 2 bytes pointer
     //rom near word* nwRom;
     //rom far byte* fbRom;                // Far = 3 bytes pointer
@@ -240,7 +240,7 @@ typedef union _POINTER
  //******** Depricated: v2.2 - will be removed at some point of time ***
 #define _LS         0x00            // Use Low-Speed USB Mode
 #define _FS         0x00            // Use Full-Speed USB Mode
-#define _TRINT      0x00            // Use internal transceiver
+#define _TRint32_t      0x00            // Use internal transceiver
 #define _TREXT      0x00            // Use external transceiver
 #define _PUEN       0x00            // Use internal pull-up resistor
 #define _OEMON      0x00            // Use SIE output indicator
@@ -259,7 +259,7 @@ typedef union _POINTER
     #error "Unsupported ping pong mode for this device"
 #endif
 
-#define ConvertToPhysicalAddress(a) ((DWORD)KVA_TO_PA(a))
+#define ConvertToPhysicalAddress(a) ((uint32_t )KVA_TO_PA(a))
 #define ConvertToVirtualAddress(a)  PA_TO_KVA1(a)
 
 /****************************************************************

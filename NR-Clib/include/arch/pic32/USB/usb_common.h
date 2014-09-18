@@ -84,6 +84,7 @@ CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
 //DOM-IGNORE-END
 
 #include <limits.h>
+#include <Bowler/Defines.h>
 
 // *****************************************************************************
 // *****************************************************************************

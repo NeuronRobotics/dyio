@@ -247,7 +247,7 @@ typedef enum
         {
             USBDeviceTasks();
             if((USBGetDeviceState() \< CONFIGURED_STATE) ||
-               (USBIsDeviceSuspended() == true) )
+               (USBIsDeviceSuspended() == TRUE))
             {
                 //Either the device is not configured or we are suspended
                 //  so we don't want to do execute any application code
@@ -395,7 +395,7 @@ boolean USBGetRemoteWakeupStatus(void);
         {
             USBDeviceTasks();
             if((USBGetDeviceState() \< CONFIGURED_STATE) ||
-               (USBIsDeviceSuspended() == true) )
+               (USBIsDeviceSuspended() == TRUE))
             {
                 //Either the device is not configured or we are suspended
                 //  so we don't want to do execute any application code
@@ -445,7 +445,7 @@ USB_DEVICE_STATE USBGetDeviceState(void);
            {
                USBDeviceTasks();
                if((USBGetDeviceState() \< CONFIGURED_STATE) ||
-                  (USBIsDeviceSuspended() == true) )
+                  (USBIsDeviceSuspended() == TRUE))
                {
                    //Either the device is not configured or we are suspended
                    //  so we don't want to do execute any application code
@@ -534,7 +534,7 @@ void USBEnableEndpoint(uint8_t ep, uint8_t options);
    
     Typical Usage:
     <code>
-    if(USBIsDeviceSuspended() == true) 
+    if(USBIsDeviceSuspended() == TRUE)
     {
         return;
     }

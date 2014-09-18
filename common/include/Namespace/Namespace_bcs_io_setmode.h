@@ -16,7 +16,7 @@
  * Initialize SetMode hardware interface functions
  */
 
-void InitilizeBcsIoSetmode(boolean (*setChanelModeHWPtrLocal)(BYTE,BYTE));
+void InitilizeBcsIoSetmode(boolean (*setChanelModeHWPtrLocal)(uint8_t,uint8_t));
 
 NAMESPACE_LIST * get_bcsIoSetmodeNamespace();
 

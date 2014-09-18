@@ -60,7 +60,7 @@
 
 #if defined(__C30__) || defined(__C32__)
 	void Delay10us(uint32_t dwCount);
-	void DelayMs(uint16_t ms);
+	void DelayMs(uint32_t ms);
 	void Delay1us(uint32_t dwCount);
 	void DelayPreServo(void);
 	void DelayIncServo(void);

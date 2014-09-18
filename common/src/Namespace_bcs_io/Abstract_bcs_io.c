@@ -12,20 +12,20 @@
 static int NumberOfIOChannels = 0;
 static DATA_STRUCT * dataPtr = NULL;
 
-boolean(*setChanelValueHWPtr)(BYTE, BYTE, int32_t *, float);
-boolean(*getChanelValueHWPtr)(BYTE, BYTE*, int32_t *);
+boolean(*setChanelValueHWPtr)(uint8_t  , uint8_t, int32_t *, float);
+boolean(*getChanelValueHWPtr)(uint8_t  , uint8_t*, int32_t *);
 boolean(*setAllChanelValueHWPtr)(int32_t *, float);
 boolean(*getAllChanelValueHWPtr)(int32_t *);
-boolean(*configChannelHWPtr)(BYTE, BYTE, int32_t *);
+boolean(*configChannelHWPtr)(uint8_t  , uint8_t, int32_t *);
 
 void InitilizeBcsIo(int numPins,
-        DATA_STRUCT * dataPtrLocal,
-        boolean(*setChanelValueHWPtrLocal)(BYTE, BYTE, int32_t *, float),
-        boolean(*getChanelValueHWPtrLocal)(BYTE, BYTE*, int32_t *),
-        boolean(*setAllChanelValueHWPtrLocal)(int32_t *, float),
-        boolean(*getAllChanelValueHWPtrLocal)(int32_t *),
-        boolean(*configChannelHWPtrLocal)(BYTE, BYTE, int32_t *)
-        ) {
+					DATA_STRUCT * dataPtrLocal,
+					boolean (*setChanelValueHWPtrLocal)(uint8_t,uint8_t,int32_t *,float),
+					boolean (*getChanelValueHWPtrLocal)(uint8_t,uint8_t*,int32_t *),
+					boolean (*setAllChanelValueHWPtrLocal)(int32_t *,float),
+					boolean (*getAllChanelValueHWPtrLocal)(int32_t *),
+					boolean (*configChannelHWPtrLocal)(uint8_t,uint8_t,int32_t *)
+) {
     if (numPins < 1
             ) {
         setPrintLevelErrorPrint();

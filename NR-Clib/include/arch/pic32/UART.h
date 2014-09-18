@@ -49,7 +49,6 @@
 #ifndef __UART_H
 #define __UART_H
 
-#include "GenericTypeDefs.h"
 boolean Write32UART1(uint8_t  data);
 boolean Write32UART2(uint8_t  data);
 

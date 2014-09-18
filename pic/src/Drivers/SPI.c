@@ -20,7 +20,7 @@ void InitSPI(void){
 	SetCoProcMode(2,IS_SPI_MOSI);
 }
 
-void StopSPI(uint8_t pin){
+void StopDyIOSPI(uint8_t pin){
 	if (isSPI(GetChannelMode(pin))){
 		CloseSPI2();
 		_RG6=1;

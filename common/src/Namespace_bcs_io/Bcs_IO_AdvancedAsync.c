@@ -211,9 +211,9 @@ boolean pushAsyncReady( uint8_t pin){
 			//
 			if(getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal != getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal){
 //				println_I("not equ ");p_int_I(pin);
-//				printfDEBUG_BYTE('\t',INFO_PRINT);
+//				printfDEBUG_uint8_t*('\t',INFO_PRINT);
 //				p_int_I(getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal);
-//				printfDEBUG_BYTE('\t',INFO_PRINT);
+//				printfDEBUG_uint8_t*('\t',INFO_PRINT);
 //				p_int_I(getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal);
 				getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal = getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
 				return true; 

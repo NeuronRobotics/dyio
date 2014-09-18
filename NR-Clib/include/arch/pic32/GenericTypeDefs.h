@@ -61,8 +61,8 @@ extern "C"
 
 /* get compiler defined type definitions (NULL, size_t, etc) */
 #include <stddef.h>
-
-//typedef enum _boolean { false = 0, true } BOOL;    /* Undefined size */
+#include <stdint.h>
+typedef enum _BOOL { FALSE = 0, TRUE } BOOL;    /* Undefined size */
 typedef enum _BIT { CLEAR = 0, SET } BIT;
 
 #define PUBLIC                                  /* Function attributes */
@@ -70,20 +70,24 @@ typedef enum _BIT { CLEAR = 0, SET } BIT;
 #define PRIVATE   static
 
 /* INT is processor specific in length may vary in size */
-//typedef signed int          INT;
-//typedef signed char         INT8;
-//typedef signed short int    INT16;
-//typedef signed long int     INT32;
+typedef int32_t         INT;
+typedef int8_t          INT8;
+typedef int16_t         INT16;
+typedef int32_t         INT32;
 
 /* MPLAB C Compiler for PIC18 does not support 64-bit integers */
 #if !defined(__18CXX)
 //__EXTENSION typedef signed long long    INT64;
 #endif
 
-/* uint32_t is processor specific in length may vary in size */
-//typedef unsigned int        UINT;
-//typedef unsigned char       UINT8;
-//typedef unsigned short int  UINT16;
+/* UINT is processor specific in length may vary in size */
+
+typedef uint32_t         UINT;
+typedef uint8_t          UINT8;
+typedef uint16_t         UINT16;
+typedef uint32_t         UINT32;
+
+
 /* 24-bit type only available on C18 */
 #if defined(__18CXX)
 typedef unsigned short long UINT24;
@@ -333,28 +337,28 @@ typedef union
 
 /***********************************************************************************/
 
-/* Alternate definitions */
-typedef void                    VOID;
-
-typedef char                    CHAR8;
-typedef unsigned char           UCHAR8;
-
-//typedef unsigned char           BYTE;                           /* 8-bit unsigned  */
-typedef unsigned short int      WORD;                           /* 16-bit unsigned */
-typedef unsigned long           DWORD;                          /* 32-bit unsigned */
-/* MPLAB C Compiler for PIC18 does not support 64-bit integers */
-#if !defined(__18CXX)
-__EXTENSION
-typedef unsigned long long      QWORD;                          /* 64-bit unsigned */
-#endif /* __18CXX */
-typedef signed char             CHAR;                           /* 8-bit signed    */
-typedef signed short int        SHORT;                          /* 16-bit signed   */
-typedef signed long             LONG;                           /* 32-bit signed   */
-/* MPLAB C Compiler for PIC18 does not support 64-bit integers */
-#if !defined(__18CXX)
-__EXTENSION
-typedef signed long long        LONGLONG;                       /* 64-bit signed   */
-#endif /* __18CXX */
+///* Alternate definitions */
+//typedef void                    VOID;
+//
+//typedef char                    CHAR8;
+//typedef unsigned char           UCHAR8;
+//
+typedef unsigned char           BYTE;                           /* 8-bit unsigned  */
+//typedef unsigned short int      WORD;                           /* 16-bit unsigned */
+//typedef unsigned long           DWORD;                          /* 32-bit unsigned */
+///* MPLAB C Compiler for PIC18 does not support 64-bit integers */
+//#if !defined(__18CXX)
+//__EXTENSION
+//typedef unsigned long long      QWORD;                          /* 64-bit unsigned */
+//#endif /* __18CXX */
+//typedef signed char             CHAR;                           /* 8-bit signed    */
+//typedef signed short int        SHORT;                          /* 16-bit signed   */
+//typedef signed long             LONG;                           /* 32-bit signed   */
+///* MPLAB C Compiler for PIC18 does not support 64-bit integers */
+//#if !defined(__18CXX)
+//__EXTENSION
+//typedef signed long long        LONGLONG;                       /* 64-bit signed   */
+//#endif /* __18CXX */
 typedef union
 {
     uint8_t Val;
@@ -373,7 +377,7 @@ typedef union
 
 typedef union
 {
-    uint16_t Val;
+    int16_t Val;
     uint8_t v[2];
     struct
     {
@@ -403,13 +407,13 @@ typedef union
 
 typedef union
 {
-    uint32_t Val;
-    uint16_t w[2];
+    int32_t Val;
+    int16_t w[2];
     uint8_t v[4];
     struct
     {
-        uint16_t LW;
-        uint16_t HW;
+        int16_t LW;
+        int16_t HW;
     } word;
     struct
     {
@@ -464,21 +468,21 @@ typedef union
 #if !defined(__18CXX)
 typedef union
 {
-    uint64_t Val;
-    uint32_t d[2];
-    uint16_t w[4];
+    int64_t Val;
+    int32_t d[2];
+    int16_t w[4];
     uint8_t v[8];
     struct
     {
-        uint32_t LD;
-        uint32_t HD;
+        int32_t LD;
+        int32_t HD;
     } dword;
     struct
     {
-        uint16_t LW;
-        uint16_t HW;
-        uint16_t UW;
-        uint16_t MW;
+        int16_t LW;
+        int16_t HW;
+        int16_t UW;
+        int16_t MW;
     } word;
     struct
     {

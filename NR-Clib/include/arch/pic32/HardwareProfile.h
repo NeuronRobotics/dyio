@@ -291,6 +291,8 @@
 
 #endif
 
-void InitADCHardware(uint8_t chan);
-float getAdcVoltage(uint8_t chan, int samples);
-int getAdcRaw(uint8_t chan, int samples);
+void InitADCHardware(BYTE chan);
+float getAdcVoltage(BYTE chan, int samples);
+int getAdcRaw(BYTE chan, int samples);
+void measureAdcOffset();
+int getAdcOffset();

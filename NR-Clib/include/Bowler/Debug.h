@@ -19,6 +19,7 @@
 #ifndef DEBUG_H_
 #define DEBUG_H_
 #include "Defines.h"
+#include "AbstractPID.h"
 typedef enum _Print_Level{
 	NO_PRINT=0,
 	ERROR_PRINT=1,
@@ -148,6 +149,11 @@ void EnableDebugTerminal(void);
 #define print_I(A) printfDEBUG_NNL(A,INFO_PRINT)
 
 /**
+ * Clears the print termainal 
+ */
+#define clearPrint() sendStr("\e[1;1H\e[2J")
+
+/**
  * print the null terminated string with a newline inserted at the begining of the string
  */
 #define println_I(A) printfDEBUG(A,INFO_PRINT)
@@ -172,16 +178,16 @@ void printfDEBUG_NNL(char *str,Print_Level l);
 /**
  * print the ascii of a signed long/int. No new line
  */
-void printfDEBUG_INT(long val,Print_Level l);
+void printfDEBUG_INT(int32_t val,Print_Level l);
 
 /**
  * convert a long into an ascii string and place the string into the Buffer
  */
-void ultoaMINE(unsigned long Value, unsigned char* Buffer);
+void ultoaMINE(uint32_t Value, uint8_t* Buffer);
 /**
  * print all the bytes in a byte array. The legnth of the array must be correct
  */
-void printByteArray(unsigned char * stream,unsigned short int len,Print_Level l);
+void printByteArray(uint8_t * stream,uint16_t len,Print_Level l);
 /**
  * convert a float into an ascii string and place the string into the outbuf
  */
@@ -194,14 +200,14 @@ void printfDEBUG_FL(float f,Print_Level l);
 /**
  * return the char of the hex value of the low 4 bits of the given byte
  */
-char GetLowNib(unsigned char b);
+char GetLowNib(uint8_t b);
 /**
  * return the char of the hex value of the high 4 bits of the given byte
  */
-char GetHighNib(unsigned char b);
+char GetHighNib(uint8_t b);
 
 void printPIDvals(int i);
-
+void printPIDvalsPointer(AbsPID * conf);
 
 //Bowler Stack Specific:
 #if defined(BOWLERSTRUCTDEF_H_)

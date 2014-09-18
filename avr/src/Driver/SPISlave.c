@@ -21,9 +21,9 @@ static boolean gotPacket = false;
 static BowlerPacket Packet;
 
 static uint8_t privateRX[BOWLER_PacketSize];
-static BYTE_FIFO_STORAGE storeRX;
+static uint8_t*_FIFO_STORAGE storeRX;
 static uint8_t privateTX[BOWLER_PacketSize];
-static BYTE_FIFO_STORAGE storeTX;
+static uint8_t*_FIFO_STORAGE storeTX;
 /**
  * Initialize the SPI port to work as an SPI channel
  */

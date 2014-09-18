@@ -60,6 +60,12 @@
 	}BowlerPacketMini;
 
 
-
+typedef struct  __attribute__((__packed__)) _INTERPOLATE_DATA
+{
+	float set;
+	float start;
+	float setTime;
+	float startTime;
+} INTERPOLATE_DATA;
 
 #endif /* WASPSTRUCTDEF_H_ */

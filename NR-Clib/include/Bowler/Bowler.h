@@ -17,7 +17,7 @@
  */
 #ifndef WASP_H_
 #define WASP_H_
-
+#include <stdint.h>
 #include "Defines.h"
 #include "Bowler_Struct_Def.h"
 #include "Debug.h"
@@ -51,8 +51,8 @@
 
 #include "BowlerServerHardwareAbstraction.h"
 
-void UserInit(void);
-void UserRun(void);
-
+#define BOOL
+#define TRUE
+#define FALSE
 
 #endif /* WASP_H_ */
