@@ -1,8 +1,8 @@
 -include common/Version.mk
 REVISION=$(MAJOR_VER).$(MINOR_VER).$(FIRMWARE_VER)
 PUB=java -jar FirmwarePublish/Publish.jar -revision=$(REVISION)
-WORKSPACE=../../../
-NRCLIB_LOCATION=$(WORKSPACE)/c-bowler/firmware/library/NR-Clib/development/
+WORKSPACE=../
+NRCLIB_LOCATION=$(WORKSPACE)/c-bowler/
 PIC_COMPILER=xc32-v1.00-linux
 
 
