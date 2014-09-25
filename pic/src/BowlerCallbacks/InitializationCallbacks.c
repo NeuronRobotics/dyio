@@ -16,9 +16,24 @@ uint8_t SaveTheState = 0;
 const uint8_t MY_MAC_ADDRESS[] = {0x74, 0xf7, 0x26, 0x00, 0x00, 0x00};
 
 extern MAC_ADDR MyMAC __attribute__((section(".scs_global_var")));
-char macStr[13];
+static char macStr[13];
+
+#if defined(ROBOSUB_DEMO)
+//char * dev = "AHD Wave";
+#else
+static char * dev = "DyIO v1.0";
+#endif
 
 void hardwareInit() {
+
+    // Configure the device for maximum performance but do not change the PBDIV
+    // Given the options, this function will change the flash wait states, RAM
+    // wait state and enable prefetch cache but will not change the PBDIV.
+    // The PBDIV value is already set via the pragma FPBDIV option above..
+    SYSTEMConfig((80000000L), SYS_CFG_WAIT_STATES | SYS_CFG_PCACHE);
+    SYSTEMConfigPerformance(80000000);
+
+
     int j = 0, i = 0;
 #if defined(PROGRAMMER_DEBUG)
     FlashSwitchMemoryToBootloader();
@@ -28,7 +43,7 @@ void hardwareInit() {
     }
     StartCritical();
     println_I("Getting MAC from flash");
-    FlashGetMac(MyMAC.v);
+    //FlashGetMac(MyMAC.v);
 
 
     for (i = 0; i < 6; i++) {
@@ -40,7 +55,9 @@ void hardwareInit() {
     print_I(macStr);
 
     Pic32_Bowler_HAL_Init();
-
+    usb_CDC_Serial_Init(dev, macStr, 0x04D8, 0x3742);
+    InitLEDS();
+    SetColor(0, 0, 1);
 
     mInitSwitch();
 
@@ -124,15 +141,6 @@ void UserInit(void) {
     setCoProcBrownOutMode(brown);
     setBrownOutDetect(brown);
 
-#if defined(ROBOSUB_DEMO)
-    //char * dev = "AHD Wave";
-#else
-    char * dev = "DyIO v.3";
-#endif
-
-    usb_CDC_Serial_Init(dev, macStr, 0x04D8, 0x3742);
-    InitLEDS();
-    SetColor(0, 0, 1);
 
     clearPrint();
     println_I("###Starting PIC In Debug Mode###\n"); // All printfDEBUG functions do not need to be removed from code if debug is disabled
