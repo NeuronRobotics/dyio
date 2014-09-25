@@ -93,16 +93,16 @@ NAMESPACE_LIST bcsSafe = {safeNSName, // The string defining the namespace
     NULL// no initial elements to the other namesapce field.
 };
 
-boolean namespcaedAdded = false;
+boolean bcsSafenamespcaedAdded = false;
 
 NAMESPACE_LIST * get_bcsSafeNamespace() {
-    if (!namespcaedAdded) {
+    if (!bcsSafenamespcaedAdded) {
         //POST
         //Add the RPC structs to the namespace
         addRpcToNamespace(&bcsSafe, & bcsSafe_safe_g);
         addRpcToNamespace(&bcsSafe, & bcsSafe_safe_p);
 
-        namespcaedAdded = true; 
+        bcsSafenamespcaedAdded = true;
     }
 
     return &bcsSafe; //Return pointer to the struct

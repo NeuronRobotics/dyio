@@ -150,9 +150,9 @@ NAMESPACE_LIST internalNamespace ={	internalNSName,// The string defining the na
                                 NULL// no initial elements to the other namesapce field.
 };
 
-boolean namespcaedAdded = false;
+boolean bcsPidDypidnamespcaedAdded = false;
 NAMESPACE_LIST * get_internalNamespace(){
-	if(!namespcaedAdded){
+	if(!bcsPidDypidnamespcaedAdded){
                 //POST
                 //Add the RPC structs to the namespace
                 addRpcToNamespace(&internalNamespace,& internal_eepd_g);
@@ -165,7 +165,7 @@ NAMESPACE_LIST * get_internalNamespace(){
                 addRpcToNamespace(&internalNamespace,& internal_pwr_c);
                 addRpcToNamespace(&internalNamespace,& internal_mac_c);
 
-                namespcaedAdded =true; 
+                bcsPidDypidnamespcaedAdded =true; 
 	}
 
 	return &internalNamespace;//Return pointer to the struct

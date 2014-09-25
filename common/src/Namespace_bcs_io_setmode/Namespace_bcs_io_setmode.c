@@ -52,15 +52,15 @@ NAMESPACE_LIST bcsIoSetmode = {setModeNSName, // The string defining the namespa
     NULL// no initial elements to the other namesapce field.
 };
 
-boolean namespcaedAdded = false;
+boolean bcsIoSetnamespcaedAdded = false;
 
 NAMESPACE_LIST * get_bcsIoSetmodeNamespace() {
-    if (!namespcaedAdded) {
+    if (!bcsIoSetnamespcaedAdded) {
         //POST
         //Add the RPC structs to the namespace
         addRpcToNamespace(&bcsIoSetmode, & bcsIoSetmode_schm_p);
         addRpcToNamespace(&bcsIoSetmode, & bcsIoSetmode_sacm_p);
-        namespcaedAdded = true; 
+        bcsIoSetnamespcaedAdded = true;
     }
 
     return &bcsIoSetmode; //Return pointer to the struct

@@ -277,11 +277,11 @@ NAMESPACE_LIST bcsIo = {ioNSName, // The string defining the namespace
 
 
 
-boolean namespcaedAdded = false;
+boolean bcsIonamespcaedAdded = false;
 
 NAMESPACE_LIST * get_bcsIoNamespace() {
-    if (!namespcaedAdded) {
-        namespcaedAdded = true; 
+    if (!bcsIonamespcaedAdded) {
+    	bcsIonamespcaedAdded = true;
         //Add the RPC structs to the namespace
         //GET
         addRpcToNamespace(&bcsIo, & bcsIo_gchm_g);

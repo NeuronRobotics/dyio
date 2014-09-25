@@ -19,7 +19,7 @@ void uartErrorCheck();
 uint8_t privateRX[BOWLER_PacketSize];
 BYTE_FIFO_STORAGE store;
 boolean lastWasError = false;
-boolean init=false;
+boolean CoProcComInit=false;
 boolean processing=false;
 BowlerPacket downstream;
 BowlerPacket asyncPacket;
@@ -168,7 +168,7 @@ void uartErrorCheck(){
 
 void initCoProcCom(){
 	println_I("initCoProcCom");
-	init = true; 
+	CoProcComInit = true;
 	StartCritical();
 	InitByteFifo(&store,privateRX,sizeof(privateRX));
 	EndCritical();
@@ -182,7 +182,7 @@ void SendPacketToCoProc(BowlerPacket * Packet){
 	//float start = getMs();
 
 	processing=true; 
-	if(init == false) {
+	if(CoProcComInit == false) {
 		println_I("SendPacketToCoProc Co-proc initializing..");
 		initCoProcCom();
 	}

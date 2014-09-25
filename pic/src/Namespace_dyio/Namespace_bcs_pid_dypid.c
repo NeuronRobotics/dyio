@@ -96,16 +96,16 @@ NAMESPACE_LIST bcsPidDypid = {dypidNSName, // The string defining the namespace
     NULL// no initial elements to the other namesapce field.
 };
 
-boolean namespcaedAdded = false;
+boolean bcsPidDypidnamespcaedAdded = false;
 
 NAMESPACE_LIST * get_bcsPidDypidNamespace() {
-    if (!namespcaedAdded) {
+    if (!bcsPidDypidnamespcaedAdded) {
         //POST
         //Add the RPC structs to the namespace
         addRpcToNamespace(&bcsPidDypid, & bcsPidDypid_dpid_g);
         addRpcToNamespace(&bcsPidDypid, & bcsPidDypid_dpid_c);
 
-        namespcaedAdded = true; 
+        bcsPidDypidnamespcaedAdded = true; 
     }
 
     return &bcsPidDypid; //Return pointer to the struct

@@ -306,10 +306,10 @@ NAMESPACE_LIST neuronRoboticsDyIO = {dyioNSName, // The string defining the name
     NULL// no initial elements to the other namesapce field.
 };
 
-boolean namespcaedAdded = false;
+boolean neuronRoboticsDyIOnamespcaedAdded = false;
 
 NAMESPACE_LIST * get_neuronRoboticsDyIONamespace() {
-    if (!namespcaedAdded) {
+    if (!neuronRoboticsDyIOnamespcaedAdded) {
         //GET
         //Add the RPC structs to the namespace
         addRpcToNamespace(&neuronRoboticsDyIO, & neuronRoboticsDyIO__rev_g);
@@ -320,7 +320,7 @@ NAMESPACE_LIST * get_neuronRoboticsDyIONamespace() {
         addRpcToNamespace(&neuronRoboticsDyIO, & neuronRoboticsDyIO__pwr_c);
         addRpcToNamespace(&neuronRoboticsDyIO, & neuronRoboticsDyIO_info_c);
 
-        namespcaedAdded = true; 
+        neuronRoboticsDyIOnamespcaedAdded = true;
     }
 
     return &neuronRoboticsDyIO; //Return pointer to the struct
