@@ -9,7 +9,7 @@
 #define FLASHSTORAGE_H_
 
 #define FLASH_PAGE_SIZE 				0x1000
-//#define BootloaderStartStorePhysical        0x1D009000//End of the bootloader page
+#define BootloaderStartStorePhysical        0x1D009000//End of the bootloader page
 #define VirtualAddress                      (0x80000000)
 #define DefaultStartStorePhysical            0x1D01F000//end of the chip
 
@@ -17,9 +17,9 @@
 
 #define LOCKBYTE					37
 
-#define FLASHSTORE					20
+#define FLASHSTORE					sizeof(dataPayload)
 
-typedef struct _dataPayload{
+typedef struct __attribute__((__packed__)) _dataPayload{
 		BYTE   mac [6];
 		char   name[17];
 		BYTE   lock;
@@ -29,9 +29,9 @@ typedef struct _dataPayload{
 		BYTE   fw[3];
 	}dataPayload;
 
-typedef union __attribute__((__packed__)) _FLASH
+typedef union  _FLASH
 {
-	UINT32 stream[sizeof(dataPayload)];
+	UINT32 stream[sizeof(dataPayload)/4];
 	dataPayload data;
 } FLASH_STORE;
 

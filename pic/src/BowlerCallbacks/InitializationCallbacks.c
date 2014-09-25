@@ -18,6 +18,9 @@ const uint8_t MY_MAC_ADDRESS[]={0x74,0xf7,0x26,0x01,0x01,0x01};
 extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 
 void hardwareInit(){
+#if defined(PROGRAMMER_DEBUG)
+	FlashSwitchMemoryToBootloader();
+#endif
 	StartCritical();
 	println_I("Getting MAC from flash");
 	FlashGetMac(MyMAC.v);
