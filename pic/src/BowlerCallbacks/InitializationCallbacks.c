@@ -94,7 +94,7 @@ void hardwareInit() {
     InitADC();
 
 
-    uint8_t rev [] = {MAJOR_REV, MINOR_REV, FIRMWARE_VERSION};
+    //uint8_t rev [] = {MAJOR_REV, MINOR_REV, FIRMWARE_VERSION};
    // FlashSetFwRev(rev);
 
     //Starts co-proc uart
