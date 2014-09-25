@@ -62,7 +62,10 @@ extern "C"
 /* get compiler defined type definitions (NULL, size_t, etc) */
 #include <stddef.h>
 #include <stdint.h>
-typedef enum _BOOL { FALSE = 0, TRUE } BOOL;    /* Undefined size */
+//typedef enum _BOOL { FALSE = 0, TRUE } BOOL;    /* Undefined size */
+typedef unsigned char BOOL;
+#define TRUE 1
+#define FALSE 0
 typedef enum _BIT { CLEAR = 0, SET } BIT;
 
 #define PUBLIC                                  /* Function attributes */

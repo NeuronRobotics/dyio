@@ -86,7 +86,6 @@ Description:
 
 #ifndef _USB_HAL_H_
 #define _USB_HAL_H_
-
 //DOM-IGNORE-END
 
 #if defined(__18CXX)
@@ -202,7 +201,7 @@ void USBHALSetBusAddress( BYTE addr );
 
 /*************************************************************************
     Function:
-       uint8_t USBHALSessionIsValid( void )
+       BOOL USBHALSessionIsValid( void )
         
     Description:
         This routine determines if there is currently a valid
@@ -223,7 +222,7 @@ void USBHALSetBusAddress( BYTE addr );
 
  *************************************************************************/
 
-uint8_t USBHALSessionIsValid( void );
+BOOL USBHALSessionIsValid( void );
 
 
 /*************************************************************************
@@ -249,7 +248,7 @@ uint8_t USBHALSessionIsValid( void );
                   
  *************************************************************************/
 
-uint8_t USBHALControlBusPower( BYTE cmd );
+BOOL USBHALControlBusPower( BYTE cmd );
 
 /* USBHALControlBusPower Commands */
 #define USB_VBUS_DISCHARGE  0       // Dicharge Vbus via resistor
@@ -341,7 +340,7 @@ void USBHALHandleBusEvent ( void );
 
 /*************************************************************************
     Function:
-        uint8_t USBHALStallPipe( TRANSFER_FLAGS pipe )
+        BOOL USBHALStallPipe( TRANSFER_FLAGS pipe )
         
     Description:
         This routine stalls the given endpoint.
@@ -377,12 +376,12 @@ void USBHALHandleBusEvent ( void );
 
 #define USBHALStallPipe OTGCORE_StallPipe
 
-uint8_t USBHALStallPipe( TRANSFER_FLAGS pipe );
+BOOL USBHALStallPipe( TRANSFER_FLAGS pipe );
 
 
 /******************************************************************************
     Function:
-        uint8_t USBHALUnstallPipe( TRANSFER_FLAGS pipe )
+        BOOL USBHALUnstallPipe( TRANSFER_FLAGS pipe )
         
     Description:
         This routine clears the stall condition for the given pipe.
@@ -414,7 +413,7 @@ uint8_t USBHALStallPipe( TRANSFER_FLAGS pipe );
 
 #define USBHALUnstallPipe OTGCORE_UnstallPipe
 
-uint8_t USBHALUnstallPipe( TRANSFER_FLAGS pipe );
+BOOL USBHALUnstallPipe( TRANSFER_FLAGS pipe );
 
 
 /**************************************************************************
@@ -453,7 +452,7 @@ UINT16 USBHALGetStalledEndpoints ( void );
 
 /******************************************************************************
     Function:
-        uint8_t USBHALFlushPipe( TRANSFER_FLAGS pipe )
+        BOOL USBHALFlushPipe( TRANSFER_FLAGS pipe )
         
     Description:
         This routine clears any pending transfers on the given
@@ -485,7 +484,7 @@ UINT16 USBHALGetStalledEndpoints ( void );
         transfer has been terminated early by the host.
  *****************************************************************************/
 
-uint8_t USBHALFlushPipe( TRANSFER_FLAGS pipe );
+BOOL USBHALFlushPipe( TRANSFER_FLAGS pipe );
 
 
 /**************************************************************************
@@ -545,7 +544,7 @@ uint8_t USBHALFlushPipe( TRANSFER_FLAGS pipe );
         
  *************************************************************************/
 
-uint8_t USBHALTransferData ( TRANSFER_FLAGS    flags,
+BOOL USBHALTransferData ( TRANSFER_FLAGS    flags,
                           void             *buffer,
                           unsigned int      size      );
 
@@ -585,7 +584,7 @@ uint8_t USBHALTransferData ( TRANSFER_FLAGS    flags,
         set all flags to 0.
  *************************************************************************/
 
-uint8_t USBHALSetEpConfiguration ( BYTE ep_num, UINT16 max_pkt_size, UINT16 flags );
+BOOL USBHALSetEpConfiguration ( BYTE ep_num, UINT16 max_pkt_size, UINT16 flags );
 
 /* Flags for USBHALSetEpConfiguration */
 #if defined(__18CXX)
@@ -635,7 +634,7 @@ uint8_t USBHALSetEpConfiguration ( BYTE ep_num, UINT16 max_pkt_size, UINT16 flag
         
  *************************************************************************/
 
-uint8_t USBHALInitialize ( unsigned long flags );
+BOOL USBHALInitialize ( unsigned long flags );
 
 #endif  // _USB_HAL_H_
 /*************************************************************************

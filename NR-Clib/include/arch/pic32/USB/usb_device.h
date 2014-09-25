@@ -100,7 +100,6 @@ Description:
 
 #ifndef USBDEVICE_H
 #define USBDEVICE_H
-
 //DOM-IGNORE-END
 
 /** DEFINITIONS ****************************************************/
@@ -300,7 +299,7 @@ void USBDeviceInit(void);
 
 /********************************************************************
   Function:
-        uint8_t USBGetRemoteWakeupStatus(void)
+        BOOL USBGetRemoteWakeupStatus(void)
     
   Summary:
     This function indicates if remote wakeup has been enabled by the host.
@@ -361,7 +360,7 @@ void USBDeviceInit(void);
     None
                                                                                                                                                                                                                                                                                                                        
   *******************************************************************/
-uint8_t USBGetRemoteWakeupStatus(void);
+BOOL USBGetRemoteWakeupStatus(void);
 /*DOM-IGNORE-BEGIN*/
 #define USBGetRemoteWakeupStatus() RemoteWakeup
 /*DOM-IGNORE-END*/
@@ -425,7 +424,7 @@ USB_DEVICE_STATE USBGetDeviceState(void);
 
 /***************************************************************************
   Function:
-        uint8_t USBGetSuspendState(void)
+        BOOL USBGetSuspendState(void)
     
   Summary:
     This function indicates if this device is currently suspended. When a
@@ -468,7 +467,7 @@ USB_DEVICE_STATE USBGetDeviceState(void);
   Remarks:
     None                                                                    
   ***************************************************************************/
-uint8_t USBGetSuspendState(void);
+BOOL USBGetSuspendState(void);
 
 /*******************************************************************************
   Function:
@@ -523,7 +522,7 @@ void USBEnableEndpoint(BYTE ep, BYTE options);
 
 /*******************************************************************************
   Function:
-        uint8_t USBIsDeviceSuspended(void)
+        BOOL USBIsDeviceSuspended(void)
     
   Summary:
     This function indicates if the USB module is in suspend mode.
@@ -551,7 +550,7 @@ void USBEnableEndpoint(BYTE ep, BYTE options);
   Remarks:
     None                                                                                                          
   *****************************************************************************/
-uint8_t USBIsDeviceSuspended(void);
+BOOL USBIsDeviceSuspended(void);
 /*DOM-IGNORE-BEGIN*/
 #define USBIsDeviceSuspended() USBSuspendControl 
 /*DOM-IGNORE-END*/
@@ -676,7 +675,7 @@ USB_HANDLE USBTransferOnePacket(BYTE ep,BYTE dir,BYTE* data,UINT16 len);
 
 /*************************************************************************
   Function:
-    uint8_t USBHandleBusy(USB_HANDLE handle)
+    BOOL USBHandleBusy(USB_HANDLE handle)
     
   Summary:
     Checks to see if the input handle is busy
@@ -706,7 +705,7 @@ USB_HANDLE USBTransferOnePacket(BYTE ep,BYTE dir,BYTE* data,UINT16 len);
   Remarks:
     None                                                                  
   *************************************************************************/
-BYTE USBHandleBusy(USB_HANDLE handle);
+BOOL USBHandleBusy(USB_HANDLE handle);
 /*DOM-IGNORE-BEGIN*/
 #define USBHandleBusy(handle) (handle==0?0:((volatile BDT_ENTRY*)handle)->STATUS.UOWN)
 /*DOM-IGNORE-END*/
@@ -1050,7 +1049,7 @@ void USBDeviceAttach(void);
 
 /*******************************************************************************
   Function:
-    uint8_t USB_APPLICATION_EVENT_HANDLER(BYTE address, USB_EVENT event, void *pdata, WORD size);
+    BOOL USB_APPLICATION_EVENT_HANDLER(BYTE address, USB_EVENT event, void *pdata, WORD size);
     
   Summary:
     This function is called whenever the USB stack wants to notify the user of
@@ -1075,7 +1074,7 @@ void USBDeviceAttach(void);
   Remarks:
     None                                                                                                          
   *****************************************************************************/
-uint8_t USB_APPLICATION_EVENT_HANDLER(BYTE address, USB_EVENT event, void *pdata, WORD size);
+BOOL USB_APPLICATION_EVENT_HANDLER(BYTE address, USB_EVENT event, void *pdata, WORD size);
 
 /*******************************************************************************
   Function:
@@ -1266,7 +1265,7 @@ typedef struct __attribute__ ((packed))
 //    #define USBCB_EP0_DATA_RECEIVED()
 //#endif
 
-extern USB_VOLATILE uint8_t RemoteWakeup;
+extern USB_VOLATILE BOOL RemoteWakeup;
 extern USB_VOLATILE USB_DEVICE_STATE USBDeviceState;
 extern USB_VOLATILE BYTE USBActiveConfiguration;
 /******************************************************************************/

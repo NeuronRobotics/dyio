@@ -439,7 +439,7 @@ stalled (ie. bit 0 = EP0, bit 1 = EP1, etc.)
  
 *******************************************************************************/
 
-typedef uint8_t (*USB_EVENT_HANDLER) ( USB_EVENT event, void *data, unsigned int size );
+typedef BOOL (*USB_EVENT_HANDLER) ( USB_EVENT event, void *data, unsigned int size );
 
 
 // *****************************************************************************
