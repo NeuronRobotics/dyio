@@ -234,6 +234,7 @@ void RunPIDComs(BowlerPacket *Packet, boolean (*pidAsyncCallbackPtr)(BowlerPacke
  */
 void RunPIDControl();
 void RunPDVel(uint8_t chan);
+void RunVel(void);
 float runPdVelocityFromPointer(PD_VEL* vel, float currentState,float KP, float KD);
 void StartPDVel(uint8_t chan, float unitsPerSeCond, float ms);
 void pushPID(BowlerPacket *Packet, boolean (*pidAsyncCallbackPtr)(BowlerPacket *Packet), uint8_t chan, int32_t value, float time);
