@@ -1,7 +1,7 @@
 
 #include "UserApp_avr.h"
 
-static BowlerPacketMini Packet;
+BowlerPacketMini Packet;
 
 void server(){
 	// Run the Bowler Stack Namespace iteration of all async packets
@@ -11,7 +11,7 @@ void server(){
 }
 
 //#define analogTime  10
-//static 	RunEveryData asyncSched = {0,analogTime};
+//	RunEveryData asyncSched = {0,analogTime};
 void runDyIOMain(void){
 	startScheduler();
 	AVR_Bowler_HAL_Init();

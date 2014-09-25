@@ -10,7 +10,7 @@ const char internalNSName[] = "neuronrobotics.internal*;0.3;;";
 
 RunEveryData vel={0,1000};
 
-static uint8_t zone;
+uint8_t zone;
 boolean internalAsyncEventCallback(BowlerPacket* Packet,boolean (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
 	checkDigital();
 	checkAnalog();
@@ -104,53 +104,53 @@ boolean internalProcessor_c(BowlerPacket * Packet){
 }
 
 
-static RPC_LIST internal_eepd_g={	BOWLER_GET,// Method
+RPC_LIST internal_eepd_g={	BOWLER_GET,// Method
                                 "eepd",//RPC as string
                                 &internalProcessor_g,//function pointer to a packet parsinf function
                                 NULL //Termination
 };
-static RPC_LIST internal_rev_g={	BOWLER_GET,// Method
+RPC_LIST internal_rev_g={	BOWLER_GET,// Method
                                 "_rev",//RPC as string
                                 &internalProcessor_g,//function pointer to a packet parsinf function
                                 NULL //Termination
 };
-static RPC_LIST internal_save_g={	BOWLER_GET,// Method
+RPC_LIST internal_save_g={	BOWLER_GET,// Method
                                 "save",//RPC as string
                                 &internalProcessor_g,//function pointer to a packet parsinf function
                                 NULL //Termination
 };
 
-static RPC_LIST internal_pwr_p={	BOWLER_POST,// Method
+RPC_LIST internal_pwr_p={	BOWLER_POST,// Method
                                 "_pwr",//RPC as string
                                 &internalProcessor_p,//function pointer to a packet parsinf function
                                 NULL //Termination
 };
-static RPC_LIST internal_eepd_p={	BOWLER_POST,// Method
+RPC_LIST internal_eepd_p={	BOWLER_POST,// Method
                                 "eepd",//RPC as string
                                 &internalProcessor_p,//function pointer to a packet parsinf function
                                 NULL //Termination
 };
 
 
-static RPC_LIST internal_mac_c={	BOWLER_CRIT,// Method
+RPC_LIST internal_mac_c={	BOWLER_CRIT,// Method
                                 "_mac",//RPC as string
                                 &internalProcessor_c,//function pointer to a packet parsinf function
                                 NULL //Termination
 };
-static RPC_LIST internal_pwr_c={	BOWLER_CRIT,// Method
+RPC_LIST internal_pwr_c={	BOWLER_CRIT,// Method
                                 "_pwr",//RPC as string
                                 &internalProcessor_c,//function pointer to a packet parsinf function
                                 NULL //Termination
 };
 
 
-static NAMESPACE_LIST internalNamespace ={	internalNSName,// The string defining the namespace
+NAMESPACE_LIST internalNamespace ={	internalNSName,// The string defining the namespace
                                 NULL,// the first element in the RPC list
                                 &internalAsyncEventCallback,// async for this namespace
                                 NULL// no initial elements to the other namesapce field.
 };
 
-static boolean namespcaedAdded = false; 
+boolean namespcaedAdded = false;
 NAMESPACE_LIST * get_internalNamespace(){
 	if(!namespcaedAdded){
                 //POST

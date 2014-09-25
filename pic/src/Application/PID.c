@@ -7,10 +7,10 @@
 
 #include "UserApp.h"
 
-static AbsPID 			pidGroups[NUM_PID_GROUPS];
-static DYIO_PID 		dyPid[NUM_PID_GROUPS];
-static PD_VEL 			vel[NUM_PID_GROUPS];
-static PidLimitEvent	limits[NUM_PID_GROUPS];
+AbsPID 			pidGroups[NUM_PID_GROUPS];
+DYIO_PID 		dyPid[NUM_PID_GROUPS];
+PD_VEL 			vel[NUM_PID_GROUPS];
+PidLimitEvent	limits[NUM_PID_GROUPS];
 
 #define DYPID_NON_USED 0xff
 
@@ -23,7 +23,7 @@ PidLimitEvent * checkPIDLimitEventsMine(uint8_t group);
 
 
 
-static RunEveryData force[NUM_PID_GROUPS];
+RunEveryData force[NUM_PID_GROUPS];
 
 void fail(){
 	while(true) {

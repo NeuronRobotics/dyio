@@ -6,14 +6,14 @@
  */
 
 #include "UserApp.h"
-static uint8_t ppmData[]={128,128,128,128,128,128};
-static uint8_t ppmLastSent[]={255,255,255,255,255,255};
-static uint8_t ppmLink[]={255,255,255,255,255,255};
-static uint32_t ppmDataTmp[]={128,128,128,128,128,128};
-static uint32_t ppmStart[NUM_PPM_CHAN];
-static uint8_t ppmIndex = 0;
-static uint32_t bufferStart=0;
-static uint32_t buffTime = (TICKS_PER_SECOND/1000)*6;
+uint8_t ppmData[]={128,128,128,128,128,128};
+uint8_t ppmLastSent[]={255,255,255,255,255,255};
+uint8_t ppmLink[]={255,255,255,255,255,255};
+uint32_t ppmDataTmp[]={128,128,128,128,128,128};
+uint32_t ppmStart[NUM_PPM_CHAN];
+uint8_t ppmIndex = 0;
+uint32_t bufferStart=0;
+uint32_t buffTime = (TICKS_PER_SECOND/1000)*6;
 
 void configPin23Int();
 
@@ -22,7 +22,7 @@ typedef enum{
 	WAIT_FOR_PULSE,
 	PULSE_STARTED
 }ppmState ;
-static ppmState state;
+ppmState state;
 
 
 void RunPPMCheck(void){

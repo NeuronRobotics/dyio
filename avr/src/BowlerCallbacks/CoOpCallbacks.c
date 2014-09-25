@@ -23,9 +23,9 @@
 #define blockTime 24.0f
 #define blockInc1 (blockTime/3.0f)
 #define blockInc2 (blockInc1+blockInc1)
-static RunEveryData block0 = {0,blockTime};
-static RunEveryData block1 = {blockInc1,blockTime};
-static RunEveryData block2 = {blockInc2,blockTime};
+RunEveryData block0 = {0,blockTime};
+RunEveryData block1 = {blockInc1,blockTime};
+RunEveryData block2 = {blockInc2,blockTime};
 
 
 void initPinState(uint8_t i){

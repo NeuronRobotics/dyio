@@ -16,12 +16,12 @@ uint8_t SaveTheState = 0;
 const uint8_t MY_MAC_ADDRESS[] = {0x74, 0xf7, 0x26, 0x00, 0x00, 0x00};
 
 extern MAC_ADDR MyMAC __attribute__((section(".scs_global_var")));
-static char macStr[13];
+char macStr[13];
 
 #if defined(ROBOSUB_DEMO)
 //char * dev = "AHD Wave";
 #else
-static char * dev = "DyIO v1.0";
+char * dev = "DyIO v1.0";
 #endif
 
 void hardwareInit() {
@@ -32,6 +32,7 @@ void hardwareInit() {
     // The PBDIV value is already set via the pragma FPBDIV option above..
     SYSTEMConfig((80000000L), SYS_CFG_WAIT_STATES | SYS_CFG_PCACHE);
     SYSTEMConfigPerformance(80000000);
+    CHECONbits.PREFEN = 0;
 
 
     int j = 0, i = 0;
@@ -65,15 +66,15 @@ void hardwareInit() {
     //Must initialize IO before hardware
     InitPins();
     println_I("Adding IO Namespace");
-    addNamespaceToList((NAMESPACE_LIST *) get_bcsIoNamespace());
+    addNamespaceToList( get_bcsIoNamespace());
     println_I("Adding IO.Setmode Namespace");
-    addNamespaceToList((NAMESPACE_LIST *) get_bcsIoSetmodeNamespace());
+    addNamespaceToList(get_bcsIoSetmodeNamespace());
     println_I("Adding DyIO Namespace");
-    addNamespaceToList((NAMESPACE_LIST *) get_neuronRoboticsDyIONamespace());
+    addNamespaceToList(get_neuronRoboticsDyIONamespace());
     println_I("Adding PID Namespace");
-    addNamespaceToList((NAMESPACE_LIST *) getBcsPidNamespace());
+    addNamespaceToList( getBcsPidNamespace());
     println_I("Adding DyIO PID Namespace");
-    addNamespaceToList((NAMESPACE_LIST *) get_bcsPidDypidNamespace());
+    addNamespaceToList( get_bcsPidDypidNamespace());
     println_I("Adding Safe Namespace");
     addNamespaceToList((NAMESPACE_LIST *) get_bcsSafeNamespace());
 
@@ -94,7 +95,7 @@ void hardwareInit() {
 
 
     uint8_t rev [] = {MAJOR_REV, MINOR_REV, FIRMWARE_VERSION};
-    FlashSetFwRev(rev);
+   // FlashSetFwRev(rev);
 
     //Starts co-proc uart
     initCoProcCom();

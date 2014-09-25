@@ -23,8 +23,8 @@ ROLLINGAVG adc[4];
 float lastHighTime=0;
 float lastLowTime=0;
 
-static boolean lockOutRail = false; 
-static boolean externalLock=false; 
+boolean lockOutRail = false;
+boolean externalLock=false;
 int32_t calc(ROLLINGAVG * avg){
 	uint32_t v=getDyIOVoltage(avg->adcChan);
 //	avg->avgSum+=v;

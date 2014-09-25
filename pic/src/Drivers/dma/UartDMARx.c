@@ -10,13 +10,13 @@
 #if defined(USE_DMA)
 
 
-static DmaChannel	chn = DMA_CHANNEL1;	// DMA channel to use for our example
+DmaChannel	chn = DMA_CHANNEL1;	// DMA channel to use for our example
 
-static int dmaReadPointer = 0;
+int dmaReadPointer = 0;
 
-static uint8_t private[DMA_SIZE*2];
+uint8_t private[DMA_SIZE*2];
 
-static boolean running=false; 
+boolean running=false;
 
 void closeDma(){
 	FLAG_ASYNC=FLAG_BLOCK;

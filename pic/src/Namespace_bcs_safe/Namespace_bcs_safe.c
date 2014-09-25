@@ -53,7 +53,7 @@ boolean bcsSafeProcessor_p(BowlerPacket * Packet) {
     return true; 
 }
 
-static RPC_LIST bcsSafe_safe_g = {BOWLER_GET, // Method
+RPC_LIST bcsSafe_safe_g = {BOWLER_GET, // Method
     "safe", //RPC as string
     &bcsSafeProcessor_g, //function pointer to a packet parsinf function
     ((const char [1]) {
@@ -68,7 +68,7 @@ static RPC_LIST bcsSafe_safe_g = {BOWLER_GET, // Method
     NULL //Termination
 };
 
-static RPC_LIST bcsSafe_safe_p = {BOWLER_POST, // Method
+RPC_LIST bcsSafe_safe_p = {BOWLER_POST, // Method
     "safe", //RPC as string
     &bcsSafeProcessor_p, //function pointer to a packet parsinf function
     ((const char [3]) {
@@ -87,13 +87,13 @@ static RPC_LIST bcsSafe_safe_p = {BOWLER_POST, // Method
 
 
 
-static NAMESPACE_LIST bcsSafe = {safeNSName, // The string defining the namespace
+NAMESPACE_LIST bcsSafe = {safeNSName, // The string defining the namespace
     NULL, // the first element in the RPC list
     &bcsSafeAsyncEventCallback, // async for this namespace
     NULL// no initial elements to the other namesapce field.
 };
 
-static boolean namespcaedAdded = false; 
+boolean namespcaedAdded = false;
 
 NAMESPACE_LIST * get_bcsSafeNamespace() {
     if (!namespcaedAdded) {

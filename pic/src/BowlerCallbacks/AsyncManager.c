@@ -9,8 +9,8 @@
 //extern DATA_STRUCT DATA;
 #define ADCINIT 0xFFFF
 //void runAsyncIO();
-//static boolean isInit=false; 
-//static AdvancedAsyncData asyncData[NUM_PINS];
+//boolean isInit=false;
+//AdvancedAsyncData asyncData[NUM_PINS];
 
 void ProcessAsyncData(BowlerPacket * Packet){
 	//println_I("**Got Async Packet**");

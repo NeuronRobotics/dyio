@@ -14,8 +14,8 @@
 #endif
 
 
-static uint8_t privateRXUART[UART_PASS_BUFF_SIZE];
-static BYTE_FIFO_STORAGE store;
+uint8_t privateRXUART[UART_PASS_BUFF_SIZE];
+BYTE_FIFO_STORAGE store;
 
 boolean validBaud(uint32_t baud);
 

@@ -13,7 +13,7 @@ void buttonCheck(uint8_t code){
 	}
 }
 
-static BowlerPacket Packet;
+BowlerPacket Packet;
 
 
 void MyServer(){

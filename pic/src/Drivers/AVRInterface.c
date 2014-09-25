@@ -14,7 +14,7 @@
 #define AVR_LOW			0xf7
 #define AVR_HIGH		0xd1
 #define AVR_EXT			0xff
-//static uint8_t progmode []						={0xAC,0x53,0x00,0x00};
+//uint8_t progmode []						={0xAC,0x53,0x00,0x00};
 
 void getCmd(uint8_t comand, uint8_t addrHigh, uint8_t addrLow, uint8_t data) {
 	GetByteSPI(comand);

@@ -7,7 +7,7 @@
 
 #include "UserApp.h"
 
-static pid_vales pidEEPRomVal[NUM_PID_GROUPS];
+pid_vales pidEEPRomVal[NUM_PID_GROUPS];
 #define pidValSize sizeof(pid_vales)
 #define PID_VAL_END ((pidValSize*(NUM_PID_GROUPS)))
 #define PPM_END	     (PID_VAL_END+NUM_PPM_CHAN)

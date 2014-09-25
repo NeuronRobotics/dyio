@@ -1,10 +1,10 @@
 #include "UserApp.h"
 
-static uint8_t privateSerialRX[BOWLER_PacketSize];
-static uint8_t privateSerialTX[BOWLER_PacketSize];
-static BYTE_FIFO_STORAGE storeRx;
-static BYTE_FIFO_STORAGE storeTx;
-//static BowlerPacket dataTableSync;
+uint8_t privateSerialRX[BOWLER_PacketSize];
+uint8_t privateSerialTX[BOWLER_PacketSize];
+BYTE_FIFO_STORAGE storeRx;
+BYTE_FIFO_STORAGE storeTx;
+//BowlerPacket dataTableSync;
 
 void InitializeDyIODataTableManager(){
 	InitByteFifo(&storeRx,privateSerialRX,BOWLER_PacketSize);

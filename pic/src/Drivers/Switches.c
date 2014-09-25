@@ -7,10 +7,10 @@
 
 #include "UserApp.h"
 
-static uint8_t switched;
-static uint8_t bankState[2];
-static float lastVolt=0;
-static float volt;
+uint8_t switched;
+uint8_t bankState[2];
+float lastVolt=0;
+float volt;
 
 
 void CheckSwitches(void){

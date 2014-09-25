@@ -16,14 +16,14 @@ void RXadd(uint8_t b);
 uint8_t TXget();
 uint8_t getTXcount();
 
-static boolean gotPacket = false; 
+boolean gotPacket = false;
 
-static BowlerPacket Packet;
+BowlerPacket Packet;
 
-static uint8_t privateRX[BOWLER_PacketSize];
-static uint8_t*_FIFO_STORAGE storeRX;
-static uint8_t privateTX[BOWLER_PacketSize];
-static uint8_t*_FIFO_STORAGE storeTX;
+uint8_t privateRX[BOWLER_PacketSize];
+uint8_t*_FIFO_STORAGE storeRX;
+uint8_t privateTX[BOWLER_PacketSize];
+uint8_t*_FIFO_STORAGE storeTX;
 /**
  * Initialize the SPI port to work as an SPI channel
  */

@@ -16,18 +16,18 @@ void dealWithAsyncPacket(BowlerPacket * Packet);
 void uartErrorCheck();
 
 
-static uint8_t privateRX[BOWLER_PacketSize];
-static BYTE_FIFO_STORAGE store;
-static boolean lastWasError = false; 
-static boolean init=false; 
-static boolean processing=false; 
-static BowlerPacket downstream;
-static BowlerPacket asyncPacket;
+uint8_t privateRX[BOWLER_PacketSize];
+BYTE_FIFO_STORAGE store;
+boolean lastWasError = false;
+boolean init=false;
+boolean processing=false;
+BowlerPacket downstream;
+BowlerPacket asyncPacket;
 
 
 //extern DATA_STRUCT DATA;
 //extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
-//static boolean addJunk = false; 
+//boolean addJunk = false;
 //uint8_t GetCoProcSingleByte(void);
 //uint32_t CalcBaud(uint32_t Baud);
 

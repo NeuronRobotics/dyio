@@ -53,7 +53,7 @@ boolean bcsPidDypidProcessor_c(BowlerPacket * Packet) {
     return true; 
 }
 
-static RPC_LIST bcsPidDypid_dpid_g = {BOWLER_GET, // Method
+RPC_LIST bcsPidDypid_dpid_g = {BOWLER_GET, // Method
     "dpid", //RPC as string
     &bcsPidDypidProcessor_g, //function pointer to a packet parsinf function
     ((const char [2]) {
@@ -72,7 +72,7 @@ static RPC_LIST bcsPidDypid_dpid_g = {BOWLER_GET, // Method
     NULL //Termination
 };
 
-static RPC_LIST bcsPidDypid_dpid_c = {BOWLER_CRIT, // Method
+RPC_LIST bcsPidDypid_dpid_c = {BOWLER_CRIT, // Method
     "dpid", //RPC as string
     &bcsPidDypidProcessor_c, //function pointer to a packet parsinf function
     ((const char [6]) {
@@ -90,13 +90,13 @@ static RPC_LIST bcsPidDypid_dpid_c = {BOWLER_CRIT, // Method
     NULL //Termination
 };
 
-static NAMESPACE_LIST bcsPidDypid = {dypidNSName, // The string defining the namespace
+NAMESPACE_LIST bcsPidDypid = {dypidNSName, // The string defining the namespace
     NULL, // the first element in the RPC list
     &bcsPidDypidAsyncEventCallback, // async for this namespace
     NULL// no initial elements to the other namesapce field.
 };
 
-static boolean namespcaedAdded = false; 
+boolean namespcaedAdded = false;
 
 NAMESPACE_LIST * get_bcsPidDypidNamespace() {
     if (!namespcaedAdded) {

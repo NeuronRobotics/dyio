@@ -9,8 +9,8 @@
 #include "Namespace/Namespace_bcs_io.h"
 
 
-static int NumberOfIOChannels = 0;
-static DATA_STRUCT * dataPtr = NULL;
+int NumberOfIOChannels = 0;
+DATA_STRUCT * dataPtr = NULL;
 
 boolean(*setChanelValueHWPtr)(uint8_t  , uint8_t, int32_t *, float);
 boolean(*getChanelValueHWPtr)(uint8_t  , uint8_t*, int32_t *);
