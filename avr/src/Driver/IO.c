@@ -7,7 +7,7 @@
 
 #include "UserApp_avr.h"
 
-extern DATA_STRUCT DATA;
+//extern DATA_STRUCT DyioPinFunctionData;
 
 uint8_t GetDIO(uint8_t PIN){
 	switch (PIN){
