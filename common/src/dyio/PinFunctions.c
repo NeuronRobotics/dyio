@@ -4,99 +4,99 @@
 
 
 
-DATA_STRUCT DATA[NUM_PINS];
+DATA_STRUCT DyioPinFunctionData[NUM_PINS];
 
 void InitPinFunction(void){
 	int i;
 	for (i=0;i<NUM_PINS;i++){
-		DATA[i].FUNCTION.HAS_ANALOG_IN=false; 
-		DATA[i].FUNCTION.HAS_PWM=false; 
-		DATA[i].FUNCTION.HAS_UART_T=false; 
-		DATA[i].FUNCTION.HAS_UART_R=false; 
-		DATA[i].FUNCTION.HAS_SPI_C=false; 
-		DATA[i].FUNCTION.HAS_SPI_I=false; 
-		DATA[i].FUNCTION.HAS_SPI_O=false; 
-		DATA[i].FUNCTION. HAS_COUNTER_INPUT_I = false; 
-		DATA[i].FUNCTION.HAS_COUNTER_OUTPUT_I = false; 
-		DATA[i].FUNCTION. HAS_COUNTER_INPUT_D = false; 
-		DATA[i].FUNCTION.HAS_COUNTER_OUTPUT_D = false; 
-		DATA[i].FUNCTION. HAS_COUNTER_INPUT_H = false; 
-		DATA[i].FUNCTION.HAS_COUNTER_OUTPUT_H = false; 
-		DATA[i].FUNCTION.HAS_DC_MOTOR = false; 
-		DATA[i].FUNCTION.HAS_PPM=false; 
+		DyioPinFunctionData[i].FUNCTION.HAS_ANALOG_IN=false; 
+		DyioPinFunctionData[i].FUNCTION.HAS_PWM=false; 
+		DyioPinFunctionData[i].FUNCTION.HAS_UART_T=false; 
+		DyioPinFunctionData[i].FUNCTION.HAS_UART_R=false; 
+		DyioPinFunctionData[i].FUNCTION.HAS_SPI_C=false; 
+		DyioPinFunctionData[i].FUNCTION.HAS_SPI_I=false; 
+		DyioPinFunctionData[i].FUNCTION.HAS_SPI_O=false; 
+		DyioPinFunctionData[i].FUNCTION. HAS_COUNTER_INPUT_I = false; 
+		DyioPinFunctionData[i].FUNCTION.HAS_COUNTER_OUTPUT_I = false; 
+		DyioPinFunctionData[i].FUNCTION. HAS_COUNTER_INPUT_D = false; 
+		DyioPinFunctionData[i].FUNCTION.HAS_COUNTER_OUTPUT_D = false; 
+		DyioPinFunctionData[i].FUNCTION. HAS_COUNTER_INPUT_H = false; 
+		DyioPinFunctionData[i].FUNCTION.HAS_COUNTER_OUTPUT_H = false; 
+		DyioPinFunctionData[i].FUNCTION.HAS_DC_MOTOR = false; 
+		DyioPinFunctionData[i].FUNCTION.HAS_PPM=false; 
 	}
-	DATA[0].FUNCTION.HAS_SPI_C=true; 
-	DATA[1].FUNCTION.HAS_SPI_I=true; 
-	DATA[2].FUNCTION.HAS_SPI_O=true; 
+	DyioPinFunctionData[0].FUNCTION.HAS_SPI_C=true; 
+	DyioPinFunctionData[1].FUNCTION.HAS_SPI_I=true; 
+	DyioPinFunctionData[2].FUNCTION.HAS_SPI_O=true; 
 
 
-	DATA[4].FUNCTION.HAS_PWM = true; 
-	DATA[5].FUNCTION.HAS_PWM = true; 
-	DATA[6].FUNCTION.HAS_PWM = true; 
-	DATA[7].FUNCTION.HAS_PWM = true; 
+	DyioPinFunctionData[4].FUNCTION.HAS_PWM = true; 
+	DyioPinFunctionData[5].FUNCTION.HAS_PWM = true; 
+	DyioPinFunctionData[6].FUNCTION.HAS_PWM = true; 
+	DyioPinFunctionData[7].FUNCTION.HAS_PWM = true; 
 
-	DATA[4].FUNCTION.HAS_DC_MOTOR = true; 
-	DATA[5].FUNCTION.HAS_DC_MOTOR = true; 
-	DATA[6].FUNCTION.HAS_DC_MOTOR = true; 
-	DATA[7].FUNCTION.HAS_DC_MOTOR = true; 
+	DyioPinFunctionData[4].FUNCTION.HAS_DC_MOTOR = true; 
+	DyioPinFunctionData[5].FUNCTION.HAS_DC_MOTOR = true; 
+	DyioPinFunctionData[6].FUNCTION.HAS_DC_MOTOR = true; 
+	DyioPinFunctionData[7].FUNCTION.HAS_DC_MOTOR = true; 
 
-	DATA[8].FUNCTION.HAS_DC_MOTOR = true; 
-	DATA[9].FUNCTION.HAS_DC_MOTOR = true; 
-	DATA[10].FUNCTION.HAS_DC_MOTOR = true; 
-	DATA[11].FUNCTION.HAS_DC_MOTOR = true; 
+	DyioPinFunctionData[8].FUNCTION.HAS_DC_MOTOR = true; 
+	DyioPinFunctionData[9].FUNCTION.HAS_DC_MOTOR = true; 
+	DyioPinFunctionData[10].FUNCTION.HAS_DC_MOTOR = true; 
+	DyioPinFunctionData[11].FUNCTION.HAS_DC_MOTOR = true; 
 
-	DATA[8].FUNCTION.HAS_ANALOG_IN = true; 
-	DATA[9].FUNCTION.HAS_ANALOG_IN = true; 
-	DATA[10].FUNCTION.HAS_ANALOG_IN = true; 
-	DATA[11].FUNCTION.HAS_ANALOG_IN = true; 
+	DyioPinFunctionData[8].FUNCTION.HAS_ANALOG_IN = true; 
+	DyioPinFunctionData[9].FUNCTION.HAS_ANALOG_IN = true; 
+	DyioPinFunctionData[10].FUNCTION.HAS_ANALOG_IN = true; 
+	DyioPinFunctionData[11].FUNCTION.HAS_ANALOG_IN = true; 
 
-	DATA[12].FUNCTION.HAS_ANALOG_IN = true; 
-	DATA[13].FUNCTION.HAS_ANALOG_IN = true; 
-	DATA[14].FUNCTION.HAS_ANALOG_IN = true; 
-	DATA[15].FUNCTION.HAS_ANALOG_IN = true; 
+	DyioPinFunctionData[12].FUNCTION.HAS_ANALOG_IN = true; 
+	DyioPinFunctionData[13].FUNCTION.HAS_ANALOG_IN = true; 
+	DyioPinFunctionData[14].FUNCTION.HAS_ANALOG_IN = true; 
+	DyioPinFunctionData[15].FUNCTION.HAS_ANALOG_IN = true; 
 
-	DATA[16].FUNCTION.HAS_UART_T =true; 
-	DATA[17].FUNCTION.HAS_UART_R =true; 
+	DyioPinFunctionData[16].FUNCTION.HAS_UART_T =true; 
+	DyioPinFunctionData[17].FUNCTION.HAS_UART_R =true; 
 
 	//Home buttons
-	DATA[0].FUNCTION.HAS_COUNTER_INPUT_H = true; 
-	DATA[1].FUNCTION.HAS_COUNTER_INPUT_H = true; 
-	DATA[2].FUNCTION.HAS_COUNTER_INPUT_H = true; 
-	DATA[3].FUNCTION.HAS_COUNTER_INPUT_H = true; 
+	DyioPinFunctionData[0].FUNCTION.HAS_COUNTER_INPUT_H = true; 
+	DyioPinFunctionData[1].FUNCTION.HAS_COUNTER_INPUT_H = true; 
+	DyioPinFunctionData[2].FUNCTION.HAS_COUNTER_INPUT_H = true; 
+	DyioPinFunctionData[3].FUNCTION.HAS_COUNTER_INPUT_H = true; 
 
-	DATA[0].FUNCTION.HAS_COUNTER_OUTPUT_H = true; 
-	DATA[1].FUNCTION.HAS_COUNTER_OUTPUT_H = true; 
-	DATA[2].FUNCTION.HAS_COUNTER_OUTPUT_H = true; 
-	DATA[3].FUNCTION.HAS_COUNTER_OUTPUT_H = true; 
+	DyioPinFunctionData[0].FUNCTION.HAS_COUNTER_OUTPUT_H = true; 
+	DyioPinFunctionData[1].FUNCTION.HAS_COUNTER_OUTPUT_H = true; 
+	DyioPinFunctionData[2].FUNCTION.HAS_COUNTER_OUTPUT_H = true; 
+	DyioPinFunctionData[3].FUNCTION.HAS_COUNTER_OUTPUT_H = true; 
 	//Interuptibles
 
-	DATA[17].FUNCTION.HAS_COUNTER_INPUT_I = true; 
-	DATA[19].FUNCTION.HAS_COUNTER_INPUT_I = true; 
-	DATA[21].FUNCTION.HAS_COUNTER_INPUT_I = true; 
-	DATA[23].FUNCTION.HAS_COUNTER_INPUT_I = true; 
+	DyioPinFunctionData[17].FUNCTION.HAS_COUNTER_INPUT_I = true; 
+	DyioPinFunctionData[19].FUNCTION.HAS_COUNTER_INPUT_I = true; 
+	DyioPinFunctionData[21].FUNCTION.HAS_COUNTER_INPUT_I = true; 
+	DyioPinFunctionData[23].FUNCTION.HAS_COUNTER_INPUT_I = true; 
 
 	//Direction
-	DATA[16].FUNCTION.HAS_COUNTER_INPUT_D = true; 
-	DATA[18].FUNCTION.HAS_COUNTER_INPUT_D = true; 
-	DATA[20].FUNCTION.HAS_COUNTER_INPUT_D = true; 
-	DATA[22].FUNCTION.HAS_COUNTER_INPUT_D = true; 
+	DyioPinFunctionData[16].FUNCTION.HAS_COUNTER_INPUT_D = true; 
+	DyioPinFunctionData[18].FUNCTION.HAS_COUNTER_INPUT_D = true; 
+	DyioPinFunctionData[20].FUNCTION.HAS_COUNTER_INPUT_D = true; 
+	DyioPinFunctionData[22].FUNCTION.HAS_COUNTER_INPUT_D = true; 
 
 	//Interuptibles
-	DATA[17].FUNCTION.HAS_COUNTER_OUTPUT_I = true; 
-	DATA[19].FUNCTION.HAS_COUNTER_OUTPUT_I = true; 
-	DATA[21].FUNCTION.HAS_COUNTER_OUTPUT_I = true; 
-	DATA[23].FUNCTION.HAS_COUNTER_OUTPUT_I = true; 
+	DyioPinFunctionData[17].FUNCTION.HAS_COUNTER_OUTPUT_I = true; 
+	DyioPinFunctionData[19].FUNCTION.HAS_COUNTER_OUTPUT_I = true; 
+	DyioPinFunctionData[21].FUNCTION.HAS_COUNTER_OUTPUT_I = true; 
+	DyioPinFunctionData[23].FUNCTION.HAS_COUNTER_OUTPUT_I = true; 
 
 	//Direction
-	DATA[16].FUNCTION.HAS_COUNTER_OUTPUT_D = true; 
-	DATA[18].FUNCTION.HAS_COUNTER_OUTPUT_D = true; 
-	DATA[20].FUNCTION.HAS_COUNTER_OUTPUT_D = true; 
-	DATA[22].FUNCTION.HAS_COUNTER_OUTPUT_D = true; 
+	DyioPinFunctionData[16].FUNCTION.HAS_COUNTER_OUTPUT_D = true; 
+	DyioPinFunctionData[18].FUNCTION.HAS_COUNTER_OUTPUT_D = true; 
+	DyioPinFunctionData[20].FUNCTION.HAS_COUNTER_OUTPUT_D = true; 
+	DyioPinFunctionData[22].FUNCTION.HAS_COUNTER_OUTPUT_D = true; 
 
-	DATA[23].FUNCTION.HAS_PPM = true; 
+	DyioPinFunctionData[23].FUNCTION.HAS_PPM = true; 
 
 	InitilizeBcsIo(	NUM_PINS,
-					DATA,
+					DyioPinFunctionData,
 					&SetChanelValueHW,
 					&GetChanelValueHW,
 					&SetAllChanelValueHW,
