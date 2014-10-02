@@ -104,6 +104,16 @@ typedef struct __attribute__((__packed__)) _AbsPID_Config {
 }
 AbsPID_Config;
 
+typedef struct __attribute__((__packed__)) _PD_VEL {
+    boolean enabled;
+    float unitsPerSeCond;
+    float lastPosition;
+    float lastVelocity;
+    float lastTime;
+    float currentOutputVel;
+}
+PD_VEL;
+
 typedef struct __attribute__((__packed__)) _AbsPID {
 
     //unsigned char           channel;
@@ -137,6 +147,7 @@ typedef struct __attribute__((__packed__)) _AbsPID {
     RunEveryData timer;
     AbsPID_Config config;
     INTERPOLATE_DATA interpolate;
+    PD_VEL vel;
 }
 AbsPID;
 
@@ -149,15 +160,7 @@ typedef struct __attribute__((__packed__)) _DYIO_PID {
 }
 DYIO_PID;
 
-typedef struct __attribute__((__packed__)) _PD_VEL {
-    boolean enabled;
-    float unitsPerSeCond;
-    float lastPosition;
-    float lastVelocity;
-    float lastTime;
-    float currentOutputVel;
-}
-PD_VEL;
+
 /**
  * RunAbstractPIDCalc
  * @param state A pointer to the AbsPID struct to run the calculations on
@@ -197,7 +200,6 @@ boolean ProcessPIDPacket(BowlerPacket * Packet);
  * @param pidAsyncCallbackPtr function pointer to push an async value
  */
 void InitilizePidController(AbsPID * groups,
-        PD_VEL * vel,
         int numberOfGroups,
         float (*getPositionPtr)(int),
         void (*setOutputPtr)(int, float),
@@ -263,6 +265,8 @@ NAMESPACE_LIST * getBcsPidNamespace();
 
 AbsPID * getPidGroupDataTable(int group);
 PD_VEL * getPidVelocityDataTable(int group);
+INTERPOLATE_DATA * getPidInterpolationDataTable(int group);
+
 void pushAllPIDPositions(BowlerPacket *Packet, boolean (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
 
 void SetPIDCalibrateionState(int group, PidCalibrationType state);
