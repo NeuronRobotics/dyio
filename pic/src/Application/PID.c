@@ -9,7 +9,6 @@
 
 AbsPID 			pidGroups[NUM_PID_GROUPS];
 DYIO_PID 		dyPid[NUM_PID_GROUPS];
-PD_VEL 			vel[NUM_PID_GROUPS];
 PidLimitEvent	limits[NUM_PID_GROUPS];
 
 #define DYPID_NON_USED 0xff
@@ -73,7 +72,7 @@ void InitPID(void){
 		dyPid[i].outputMode=0;
 
 		pidGroups[i].config.Enabled=false; 
-		vel[i].enabled=false; 
+		pidGroups[i].vel.enabled=false;
 		pidGroups[i].config.V.P=.1;
 		limits[i].type=NO_LIMIT;
 
@@ -90,15 +89,13 @@ void InitPID(void){
 		force[i].setPoint=200;
 	}
 
-	InitilizePidController( pidGroups,
-							vel,
-							NUM_PID_GROUPS,
-							&getPositionMine,
-							&setOutputMine,
-							&resetPositionMine,
-							//&asyncCallback,
-							&onPidConfigureMine,
-							&checkPIDLimitEventsMine);
+	InitilizePidController( &(pidGroups[0]),
+                                NUM_PID_GROUPS,
+                                &getPositionMine,
+                                &setOutputMine,
+                                &resetPositionMine,
+                                &onPidConfigureMine,
+                                &checkPIDLimitEventsMine);
 
 	for (i=0;i<NUM_PID_GROUPS;i++){
 		printPIDvals(i);
@@ -150,7 +147,7 @@ uint8_t GetPIDGroup(uint8_t channel){
 	case IS_DI:
 		for(i=0;i<NUM_PID_GROUPS;i++){
 			if(dyPid[i].inputChannel == channel){
-				if(pidGroups[i].config.Enabled || vel[i].enabled )
+				if(pidGroups[i].config.Enabled || pidGroups[i].vel.enabled )
 					return i;
 			}
 		}
@@ -162,7 +159,7 @@ uint8_t GetPIDGroup(uint8_t channel){
 	case IS_DO:
 		for(i=0;i<NUM_PID_GROUPS;i++){
 			if(dyPid[i].outputChannel == channel){
-				if(pidGroups[i].config.Enabled || vel[i].enabled)
+				if(pidGroups[i].config.Enabled ||  pidGroups[i].vel.enabled)
 					return i;
 			}
 		}
@@ -204,7 +201,7 @@ int resetPositionMine(int group, int current){
 
 float getPositionMine(int group){
 	if(dyPid[group].inputChannel==DYPID_NON_USED||
-			((pidGroups[group].config.Enabled == false)  && (vel[group].enabled==false) ))
+			((pidGroups[group].config.Enabled == false)  && ( pidGroups[group].vel.enabled==false) ))
 		return 0;
 
 	int64_t pos = 0;
@@ -228,7 +225,7 @@ float getPositionMine(int group){
 void setOutputMine(int group, float v){
 
 	if( dyPid[group].outputChannel==DYPID_NON_USED||
-			((pidGroups[group].config.Enabled == false)  && (vel[group].enabled==false) ))
+			((pidGroups[group].config.Enabled == false)  && ( pidGroups[group].vel.enabled==false) ))
 		return;
 	Print_Level l = getPrintLevel();
 	setPrintLevelNoPrint();
