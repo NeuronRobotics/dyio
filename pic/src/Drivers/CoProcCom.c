@@ -465,7 +465,7 @@ void newByte(){
 #endif
 }
 //#if !defined(USE_DMA)
-void __ISR(_UART_2_VECTOR, ipl7) My_U2_ISR(void){
+void __ISR(_UART_2_VECTOR, IPL7AUTO) My_U2_ISR(void){
 	FLAG_ASYNC=FLAG_BLOCK;
 	StartCritical();
 	if (INTGetFlag(INT_SOURCE_UART_RX(UART2))){

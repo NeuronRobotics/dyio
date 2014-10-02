@@ -56,15 +56,6 @@
 
 
 
-	typedef struct __attribute__((__packed__)) _STORAGE
-	{
-		char					LockCode[5];
-		char 					Name[17];
-	} STORAGE;
-
-
-
-
 
 boolean ConfigChannel(BowlerPacket * Packet);
 void ClearPinState(uint8_t pin);

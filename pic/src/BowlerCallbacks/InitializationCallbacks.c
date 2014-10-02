@@ -26,6 +26,7 @@ char * dev = "DyIO v1.0";
 
 void hardwareInit() {
 
+
     // Configure the device for maximum performance but do not change the PBDIV
     // Given the options, this function will change the flash wait states, RAM
     // wait state and enable prefetch cache but will not change the PBDIV.
@@ -37,14 +38,14 @@ void hardwareInit() {
 
     int j = 0, i = 0;
 #if defined(PROGRAMMER_DEBUG)
-    FlashSwitchMemoryToBootloader();
+    //FlashSwitchMemoryToBootloader();
 #endif
     for (i = 0; i < 6; i++) {
         MyMAC.v[i] = MY_MAC_ADDRESS[i];
     }
     StartCritical();
     println_I("Getting MAC from flash");
-    //FlashGetMac(MyMAC.v);
+    FlashGetMac(MyMAC.v);
 
 
     for (i = 0; i < 6; i++) {
@@ -94,8 +95,8 @@ void hardwareInit() {
     InitADC();
 
 
-    //uint8_t rev [] = {MAJOR_REV, MINOR_REV, FIRMWARE_VERSION};
-   // FlashSetFwRev(rev);
+    uint8_t rev [] = {MAJOR_REV, MINOR_REV, FIRMWARE_VERSION};
+    FlashSetFwRev(rev);
 
     //Starts co-proc uart
     initCoProcCom();
@@ -146,7 +147,7 @@ void UserInit(void) {
     clearPrint();
     println_I("###Starting PIC In Debug Mode###\n"); // All printfDEBUG functions do not need to be removed from code if debug is disabled
     //DelayMs(1000);
-    //setPrintLevelWarningPrint();
+    setPrintLevelWarningPrint();
     println_E("Error level printing");
     println_W("Warning level printing");
     println_I("Info level printing");

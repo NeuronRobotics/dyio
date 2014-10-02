@@ -6,7 +6,10 @@
  */
 #include "UserApp.h"
 
-STORAGE self;
+char					LockCode[5];
+char 					Name[17];
+char defaultName[] = "DyIO Module     ";
+char defaultlock[] = "0000";
 
 extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 void InitPins(void){
@@ -18,18 +21,20 @@ void InitPins(void){
 	println_W("Done with Pin States");
 
 	FlashGetMac(MyMAC.v);
-	FlashGetName(self.Name);
-	for(i=0;i<17;i++){
-		if((unsigned char)self.Name[i]==0xff){
-			strcpy(self.Name,"DyIO Module     ");
-			FlashSetName(self.Name);
+	FlashGetName(Name);
+        if(Name[0]==0xff){
+                for(i=0;i<17;i++){
+			Name[i]=defaultName[i] ;
 		}
-		FlashGetName(self.Name);
+                FlashSetName(Name);
+		FlashGetName(Name);
 	}
 
-	if (!GetLockCode(self.LockCode)){
-		strcpy(self.LockCode,"0000");
-		SetLockCode(self.LockCode);
+	if (!GetLockCode(LockCode)){
+		for(i=0;i<4;i++){
+                    LockCode[i] = defaultlock[i];
+                }
+		SetLockCode(LockCode);
 	}
 
 
