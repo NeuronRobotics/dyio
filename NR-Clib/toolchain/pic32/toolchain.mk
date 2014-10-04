@@ -13,10 +13,10 @@ else
 
 endif
 
-GCCP			=$(PICTOOLCHAIN)xc32-gcc -mips16 -O1 -s
+GCCP			=$(PICTOOLCHAIN)xc32-gcc -mips16  -O1 -s
 ARP				=$(PICTOOLCHAIN)xc32-ar
 BIN2HEX			=$(PICTOOLCHAIN)xc32-bin2hex
 #PICTOOLCHAIN    = /usr/local/bin/
-#GCCP			=$(PICTOOLCHAIN)pic32mx-gcc  -O3 -mips16 -s
+#GCCP			=$(PICTOOLCHAIN)pic32mx-gcc -D_SUPPRESS_PLIB_WARNING -O3 -mips16 -s
 #ARP				=$(PICTOOLCHAIN)pic32mx-ar
 #BIN2HEX			=$(PICTOOLCHAIN)pic32mx-bin2hex
