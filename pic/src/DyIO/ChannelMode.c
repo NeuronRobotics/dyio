@@ -59,7 +59,7 @@ boolean setMode(uint8_t pin,uint8_t mode){
 	case IS_SPI_SCK:
 		if( pinHasFunction(pin, mode) != false) {
 			print_I("|Mode is now SPI");
-			InitSPI();
+			InitSPIDyIO();
 			break;
 		}else{
 			return false; 

@@ -7,7 +7,7 @@
 #include "UserApp.h"
 
 
-void InitSPI(void){
+void InitSPIDyIO(void){
 	println_I("Initializing the SPI perpheral");
 	mPORTGOpenDrainOpen(BIT_6);// Clock is output
 	mPORTGOpenDrainOpen(BIT_8);// Data Out is an output
@@ -44,8 +44,8 @@ boolean isSPI(uint8_t mode){
 	return false; 
 }
 
-uint8_t GetByteSPI(uint8_t b){
-	InitSPI();
+uint8_t GetByteSPIDyIO(uint8_t b){
+	InitSPIDyIO();
 	putcSPI2(b);	// Start sending
 	return getcSPI2();
 }
@@ -61,7 +61,7 @@ void SendPacketToSPIFromArray(uint8_t numBytes,uint8_t * data){
 	SetChannelValueCoProc(ss,0);
 	uint8_t i;
 	for (i=0;i<numBytes;i++){
-		data[i+1]=GetByteSPI(data[i+1]);
+		data[i+1]=GetByteSPIDyIO(data[i+1]);
 	}
 	SetChannelValueCoProc(ss,1);
 }

@@ -47,13 +47,13 @@ void PowerCycleAVR(){
 	ReleaseAVRReset();
 }
 void HoldAVRReset(void){
-	AVR_RST_IO=0;
+	AVR_RST_IO(0);
 	println_I("Holding AVR in reset");
 	DelayMs(10);
 }
 
 void ReleaseAVRReset(void){
-	AVR_RST_IO=1;
+	AVR_RST_IO(1);
 	UpdateAVRLED();
 	DelayMs(30);
 	println_I("Release AVR in reset");
