@@ -22,6 +22,9 @@ void avrSPIProg(BowlerPacket * Packet);
 void eraseAVR(void);
 void GetAVRid(uint8_t * buffer);
 void HoldAVRReset(void);
+
+void PowerCycleAVR();
+
 void ReleaseAVRReset(void);
 boolean AVRDone(void);
 void AVRFlush(void);

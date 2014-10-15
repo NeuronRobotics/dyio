@@ -157,7 +157,7 @@
 	#if defined(__PIC32MX__)
 		#define persistent
 		#define far
-        #define FAR
+                #define FAR
 		#define Reset()				SoftReset()
 		#define ClrWdt()			(WDTCONSET = _WDTCON_WDTCLR_MASK)
 

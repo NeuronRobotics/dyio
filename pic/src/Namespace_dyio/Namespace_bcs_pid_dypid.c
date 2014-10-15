@@ -6,7 +6,7 @@
  */
 #include "UserApp.h"
 
-char dypidNSName[] = "bcs.pid.dypid.*;0.3;;";
+//char dypidNSName[] = "bcs.pid.dypid.*;0.3;;";
 RunEveryData pid = {0, 30};
 RunEveryData vel = {0, 100};
 
@@ -90,7 +90,7 @@ RPC_LIST bcsPidDypid_dpid_c = {BOWLER_CRIT, // Method
     NULL //Termination
 };
 
-NAMESPACE_LIST bcsPidDypid = {dypidNSName, // The string defining the namespace
+NAMESPACE_LIST bcsPidDypid = {"bcs.pid.dypid.*;0.3;;", // The string defining the namespace
     NULL, // the first element in the RPC list
     &bcsPidDypidAsyncEventCallback, // async for this namespace
     NULL// no initial elements to the other namesapce field.

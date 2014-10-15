@@ -21,5 +21,6 @@
  * Initializes core and returns a pointer to the namespace list
  */
 NAMESPACE_LIST * getBcsCoreNamespace();
+NAMESPACE_LIST * getBcsRpcNamespace();
 
 #endif /* NAMESPACE_BCS_CORE_H_ */

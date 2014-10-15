@@ -7,7 +7,7 @@
 #include "Bowler/Bowler.h"
 #include "Namespace/Namespace_bcs_io_setmode.h"
 
-char setModeNSName[] = "bcs.io.setmode.*;0.3;;";
+//char setModeNSName[] = "bcs.io.setmode.*;0.3;;";
 
 boolean bcsIoSetmodeAsyncEventCallback(BowlerPacket *Packet, boolean(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {
     //no async
@@ -46,7 +46,7 @@ RPC_LIST bcsIoSetmode_sacm_p = {BOWLER_POST, // Method
 };
 
 
-NAMESPACE_LIST bcsIoSetmode = {setModeNSName, // The string defining the namespace
+NAMESPACE_LIST bcsIoSetmode = {"bcs.io.setmode.*;0.3;;", // The string defining the namespace
     NULL, // the first element in the RPC list
     &bcsIoSetmodeAsyncEventCallback, // async for this namespace
     NULL// no initial elements to the other namesapce field.

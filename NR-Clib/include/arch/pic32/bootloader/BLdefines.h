@@ -8,10 +8,10 @@
 #ifndef BLDEFINES_H_
 #define BLDEFINES_H_
 
-#define StartAppVectVirtual				0x9D00A000
+#define StartAppVectVirtual				0x9D00B000
 
 #define StartAppVectPhysical			0x1D00A000
-#define EndAppVectPhysical				0x1D01F000
+#define EndAppVectPhysical				0x1D01FFFF
 
 
 	// acamilo:

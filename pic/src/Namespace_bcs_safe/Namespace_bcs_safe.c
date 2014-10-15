@@ -9,7 +9,7 @@ int getHeartBeatTime();
 boolean getHeartBeatLock();
 void setHeartBeatState(boolean hb, int time);
 
-char safeNSName[] = "bcs.safe.*;0.3;;";
+//char safeNSName[] = "bcs.safe.*;0.3;;";
 
 boolean bcsSafeAsyncEventCallback(BowlerPacket *Packet, boolean(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {
     //println_W("Async ");print_W(safeNSName);
@@ -87,7 +87,7 @@ RPC_LIST bcsSafe_safe_p = {BOWLER_POST, // Method
 
 
 
-NAMESPACE_LIST bcsSafe = {safeNSName, // The string defining the namespace
+NAMESPACE_LIST bcsSafe = {"bcs.safe.*;0.3;;", // The string defining the namespace
     NULL, // the first element in the RPC list
     &bcsSafeAsyncEventCallback, // async for this namespace
     NULL// no initial elements to the other namesapce field.

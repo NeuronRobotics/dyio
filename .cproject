@@ -60,13 +60,12 @@
 					<fileInfo id="0.702444624.1805628419" name="AsyncManager.c" rcbsApplicability="disable" resourcePath="pic/src/BowlerCallbacks/AsyncManager.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1035655765" name="UpstreamPackets.c" rcbsApplicability="disable" resourcePath="pic/src/BowlerCallbacks/UpstreamPackets.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1913547314" name="Counter.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/Counter.c" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.2140669862" name="DyIODataTableManager.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/DyIODataTableManager.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.2042390625" name="SerialPassThrough.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/SerialPassThrough.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.2062763767" name="EEPROMMannager.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/EEPROMMannager.c" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.245597868" name="ADC.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/ADC.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1696379772" name="UartDMARx.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/dma/UartDMARx.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1700208760" name="Switches.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/Switches.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.2140669862" name="DyIODataTableManager.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/DyIODataTableManager.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.245597868" name="ADC.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/ADC.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.347240323" name="AVRInterface.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/AVRInterface.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1301992894" name="BluetoothManager.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/BluetoothManager.NOCOMPILE" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.947834262" name="PPMReader.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/PPMReader.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.219400765" name="CoProcCom.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/CoProcCom.c" toolsToInvoke=""/>

@@ -6,7 +6,7 @@
  */
 #include "UserApp.h"
 
-char dyioNSName[] = "neuronrobotics.dyio.*;1.0;;";
+//char dyioNSName[] = "neuronrobotics.dyio.*;1.0;;";
 RunEveryData syncVolt = {0, 200};
 RunEveryData ppm = {0, 50};
 
@@ -294,7 +294,7 @@ RPC_LIST neuronRoboticsDyIO_info_c = {BOWLER_CRIT, // Method
     NULL //Termination
 };
 
-NAMESPACE_LIST neuronRoboticsDyIO = {dyioNSName, // The string defining the namespace
+NAMESPACE_LIST neuronRoboticsDyIO = {"neuronrobotics.dyio.*;1.0;;", // The string defining the namespace
     NULL, // the first element in the RPC list
     &neuronRoboticsDyIOAsyncEventCallback, // async for this namespace
     NULL// no initial elements to the other namesapce field.

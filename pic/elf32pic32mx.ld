@@ -12,12 +12,12 @@ ENTRY(_reset)
  *                     the command line using the linker's --defsym option.
  */
 EXTERN (_min_stack_size _min_heap_size)
-PROVIDE(_min_stack_size = 0x800) ;
+PROVIDE(_min_stack_size = 0x200) ;
 PROVIDE(_min_heap_size = 0xff) ;
 INCLUDE nr_procdefs.ld
 
-_DATA_ADDR     = 0xA0000800;
-_BSS_ADDR      = 0xA0001000;
+_DATA_ADDR     = 0xA0000200;
+_BSS_ADDR      = 0xA0001800;
 
 SECTIONS
 {

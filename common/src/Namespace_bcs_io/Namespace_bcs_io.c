@@ -9,7 +9,7 @@
 #include "Bowler/Bowler.h"
 #include "Namespace/Namespace_bcs_io.h"
 
-char ioNSName[] = "bcs.io.*;0.3;;";
+//char ioNSName[] = "bcs.io.*;0.3;;";
 
 boolean bcsIoAsyncEventCallback(BowlerPacket *Packet, boolean (*pidAsyncCallbackPtr)(BowlerPacket *)) {
 
@@ -268,7 +268,7 @@ RPC_LIST bcsIo_asyn_c = {BOWLER_CRIT, // Method
 };
 
 //Namespace
-NAMESPACE_LIST bcsIo = {ioNSName, // The string defining the namespace
+NAMESPACE_LIST bcsIo = {"bcs.io.*;0.3;;", // The string defining the namespace
     NULL, // the first element in the RPC list
     &bcsIoAsyncEventCallback, // async for this namespace
     NULL// no initial elements to the other namesapce field.
