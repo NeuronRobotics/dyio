@@ -57,6 +57,7 @@ void CheckSwitches(void){
 		println_I("Power Code 1 : ");p_int_I(GetRawVoltageCode(1));
 		println_I("Raw: ");p_fl_I(GetRawVoltage());
 		UpstreamPushPowerChange();
+                println_I("Pusing change");
 	}
 	setPrintLevel(l);
 }

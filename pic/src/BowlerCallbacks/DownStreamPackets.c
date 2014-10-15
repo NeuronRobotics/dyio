@@ -108,19 +108,19 @@ void CheckRev(void){
 	if((packetTemp.use.data[0]==MAJOR_REV) && (packetTemp.use.data[1]==MINOR_REV) && (packetTemp.use.data[2]==FIRMWARE_VERSION) ){
 		SetColor(0,0,1);
 	}else{
-		SetColor(1,0,0);
-		println_I("Rev. Check Failed! AVR:");
-		p_int_I(packetTemp.use.data[0]);
-		print_I(".");
-		p_int_I(packetTemp.use.data[1]);
-		print_I(".");
-		p_int_I(packetTemp.use.data[2]);
-		print_I(" PIC:");
-		p_int_I(MAJOR_REV);
-		print_I(".");
-		p_int_I(MINOR_REV);
-		print_I(".");
-		p_int_I(FIRMWARE_VERSION);
+//		SetColor(1,0,0);
+//		println_I("Rev. Check Failed! AVR:");
+//		p_int_I(packetTemp.use.data[0]);
+//		print_I(".");
+//		p_int_I(packetTemp.use.data[1]);
+//		print_I(".");
+//		p_int_I(packetTemp.use.data[2]);
+//		print_I(" PIC:");
+//		p_int_I(MAJOR_REV);
+//		print_I(".");
+//		p_int_I(MINOR_REV);
+//		print_I(".");
+//		p_int_I(FIRMWARE_VERSION);
 
 	}
 }

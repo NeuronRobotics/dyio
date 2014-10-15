@@ -45,7 +45,7 @@ void hardwareInit() {
     }
     StartCritical();
     println_I("Getting MAC from flash");
-    FlashGetMac(MyMAC.v);
+    //FlashGetMac(MyMAC.v);
 
 
     for (i = 0; i < 6; i++) {

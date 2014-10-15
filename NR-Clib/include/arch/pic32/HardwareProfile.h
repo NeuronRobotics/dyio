@@ -241,7 +241,7 @@
 
 	#define BLUE_LED_TRIS		(_TRISD0)	//
 	#define BLUE_LED_IO			(_RD0)
-	#define startLED()			 AD1CHS = 0x0000;AD1PCFG = 0xFFFF;AD1CON1 = 0x0000;AD1CON2 = 0x0000;AD1CON3 = 0x0000;AD1CSSL = 0x0000;PORTSetPinsDigitalOut(IOPORT_B,BIT_1|BIT_2|BIT_3)
+	#define startLED()			 PORTSetPinsDigitalOut(IOPORT_B,BIT_1|BIT_2|BIT_3)
 	#define SET_RED(a)			(a==0?PORTSetBits(IOPORT_B,BIT_3):PORTClearBits(IOPORT_B,BIT_3))
 	#define SET_GREEN(a)                    (a==0?PORTSetBits(IOPORT_B,BIT_2):PORTClearBits(IOPORT_B,BIT_2))
 	#define SET_BLUE(a)			(a==0?PORTSetBits(IOPORT_B,BIT_1):PORTClearBits(IOPORT_B,BIT_1))
