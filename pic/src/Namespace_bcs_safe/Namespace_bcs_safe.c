@@ -56,32 +56,32 @@ boolean bcsSafeProcessor_p(BowlerPacket * Packet) {
 RPC_LIST bcsSafe_safe_g = {BOWLER_GET, // Method
     "safe", //RPC as string
     &bcsSafeProcessor_g, //function pointer to a packet parsinf function
-     {
+    ((const char [])  {
         0
-    }, // Calling arguments
+    }),// Calling arguments
     BOWLER_POST, // response method
-     {
+     ((const char []) {
         BOWLER_I08,// heartbeat lockout
         BOWLER_I16,// heartbeet time
         0
-    }, // Response arguments
+    }),// Calling arguments
     NULL //Termination
 };
 
 RPC_LIST bcsSafe_safe_p = {BOWLER_POST, // Method
     "safe", //RPC as string
     &bcsSafeProcessor_p, //function pointer to a packet parsinf function
-     {
+     ((const char []) {
         BOWLER_I08,// heartbeat lockout
         BOWLER_I16,// heartbeet time
         0
-    }, // Response arguments
+    }),// Calling arguments
     BOWLER_POST, // response method
-     {
+     ((const char []) {
         BOWLER_I08, // code
         BOWLER_I08, // trace
         0
-    }, // Response arguments
+    }),// Calling arguments
     NULL //Termination
 };
 
