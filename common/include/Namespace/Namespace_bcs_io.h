@@ -162,7 +162,7 @@ typedef struct __attribute__((__packed__)) _DATA
 {
 	PIN_MAP PIN;
 	FUNCTION_MAP FUNCTION;
-        RunEveryData 	asyncDataTimer;
+    RunEveryData 	asyncDataTimer;
 } DATA_STRUCT;
 
 void set8bit(BowlerPacket * Packet,uint8_t val, uint8_t offset);

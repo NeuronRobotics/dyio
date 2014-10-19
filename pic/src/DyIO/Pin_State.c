@@ -14,11 +14,11 @@ char defaultlock[] = "0000";
 extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 void InitPins(void){
 	int i;
-	println_W("Pin Functions");
+	//println_W("Pin Functions");
 	InitPinFunction();
-	println_W("Pin States");
+	//println_W("Pin States");
 	InitPinStates();
-	println_W("Done with Pin States");
+	//println_W("Done with Pin States");
 
 	FlashGetMac(MyMAC.v);
 	FlashGetName(Name);
