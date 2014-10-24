@@ -60,7 +60,7 @@ void RunPPMCheck(void){
 					ppmLastSent[i] = ppmData[i];
 					Print_Level l = getPrintLevel();
 					setPrintLevelInfoPrint();
-					println_I("PPM setting output");
+					//println_I("PPM setting output");
 					//SetChannelValueCoProc(ppmLink[i],ppmData[i]);
 					getBcsIoDataTable(ppmLink[i])->PIN.currentValue=ppmData[i];
 					//SetValFromAsync(ppmLink[i],ppmData[i]);

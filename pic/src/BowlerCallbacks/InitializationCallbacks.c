@@ -44,7 +44,7 @@ void hardwareInit() {
         MyMAC.v[i] = MY_MAC_ADDRESS[i];
     }
     StartCritical();
-    println_I("Getting MAC from flash");
+    //println_I("Getting MAC from flash");
     //FlashGetMac(MyMAC.v);
 
 
@@ -53,7 +53,7 @@ void hardwareInit() {
         macStr[j++] = GetLowNib(MyMAC.v[i]);
     }
     macStr[12] = 0;
-    println_I("MAC address is =");
+    //println_I("MAC address is =");
     print_I(macStr);
 
     Pic32_Bowler_HAL_Init();
@@ -66,17 +66,17 @@ void hardwareInit() {
 
     //Must initialize IO before hardware
     InitPins();
-    println_I("Adding IO Namespace");
+    //println_I("Adding IO Namespace");
     addNamespaceToList( get_bcsIoNamespace());
-    println_I("Adding IO.Setmode Namespace");
+    //println_I("Adding IO.Setmode Namespace");
     addNamespaceToList(get_bcsIoSetmodeNamespace());
-    println_I("Adding DyIO Namespace");
+    //println_I("Adding DyIO Namespace");
     addNamespaceToList(get_neuronRoboticsDyIONamespace());
-    println_I("Adding PID Namespace");
+    //println_I("Adding PID Namespace");
     addNamespaceToList( getBcsPidNamespace());
-    println_I("Adding DyIO PID Namespace");
+    //println_I("Adding DyIO PID Namespace");
     addNamespaceToList( get_bcsPidDypidNamespace());
-    println_I("Adding Safe Namespace");
+    //println_I("Adding Safe Namespace");
     addNamespaceToList((NAMESPACE_LIST *) get_bcsSafeNamespace());
 
 
@@ -114,10 +114,10 @@ void hardwareInit() {
 void UserInit(void) {
     //setPrintStream(&USBPutArray);
     setPrintLevelInfoPrint();
-    println_I("\n\nStarting PIC initialization");
+    //println_I("\n\nStarting PIC initialization");
     //DelayMs(1000);
     hardwareInit();
-    println_I("Hardware Init done");
+    //println_I("Hardware Init done");
 
     ReleaseAVRReset();
 
@@ -129,7 +129,6 @@ void UserInit(void) {
 
     LoadDefaultValues();
 
-    CartesianControllerInit();
 
     InitPID();
 
@@ -145,11 +144,11 @@ void UserInit(void) {
 
 
     clearPrint();
-    println_I("###Starting PIC In Debug Mode###\n"); // All printfDEBUG functions do not need to be removed from code if debug is disabled
+    //println_I("###Starting PIC In Debug Mode###\n"); // All printfDEBUG functions do not need to be removed from code if debug is disabled
     //DelayMs(1000);
     setPrintLevelWarningPrint();
-    println_E("Error level printing");
-    println_W("Warning level printing");
-    println_I("Info level printing");
+    //println_E("Error level printing");
+    //println_W("Warning level printing");
+    //println_I("Info level printing");
 }
 

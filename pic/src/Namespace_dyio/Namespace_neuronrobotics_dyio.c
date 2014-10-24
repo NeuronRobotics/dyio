@@ -201,9 +201,9 @@ boolean neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet) {
 RPC_LIST neuronRoboticsDyIO__rev_g = {BOWLER_GET, // Method
     "_rev", //RPC as string
     &neuronRoboticsDyIOProcessor_g, //function pointer to a packet parsinf function
-    {0}, // Calling arguments
+    ((const char []) {0}),// Calling arguments
     BOWLER_POST, // response method
-     {
+     ((const char []) {
         BOWLER_I08, //major
         BOWLER_I08, // minor
         BOWLER_I08, // FW version
@@ -211,40 +211,40 @@ RPC_LIST neuronRoboticsDyIO__rev_g = {BOWLER_GET, // Method
         BOWLER_I08, // AVR minor
         BOWLER_I08, // AVR FW version
         0
-    }, // Response arguments
+    }),// Calling arguments
     NULL //Termination
 };
 
 RPC_LIST neuronRoboticsDyIO__pwr_g = {BOWLER_GET, // Method
     "_pwr", //RPC as string
     &neuronRoboticsDyIOProcessor_g, //function pointer to a packet parsinf function
-    {0}, // Calling arguments
+    ((const char []) {0}),// Calling arguments
     BOWLER_POST, // response method
-     {
+    ((const char [])  {
         BOWLER_I08, // 0 regulated
         BOWLER_I08, // 1 regulated
         BOWLER_I16, // Voltage
         0
-    }, // Calling arguments
+    }),// Calling arguments
     NULL //Termination
 };
 
 RPC_LIST neuronRoboticsDyIO_info_g = {BOWLER_GET, // Method
     "info", //RPC as string
     &neuronRoboticsDyIOProcessor_g, //function pointer to a packet parsinf function
-    {0}, // Calling arguments
+    ((const char []) {0}),// Calling arguments
     BOWLER_POST, // response method
-    {
+    ((const char []) {
         BOWLER_ASCII,
         0
-    }, // Response arguments
+    }),// Calling arguments
     NULL //Termination
 };
 
 RPC_LIST neuronRoboticsDyIO__mac_c = {BOWLER_CRIT, // Method
     "_mac", //RPC as string
     &neuronRoboticsDyIOProcessor_c, //function pointer to a packet parsinf function
-     {
+    ((const char [])  {
         BOWLER_I08, // mac address
         BOWLER_I08,
         BOWLER_I08,
@@ -252,45 +252,45 @@ RPC_LIST neuronRoboticsDyIO__mac_c = {BOWLER_CRIT, // Method
         BOWLER_I08,
         BOWLER_I08,
         0
-    }, // Calling arguments
+    }),// Calling arguments
     BOWLER_POST, // response method
-     {
+    ((const char [])  {
         BOWLER_I08, // code
         BOWLER_I08, // trace
         0
-    }, // Response arguments
+    }),// Calling arguments
     NULL //Termination
 };
 
 RPC_LIST neuronRoboticsDyIO__pwr_c = {BOWLER_CRIT, // Method
     "_pwr", //RPC as string
     &neuronRoboticsDyIOProcessor_c, //function pointer to a packet parsinf function
-     {
+     ((const char []) {
         BOWLER_I08, // Brown out override
         0
-    }, // Calling arguments
+    }),// Calling arguments
     BOWLER_POST, // response method
-    {
+    ((const char []) {
         BOWLER_I08, // code
         BOWLER_I08, // trace
         0
-    }, // Response arguments
+    }),// Calling arguments
     NULL //Termination
 };
 
 RPC_LIST neuronRoboticsDyIO_info_c = {BOWLER_CRIT, // Method
     "info", //RPC as string
     &neuronRoboticsDyIOProcessor_c, //function pointer to a packet parsinf function
-     {
+    ((const char [])  {
         BOWLER_ASCII,
         0
-    }, // Calling arguments
+    }),// Calling arguments
     BOWLER_POST, // response method
-     {
+    ((const char [])  {
         BOWLER_I08, // code
         BOWLER_I08, // trace
         0
-    }, // Response arguments
+    }),// Calling arguments
     NULL //Termination
 };
 

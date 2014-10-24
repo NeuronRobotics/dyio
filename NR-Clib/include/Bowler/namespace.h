@@ -21,11 +21,11 @@ typedef struct  _RPC_LIST{
 	//This is the callback function pointer for execution of the method
 	packetEventCallback * callback;
         //This is the array of argument data types
-	const char  arguments [22 ];
+	const char * arguments ;
         //This is the bowler method for this RPC
 	uint8_t responseMethod;
         //This is the array of argument data types
-	const char responseArguments[22];
+	const char * responseArguments;
         
 	//This is the linked list field
 	struct _RPC_LIST * next;
@@ -33,7 +33,7 @@ typedef struct  _RPC_LIST{
 
 typedef struct _NAMESPACE_LIST{
 	//This is the string that identifies the names pace
-	char  namespaceString[35];
+	const char * namespaceString;
 	//This is the linked list of the RPC's
 	RPC_LIST * rpcSet;
 	//This is the callback function pointer for checking for async.
