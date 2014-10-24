@@ -84,7 +84,7 @@ boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidA
     SyncDataTable();
 
     SetColor((isLocked()) ? 1 : 0, (isActive() && !isLocked()) ? 1 : 0, 1);
-    //println_W("Done ");print_W(dyioNSName);
+    println_W("Done ");
     return false; 
 }
 
