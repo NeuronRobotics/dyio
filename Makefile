@@ -38,9 +38,9 @@ svnupdate:
 commit:
 	svn commit -m="Building the DyIO"
 	cd ../NRSDK/fw; svn commit -m="Building the DyIO"
-main:
+main:update
 	make -C avr all
-	#make -C pic all
+	make -C pic all
 	
 	
 	

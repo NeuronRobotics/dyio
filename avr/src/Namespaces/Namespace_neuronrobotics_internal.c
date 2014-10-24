@@ -10,7 +10,7 @@ const char internalNSName[] = "neuronrobotics.internal*;0.3;;";
 
 RunEveryData vel={0,1000};
 
-uint8_t zone;
+static uint8_t zone;
 boolean internalAsyncEventCallback(BowlerPacket* Packet,boolean (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
 	checkDigital();
 	checkAnalog();

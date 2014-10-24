@@ -40,5 +40,6 @@ uint8_t FlashSetFwRev(uint8_t * mac);
 void FlashGetFwRev(uint8_t * mac);
 
 void FlashSwitchMemoryToBootloader();
+void enableFlashStorage(boolean enabled);
 
 #endif /* FLASHSTORAGE_H_ */
