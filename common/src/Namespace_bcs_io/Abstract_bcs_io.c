@@ -444,7 +444,7 @@ void printConfigurations() {
 }
 
 void printAsync() {
-    int i;
+//    int i;
     println_I("Async Data ");
     p_fl_I(getMs());
 //    for (i = 0; i < GetNumberOfIOChannels(); i++) {

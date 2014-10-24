@@ -24,7 +24,7 @@ typedef enum _Print_Level{
 	NO_PRINT=0,
 	ERROR_PRINT=1,
 	WARN_PRINT=2,
-	//DEBUG_PRINT=3,
+	DEBUG_PRINT=3,
 	INFO_PRINT=4
 }Print_Level;
 
@@ -34,6 +34,7 @@ typedef enum _Print_Level{
 #define setPrintLevelInfoPrint() setPrintLevel(INFO_PRINT)
 
 Print_Level setPrintLevel(Print_Level l);
+boolean okToprint(Print_Level l);
 
 Print_Level getPrintLevel();
 /**
@@ -77,7 +78,7 @@ void EnableDebugTerminal(void);
 /**
  * print the null terminated string with a newline inserted at the begining of the string
  */
-#define println(A,B) printfDEBUG(A,B)
+#define println(A,B) printfDEBUG(__FILE__,DEBUG_PRINT);printfDEBUG(A,B)
 
 #define printStream(A,B,C) printByteArray(A,B,C);
 
@@ -101,7 +102,7 @@ void EnableDebugTerminal(void);
 /**
  * print the null terminated string with a newline inserted at the begining of the string
  */
-#define println_E(A) printfDEBUG(A,ERROR_PRINT);
+#define println_E(A) println(A,ERROR_PRINT);
 
 #define printStream_E(A,B) printByteArray(A,B,ERROR_PRINT);
 
@@ -126,7 +127,7 @@ void EnableDebugTerminal(void);
 /**
  * print the null terminated string with a newline inserted at the begining of the string
  */
-#define println_W(A) printfDEBUG(A,WARN_PRINT)
+#define println_W(A) println(A,WARN_PRINT)
 
 #define printStream_W(A,B) printByteArray(A,B,WARN_PRINT);
 
@@ -156,7 +157,7 @@ void EnableDebugTerminal(void);
 /**
  * print the null terminated string with a newline inserted at the begining of the string
  */
-#define println_I(A) printfDEBUG(A,INFO_PRINT)
+#define println_I(A) println(A,INFO_PRINT)
 
 #define printStream_I(A,B) printByteArray(A,B,INFO_PRINT);
 
