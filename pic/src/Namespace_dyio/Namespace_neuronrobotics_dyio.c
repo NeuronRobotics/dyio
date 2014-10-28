@@ -198,7 +198,7 @@ boolean neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet) {
     return true; 
 }
 
-RPC_LIST neuronRoboticsDyIO__rev_g = {BOWLER_GET, // Method
+static RPC_LIST neuronRoboticsDyIO__rev_g = {BOWLER_GET, // Method
     "_rev", //RPC as string
     &neuronRoboticsDyIOProcessor_g, //function pointer to a packet parsinf function
     ((const char []) {0}),// Calling arguments
@@ -215,7 +215,7 @@ RPC_LIST neuronRoboticsDyIO__rev_g = {BOWLER_GET, // Method
     NULL //Termination
 };
 
-RPC_LIST neuronRoboticsDyIO__pwr_g = {BOWLER_GET, // Method
+static RPC_LIST neuronRoboticsDyIO__pwr_g = {BOWLER_GET, // Method
     "_pwr", //RPC as string
     &neuronRoboticsDyIOProcessor_g, //function pointer to a packet parsinf function
     ((const char []) {0}),// Calling arguments
@@ -229,7 +229,7 @@ RPC_LIST neuronRoboticsDyIO__pwr_g = {BOWLER_GET, // Method
     NULL //Termination
 };
 
-RPC_LIST neuronRoboticsDyIO_info_g = {BOWLER_GET, // Method
+static RPC_LIST neuronRoboticsDyIO_info_g = {BOWLER_GET, // Method
     "info", //RPC as string
     &neuronRoboticsDyIOProcessor_g, //function pointer to a packet parsinf function
     ((const char []) {0}),// Calling arguments
@@ -241,7 +241,7 @@ RPC_LIST neuronRoboticsDyIO_info_g = {BOWLER_GET, // Method
     NULL //Termination
 };
 
-RPC_LIST neuronRoboticsDyIO__mac_c = {BOWLER_CRIT, // Method
+static RPC_LIST neuronRoboticsDyIO__mac_c = {BOWLER_CRIT, // Method
     "_mac", //RPC as string
     &neuronRoboticsDyIOProcessor_c, //function pointer to a packet parsinf function
     ((const char [])  {
@@ -262,7 +262,7 @@ RPC_LIST neuronRoboticsDyIO__mac_c = {BOWLER_CRIT, // Method
     NULL //Termination
 };
 
-RPC_LIST neuronRoboticsDyIO__pwr_c = {BOWLER_CRIT, // Method
+static RPC_LIST neuronRoboticsDyIO__pwr_c = {BOWLER_CRIT, // Method
     "_pwr", //RPC as string
     &neuronRoboticsDyIOProcessor_c, //function pointer to a packet parsinf function
      ((const char []) {
@@ -278,7 +278,7 @@ RPC_LIST neuronRoboticsDyIO__pwr_c = {BOWLER_CRIT, // Method
     NULL //Termination
 };
 
-RPC_LIST neuronRoboticsDyIO_info_c = {BOWLER_CRIT, // Method
+static RPC_LIST neuronRoboticsDyIO_info_c = {BOWLER_CRIT, // Method
     "info", //RPC as string
     &neuronRoboticsDyIOProcessor_c, //function pointer to a packet parsinf function
     ((const char [])  {
@@ -294,13 +294,13 @@ RPC_LIST neuronRoboticsDyIO_info_c = {BOWLER_CRIT, // Method
     NULL //Termination
 };
 
-NAMESPACE_LIST neuronRoboticsDyIO = {"neuronrobotics.dyio.*;1.0;;", // The string defining the namespace
+static NAMESPACE_LIST neuronRoboticsDyIO = {"neuronrobotics.dyio.*;1.0;;", // The string defining the namespace
     NULL, // the first element in the RPC list
     &neuronRoboticsDyIOAsyncEventCallback, // async for this namespace
     NULL// no initial elements to the other namesapce field.
 };
 
-boolean neuronRoboticsDyIOnamespcaedAdded = false;
+static boolean neuronRoboticsDyIOnamespcaedAdded = false;
 
 NAMESPACE_LIST * get_neuronRoboticsDyIONamespace() {
     if (!neuronRoboticsDyIOnamespcaedAdded) {

@@ -6,10 +6,10 @@
  */
 #include "UserApp.h"
 
-char					LockCode[5];
-char 					Name[17];
-char defaultName[] = "DyIO Module     ";
-char defaultlock[] = "0000";
+static char					LockCode[5];
+static char 					Name[17];
+static char defaultName[] = "DyIO Module     ";
+static char defaultlock[] = "0000";
 
 extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 void InitPins(void){

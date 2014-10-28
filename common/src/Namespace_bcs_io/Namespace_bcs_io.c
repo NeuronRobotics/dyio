@@ -41,7 +41,7 @@ boolean bcsIoAsyncEventCallback(BowlerPacket *Packet, boolean (*pidAsyncCallback
 
 // GET structures
 
-RPC_LIST bcsIo_gchm_g = {BOWLER_GET, // Method
+static RPC_LIST bcsIo_gchm_g = {BOWLER_GET, // Method
     "gchm", //RPC as string
     &GetChannelModeFromPacket, //function pointer to a packet parsing function
     ((const char []) {
@@ -57,7 +57,7 @@ RPC_LIST bcsIo_gchm_g = {BOWLER_GET, // Method
     NULL //Termination
 };
 
-RPC_LIST bcsIo_gacm_g = {BOWLER_GET, // Method
+static RPC_LIST bcsIo_gacm_g = {BOWLER_GET, // Method
     "gacm", //RPC as string
     &GetAllChannelModeFromPacket, //function pointer to a packet parsing function
      ((const char []) {
@@ -71,7 +71,7 @@ RPC_LIST bcsIo_gacm_g = {BOWLER_GET, // Method
     NULL //Termination
 };
 
-RPC_LIST bcsIo_gchv_g = {BOWLER_GET, // Method
+static RPC_LIST bcsIo_gchv_g = {BOWLER_GET, // Method
     "gchv", //RPC as string
     &GetChanelValueFromPacket, //function pointer to a packet parsing function
      ((const char []) {
@@ -87,7 +87,7 @@ RPC_LIST bcsIo_gchv_g = {BOWLER_GET, // Method
     NULL //Termination
 };
 
-RPC_LIST bcsIo_gacv_g = {BOWLER_GET, // Method
+static RPC_LIST bcsIo_gacv_g = {BOWLER_GET, // Method
     "gacv", //RPC as string
     &GetAllChanelValueFromPacket, //function pointer to a packet parsing function
     ((const char [])  {
@@ -101,7 +101,7 @@ RPC_LIST bcsIo_gacv_g = {BOWLER_GET, // Method
     NULL //Termination
 };
 
-RPC_LIST bcsIo_asyn_g = {BOWLER_GET, // Method
+static RPC_LIST bcsIo_asyn_g = {BOWLER_GET, // Method
     "asyn", //RPC as string
     &GetAsyncFromPacket, //function pointer to a packet parsing function
      ((const char []) {
@@ -118,7 +118,7 @@ RPC_LIST bcsIo_asyn_g = {BOWLER_GET, // Method
     NULL //Termination
 };
 
-RPC_LIST bcsIo_gchc_g = {BOWLER_GET, // Method
+static RPC_LIST bcsIo_gchc_g = {BOWLER_GET, // Method
     "gchc", //RPC as string
     &GetIOChannelCountFromPacket, //function pointer to a packet parsing function
     ((const char []) {
@@ -132,7 +132,7 @@ RPC_LIST bcsIo_gchc_g = {BOWLER_GET, // Method
     NULL //Termination
 };
 
-RPC_LIST bcsIo_gcml_g = {BOWLER_GET, // Method
+static RPC_LIST bcsIo_gcml_g = {BOWLER_GET, // Method
     "gcml", //RPC as string
     &getFunctionList, //function pointer to a packet parsing function
     ((const char [])  {
@@ -149,7 +149,7 @@ RPC_LIST bcsIo_gcml_g = {BOWLER_GET, // Method
 };
 //POST
 
-RPC_LIST bcsIo_strm_p = {BOWLER_POST, // Method
+static RPC_LIST bcsIo_strm_p = {BOWLER_POST, // Method
     "strm", //RPC as string
     &SetChanelStreamFromPacket, //function pointer to a packet parsing function
     ((const char [])  {
@@ -166,7 +166,7 @@ RPC_LIST bcsIo_strm_p = {BOWLER_POST, // Method
     NULL //Termination
 };
 
-RPC_LIST bcsIo_schv_p = {BOWLER_POST, // Method
+static RPC_LIST bcsIo_schv_p = {BOWLER_POST, // Method
     "schv", //RPC as string
     &SetChanelValueFromPacket, //function pointer to a packet parsing function
     ((const char [])  {
@@ -184,7 +184,7 @@ RPC_LIST bcsIo_schv_p = {BOWLER_POST, // Method
     NULL //Termination
 };
 
-RPC_LIST bcsIo_sacv_p = {BOWLER_POST, // Method
+static RPC_LIST bcsIo_sacv_p = {BOWLER_POST, // Method
     "sacv", //RPC as string
     &SetAllChannelValueFromPacket, //function pointer to a packet parsing function
      ((const char []) {
@@ -200,7 +200,7 @@ RPC_LIST bcsIo_sacv_p = {BOWLER_POST, // Method
     NULL //Termination
 };
 
-RPC_LIST bcsIo_asyn_p = {BOWLER_POST, // Method
+static RPC_LIST bcsIo_asyn_p = {BOWLER_POST, // Method
     "asyn", //RPC as string
     &SetAsyncFromPacket, //function pointer to a packet parsing function
     ((const char [])  {
@@ -216,7 +216,7 @@ RPC_LIST bcsIo_asyn_p = {BOWLER_POST, // Method
 };
 
 //CRIT
-RPC_LIST bcsIo_cchn_c = {BOWLER_CRIT, // Method
+static RPC_LIST bcsIo_cchn_c = {BOWLER_CRIT, // Method
     "cchn", //RPC as string
     &ConfigureChannelFromPacket, //function pointer to a packet parsing function
     ((const char []) {
@@ -232,7 +232,7 @@ RPC_LIST bcsIo_cchn_c = {BOWLER_CRIT, // Method
 };
 //@Depricated
 
-RPC_LIST bcsIo_schv_c = {BOWLER_CRIT, // Method
+static RPC_LIST bcsIo_schv_c = {BOWLER_CRIT, // Method
     "schv", //RPC as string
 
     &SetChanelValueFromPacket, //function pointer to a packet parsing function
@@ -249,7 +249,7 @@ RPC_LIST bcsIo_schv_c = {BOWLER_CRIT, // Method
 };
 //@Depricated
 
-RPC_LIST bcsIo_asyn_c = {BOWLER_CRIT, // Method
+static RPC_LIST bcsIo_asyn_c = {BOWLER_CRIT, // Method
     "asyn", //RPC as string
     &configAdvancedAsync, //function pointer to a packet parsing function
     ((const char [])  {
@@ -268,7 +268,7 @@ RPC_LIST bcsIo_asyn_c = {BOWLER_CRIT, // Method
 };
 
 //Namespace
-NAMESPACE_LIST bcsIo = {"bcs.io.*;0.3;;", // The string defining the namespace
+static NAMESPACE_LIST bcsIo = {"bcs.io.*;0.3;;", // The string defining the namespace
     NULL, // the first element in the RPC list
     &bcsIoAsyncEventCallback, // async for this namespace
     NULL// no initial elements to the other namesapce field.
@@ -277,10 +277,10 @@ NAMESPACE_LIST bcsIo = {"bcs.io.*;0.3;;", // The string defining the namespace
 
 
 
-boolean bcsIonamespcaedAdded = false;
+static boolean bcsIonamespcaedAdded = false;
 
 NAMESPACE_LIST * get_bcsIoNamespace() {
-    if (!bcsIonamespcaedAdded) {
+    if (bcsIonamespcaedAdded != true) {
     	bcsIonamespcaedAdded = true;
         //Add the RPC structs to the namespace
         //GET

@@ -6,13 +6,13 @@
  */
 
 #include "UserApp.h"
-BowlerPacket packetTemp;
-uint8_t isAscii(char * str);
+static BowlerPacket downstreamPacketTemp;
+static uint8_t isAscii(char * str);
 
-boolean bankA=true , bankB=true;
-uint8_t batteryCode0=0,batteryCode1=0;
+static boolean bankA=true , bankB=true;
+static uint8_t batteryCode0=0,batteryCode1=0;
 
-Downstream_Data down[NUM_PINS];
+static Downstream_Data down[NUM_PINS];
 
 
 void forceValueDownstream(int8_t pin){
@@ -23,56 +23,56 @@ void forceModeDownstream(int8_t pin){
 }
 
 void LoadDefaultValues(){
-	LoadCorePacket(& packetTemp);
-	packetTemp.use.head.Method=BOWLER_GET;
-	packetTemp.use.head.RPC=GetRPCValue("save");
-	SendPacketToCoProc(& packetTemp);
+	LoadCorePacket(& downstreamPacketTemp);
+	downstreamPacketTemp.use.head.Method=BOWLER_GET;
+	downstreamPacketTemp.use.head.RPC=GetRPCValue("save");
+	SendPacketToCoProc(& downstreamPacketTemp);
 	uint8_t i;
 	for (i=0;i<GetNumberOfIOChannels();i++){
-		//getBcsIoDataTable(i)->PIN.currentConfiguration=packetTemp.use.data[i];
+		//getBcsIoDataTable(i)->PIN.currentConfiguration=downstreamPacketTemp.use.data[i];
             down[i].changeMode =false;
             down[i].changeValue =false;
 	}
 }
 
 //void SetCoProcLED(boolean a, boolean b, int batt){
-//	LoadCorePacket(& packetTemp);
-//	POWER(& packetTemp);
-//	packetTemp.use.data[0]=a;
-//	packetTemp.use.data[1]=b;
-//	packetTemp.use.data[2]=0;
-//	packetTemp.use.data[3]=batt;
-//	SendPacketToCoProc(& packetTemp);
+//	LoadCorePacket(& downstreamPacketTemp);
+//	POWER(& downstreamPacketTemp);
+//	downstreamPacketTemp.use.data[0]=a;
+//	downstreamPacketTemp.use.data[1]=b;
+//	downstreamPacketTemp.use.data[2]=0;
+//	downstreamPacketTemp.use.data[3]=batt;
+//	SendPacketToCoProc(& downstreamPacketTemp);
 //}
 
 void setCoProcBrownOutMode(boolean b){
-	LoadCorePacket(& packetTemp);
-	packetTemp.use.head.Method=BOWLER_CRIT;
-	packetTemp.use.head.RPC=GetRPCValue("_pwr");
-	packetTemp.use.head.DataLegnth=4+1;
-	packetTemp.use.data[0]=b?0:1;
-	SendPacketToCoProc(& packetTemp);
+	LoadCorePacket(& downstreamPacketTemp);
+	downstreamPacketTemp.use.head.Method=BOWLER_CRIT;
+	downstreamPacketTemp.use.head.RPC=GetRPCValue("_pwr");
+	downstreamPacketTemp.use.head.DataLegnth=4+1;
+	downstreamPacketTemp.use.data[0]=b?0:1;
+	SendPacketToCoProc(& downstreamPacketTemp);
 }
 
 void DownstreamPowerChange(void){
 
-	LoadCorePacket(& packetTemp);
-	POWER(& packetTemp);
+	LoadCorePacket(& downstreamPacketTemp);
+	POWER(& downstreamPacketTemp);
 
-	packetTemp.use.data[2]=GetRawVoltageCode(0);
-	packetTemp.use.data[3]=GetRawVoltageCode(1);
+	downstreamPacketTemp.use.data[2]=GetRawVoltageCode(0);
+	downstreamPacketTemp.use.data[3]=GetRawVoltageCode(1);
 
-	if(		packetTemp.use.data[0]==bankA &&
-			packetTemp.use.data[1]==bankB &&
-			packetTemp.use.data[2]==batteryCode0 &&
-			packetTemp.use.data[3]==batteryCode1)
+	if(		downstreamPacketTemp.use.data[0]==bankA &&
+			downstreamPacketTemp.use.data[1]==bankB &&
+			downstreamPacketTemp.use.data[2]==batteryCode0 &&
+			downstreamPacketTemp.use.data[3]==batteryCode1)
 			return;
-	bankA=packetTemp.use.data[0];
-	bankB=packetTemp.use.data[1];
-	batteryCode0=packetTemp.use.data[2];
-	batteryCode1=packetTemp.use.data[3];
+	bankA=downstreamPacketTemp.use.data[0];
+	bankB=downstreamPacketTemp.use.data[1];
+	batteryCode0=downstreamPacketTemp.use.data[2];
+	batteryCode1=downstreamPacketTemp.use.data[3];
 
-	SendPacketToCoProc(& packetTemp);
+	SendPacketToCoProc(& downstreamPacketTemp);
 
 }
 void LoadGACM(BowlerPacket * pack){
@@ -80,7 +80,7 @@ void LoadGACM(BowlerPacket * pack){
 	pack->use.head.Method=BOWLER_GET;
 	pack->use.head.RPC=GetRPCValue("gacm");
 	pack->use.head.DataLegnth=4;
-	SetCRC(& packetTemp);
+	SetCRC(& downstreamPacketTemp);
 }
 void GetAllModes(BowlerPacket * pack){
 	println_I("GetAllModes");
@@ -100,21 +100,21 @@ void GetAllModes(BowlerPacket * pack){
 }
 
 void CheckRev(void){
-	LoadCorePacket(& packetTemp);
-	packetTemp.use.head.Method=BOWLER_GET;
-	packetTemp.use.head.RPC=GetRPCValue("_rev");
-	packetTemp.use.head.DataLegnth=4;
-	SendPacketToCoProc(& packetTemp);
-	if((packetTemp.use.data[0]==MAJOR_REV) && (packetTemp.use.data[1]==MINOR_REV) && (packetTemp.use.data[2]==FIRMWARE_VERSION) ){
+	LoadCorePacket(& downstreamPacketTemp);
+	downstreamPacketTemp.use.head.Method=BOWLER_GET;
+	downstreamPacketTemp.use.head.RPC=GetRPCValue("_rev");
+	downstreamPacketTemp.use.head.DataLegnth=4;
+	SendPacketToCoProc(& downstreamPacketTemp);
+	if((downstreamPacketTemp.use.data[0]==MAJOR_REV) && (downstreamPacketTemp.use.data[1]==MINOR_REV) && (downstreamPacketTemp.use.data[2]==FIRMWARE_VERSION) ){
 		SetColor(0,0,1);
 	}else{
 //		SetColor(1,0,0);
 //		println_I("Rev. Check Failed! AVR:");
-//		p_int_I(packetTemp.use.data[0]);
+//		p_int_I(downstreamPacketTemp.use.data[0]);
 //		print_I(".");
-//		p_int_I(packetTemp.use.data[1]);
+//		p_int_I(downstreamPacketTemp.use.data[1]);
 //		print_I(".");
-//		p_int_I(packetTemp.use.data[2]);
+//		p_int_I(downstreamPacketTemp.use.data[2]);
 //		print_I(" PIC:");
 //		p_int_I(MAJOR_REV);
 //		print_I(".");
@@ -129,14 +129,14 @@ uint8_t SetCoProcMode(uint8_t pin,uint8_t mode){
 	if(getBcsIoDataTable(pin)->PIN.currentChannelMode == mode)
 		return true; 
 	getBcsIoDataTable(pin)->PIN.currentChannelMode=mode;
-	LoadCorePacket(& packetTemp);
-	packetTemp.use.head.Method=BOWLER_POST;
-	packetTemp.use.head.RPC=GetRPCValue("schm");
-	packetTemp.use.data[0]=pin;
-	packetTemp.use.data[1]=mode;
-	packetTemp.use.data[2]=(IsAsync(pin))?1:0;
-	packetTemp.use.head.DataLegnth=7;
-	SendPacketToCoProc(& packetTemp);
+	LoadCorePacket(& downstreamPacketTemp);
+	downstreamPacketTemp.use.head.Method=BOWLER_POST;
+	downstreamPacketTemp.use.head.RPC=GetRPCValue("schm");
+	downstreamPacketTemp.use.data[0]=pin;
+	downstreamPacketTemp.use.data[1]=mode;
+	downstreamPacketTemp.use.data[2]=(IsAsync(pin))?1:0;
+	downstreamPacketTemp.use.head.DataLegnth=7;
+	SendPacketToCoProc(& downstreamPacketTemp);
 	down[pin].changeMode=true;
 	return false; 
 }
@@ -151,17 +151,17 @@ uint8_t SetAllCoProcMode(){
 	}
 	if(send){
 
-		LoadCorePacket(& packetTemp);
-		packetTemp.use.head.Method=BOWLER_POST;
-		packetTemp.use.head.RPC=GetRPCValue("sacm");
-		packetTemp.use.head.DataLegnth = 4;
+		LoadCorePacket(& downstreamPacketTemp);
+		downstreamPacketTemp.use.head.Method=BOWLER_POST;
+		downstreamPacketTemp.use.head.RPC=GetRPCValue("sacm");
+		downstreamPacketTemp.use.head.DataLegnth = 4;
 		for(i=0;i<GetNumberOfIOChannels();i++){
-			packetTemp.use.data[i]=getBcsIoDataTable(i)->PIN.currentChannelMode ;
+			downstreamPacketTemp.use.data[i]=getBcsIoDataTable(i)->PIN.currentChannelMode ;
 			down[i].changeMode=false ;
-			packetTemp.use.head.DataLegnth++;
+			downstreamPacketTemp.use.head.DataLegnth++;
 		}
-                println_I("Sending mode sync packet");printPacket(&packetTemp,INFO_PRINT);
-		SendPacketToCoProc(& packetTemp);
+                println_I("Sending mode sync packet");printPacket(&downstreamPacketTemp,INFO_PRINT);
+		SendPacketToCoProc(& downstreamPacketTemp);
 	}
 	return true; 
 }
@@ -178,32 +178,32 @@ uint8_t SetAllCoProcValues(){
 	}
 	//int32_t tmp;
 //	if(send){
-//		LoadCorePacket(& packetTemp);
-//		packetTemp.use.head.Method=BOWLER_POST;
-//		packetTemp.use.head.RPC=GetRPCValue("sacv");
-//		packetTemp.use.head.DataLegnth = 4;
+//		LoadCorePacket(& downstreamPacketTemp);
+//		downstreamPacketTemp.use.head.Method=BOWLER_POST;
+//		downstreamPacketTemp.use.head.RPC=GetRPCValue("sacv");
+//		downstreamPacketTemp.use.head.DataLegnth = 4;
 //		for(i=0;i<GetNumberOfIOChannels();i++){
 //			tmp = getBcsIoDataTable(i)->PIN.currentValue ;
 //			down[i].changeValue =false ;
-//			set32bit(& packetTemp,tmp,i*4);
-//			packetTemp.use.head.DataLegnth +=4;
+//			set32bit(& downstreamPacketTemp,tmp,i*4);
+//			downstreamPacketTemp.use.head.DataLegnth +=4;
 //		}
-//                println_I("Syncing channel values ");printPacket(&packetTemp,INFO_PRINT);
-//		SendPacketToCoProc(& packetTemp);
+//                println_I("Syncing channel values ");printPacket(&downstreamPacketTemp,INFO_PRINT);
+//		SendPacketToCoProc(& downstreamPacketTemp);
 //	}
 
-//        LoadCorePacket(& packetTemp);
-//	packetTemp.use.head.Method=BOWLER_GET;
-//	packetTemp.use.head.RPC=GetRPCValue("gacv");
-//	packetTemp.use.head.DataLegnth=4;
-//	SendPacketToCoProc(& packetTemp);
-//	if (packetTemp.use.head.RPC==_ERR){
+//        LoadCorePacket(& downstreamPacketTemp);
+//	downstreamPacketTemp.use.head.Method=BOWLER_GET;
+//	downstreamPacketTemp.use.head.RPC=GetRPCValue("gacv");
+//	downstreamPacketTemp.use.head.DataLegnth=4;
+//	SendPacketToCoProc(& downstreamPacketTemp);
+//	if (downstreamPacketTemp.use.head.RPC==_ERR){
 //		println_I("Failed to get channel values");
 //		return 1;
 //	}
 //
 //	for(i=0;i<GetNumberOfIOChannels();i++){
-//            SetValFromAsync(i,get32bit(& packetTemp, i*4));
+//            SetValFromAsync(i,get32bit(& downstreamPacketTemp, i*4));
 //        }
 
       	for(i=0;i<GetNumberOfIOChannels();i++){
@@ -219,51 +219,51 @@ void SetChannelValueCoProc(uint8_t PIN,uint8_t state){
 	do{
 		if(retry>0){
 			println_E("#*#*SetChannelValueCoProc did not return RDY pin: ");p_int_E(PIN);print_E(" mode: ");printMode(GetChannelMode(PIN),ERROR_PRINT);
-			printPacket(&packetTemp,ERROR_PRINT);
+			printPacket(&downstreamPacketTemp,ERROR_PRINT);
 			return;
 		}
-		LoadCorePacket(& packetTemp);
-		packetTemp.use.head.Method=BOWLER_POST;
-		packetTemp.use.head.RPC=GetRPCValue("schv");
-		packetTemp.use.data[0]=PIN;
-		packetTemp.use.data[1]=state;
-		packetTemp.use.data[2]=0;
-		packetTemp.use.data[3]=0;
-		packetTemp.use.head.DataLegnth=8;
-		SendPacketToCoProc(& packetTemp);
+		LoadCorePacket(& downstreamPacketTemp);
+		downstreamPacketTemp.use.head.Method=BOWLER_POST;
+		downstreamPacketTemp.use.head.RPC=GetRPCValue("schv");
+		downstreamPacketTemp.use.data[0]=PIN;
+		downstreamPacketTemp.use.data[1]=state;
+		downstreamPacketTemp.use.data[2]=0;
+		downstreamPacketTemp.use.data[3]=0;
+		downstreamPacketTemp.use.head.DataLegnth=8;
+		SendPacketToCoProc(& downstreamPacketTemp);
 		retry++;
 		buttonCheck(13);
-	}while(packetTemp.use.head.RPC != _RDY);
+	}while(downstreamPacketTemp.use.head.RPC != _RDY);
 
 }
 
 uint8_t GetChannelValueCoProc(uint8_t PIN){
-	LoadCorePacket(& packetTemp);
-	packetTemp.use.head.Method=BOWLER_GET;
-	packetTemp.use.head.RPC=GetRPCValue("gchv");
-	packetTemp.use.data[0]=PIN;
-	packetTemp.use.head.DataLegnth=5;
-	SendPacketToCoProc(& packetTemp);
-	if (packetTemp.use.head.RPC==_ERR)
+	LoadCorePacket(& downstreamPacketTemp);
+	downstreamPacketTemp.use.head.Method=BOWLER_GET;
+	downstreamPacketTemp.use.head.RPC=GetRPCValue("gchv");
+	downstreamPacketTemp.use.data[0]=PIN;
+	downstreamPacketTemp.use.head.DataLegnth=5;
+	SendPacketToCoProc(& downstreamPacketTemp);
+	if (downstreamPacketTemp.use.head.RPC==_ERR)
 			return 1;
-	SetValFromAsync(PIN, packetTemp.use.data[1]);
-	return packetTemp.use.data[1];
+	SetValFromAsync(PIN, downstreamPacketTemp.use.data[1]);
+	return downstreamPacketTemp.use.data[1];
 }
 
 uint16_t GetADC(uint8_t PIN){
 	WORD_VAL v;
-	LoadCorePacket(& packetTemp);
-	packetTemp.use.head.Method=BOWLER_GET;
-	packetTemp.use.head.RPC=GetRPCValue("gchv");
-	packetTemp.use.data[0]=PIN;
-	packetTemp.use.head.DataLegnth=5;
-	SendPacketToCoProc(& packetTemp);
-	if (packetTemp.use.head.RPC==_ERR){
+	LoadCorePacket(& downstreamPacketTemp);
+	downstreamPacketTemp.use.head.Method=BOWLER_GET;
+	downstreamPacketTemp.use.head.RPC=GetRPCValue("gchv");
+	downstreamPacketTemp.use.data[0]=PIN;
+	downstreamPacketTemp.use.head.DataLegnth=5;
+	SendPacketToCoProc(& downstreamPacketTemp);
+	if (downstreamPacketTemp.use.head.RPC==_ERR){
 		println_I("Failed to get adc");
 		return 1;
 	}
-	v.byte.HB=packetTemp.use.data[1];
-	v.byte.LB=packetTemp.use.data[2];
+	v.byte.HB=downstreamPacketTemp.use.data[1];
+	v.byte.LB=downstreamPacketTemp.use.data[2];
 
 	SetValFromAsync(PIN, v.Val);
 	return v.Val;
@@ -301,22 +301,22 @@ void GetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
 		total++;
 		if (total>5)
 			return;
-		LoadCorePacket(& packetTemp);
+		LoadCorePacket(& downstreamPacketTemp);
 		for (i=0;i<(stop-start);i++){
 			//Writes over the old packet to avoid mis-reads
-			packetTemp.use.data[i] = data[i];
+			downstreamPacketTemp.use.data[i] = data[i];
 		}
-		packetTemp.use.head.Method=BOWLER_GET;
-		packetTemp.use.head.RPC=GetRPCValue("eepd");
-		packetTemp.use.data[0]=start+DATASTART;
-		packetTemp.use.data[1]=stop+DATASTART;
-		packetTemp.use.head.DataLegnth=6;
-		SendPacketToCoProc(& packetTemp);
+		downstreamPacketTemp.use.head.Method=BOWLER_GET;
+		downstreamPacketTemp.use.head.RPC=GetRPCValue("eepd");
+		downstreamPacketTemp.use.data[0]=start+DATASTART;
+		downstreamPacketTemp.use.data[1]=stop+DATASTART;
+		downstreamPacketTemp.use.head.DataLegnth=6;
+		SendPacketToCoProc(& downstreamPacketTemp);
 		buttonCheck(12);
-	}while(packetTemp.use.head.RPC != GetRPCValue("eepd"));
+	}while(downstreamPacketTemp.use.head.RPC != GetRPCValue("eepd"));
 
 	for (i=0;i<(stop-start);i++){
-		data[i]=packetTemp.use.data[i];
+		data[i]=downstreamPacketTemp.use.data[i];
 	}
 }
 
@@ -326,31 +326,31 @@ void SetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
 	uint8_t i=0;
 	if (start>=stop)
 		return;
-	LoadCorePacket(& packetTemp);
-	packetTemp.use.head.Method=BOWLER_POST;
-	packetTemp.use.head.RPC=GetRPCValue("eepd");
-	packetTemp.use.data[0]=start+DATASTART;
-	packetTemp.use.data[1]=stop+DATASTART;
+	LoadCorePacket(& downstreamPacketTemp);
+	downstreamPacketTemp.use.head.Method=BOWLER_POST;
+	downstreamPacketTemp.use.head.RPC=GetRPCValue("eepd");
+	downstreamPacketTemp.use.data[0]=start+DATASTART;
+	downstreamPacketTemp.use.data[1]=stop+DATASTART;
 	for (i=0;i<(stop-start);i++){
-		packetTemp.use.data[2+i]=data[i];
+		downstreamPacketTemp.use.data[2+i]=data[i];
 	}
-	packetTemp.use.head.DataLegnth=6+stop-start;
+	downstreamPacketTemp.use.head.DataLegnth=6+stop-start;
 	println_I("Sent data to coproc's eeprom");
-	SendPacketToCoProc(& packetTemp);
+	SendPacketToCoProc(& downstreamPacketTemp);
 }
 
 boolean GetName(char * name){
 	//WORD_VAL raw;
 	uint8_t i=0;
-	LoadCorePacket(& packetTemp);
-	packetTemp.use.head.Method=BOWLER_GET;
-	packetTemp.use.head.RPC=GetRPCValue("eepd");
-	packetTemp.use.data[0]=NAMESTART;
-	packetTemp.use.data[1]=LOCKSTART;
-	packetTemp.use.head.DataLegnth=6;
-	SendPacketToCoProc(& packetTemp);
-	while (packetTemp.use.data[i]!='\0'){
-		name[i]=packetTemp.use.data[i];
+	LoadCorePacket(& downstreamPacketTemp);
+	downstreamPacketTemp.use.head.Method=BOWLER_GET;
+	downstreamPacketTemp.use.head.RPC=GetRPCValue("eepd");
+	downstreamPacketTemp.use.data[0]=NAMESTART;
+	downstreamPacketTemp.use.data[1]=LOCKSTART;
+	downstreamPacketTemp.use.head.DataLegnth=6;
+	SendPacketToCoProc(& downstreamPacketTemp);
+	while (downstreamPacketTemp.use.data[i]!='\0'){
+		name[i]=downstreamPacketTemp.use.data[i];
 		i++;
 		buttonCheck(11);
 	}
@@ -361,15 +361,15 @@ boolean GetName(char * name){
 boolean GetLockCode(char * code){
 	//WORD_VAL raw;
 	uint8_t i=0;
-	LoadCorePacket(& packetTemp);
-	packetTemp.use.head.Method=BOWLER_GET;
-	packetTemp.use.head.RPC=GetRPCValue("eepd");
-	packetTemp.use.data[0]=LOCKSTART;
-	packetTemp.use.data[1]=DATASTART;
-	packetTemp.use.head.DataLegnth=6;
-	SendPacketToCoProc(& packetTemp);
-	while (packetTemp.use.data[i+2]!='\0'){
-		code[i]=packetTemp.use.data[2+i];
+	LoadCorePacket(& downstreamPacketTemp);
+	downstreamPacketTemp.use.head.Method=BOWLER_GET;
+	downstreamPacketTemp.use.head.RPC=GetRPCValue("eepd");
+	downstreamPacketTemp.use.data[0]=LOCKSTART;
+	downstreamPacketTemp.use.data[1]=DATASTART;
+	downstreamPacketTemp.use.head.DataLegnth=6;
+	SendPacketToCoProc(& downstreamPacketTemp);
+	while (downstreamPacketTemp.use.data[i+2]!='\0'){
+		code[i]=downstreamPacketTemp.use.data[2+i];
 		i++;
 		buttonCheck(10);
 	}
@@ -380,37 +380,37 @@ boolean GetLockCode(char * code){
 void SetName(char * name){
 	//WORD_VAL raw;
 	uint8_t i=0;
-	LoadCorePacket(& packetTemp);
-	packetTemp.use.head.Method=BOWLER_POST;
-	packetTemp.use.head.RPC=GetRPCValue("eepd");
-	packetTemp.use.data[0]=NAMESTART;
-	packetTemp.use.data[1]=LOCKSTART;
+	LoadCorePacket(& downstreamPacketTemp);
+	downstreamPacketTemp.use.head.Method=BOWLER_POST;
+	downstreamPacketTemp.use.head.RPC=GetRPCValue("eepd");
+	downstreamPacketTemp.use.data[0]=NAMESTART;
+	downstreamPacketTemp.use.data[1]=LOCKSTART;
 	while (name[i]!='\0'){
-		packetTemp.use.data[2+i]=name[i];
+		downstreamPacketTemp.use.data[2+i]=name[i];
 		i++;
 		buttonCheck(9);
 	}
-	packetTemp.use.data[2+i]='\0';
-	packetTemp.use.head.DataLegnth=6+i+1;
-	SendPacketToCoProc(& packetTemp);
+	downstreamPacketTemp.use.data[2+i]='\0';
+	downstreamPacketTemp.use.head.DataLegnth=6+i+1;
+	SendPacketToCoProc(& downstreamPacketTemp);
 }
 
 void SetLockCode(char * code){
 	//WORD_VAL raw;
 	uint8_t i=0;
-	LoadCorePacket(& packetTemp);
-	packetTemp.use.head.Method=BOWLER_POST;
-	packetTemp.use.head.RPC=GetRPCValue("eepd");
-	packetTemp.use.data[0]=LOCKSTART;
-	packetTemp.use.data[1]=DATASTART;
+	LoadCorePacket(& downstreamPacketTemp);
+	downstreamPacketTemp.use.head.Method=BOWLER_POST;
+	downstreamPacketTemp.use.head.RPC=GetRPCValue("eepd");
+	downstreamPacketTemp.use.data[0]=LOCKSTART;
+	downstreamPacketTemp.use.data[1]=DATASTART;
 	while (code[i]!='\0'){
-		packetTemp.use.data[2+i]=code[i];
+		downstreamPacketTemp.use.data[2+i]=code[i];
 		i++;
 		buttonCheck(8);
 	}
-	packetTemp.use.data[2+i]='\0';
-	packetTemp.use.head.DataLegnth=6+5;
-	SendPacketToCoProc(& packetTemp);
+	downstreamPacketTemp.use.data[2+i]='\0';
+	downstreamPacketTemp.use.head.DataLegnth=6+5;
+	SendPacketToCoProc(& downstreamPacketTemp);
 }
 
 uint8_t isAscii(char * str){
@@ -426,14 +426,14 @@ uint8_t isAscii(char * str){
 void SyncModes(void){
 
 	uint8_t i;
-	GetAllModes(& packetTemp);
+	GetAllModes(& downstreamPacketTemp);
 	for (i=0;i<NUM_PINS;i++){
-            if(packetTemp.use.data[i] == NO_CHANGE){
+            if(downstreamPacketTemp.use.data[i] == NO_CHANGE){
                 getBcsIoDataTable(i)->PIN.currentChannelMode=IS_DI;
                 down[i].changeMode = true;// force a sync of the no valid mode
                 println_E("FAULT: the mode was set to NO_CHANGE");
             }else{
-                getBcsIoDataTable(i)->PIN.currentChannelMode=packetTemp.use.data[i];
+                getBcsIoDataTable(i)->PIN.currentChannelMode=downstreamPacketTemp.use.data[i];
                 down[i].changeMode = false;
             }
 	}

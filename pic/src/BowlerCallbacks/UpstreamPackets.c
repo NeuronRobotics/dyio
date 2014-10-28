@@ -8,7 +8,7 @@
 
 #include "UserApp.h"
 
-BowlerPacket packetTemp;
+static BowlerPacket packetTemp;
 extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 
 void pushDummy(uint8_t numData){

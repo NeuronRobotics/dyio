@@ -12,7 +12,7 @@ OPTIONAL("libmchp_peripheral_32MX440F128H.a")
  * For interrupt vector handling
  *************************************************************************/
 PROVIDE(_vector_spacing = 0x00000001);
-_ebase_address  = 0x9D000000;
+_ebase_address  = 0x9D001000;
 
 /*************************************************************************
  * Memory Address Equates
