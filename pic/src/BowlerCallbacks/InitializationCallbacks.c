@@ -21,7 +21,7 @@ char macStr[13];
 #if defined(ROBOSUB_DEMO)
 //char * dev = "AHD Wave";
 #else
-char * dev = "DyIO v1.0";
+char  dev [] = "DyIO v1.0";
 #endif
 
 void hardwareInit() {
