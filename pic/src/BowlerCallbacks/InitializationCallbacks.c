@@ -21,7 +21,7 @@ char macStr[13];
 #if defined(ROBOSUB_DEMO)
 //char * dev = "AHD Wave";
 #else
-char * dev = "DyIO v1.0";
+char  dev [] = "DyIO v1.0";
 #endif
 
 void hardwareInit() {
@@ -44,8 +44,10 @@ void hardwareInit() {
         MyMAC.v[i] = MY_MAC_ADDRESS[i];
     }
     StartCritical();
-    //
-    //FlashGetMac(MyMAC.v);
+
+    println_I("Getting MAC from flash");
+    enableFlashStorage(true);
+    FlashGetMac(MyMAC.v);
 
 
     for (i = 0; i < 6; i++) {

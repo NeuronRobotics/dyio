@@ -39,9 +39,9 @@ void InitilizeBcsIo(int numPins,
             dataPtrLocal == NULL
             ) {
         setPrintLevelErrorPrint();
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-        println_E("Failed IO sanity check: failed initialization dataPtrLocal");
-#endif
+//#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
+//        println_E("Failed IO sanity check: failed initialization dataPtrLocal");
+//#endif
         //println_E("Failed IO sanity check: failed initialization dataPtrLocal");
         //FAIL sanity check
         while (1);
@@ -50,9 +50,9 @@ void InitilizeBcsIo(int numPins,
             setChanelValueHWPtrLocal == NULL
             ) {
         setPrintLevelErrorPrint();
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-        println_E("Failed IO sanity check: failed initialization setChanelValueHWPtrLocal");
-#endif
+//#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
+//        println_E("Failed IO sanity check: failed initialization setChanelValueHWPtrLocal");
+//#endif
         //println_E("Failed IO sanity check: failed initialization setChanelValueHWPtrLocal");
         //FAIL sanity check
         while (1);
@@ -61,9 +61,9 @@ void InitilizeBcsIo(int numPins,
             getChanelValueHWPtrLocal == NULL
             ) {
         setPrintLevelErrorPrint();
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-        println_E("Failed IO sanity check: failed initialization getChanelValueHWPtrLocal");
-#endif
+//#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
+//        println_E("Failed IO sanity check: failed initialization getChanelValueHWPtrLocal");
+//#endif
         //println_E("Failed IO sanity check: failed initialization getChanelValueHWPtrLocal");
         //FAIL sanity check
         while (1);
@@ -72,9 +72,9 @@ void InitilizeBcsIo(int numPins,
             setAllChanelValueHWPtrLocal == NULL
             ) {
         setPrintLevelErrorPrint();
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-        println_E("Failed IO sanity check: failed initialization setAllChanelValueHWPtrLocal");
-#endif
+//#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
+//        println_E("Failed IO sanity check: failed initialization setAllChanelValueHWPtrLocal");
+//#endif
         //println_E("Failed IO sanity check: failed initialization setAllChanelValueHWPtrLocal");
         //FAIL sanity check
         while (1);
@@ -83,9 +83,9 @@ void InitilizeBcsIo(int numPins,
             getAllChanelValueHWPtrLocal == NULL
             ) {
         setPrintLevelErrorPrint();
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-        println_E("Failed IO sanity check: failed initialization getAllChanelValueHWPtrLocal");
-#endif
+//#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
+//        println_E("Failed IO sanity check: failed initialization getAllChanelValueHWPtrLocal");
+//#endif
         //println_E("Failed IO sanity check: failed initialization getAllChanelValueHWPtrLocal");
         //FAIL sanity check
         while (1);
@@ -94,9 +94,9 @@ void InitilizeBcsIo(int numPins,
             configChannelHWPtrLocal == NULL
             ) {
         setPrintLevelErrorPrint();
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-        println_E("Failed IO sanity check: failed initialization configChannelHWPtrLocal");
-#endif
+//#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
+//        println_E("Failed IO sanity check: failed initialization configChannelHWPtrLocal");
+//#endif
         //println_E("Failed IO sanity check: failed initialization configChannelHWPtrLocal");
         //FAIL sanity check
         while (1);
@@ -119,10 +119,10 @@ int GetNumberOfIOChannels() {
 uint8_t GetChannelMode(uint8_t pin) {
     if (pin < 0 || pin > GetNumberOfIOChannels()) {
         setPrintLevelErrorPrint();
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-        println_E("Failed IO sanity check: channel number out of bounds # ");
-        p_int_E(pin);
-#endif
+//#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
+//        println_E("Failed IO sanity check: channel number out of bounds # ");
+//        p_int_E(pin);
+//#endif
         //FAIL sanity check
         while (1);
     }
@@ -137,9 +137,9 @@ RunEveryData * getPinsScheduler(int pin) {
 DATA_STRUCT * getBcsIoDataTable(int pin) {
     if (dataPtr == NULL) {
         setPrintLevelErrorPrint();
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-        println_E("Failed IO sanity check: no data table");
-#endif
+//#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
+//        println_E("Failed IO sanity check: no data table");
+//#endif
         //println_E("Failed IO sanity check: no data table");
         //FAIL sanity check
         while (1);
@@ -227,7 +227,7 @@ boolean SetChanelValueFromPacket(BowlerPacket * Packet) {
         time = (float) get32bit(Packet, 5);
 
         getBcsIoDataTable(pin)->PIN.currentValue = data;
-        //println_W("Setting on pin=");p_int_W(pin); print_W(" value= ");p_int_W(data); print_W(" time= ");p_fl_W(time);
+        println_W("Setting on pin=");p_int_W(pin); print_W(" value= ");p_int_W(data); print_W(" time= ");p_fl_W(time);
         if (setChanelValueHWPtr != NULL)
             setChanelValueHWPtr(pin, 1, &data, time);
 

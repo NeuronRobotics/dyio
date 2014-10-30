@@ -22,7 +22,7 @@ char startmessage[]  = "\n\n###Starting AVR In Debug Mode\n";
 void UserInit(void){
 	StartCritical();
 	setPrintLevelWarningPrint();
-	println_I(startmessage);// All printfDEBUG functions do not need to be removed from code if debug is disabled
+	//println_I(startmessage);// All printfDEBUG functions do not need to be removed from code if debug is disabled
 #if defined(DEBUG)
 	ConfigureUART(115200);
 	if(GetChannelMode(16)!=IS_UART_TX)

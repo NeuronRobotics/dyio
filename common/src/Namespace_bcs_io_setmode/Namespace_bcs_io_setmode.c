@@ -15,44 +15,44 @@ boolean bcsIoSetmodeAsyncEventCallback(BowlerPacket *Packet, boolean(*pidAsyncCa
     return false; 
 }
 
-RPC_LIST bcsIoSetmode_schm_p = {BOWLER_POST, // Method
+static RPC_LIST bcsIoSetmode_schm_p = {BOWLER_POST, // Method
     "schm", //RPC as string
     &AbstractSetChannelMode, //function pointer to a packet parsing function
-  ((const char []) {
+  ((const char [4]) {
         BOWLER_I08, // Channel
         BOWLER_I08, // mode
         BOWLER_I08, // async
         0
     }),// Calling arguments
     BOWLER_POST, // response method
-    ((const char []) {
+    ((const char [1]) {
         0
     }),// Calling arguments
     NULL //Termination
 };
 
-RPC_LIST bcsIoSetmode_sacm_p = {BOWLER_POST, // Method
+static RPC_LIST bcsIoSetmode_sacm_p = {BOWLER_POST, // Method
     "sacm", //RPC as string
     &AbstractSetAllChannelMode, //function pointer to a packet parsinf function
-     ((const char []) {
+     ((const char [2]) {
         BOWLER_STR,
         0
     }),// Calling arguments
     BOWLER_POST, // response method
-    ((const char []) {
+    ((const char [1]) {
         0
     }),// Calling arguments
     NULL //Termination
 };
 
 
-NAMESPACE_LIST bcsIoSetmode = {"bcs.io.setmode.*;0.3;;", // The string defining the namespace
+static NAMESPACE_LIST bcsIoSetmode = {"bcs.io.setmode.*;0.3;;", // The string defining the namespace
     NULL, // the first element in the RPC list
     &bcsIoSetmodeAsyncEventCallback, // async for this namespace
     NULL// no initial elements to the other namesapce field.
 };
 
-boolean bcsIoSetnamespcaedAdded = false;
+static boolean bcsIoSetnamespcaedAdded = false;
 
 NAMESPACE_LIST * get_bcsIoSetmodeNamespace() {
     if (!bcsIoSetnamespcaedAdded) {

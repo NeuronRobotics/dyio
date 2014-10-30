@@ -53,14 +53,14 @@ boolean bcsSafeProcessor_p(BowlerPacket * Packet) {
     return true; 
 }
 
-RPC_LIST bcsSafe_safe_g = {BOWLER_GET, // Method
+static RPC_LIST bcsSafe_safe_g = {BOWLER_GET, // Method
     "safe", //RPC as string
     &bcsSafeProcessor_g, //function pointer to a packet parsinf function
-    ((const char [])  {
+    ((const char [1])  {
         0
     }),// Calling arguments
     BOWLER_POST, // response method
-     ((const char []) {
+     ((const char [3]) {
         BOWLER_I08,// heartbeat lockout
         BOWLER_I16,// heartbeet time
         0
@@ -68,16 +68,16 @@ RPC_LIST bcsSafe_safe_g = {BOWLER_GET, // Method
     NULL //Termination
 };
 
-RPC_LIST bcsSafe_safe_p = {BOWLER_POST, // Method
+static RPC_LIST bcsSafe_safe_p = {BOWLER_POST, // Method
     "safe", //RPC as string
     &bcsSafeProcessor_p, //function pointer to a packet parsinf function
-     ((const char []) {
+     ((const char [3]) {
         BOWLER_I08,// heartbeat lockout
         BOWLER_I16,// heartbeet time
         0
     }),// Calling arguments
     BOWLER_POST, // response method
-     ((const char []) {
+     ((const char [3]) {
         BOWLER_I08, // code
         BOWLER_I08, // trace
         0
@@ -87,13 +87,13 @@ RPC_LIST bcsSafe_safe_p = {BOWLER_POST, // Method
 
 
 
-NAMESPACE_LIST bcsSafe = {"bcs.safe.*;0.3;;", // The string defining the namespace
+static NAMESPACE_LIST bcsSafe = {"bcs.safe.*;0.3;;", // The string defining the namespace
     NULL, // the first element in the RPC list
     &bcsSafeAsyncEventCallback, // async for this namespace
     NULL// no initial elements to the other namesapce field.
 };
 
-boolean bcsSafenamespcaedAdded = false;
+static boolean bcsSafenamespcaedAdded = false;
 
 NAMESPACE_LIST * get_bcsSafeNamespace() {
     if (!bcsSafenamespcaedAdded) {

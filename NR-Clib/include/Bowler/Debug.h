@@ -34,6 +34,7 @@ typedef enum _Print_Level{
 #define setPrintLevelInfoPrint() setPrintLevel(INFO_PRINT)
 
 Print_Level setPrintLevel(Print_Level l);
+boolean okToprint(Print_Level l);
 
 Print_Level getPrintLevel();
 /**
@@ -77,7 +78,12 @@ void EnableDebugTerminal(void);
 /**
  * print the null terminated string with a newline inserted at the begining of the string
  */
+<<<<<<< HEAD
 #define println(A,B) printfDEBUG(__FILE__,DEBUG_PRINT);printfDEBUG(A,B)
+=======
+//#define println(A,B) printfDEBUG(__FILE__,DEBUG_PRINT);printfDEBUG(A,B)
+#define println(A,B) printfDEBUG(A,B)
+>>>>>>> branch 'development' of https://github.com/NeuronRobotics/dyio.git
 
 #define printStream(A,B,C) printByteArray(A,B,C);
 
