@@ -83,12 +83,12 @@ void LoadGACM(BowlerPacket * pack){
 	SetCRC(& packetTemp);
 }
 void GetAllModes(BowlerPacket * pack){
-	println_I("GetAllModes");
+//	println_I("GetAllModes");
 	int total=0;
 	do{
 		total++;
 		if (total>5){
-			println_I("Failed returning");
+//			println_I("Failed returning");
 			return;
 		}
 		LoadGACM(pack);
@@ -160,7 +160,7 @@ uint8_t SetAllCoProcMode(){
 			down[i].changeMode=false ;
 			packetTemp.use.head.DataLegnth++;
 		}
-                println_I("Sending mode sync packet");printPacket(&packetTemp,INFO_PRINT);
+//                println_I("Sending mode sync packet");printPacket(&packetTemp,INFO_PRINT);
 		SendPacketToCoProc(& packetTemp);
 	}
 	return true; 
@@ -218,7 +218,7 @@ void SetChannelValueCoProc(uint8_t PIN,uint8_t state){
 	uint8_t retry = 0;
 	do{
 		if(retry>0){
-			println_E("#*#*SetChannelValueCoProc did not return RDY pin: ");p_int_E(PIN);print_E(" mode: ");printMode(GetChannelMode(PIN),ERROR_PRINT);
+//			println_E("#*#*SetChannelValueCoProc did not return RDY pin: ");p_int_E(PIN);print_E(" mode: ");printMode(GetChannelMode(PIN),ERROR_PRINT);
 			printPacket(&packetTemp,ERROR_PRINT);
 			return;
 		}
@@ -259,7 +259,7 @@ uint16_t GetADC(uint8_t PIN){
 	packetTemp.use.head.DataLegnth=5;
 	SendPacketToCoProc(& packetTemp);
 	if (packetTemp.use.head.RPC==_ERR){
-		println_I("Failed to get adc");
+//		println_I("Failed to get adc");
 		return 1;
 	}
 	v.byte.HB=packetTemp.use.data[1];
@@ -289,7 +289,7 @@ boolean GetSerialStream(BowlerPacket * packet){
 }
 
 void GetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
-	println_I("Getting eeprom page: ");p_int_I(start);print_I(" to ");p_int_I(stop);
+//	println_I("Getting eeprom page: ");p_int_I(start);print_I(" to ");p_int_I(stop);
 	//WORD_VAL raw;
 	uint8_t i=0;
 	if (start>stop){
@@ -321,7 +321,7 @@ void GetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
 }
 
 void SetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
-	println_I("Setting eeprom page: ");p_int_I(start);print_I(" to ");p_int_I(stop);
+//	println_I("Setting eeprom page: ");p_int_I(start);print_I(" to ");p_int_I(stop);
 	//WORD_VAL raw;
 	uint8_t i=0;
 	if (start>=stop)
@@ -335,7 +335,7 @@ void SetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
 		packetTemp.use.data[2+i]=data[i];
 	}
 	packetTemp.use.head.DataLegnth=6+stop-start;
-	println_I("Sent data to coproc's eeprom");
+//	println_I("Sent data to coproc's eeprom");
 	SendPacketToCoProc(& packetTemp);
 }
 

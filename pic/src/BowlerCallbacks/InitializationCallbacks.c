@@ -44,7 +44,7 @@ void hardwareInit() {
         MyMAC.v[i] = MY_MAC_ADDRESS[i];
     }
     StartCritical();
-    //println_I("Getting MAC from flash");
+    //
     //FlashGetMac(MyMAC.v);
 
 
@@ -113,8 +113,9 @@ void hardwareInit() {
 
 void UserInit(void) {
     //setPrintStream(&USBPutArray);
+    clearPrint();
     setPrintLevelInfoPrint();
-    //println_I("\n\nStarting PIC initialization");
+    println_I("\n\n\nStarting PIC initialization ");
     //DelayMs(1000);
     hardwareInit();
     //println_I("Hardware Init done");
@@ -143,7 +144,7 @@ void UserInit(void) {
     setBrownOutDetect(brown);
 
 
-    clearPrint();
+    
     //println_I("###Starting PIC In Debug Mode###\n"); // All printfDEBUG functions do not need to be removed from code if debug is disabled
     //DelayMs(1000);
     setPrintLevelWarningPrint();

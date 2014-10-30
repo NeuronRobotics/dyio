@@ -39,7 +39,7 @@ void InitADC(void){
 	if(init==true) 
 		return;
 	init = true; 
-	println_I("Start Initialized the ADC");
+//	println_I("Start Initialized the ADC");
 	uint8_t i,j;
 
 	adc[0].adcChan=15;
@@ -55,7 +55,7 @@ void InitADC(void){
 			calc(&adc[i]);
 		}
 	}
-	println_I("Finish Initializing the ADC");
+//	println_I("Finish Initializing the ADC");
 
 
 }

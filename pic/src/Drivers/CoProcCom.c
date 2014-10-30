@@ -91,7 +91,7 @@ void startUartCoProc(){
 	if(coProcRunning == true) 
 		return;
 
-	println_I("startUartCoProc");
+//	println_I("startUartCoProc");
 
 	//Rx should be open collector
 	mPORTFOpenDrainOpen(BIT_5);
@@ -122,7 +122,7 @@ void startUartCoProc(){
 }
 
 void initCoProcUART(){
-	println_I("initCoProcUART");
+//println_I("initCoProcUART");
 	coProcRunning =false; 
 #if defined(USE_DMA)
 	closeDma();
@@ -167,7 +167,7 @@ void uartErrorCheck(){
 }
 
 void initCoProcCom(){
-	println_I("initCoProcCom");
+//	println_I("initCoProcCom");
 	CoProcComInit = true;
 	StartCritical();
 	InitByteFifo(&store,privateRX,sizeof(privateRX));
@@ -183,7 +183,7 @@ void SendPacketToCoProc(BowlerPacket * Packet){
 
 	processing=true; 
 	if(CoProcComInit == false) {
-		println_I("SendPacketToCoProc Co-proc initializing..");
+//		println_I("SendPacketToCoProc Co-proc initializing..");
 		initCoProcCom();
 	}
 
@@ -202,14 +202,14 @@ void SendPacketToCoProc(BowlerPacket * Packet){
 
 
 	if (i==MAX_RETRY){
-		println_E("#Five times failed, co-proc reset: ");printPacket(Packet,ERROR_PRINT);
+		println_E("#Fail:");printPacket(Packet,ERROR_PRINT);
 		SetColor(1,0,0);
 		initCoProcCom();
 		PowerCycleAVR();
 		DelayMs(200);
 		ret = sendPacket(Packet);
 		if(ret == 0){
-			println_W("##SUCCESS! OK after AVR reset");
+			println_W("AVR reset");
 			return;
 		}
 		//println_E("##Failed sending to co-proc after reset also!!:");
@@ -224,7 +224,7 @@ void SendPacketToCoProc(BowlerPacket * Packet){
 }
 
 uint8_t sendPacket(BowlerPacket * Packet){
-	println_I("sendPacket");
+//	println_I("sendPacket");
 	uint8_t i;
 	//int serIndex;
 
@@ -260,7 +260,7 @@ uint8_t sendPacket(BowlerPacket * Packet){
 				}else{
 					//println_I("Not async");
 					if(!valadateRPC(downstream.use.head.RPC,Packet->use.head.RPC) ){
-						println_E("@@#@#@@Valadation failed, junk TX>>");printPacket(Packet,ERROR_PRINT);print_E("\nRX<<\n");printPacket(&downstream,ERROR_PRINT);
+						println_E("Valadation failed, junk TX>>");printPacket(Packet,ERROR_PRINT);print_E("\nRX<<\n");printPacket(&downstream,ERROR_PRINT);
 						//SendPacketUARTCoProc(Packet->stream,packetSize);
 						SetColor(1,0,0);
 						//wait.MsTime += 2;
@@ -275,13 +275,13 @@ uint8_t sendPacket(BowlerPacket * Packet){
 
 			buttonCheck(4);
 		}
-		println_E("#Response Timed Out, took: ");p_fl_E(getMs()-packStartTime);
-		print_E(" ms to send:\n");printPacket(Packet,ERROR_PRINT);
+		println_E("Rx took: ");p_fl_E(getMs()-packStartTime);
+		printPacket(Packet,ERROR_PRINT);
 		printFiFoState_E(&store,downstream.stream);
 		PushCoProcAsync();//clear out any packets
 		return 2;
 	}else{
-		println_E("@Transmit Timed Out, took: ");p_fl_E(getMs()-packStartTime);print_E(" ms");
+		println_E("Tx took: ");p_fl_E(getMs()-packStartTime);
 		return 1;
 	}
 }

@@ -32,15 +32,15 @@ boolean SetChannelMode(uint8_t pin,uint8_t mode){
 		println_E("Set mode pointer not set!")
 		return false; 
 	}
-	println_I("Abstract_bcs_io_setmode Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_int_I(pin);
+	//println_I("Abstract_bcs_io_setmode Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_int_I(pin);
 
 	boolean ok = setChanelModeHWPtr(pin,mode);
-	print_I(" Hardware ok");
+	//print_I(" Hardware ok");
 
 	getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
 	if(IsAsync(pin)){
 
-		print_I(" Restarting async");
+		//print_I(" Restarting async");
 
 		startAdvancedAsyncDefault(pin);
 	}

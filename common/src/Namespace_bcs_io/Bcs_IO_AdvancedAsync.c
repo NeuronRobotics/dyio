@@ -20,7 +20,7 @@ void initAdvancedAsync(){
 		//println_W("All ready initialized advanced async");
 		return;
 	}
-	println_W("Initializing advanced async");
+	//println_W("Initializing advanced async");
 	isInit=true; 
 	int i;
 	for (i=0;i<GetNumberOfIOChannels();i++){
@@ -136,7 +136,7 @@ boolean configAdvancedAsync(BowlerPacket * Packet){
 
 
 void startAdvancedAsyncDefault(uint8_t pin){
-	println_I("Starting advanced async on channel: ");p_int_I(pin);
+	//println_I("Starting advanced async on channel: ");p_int_I(pin);
 	getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal=1;
 	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=1;
 	getBcsIoDataTable(pin)->asyncDataTimer.MsTime=getMs();
@@ -159,7 +159,7 @@ void startAdvancedAsyncDefault(uint8_t pin){
 	}
 
 	//RunEvery(getPinsScheduler( pin));
-	println_I("Async OK");
+	//println_I("Async OK");
 }
 
 
@@ -251,7 +251,7 @@ boolean pushAsyncReady( uint8_t pin){
 			}
 			break;
 		default:
-			print_I("\nNo type defined!! chan: ");p_int_I(pin);print_I(" mode: ");printMode(GetChannelMode(pin),INFO_PRINT);print_I(" type: ");printAsyncType(getBcsIoDataTable(pin)->PIN.asyncDataType);
+			//print_I("\nNo type defined!! chan: ");p_int_I(pin);print_I(" mode: ");printMode(GetChannelMode(pin),INFO_PRINT);print_I(" type: ");printAsyncType(getBcsIoDataTable(pin)->PIN.asyncDataType);
 			startAdvancedAsyncDefault(pin);
 			break;
 		}
