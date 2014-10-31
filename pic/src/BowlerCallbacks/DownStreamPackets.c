@@ -6,13 +6,13 @@
  */
 
 #include "UserApp.h"
-static BowlerPacket downstreamPacketTemp;
+BowlerPacket downstreamPacketTemp;
 static uint8_t isAscii(char * str);
 
 static boolean bankA=true , bankB=true;
 static uint8_t batteryCode0=0,batteryCode1=0;
 
-static Downstream_Data down[NUM_PINS];
+Downstream_Data down[NUM_PINS];
 
 
 void forceValueDownstream(int8_t pin){
@@ -160,13 +160,10 @@ uint8_t SetAllCoProcMode(){
 			down[i].changeMode=false ;
 			downstreamPacketTemp.use.head.DataLegnth++;
 		}
-<<<<<<< HEAD
+
 //                println_I("Sending mode sync packet");printPacket(&packetTemp,INFO_PRINT);
-		SendPacketToCoProc(& packetTemp);
-=======
-                println_I("Sending mode sync packet");printPacket(&downstreamPacketTemp,INFO_PRINT);
 		SendPacketToCoProc(& downstreamPacketTemp);
->>>>>>> branch 'development' of https://github.com/NeuronRobotics/dyio.git
+
 	}
 	return true; 
 }
@@ -223,13 +220,9 @@ void SetChannelValueCoProc(uint8_t PIN,uint8_t state){
 	uint8_t retry = 0;
 	do{
 		if(retry>0){
-<<<<<<< HEAD
-//			println_E("#*#*SetChannelValueCoProc did not return RDY pin: ");p_int_E(PIN);print_E(" mode: ");printMode(GetChannelMode(PIN),ERROR_PRINT);
-			printPacket(&packetTemp,ERROR_PRINT);
-=======
-			println_E("#*#*SetChannelValueCoProc did not return RDY pin: ");p_int_E(PIN);print_E(" mode: ");printMode(GetChannelMode(PIN),ERROR_PRINT);
+
+			//println_E("#*#*SetChannelValueCoProc did not return RDY pin: ");p_int_E(PIN);print_E(" mode: ");printMode(GetChannelMode(PIN),ERROR_PRINT);
 			printPacket(&downstreamPacketTemp,ERROR_PRINT);
->>>>>>> branch 'development' of https://github.com/NeuronRobotics/dyio.git
 			return;
 		}
 		LoadCorePacket(& downstreamPacketTemp);

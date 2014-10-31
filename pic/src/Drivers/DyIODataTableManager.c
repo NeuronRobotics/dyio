@@ -1,7 +1,7 @@
 #include "UserApp.h"
 
-uint8_t privateSerialRX[BOWLER_PacketSize];
-uint8_t privateSerialTX[BOWLER_PacketSize];
+uint8_t privateSerialRX[20];
+uint8_t privateSerialTX[20];
 BYTE_FIFO_STORAGE storeRx;
 BYTE_FIFO_STORAGE storeTx;
 //BowlerPacket dataTableSync;

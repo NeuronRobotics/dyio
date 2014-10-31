@@ -18,30 +18,25 @@ boolean bcsIoSetmodeAsyncEventCallback(BowlerPacket *Packet, boolean(*pidAsyncCa
 static RPC_LIST bcsIoSetmode_schm_p = {BOWLER_POST, // Method
     "schm", //RPC as string
     &AbstractSetChannelMode, //function pointer to a packet parsing function
-  ((const char [4]) {
+  {
         BOWLER_I08, // Channel
         BOWLER_I08, // mode
         BOWLER_I08, // async
         0
-    }),// Calling arguments
+    }, // Calling arguments
     BOWLER_POST, // response method
-    ((const char [1]) {
-        0
-    }),// Calling arguments
+    {0}, // Calling arguments
     NULL //Termination
 };
 
 static RPC_LIST bcsIoSetmode_sacm_p = {BOWLER_POST, // Method
     "sacm", //RPC as string
     &AbstractSetAllChannelMode, //function pointer to a packet parsinf function
-     ((const char [2]) {
-        BOWLER_STR,
+    { BOWLER_STR,
         0
-    }),// Calling arguments
+    }, // Calling arguments
     BOWLER_POST, // response method
-    ((const char [1]) {
-        0
-    }),// Calling arguments
+    {0}, // Calling arguments
     NULL //Termination
 };
 
