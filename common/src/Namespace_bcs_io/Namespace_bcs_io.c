@@ -268,7 +268,7 @@ NAMESPACE_LIST * get_bcsIoNamespace() {
         addRpcToNamespace(&bcsIo, & bcsIo_asyn_c);
 
         //IO stack initilizations
-        initAdvancedAsync();
+        //initAdvancedAsync();
 
     }
 

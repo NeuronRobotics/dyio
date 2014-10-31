@@ -13,19 +13,20 @@
 #define ADCINIT 0xFFFF
 #define FASTIO
 
-boolean isInit=false; 
+static boolean isInit=false;
 
 void initAdvancedAsync(){
 	if(isInit == true) {
 		//println_W("All ready initialized advanced async");
 		return;
 	}
-	//println_W("Initializing advanced async");
+	
 	isInit=true; 
 	int i;
 	for (i=0;i<GetNumberOfIOChannels();i++){
 		startAdvancedAsyncDefault(i);
 	}
+        println_W("Initializing advanced async");
 }
 
 void setAsync(uint8_t pin,boolean async){
@@ -136,7 +137,7 @@ boolean configAdvancedAsync(BowlerPacket * Packet){
 
 
 void startAdvancedAsyncDefault(uint8_t pin){
-	//println_I("Starting advanced async on channel: ");p_int_I(pin);
+	println_I("Starting advanced async on channel: ");p_int_I(pin);
 	getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal=1;
 	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=1;
 	getBcsIoDataTable(pin)->asyncDataTimer.MsTime=getMs();
@@ -158,7 +159,7 @@ void startAdvancedAsyncDefault(uint8_t pin){
 		break;
 	}
 
-	//RunEvery(getPinsScheduler( pin));
+	RunEvery(getPinsScheduler( pin));
 	//println_I("Async OK");
 }
 

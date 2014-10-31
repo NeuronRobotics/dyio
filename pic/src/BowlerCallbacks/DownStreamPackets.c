@@ -7,10 +7,10 @@
 
 #include "UserApp.h"
 BowlerPacket downstreamPacketTemp;
-static uint8_t isAscii(char * str);
+  uint8_t isAscii(char * str);
 
-static boolean bankA=true , bankB=true;
-static uint8_t batteryCode0=0,batteryCode1=0;
+  boolean bankA=true , bankB=true;
+  uint8_t batteryCode0=0,batteryCode1=0;
 
 Downstream_Data down[NUM_PINS];
 
