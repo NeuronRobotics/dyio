@@ -78,12 +78,8 @@ void EnableDebugTerminal(void);
 /**
  * print the null terminated string with a newline inserted at the begining of the string
  */
-<<<<<<< HEAD
 #define println(A,B) printfDEBUG(__FILE__,DEBUG_PRINT);printfDEBUG(A,B)
-=======
-//#define println(A,B) printfDEBUG(__FILE__,DEBUG_PRINT);printfDEBUG(A,B)
-#define println(A,B) printfDEBUG(A,B)
->>>>>>> branch 'development' of https://github.com/NeuronRobotics/dyio.git
+//#define println(A,B) printfDEBUG(A,B)
 
 #define printStream(A,B,C) printByteArray(A,B,C);
 
