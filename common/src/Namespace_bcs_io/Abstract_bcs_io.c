@@ -227,7 +227,7 @@ boolean SetChanelValueFromPacket(BowlerPacket * Packet) {
         time = (float) get32bit(Packet, 5);
 
         getBcsIoDataTable(pin)->PIN.currentValue = data;
-        println_W("Setting on pin=");p_int_W(pin); print_W(" value= ");p_int_W(data); print_W(" time= ");p_fl_W(time);
+        //println_W("Setting on pin=");p_int_W(pin); print_W(" value= ");p_int_W(data); print_W(" time= ");p_fl_W(time);
         if (setChanelValueHWPtr != NULL)
             setChanelValueHWPtr(pin, 1, &data, time);
 

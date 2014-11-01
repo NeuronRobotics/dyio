@@ -8,7 +8,7 @@
 
 char					LockCode[5];
 char 					Name[17];
-char defaultName[] = "DyIO Module     ";
+char defaultName[] = "DyIO Module";
 char defaultlock[] = "0000";
 
 extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));

@@ -23,8 +23,7 @@ boolean bcsIoAsyncEventCallback(BowlerPacket *Packet, boolean (*pidAsyncCallback
         }
     }
     if (update) {
-        println_I(__FILE__);
-        println_I("Async: ");
+
         populateGACV(Packet);
         Packet->use.head.Method = BOWLER_ASYN;
         FixPacket(Packet);

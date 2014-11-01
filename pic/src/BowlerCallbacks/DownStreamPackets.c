@@ -292,6 +292,7 @@ boolean GetSerialStream(BowlerPacket * packet){
 	return false; 
 }
 
+char * eepd = "eepd";
 void GetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
 //	println_I("Getting eeprom page: ");p_int_I(start);print_I(" to ");p_int_I(stop);
 	//WORD_VAL raw;
@@ -311,13 +312,13 @@ void GetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
 			downstreamPacketTemp.use.data[i] = data[i];
 		}
 		downstreamPacketTemp.use.head.Method=BOWLER_GET;
-		downstreamPacketTemp.use.head.RPC=GetRPCValue("eepd");
+		downstreamPacketTemp.use.head.RPC=GetRPCValue(eepd);
 		downstreamPacketTemp.use.data[0]=start+DATASTART;
 		downstreamPacketTemp.use.data[1]=stop+DATASTART;
 		downstreamPacketTemp.use.head.DataLegnth=6;
 		SendPacketToCoProc(& downstreamPacketTemp);
 		buttonCheck(12);
-	}while(downstreamPacketTemp.use.head.RPC != GetRPCValue("eepd"));
+	}while(downstreamPacketTemp.use.head.RPC != GetRPCValue(eepd));
 
 	for (i=0;i<(stop-start);i++){
 		data[i]=downstreamPacketTemp.use.data[i];
@@ -332,7 +333,7 @@ void SetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
 		return;
 	LoadCorePacket(& downstreamPacketTemp);
 	downstreamPacketTemp.use.head.Method=BOWLER_POST;
-	downstreamPacketTemp.use.head.RPC=GetRPCValue("eepd");
+	downstreamPacketTemp.use.head.RPC=GetRPCValue(eepd);
 	downstreamPacketTemp.use.data[0]=start+DATASTART;
 	downstreamPacketTemp.use.data[1]=stop+DATASTART;
 	for (i=0;i<(stop-start);i++){
@@ -349,7 +350,7 @@ boolean GetName(char * name){
 	uint8_t i=0;
 	LoadCorePacket(& downstreamPacketTemp);
 	downstreamPacketTemp.use.head.Method=BOWLER_GET;
-	downstreamPacketTemp.use.head.RPC=GetRPCValue("eepd");
+	downstreamPacketTemp.use.head.RPC=GetRPCValue(eepd);
 	downstreamPacketTemp.use.data[0]=NAMESTART;
 	downstreamPacketTemp.use.data[1]=LOCKSTART;
 	downstreamPacketTemp.use.head.DataLegnth=6;
@@ -370,7 +371,7 @@ boolean GetLockCode(char * code){
 	uint8_t i=0;
 	LoadCorePacket(& downstreamPacketTemp);
 	downstreamPacketTemp.use.head.Method=BOWLER_GET;
-	downstreamPacketTemp.use.head.RPC=GetRPCValue("eepd");
+	downstreamPacketTemp.use.head.RPC=GetRPCValue(eepd);
 	downstreamPacketTemp.use.data[0]=LOCKSTART;
 	downstreamPacketTemp.use.data[1]=DATASTART;
 	downstreamPacketTemp.use.head.DataLegnth=6;
@@ -391,7 +392,7 @@ void SetName(char * name){
 	uint8_t i=0;
 	LoadCorePacket(& downstreamPacketTemp);
 	downstreamPacketTemp.use.head.Method=BOWLER_POST;
-	downstreamPacketTemp.use.head.RPC=GetRPCValue("eepd");
+	downstreamPacketTemp.use.head.RPC=GetRPCValue(eepd);
 	downstreamPacketTemp.use.data[0]=NAMESTART;
 	downstreamPacketTemp.use.data[1]=LOCKSTART;
 	while (name[i]!='\0'){
@@ -411,7 +412,7 @@ void SetLockCode(char * code){
 	uint8_t i=0;
 	LoadCorePacket(& downstreamPacketTemp);
 	downstreamPacketTemp.use.head.Method=BOWLER_POST;
-	downstreamPacketTemp.use.head.RPC=GetRPCValue("eepd");
+	downstreamPacketTemp.use.head.RPC=GetRPCValue(eepd);
 	downstreamPacketTemp.use.data[0]=LOCKSTART;
 	downstreamPacketTemp.use.data[1]=DATASTART;
 	while (code[i]!='\0'){
@@ -444,7 +445,7 @@ void SyncModes(void){
             if(downstreamPacketTemp.use.data[i] == NO_CHANGE){
                 getBcsIoDataTable(i)->PIN.currentChannelMode=IS_DI;
                 down[i].changeMode = true;// force a sync of the no valid mode
-                println_E("FAULT: the mode was set to NO_CHANGE");
+                //println_E("FAULT: the mode was set to NO_CHANGE");
             }else{
                 getBcsIoDataTable(i)->PIN.currentChannelMode=downstreamPacketTemp.use.data[i];
                 down[i].changeMode = false;

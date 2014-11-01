@@ -33,7 +33,7 @@ void runDyIOMain(void){
 	Bowler_Init();// Com Stack Init. Sets up timeout timer, uart 0 and if debug enabled, uart 1
 
 	UserInit();// User code init
-	println_I("Main Loop Start");
+	//println_I("Main Loop Start");
 	while (1){
 		MyServer();
 		buttonCheck(0);
