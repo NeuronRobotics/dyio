@@ -8,9 +8,13 @@
 #ifndef EEPROMMANAGER_H_
 #define EEPROMMANAGER_H_
 
+
+#define NAMESIZE 17
+#define LOCKSIZE 5
+
 #define NAMESTART 0
-#define LOCKSTART 17
-#define DATASTART 22
+#define LOCKSTART (NAMESIZE+NAMESTART)
+#define DATASTART (LOCKSTART +LOCKSIZE)
 #define DATAVALID 37
 #include "Bowler/AbstractPID.h"
 struct _local_pid{

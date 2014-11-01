@@ -358,6 +358,8 @@ boolean GetName(char * name){
 		name[i]=downstreamPacketTemp.use.data[i];
 		i++;
 		buttonCheck(11);
+                if(i==NAMESIZE)
+                    break;
 	}
 	name[i]='\0';
 	return isAscii(name);
@@ -377,6 +379,8 @@ boolean GetLockCode(char * code){
 		code[i]=downstreamPacketTemp.use.data[2+i];
 		i++;
 		buttonCheck(10);
+                if(i==LOCKSIZE)
+                    break;
 	}
 	code[i]='\0';
 	return isAscii(code);
@@ -394,6 +398,8 @@ void SetName(char * name){
 		downstreamPacketTemp.use.data[2+i]=name[i];
 		i++;
 		buttonCheck(9);
+                if(i==NAMESIZE)
+                    break;
 	}
 	downstreamPacketTemp.use.data[2+i]='\0';
 	downstreamPacketTemp.use.head.DataLegnth=6+i+1;
@@ -412,6 +418,8 @@ void SetLockCode(char * code){
 		downstreamPacketTemp.use.data[2+i]=code[i];
 		i++;
 		buttonCheck(8);
+                if(i==LOCKSIZE)
+                    break;
 	}
 	downstreamPacketTemp.use.data[2+i]='\0';
 	downstreamPacketTemp.use.head.DataLegnth=6+5;
