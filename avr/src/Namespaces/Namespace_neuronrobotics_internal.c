@@ -106,45 +106,66 @@ boolean internalProcessor_c(BowlerPacket * Packet){
 
 RPC_LIST internal_eepd_g={	BOWLER_GET,// Method
                                 "eepd",//RPC as string
-                                &internalProcessor_g,//function pointer to a packet parsinf function
+                                &internalProcessor_g,//function pointer to a packet parsing function
+                                {0}, // Calling arguments
+                                BOWLER_POST, // response method
+                                {0}, // Calling arguments
                                 NULL //Termination
 };
 RPC_LIST internal_rev_g={	BOWLER_GET,// Method
                                 "_rev",//RPC as string
-                                &internalProcessor_g,//function pointer to a packet parsinf function
+                                &internalProcessor_g,//function pointer to a packet parsing function
+                                {0}, // Calling arguments
+                                BOWLER_POST, // response method
+                                {0}, // Calling arguments
                                 NULL //Termination
 };
 RPC_LIST internal_save_g={	BOWLER_GET,// Method
                                 "save",//RPC as string
-                                &internalProcessor_g,//function pointer to a packet parsinf function
+                                &internalProcessor_g,//function pointer to a packet parsing function
+                                {0}, // Calling arguments
+                                BOWLER_POST, // response method
+                                {0}, // Calling arguments
                                 NULL //Termination
 };
 
 RPC_LIST internal_pwr_p={	BOWLER_POST,// Method
                                 "_pwr",//RPC as string
-                                &internalProcessor_p,//function pointer to a packet parsinf function
+                                &internalProcessor_p,//function pointer to a packet parsing function
+                                {0}, // Calling arguments
+                                BOWLER_POST, // response method
+                                {0}, // Calling arguments
                                 NULL //Termination
 };
 RPC_LIST internal_eepd_p={	BOWLER_POST,// Method
                                 "eepd",//RPC as string
-                                &internalProcessor_p,//function pointer to a packet parsinf function
+                                &internalProcessor_p,//function pointer to a packet parsing function
+                                {0}, // Calling arguments
+                                BOWLER_POST, // response method
+                                {0}, // Calling arguments
                                 NULL //Termination
 };
 
 
 RPC_LIST internal_mac_c={	BOWLER_CRIT,// Method
                                 "_mac",//RPC as string
-                                &internalProcessor_c,//function pointer to a packet parsinf function
+                                &internalProcessor_c,//function pointer to a packet parsing function
+                                {0}, // Calling arguments
+                                BOWLER_POST, // response method
+                                {0}, // Calling arguments
                                 NULL //Termination
 };
 RPC_LIST internal_pwr_c={	BOWLER_CRIT,// Method
                                 "_pwr",//RPC as string
-                                &internalProcessor_c,//function pointer to a packet parsinf function
+                                &internalProcessor_c,//function pointer to a packet parsing function
+                                {0}, // Calling arguments
+                                BOWLER_POST, // response method
+                                {0}, // Calling arguments
                                 NULL //Termination
 };
 
 
-NAMESPACE_LIST internalNamespace ={	internalNSName,// The string defining the namespace
+NAMESPACE_LIST internalNamespace ={	"neuronrobotics.internal*;0.3;;",// The string defining the namespace
                                 NULL,// the first element in the RPC list
                                 &internalAsyncEventCallback,// async for this namespace
                                 NULL// no initial elements to the other namesapce field.
