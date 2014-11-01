@@ -13,7 +13,7 @@
 #define ADCINIT 0xFFFF
 #define FASTIO
 
-static boolean isInit=false;
+boolean isInit=false;
 
 void initAdvancedAsync(){
 	if(isInit == true) {
