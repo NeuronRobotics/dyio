@@ -262,21 +262,23 @@ boolean pushAsyncReady( uint8_t pin){
 	return false; 
 }
 
-void populateGACV(BowlerPacket * Packet){
-	INT32_UNION s;
-	LoadCorePacket(Packet);
-	Packet->use.head.Method=BOWLER_POST;
-	Packet->use.head.RPC=GetRPCValue("gacv");
-	Packet->use.head.DataLegnth=(GetNumberOfIOChannels()*4)+4;
-	Packet->use.head.MessageID=37;
-	int i;
-	for(i=0;i<GetNumberOfIOChannels();i++){
-		s.Val= getBcsIoDataTable(i)->PIN.asyncDataCurrentVal;
-		Packet->use.data[(i*4)+0]=s.byte.FB;
-		Packet->use.data[(i*4)+1]=s.byte.TB;
-		Packet->use.data[(i*4)+2]=s.byte.SB;
-		Packet->use.data[(i*4)+3]=s.byte.LB;
-	}
-}
+//void populateGACV(BowlerPacket * Packet){
+//	INT32_UNION s;
+//	LoadCorePacket(Packet);
+//	Packet->use.head.Method=BOWLER_POST;
+//	Packet->use.head.RPC=GetRPCValue("gacv");
+//	Packet->use.head.DataLegnth=(GetNumberOfIOChannels()*4)+4+1;
+//	Packet->use.head.MessageID=37;
+//	int i;
+//	for(i=0;i<GetNumberOfIOChannels();i++){
+//		s.Val= getBcsIoDataTable(i)->PIN.asyncDataCurrentVal;
+//		Packet->use.data[(i*4)+0]=s.byte.FB;
+//		Packet->use.data[(i*4)+1]=s.byte.TB;
+//		Packet->use.data[(i*4)+2]=s.byte.SB;
+//		Packet->use.data[(i*4)+3]=s.byte.LB;
+//
+//
+//	}
+//}
 
 

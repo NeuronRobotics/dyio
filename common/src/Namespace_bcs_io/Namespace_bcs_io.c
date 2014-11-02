@@ -11,6 +11,12 @@
 
 //char ioNSName[] = "bcs.io.*;0.3;;";
 
+boolean noAsyncMode=false;
+
+void setNoAsyncMode(boolean m){
+	noAsyncMode = m;
+}
+
 boolean bcsIoAsyncEventCallback(BowlerPacket *Packet, boolean (*pidAsyncCallbackPtr)(BowlerPacket *)) {
 
     int i;
@@ -24,7 +30,7 @@ boolean bcsIoAsyncEventCallback(BowlerPacket *Packet, boolean (*pidAsyncCallback
     }
     if (update) {
 
-        populateGACV(Packet);
+    	GetAllChanelValueFromPacket(Packet);
         Packet->use.head.Method = BOWLER_ASYN;
         FixPacket(Packet);
         printBowlerPacketDEBUG(Packet, INFO_PRINT);
@@ -165,12 +171,12 @@ RPC_LIST bcsIo_schv_p = {BOWLER_POST, // Method
 RPC_LIST bcsIo_sacv_p = {BOWLER_POST, // Method
     "sacv", //RPC as string
     &SetAllChannelValueFromPacket, //function pointer to a packet parsing function
-    {BOWLER_STR,
+    {   BOWLER_I32, // time in ms
+        BOWLER_I32STR,
         0
     }, // Calling arguments
     BOWLER_POST, // response method
-    {BOWLER_I08, // code
-        BOWLER_I08, // trace
+    {   BOWLER_I32STR,
         0
     }, // Calling arguments
     NULL //Termination

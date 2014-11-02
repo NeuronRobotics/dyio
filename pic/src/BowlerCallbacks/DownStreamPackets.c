@@ -169,50 +169,47 @@ uint8_t SetAllCoProcMode(){
 }
 uint8_t SetAllCoProcValues(){
 	int i=0;
-	boolean send = false; 
-	for(i=0;i<GetNumberOfIOChannels();i++){
-		if( down[i].changeValue == true){
-                    //println_W("Pin Value Changed ");p_int_W(i);print_W(" to ");p_int_W(getBcsIoDataTable(i)->PIN.currentValue);
-			 send=true;
-                         SetChannelValueCoProc(i,getBcsIoDataTable(i)->PIN.currentValue);
-                         down[i].changeValue =false ;
-		}
-	}
-	//int32_t tmp;
-//	if(send){
-//		LoadCorePacket(& downstreamPacketTemp);
-//		downstreamPacketTemp.use.head.Method=BOWLER_POST;
-//		downstreamPacketTemp.use.head.RPC=GetRPCValue("sacv");
-//		downstreamPacketTemp.use.head.DataLegnth = 4;
-//		for(i=0;i<GetNumberOfIOChannels();i++){
-//			tmp = getBcsIoDataTable(i)->PIN.currentValue ;
-//			down[i].changeValue =false ;
-//			set32bit(& downstreamPacketTemp,tmp,i*4);
-//			downstreamPacketTemp.use.head.DataLegnth +=4;
-//		}
-//                println_I("Syncing channel values ");printPacket(&downstreamPacketTemp,INFO_PRINT);
-//		SendPacketToCoProc(& downstreamPacketTemp);
-//	}
-
-//        LoadCorePacket(& downstreamPacketTemp);
-//	downstreamPacketTemp.use.head.Method=BOWLER_GET;
-//	downstreamPacketTemp.use.head.RPC=GetRPCValue("gacv");
-//	downstreamPacketTemp.use.head.DataLegnth=4;
-//	SendPacketToCoProc(& downstreamPacketTemp);
-//	if (downstreamPacketTemp.use.head.RPC==_ERR){
-//		println_I("Failed to get channel values");
-//		return 1;
-//	}
-//
+	boolean send = true;
 //	for(i=0;i<GetNumberOfIOChannels();i++){
-//            SetValFromAsync(i,get32bit(& downstreamPacketTemp, i*4));
-//        }
+//		if( down[i].changeValue == true){
+//                    //println_W("Pin Value Changed ");p_int_W(i);print_W(" to ");p_int_W(getBcsIoDataTable(i)->PIN.currentValue);
+//			 send=true;
+//                         SetChannelValueCoProc(i,getBcsIoDataTable(i)->PIN.currentValue);
+//                         down[i].changeValue =false ;
+//		}
+//	}
+//	for(i=0;i<GetNumberOfIOChannels();i++){
+//		if(GetChannelMode(i)==IS_ANALOG_IN){
+//			GetADC(i);
+//		}
+//	}
+	int32_t tmp;
+	if(send){
+		LoadCorePacket(& downstreamPacketTemp);
+		downstreamPacketTemp.use.head.Method=BOWLER_POST;
+		downstreamPacketTemp.use.head.RPC=GetRPCValue("sacv");
+                set32bit(& downstreamPacketTemp,123,0);// setting the translation time
+                downstreamPacketTemp.use.data[4] = GetNumberOfIOChannels();
+		for(i=0;i<GetNumberOfIOChannels();i++){
+			tmp = getBcsIoDataTable(i)->PIN.currentValue ;
+			down[i].changeValue =false ;
+			set32bit(& downstreamPacketTemp,tmp,(i*4)+5);
+		}
 
-      	for(i=0;i<GetNumberOfIOChannels();i++){
-            if(GetChannelMode(i)==IS_ANALOG_IN){
-                GetADC(i);
-            }
-        }
+                downstreamPacketTemp.use.head.DataLegnth = 4+4+1+(4*GetNumberOfIOChannels());
+//                clearPrint();
+//                println_W("Syncing channel values ");printPacket(&downstreamPacketTemp,WARN_PRINT);
+		SendPacketToCoProc(& downstreamPacketTemp);
+//		printPacket(&downstreamPacketTemp,ERROR_PRINT);
+	}
+
+
+	for(i=0;i<GetNumberOfIOChannels();i++){
+            SetValFromAsync(i,get32bit(& downstreamPacketTemp, (i*4)+1));
+	}
+
+	getBcsIoDataTable(0)->PIN.currentValue = GetValFromAsync(23);
+
 	return true;
 }
 

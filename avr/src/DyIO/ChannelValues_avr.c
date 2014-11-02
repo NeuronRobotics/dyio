@@ -45,7 +45,11 @@ boolean SetChanelValueHW(uint8_t pin,uint8_t numValues,int32_t * data, float ms)
 		if(isSingleByteMode(mode)){
 			int32_t time = (int32_t)ms;
 			//mask the time into the data byte
-			getBcsIoDataTable(pin)->PIN.currentValue = (time<<16)|(data[0]&0x000000ff);
+			int32_t tmp = (data[0]&0x000000ff);
+			if(tmp !=getBcsIoDataTable(pin)->PIN.currentValue ){
+				getBcsIoDataTable(pin)->PIN.currentValue = (data[0]&0x000000ff);
+				SetChanVal(pin,getBcsIoDataTable(pin)->PIN.currentValue, ms);
+			}
 		}
 		return true; 
 	}
@@ -90,8 +94,12 @@ boolean GetChanelValueHW(uint8_t pin,uint8_t * numValues,int32_t * data){
 		}
 		if(isSingleByteMode(mode)){
 			//mask the time into the data byte
-			 data[0] = getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal & 0x000000ff;
+			data[0] = getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal & 0x000000ff;
+
+		}else{
+			data[0] = getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
 		}
+		//data[0] = pin;
 		return true; 
 	}
 	return true; 

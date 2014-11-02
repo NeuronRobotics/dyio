@@ -22,11 +22,14 @@ char startmessage[]  = "\n\n###Starting AVR In Debug Mode\n";
 void UserInit(void){
 	StartCritical();
 	setPrintLevelWarningPrint();
-	//println_I(startmessage);// All printfDEBUG functions do not need to be removed from code if debug is disabled
+	clearPrint();
+	println_W(startmessage);// All printfDEBUG functions do not need to be removed from code if debug is disabled
 #if defined(DEBUG)
 	ConfigureUART(115200);
 	if(GetChannelMode(16)!=IS_UART_TX)
 		setMode(16,IS_UART_TX);
+	setMode(0,IS_DO);
+	setMode(23,IS_DI);
 #endif
 	//println_I(/*PSTR*/("\n\n***Starting User initialization***"));
 	InitFlagPins();
@@ -41,9 +44,7 @@ void UserInit(void){
 	SPISlaveInit();
 #endif
 
-//	setMethodCallback(BOWLER_GET,UserGetRPCs);
-//	setMethodCallback(BOWLER_POST,UserPostRPCs);
-//	setMethodCallback(BOWLER_CRIT,UserCriticalRPCs);
+
 	//println_I(/*PSTR*/("Starting Pin Initialization"));
 	InitPins();
 	//println_I(/*PSTR*/("Adding IO Initialization"));

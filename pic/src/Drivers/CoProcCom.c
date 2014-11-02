@@ -360,6 +360,8 @@ boolean valadateRPC(int response,int sent){
 		switch(response){
 		case _RDY:
 		case _ERR:
+                case GACM:
+                case SCHV:
 			return true; 
 		default:
 			return false; 
@@ -368,6 +370,7 @@ boolean valadateRPC(int response,int sent){
 		switch(response){
 		case _RDY:
 		case _ERR:
+                case GACV:
 			return true; 
 		default:
 			return false; 

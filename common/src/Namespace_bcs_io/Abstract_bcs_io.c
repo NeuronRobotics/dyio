@@ -237,24 +237,22 @@ boolean SetChanelValueFromPacket(BowlerPacket * Packet) {
 }
 
 boolean SetAllChannelValueFromPacket(BowlerPacket * Packet) {
-    int32_t * data = (int32_t *) (Packet->use.data + 4);
+    int32_t * data = (int32_t *) (&Packet->use.data[5] );
     uint32_t tmp;
     if (setAllChanelValueHWPtr != NULL) {
-        UINT32_UNION time;
+    	uint32_t time;
         uint8_t i;
 
-        time.byte.FB = Packet->use.data[0];
-        time.byte.TB = Packet->use.data[1];
-        time.byte.SB = Packet->use.data[2];
-        time.byte.LB = Packet->use.data[3];
+        time=get32bit(Packet, 0);
+
         for (i = 0; i < GetNumberOfIOChannels(); i++) {
-            tmp = get32bit(Packet, i * 4);
+            tmp = get32bit(Packet, (i*4) +5);
             getBcsIoDataTable(i)->PIN.currentValue = tmp;
             data[i] = tmp;
         }
-        setAllChanelValueHWPtr(data, time.Val);
-        READY(Packet, 3, 3);
-        FixPacket(Packet);
+        setAllChanelValueHWPtr(data, time);
+        //READY(Packet, 3, 3);
+        GetAllChanelValueFromPacket(Packet);
     } else {
         return false;
     }
@@ -291,8 +289,6 @@ boolean GetChanelValueFromPacket(BowlerPacket * Packet) {
 //        }
         set32bit(Packet, data, 1);
         numValues = 4;
-
-
     }
     Packet->use.head.DataLegnth = 4 + 1 + numValues;
     FixPacket(Packet);
@@ -300,17 +296,18 @@ boolean GetChanelValueFromPacket(BowlerPacket * Packet) {
 }
 
 boolean GetAllChanelValueFromPacket(BowlerPacket * Packet) {
-    int32_t * data = (int32_t *) (Packet->use.data);
+    int32_t * data = (int32_t *) (&Packet->use.data[1]);
     if (getAllChanelValueHWPtr != NULL) {
         int i;
         int32_t tmp;
-        getAllChanelValueHWPtr((int32_t *) Packet->use.data);
+        getAllChanelValueHWPtr((int32_t *) (&Packet->use.data[1]));
         for (i = 0; i < GetNumberOfIOChannels(); i++) {
             tmp = data[i];
             getBcsIoDataTable(i)->PIN.currentValue = tmp;
-            set32bit(Packet, tmp, i * 4);
+            set32bit(Packet, tmp, (i*4)+1);
         }
-        Packet->use.head.DataLegnth = 4 + GetNumberOfIOChannels()*4;
+        Packet->use.data[0]=(GetNumberOfIOChannels());
+        Packet->use.head.RPC=GetRPCValue("gacv");
     } else
         return false;
     FixPacket(Packet);
@@ -438,29 +435,29 @@ void printConfigurations() {
     for (i = 0; i < GetNumberOfIOChannels(); i++) {
         println_I("\t# ");
         p_int_I(i);
-        //print_I("\tCurrent ");p_int_I(getBcsIoDataTable(i)->PIN.currentConfiguration);
-        //print_I("\tPrevious ");p_int_I(getBcsIoDataTable(i)->PIN.previousConfiguration);
+//        print_I("\tCurrent ");p_int_I(getBcsIoDataTable(i)->PIN.currentConfiguration);
+//        print_I("\tPrevious ");p_int_I(getBcsIoDataTable(i)->PIN.previousConfiguration);
     }
 }
 
 void printAsync() {
-//    int i;
+    int i;
     println_I("Async Data ");
     p_fl_I(getMs());
-//    for (i = 0; i < GetNumberOfIOChannels(); i++) {
-//        println_I("\t# ");
-//        p_int_I(i);
-//        print_I("\tCurrent ");
-//        p_int_I(getBcsIoDataTable(i)->PIN.asyncDataCurrentVal);
-//        print_I("\tPrevious ");
-//        p_int_I(getBcsIoDataTable(i)->PIN.asyncDataPreviousVal);
-//        print_I("\tMode ");
-//        printAsyncType(getBcsIoDataTable(i)->PIN.asyncDataType);
-//        print_I("\tIteration ");
-//        p_fl_I(getBcsIoDataTable(i)->asyncDataTimer.setPoint);
-//        print_I("\tLast ");
-//        p_fl_I(getBcsIoDataTable(i)->asyncDataTimer.MsTime);
-//    }
+    for (i = 0; i < GetNumberOfIOChannels(); i++) {
+        println_I("\t# ");
+        p_int_I(i);
+        print_I("\tCurrent ");
+        p_int_I(getBcsIoDataTable(i)->PIN.asyncDataCurrentVal);
+        print_I("\tPrevious ");
+        p_int_I(getBcsIoDataTable(i)->PIN.asyncDataPreviousVal);
+        print_I("\tMode ");
+        printAsyncType(getBcsIoDataTable(i)->PIN.asyncDataType);
+        print_I("\tIteration ");
+        p_fl_I(getBcsIoDataTable(i)->asyncDataTimer.setPoint);
+        print_I("\tLast ");
+        p_fl_I(getBcsIoDataTable(i)->asyncDataTimer.MsTime);
+    }
 }
 
 

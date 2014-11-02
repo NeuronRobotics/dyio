@@ -202,6 +202,7 @@ DATA_STRUCT * getBcsIoDataTable(int pin);
  */
 
 RunEveryData * getPinsScheduler(int pin);
+void setNoAsyncMode(boolean m);
 
 NAMESPACE_LIST * get_bcsIoNamespace();
 
