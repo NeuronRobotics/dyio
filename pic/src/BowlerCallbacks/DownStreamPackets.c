@@ -167,6 +167,7 @@ uint8_t SetAllCoProcMode(){
 	}
 	return true; 
 }
+int32_t valueLocal;
 uint8_t SetAllCoProcValues(){
 	int i=0;
 	boolean send = true;
@@ -208,8 +209,14 @@ uint8_t SetAllCoProcValues(){
             SetValFromAsync(i,get32bit(& downstreamPacketTemp, (i*4)+1));
 	}
 
-	getBcsIoDataTable(22)->PIN.currentValue = GetValFromAsync(23);
-
+        valueLocal = GetValFromAsync(23);
+        SetChanelValueHW(22, 1, &valueLocal, 0);
+        Print_Level l = getPrintLevel();
+        setPrintLevelInfoPrint();
+        clearPrint();
+        printValues();
+        printModes();
+        setPrintLevel(l);
 	return true;
 }
 
@@ -439,12 +446,12 @@ void SyncModes(void){
 	uint8_t i;
 	GetAllModes(& downstreamPacketTemp);
 	for (i=0;i<NUM_PINS;i++){
-            if(downstreamPacketTemp.use.data[i] == NO_CHANGE){
+            if(downstreamPacketTemp.use.data[i+1] == NO_CHANGE){
                 getBcsIoDataTable(i)->PIN.currentChannelMode=IS_DI;
                 down[i].changeMode = true;// force a sync of the no valid mode
                 //println_E("FAULT: the mode was set to NO_CHANGE");
             }else{
-                getBcsIoDataTable(i)->PIN.currentChannelMode=downstreamPacketTemp.use.data[i];
+                getBcsIoDataTable(i)->PIN.currentChannelMode=downstreamPacketTemp.use.data[i+1];
                 down[i].changeMode = false;
             }
 	}
