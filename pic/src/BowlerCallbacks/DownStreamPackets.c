@@ -208,7 +208,7 @@ uint8_t SetAllCoProcValues(){
             SetValFromAsync(i,get32bit(& downstreamPacketTemp, (i*4)+1));
 	}
 
-	getBcsIoDataTable(0)->PIN.currentValue = GetValFromAsync(23);
+	getBcsIoDataTable(22)->PIN.currentValue = GetValFromAsync(23);
 
 	return true;
 }

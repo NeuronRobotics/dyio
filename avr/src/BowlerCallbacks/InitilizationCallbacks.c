@@ -18,20 +18,17 @@
 
 #include "UserApp_avr.h"
 
-char startmessage[]  = "\n\n###Starting AVR In Debug Mode\n";
 void UserInit(void){
 	StartCritical();
-	setPrintLevelWarningPrint();
-	clearPrint();
+
 	//println_W(startmessage);// All printfDEBUG functions do not need to be removed from code if debug is disabled
 #if defined(DEBUG)
 	ConfigureUART(115200);
 	if(GetChannelMode(16)!=IS_UART_TX)
 		setMode(16,IS_UART_TX);
-	setMode(0,IS_DO);
-	setMode(23,IS_DI);
 #endif
-	//println_I(/*PSTR*/("\n\n***Starting User initialization***"));
+	setPrintLevelInfoPrint();
+	println_I(/*PSTR*/("\e[1;1H\e[2J ***Starting User initialization***"));
 	InitFlagPins();
 	InitBankLEDs();
 	SetPowerState0(0,0);
@@ -45,7 +42,7 @@ void UserInit(void){
 #endif
 
 
-	//println_I(/*PSTR*/("Starting Pin Initialization"));
+
 	InitPins();
 	//println_I(/*PSTR*/("Adding IO Initialization"));
 	addNamespaceToList((NAMESPACE_LIST *)get_bcsIoNamespace());
@@ -60,8 +57,11 @@ void UserInit(void){
 #if defined(USE_AS_LIBRARY)
 	InitializeUserCode();
 #endif
-setPrintLevelInfoPrint();
 	EndCritical();
+	println_I(/*PSTR*/("Starting Pin Initialization"));
+	setMode(22,IS_DO);
+	setMode(23,IS_DI);
+	println_I(/*PSTR*/("Pin done"));
 }
 
 

@@ -7,7 +7,7 @@
 #include "UserApp.h"
 
 #define MAX_RETRY 5
-#define DELAY_TIMEOUT 500
+#define DELAY_TIMEOUT 5000
 
 boolean valadateRPC(int response,int sent);
 uint8_t sendPacket(BowlerPacket * Packet);

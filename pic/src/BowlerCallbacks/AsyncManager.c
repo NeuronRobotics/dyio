@@ -13,8 +13,8 @@
 //AdvancedAsyncData asyncData[NUM_PINS];
 
 void ProcessAsyncData(BowlerPacket * Packet){
-	//println_I("**Got Async Packet**");
-	//printPacket(Packet,INFO_PRINT);
+	println_I("**Got Async Packet**");
+	printPacket(Packet,INFO_PRINT);
 
 	Print_Level l = getPrintLevel();
 	setPrintLevelInfoPrint();
@@ -63,12 +63,12 @@ void ProcessAsyncData(BowlerPacket * Packet){
 				SetValFromAsync(i,Packet->use.data[i]);//asyncData[i].currentVal=Packet->use.data[i];
 			}
 		}
-		//println_I("***Setting All Digital value: ");
+		println_I("***Setting All Digital value: ");
 	}else if (Packet->use.head.RPC==GetRPCValue("gacv")){
 		int i;
 		int val;
 		for(i=0;i<GetNumberOfIOChannels();i++){
-			val = get32bit(Packet, i*4);
+			val = get32bit(Packet, (i*4)+1);
 			if(getBcsIoDataTable(i)->PIN.asyncDataCurrentVal!=val){
 				println_W("Data on Pin ");p_int_W(i);print_W(" to val ");p_int_W(val);
 				SetValFromAsync(i,val);//
