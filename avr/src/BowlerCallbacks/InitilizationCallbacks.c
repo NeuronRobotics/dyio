@@ -23,7 +23,7 @@ void UserInit(void){
 	StartCritical();
 	setPrintLevelWarningPrint();
 	clearPrint();
-	println_W(startmessage);// All printfDEBUG functions do not need to be removed from code if debug is disabled
+	//println_W(startmessage);// All printfDEBUG functions do not need to be removed from code if debug is disabled
 #if defined(DEBUG)
 	ConfigureUART(115200);
 	if(GetChannelMode(16)!=IS_UART_TX)
