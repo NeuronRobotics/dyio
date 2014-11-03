@@ -210,13 +210,13 @@ uint8_t SetAllCoProcValues(){
 	}
 
         valueLocal = GetValFromAsync(23);
-        SetChanelValueHW(22, 1, &valueLocal, 0);
-        Print_Level l = getPrintLevel();
-        setPrintLevelInfoPrint();
-        clearPrint();
-        printValues();
-        //printModes();
-        setPrintLevel(l);
+        //SetChanelValueHW(22, 1, &valueLocal, 0);
+//        Print_Level l = getPrintLevel();
+//        setPrintLevelInfoPrint();
+//        clearPrint();
+//        printValues();
+//        //printModes();
+//        setPrintLevel(l);
 	return true;
 }
 

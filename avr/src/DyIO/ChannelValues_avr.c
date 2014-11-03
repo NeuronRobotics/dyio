@@ -116,9 +116,9 @@ boolean GetChanelValueHW(uint8_t pin,uint8_t * numValues,int32_t * data){
  *
  */
 boolean SetAllChanelValueHW(int32_t * data, float ms){
-    Print_Level l = getPrintLevel();
-    setPrintLevelInfoPrint();
-    clearPrint();
+//    Print_Level l = getPrintLevel();
+//    setPrintLevelInfoPrint();
+//    clearPrint();
 	int i;
 	for(i=0;i<GetNumberOfIOChannels();i++){
 		if(!isStremChannelMode(GetChannelMode(i)))
@@ -126,9 +126,9 @@ boolean SetAllChanelValueHW(int32_t * data, float ms){
 	}
 
 
-    printValues();
-    //printModes();
-    setPrintLevel(l);
+//    printValues();
+//    //printModes();
+//    setPrintLevel(l);
 
 	return true; 
 }
