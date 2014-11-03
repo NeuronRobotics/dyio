@@ -28,7 +28,7 @@ boolean bcsIoAsyncEventCallback(BowlerPacket *Packet, boolean (*pidAsyncCallback
             update = true; 
         }
     }
-    if (update) {
+    if (update &&noAsyncMode==false ) {
 
     	GetAllChanelValueFromPacket(Packet);
         Packet->use.head.Method = BOWLER_ASYN;

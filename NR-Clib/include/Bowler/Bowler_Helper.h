@@ -53,6 +53,8 @@ void set16bit(BowlerPacket * Packet,int16_t val, uint8_t offset);
 
 void set32bit(BowlerPacket * Packet,int32_t val, uint8_t offset);
 
+void setString(BowlerPacket * Packet, char * val, uint8_t offset);
+
 int32_t get32bit(BowlerPacket * Packet, uint8_t offset);
 
 int32_t get16bit(BowlerPacket * Packet, uint8_t offset);

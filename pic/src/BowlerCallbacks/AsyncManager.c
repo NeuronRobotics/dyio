@@ -13,11 +13,10 @@
 //AdvancedAsyncData asyncData[NUM_PINS];
 
 void ProcessAsyncData(BowlerPacket * Packet){
+        Print_Level l = getPrintLevel();
+	setPrintLevelInfoPrint();
 	println_I("**Got Async Packet**");
 	printPacket(Packet,INFO_PRINT);
-
-	Print_Level l = getPrintLevel();
-	setPrintLevelInfoPrint();
 
 	if (Packet->use.head.RPC==GetRPCValue("gchv")){
 		uint8_t pin = Packet->use.data[0];

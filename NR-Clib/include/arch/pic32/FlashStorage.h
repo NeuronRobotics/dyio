@@ -9,7 +9,7 @@
 #define FLASHSTORAGE_H_
 
 #define FLASH_PAGE_SIZE 				0x1000
-#define BootloaderStartStorePhysical        0x1FC02000//End of the bootloader page
+#define BootloaderStartStorePhysical        0x1D01F000///End of the bootloader page
 #define VirtualAddress                      (0x80000000)
 #define DefaultStartStorePhysical           BootloaderStartStorePhysical//end of the chip
 
@@ -26,9 +26,9 @@ typedef struct __attribute__((__packed__)) _FLASH_STORE{
 		uint8_t   blSet;
 		uint8_t   fwSet;
 		uint8_t   bl[3];
-		uint8_t   fw[3];
-	}FLASH_STORE;
-#define FLASHSTORE			sizeof(FLASH_STORE)
+		uint8_t   fw[4];
+	}FlashStorageStruct;
+#define FLASHSTORE			sizeof(FlashStorageStruct)
 uint8_t FlashSetMac(uint8_t * mac);
 void FlashSetName(char * name);
 void FlashGetMac(uint8_t * mac);

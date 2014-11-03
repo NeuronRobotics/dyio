@@ -50,7 +50,7 @@ void UserInit(void){
 	addNamespaceToList((NAMESPACE_LIST *)get_bcsIoSetmodeNamespace());
 	//println_I(/*PSTR*/("Adding Internal Initialization"));
 	addNamespaceToList((NAMESPACE_LIST *)get_internalNamespace());
-
+	setNoAsyncMode(true);
 	//SetPinTris(0,OUTPUT);
 	//SetDIO(0,OFF);
 

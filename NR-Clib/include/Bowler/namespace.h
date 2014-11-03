@@ -17,15 +17,15 @@ typedef struct  _RPC_LIST{
 	//This is the bowler method for this RPC
 	uint8_t bowlerMethod;
 	//This is the 4 byte code for of the RPC
-	const char  rpc[4];
+	char  rpc[4];
 	//This is the callback function pointer for execution of the method
 	packetEventCallback * callback;
         //This is the array of argument data types
-	const char * arguments ;
+	uint8_t  arguments [17] ;
         //This is the bowler method for this RPC
 	uint8_t responseMethod;
         //This is the array of argument data types
-	const char * responseArguments;
+	uint8_t responseArguments[17];
         
 	//This is the linked list field
 	struct _RPC_LIST * next;
@@ -33,7 +33,7 @@ typedef struct  _RPC_LIST{
 
 typedef struct _NAMESPACE_LIST{
 	//This is the string that identifies the names pace
-	const char * namespaceString;
+	char  namespaceString[34];
 	//This is the linked list of the RPC's
 	RPC_LIST * rpcSet;
 	//This is the callback function pointer for checking for async.
