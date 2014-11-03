@@ -46,9 +46,7 @@ boolean SetChanelValueHW(uint8_t pin,uint8_t numValues,int32_t * data, float ms)
 			int32_t time = (int32_t)ms;
 			//mask the time into the data byte
 			int32_t tmp = (data[0]&0x000000ff);
-			if(tmp !=getBcsIoDataTable(pin)->PIN.currentValue ){
-
-				getBcsIoDataTable(pin)->PIN.currentValue = tmp;
+			if(setDataTableCurrentValue(pin,tmp)){
 				if(isOutputMode(mode)){
 					SetChanVal(pin,getBcsIoDataTable(pin)->PIN.currentValue, time);
 				}else{

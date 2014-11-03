@@ -138,7 +138,7 @@ boolean configAdvancedAsync(BowlerPacket * Packet){
 
 void startAdvancedAsyncDefault(uint8_t pin){
 	println_I("Starting advanced async on channel: ");p_int_I(pin);
-	getBcsIoDataTable(pin)->PIN.currentValue=1;
+	setDataTableCurrentValue(pin,1);
 	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=1;
 	getBcsIoDataTable(pin)->asyncDataTimer.MsTime=getMs();
 	getBcsIoDataTable(pin)->asyncDataTimer.setPoint=10;
@@ -152,7 +152,7 @@ void startAdvancedAsyncDefault(uint8_t pin){
 		getBcsIoDataTable(pin)->asyncDataTimer.setPoint=5;
 		break;
 	case IS_ANALOG_IN:
-		getBcsIoDataTable(pin)->PIN.currentValue=ADCINIT;
+		setDataTableCurrentValue(pin,ADCINIT);
 		getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=ADCINIT;
 		getBcsIoDataTable(pin)->PIN.asyncDataType = DEADBAND;
 		getBcsIoDataTable(pin)->PIN.asyncDatadeadBandval=10;
@@ -165,8 +165,7 @@ void startAdvancedAsyncDefault(uint8_t pin){
 
 
 void SetValFromAsync(int pin, int value){
-  
-	getBcsIoDataTable(pin)->PIN.currentValue=value;
+	setDataTableCurrentValue(pin,value);
 }
 
 int GetValFromAsync(int pin){

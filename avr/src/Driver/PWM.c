@@ -126,7 +126,7 @@ void SetPWM(uint8_t pin,uint8_t val){
 		OCR2B =val;
 		break;
 	}
-	getBcsIoDataTable(pin)->PIN.currentValue = val;
+	setDataTableCurrentValue(pin,val);
 }
 
 uint8_t GetPWM(uint8_t pin){

@@ -42,7 +42,7 @@ boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidA
     int i;
     for (i = 0; i < GetNumberOfIOChannels(); i++) {
         if (GetChannelMode(i) == IS_COUNTER_INPUT_INT || GetChannelMode(i) == IS_COUNTER_OUTPUT_INT) {
-            getBcsIoDataTable(i)->PIN.currentValue = GetCounterByChannel(i);
+            setDataTableCurrentValue(i, GetCounterByChannel(i));
         }
     }
     if (RunEvery(&ppm) > 0)

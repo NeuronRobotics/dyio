@@ -196,7 +196,7 @@ void runLinearInterpolationServo(uint8_t blockStart,uint8_t blockEnd){
 				ip=SERVO_BOUND;
 			}
 			int tmp = (int)ip;
-			getBcsIoDataTable(i)->PIN.currentValue=  tmp;
+			setDataTableCurrentValue(i,tmp);
 		}
 	}
 

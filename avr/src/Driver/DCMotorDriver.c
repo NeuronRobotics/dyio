@@ -67,7 +67,7 @@ void SetDCMotor(uint8_t pin,uint8_t vel){
 
 	int tmp = vel-128;
 
-	getBcsIoDataTable(pwm)->PIN.currentValue = vel;
+	setDataTableCurrentValue(pwm,vel);
 
 	if(tmp>0){
 		SetDIO(dir,0);

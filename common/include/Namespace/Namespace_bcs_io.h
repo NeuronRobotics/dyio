@@ -204,6 +204,10 @@ DATA_STRUCT * getBcsIoDataTable(int pin);
 RunEveryData * getPinsScheduler(int pin);
 void setNoAsyncMode(boolean m);
 boolean isOutputMode(uint8_t mode);
+/**
+ * Sets the datable value and returns true if the value is new, false if it is the same as it was
+ */
+boolean setDataTableCurrentValue(uint8_t pin, int32_t value);
 
 NAMESPACE_LIST * get_bcsIoNamespace();
 
