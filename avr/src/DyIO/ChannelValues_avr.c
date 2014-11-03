@@ -47,8 +47,14 @@ boolean SetChanelValueHW(uint8_t pin,uint8_t numValues,int32_t * data, float ms)
 			//mask the time into the data byte
 			int32_t tmp = (data[0]&0x000000ff);
 			if(tmp !=getBcsIoDataTable(pin)->PIN.currentValue ){
-				getBcsIoDataTable(pin)->PIN.currentValue = (data[0]&0x000000ff);
-				SetChanVal(pin,getBcsIoDataTable(pin)->PIN.currentValue, ms);
+
+				getBcsIoDataTable(pin)->PIN.currentValue = tmp;
+				if(isOutputMode(mode)){
+					SetChanVal(pin,getBcsIoDataTable(pin)->PIN.currentValue, time);
+				}else{
+					println_I("INPUT\tchan: ");p_int_I(pin);
+					print_I(" \tto val: ");p_int_I(tmp);
+				}
 			}
 		}
 		return true; 
@@ -94,10 +100,10 @@ boolean GetChanelValueHW(uint8_t pin,uint8_t * numValues,int32_t * data){
 		}
 		if(isSingleByteMode(mode)){
 			//mask the time into the data byte
-			data[0] = getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal & 0x000000ff;
+			data[0] = getBcsIoDataTable(pin)->PIN.currentValue & 0x000000ff;
 
 		}else{
-			data[0] = getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
+			data[0] = getBcsIoDataTable(pin)->PIN.currentValue;
 		}
 		//data[0] = pin;
 		return true; 
@@ -112,17 +118,18 @@ boolean GetChanelValueHW(uint8_t pin,uint8_t * numValues,int32_t * data){
  *
  */
 boolean SetAllChanelValueHW(int32_t * data, float ms){
+    Print_Level l = getPrintLevel();
+    setPrintLevelInfoPrint();
+    clearPrint();
 	int i;
 	for(i=0;i<GetNumberOfIOChannels();i++){
 		if(!isStremChannelMode(GetChannelMode(i)))
 			SetChanelValueHW(i,1,& data[i], ms);
 	}
 
-    Print_Level l = getPrintLevel();
-    setPrintLevelInfoPrint();
-    clearPrint();
+
     printValues();
-    printModes();
+    //printModes();
     setPrintLevel(l);
 
 	return true; 
@@ -244,6 +251,9 @@ uint16_t GetChanVal(uint8_t pin){
 	}
 	return val;
 }
+
+
+
 boolean isASetableMode(uint8_t mode){
 	if ((mode == IS_DO)|| (mode == IS_SERVO) || (mode == IS_PWM)|| (mode == IS_DI)||(mode == IS_DC_MOTOR_VEL)||(mode == IS_DC_MOTOR_DIR)){
 		return true; 
@@ -315,25 +325,30 @@ boolean isASetableMode(uint8_t mode){
 
 
 boolean SetChanVal(uint8_t pin,int32_t bval, float time){
+
 	uint8_t mode = GetChannelMode(pin);
-	//println_I("Setting channel pos\n\tchan: ");p_int_I(pin);print_I(" \n\tto val: ");p_int_I(bval);print_I("\n\tin time: ");p_fl_I(time);
-	switch (mode){
-	case IS_DI:
-	case IS_DO:
-		SetDIO(pin,bval);
-		break;
-	case IS_SERVO:
-		SetServoPos(pin,bval,time);
-		break;
-	case IS_PWM:
-		SetPWM(pin,bval);
-		break;
-	case IS_DC_MOTOR_VEL:
-	case IS_DC_MOTOR_DIR:
-		SetDCMotor(pin,bval);
-		break;
-	default:
-		return false; 
-	}
-	return true; 
+
+		println_I("Setting channel pos\tchan: ");p_int_I(pin);
+		print_I(" \tto val: ");p_int_I(bval);
+		print_I("\tin time: ");p_fl_I(time);
+		switch (mode){
+		case IS_DI:
+		case IS_DO:
+			SetDIO(pin,bval);
+			break;
+		case IS_SERVO:
+			SetServoPos(pin,bval,time);
+			break;
+		case IS_PWM:
+			SetPWM(pin,bval);
+			break;
+		case IS_DC_MOTOR_VEL:
+		case IS_DC_MOTOR_DIR:
+			SetDCMotor(pin,bval);
+			break;
+		default:
+			return false;
+		}
+		return true;
+
 }

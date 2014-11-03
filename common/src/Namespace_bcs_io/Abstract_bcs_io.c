@@ -225,11 +225,10 @@ boolean SetChanelValueFromPacket(BowlerPacket * Packet) {
         data = get32bit(Packet, 1);
 
         time = (float) get32bit(Packet, 5);
-
-        getBcsIoDataTable(pin)->PIN.currentValue = data;
         //println_W("Setting on pin=");p_int_W(pin); print_W(" value= ");p_int_W(data); print_W(" time= ");p_fl_W(time);
         if (setChanelValueHWPtr != NULL)
             setChanelValueHWPtr(pin, 1, &data, time);
+        getBcsIoDataTable(pin)->PIN.currentValue = data;
 
     }
     READY(Packet, 1, 3);
@@ -246,11 +245,20 @@ boolean SetAllChannelValueFromPacket(BowlerPacket * Packet) {
         time=get32bit(Packet, 0);
 
         for (i = 0; i < GetNumberOfIOChannels(); i++) {
-            tmp = get32bit(Packet, (i*4) +5);
-            getBcsIoDataTable(i)->PIN.currentValue = tmp;
-            data[i] = tmp;
+        	if(isOutputMode(GetChannelMode(i))==true){
+        		tmp = get32bit(Packet, (i*4) +5);
+        		data[i] = tmp;
+			}else{
+				data[i] = getBcsIoDataTable(i)->PIN.currentValue;
+			}
         }
         setAllChanelValueHWPtr(data, time);
+        for (i = 0; i < GetNumberOfIOChannels(); i++) {
+        	if(isOutputMode(GetChannelMode(i))==true){
+				tmp = get32bit(Packet, (i*4) +5);
+				getBcsIoDataTable(i)->PIN.currentValue = tmp;
+        	}
+		}
         //READY(Packet, 3, 3);
         GetAllChanelValueFromPacket(Packet);
     } else {
@@ -303,8 +311,14 @@ boolean GetAllChanelValueFromPacket(BowlerPacket * Packet) {
         getAllChanelValueHWPtr((int32_t *) (&Packet->use.data[1]));
         for (i = 0; i < GetNumberOfIOChannels(); i++) {
             tmp = data[i];
-            getBcsIoDataTable(i)->PIN.currentValue = tmp;
-            set32bit(Packet, tmp, (i*4)+1);
+            if(isOutputMode(GetChannelMode(i))==false){
+				getBcsIoDataTable(i)->PIN.currentValue = tmp;
+				set32bit(Packet, tmp, (i*4)+1);
+            }else{
+            	tmp = getBcsIoDataTable(i)->PIN.currentValue;
+            	set32bit(Packet, tmp, (i*4)+1);
+            }
+
         }
         Packet->use.data[0]=(GetNumberOfIOChannels());
         Packet->use.head.RPC=GetRPCValue("gacv");
@@ -339,6 +353,23 @@ boolean ConfigureChannelFromPacket(BowlerPacket * Packet) {
     }
     FixPacket(Packet);
     return true;
+}
+
+boolean isOutputMode(uint8_t mode){
+    switch (mode) {
+
+        case IS_DO:
+        case IS_ANALOG_OUT:
+        case IS_PWM:
+        case IS_SERVO:
+        case IS_COUNTER_OUTPUT_INT:
+        case IS_COUNTER_OUTPUT_DIR:
+        case IS_DC_MOTOR_VEL:
+        case IS_DC_MOTOR_DIR:
+        	return true;
+        default:
+            return false;
+    }
 }
 
 boolean pinHasFunction(uint8_t pin, uint8_t function) {
@@ -448,7 +479,8 @@ void printAsync() {
         println_I("\t# ");
         p_int_I(i);
         print_I("\tCurrent ");
-        p_int_I(getBcsIoDataTable(i)->PIN.asyncDataCurrentVal);
+        //FIXME
+        p_int_I(getBcsIoDataTable(i)->PIN.currentValue);
         print_I("\tPrevious ");
         p_int_I(getBcsIoDataTable(i)->PIN.asyncDataPreviousVal);
         print_I("\tMode ");

@@ -215,7 +215,7 @@ uint8_t SetAllCoProcValues(){
         setPrintLevelInfoPrint();
         clearPrint();
         printValues();
-        printModes();
+        //printModes();
         setPrintLevel(l);
 	return true;
 }

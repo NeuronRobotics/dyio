@@ -86,9 +86,9 @@ void SetServoPos(uint8_t pin,uint8_t val,float time){
 		time=0;
 	velocity[pin].setTime=time;
 	velocity[pin].set=(float)val;
-	velocity[pin].start=(float)getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
+	velocity[pin].start=(float)getBcsIoDataTable(pin)->PIN.currentValue;
 	velocity[pin].startTime=getMs();
-	if (val==getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal){
+	if (val==getBcsIoDataTable(pin)->PIN.currentValue){
 		velocity[pin].setTime=0;
 	}
 	if(pin<12){
@@ -101,7 +101,7 @@ void SetServoPos(uint8_t pin,uint8_t val,float time){
 	print = pin;
 }
 uint8_t GetServoPos(uint8_t pin){
-	return getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
+	return getBcsIoDataTable(pin)->PIN.currentValue;
 }
 
 void RunServo(uint8_t block){
@@ -127,7 +127,7 @@ void RunServo(uint8_t block){
 	for (j=0;j<256;j++){
 		//check all servo positions
 		for (xIndex=start; xIndex < stop ;xIndex++){
-			if (j == getBcsIoDataTable(xIndex)->PIN.asyncDataCurrentVal){
+			if (j == getBcsIoDataTable(xIndex)->PIN.currentValue){
 				//turn off if it is time to turn off
 				pinOff(xIndex);
 			}
@@ -196,7 +196,7 @@ void runLinearInterpolationServo(uint8_t blockStart,uint8_t blockEnd){
 				ip=SERVO_BOUND;
 			}
 			int tmp = (int)ip;
-			getBcsIoDataTable(i)->PIN.asyncDataCurrentVal=  tmp;
+			getBcsIoDataTable(i)->PIN.currentValue=  tmp;
 		}
 	}
 

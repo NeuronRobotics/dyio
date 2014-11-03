@@ -134,7 +134,7 @@ typedef struct __attribute__((__packed__))  _PIN_MAP
 	int32_t currentValue;
 	uint8_t  currentChannelMode;
 	int32_t			asyncDataPreviousVal;
-	int32_t			asyncDataCurrentVal;
+	//int32_t			asyncDataCurrentVal;
 	uint8_t		asyncDataType;
 	uint8_t 		asyncDataenabled;
 	int32_t 	asyncDatadeadBandval;
@@ -203,6 +203,7 @@ DATA_STRUCT * getBcsIoDataTable(int pin);
 
 RunEveryData * getPinsScheduler(int pin);
 void setNoAsyncMode(boolean m);
+boolean isOutputMode(uint8_t mode);
 
 NAMESPACE_LIST * get_bcsIoNamespace();
 

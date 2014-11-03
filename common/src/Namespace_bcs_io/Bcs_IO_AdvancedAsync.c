@@ -138,7 +138,7 @@ boolean configAdvancedAsync(BowlerPacket * Packet){
 
 void startAdvancedAsyncDefault(uint8_t pin){
 	println_I("Starting advanced async on channel: ");p_int_I(pin);
-	getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal=1;
+	getBcsIoDataTable(pin)->PIN.currentValue=1;
 	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=1;
 	getBcsIoDataTable(pin)->asyncDataTimer.MsTime=getMs();
 	getBcsIoDataTable(pin)->asyncDataTimer.setPoint=10;
@@ -152,7 +152,7 @@ void startAdvancedAsyncDefault(uint8_t pin){
 		getBcsIoDataTable(pin)->asyncDataTimer.setPoint=5;
 		break;
 	case IS_ANALOG_IN:
-		getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal=ADCINIT;
+		getBcsIoDataTable(pin)->PIN.currentValue=ADCINIT;
 		getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=ADCINIT;
 		getBcsIoDataTable(pin)->PIN.asyncDataType = DEADBAND;
 		getBcsIoDataTable(pin)->PIN.asyncDatadeadBandval=10;
@@ -166,17 +166,17 @@ void startAdvancedAsyncDefault(uint8_t pin){
 
 void SetValFromAsync(int pin, int value){
   
-	getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal=value;
+	getBcsIoDataTable(pin)->PIN.currentValue=value;
 }
 
 int GetValFromAsync(int pin){
-	return getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
+	return getBcsIoDataTable(pin)->PIN.currentValue;
 }
 
 int GetDigitalValFromAsync(uint8_t pin){
 	initAdvancedAsync();
 	if(GetChannelMode(pin)==IS_DI || GetChannelMode(pin)==IS_COUNTER_INPUT_HOME || GetChannelMode(pin)==IS_COUNTER_OUTPUT_HOME ){
-		return getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
+		return getBcsIoDataTable(pin)->PIN.currentValue;
 	}
 	return 1;
 }
@@ -205,23 +205,23 @@ boolean pushAsyncReady( uint8_t pin){
 		switch(getBcsIoDataTable(pin)->PIN.asyncDataType&0x0F){
 		case AUTOSAMP:
 //			println_I("Auto samp ");p_int_I(pin);
-			getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal = getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
+			getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal = getBcsIoDataTable(pin)->PIN.currentValue;
 
 			return true; 
 		case NOTEQUAL:
 			//
-			if(getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal != getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal){
+			if(getBcsIoDataTable(pin)->PIN.currentValue != getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal){
 //				println_I("not equ ");p_int_I(pin);
 //				printfDEBUG_uint8_t*('\t',INFO_PRINT);
 //				p_int_I(getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal);
 //				printfDEBUG_uint8_t*('\t',INFO_PRINT);
-//				p_int_I(getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal);
-				getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal = getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
+//				p_int_I(getBcsIoDataTable(pin)->PIN.currentValue);
+				getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal = getBcsIoDataTable(pin)->PIN.currentValue;
 				return true; 
 			}
 			break;
 		case DEADBAND:
-			aval = getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
+			aval = getBcsIoDataTable(pin)->PIN.currentValue;
 			last = getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal;
 			db = getBcsIoDataTable(pin)->PIN.asyncDatadeadBandval;
 			if (	( 	( last >(aval+db)) ||
@@ -235,10 +235,10 @@ boolean pushAsyncReady( uint8_t pin){
 			break;
 		case THRESHHOLD:
 //			println_I("treshhold");p_int_I(pin);
-			aval = getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
+			aval = getBcsIoDataTable(pin)->PIN.currentValue;
 			last = getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal;
 			db = getBcsIoDataTable(pin)->PIN.asyncDatathreshholdval;
-			getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal = getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
+			getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal = getBcsIoDataTable(pin)->PIN.currentValue;
 			if(getBcsIoDataTable(pin)->PIN.asyncDatathreshholdedge == ASYN_RISING || getBcsIoDataTable(pin)->PIN.asyncDatathreshholdedge == ASYN_BOTH){
 				if(last<= db && aval>db){
 
@@ -271,7 +271,7 @@ boolean pushAsyncReady( uint8_t pin){
 //	Packet->use.head.MessageID=37;
 //	int i;
 //	for(i=0;i<GetNumberOfIOChannels();i++){
-//		s.Val= getBcsIoDataTable(i)->PIN.asyncDataCurrentVal;
+//		s.Val= getBcsIoDataTable(i)->PIN.currentValue;
 //		Packet->use.data[(i*4)+0]=s.byte.FB;
 //		Packet->use.data[(i*4)+1]=s.byte.TB;
 //		Packet->use.data[(i*4)+2]=s.byte.SB;
