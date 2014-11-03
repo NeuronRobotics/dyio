@@ -59,9 +59,9 @@ void UserInit(void){
 #endif
 	EndCritical();
 	println_I(/*PSTR*/("Starting Pin Initialization"));
-	setMode(22,IS_DO);
-	setMode(23,IS_DI);
-	println_I(/*PSTR*/("Pin done"));
+//	setMode(22,IS_DO);
+//	setMode(23,IS_DI);
+//	println_I(/*PSTR*/("Pin done"));
 }
 
 
