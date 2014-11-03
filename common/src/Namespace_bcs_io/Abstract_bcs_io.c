@@ -237,7 +237,8 @@ boolean SetChanelValueFromPacket(BowlerPacket * Packet) {
 
 boolean SetAllChannelValueFromPacket(BowlerPacket * Packet) {
     int32_t * data = (int32_t *) (&Packet->use.data[5] );
-    uint32_t tmp;
+    int32_t tmp;
+
     if (setAllChanelValueHWPtr != NULL) {
     	uint32_t time;
         uint8_t i;
@@ -255,8 +256,7 @@ boolean SetAllChannelValueFromPacket(BowlerPacket * Packet) {
         setAllChanelValueHWPtr(data, time);
         for (i = 0; i < GetNumberOfIOChannels(); i++) {
         	if(isOutputMode(GetChannelMode(i))==true){
-				tmp = get32bit(Packet, (i*4) +5);
-				setDataTableCurrentValue(i,tmp);
+				setDataTableCurrentValue(i,data[i]);
         	}
 		}
         //READY(Packet, 3, 3);
@@ -425,10 +425,12 @@ boolean pinHasFunction(uint8_t pin, uint8_t function) {
  */
 boolean setDataTableCurrentValue(uint8_t pin, int32_t value){
 	if(value !=getBcsIoDataTable(pin)->PIN.currentValue ){
-		println_I("Value was");p_int_I(getBcsIoDataTable(pin)->PIN.currentValue);
-		print_I(" set to ");p_int_I(value);
-		print_I(" son pin ");p_int_I(pin);
-		setDataTableCurrentValue(pin,value);
+		println_E("Value was ");p_int_E(getBcsIoDataTable(pin)->PIN.currentValue);
+		print_E(" set to ");p_int_E(value);
+		print_E(" on pin ");p_int_E(pin);
+		// THis is the only place this variable should be set
+		getBcsIoDataTable(pin)->PIN.currentValue =value;
+		print_E(" confirmed ");p_int_E(getBcsIoDataTable(pin)->PIN.currentValue);
 		return true;
 	}
 	return false;
