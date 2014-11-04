@@ -31,7 +31,7 @@ boolean bcsIoSetmodeAsyncEventCallback(BowlerPacket *Packet, boolean(*pidAsyncCa
 
   RPC_LIST bcsIoSetmode_sacm_p = {BOWLER_POST, // Method
     "sacm", //RPC as string
-    &AbstractSetAllChannelMode, //function pointer to a packet parsinf function
+    &AbstractSetAllChannelMode, //function pointer to a packet parsing function
     { BOWLER_STR,
         0
     }, // Calling arguments

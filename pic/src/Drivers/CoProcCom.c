@@ -198,6 +198,7 @@ void SendPacketToCoProc(BowlerPacket * Packet) {
         if (ret > 0) {
             println_E("Resending:");
             printPacket(Packet, ERROR_PRINT);
+            FixPacket(Packet);
         }
         ret = sendPacket(Packet);
         i++;
@@ -366,6 +367,7 @@ boolean valadateRPC(int response, int sent) {
             switch (response) {
                 case SACM:
                 case _ERR:
+                case _RDY:
                     return true;
                 default:
                     return false;

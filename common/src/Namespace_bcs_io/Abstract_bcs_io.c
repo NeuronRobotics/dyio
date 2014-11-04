@@ -267,6 +267,7 @@ boolean SetAllChannelValueFromPacket(BowlerPacket * Packet) {
     return true;
 }
 
+
 boolean GetChanelValueFromPacket(BowlerPacket * Packet) {
     uint8_t pin = Packet->use.data[0];
     uint8_t mode = GetChannelMode(pin);

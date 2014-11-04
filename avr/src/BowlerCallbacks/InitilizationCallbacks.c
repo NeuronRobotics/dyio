@@ -18,6 +18,7 @@
 
 #include "UserApp_avr.h"
 
+
 void UserInit(void){
 	StartCritical();
 
@@ -44,6 +45,7 @@ void UserInit(void){
 
 
 	InitPins();
+
 	//println_I(/*PSTR*/("Adding IO Initialization"));
 	addNamespaceToList((NAMESPACE_LIST *)get_bcsIoNamespace());
 	//println_I(/*PSTR*/("Adding IO.SETMODE Initialization"));
@@ -51,6 +53,7 @@ void UserInit(void){
 	//println_I(/*PSTR*/("Adding Internal Initialization"));
 	addNamespaceToList((NAMESPACE_LIST *)get_internalNamespace());
 	setNoAsyncMode(true);
+	setIgnoreAddressing(true);
 	//SetPinTris(0,OUTPUT);
 	//SetDIO(0,OFF);
 
