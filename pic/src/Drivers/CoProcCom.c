@@ -365,7 +365,7 @@ boolean valadateRPC(int response, int sent) {
             }
         case SACM:
             switch (response) {
-                case SACM:
+                case GACM:
                 case _ERR:
                 case _RDY:
                     return true;

@@ -154,15 +154,24 @@ uint8_t SetAllCoProcMode(){
 		LoadCorePacket(& downstreamPacketTemp);
 		downstreamPacketTemp.use.head.Method=BOWLER_POST;
 		downstreamPacketTemp.use.head.RPC=GetRPCValue("sacm");
-		downstreamPacketTemp.use.head.DataLegnth = 4;
+                downstreamPacketTemp.use.data[0] = GetNumberOfIOChannels();
 		for(i=0;i<GetNumberOfIOChannels();i++){
-			downstreamPacketTemp.use.data[i]=getBcsIoDataTable(i)->PIN.currentChannelMode ;
+			downstreamPacketTemp.use.data[i+1]=getBcsIoDataTable(i)->PIN.currentChannelMode ;
 			down[i].changeMode=false ;
-			downstreamPacketTemp.use.head.DataLegnth++;
 		}
-
+                downstreamPacketTemp.use.head.DataLegnth = 4+1+GetNumberOfIOChannels();
 //                println_I("Sending mode sync packet");printPacket(&packetTemp,INFO_PRINT);
 		SendPacketToCoProc(& downstreamPacketTemp);
+                for (i=0;i<NUM_PINS;i++){
+                    if(downstreamPacketTemp.use.data[i+1] == NO_CHANGE){
+                        getBcsIoDataTable(i)->PIN.currentChannelMode=IS_DI;
+                        down[i].changeMode = true;// force a sync of the no valid mode
+                        //println_E("FAULT: the mode was set to NO_CHANGE");
+                    }else{
+                        getBcsIoDataTable(i)->PIN.currentChannelMode=downstreamPacketTemp.use.data[i+1];
+                        down[i].changeMode = false;
+                    }
+                }
 
 	}
 	return true; 

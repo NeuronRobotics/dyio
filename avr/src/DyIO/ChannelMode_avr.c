@@ -58,7 +58,7 @@ void InitPinModes(void){
 boolean setMode(uint8_t pin,uint8_t mode){
 
 	ClearPinState(pin);
-	println_W("Pin :");p_int_W(pin);printMode(mode,WARN_PRINT);
+	//println_W("Pin :");p_int_W(pin);printMode(mode,WARN_PRINT);
 	//uint8_t pwm,dir;
 	if (mode == NO_CHANGE){
 		return true; 

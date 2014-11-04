@@ -91,10 +91,11 @@ boolean AbstractSetChannelMode(BowlerPacket * Packet){
  */
 boolean AbstractSetAllChannelMode(BowlerPacket * Packet){
         // First byte is the number of channels
-	int i=1;
+	int i;
 	for(i=0;i<GetNumberOfIOChannels();i++){
 		SetChannelMode(i,Packet->use.data[i+1]);
 	}
-	READY(Packet,33,44);
+	GetAllChannelModeFromPacket(Packet);
+
 	return true; 
 }

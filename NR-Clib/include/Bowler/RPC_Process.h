@@ -21,6 +21,7 @@
 #include "namespace.h"
 
 float getLastPacketTime(void);
+void setIgnoreAddressing(boolean v);
 void Process_Self_Packet(BowlerPacket * Packet);
 void StatRPCs(BowlerPacket * Packet);
 void GetRPCs(BowlerPacket * Packet);

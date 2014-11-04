@@ -158,11 +158,12 @@ boolean GetChannelModeFromPacket(BowlerPacket * Packet) {
 boolean GetAllChannelModeFromPacket(BowlerPacket * Packet) {
     int i;
     Packet->use.head.Method = BOWLER_POST;
+    Packet->use.head.RPC=GetRPCValue("gacm");
     Packet->use.data[0] = GetNumberOfIOChannels();
     for (i = 0; i < GetNumberOfIOChannels(); i++) {
         Packet->use.data[1 + i] = GetChannelMode(i);
     }
-    Packet->use.head.DataLegnth = 4 + GetNumberOfIOChannels();
+    Packet->use.head.DataLegnth = 4 + GetNumberOfIOChannels()+1;
     FixPacket(Packet);
     return true;
 }

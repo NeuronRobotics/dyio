@@ -26,7 +26,7 @@
 #if !defined(__STACK_TSK_H) && !defined(_SOCKET_H_)
 	typedef struct __attribute__((__packed__)) _MAC_ADDR
 	{
-		unsigned char v[6];
+		uint8_t v[6];
 	} MAC_ADDR;
 #endif
 	typedef struct __attribute__((__packed__)) _HEADER
