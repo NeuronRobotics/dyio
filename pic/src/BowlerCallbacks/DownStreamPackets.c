@@ -213,15 +213,15 @@ uint8_t SetAllCoProcValues(){
 //		printPacket(&downstreamPacketTemp,ERROR_PRINT);
 	}
 
-
+//        Print_Level l = getPrintLevel();
+//        setPrintLevelInfoPrint();
 	for(i=0;i<GetNumberOfIOChannels();i++){
             SetValFromAsync(i,get32bit(& downstreamPacketTemp, (i*4)+1));
 	}
 
-        valueLocal = GetValFromAsync(23);
-        //SetChanelValueHW(22, 1, &valueLocal, 0);
-//        Print_Level l = getPrintLevel();
-//        setPrintLevelInfoPrint();
+//        valueLocal = GetValFromAsync(23);
+//        SetChanelValueHW(22, 1, &valueLocal, 0);
+//
 //        clearPrint();
 //        printValues();
 //        //printModes();

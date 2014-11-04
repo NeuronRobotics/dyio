@@ -432,7 +432,7 @@ boolean setDataTableCurrentValue(uint8_t pin, int32_t value){
 		print_I(" on pin ");p_int_I(pin);
 		// THis is the only place this variable should be set
 		getBcsIoDataTable(pin)->PIN.currentValue =value;
-		print_I(" confirmed ");p_int_I(getBcsIoDataTable(pin)->PIN.currentValue);
+		//print_I(" confirmed ");p_int_I(getBcsIoDataTable(pin)->PIN.currentValue);
 		return true;
 	}
 	return false;

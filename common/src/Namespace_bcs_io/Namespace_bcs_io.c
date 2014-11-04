@@ -28,12 +28,13 @@ boolean bcsIoAsyncEventCallback(BowlerPacket *Packet, boolean (*pidAsyncCallback
             update = true; 
         }
     }
-    if (update &&noAsyncMode==false ) {
+    if (update ==true && noAsyncMode==false ) {
 
     	GetAllChanelValueFromPacket(Packet);
+        Packet->use.head.DataLegnth = 4+1+GetNumberOfIOChannels();
         Packet->use.head.Method = BOWLER_ASYN;
         FixPacket(Packet);
-        printBowlerPacketDEBUG(Packet, INFO_PRINT);
+        println_W("Async ");printBowlerPacketDEBUG(Packet, WARN_PRINT);
         if (pidAsyncCallbackPtr != NULL) {
             pidAsyncCallbackPtr(Packet);
         }
