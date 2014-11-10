@@ -300,10 +300,12 @@ boolean GetChanelValueFromPacket(BowlerPacket * Packet) {
         } else {
             return false;
         }
-//        if (GetChannelMode(pin) == IS_ANALOG_IN) {
-//            println_W("Analog value= ");
-//            p_int_W(data);
-//        }
+        if(isOutputMode(GetChannelMode(pin))==false){
+        	setDataTableCurrentValue(pin,data);
+        }else{
+        	data = getBcsIoDataTable(pin)->PIN.currentValue;
+        }
+
         set32bit(Packet, data, 1);
         numValues = 4;
     }
