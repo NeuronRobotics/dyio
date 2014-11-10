@@ -45,7 +45,7 @@ void hardwareInit() {
     }
     StartCritical();
 
-    println_I("Getting MAC from flash");
+    println_I("Getting MAC from flash ");
     enableFlashStorage(true);
     FlashGetMac(MyMAC.v);
 
@@ -65,7 +65,8 @@ void hardwareInit() {
 
     mInitSwitch();
 
-
+    //AVR must be running before pin states can be synced in the pin initialization
+    ReleaseAVRReset();
     //Must initialize IO before hardware
     InitPins();
     //println_I("Adding IO Namespace");
@@ -121,9 +122,6 @@ void UserInit(void) {
     //DelayMs(1000);
     hardwareInit();
     //println_I("Hardware Init done");
-
-    ReleaseAVRReset();
-
 
 
     CheckRev();
