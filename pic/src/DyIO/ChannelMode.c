@@ -93,6 +93,9 @@ boolean setMode(uint8_t pin,uint8_t mode){
 		println_I("Setting up PPM...");
 		startPPM(pin);
 		break;
+	case IS_DO:
+		setDataTableCurrentValue(pin,OFF);
+		break;
 	}
 //	print_I(" \tMode set");
 	return true; 
