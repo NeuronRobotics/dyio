@@ -198,6 +198,11 @@ uint8_t GetChannelMode(uint8_t chan);
 DATA_STRUCT * getBcsIoDataTable(int pin);
 
 /**
+ * Wrapper to get a single value
+ */
+int32_t GetChanelSingleValue(uint8_t pin);
+
+/**
  * retrive the scheduler
  */
 

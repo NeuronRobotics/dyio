@@ -164,8 +164,8 @@ void startAdvancedAsyncDefault(uint8_t pin){
 }
 
 
-void SetValFromAsync(int pin, int value){
-	setDataTableCurrentValue(pin,value);
+boolean SetValFromAsync(int pin, int value){
+	return setDataTableCurrentValue(pin,value);
 }
 
 int GetValFromAsync(int pin){

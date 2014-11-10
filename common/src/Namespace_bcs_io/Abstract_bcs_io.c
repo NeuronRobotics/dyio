@@ -268,6 +268,13 @@ boolean SetAllChannelValueFromPacket(BowlerPacket * Packet) {
     return true;
 }
 
+int32_t GetChanelSingleValue(uint8_t pin){
+	int32_t val;
+	uint8_t size=1;
+	GetChanelValueHW(pin, &size, &val);
+	return val;
+}
+
 
 boolean GetChanelValueFromPacket(BowlerPacket * Packet) {
     uint8_t pin = Packet->use.data[0];
@@ -310,20 +317,20 @@ boolean GetAllChanelValueFromPacket(BowlerPacket * Packet) {
     if (getAllChanelValueHWPtr != NULL) {
         int i;
         int32_t tmp;
-        getAllChanelValueHWPtr((int32_t *) (&Packet->use.data[1]));
+        getAllChanelValueHWPtr(data);
         for (i = 0; i < GetNumberOfIOChannels(); i++) {
             tmp = data[i];
             if(isOutputMode(GetChannelMode(i))==false){
             	setDataTableCurrentValue(i,tmp);
-				set32bit(Packet, tmp, (i*4)+1);
             }else{
             	tmp = getBcsIoDataTable(i)->PIN.currentValue;
-            	set32bit(Packet, tmp, (i*4)+1);
             }
+            set32bit(Packet, tmp, (i*4)+1);
 
         }
         Packet->use.data[0]=(GetNumberOfIOChannels());
         Packet->use.head.RPC=GetRPCValue("gacv");
+        Packet->use.head.DataLegnth = 4+1+(GetNumberOfIOChannels()*4);
     } else
         return false;
     FixPacket(Packet);
@@ -427,12 +434,12 @@ boolean pinHasFunction(uint8_t pin, uint8_t function) {
  */
 boolean setDataTableCurrentValue(uint8_t pin, int32_t value){
 	if(value !=getBcsIoDataTable(pin)->PIN.currentValue ){
-		println_I("Value was ");p_int_I(getBcsIoDataTable(pin)->PIN.currentValue);
-		print_I(" set to ");p_int_I(value);
-		print_I(" on pin ");p_int_I(pin);
+		println_W("Value was ");p_int_W(getBcsIoDataTable(pin)->PIN.currentValue);
+		print_W(" set to ");p_int_W(value);
+		print_W(" on pin ");p_int_W(pin);
 		// THis is the only place this variable should be set
 		getBcsIoDataTable(pin)->PIN.currentValue =value;
-		print_I(" confirmed ");p_int_I(getBcsIoDataTable(pin)->PIN.currentValue);
+		print_W(" confirmed ");p_int_W(getBcsIoDataTable(pin)->PIN.currentValue);
 		return true;
 	}
 	return false;

@@ -21,19 +21,23 @@ boolean bcsIoAsyncEventCallback(BowlerPacket *Packet, boolean (*pidAsyncCallback
 
     int i;
     boolean update = false; 
-    //println_W("Async ");print_W(ioNSName);
+
     for (i = 0; i < GetNumberOfIOChannels(); i++) {
-        //println_W("Checking ");p_int_W(i);
+        //
         if (pushAsyncReady(i)) {
+        	println_W("Pin Async ");p_int_W(i);
+        	print_W(" val= ");p_int_W(GetChanelSingleValue(i));
             update = true; 
         }
     }
-    if (update &&noAsyncMode==false ) {
-
+    if(noAsyncMode==true){
+    	return false;
+    }
+    if (update) {
     	GetAllChanelValueFromPacket(Packet);
         Packet->use.head.Method = BOWLER_ASYN;
         FixPacket(Packet);
-        printBowlerPacketDEBUG(Packet, INFO_PRINT);
+        printBowlerPacketDEBUG(Packet, WARN_PRINT);
         if (pidAsyncCallbackPtr != NULL) {
             pidAsyncCallbackPtr(Packet);
         }

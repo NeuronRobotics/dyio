@@ -19,7 +19,7 @@ void initAdvancedAsync();
 
 void ProcessAsyncData(BowlerPacket * Packet);
 //int GetAnalogValFromAsync(uint8_t pin);
-void SetValFromAsync(int pin, int value);
+boolean SetValFromAsync(int pin, int value);
 int GetValFromAsync(int pin);
 int GetDigitalValFromAsync(uint8_t pin);
 
