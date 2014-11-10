@@ -65,6 +65,9 @@ void hardwareInit() {
 
     mInitSwitch();
 
+    //AVR Reset pin
+    InitAVR_RST();
+    HoldAVRReset();
     //AVR must be running before pin states can be synced in the pin initialization
     ReleaseAVRReset();
     //Must initialize IO before hardware
@@ -85,10 +88,6 @@ void hardwareInit() {
 
     Init_FLAG_BUSY_ASYNC();
     //InitCTS_RTS_HO();
-
-    //AVR Reset pin
-    InitAVR_RST();
-    HoldAVRReset();
 
     //ConfigUARTOpenCollector();
     ConfigUARTRXTristate();
