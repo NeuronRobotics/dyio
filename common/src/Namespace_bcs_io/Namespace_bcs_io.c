@@ -25,8 +25,8 @@ boolean bcsIoAsyncEventCallback(BowlerPacket *Packet, boolean (*pidAsyncCallback
     for (i = 0; i < GetNumberOfIOChannels(); i++) {
         //
         if (pushAsyncReady(i)) {
-        	println_W("Pin Async ");p_int_W(i);
-        	print_W(" val= ");p_int_W(GetChanelSingleValue(i));
+//        	println_W("Pin Async ");p_int_W(i);
+//        	print_W(" val= ");p_int_W(GetChanelSingleValue(i));
             update = true; 
         }
     }
@@ -42,7 +42,7 @@ boolean bcsIoAsyncEventCallback(BowlerPacket *Packet, boolean (*pidAsyncCallback
             pidAsyncCallbackPtr(Packet);
         }
 
-        printBowlerPacketDEBUG(Packet, ERROR_PRINT);
+        //printBowlerPacketDEBUG(Packet, ERROR_PRINT);
     }
     //println_W("Done ");print_W(ioNSName);
     return false; 

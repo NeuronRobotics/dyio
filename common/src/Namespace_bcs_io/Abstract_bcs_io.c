@@ -434,12 +434,12 @@ boolean pinHasFunction(uint8_t pin, uint8_t function) {
  */
 boolean setDataTableCurrentValue(uint8_t pin, int32_t value){
 	if(value !=getBcsIoDataTable(pin)->PIN.currentValue ){
-		println_W("Value was ");p_int_W(getBcsIoDataTable(pin)->PIN.currentValue);
-		print_W(" set to ");p_int_W(value);
-		print_W(" on pin ");p_int_W(pin);
+		println_I("Value was ");p_int_I(getBcsIoDataTable(pin)->PIN.currentValue);
+		print_I(" set to ");p_int_I(value);
+		print_I(" on pin ");p_int_I(pin);
 		// THis is the only place this variable should be set
 		getBcsIoDataTable(pin)->PIN.currentValue =value;
-		print_W(" confirmed ");p_int_W(getBcsIoDataTable(pin)->PIN.currentValue);
+		//print_W(" confirmed ");p_int_W(getBcsIoDataTable(pin)->PIN.currentValue);
 		return true;
 	}
 	return false;
