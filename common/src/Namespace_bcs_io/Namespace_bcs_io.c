@@ -37,10 +37,12 @@ boolean bcsIoAsyncEventCallback(BowlerPacket *Packet, boolean (*pidAsyncCallback
     	GetAllChanelValueFromPacket(Packet);
         Packet->use.head.Method = BOWLER_ASYN;
         FixPacket(Packet);
-        printBowlerPacketDEBUG(Packet, WARN_PRINT);
+        //
         if (pidAsyncCallbackPtr != NULL) {
             pidAsyncCallbackPtr(Packet);
         }
+
+        printBowlerPacketDEBUG(Packet, ERROR_PRINT);
     }
     //println_W("Done ");print_W(ioNSName);
     return false; 
