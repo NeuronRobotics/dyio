@@ -49,7 +49,7 @@
 			unsigned char data[FullPacketDataSize];
 		} use;
 	}BowlerPacket;
-#define MiniPacketDataSize 105
+#define MiniPacketDataSize FullPacketDataSize
 	typedef union _BowlerPacketMini{
 		unsigned char stream[MiniPacketDataSize+sizeof(HEADER)];
 		struct
