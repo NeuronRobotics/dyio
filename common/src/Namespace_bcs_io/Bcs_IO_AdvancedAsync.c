@@ -24,7 +24,8 @@ void initAdvancedAsync(){
 	isInit=true; 
 	int i;
 	for (i=0;i<GetNumberOfIOChannels();i++){
-		startAdvancedAsyncDefault(i);
+
+			startAdvancedAsyncDefault(i);
 	}
         println_W("Initializing advanced async");
 }
@@ -138,7 +139,8 @@ boolean configAdvancedAsync(BowlerPacket * Packet){
 
 void startAdvancedAsyncDefault(uint8_t pin){
 	println_I("Starting advanced async on channel: ");p_int_I(pin);
-	setDataTableCurrentValue(pin,1);
+	if(isOutputMode(GetChannelMode(pin))==false)
+		setDataTableCurrentValue(pin,1);
 	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=1;
 	getBcsIoDataTable(pin)->asyncDataTimer.MsTime=getMs();
 	getBcsIoDataTable(pin)->asyncDataTimer.setPoint=10;
