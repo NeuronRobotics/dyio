@@ -11,17 +11,14 @@ void buttonCheck(uint8_t code){
 		DelayMs(100);
 		Reset();
 	}
+	MyServer();
 }
 
  BowlerPacket Packet;
 
 
 void MyServer(){
-	// Run the Bowler Stack Namespace iteration of all async packets
-	// Pass in  the function pointer to push the packets upstream
 
-	//println_I("Main Loop 1");
-	RunNamespaceAsync(&Packet,&PutBowlerPacket);
 	//println_I("Main Loop 2");
 	Bowler_Server((BowlerPacket *) &Packet, false) ;
 	//println_I("Main Loop 3");
@@ -36,6 +33,11 @@ void runDyIOMain(void){
 	//println_I("Main Loop Start");
 	while (1){
 		MyServer();
+		// Run the Bowler Stack Namespace iteration of all async packets
+		// Pass in  the function pointer to push the packets upstream
+
+		//println_I("Main Loop 1");
+		RunNamespaceAsync(&Packet,&PutBowlerPacket);
 		buttonCheck(0);
 	}
 }

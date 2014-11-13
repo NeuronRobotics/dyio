@@ -176,7 +176,7 @@ uint8_t SetAllCoProcMode(){
 	}
 	return true; 
 }
-int32_t valueLocal;
+//int32_t valueLocal;
 uint8_t SetAllCoProcValues(){
 	int i=0;
 	boolean send = true;
@@ -220,7 +220,7 @@ uint8_t SetAllCoProcValues(){
             }
 	}
 
-        valueLocal = GetValFromAsync(23);
+//        valueLocal = GetValFromAsync(23);
         //SetChanelValueHW(22, 1, &valueLocal, 0);
 //        Print_Level l = getPrintLevel();
 //        setPrintLevelInfoPrint();
