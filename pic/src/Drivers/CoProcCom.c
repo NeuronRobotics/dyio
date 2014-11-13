@@ -7,7 +7,7 @@
 #include "UserApp.h"
 
 #define MAX_RETRY 5
-#define DELAY_TIMEOUT 5000
+#define DELAY_TIMEOUT 50
 
 boolean valadateRPC(int response, int sent);
 uint8_t sendPacket(BowlerPacket * Packet);
@@ -40,7 +40,9 @@ boolean getPacket(BowlerPacket * packet) {
         printFiFoState_I(&store, downstream.stream);
     }
 #endif
+    StartCritical();
     boolean b = _getBowlerPacket(packet, & store, true);
+    EndCritical();
     if (b) {
         //println_I("Returning packet");
     }
@@ -154,18 +156,18 @@ void initCoProcUART() {
 void uartErrorCheck() {
     int err = UART2GetErrors();
     if (err) {
-        //		if(err & _U2STA_FERR_MASK){
-        //			println_E("\n\n\nFraming error");
-        //		}
-        //		else if(err & _U2STA_OERR_MASK){
-        //			println_E("\n\n\n\nOverflow error");
-        //		}
-        //		else if(err & _U2STA_PERR_MASK){
-        //			println_E("\n\n\n\nPARITY error");
-        //		}
-        //		else {
-        //			println_E("\n\n\n\nUnknown UART error");
-        //		}
+        		if(err & _U2STA_FERR_MASK){
+        			println_E("\n\n\nFraming error");
+        		}
+        		else if(err & _U2STA_OERR_MASK){
+        			println_E("\n\n\n\nOverflow error");
+        		}
+        		else if(err & _U2STA_PERR_MASK){
+        			println_E("\n\n\n\nPARITY error");
+        		}
+        		else {
+        			println_E("\n\n\n\nUnknown UART error");
+        		}
         UART2ClearAllErrors();
     }
 }
@@ -242,7 +244,13 @@ uint8_t sendPacket(BowlerPacket * Packet) {
     }
     Packet->use.head.ProtocolRevision = BOWLER_VERSION;
     SetCRC(Packet);
-    //println_I(">>TX CoProc\n");printPacket(Packet,INFO_PRINT);
+    if (Packet->use.head.RPC != GetRPCValue("_pwr") &&
+        Packet->use.head.RPC != GetRPCValue("sacv")
+            ) {//Ignore Power Packet
+        println("CoPro TX>>:", ERROR_PRINT);
+        printPacket(Packet, ERROR_PRINT);
+    }
+
     int packetSize = BowlerHeaderSize + Packet->use.head.DataLegnth;
 
     PushCoProcAsync(); //clear out any packets before begining
@@ -488,22 +496,23 @@ void newByte() {
 void __ISR(_UART_2_VECTOR, IPL7AUTO) My_U2_ISR(void) {
     FLAG_ASYNC = FLAG_BLOCK;
     StartCritical();
+    uartErrorCheck();
     if (INTGetFlag(INT_SOURCE_UART_RX(UART2))) {
         newByte();
         INTClearFlag(INT_SOURCE_UART_RX(UART2));
         mU2ClearAllIntFlags();
-    } else
-        if (INTGetFlag(INT_SOURCE_UART_ERROR(UART2))) {
-        //uartErrorCheck();
+    } else if (INTGetFlag(INT_SOURCE_UART_ERROR(UART2))) {
+        	println_E("&@&@&&@&@&@ generic uart");
+
         INTClearFlag(INT_SOURCE_UART_ERROR(UART2));
     } else {
         if (INTGetFlag(INT_SOURCE_UART_TX(UART2))) {
             INTClearFlag(INT_SOURCE_UART_TX(UART2));
-            //println_I("&@&@&&@&@&@ wtf tx");
+            println_E("&@&@&&@&@&@ wtf tx");
         }
         if (INTGetFlag(INT_SOURCE_UART(UART2))) {
             INTClearFlag(INT_SOURCE_UART(UART2));
-            //println_I("&@&@&&@&@&@ generic uart");
+            println_E("&@&@&&@&@&@ generic uart");
         }
     }
     UART2ClearAllErrors();
