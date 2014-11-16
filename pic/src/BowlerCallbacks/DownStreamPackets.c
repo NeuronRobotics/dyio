@@ -215,9 +215,11 @@ uint8_t SetAllCoProcValues(){
 
 
 	for(i=0;i<GetNumberOfIOChannels();i++){
+		if(isOutputMode(GetChannelMode(i)) == false){
             if(SetValFromAsync(i,get32bit(& downstreamPacketTemp, (i*4)+1))){
             	getBcsIoDataTable(i)->PIN.asyncDataenabled = true;
             }
+		}
 	}
 
 //        valueLocal = GetValFromAsync(23);
