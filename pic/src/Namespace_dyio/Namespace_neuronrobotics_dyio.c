@@ -155,7 +155,7 @@ boolean neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet) {
 
         case _PWR:
             setBrownOutDetect(Packet->use.data[0] ? 0 : 1);
-            SendPacketToCoProc(Packet);
+            //SendPacketToCoProc(Packet);
             READY(Packet, zone, 5);
             break;
         case INFO:
