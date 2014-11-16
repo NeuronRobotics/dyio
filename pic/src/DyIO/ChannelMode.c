@@ -34,7 +34,9 @@ boolean getBrownOutDetect(){
 boolean setMode(uint8_t pin,uint8_t mode){
 	//println_I("Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_int_I(pin);
 	//uint8_t currentMode = GetChannelMode(pin);
-        forceModeDownstream( pin);
+	if(GetChannelMode(pin)== mode)
+		return true;
+	forceModeDownstream( pin);
 	ClearCounter(pin);
 	StopDyIOSPI(pin);
 	clearPPM(pin);
