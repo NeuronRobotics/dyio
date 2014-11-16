@@ -98,21 +98,6 @@ boolean neuronRoboticsDyIOProcessor_g(BowlerPacket * Packet) {
             POWER(Packet);
             break;
         case _REV:
-            SendPacketToCoProc(Packet);
-
-            //			if(Packet->use.head.RPC == _ERR){
-            //				break;
-            //			}
-            Packet->use.head.DataLegnth = 4 + 3;
-            if ((Packet->use.data[0] == MAJOR_REV) && (Packet->use.data[1] == MINOR_REV) && (Packet->use.data[2] == FIRMWARE_VERSION)) {
-                SetColor(0, 0, 1);
-            } else {
-                SetColor(1, 0, 0);
-            }
-            //		FlashGetFwRev(rev);
-            //		for (i=0;i<3;i++){
-            //			Packet->use.data[i]=rev[i];
-            //		}
             Packet->use.data[0] = MAJOR_REV;
             Packet->use.data[1] = MINOR_REV;
             Packet->use.data[2] = FIRMWARE_VERSION;
