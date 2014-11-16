@@ -7,7 +7,7 @@
 #include "UserApp.h"
 
 #define MAX_RETRY 5
-#define DELAY_TIMEOUT 50
+#define DELAY_TIMEOUT 100
 
 boolean valadateRPC(int response, int sent);
 uint8_t sendPacket(BowlerPacket * Packet);
@@ -60,12 +60,7 @@ void PushCoProcAsync(void) {
     BowlerPacket * Packet = &asyncPacket;
     while (getPacket(Packet) == true) {
         buttonCheck(6);
-        if (Packet->use.head.MessageID != 0) {
-            dealWithAsyncPacket(Packet);
-        } else {
-            println_W("###########Stray sync packet..");
-            printPacket(Packet, WARN_PRINT);
-        }
+        dealWithAsyncPacket(Packet);
     }
 }
 
@@ -133,9 +128,11 @@ void startUartCoProc() {
     INTSetVectorPriority(INT_VECTOR_UART(UART2), INT_PRIORITY_LEVEL_7);
     INTSetVectorSubPriority(INT_VECTOR_UART(UART2), INT_SUB_PRIORITY_LEVEL_3);
     coProcRunning = true;
+
 }
 
 void initCoProcUART() {
+	FLAG_ASYNC = FLAG_BLOCK;
     println_W("initCoProcUART");
     coProcRunning = false;
 #if defined(USE_DMA)
@@ -159,11 +156,16 @@ void initCoProcUART() {
 #else
     startUartCoProc();
 #endif
+    StartCritical();
+    InitByteFifo(&store, privateRX, sizeof (privateRX));
+    EndCritical();
+    FLAG_ASYNC = FLAG_BLOCK;
 }
 
 int uartErrorCheck() {
     int err = UART2GetErrors();
     if (err) {
+    	FLAG_ASYNC = FLAG_BLOCK;
         		if(err & _U2STA_FERR_MASK){
         			println_E("\n\n\nFraming error");
         		}
@@ -177,6 +179,7 @@ int uartErrorCheck() {
         			println_E("\n\n\n\nUnknown UART error");
         		}
         UART2ClearAllErrors();
+        initCoProcUART();
         return err;
     }
     return 0;
@@ -185,9 +188,7 @@ int uartErrorCheck() {
 void initCoProcCom() {
     //	println_I("initCoProcCom");
     CoProcComInit = true;
-    StartCritical();
-    InitByteFifo(&store, privateRX, sizeof (privateRX));
-    EndCritical();
+
     initCoProcUART();
     Init_FLAG_BUSY_ASYNC();
     FLAG_ASYNC = FLAG_OK;
@@ -313,6 +314,7 @@ uint8_t sendPacket(BowlerPacket * Packet) {
         printPacket(Packet, ERROR_PRINT);
         printFiFoState_E(&store);
         PushCoProcAsync(); //clear out any packets
+        initCoProcUART();
         return 2;
     } else {
         println_E("Tx took: ");
