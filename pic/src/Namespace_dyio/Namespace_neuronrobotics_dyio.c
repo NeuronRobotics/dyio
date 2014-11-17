@@ -114,7 +114,7 @@ boolean neuronRoboticsDyIOProcessor_g(BowlerPacket * Packet) {
             while (tmpName[i] != 0) {
                 Packet->use.data[i] = tmpName[i];
                 i++;
-                buttonCheck(15);
+                //buttonCheck(15);
             }
             Packet->use.data[i] = '\0';
             Packet->use.head.Method = BOWLER_POST;

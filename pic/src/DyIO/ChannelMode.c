@@ -10,7 +10,7 @@ boolean setMode(uint8_t pin,uint8_t mode);
 
 void SyncModes(void);
 
-boolean brownOutDetect = true; 
+
 
 void InitPinStates(void){
 	SyncModes();
@@ -23,13 +23,8 @@ void InitPinStates(void){
 	}
 }
 
-void setBrownOutDetect(boolean b){
-	brownOutDetect = b;
-	setEEBrownOutDetect(b);
-}
-boolean getBrownOutDetect(){
-	return brownOutDetect;
-}
+
+
 
 boolean setMode(uint8_t pin,uint8_t mode){
 	//println_I("Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_int_I(pin);

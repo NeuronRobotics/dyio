@@ -256,6 +256,7 @@ uint8_t sendPacket(BowlerPacket * Packet) {
     Packet->use.head.ProtocolRevision = BOWLER_VERSION;
     SetCRC(Packet);
     if (Packet->use.head.RPC != GetRPCValue("_pwr") &&
+    	Packet->use.head.RPC != GetRPCValue("eepd") &&
         Packet->use.head.RPC != GetRPCValue("sacv")
             ) {//Ignore Power Packet
         println("CoPro TX>>:", ERROR_PRINT);
