@@ -9,10 +9,7 @@
 
 pid_vales pidEEPRomVal[NUM_PID_GROUPS];
 #define pidValSize sizeof(pid_vales)
-#define PID_VAL_END ((pidValSize*(NUM_PID_GROUPS)))
-#define PPM_END	     (PID_VAL_END+NUM_PPM_CHAN)
-#define BROWNOUT_START  (PPM_END+1)
-#define BROWNOUT_END 	(BROWNOUT_START+1)
+
 
 uint8_t loadEEDone=false; 
 void LoadEEstore(void){

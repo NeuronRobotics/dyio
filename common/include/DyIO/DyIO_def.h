@@ -27,7 +27,7 @@
 
 #define NUM_PINS   			24
 
-#define SERVO_BOUND 		15
+#define SERVO_BOUND 		0
 
 //#define MAJOR_REV			3
 //#define MINOR_REV			7
@@ -54,7 +54,10 @@
 #define FLAG_OK    1
 
 
-
+#define PID_VAL_END ((pidValSize*(NUM_PID_GROUPS)))
+#define PPM_END	     (PID_VAL_END+NUM_PPM_CHAN)
+#define BROWNOUT_START  (PPM_END+1)
+#define BROWNOUT_END 	(BROWNOUT_START+1)
 
 
 boolean ConfigChannel(BowlerPacket * Packet);

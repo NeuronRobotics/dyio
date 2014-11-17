@@ -48,7 +48,7 @@ boolean SetChanelValueHW(uint8_t pin,uint8_t numValues,int32_t * data, float ms)
 			int32_t tmp = (data[0]&0x000000ff);
 			if(setDataTableCurrentValue(pin,tmp)){
 				if(isOutputMode(mode)){
-					SetChanVal(pin,getBcsIoDataTable(pin)->PIN.currentValue, time);
+					SetChanVal(pin,tmp, time);
 				}else{
 					println_I("INPUT\tchan: ");p_int_I(pin);
 					print_I(" \tto val: ");p_int_I(tmp);
@@ -326,9 +326,6 @@ boolean SetChanVal(uint8_t pin,int32_t bval, float time){
 
 	uint8_t mode = GetChannelMode(pin);
 
-		println_I("Setting channel pos\tchan: ");p_int_I(pin);
-		print_I(" \tto val: ");p_int_I(bval);
-		print_I("\tin time: ");p_fl_I(time);
 		switch (mode){
 		case IS_DI:
 		case IS_DO:

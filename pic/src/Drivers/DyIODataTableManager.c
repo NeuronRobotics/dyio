@@ -36,7 +36,7 @@ void SyncDataTable(){
 		changedBrownOutDetect = false;
 	}
 	float end = getMs() - start;
-	if(end > 30){
+	if(end > 60){
 		println_W("Long Sync time = ");
 		p_fl_W(end);
 	}
