@@ -10,6 +10,7 @@
 
 //#define WPIRBE
 #include <math.h>
+#include "arch/AVR/BowlerConfig.h"
 #include "Bowler/Bowler.h"
 
 #include "Namespace/Namespace_bcs_io.h"
