@@ -39,7 +39,7 @@ boolean bcsIoAsyncEventCallback(BowlerPacket *Packet, boolean (*pidAsyncCallback
         Packet->use.head.Method = BOWLER_ASYN;
         FixPacket(Packet);
 
-        println_W("Async ");printBowlerPacketDEBUG(Packet, WARN_PRINT);
+        //println_W("Async ");printBowlerPacketDEBUG(Packet, WARN_PRINT);
 
         if (pidAsyncCallbackPtr != NULL) {
             pidAsyncCallbackPtr(Packet);
