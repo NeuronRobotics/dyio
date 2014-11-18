@@ -176,7 +176,7 @@ uint8_t SetAllCoProcMode(){
 	}
 	return true; 
 }
-int32_t valueLocal;
+//int32_t valueLocal;
 uint8_t SetAllCoProcValues(){
 	int i=0;
 	boolean send = true;
@@ -216,12 +216,14 @@ uint8_t SetAllCoProcValues(){
 //        Print_Level l = getPrintLevel();
 //        setPrintLevelInfoPrint();
 	for(i=0;i<GetNumberOfIOChannels();i++){
-            SetValFromAsync(i,get32bit(& downstreamPacketTemp, (i*4)+1));
+		if(isOutputMode(GetChannelMode(i)) == false){
+            if(SetValFromAsync(i,get32bit(& downstreamPacketTemp, (i*4)+1))){
+            	getBcsIoDataTable(i)->PIN.asyncDataenabled = true;
+            }
+		}
 	}
 
 //        valueLocal = GetValFromAsync(23);
-//        SetChanelValueHW(22, 1, &valueLocal, 0);
-//
 //        clearPrint();
 //        printValues();
 //        //printModes();

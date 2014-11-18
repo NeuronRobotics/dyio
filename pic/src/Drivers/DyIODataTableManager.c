@@ -6,24 +6,43 @@ BYTE_FIFO_STORAGE storeRx;
 BYTE_FIFO_STORAGE storeTx;
 //BowlerPacket dataTableSync;
 
+boolean brownOutDetect = true;
+
+boolean changedBrownOutDetect = false;
+
+boolean getBrownOutDetect(){
+	return brownOutDetect;
+}
+
+void setBrownOutDetect(boolean b){
+	brownOutDetect = b;
+	changedBrownOutDetect = true;
+	println_W("powerOverRide: ");p_int_W(b);
+}
+
 void InitializeDyIODataTableManager(){
 	InitByteFifo(&storeRx,privateSerialRX,BOWLER_PacketSize);
 	InitByteFifo(&storeTx,privateSerialTX,BOWLER_PacketSize);
 
 }
-RunEveryData printData = {0,10000};
+//RunEveryData printData = {0,10000};
 void SyncDataTable(){
 	PushCoProcAsync();
+	float start = getMs();
 	SetAllCoProcMode();
 	SetAllCoProcValues();
 	DownstreamPowerChange();
-	if(RunEvery(&printData)>0){
-//		println_I("Data Table:");
-//		printValues();
-//		printModes();
-		//printConfigurations();
-		//printAsync();
+	if(changedBrownOutDetect == true){
+		setEEBrownOutDetect(brownOutDetect);
+		changedBrownOutDetect = false;
 	}
+	float end = getMs() - start;
+	if(end > 60){
+		println_W("Long Sync time = ");
+		p_fl_W(end);
+	}
+
+
 
 }
 

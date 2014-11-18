@@ -7,13 +7,14 @@
 #include "UserApp.h"
 
 #define MAX_RETRY 5
-#define DELAY_TIMEOUT 5000
+#define DELAY_TIMEOUT 100
 
 boolean valadateRPC(int response, int sent);
 uint8_t sendPacket(BowlerPacket * Packet);
 boolean clearToSend(void);
 void dealWithAsyncPacket(BowlerPacket * Packet);
-void uartErrorCheck();
+int uartErrorCheck();
+void newByte();
 
 
 uint8_t privateRX[BOWLER_PacketSize];
@@ -40,7 +41,9 @@ boolean getPacket(BowlerPacket * packet) {
         printFiFoState_I(&store, downstream.stream);
     }
 #endif
+    StartCritical();
     boolean b = _getBowlerPacket(packet, & store, true);
+    EndCritical();
     if (b) {
         //println_I("Returning packet");
     }
@@ -57,12 +60,7 @@ void PushCoProcAsync(void) {
     BowlerPacket * Packet = &asyncPacket;
     while (getPacket(Packet) == true) {
         buttonCheck(6);
-        if (Packet->use.head.MessageID != 0) {
-            dealWithAsyncPacket(Packet);
-        } else {
-            println_W("###########Stray sync packet..");
-            printPacket(Packet, WARN_PRINT);
-        }
+        dealWithAsyncPacket(Packet);
     }
 }
 
@@ -90,27 +88,34 @@ void startUartCoProc() {
     if (coProcRunning == true)
         return;
 
-    //	println_I("startUartCoProc");
+    println_W("startUartCoProc");
 
     //Rx should be open collector
     mPORTFOpenDrainOpen(BIT_5);
 
     //Start configuration
-    UARTConfigure(UART2, UART_ENABLE_PINS_TX_RX_ONLY | UART_ENABLE_HIGH_SPEED);
+    UARTConfigure(UART2, UART_ENABLE_PINS_TX_RX_ONLY | UART_ENABLE_HIGH_SPEED );
     UARTSetFifoMode(UART2, UART_INTERRUPT_ON_RX_NOT_EMPTY);
 
     //OpenUART1(UART_EN|UART_EVEN_PAR_8BIT|UART_1STOPBIT|UART_DIS_BCLK_CTS_RTS,UART_TX_ENABLE|UART_RX_ENABLE,CalcBaud(INTERNAL_BAUD ));
     UARTSetLineControl(UART2, UART_DATA_SIZE_8_BITS | UART_PARITY_EVEN | UART_STOP_BITS_1);
     //UARTSetLineControl(UART2, UART_DATA_SIZE_8_BITS | UART_PARITY_NONE| UART_STOP_BITS_1);
-    int actual = UARTSetDataRate(UART2, GetPeripheralClock(), INTERNAL_BAUD);
-    float percent = (((float) INTERNAL_BAUD) / ((float) actual))*100.0f;
+    //int actual = UARTSetDataRate(UART2, GetPeripheralClock(), INTERNAL_BAUD+5);
+    int calculated = (GetPeripheralClock()/(4*INTERNAL_BAUD))-1;
+    //calculated +=1;// fudge factor
+    U2BRG = calculated;
+    float actual = ((float)GetPeripheralClock()/(4.0*(((float)calculated)+1.0)));
+
+    float percent = ( actual / ((float) INTERNAL_BAUD))*100.0f;
     if (actual != INTERNAL_BAUD) {
-        println_E("###Uart baud not what was set!! Actual=");
-        p_int_E(actual);
-        print_E(" desired=");
+        println_E("###Uart baud not what was set!! Actual = ");
+        p_fl_E(actual);
+        print_E(", desired = ");
         p_int_E(INTERNAL_BAUD);
-        print_E(" %");
+        print_E(" ");
         p_fl_E(percent);
+        print_E("%, U2BRG = ");
+        p_int_E(calculated);
     }
     UARTEnable(UART2, UART_ENABLE_FLAGS(
             UART_PERIPHERAL |
@@ -121,12 +126,14 @@ void startUartCoProc() {
     INTEnable(INT_SOURCE_UART_ERROR(UART2), INT_ENABLED);
 
     INTSetVectorPriority(INT_VECTOR_UART(UART2), INT_PRIORITY_LEVEL_7);
-    INTSetVectorSubPriority(INT_VECTOR_UART(UART2), INT_SUB_PRIORITY_LEVEL_0);
+    INTSetVectorSubPriority(INT_VECTOR_UART(UART2), INT_SUB_PRIORITY_LEVEL_3);
     coProcRunning = true;
+
 }
 
 void initCoProcUART() {
-    //println_I("initCoProcUART");
+	FLAG_ASYNC = FLAG_BLOCK;
+    println_W("initCoProcUART");
     coProcRunning = false;
 #if defined(USE_DMA)
     closeDma();
@@ -149,33 +156,39 @@ void initCoProcUART() {
 #else
     startUartCoProc();
 #endif
+    StartCritical();
+    InitByteFifo(&store, privateRX, sizeof (privateRX));
+    EndCritical();
+    FLAG_ASYNC = FLAG_BLOCK;
 }
 
-void uartErrorCheck() {
+int uartErrorCheck() {
     int err = UART2GetErrors();
     if (err) {
-        //		if(err & _U2STA_FERR_MASK){
-        //			println_E("\n\n\nFraming error");
-        //		}
-        //		else if(err & _U2STA_OERR_MASK){
-        //			println_E("\n\n\n\nOverflow error");
-        //		}
-        //		else if(err & _U2STA_PERR_MASK){
-        //			println_E("\n\n\n\nPARITY error");
-        //		}
-        //		else {
-        //			println_E("\n\n\n\nUnknown UART error");
-        //		}
+    	FLAG_ASYNC = FLAG_BLOCK;
+        		if(err & _U2STA_FERR_MASK){
+        			println_E("\n\n\nFraming error");
+        		}
+        		else if(err & _U2STA_OERR_MASK){
+        			println_E("\n\n\n\nOverflow error");
+        		}
+        		else if(err & _U2STA_PERR_MASK){
+        			println_E("\n\n\n\nPARITY error");
+        		}
+        		else {
+        			println_E("\n\n\n\nUnknown UART error");
+        		}
         UART2ClearAllErrors();
+        initCoProcUART();
+        return err;
     }
+    return 0;
 }
 
 void initCoProcCom() {
     //	println_I("initCoProcCom");
     CoProcComInit = true;
-    StartCritical();
-    InitByteFifo(&store, privateRX, sizeof (privateRX));
-    EndCritical();
+
     initCoProcUART();
     Init_FLAG_BUSY_ASYNC();
     FLAG_ASYNC = FLAG_OK;
@@ -242,7 +255,14 @@ uint8_t sendPacket(BowlerPacket * Packet) {
     }
     Packet->use.head.ProtocolRevision = BOWLER_VERSION;
     SetCRC(Packet);
-    //println_I(">>TX CoProc\n");printPacket(Packet,INFO_PRINT);
+    if (Packet->use.head.RPC != GetRPCValue("_pwr") &&
+    	Packet->use.head.RPC != GetRPCValue("eepd") &&
+        Packet->use.head.RPC != GetRPCValue("sacv")
+            ) {//Ignore Power Packet
+        println("CoPro TX>>:", ERROR_PRINT);
+        printPacket(Packet, ERROR_PRINT);
+    }
+
     int packetSize = BowlerHeaderSize + Packet->use.head.DataLegnth;
 
     PushCoProcAsync(); //clear out any packets before begining
@@ -284,6 +304,8 @@ uint8_t sendPacket(BowlerPacket * Packet) {
                         return 0; //Got a synchronus packet
                     }
                 }
+            }else{
+            	//newByte();
             }
 
             buttonCheck(4);
@@ -291,8 +313,9 @@ uint8_t sendPacket(BowlerPacket * Packet) {
         println_E("Rx took: ");
         p_fl_E(getMs() - packStartTime);
         printPacket(Packet, ERROR_PRINT);
-        printFiFoState_E(&store, downstream.stream);
+        printFiFoState_E(&store);
         PushCoProcAsync(); //clear out any packets
+        initCoProcUART();
         return 2;
     } else {
         println_E("Tx took: ");
@@ -469,7 +492,7 @@ void newByte() {
     while (DataRdyUART2()) {
         addCoProcByte(UARTGetDataByte(UART2));
         mU2ClearAllIntFlags();
-        buttonCheck(17);
+        //buttonCheck(17);
         timeout++;
         if (timeout > 8) {// size of the built in FIFo
             return;
@@ -486,27 +509,29 @@ void newByte() {
 //#if !defined(USE_DMA)
 
 void __ISR(_UART_2_VECTOR, IPL7AUTO) My_U2_ISR(void) {
+    int err = uartErrorCheck();
+    if(err)
+    	return;
     FLAG_ASYNC = FLAG_BLOCK;
     StartCritical();
     if (INTGetFlag(INT_SOURCE_UART_RX(UART2))) {
         newByte();
         INTClearFlag(INT_SOURCE_UART_RX(UART2));
         mU2ClearAllIntFlags();
-    } else
-        if (INTGetFlag(INT_SOURCE_UART_ERROR(UART2))) {
-        //uartErrorCheck();
+    } else if (INTGetFlag(INT_SOURCE_UART_ERROR(UART2))) {
+        	println_E("&@&@&&@&@&@ generic uart");
+
         INTClearFlag(INT_SOURCE_UART_ERROR(UART2));
     } else {
         if (INTGetFlag(INT_SOURCE_UART_TX(UART2))) {
             INTClearFlag(INT_SOURCE_UART_TX(UART2));
-            //println_I("&@&@&&@&@&@ wtf tx");
+            println_E("&@&@&&@&@&@ wtf tx");
         }
         if (INTGetFlag(INT_SOURCE_UART(UART2))) {
             INTClearFlag(INT_SOURCE_UART(UART2));
-            //println_I("&@&@&&@&@&@ generic uart");
+            println_E("&@&@&&@&@&@ generic uart");
         }
     }
-    UART2ClearAllErrors();
 
     EndCritical();
     FLAG_ASYNC = FLAG_OK;

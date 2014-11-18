@@ -69,6 +69,7 @@ boolean internalProcessor_p(BowlerPacket * Packet){
 	case EEPD:
 		start = Packet->use.data[0];
 		end = Packet->use.data[1];
+
 		if (end >= start){
 			for (i=0;i<(end-start);i++){
 				EEWriteData(i+start,Packet->use.data[i+2]);

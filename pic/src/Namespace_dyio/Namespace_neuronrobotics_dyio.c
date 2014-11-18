@@ -98,21 +98,6 @@ boolean neuronRoboticsDyIOProcessor_g(BowlerPacket * Packet) {
             POWER(Packet);
             break;
         case _REV:
-            SendPacketToCoProc(Packet);
-
-            //			if(Packet->use.head.RPC == _ERR){
-            //				break;
-            //			}
-            Packet->use.head.DataLegnth = 4 + 3;
-            if ((Packet->use.data[0] == MAJOR_REV) && (Packet->use.data[1] == MINOR_REV) && (Packet->use.data[2] == FIRMWARE_VERSION)) {
-                SetColor(0, 0, 1);
-            } else {
-                SetColor(1, 0, 0);
-            }
-            //		FlashGetFwRev(rev);
-            //		for (i=0;i<3;i++){
-            //			Packet->use.data[i]=rev[i];
-            //		}
             Packet->use.data[0] = MAJOR_REV;
             Packet->use.data[1] = MINOR_REV;
             Packet->use.data[2] = FIRMWARE_VERSION;
@@ -129,7 +114,7 @@ boolean neuronRoboticsDyIOProcessor_g(BowlerPacket * Packet) {
             while (tmpName[i] != 0) {
                 Packet->use.data[i] = tmpName[i];
                 i++;
-                buttonCheck(15);
+                //buttonCheck(15);
             }
             Packet->use.data[i] = '\0';
             Packet->use.head.Method = BOWLER_POST;
@@ -170,7 +155,7 @@ boolean neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet) {
 
         case _PWR:
             setBrownOutDetect(Packet->use.data[0] ? 0 : 1);
-            SendPacketToCoProc(Packet);
+            //SendPacketToCoProc(Packet);
             READY(Packet, zone, 5);
             break;
         case INFO:

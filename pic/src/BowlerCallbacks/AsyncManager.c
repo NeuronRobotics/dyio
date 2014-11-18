@@ -13,7 +13,7 @@
 //AdvancedAsyncData asyncData[NUM_PINS];
 
 void ProcessAsyncData(BowlerPacket * Packet){
-        Print_Level l = getPrintLevel();
+    Print_Level l = getPrintLevel();
 	setPrintLevelInfoPrint();
 	println_I("**Got Async Packet**");
 	printPacket(Packet,INFO_PRINT);
@@ -103,7 +103,12 @@ void dealWithAsyncPacket(BowlerPacket * Packet){
 		SetColor(1,0,0);
 		return;
 	}
-	ProcessAsyncData(Packet);
+	if (Packet->use.head.Method == BOWLER_ASYN) {
+		ProcessAsyncData(Packet);
+	} else {
+		println_W("###########Stray sync packet..");
+		printPacket(Packet, WARN_PRINT);
+	}
 }
 
 

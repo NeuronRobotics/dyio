@@ -50,13 +50,14 @@ uint32_t FifoGetByteCount(BYTE_FIFO_STORAGE * fifo);
 
 uint32_t FifoAddByte(BYTE_FIFO_STORAGE * fifo,uint8_t b, uint8_t * errorCode);
 
-void printFiFoState(BYTE_FIFO_STORAGE * fifo, uint8_t * buffer,Print_Level l);
+void printFiFoState(BYTE_FIFO_STORAGE * fifo, Print_Level l);
 
-#define printFiFoState_E(A,B) printFiFoState(A, B,ERROR_PRINT)
-#define printFiFoState_W(A,B) printFiFoState(A, B,WARN_PRINT)
-#define printFiFoState_I(A,B) printFiFoState(A, B,INFO_PRINT)
+#define printFiFoState_E(A) printFiFoState(A,ERROR_PRINT)
+#define printFiFoState_W(A) printFiFoState(A, WARN_PRINT)
+#define printFiFoState_I(A) printFiFoState(A, INFO_PRINT)
 
 uint32_t FifoGetByteStream(BYTE_FIFO_STORAGE * fifo,uint8_t *packet,uint32_t size);
+uint8_t FifoReadByteAtIndex(BYTE_FIFO_STORAGE * fifo,uint32_t offset );
 
 uint32_t FifoReadByteStream(uint8_t *packet,uint32_t size,BYTE_FIFO_STORAGE * fifo);
 

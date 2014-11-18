@@ -23,7 +23,7 @@ boolean powerOverRide = false;
 
 INTERPOLATE_DATA velocity[NUM_PINS];
 void runLinearInterpolationServo(uint8_t blockStart,uint8_t blockEnd);
-
+boolean pinServoOk(uint8_t pin);
 
 uint8_t pinOn(uint8_t pin);
 void pinOff(uint8_t pin);
@@ -36,6 +36,7 @@ void InitServo(uint8_t PIN){
 }
 
 void setPowerOverride(boolean set){
+	println_W("powerOverRide: ");p_int_W(set);
 	powerOverRide = set;
 }
 
@@ -84,6 +85,11 @@ boolean print = 0xff;
 void SetServoPos(uint8_t pin,uint8_t val,float time){
 	if(time<30)
 		time=0;
+	if(val == velocity[pin].set){
+		return;
+	}
+
+
 	velocity[pin].setTime=time;
 	velocity[pin].set=(float)val;
 	velocity[pin].start=(float)getBcsIoDataTable(pin)->PIN.currentValue;
@@ -99,6 +105,22 @@ void SetServoPos(uint8_t pin,uint8_t val,float time){
 	if(GetChannelMode(pin)!=IS_SERVO)
 		return;
 	print = pin;
+
+	if(pinServoOk(pin) == false){
+		println_W("Servo\tchan: ");p_int_W(pin);
+		print_W(" \tto val: ");p_int_W(val);
+		print_W("\tin time: ");p_fl_W(time);
+		if(pin > 11){
+			print_W(" \tb1OK: ");p_int_W(b1OK);
+			print_W(" \tpowerOverRide: ");p_int_W(powerOverRide);
+			print_W(" \tb1lock: ");p_int_W(b1lock);
+		}else{
+			print_W(" \tb0OK: ");p_int_W(b0OK);
+			print_W(" \tpowerOverRide: ");p_int_W(powerOverRide);
+			print_W(" \tb0lock: ");p_int_W(b0lock);
+		}
+	}
+
 }
 uint8_t GetServoPos(uint8_t pin){
 	return getBcsIoDataTable(pin)->PIN.currentValue;
@@ -149,18 +171,24 @@ void RunServo(uint8_t block){
 	//enableDebug();
 }
 
-uint8_t pinOn(uint8_t pin){
+boolean pinServoOk(uint8_t pin){
 	if(GetChannelMode(pin)==IS_SERVO){
 		if((pin > 11)){
 			if(		(b1OK==false && !powerOverRide) ||
 					b1lock == true) {
-				return 0;
+				return false;
 			}
 		}else if(	(b0OK==false && !powerOverRide)||
 					b0lock == true) {
-			return 0;
+			return false;
 		}
+		return true;
+	}
+	return false;
+}
 
+uint8_t pinOn(uint8_t pin){
+	if(pinServoOk(pin) ==true){
 		SetDIO(pin,ON);
 		return 1;
 	}

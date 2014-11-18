@@ -19,7 +19,7 @@ void eeWriteByte(uint16_t addr,uint8_t val);
 #define MODESTART 	(MACSTART+6)
 #define VALUESTART 	(MODESTART+24)
 #define UARTBAUD 	(VALUESTART+24)
-#define DATASTART 	(UARTBAUD+4)
+#define DATASTART_AVR 	(UARTBAUD+4)
 
 
 void EEInitMAC(void){
@@ -92,16 +92,16 @@ void EEWriteBaud(uint32_t val){
 }
 
 uint8_t EEReadData(uint16_t addr){
-	if((addr+DATASTART)>=1024){
+	if((addr+DATASTART_AVR)>=1024){
 		return 0;
 	}
-	return eeReadByte((DATASTART+addr));
+	return eeReadByte((DATASTART_AVR+addr));
 }
 void EEWriteData(uint16_t addr,uint8_t data){
-	if((addr+DATASTART)>=1024){
+	if((addr+DATASTART_AVR)>=1024){
 		return;
 	}
-	eeWriteByte((DATASTART+addr),data);
+	eeWriteByte((DATASTART_AVR+addr),data);
 
 }
 

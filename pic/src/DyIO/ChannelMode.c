@@ -10,7 +10,7 @@ boolean setMode(uint8_t pin,uint8_t mode);
 
 void SyncModes(void);
 
-boolean brownOutDetect = true; 
+
 
 void InitPinStates(void){
 	SyncModes();
@@ -23,18 +23,15 @@ void InitPinStates(void){
 	}
 }
 
-void setBrownOutDetect(boolean b){
-	brownOutDetect = b;
-	setEEBrownOutDetect(b);
-}
-boolean getBrownOutDetect(){
-	return brownOutDetect;
-}
+
+
 
 boolean setMode(uint8_t pin,uint8_t mode){
 	//println_I("Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_int_I(pin);
 	//uint8_t currentMode = GetChannelMode(pin);
-        forceModeDownstream( pin);
+	if(GetChannelMode(pin)== mode)
+		return true;
+	forceModeDownstream( pin);
 	ClearCounter(pin);
 	StopDyIOSPI(pin);
 	clearPPM(pin);
@@ -92,6 +89,9 @@ boolean setMode(uint8_t pin,uint8_t mode){
 	case IS_PPM_IN:
 		println_I("Setting up PPM...");
 		startPPM(pin);
+		break;
+	case IS_DO:
+		setDataTableCurrentValue(pin,OFF);
 		break;
 	}
 //	print_I(" \tMode set");

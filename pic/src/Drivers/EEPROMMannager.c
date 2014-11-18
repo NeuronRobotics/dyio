@@ -8,11 +8,8 @@
 #include "UserApp.h"
 
 pid_vales pidEEPRomVal[NUM_PID_GROUPS];
-#define pidValSize sizeof(pid_vales)
-#define PID_VAL_END ((pidValSize*(NUM_PID_GROUPS)))
-#define PPM_END	     (PID_VAL_END+NUM_PPM_CHAN)
-#define BROWNOUT_START  (PPM_END+1)
-#define BROWNOUT_END 	(BROWNOUT_START+1)
+
+
 
 uint8_t loadEEDone=false; 
 void LoadEEstore(void){
@@ -72,12 +69,13 @@ void readPPMLink(uint8_t * vals){
 
 void setEEBrownOutDetect(boolean b){
 	uint8_t tmp = b?1:0;
+	setCoProcBrownOutMode(b);
 	SetEEPRomData(BROWNOUT_START,BROWNOUT_END,&tmp);
 }
 boolean getEEBrownOutDetect(){
 	uint8_t tmp =0;
 	GetEEPRomData(BROWNOUT_START,BROWNOUT_END,&tmp);
-	return tmp;
+	return tmp?true:false;
 }
 
 

@@ -268,6 +268,13 @@ boolean SetAllChannelValueFromPacket(BowlerPacket * Packet) {
     return true;
 }
 
+int32_t GetChanelSingleValue(uint8_t pin){
+	int32_t val;
+	uint8_t size=1;
+	GetChanelValueHW(pin, &size, &val);
+	return val;
+}
+
 
 boolean GetChanelValueFromPacket(BowlerPacket * Packet) {
     uint8_t pin = Packet->use.data[0];
@@ -293,10 +300,12 @@ boolean GetChanelValueFromPacket(BowlerPacket * Packet) {
         } else {
             return false;
         }
-//        if (GetChannelMode(pin) == IS_ANALOG_IN) {
-//            println_W("Analog value= ");
-//            p_int_W(data);
-//        }
+        if(isOutputMode(GetChannelMode(pin))==false){
+        	setDataTableCurrentValue(pin,data);
+        }else{
+        	data = getBcsIoDataTable(pin)->PIN.currentValue;
+        }
+
         set32bit(Packet, data, 1);
         numValues = 4;
     }
@@ -310,20 +319,20 @@ boolean GetAllChanelValueFromPacket(BowlerPacket * Packet) {
     if (getAllChanelValueHWPtr != NULL) {
         int i;
         int32_t tmp;
-        getAllChanelValueHWPtr((int32_t *) (&Packet->use.data[1]));
+        getAllChanelValueHWPtr(data);
         for (i = 0; i < GetNumberOfIOChannels(); i++) {
             tmp = data[i];
             if(isOutputMode(GetChannelMode(i))==false){
             	setDataTableCurrentValue(i,tmp);
-				set32bit(Packet, tmp, (i*4)+1);
             }else{
             	tmp = getBcsIoDataTable(i)->PIN.currentValue;
-            	set32bit(Packet, tmp, (i*4)+1);
             }
+            set32bit(Packet, tmp, (i*4)+1);
 
         }
         Packet->use.data[0]=(GetNumberOfIOChannels());
         Packet->use.head.RPC=GetRPCValue("gacv");
+        Packet->use.head.DataLegnth = 4+1+(GetNumberOfIOChannels()*4);
     } else
         return false;
     FixPacket(Packet);
@@ -427,9 +436,10 @@ boolean pinHasFunction(uint8_t pin, uint8_t function) {
  */
 boolean setDataTableCurrentValue(uint8_t pin, int32_t value){
 	if(value !=getBcsIoDataTable(pin)->PIN.currentValue ){
-		println_I("Value was ");p_int_I(getBcsIoDataTable(pin)->PIN.currentValue);
-		print_I(" set to ");p_int_I(value);
-		print_I(" on pin ");p_int_I(pin);
+		Print_Level l = isOutputMode(GetChannelMode(pin))?WARN_PRINT:INFO_PRINT;
+		println("Value was ",l);p_int(getBcsIoDataTable(pin)->PIN.currentValue,l);
+		print_nnl(" set to ",l);p_int(value,l);
+		print_nnl(" on pin ",l);p_int(pin,l);
 		// THis is the only place this variable should be set
 		getBcsIoDataTable(pin)->PIN.currentValue =value;
 		//print_I(" confirmed ");p_int_I(getBcsIoDataTable(pin)->PIN.currentValue);

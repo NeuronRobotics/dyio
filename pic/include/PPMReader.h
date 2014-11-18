@@ -8,8 +8,7 @@
 #ifndef PPMREADER_H_
 #define PPMREADER_H_
 
-#define NUM_PPM_CHAN 6
-#define INVALID_PPM_LINK 0xff
+
 void pushPPMPacket(void);
 void runPPMEvent(void);
 void RunPPMCheck(void);

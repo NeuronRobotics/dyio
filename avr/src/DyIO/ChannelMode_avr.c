@@ -110,6 +110,7 @@ boolean setMode(uint8_t pin,uint8_t mode){
 		return true; 
 	case IS_DO:
 		configPinMode(pin,mode,OUTPUT,OFF);
+		setDataTableCurrentValue(pin,OFF);
 		return true; 
 	case IS_DI:
 	case IS_PPM_IN:
@@ -134,4 +135,5 @@ void configPinMode(uint8_t pin,uint8_t mode,uint8_t tris,uint8_t io){
 	SetDIO(pin,io);
 	getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
 	EEWriteMode(pin,mode);
+
 }

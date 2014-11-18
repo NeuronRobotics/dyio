@@ -45,7 +45,7 @@ void hardwareInit() {
     }
     StartCritical();
 
-    println_I("Getting MAC from flash");
+    println_I("Getting MAC from flash ");
     enableFlashStorage(true);
     FlashGetMac(MyMAC.v);
 
@@ -65,7 +65,11 @@ void hardwareInit() {
 
     mInitSwitch();
 
-
+    //AVR Reset pin
+    InitAVR_RST();
+    HoldAVRReset();
+    //AVR must be running before pin states can be synced in the pin initialization
+    ReleaseAVRReset();
     //Must initialize IO before hardware
     InitPins();
     //println_I("Adding IO Namespace");
@@ -84,10 +88,6 @@ void hardwareInit() {
 
     Init_FLAG_BUSY_ASYNC();
     //InitCTS_RTS_HO();
-
-    //AVR Reset pin
-    InitAVR_RST();
-    HoldAVRReset();
 
     //ConfigUARTOpenCollector();
     ConfigUARTRXTristate();
@@ -122,9 +122,6 @@ void UserInit(void) {
     hardwareInit();
     //println_I("Hardware Init done");
 
-    ReleaseAVRReset();
-
-
 
     CheckRev();
 
@@ -141,8 +138,7 @@ void UserInit(void) {
     lockServos();
     setPrintLevelInfoPrint();
 
-    boolean brown = getEEBrownOutDetect();
-    setCoProcBrownOutMode(brown);
+    boolean brown = getEEBrownOutDetect() ? true:false;
     setBrownOutDetect(brown);
 
 
