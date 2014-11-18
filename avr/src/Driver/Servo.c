@@ -19,7 +19,7 @@
 #include "UserApp_avr.h"
 
 
-boolean powerOverRide = false; 
+boolean powerOverRide = true;
 
 INTERPOLATE_DATA velocity[NUM_PINS];
 void runLinearInterpolationServo(uint8_t blockStart,uint8_t blockEnd);
@@ -28,11 +28,17 @@ boolean pinServoOk(uint8_t pin);
 uint8_t pinOn(uint8_t pin);
 void pinOff(uint8_t pin);
 
+boolean servoEngineStarted =false;
+
 void InitServo(uint8_t PIN){
 	//println_I("Starting servo");
 	ClearPinState(PIN);
 	SetPinTris(PIN,OUTPUT);
 	//DATA.PIN[PIN].State=IS_SERVO;
+	if( servoEngineStarted == false){
+		servoEngineStarted =true;
+		setTimerLowTime();
+	}
 }
 
 void setPowerOverride(boolean set){
@@ -128,6 +134,7 @@ uint8_t GetServoPos(uint8_t pin){
 
 void RunServo(uint8_t block){
 
+	return;//short circuit servo system
 	//disableDebug();
 	uint16_t j;
 	uint8_t xIndex;

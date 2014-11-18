@@ -35,4 +35,43 @@ void RunServo(uint8_t block);
 void InitServo(uint8_t pin);
 void DelayPreServo(void);
 
+
+typedef enum _ServoState{
+    LOW=0,
+    PRETIME=1,
+    TIME=2,
+    FINISH=3
+} ServoState;
+
+    /*Stop the servo signals
+     */
+    void stopServos();
+
+    /**
+     * Start the servo hardware
+     */
+    void initServos();
+
+    /**
+     * Run the pulse for all pins
+     */
+    void runServos();
+
+    /**
+     * Set a setpoint for a servo with an intrerpolated time
+     */
+    void setServo(uint8_t PIN, uint8_t val,float time);
+
+    /**
+     * get the current position of the servo
+     */
+    uint8_t getServoPosition(uint8_t PIN);
+   /**
+    * private
+    */
+void runLinearInterpolationServo(uint8_t blockStart,uint8_t blockEnd);
+uint8_t pinOn(uint8_t pin);
+void pinOff(uint8_t pin);
+void DelayPreServoPulse(void);
+
 #endif /* SERVO_H_ */
