@@ -3,23 +3,51 @@
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="0.702444624">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="0.702444624" moduleId="org.eclipse.cdt.core.settings" name="Default">
-				<externalSettings/>
+				<externalSettings>
+					<externalSetting/>
+				</externalSettings>
 				<extensions>
-					<extension id="org.eclipse.cdt.core.VCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
 					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 				<configuration artifactName="${ProjName}" buildProperties="" description="" id="0.702444624" name="Default" parent="org.eclipse.cdt.build.core.prefbase.cfg">
 					<folderInfo id="0.702444624." name="/" resourcePath="">
-						<toolChain id="org.eclipse.cdt.build.core.prefbase.toolchain.1220353356" name="No ToolChain" resourceTypeBasedDiscovery="false" superClass="org.eclipse.cdt.build.core.prefbase.toolchain">
-							<targetPlatform id="org.eclipse.cdt.build.core.prefbase.toolchain.1220353356.1262549142" name=""/>
-							<builder arguments="" id="org.eclipse.linuxtools.cdt.autotools.core.toolchain.builder.991834479" keepEnvironmentInBuildfile="false"/>
-							<tool id="org.eclipse.cdt.build.core.settings.holder.libs.203827591" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs"/>
-							<tool id="org.eclipse.cdt.build.core.settings.holder.1961328103" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
-								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.896688412" languageId="org.eclipse.cdt.core.assembly" languageName="Assembly" sourceContentType="org.eclipse.cdt.core.asmSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
+						<toolChain id="cdt.managedbuild.toolchain.gnu.base.1232449726" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.base">
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.target.gnu.platform.base.439307925" name="Debug Platform" osList="linux,hpux,aix,qnx" superClass="cdt.managedbuild.target.gnu.platform.base"/>
+							<builder buildPath="${workspace_loc:/DyIO}/Default" id="cdt.managedbuild.target.gnu.builder.base.686744446" keepEnvironmentInBuildfile="false" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.base"/>
+							<tool id="cdt.managedbuild.tool.gnu.archiver.base.2080682202" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.base.1977744597" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.base"/>
+							<tool id="cdt.managedbuild.tool.gnu.c.compiler.base.1741500108" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.base">
+								<option id="gnu.c.compiler.option.include.paths.471637397" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/c-bowler/BowlerStack/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/c-bowler/Platform/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/DyIO/common/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/DyIO/avr/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/DyIO/pic/include}&quot;"/>
+									<listOptionValue builtIn="false" value="/opt/microchip/xc32/v1.00/pic32-libs/include"/>
+								</option>
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1884524285" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="MINOR_REV=9"/>
+									<listOptionValue builtIn="false" value="MAJOR_REV=3"/>
+									<listOptionValue builtIn="false" value="FIRMWARE_VERSION=77"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.799968923" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.c.linker.base.354322964" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.base">
+								<inputType id="cdt.managedbuild.tool.gnu.c.linker.input.533914779" superClass="cdt.managedbuild.tool.gnu.c.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.base.1014828621" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.base"/>
+							<tool id="cdt.managedbuild.tool.gnu.assembler.base.1075500754" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.base">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.154835404" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
@@ -27,8 +55,8 @@
 					<fileInfo id="0.702444624.879005345" name="ADC.c" rcbsApplicability="disable" resourcePath="avr/src/Driver/ADC.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.829368067" name="SPISlave.c" rcbsApplicability="disable" resourcePath="avr/src/Driver/SPISlave.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.223485518" name="IO.c" rcbsApplicability="disable" resourcePath="avr/src/Driver/IO.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.1653347302" name="UARTPassThrough.c" rcbsApplicability="disable" resourcePath="avr/src/Driver/UARTPassThrough.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1879514195" name="Servo.c" rcbsApplicability="disable" resourcePath="avr/src/Driver/Servo.c" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.1653347302" name="UARTPassThrough.c" rcbsApplicability="disable" resourcePath="avr/src/Driver/UARTPassThrough.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1952241767" name="PWM.c" rcbsApplicability="disable" resourcePath="avr/src/Driver/PWM.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1986292667" name="DCMotorDriver.c" rcbsApplicability="disable" resourcePath="avr/src/Driver/DCMotorDriver.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.536667842" name="Main.c" rcbsApplicability="disable" resourcePath="avr/src/Main_avr.c" toolsToInvoke=""/>
@@ -39,15 +67,15 @@
 					<fileInfo id="0.702444624.567594353" name="CoOpCallbacks.c" rcbsApplicability="disable" resourcePath="avr/src/BowlerCallbacks/CoOpCallbacks.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.824828397" name="Pin_State.c" rcbsApplicability="disable" resourcePath="avr/src/DyIO/Pin_State_avr.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.837731795" name="ChannelConfig.c" rcbsApplicability="disable" resourcePath="avr/src/DyIO/ChannelConfig_avr.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.611643409" name="ChannelMode.c" rcbsApplicability="disable" resourcePath="avr/src/DyIO/ChannelMode_avr.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1467074842" name="ChannelValues.c" rcbsApplicability="disable" resourcePath="avr/src/DyIO/ChannelValues_avr.c" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.611643409" name="ChannelMode.c" rcbsApplicability="disable" resourcePath="avr/src/DyIO/ChannelMode_avr.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1244972545" name="PinFunctions.c" rcbsApplicability="disable" resourcePath="common/src/dyio/PinFunctions.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.754692510" name="Abstract_bcs_io_setmode.c" rcbsApplicability="disable" resourcePath="common/src/Namespace_bcs_io_setmode/Abstract_bcs_io_setmode.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.695325250" name="Namespace_bcs_io_setmode.c" rcbsApplicability="disable" resourcePath="common/src/Namespace_bcs_io_setmode/Namespace_bcs_io_setmode.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.2077198970" name="Namespace_bcs_io.c" rcbsApplicability="disable" resourcePath="common/src/Namespace_bcs_io/Namespace_bcs_io.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1784630676" name="Debug_DyIO.c" rcbsApplicability="disable" resourcePath="common/src/Namespace_bcs_io/Debug_DyIO.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.570594938" name="Bcs_IO_AdvancedAsync.c" rcbsApplicability="disable" resourcePath="common/src/Namespace_bcs_io/Bcs_IO_AdvancedAsync.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1051167662" name="Abstract_bcs_io.c" rcbsApplicability="disable" resourcePath="common/src/Namespace_bcs_io/Abstract_bcs_io.c" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.570594938" name="Bcs_IO_AdvancedAsync.c" rcbsApplicability="disable" resourcePath="common/src/Namespace_bcs_io/Bcs_IO_AdvancedAsync.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1584332681" name="Namespace_bcs_safe.c" rcbsApplicability="disable" resourcePath="pic/src/Namespace_bcs_safe/Namespace_bcs_safe.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.59156166" name="Abstract_bsc_safe.c" rcbsApplicability="disable" resourcePath="pic/src/Namespace_bcs_safe/Abstract_bsc_safe.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.156713085" name="Namespace_bcs_pid_dypid.c" rcbsApplicability="disable" resourcePath="pic/src/Namespace_dyio/Namespace_bcs_pid_dypid.c" toolsToInvoke=""/>
@@ -59,18 +87,18 @@
 					<fileInfo id="0.702444624.1222159836" name="DownStreamPackets.c" rcbsApplicability="disable" resourcePath="pic/src/BowlerCallbacks/DownStreamPackets.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1805628419" name="AsyncManager.c" rcbsApplicability="disable" resourcePath="pic/src/BowlerCallbacks/AsyncManager.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1035655765" name="UpstreamPackets.c" rcbsApplicability="disable" resourcePath="pic/src/BowlerCallbacks/UpstreamPackets.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.1913547314" name="Counter.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/Counter.c" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.238634355" name="Main.c" rcbsApplicability="disable" resourcePath="pic/src/Main.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.2140669862" name="DyIODataTableManager.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/DyIODataTableManager.c" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.1913547314" name="Counter.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/Counter.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.2042390625" name="SerialPassThrough.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/SerialPassThrough.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.2062763767" name="EEPROMMannager.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/EEPROMMannager.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.245597868" name="ADC.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/ADC.c" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.2062763767" name="EEPROMMannager.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/EEPROMMannager.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1696379772" name="UartDMARx.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/dma/UartDMARx.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.1700208760" name="Switches.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/Switches.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1301992894" name="BluetoothManager.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/BluetoothManager.NOCOMPILE" toolsToInvoke=""/>
+					<fileInfo id="0.702444624.1700208760" name="Switches.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/Switches.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.947834262" name="PPMReader.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/PPMReader.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.219400765" name="CoProcCom.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/CoProcCom.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.737431134" name="SPI.c" rcbsApplicability="disable" resourcePath="pic/src/Drivers/SPI.c" toolsToInvoke=""/>
-					<fileInfo id="0.702444624.238634355" name="Main.c" rcbsApplicability="disable" resourcePath="pic/src/Main.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.657270879" name="ChannelValues.c" rcbsApplicability="disable" resourcePath="pic/src/DyIO/ChannelValues.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.591545123" name="ChannelMode.c" rcbsApplicability="disable" resourcePath="pic/src/DyIO/ChannelMode.c" toolsToInvoke=""/>
 					<fileInfo id="0.702444624.1374312381" name="ChannelConfig.c" rcbsApplicability="disable" resourcePath="pic/src/DyIO/ChannelConfig.c" toolsToInvoke=""/>
@@ -92,6 +120,7 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		<profile id="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile">
@@ -134,6 +163,49 @@
 				<parser enabled="true"/>
 			</scannerInfoProvider>
 		</profile>
+		<scannerConfigBuildInfo instanceId="0.702444624;0.702444624.;cdt.managedbuild.tool.gnu.c.compiler.base.1741500108;cdt.managedbuild.tool.gnu.c.compiler.input.799968923">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+			<profile id="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile">
+				<buildOutputProvider>
+					<openAction enabled="true" filePath=""/>
+					<parser enabled="true"/>
+				</buildOutputProvider>
+				<scannerInfoProvider id="specsFile">
+					<runAction arguments="-E -P -v -dD ${plugin_state_location}/${specs_file}" command="gcc" useDefault="true"/>
+					<parser enabled="true"/>
+				</scannerInfoProvider>
+			</profile>
+			<profile id="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfile">
+				<buildOutputProvider>
+					<openAction enabled="true" filePath=""/>
+					<parser enabled="true"/>
+				</buildOutputProvider>
+				<scannerInfoProvider id="specsFile">
+					<runAction arguments="-E -P -v -dD ${plugin_state_location}/${specs_file}" command="gcc" useDefault="true"/>
+					<parser enabled="true"/>
+				</scannerInfoProvider>
+			</profile>
+			<profile id="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP">
+				<buildOutputProvider>
+					<openAction enabled="true" filePath=""/>
+					<parser enabled="true"/>
+				</buildOutputProvider>
+				<scannerInfoProvider id="specsFile">
+					<runAction arguments="-E -P -v -dD ${plugin_state_location}/specs.cpp" command="g++" useDefault="true"/>
+					<parser enabled="true"/>
+				</scannerInfoProvider>
+			</profile>
+			<profile id="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC">
+				<buildOutputProvider>
+					<openAction enabled="true" filePath=""/>
+					<parser enabled="true"/>
+				</buildOutputProvider>
+				<scannerInfoProvider id="specsFile">
+					<runAction arguments="-E -P -v -dD ${plugin_state_location}/specs.c" command="gcc" useDefault="true"/>
+					<parser enabled="true"/>
+				</scannerInfoProvider>
+			</profile>
+		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="0.702444624">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.make.core.GCCStandardMakePerFileProfile"/>
 			<profile id="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile">
@@ -178,5 +250,4 @@
 			</profile>
 		</scannerConfigBuildInfo>
 	</storageModule>
-	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 </cproject>

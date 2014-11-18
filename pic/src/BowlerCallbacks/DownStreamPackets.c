@@ -105,7 +105,9 @@ void CheckRev(void){
 	downstreamPacketTemp.use.head.RPC=GetRPCValue("_rev");
 	downstreamPacketTemp.use.head.DataLegnth=4;
 	SendPacketToCoProc(& downstreamPacketTemp);
-	if((downstreamPacketTemp.use.data[0]==MAJOR_REV) && (downstreamPacketTemp.use.data[1]==MINOR_REV) && (downstreamPacketTemp.use.data[2]==FIRMWARE_VERSION) ){
+	if((downstreamPacketTemp.use.data[0]==MAJOR_REV) &&
+			(downstreamPacketTemp.use.data[1]==MINOR_REV) &&
+			(downstreamPacketTemp.use.data[2]==FIRMWARE_VERSION) ){
 		SetColor(0,0,1);
 	}else{
 //		SetColor(1,0,0);
