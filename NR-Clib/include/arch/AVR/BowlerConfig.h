@@ -18,6 +18,7 @@
 #ifndef BOWLERCONFIG_H_
 #define BOWLERCONFIG_H_
 
+
 #include "reg_structs.h"
 #include <util/delay.h>
 #include <avr/io.h>
@@ -25,6 +26,7 @@
 #include <string.h>
 #include <avr/pgmspace.h>
 #include "Bowler/Debug.h"
+#  include <avr/iom644p.h>
 #if !defined(__AVR_ATmega324P__)
 	#define USE_DYN_RPC
 #endif
