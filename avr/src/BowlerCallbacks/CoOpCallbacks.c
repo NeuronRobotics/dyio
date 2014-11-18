@@ -20,12 +20,12 @@
 
 #define ANALOG_DEAD_BAND 1
 
-#define blockTime 24.0f
-#define blockInc1 (blockTime/3.0f)
-#define blockInc2 (blockInc1+blockInc1)
-RunEveryData block0 = {0,blockTime};
-RunEveryData block1 = {blockInc1,blockTime};
-RunEveryData block2 = {blockInc2,blockTime};
+//#define blockTime 24.0f
+//#define blockInc1 (blockTime/3.0f)
+//#define blockInc2 (blockInc1+blockInc1)
+//RunEveryData block0 = {0,blockTime};
+//RunEveryData block1 = {blockInc1,blockTime};
+//RunEveryData block2 = {blockInc2,blockTime};
 
 
 void initPinState(uint8_t i){
@@ -67,22 +67,22 @@ boolean checkDigital(){
 	return true; 
 }
 
-void resetBlocks(){
-#if ! defined(__AVR_ATmega324P__)
-	println_E("Block times b0: ");p_fl_E(block0.MsTime);print_E(", b1: ");p_fl_E(block1.MsTime);print_E(", b2: ");p_fl_E(block2.MsTime);
-#endif
-	block0.setPoint = blockTime;
-	block0.MsTime=getMs();
-
-	block1.setPoint = blockTime;
-	block1.MsTime=block0.MsTime+blockInc1 ;
-
-	block2.setPoint = blockTime;
-	block2.MsTime=block0.MsTime+blockInc2 ;
-#if ! defined(__AVR_ATmega324P__)
-	println_E("Fixed to values, b0: ");p_fl_E(block0.MsTime);print_E(", b1: ");p_fl_E(block1.MsTime);print_E(", b2: ");p_fl_E(block2.MsTime);
-#endif
-}
+//void resetBlocks(){
+//#if ! defined(__AVR_ATmega324P__)
+//	println_E("Block times b0: ");p_fl_E(block0.MsTime);print_E(", b1: ");p_fl_E(block1.MsTime);print_E(", b2: ");p_fl_E(block2.MsTime);
+//#endif
+//	block0.setPoint = blockTime;
+//	block0.MsTime=getMs();
+//
+//	block1.setPoint = blockTime;
+//	block1.MsTime=block0.MsTime+blockInc1 ;
+//
+//	block2.setPoint = blockTime;
+//	block2.MsTime=block0.MsTime+blockInc2 ;
+//#if ! defined(__AVR_ATmega324P__)
+//	println_E("Fixed to values, b0: ");p_fl_E(block0.MsTime);print_E(", b1: ");p_fl_E(block1.MsTime);print_E(", b2: ");p_fl_E(block2.MsTime);
+//#endif
+//}
 
 void UserRun(void){
 #if defined(DEBUG)
@@ -102,45 +102,47 @@ void UserRun(void){
 		PushSerial();
 	}
 
-	if(block0.MsTime < 0.0f){
-#if ! defined(__AVR_ATmega324P__)
-		println_I("Block0 error, ");p_fl_I(block0.MsTime);
-#endif
-		resetBlocks();
-	}
-	if(block1.MsTime < 0.0f){
-#if ! defined(__AVR_ATmega324P__)
-		println_I("Block1 error, ");p_fl_I(block1.MsTime);
-#endif
-		resetBlocks();
-	}
-	if(block2.MsTime < 0.0f){
-#if ! defined(__AVR_ATmega324P__)
-		println_I("Block2 error, ");p_fl_I(block2.MsTime);
-#endif
-		resetBlocks();
-	}
+	//println_E("Main Loop ");p_fl_E(getMs());
 
-	if (RunEvery(&block0)>0.0f){
-		//println_I("Step 0");
-		//
-		block0.MsTime = getMs();
-		RunServo(0);
-		//return;
-	}
-	if (RunEvery(&block1)>0.0f){
-		//println_I("Step 1");
-		RunServo(1);
-		//return;
-	}
-	if (RunEvery(&block2)>0.0f){
-		//println_I("Step 2");
-		RunServo(2);
-		//Re-align the offsets for the servos
-		block0.setPoint = blockTime;
-		block1.setPoint = blockTime;
-		block2.setPoint = blockTime;
-		block1.MsTime=block0.MsTime+blockInc1 ;
-		block2.MsTime=block0.MsTime+blockInc2 ;
-	}
+//	if(block0.MsTime < 0.0f){
+//#if ! defined(__AVR_ATmega324P__)
+//		println_I("Block0 error, ");p_fl_I(block0.MsTime);
+//#endif
+//		resetBlocks();
+//	}
+//	if(block1.MsTime < 0.0f){
+//#if ! defined(__AVR_ATmega324P__)
+//		println_I("Block1 error, ");p_fl_I(block1.MsTime);
+//#endif
+//		resetBlocks();
+//	}
+//	if(block2.MsTime < 0.0f){
+//#if ! defined(__AVR_ATmega324P__)
+//		println_I("Block2 error, ");p_fl_I(block2.MsTime);
+//#endif
+//		resetBlocks();
+//	}
+//
+//	if (RunEvery(&block0)>0.0f){
+//		//println_I("Step 0");
+//		//
+//		block0.MsTime = getMs();
+//		RunServo(0);
+//		//return;
+//	}
+//	if (RunEvery(&block1)>0.0f){
+//		//println_I("Step 1");
+//		RunServo(1);
+//		//return;
+//	}
+//	if (RunEvery(&block2)>0.0f){
+//		//println_I("Step 2");
+//		RunServo(2);
+//		//Re-align the offsets for the servos
+//		block0.setPoint = blockTime;
+//		block1.setPoint = blockTime;
+//		block2.setPoint = blockTime;
+//		block1.MsTime=block0.MsTime+blockInc1 ;
+//		block2.MsTime=block0.MsTime+blockInc2 ;
+//	}
 }

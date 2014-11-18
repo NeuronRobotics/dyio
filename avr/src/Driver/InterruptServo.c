@@ -9,11 +9,11 @@
 #define dataTableSize (NUM_SERVO)
 
 //INTERPOLATE_DATA velocity[dataTableSize];
-int32_t positionTemp[dataTableSize];
-int32_t sort[dataTableSize];
-int32_t lastValue=0;
-int32_t sortedIndex = 0;
-int32_t blockIndex = 0;
+uint8_t positionTemp[dataTableSize];
+uint8_t sort[dataTableSize];
+uint8_t lastValue=0;
+uint8_t sortedIndex = 0;
+uint8_t blockIndex = 0;
 
 ServoState servoStateMachineCurrentState = LOW;
 
@@ -24,7 +24,7 @@ void runSort(){
         sort[k]=dataTableSize;
     }
     for(x=0;x<dataTableSize;x++){
-        positionTemp[x]=getBcsIoDataTable(x + (blockIndex*BLOCK_SIZE))->PIN.currentValue;
+        positionTemp[x]=getBcsIoDataTable(x + (blockIndex*BLOCK_SIZE))->PIN.currentValue & 0x000000ff;
     }
     for(x=0;x<dataTableSize;x++){
         current = 256;
@@ -54,19 +54,26 @@ void printSortedData(){
     }
     print_I(" ] ");
 
-    print_I("\r\n[ ");
+    print_I("\r\nS[ ");
 
     for(x=0;x<dataTableSize;x++){
         p_int_I(sort[x]);print_I(" , ");
     }
     print_I(" ] ");
 
-    print_I("\r\n[ ");
+    print_I("\r\nP[ ");
 
     for(x=0;x<dataTableSize;x++){
         p_int_I(positionTemp[sort[x]]);print_I(" , ");
     }
     print_I(" ] ");
+    print_I("\r\nI[ ");
+
+        for(x=0;x<dataTableSize;x++){
+            p_int_I(x + (blockIndex*BLOCK_SIZE));print_I(" , ");
+        }
+        print_I(" ] ");
+
 }
 
 void setServoTimer(int value){
@@ -79,18 +86,24 @@ void setServoTimer(int value){
     if(target>=0xffff){
     	target -=0xffff;
     }
+    println_E("Setting timer to: ");prHEX32(target,ERROR_PRINT);
     TIMSK1bits._OCIE1A=0;
     OCR1AH = (target>>8) && 0x00ff;
     OCR1AL = (target>>0) && 0x00ff;
     TIMSK1bits._OCIE1A=1;
 }
 
-ISR(TIMER1_COMPA_vect){//timer 1 overflow interrupt
-	servoTimerEvent();
+
+boolean pinState= false;
+ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
+	//servoTimerEvent();
+	pinState= pinState?false:true;
+	SetDIO(11,pinState?ON:OFF);
+	//print_E("*");
 }
 
 void stopServos(){
-	TIMSK1bits._OCIE1A=0;
+	//TIMSK1bits._OCIE1A=0;
 }
 void setTimerNextBlockTime(){
     setServoTimer(20);
@@ -122,7 +135,9 @@ boolean setUpNextServo(){
     lastValue = positionTemp[sort[sortedIndex]];
     if(diff<0){
         setPrintLevelErrorPrint();
-        println_E("Servo.c: Something is wrong!! Current minus last value is less then 0");
+        println_E("Servo.c: Something is wrong!! Current minus last value is less then 0\r\n");
+        setPrintLevelInfoPrint();
+        printSortedData();
         while(1);
     }
 
@@ -146,15 +161,17 @@ void stopCurrentServo(){
 
 void servoTimerEvent()
 {
+	uint8_t start;
+	uint8_t stop;
         //mPORTDToggleBits(BIT_3);
 	//StartCritical();
         stopServos();
         int j;
         switch(servoStateMachineCurrentState){
             case LOW:
-            	uint8_t start=blockIndex*BLOCK_SIZE;
-            	uint8_t stop=(blockIndex*BLOCK_SIZE)+BLOCK_SIZE;
-
+            	start=blockIndex*BLOCK_SIZE;
+            	stop=(blockIndex*BLOCK_SIZE)+BLOCK_SIZE;
+            	runLinearInterpolationServo(start,stop);
                 runSort();
                 for (j=0;j<NUM_SERVO;j++){
                     pinOn(j+ (blockIndex*BLOCK_SIZE));

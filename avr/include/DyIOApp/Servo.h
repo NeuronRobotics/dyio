@@ -35,6 +35,10 @@ void RunServo(uint8_t block);
 void InitServo(uint8_t pin);
 void DelayPreServo(void);
 
+void setTimerLowTime();
+void setTimerLowTime();
+void servoTimerEvent();
+
 
 typedef enum _ServoState{
     LOW=0,

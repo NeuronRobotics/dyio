@@ -36,7 +36,7 @@ void runDyIOMain(void){
 		// Run the Bowler Stack Namespace iteration of all async packets
 		// Pass in  the function pointer to push the packets upstream
 
-		//println_I("Main Loop 1");
+
 		RunNamespaceAsync(&Packet,&PutBowlerPacket);
 		buttonCheck(0);
 	}
