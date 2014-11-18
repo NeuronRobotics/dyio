@@ -69,9 +69,7 @@ boolean internalProcessor_p(BowlerPacket * Packet){
 	case EEPD:
 		start = Packet->use.data[0];
 		end = Packet->use.data[1];
-		if(start == BROWNOUT_START && end == BROWNOUT_END){
-			setPowerOverride(Packet->use.data[2]);
-		}
+
 		if (end >= start){
 			for (i=0;i<(end-start);i++){
 				EEWriteData(i+start,Packet->use.data[i+2]);

@@ -17,6 +17,7 @@ boolean getBrownOutDetect(){
 void setBrownOutDetect(boolean b){
 	brownOutDetect = b;
 	changedBrownOutDetect = true;
+	println_W("powerOverRide: ");p_int_W(b);
 }
 
 void InitializeDyIODataTableManager(){

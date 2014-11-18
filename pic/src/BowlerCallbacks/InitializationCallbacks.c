@@ -138,8 +138,7 @@ void UserInit(void) {
     lockServos();
     setPrintLevelInfoPrint();
 
-    boolean brown = getEEBrownOutDetect();
-    setCoProcBrownOutMode(brown);
+    boolean brown = getEEBrownOutDetect() ? true:false;
     setBrownOutDetect(brown);
 
 
