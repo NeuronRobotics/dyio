@@ -336,29 +336,30 @@ boolean GetAllChanelValueFromPacket(BowlerPacket * Packet) {
 boolean ConfigureChannelFromPacket(BowlerPacket * Packet) {
     uint8_t pin = Packet->use.data[0];
     boolean setValues = Packet->use.data[1];
-    int numVals = Packet->use.data[2];
     uint8_t mode = GetChannelMode(pin);
-    int i;
+
     int32_t * data = (int32_t *) (Packet->use.data + 3);
     int32_t tmp;
     if(mode != 0xff && setValues){
 		if (configChannelHWPtr != NULL) {
-			for (i = 0; i < numVals; i++) {
-				tmp = get32bit(Packet, (i * 4) + 3);
-				setDataTableCurrentValue(i,tmp);
-				data[i] = tmp;
-			}
-			configChannelHWPtr(pin, numVals, data);
+			println_E("Loading configs from packet");
+			tmp = get32bit(Packet,  3);
+			setDataTableCurrentValue(pin,tmp);
+			data[0] = tmp;// byte swap
+			configChannelHWPtr(pin, 1, data);
 		} else {
 			return false;
 		}
 
     }
+    println_E("Loading configs into packet");
     Packet->use.head.RPC= GetRPCValue("cchn");
     Packet->use.head.Method = BOWLER_CRIT;
     Packet->use.head.DataLegnth = 4+1+(GetNumberOfIOChannels()*4);
+    data = (int32_t *) (Packet->use.data + 1);
     configChannelHWPtr(0xff, GetNumberOfIOChannels(), data);
     Packet->use.data[0] =GetNumberOfIOChannels();
+    int i;
     for (i = 0; i < GetNumberOfIOChannels(); i++) {
 		tmp = data[i];
 		set32bit(Packet, tmp, (i*4)+1);

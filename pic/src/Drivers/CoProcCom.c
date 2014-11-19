@@ -426,8 +426,7 @@ boolean valadateRPC(int response, int sent) {
             }
         case CCHN:
             switch (response) {
-                case _RDY:
-                case _ERR:
+                case CCHN:
                     return true;
                 default:
                     return false;
