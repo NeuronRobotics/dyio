@@ -108,7 +108,7 @@ ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
 
 	pinState= pinState?false:true;
 	SetDIO(11,pinState?ON:OFF);
-	setTimerServoTicks(64+(getBcsIoDataTable(11)->PIN.currentValue&0x000000ff));
+	setTimerServoTicks(128+(getBcsIoDataTable(11)->PIN.currentValue&0x000000ff));
 
 	TIFR1bits._OCF1A=0;
 }
@@ -117,7 +117,7 @@ void stopServos(){
 	//TIMSK1bits._OCIE1A=0;
 }
 void setTimerNextBlockTime(){
-    setServoTimer(2307/2);//.5 ms
+	setTimerServoTicks(128);//1ms
     servoStateMachineCurrentState = LOW;
 }
 
@@ -129,12 +129,12 @@ void setTimerLowTime(){
 }
 
 void setTimerPreTime(){
-    setServoTimer(2307/2);//.5 ms
+	setTimerServoTicks(128);//1ms
     servoStateMachineCurrentState = PRETIME;
 }
 
 void setTimerServoTicks(int value){
-    setServoTimer(value*18);
+    setServoTimer(value*9);
     servoStateMachineCurrentState = TIME;
 }
 
