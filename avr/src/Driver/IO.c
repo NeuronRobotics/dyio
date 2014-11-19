@@ -48,9 +48,11 @@ uint8_t GetDIO(uint8_t PIN){
 	case 16:
 		if (getPrintLevel() == NO_PRINT)
 			return PI16;
+			/* no break */
 	case 17:
 		if (getPrintLevel() == NO_PRINT)
 			return PI17;
+			/* no break */
 	case 18:
 		return PI18;
 	case 19:

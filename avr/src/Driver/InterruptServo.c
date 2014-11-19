@@ -76,53 +76,65 @@ void printSortedData(){
 
 }
 
-void setServoTimer(int value){
+void setServoTimer(int32_t value){
 	int current = TCNT1;
+	//uint32_t ivalue =(uint32_t) (value * 2307.0);// scale factor
+
     if(value<1)
         value = 1;
-    if(value>0xfffe)
-        value = 0xfffe;
+    if(value>0xffff){
+		println_E("Maxed timer to: ");prHEX32(value,ERROR_PRINT);
+        value = 0xffff;
+    }
     int target = value +current;
     if(target>=0xffff){
     	target -=0xffff;
     }
-    println_E("Setting timer to: ");prHEX32(target,ERROR_PRINT);
+    if(target>=0xffff){
+		println_E("Setting timer to: ");prHEX32(value,ERROR_PRINT);
+		print_E(" reg ");prHEX16(target,ERROR_PRINT);
+    }
     TIMSK1bits._OCIE1A=0;
-    OCR1AH = (target>>8) && 0x00ff;
-    OCR1AL = (target>>0) && 0x00ff;
+    OCR1A = target & 0xffff;
     TIMSK1bits._OCIE1A=1;
+
 }
 
 
 boolean pinState= false;
 ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
-	//servoTimerEvent();
+
+//	servoTimerEvent();
+
 	pinState= pinState?false:true;
 	SetDIO(11,pinState?ON:OFF);
-	//print_E("*");
+	setTimerServoTicks(64+(getBcsIoDataTable(11)->PIN.currentValue&0x000000ff));
+
+	TIFR1bits._OCF1A=0;
 }
 
 void stopServos(){
 	//TIMSK1bits._OCIE1A=0;
 }
 void setTimerNextBlockTime(){
-    setServoTimer(20);
+    setServoTimer(2307/2);//.5 ms
     servoStateMachineCurrentState = LOW;
 }
 
 void setTimerLowTime(){
-    setServoTimer(300*(18));
+    //setServoTimer(300*(18));
+	setServoTimer((18i -((3i*NUM_BLOCKS)+1))*2307i);
     servoStateMachineCurrentState = LOW;
     blockIndex=0;
 }
 
 void setTimerPreTime(){
-    setServoTimer(285);
+    setServoTimer(2307/2);//.5 ms
     servoStateMachineCurrentState = PRETIME;
 }
 
 void setTimerServoTicks(int value){
-    setServoTimer((int)((float)value*1.4));
+    setServoTimer(value*18);
     servoStateMachineCurrentState = TIME;
 }
 

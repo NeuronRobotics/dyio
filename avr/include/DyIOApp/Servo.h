@@ -38,7 +38,7 @@ void DelayPreServo(void);
 void setTimerLowTime();
 void setTimerLowTime();
 void servoTimerEvent();
-
+void setTimerServoTicks(int value);
 
 typedef enum _ServoState{
     LOW=0,
