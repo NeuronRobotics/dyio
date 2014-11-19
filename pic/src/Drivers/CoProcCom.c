@@ -1,10 +1,13 @@
 /*
  * CoProcCom.c
+
  *
  *  Created on: Nov 21, 2009
  *      Author: hephaestus
  */
+
 #include "UserApp.h"
+extern volatile unsigned int        U2BRG __attribute__((section("sfrs")));
 
 #define MAX_RETRY 5
 #define DELAY_TIMEOUT 100

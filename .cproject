@@ -24,6 +24,8 @@
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.base.1535218105" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.base">
 								<option id="gnu.c.compiler.option.include.paths.1402920046" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/usr/lib/avr/include/"/>
+									<listOptionValue builtIn="false" value="/opt/microchip/xc32/v1.00/lib/gcc/pic32mx/4.5.1/include"/>
+									<listOptionValue builtIn="false" value="/opt/microchip/xc32/v1.00/pic32-libs/include"/>
 									<listOptionValue builtIn="false" value="/opt/microchip/xc32/v1.00/pic32mx/include"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1552885619" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
