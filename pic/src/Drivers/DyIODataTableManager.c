@@ -10,6 +10,7 @@ boolean brownOutDetect = true;
 
 boolean changedBrownOutDetect = false;
 
+
 boolean getBrownOutDetect(){
 	return brownOutDetect;
 }
@@ -36,6 +37,8 @@ void SyncDataTable(){
 		setEEBrownOutDetect(brownOutDetect);
 		changedBrownOutDetect = false;
 	}
+
+    SyncConfigurations();
 	float end = getMs() - start;
 	if(end > 60){
 		println_W("Long Sync time = ");
@@ -46,9 +49,7 @@ void SyncDataTable(){
 
 }
 
-void SetNewConfigurationDataTable(uint8_t pin, int32_t value){
 
-}
 
 boolean LoadSerialTxData(uint8_t numValues,uint8_t * data){
 	int i;

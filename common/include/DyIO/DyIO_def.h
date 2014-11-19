@@ -127,6 +127,7 @@ uint8_t SetAllCoProcValues();
 boolean LoadSerialTxData(uint8_t numValues,uint8_t * data);
 uint8_t GetSerialRxData(uint8_t * data);
 void SetNewConfigurationDataTable(uint8_t pin, int32_t value);
+int32_t GetConfigurationDataTable(uint8_t pin);
 void SyncDataTable();
 
 

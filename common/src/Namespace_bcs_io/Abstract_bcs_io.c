@@ -118,13 +118,7 @@ int GetNumberOfIOChannels() {
 
 uint8_t GetChannelMode(uint8_t pin) {
     if (pin < 0 || pin > GetNumberOfIOChannels()) {
-        setPrintLevelErrorPrint();
-//#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-//        println_E("Failed IO sanity check: channel number out of bounds # ");
-//        p_int_E(pin);
-//#endif
-        //FAIL sanity check
-        while (1);
+        return 0xff;
     }
     //Strip off the internally stored High Bit
     return getBcsIoDataTable(pin)->PIN.currentChannelMode;
@@ -341,27 +335,34 @@ boolean GetAllChanelValueFromPacket(BowlerPacket * Packet) {
 
 boolean ConfigureChannelFromPacket(BowlerPacket * Packet) {
     uint8_t pin = Packet->use.data[0];
+    boolean setValues = Packet->use.data[1];
+    int numVals = Packet->use.data[2];
     uint8_t mode = GetChannelMode(pin);
-    int32_t * data = (int32_t *) (Packet->use.data + 1);
-    int32_t tmp;
     int i;
-    if (configChannelHWPtr != NULL) {
-        if (Packet->use.head.DataLegnth > 5 && mode != IS_SERVO) {
-            int numVals = (Packet->use.head.DataLegnth - (4 + 1)) / 4;
-            for (i = 0; i < numVals; i++) {
-                tmp = get32bit(Packet, (i * 4) + 1);
-                setDataTableCurrentValue(i,tmp);
-                data[i] = tmp;
-            }
-            configChannelHWPtr(pin, numVals, (int32_t *) (Packet->use.data + 1));
-        } else {
-            // Single Byte Servo, legacy HACK
-            int32_t value = Packet->use.data[1];
-            configChannelHWPtr(pin, 1, &value);
-        }
-    } else {
-        return false;
+    int32_t * data = (int32_t *) (Packet->use.data + 3);
+    int32_t tmp;
+    if(mode != 0xff && setValues){
+		if (configChannelHWPtr != NULL) {
+			for (i = 0; i < numVals; i++) {
+				tmp = get32bit(Packet, (i * 4) + 3);
+				setDataTableCurrentValue(i,tmp);
+				data[i] = tmp;
+			}
+			configChannelHWPtr(pin, numVals, data);
+		} else {
+			return false;
+		}
+
     }
+    Packet->use.head.RPC= GetRPCValue("cchn");
+    Packet->use.head.Method = BOWLER_CRIT;
+    Packet->use.head.DataLegnth = 4+1+(GetNumberOfIOChannels()*4);
+    configChannelHWPtr(0xff, GetNumberOfIOChannels(), data);
+    Packet->use.data[0] =GetNumberOfIOChannels();
+    for (i = 0; i < GetNumberOfIOChannels(); i++) {
+		tmp = data[i];
+		set32bit(Packet, tmp, (i*4)+1);
+	}
     FixPacket(Packet);
     return true;
 }

@@ -208,16 +208,18 @@ RPC_LIST bcsIo_asyn_p = {BOWLER_POST, // Method
 RPC_LIST bcsIo_cchn_c = {BOWLER_CRIT, // Method
     "cchn", //RPC as string
     &ConfigureChannelFromPacket, //function pointer to a packet parsing function
-    {BOWLER_I08, // channel
+    {	BOWLER_I08, // channel to push, Invalad treats it as bulk packet
+		BOWLER_BOOL,// change the values
         BOWLER_I32STR, // values
         0
     }, // Calling arguments
     BOWLER_POST, // response method
-    {0}, // Calling arguments
+    {BOWLER_I32STR, // values
+    }, // Calling arguments
     NULL //Termination
 };
-//@Depricated
 
+//@Depricated Set Channel value should be replaced with the set all and the stream mode
 RPC_LIST bcsIo_schv_c = {BOWLER_CRIT, // Method
     "schv", //RPC as string
 
@@ -230,7 +232,7 @@ RPC_LIST bcsIo_schv_c = {BOWLER_CRIT, // Method
     {0}, // Calling arguments
     NULL //Termination
 };
-//@Depricated
+
 
 RPC_LIST bcsIo_asyn_c = {BOWLER_CRIT, // Method
     "asyn", //RPC as string

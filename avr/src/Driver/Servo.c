@@ -35,6 +35,7 @@ void InitServo(uint8_t PIN){
 	ClearPinState(PIN);
 	SetPinTris(PIN,OUTPUT);
 	//DATA.PIN[PIN].State=IS_SERVO;
+	SetServoPos(PIN,EEReadValue(PIN),0);
 	if( servoEngineStarted == false){
 		servoEngineStarted =true;
 

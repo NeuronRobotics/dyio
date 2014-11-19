@@ -15,8 +15,7 @@ void InitPinModes(void){
 		//ClearPinState(i);
 		SetPinTris(i,INPUT);
 		SetDIO(i,0);
-		SetPWM(i,EEReadValue(i));
-		SetServoPos(i,EEReadValue(i),0);
+
 		//getBcsIoDataTable(i)->PIN.previousChannelMode=NO_CHANGE;
 		mode=EEReadMode(i);
 		if((mode < 2)||(mode >=IO_MODE_MAX)){

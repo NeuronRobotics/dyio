@@ -102,19 +102,20 @@ boolean pinState= false;
 ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
 	uint8_t TCCR1Btmp = TCCR1B;// store the clock
 	TCCR1Bbits._CS = 0; // stop the clock
+	EndCritical();// re-enable interupts for the UART
 	current = TCNT1;// store the state
 	uint8_t state = TIMSK1; // the interrupts
 	TIMSK1 = 0x00;// stop all interrupts
 
-	//	servoTimerEvent();
+	servoTimerEvent();
 
-	pinState= pinState?false:true;
-	SetDIO(11,pinState?ON:OFF);
-	if(pinState)
-		setTimerServoTicks(255+(getBcsIoDataTable(11)->PIN.currentValue&0x000000ff));
-	else{
-		setTimerLowTime();
-	}
+//	pinState= pinState?false:true;
+//	SetDIO(11,pinState?ON:OFF);
+//	if(pinState)
+//		setTimerServoTicks(255+(getBcsIoDataTable(11)->PIN.currentValue&0x000000ff));
+//	else{
+//		setTimerLowTime();
+//	}
 
 	TIFR1bits._OCF1A=0;// clear the interrupt flag
 	TIMSK1 = state;// re-enable the interrupts
@@ -185,19 +186,13 @@ void servoTimerEvent()
 {
 	uint8_t start;
 	uint8_t stop;
-        //mPORTDToggleBits(BIT_3);
-	//StartCritical();
-        stopServos();
         int j;
         switch(servoStateMachineCurrentState){
             case LOW:
-            	start=blockIndex*BLOCK_SIZE;
-            	stop=(blockIndex*BLOCK_SIZE)+BLOCK_SIZE;
-            	runLinearInterpolationServo(start,stop);
-                runSort();
                 for (j=0;j<NUM_SERVO;j++){
                     pinOn(j+ (blockIndex*BLOCK_SIZE));
                 }
+                EndCritical();
                 lastValue = 0;
                 sortedIndex=0;
 
@@ -205,6 +200,7 @@ void servoTimerEvent()
                 setTimerPreTime();
                 return;
             case PRETIME:
+
                 if(setUpNextServo())
                     return;
                     /* no break */
@@ -216,21 +212,28 @@ void servoTimerEvent()
                         servoTimerEvent();
                     }
                 }
+                EndCritical();
                 //If there are still more channels to be turned off after the recoursion, break
                 if(servoStateMachineCurrentState != FINISH)
                     return;
                     /* no break */
 
             case FINISH:
+            	EndCritical();
             	blockIndex++;
-            	if(blockIndex == NUM_BLOCKS)
+            	if(blockIndex == NUM_BLOCKS){
             		setTimerLowTime();
+                	start=blockIndex*BLOCK_SIZE;
+                	stop=(blockIndex*BLOCK_SIZE)+BLOCK_SIZE;
+                	runLinearInterpolationServo(start,stop);
+                    runSort();
+            	}
             	else{
             		setTimerNextBlockTime();
             	}
                 return;
         }
-        //EndCritical();
+        //
 }
 
 

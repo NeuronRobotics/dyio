@@ -147,7 +147,7 @@ typedef struct __attribute__((__packed__))  _Downstream_Data
 {
 
 
-	uint8_t  currentConfiguration;
+	uint32_t  currentConfiguration;
 
 	//Used to detect any hardware state change and synchronize
 	boolean changeValue;

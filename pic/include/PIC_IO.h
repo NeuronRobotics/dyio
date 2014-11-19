@@ -9,6 +9,9 @@
 #define PIC_IO_H_
 
 uint8_t SetCoProcMode(uint8_t PIN,uint8_t mode);
+uint8_t SetCoProConfiguration(uint8_t pin,int32_t mode);
+uint8_t GetCoProConfigurations();
+void SyncConfigurations();
 uint8_t SetAllCoProcMode();
 
 void SetChannelValueCoProc(uint8_t PIN,uint8_t state);

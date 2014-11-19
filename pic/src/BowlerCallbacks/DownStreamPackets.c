@@ -23,16 +23,7 @@ void forceModeDownstream(int8_t pin){
 }
 
 void LoadDefaultValues(){
-	LoadCorePacket(& downstreamPacketTemp);
-	downstreamPacketTemp.use.head.Method=BOWLER_GET;
-	downstreamPacketTemp.use.head.RPC=GetRPCValue("save");
-	SendPacketToCoProc(& downstreamPacketTemp);
-	uint8_t i;
-	for (i=0;i<GetNumberOfIOChannels();i++){
-		//getBcsIoDataTable(i)->PIN.currentConfiguration=downstreamPacketTemp.use.data[i];
-            down[i].changeMode =false;
-            down[i].changeValue =false;
-	}
+	 GetCoProConfigurations();
 }
 
 //void SetCoProcLED(boolean a, boolean b, int batt){
@@ -125,6 +116,67 @@ void CheckRev(void){
 //		p_int_I(FIRMWARE_VERSION);
 
 	}
+}
+
+int32_t GetConfigurationDataTable(uint8_t pin){
+	return down[pin].currentConfiguration;
+}
+
+void SetNewConfigurationDataTable(uint8_t pin, int32_t value){
+	if(down[pin].currentConfiguration!=value){
+		down[pin].changeConfiguration=true;
+		down[pin].currentConfiguration = value;
+	}
+}
+
+void SyncConfigurations(){
+	int i;
+	for (i = 0; i < GetNumberOfIOChannels(); i++) {
+		if(down[i].changeConfiguration==true){
+			down[i].changeConfiguration=false;
+			SetCoProConfiguration(i,down[i].currentConfiguration);
+		}
+	}
+
+}
+
+uint8_t GetCoProConfigurations(){
+
+		LoadCorePacket(& downstreamPacketTemp);
+		downstreamPacketTemp.use.head.Method=BOWLER_CRIT;
+		downstreamPacketTemp.use.head.RPC=GetRPCValue("cchn");
+		downstreamPacketTemp.use.data[0]=0xff;
+		downstreamPacketTemp.use.data[1]=false;
+		downstreamPacketTemp.use.data[2]=1;
+		set32bit(&downstreamPacketTemp,0,3);
+
+		downstreamPacketTemp.use.head.DataLegnth=4+3+4;
+		SendPacketToCoProc(& downstreamPacketTemp);
+		int i;
+		for (i = 0; i < GetNumberOfIOChannels(); i++) {
+			down[i].currentConfiguration = get32bit(&downstreamPacketTemp,1+(i*4));
+		}
+
+		return false;
+}
+
+
+uint8_t SetCoProConfiguration(uint8_t pin,int32_t mode){
+	if(getBcsIoDataTable(pin)->PIN.currentChannelMode == mode)
+		return true;
+	getBcsIoDataTable(pin)->PIN.currentChannelMode=mode;
+	LoadCorePacket(& downstreamPacketTemp);
+	downstreamPacketTemp.use.head.Method=BOWLER_CRIT;
+	downstreamPacketTemp.use.head.RPC=GetRPCValue("cchn");
+	downstreamPacketTemp.use.data[0]=pin;
+	downstreamPacketTemp.use.data[1]=true;
+	downstreamPacketTemp.use.data[2]=1;
+	set32bit(&downstreamPacketTemp,mode,3);
+
+	downstreamPacketTemp.use.head.DataLegnth=4+3+4;
+	SendPacketToCoProc(& downstreamPacketTemp);
+	down[pin].changeMode=true;
+	return false;
 }
 
 uint8_t SetCoProcMode(uint8_t pin,uint8_t mode){

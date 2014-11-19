@@ -6,8 +6,13 @@
  */
 #include "UserApp_avr.h"
 
+int32_t GetConfigurationDataTable(uint8_t pin){
+	return EEReadValue(pin);
+}
+
 void SetNewConfigurationDataTable(uint8_t pin, int32_t value){
 
+	EEWriteValue(pin,value);
 }
 
 boolean ConfigChannel(BowlerPacket * Packet){

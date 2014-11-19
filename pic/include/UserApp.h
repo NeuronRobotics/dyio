@@ -12,7 +12,7 @@
 #if !defined(RELEASE_BOARD)
 #define LAST_DEV_BOARD
 #endif
-//#if !defined(__PIC32MX__)
+#if !defined(__PIC32MX__)
 #define __PIC32MX__
 #define __C32__
 #define __32MX440F128H__
@@ -20,7 +20,7 @@
 #define __LANGUAGE_C__
 #include "arch/pic32/BowlerConfig.h"
 
-//#endif
+#endif
 //#include <peripheral/legacy/int_3xx_4xx_legacy.h>
 
 #include "Bowler/Bowler.h"
