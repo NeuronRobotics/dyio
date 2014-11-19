@@ -8,6 +8,8 @@
 
 #define dataTableSize (NUM_SERVO)
 
+
+
 //INTERPOLATE_DATA velocity[dataTableSize];
 uint8_t positionTemp[dataTableSize];
 uint8_t sort[dataTableSize];
@@ -78,8 +80,6 @@ void printSortedData(){
 
 void setServoTimer(int32_t value){
 	int current = TCNT1;
-	//uint32_t ivalue =(uint32_t) (value * 2307.0);// scale factor
-
     if(value<1)
         value = 1;
     if(value>0xffff){
@@ -108,7 +108,11 @@ ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
 
 	pinState= pinState?false:true;
 	SetDIO(11,pinState?ON:OFF);
-	setTimerServoTicks(128+(getBcsIoDataTable(11)->PIN.currentValue&0x000000ff));
+	if(pinState)
+		setTimerServoTicks(255+(getBcsIoDataTable(11)->PIN.currentValue&0x000000ff));
+	else{
+		setTimerLowTime();
+	}
 
 	TIFR1bits._OCF1A=0;
 }
@@ -117,19 +121,20 @@ void stopServos(){
 	//TIMSK1bits._OCIE1A=0;
 }
 void setTimerNextBlockTime(){
-	setTimerServoTicks(128);//1ms
+	setTimerServoTicks(255);//1ms
     servoStateMachineCurrentState = LOW;
 }
 
+
+
 void setTimerLowTime(){
-    //setServoTimer(300*(18));
-	setServoTimer((18i -((3i*NUM_BLOCKS)+1))*2307i);
+	setTimerServoTicks(255*13);//1ms
     servoStateMachineCurrentState = LOW;
     blockIndex=0;
 }
 
 void setTimerPreTime(){
-	setTimerServoTicks(128);//1ms
+	setTimerServoTicks(255);//1ms
     servoStateMachineCurrentState = PRETIME;
 }
 
