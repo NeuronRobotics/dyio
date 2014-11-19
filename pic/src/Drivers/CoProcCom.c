@@ -510,16 +510,13 @@ void newByte() {
 
 void __ISR(_UART_2_VECTOR, IPL7AUTO) My_U2_ISR(void) {
 	StartCritical();
-    int err = uartErrorCheck();
-    if(err)
-    	return;
     FLAG_ASYNC = FLAG_BLOCK;
     if (INTGetFlag(INT_SOURCE_UART_RX(UART2))) {
         newByte();
         INTClearFlag(INT_SOURCE_UART_RX(UART2));
-        mU2ClearAllIntFlags();
+        EndCritical();
     } else if (INTGetFlag(INT_SOURCE_UART_ERROR(UART2))) {
-        	println_E("&@&@&&@&@&@ generic uart");
+        	println_E("&@&@&&@&@&@ generic uart error");
 
         INTClearFlag(INT_SOURCE_UART_ERROR(UART2));
     } else {
@@ -532,8 +529,11 @@ void __ISR(_UART_2_VECTOR, IPL7AUTO) My_U2_ISR(void) {
             println_E("&@&@&&@&@&@ generic uart");
         }
     }
+    int err = uartErrorCheck();
+    if(err)
+    	return;
 
-    EndCritical();
+
     FLAG_ASYNC = FLAG_OK;
 }
 //#endif
