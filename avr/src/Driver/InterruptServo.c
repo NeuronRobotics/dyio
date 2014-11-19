@@ -77,25 +77,22 @@ void printSortedData(){
         print_I(" ] ");
 
 }
+uint32_t current;
+void setServoTimer(uint32_t value){
 
-void setServoTimer(int32_t value){
-	int current = TCNT1;
     if(value<1)
         value = 1;
-    if(value>0xffff){
+    if(value>0x0000ffff){
 		println_E("Maxed timer to: ");prHEX32(value,ERROR_PRINT);
-        value = 0xffff;
+        value = 0x0000ffff;
     }
-    int target = value +current;
-    if(target>=0xffff){
-    	target -=0xffff;
+    uint32_t target = value +current;
+    if(target>0x0000ffff){
+    	target -=(0x0000ffff+1);
     }
-    if(target>=0xffff){
-		println_E("Setting timer to: ");prHEX32(value,ERROR_PRINT);
-		print_E(" reg ");prHEX16(target,ERROR_PRINT);
-    }
+
     TIMSK1bits._OCIE1A=0;
-    OCR1A = target & 0xffff;
+    OCR1A = target & 0x0000ffff;
     TIMSK1bits._OCIE1A=1;
 
 }
@@ -103,8 +100,13 @@ void setServoTimer(int32_t value){
 
 boolean pinState= false;
 ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
+	uint8_t TCCR1Btmp = TCCR1B;// store the clock
+	TCCR1Bbits._CS = 0; // stop the clock
+	current = TCNT1;// store the state
+	uint8_t state = TIMSK1; // the interrupts
+	TIMSK1 = 0x00;// stop all interrupts
 
-//	servoTimerEvent();
+	//	servoTimerEvent();
 
 	pinState= pinState?false:true;
 	SetDIO(11,pinState?ON:OFF);
@@ -114,7 +116,10 @@ ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
 		setTimerLowTime();
 	}
 
-	TIFR1bits._OCF1A=0;
+	TIFR1bits._OCF1A=0;// clear the interrupt flag
+	TIMSK1 = state;// re-enable the interrupts
+	TCNT1 = current; // re-load the state value
+	TCCR1B = TCCR1Btmp; // re-start the clock
 }
 
 void stopServos(){

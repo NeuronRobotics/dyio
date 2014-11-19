@@ -33,6 +33,7 @@
 #define PRINT_BAUD 			115200
 
 #define INTERNAL_BAUD 				384000 // 0.16% difference
+
 //#define INTERNAL_BAUD 				115200
 
 #define BOWLER_PacketSize		(BowlerHeaderSize+255)
