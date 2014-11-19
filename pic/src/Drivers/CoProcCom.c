@@ -88,7 +88,7 @@ void startUartCoProc() {
     if (coProcRunning == true)
         return;
 
-    println_W("startUartCoProc");
+    //println_W("startUartCoProc");
 
     //Rx should be open collector
     mPORTFOpenDrainOpen(BIT_5);
@@ -108,14 +108,14 @@ void startUartCoProc() {
 
     float percent = ( actual / ((float) INTERNAL_BAUD))*100.0f;
     if (actual != INTERNAL_BAUD) {
-        println_E("###Uart baud not what was set!! Actual = ");
-        p_fl_E(actual);
-        print_E(", desired = ");
-        p_int_E(INTERNAL_BAUD);
-        print_E(" ");
-        p_fl_E(percent);
-        print_E("%, U2BRG = ");
-        p_int_E(calculated);
+//        println_E("###Uart baud not what was set!! Actual = ");
+//        p_fl_E(actual);
+//        print_E(", desired = ");
+//        p_int_E(INTERNAL_BAUD);
+//        print_E(" ");
+//        p_fl_E(percent);
+//        print_E("%, U2BRG = ");
+//        p_int_E(calculated);
     }
     UARTEnable(UART2, UART_ENABLE_FLAGS(
             UART_PERIPHERAL |
@@ -133,7 +133,7 @@ void startUartCoProc() {
 
 void initCoProcUART() {
 	FLAG_ASYNC = FLAG_BLOCK;
-    println_W("initCoProcUART");
+    //println_W("initCoProcUART");
     coProcRunning = false;
 #if defined(USE_DMA)
     closeDma();
@@ -167,16 +167,16 @@ int uartErrorCheck() {
     if (err) {
     	FLAG_ASYNC = FLAG_BLOCK;
         		if(err & _U2STA_FERR_MASK){
-        			println_E("\n\n\nFraming error");
+        			//println_E("\n\n\nFraming error");
         		}
         		else if(err & _U2STA_OERR_MASK){
-        			println_E("\n\n\n\nOverflow error");
+        			//println_E("\n\n\n\nOverflow error");
         		}
         		else if(err & _U2STA_PERR_MASK){
-        			println_E("\n\n\n\nPARITY error");
+        			//println_E("\n\n\n\nPARITY error");
         		}
         		else {
-        			println_E("\n\n\n\nUnknown UART error");
+        			//println_E("\n\n\n\nUnknown UART error");
         		}
         UART2ClearAllErrors();
         initCoProcUART();
@@ -494,7 +494,7 @@ void newByte() {
         mU2ClearAllIntFlags();
         //buttonCheck(17);
         timeout++;
-        if (timeout > 8) {// size of the built in FIFo
+        if (timeout > BOWLER_PacketSize) {// size of the built in FIFo
             return;
         }
     }
