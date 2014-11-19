@@ -15,6 +15,7 @@
 #if !defined(__PIC32MX__)
 #define __PIC32MX__
 #define __C32__
+#define __32MX440F128H__
 #include "arch/pic32/BowlerConfig.h"
 #endif
 
@@ -42,6 +43,7 @@
 #include "Bluetooth.h"
 
 #include "arch/pic32/BowlerConfig.h"
+//#include <peripheral/legacy/int_3xx_4xx_legacy.h>
 
 
 

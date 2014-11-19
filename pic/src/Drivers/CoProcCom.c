@@ -509,11 +509,11 @@ void newByte() {
 //#if !defined(USE_DMA)
 
 void __ISR(_UART_2_VECTOR, IPL7AUTO) My_U2_ISR(void) {
+	StartCritical();
     int err = uartErrorCheck();
     if(err)
     	return;
     FLAG_ASYNC = FLAG_BLOCK;
-    StartCritical();
     if (INTGetFlag(INT_SOURCE_UART_RX(UART2))) {
         newByte();
         INTClearFlag(INT_SOURCE_UART_RX(UART2));
