@@ -342,9 +342,17 @@ boolean ConfigureChannelFromPacket(BowlerPacket * Packet) {
     int32_t tmp;
     if(mode != 0xff && setValues){
 		if (configChannelHWPtr != NULL) {
-			println_E("Loading configs from packet");
+
+			println_E("Pushing configs from packet ");
+			p_int_E(pin);
+
 			tmp = get32bit(Packet,  3);
+
+			print_E(" value = ");
+			p_int_E(tmp);
+
 			setDataTableCurrentValue(pin,tmp);
+
 			data[0] = tmp;// byte swap
 			configChannelHWPtr(pin, 1, data);
 		} else {
@@ -437,6 +445,9 @@ boolean pinHasFunction(uint8_t pin, uint8_t function) {
  * Sets the datable value and returns true if the value is new, false if it is the same as it was
  */
 boolean setDataTableCurrentValue(uint8_t pin, int32_t value){
+	if(pin>=GetNumberOfIOChannels()){
+		println_E("Pin out of index! : "); p_int_E(pin);
+	}
 	if(value !=getBcsIoDataTable(pin)->PIN.currentValue ){
 //		Print_Level l = isOutputMode(GetChannelMode(pin))?WARN_PRINT:INFO_PRINT;
 //		println("Value was ",l);p_int(getBcsIoDataTable(pin)->PIN.currentValue,l);

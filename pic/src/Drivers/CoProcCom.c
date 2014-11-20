@@ -262,8 +262,8 @@ uint8_t sendPacket(BowlerPacket * Packet) {
     	Packet->use.head.RPC != GetRPCValue("eepd") &&
         Packet->use.head.RPC != GetRPCValue("sacv")
             ) {//Ignore Power Packet
-        println("CoPro TX>>:", ERROR_PRINT);
-        printPacket(Packet, ERROR_PRINT);
+//        println("CoPro TX>>:", ERROR_PRINT);
+//        printPacket(Packet, ERROR_PRINT);
     }
 
     int packetSize = BowlerHeaderSize + Packet->use.head.DataLegnth;

@@ -142,9 +142,11 @@ boolean GetAllChanelValueHW(int32_t * data) {
  */
 
 boolean ConfigureChannelHW(uint8_t pin, uint8_t numValues, int32_t * data) {
+
 	if(GetChannelMode(pin) != 0xff){
-		if (!isStremChannelMode(GetChannelMode(pin)))
-			SetNewConfigurationDataTable(pin, data[0]);
+		println_E("Loading to hardware ");
+					p_int_E(pin);
+		SetNewConfigurationDataTable(pin, data[0]);
 	}else{
 		int i;
 		for (i=0;i<numValues;i++){
