@@ -127,7 +127,7 @@ void stopServos(){
 	//TIMSK1bits._OCIE1A=0;
 }
 void setTimerNextBlockTime(){
-	setTimerServoTicks(255);//1ms
+	setTimerServoTicks(255*2);//2ms
     servoStateMachineCurrentState = LOW;
 }
 
@@ -184,8 +184,8 @@ void stopCurrentServo(){
 
 void servoTimerEvent()
 {
-	uint8_t start;
-	uint8_t stop;
+//	uint8_t start;
+//	uint8_t stop;
         int j;
         switch(servoStateMachineCurrentState){
             case LOW:
@@ -200,7 +200,7 @@ void servoTimerEvent()
                 setTimerPreTime();
                 return;
             case PRETIME:
-
+            	EndCritical();
                 if(setUpNextServo())
                     return;
                     /* no break */
@@ -219,18 +219,18 @@ void servoTimerEvent()
                     /* no break */
 
             case FINISH:
-            	EndCritical();
             	blockIndex++;
             	if(blockIndex == NUM_BLOCKS){
+            		// this resets the block Index
             		setTimerLowTime();
-                	start=blockIndex*BLOCK_SIZE;
-                	stop=(blockIndex*BLOCK_SIZE)+BLOCK_SIZE;
-                	runLinearInterpolationServo(start,stop);
-                    runSort();
             	}
             	else{
             		setTimerNextBlockTime();
             	}
+            	EndCritical();
+            	runLinearInterpolationServo(	blockIndex*BLOCK_SIZE,
+												(blockIndex*BLOCK_SIZE)+BLOCK_SIZE);
+				runSort();
                 return;
         }
         //
