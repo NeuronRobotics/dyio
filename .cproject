@@ -24,9 +24,15 @@
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.base.1535218105" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.base">
 								<option id="gnu.c.compiler.option.include.paths.1402920046" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/usr/lib/avr/include/"/>
-									<listOptionValue builtIn="false" value="/opt/microchip/xc32/v1.00/lib/gcc/pic32mx/4.5.1/include"/>
-									<listOptionValue builtIn="false" value="/opt/microchip/xc32/v1.00/pic32-libs/include"/>
 									<listOptionValue builtIn="false" value="/opt/microchip/xc32/v1.00/pic32mx/include"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/c-bowler/BowlerStack/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/c-bowler/Platform/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/DyIO/common/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/DyIO/pic/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/DyIO/avr/include}&quot;"/>
+								</option>
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.991408930" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="mprocessor=32MX44F128H"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1552885619" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
