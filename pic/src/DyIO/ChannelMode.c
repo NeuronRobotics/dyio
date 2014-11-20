@@ -38,37 +38,36 @@ boolean setMode(uint8_t pin,uint8_t mode){
 	//print_I(" \tHardware Cleared");
 	switch (mode){
 	case IS_SERVO:
-		if(((pin < 12) && (isRegulated_0() == 0)) || ((pin >= 12) && (isRegulated_1()== 0))   ){
-//			print_I("|Mode is now servo");
-			break;
-		}else{
-			if(getBrownOutDetect()){
-				print_I(" Servo Mode could not be set, voltage invalid");
-				return false; 
-			}else{
-//				print_I(" Servo Mode set|");
-				break;
-			}
-		}
-		break;
+		if(!(((pin < 12) && (isRegulated_0() == 0)) || ((pin >= 12) && (isRegulated_1()== 0)))   ){
+                    if(getBrownOutDetect()){
+                            print_I(" Servo Mode could not be set, voltage invalid");
+                            return false;
+                    }
+                }
+                println_E("Setting servo dfault position to: "); p_int_E(GetConfigurationDataTable(pin));
+                /** no break, fall through to set datatable*/
+
+        case IS_PWM:
+                setDataTableCurrentValue(pin,GetConfigurationDataTable(pin));
+		return true;
 	case IS_SPI_MOSI:
 	case IS_SPI_MISO:
 	case IS_SPI_SCK:
 		if( pinHasFunction(pin, mode) != false) {
 //			print_I("|Mode is now SPI");
 			InitSPIDyIO();
-			break;
+			return true;
 		}else{
 			return false; 
 		}
-		break;
+		return true;
 	case IS_COUNTER_INPUT_INT:
 	case IS_COUNTER_INPUT_DIR:
 	case IS_COUNTER_INPUT_HOME:
 		if(pinHasFunction(pin, mode) != false) {
 //			print_I("|Mode is now Counter Input");
 			StartCounterInput(pin);
-			break;
+			return true;
 		}else{
 			print_E(", Counter Input not availible");
 			return false; 
@@ -80,22 +79,24 @@ boolean setMode(uint8_t pin,uint8_t mode){
 		if(pinHasFunction(pin, mode) != false) {
 //			print_I("|Mode is now Counter Output");
 			StartCounterOutput(pin);
-			break;
+			return true;
 		}else{
 			print_E(", Counter Output not availible");
 			return false; 
 		}
-		break;
+		return true;
 	case IS_PPM_IN:
 		println_I("Setting up PPM...");
 		startPPM(pin);
-		break;
+		return true;
 	case IS_DO:
 		setDataTableCurrentValue(pin,OFF);
-		break;
+		return true;
+            default:
+                return true;
 	}
 //	print_I(" \tMode set");
-	return true; 
+	
 }
 
 

@@ -10,7 +10,7 @@
 extern volatile unsigned int        U2BRG __attribute__((section("sfrs")));
 
 #define MAX_RETRY 5
-#define DELAY_TIMEOUT 100
+#define DELAY_TIMEOUT 1000
 
 boolean valadateRPC(int response, int sent);
 uint8_t sendPacket(BowlerPacket * Packet);
@@ -107,10 +107,10 @@ void startUartCoProc() {
     int calculated = (GetPeripheralClock()/(4*INTERNAL_BAUD))-1;
     //calculated +=1;// fudge factor
     U2BRG = calculated;
-    float actual = ((float)GetPeripheralClock()/(4.0*(((float)calculated)+1.0)));
-
-    float percent = ( actual / ((float) INTERNAL_BAUD))*100.0f;
-    if (actual != INTERNAL_BAUD) {
+//    float actual = ((float)GetPeripheralClock()/(4.0*(((float)calculated)+1.0)));
+//
+//    float percent = ( actual / ((float) INTERNAL_BAUD))*100.0f;
+//    if (actual != INTERNAL_BAUD) {
 //        println_E("###Uart baud not what was set!! Actual = ");
 //        p_fl_E(actual);
 //        print_E(", desired = ");
@@ -119,7 +119,7 @@ void startUartCoProc() {
 //        p_fl_E(percent);
 //        print_E("%, U2BRG = ");
 //        p_int_E(calculated);
-    }
+//    }
     UARTEnable(UART2, UART_ENABLE_FLAGS(
             UART_PERIPHERAL |
             UART_RX | UART_TX));

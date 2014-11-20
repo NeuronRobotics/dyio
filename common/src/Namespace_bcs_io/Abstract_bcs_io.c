@@ -120,7 +120,6 @@ uint8_t GetChannelMode(uint8_t pin) {
     if (pin < 0 || pin > GetNumberOfIOChannels()) {
         return 0xff;
     }
-    //Strip off the internally stored High Bit
     return getBcsIoDataTable(pin)->PIN.currentChannelMode;
 }
 
@@ -338,7 +337,6 @@ boolean ConfigureChannelFromPacket(BowlerPacket * Packet) {
     boolean setValues = Packet->use.data[1];
     uint8_t mode = GetChannelMode(pin);
 
-    int32_t * data = (int32_t *) (Packet->use.data + 3);
     int32_t tmp;
     if(mode != 0xff && setValues){
 		if (configChannelHWPtr != NULL) {
@@ -353,8 +351,7 @@ boolean ConfigureChannelFromPacket(BowlerPacket * Packet) {
 
 			setDataTableCurrentValue(pin,tmp);
 
-			data[0] = tmp;// byte swap
-			configChannelHWPtr(pin, 1, data);
+			configChannelHWPtr(pin, 1, &tmp);
 		} else {
 			return false;
 		}
@@ -364,7 +361,7 @@ boolean ConfigureChannelFromPacket(BowlerPacket * Packet) {
     Packet->use.head.RPC= GetRPCValue("cchn");
     Packet->use.head.Method = BOWLER_CRIT;
     Packet->use.head.DataLegnth = 4+1+(GetNumberOfIOChannels()*4);
-    data = (int32_t *) (Packet->use.data + 1);
+    int32_t * data = (int32_t *) (Packet->use.data + 1);
     configChannelHWPtr(0xff, GetNumberOfIOChannels(), data);
     Packet->use.data[0] =GetNumberOfIOChannels();
     int i;

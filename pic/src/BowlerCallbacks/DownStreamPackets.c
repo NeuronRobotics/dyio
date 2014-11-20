@@ -124,7 +124,8 @@ int32_t GetConfigurationDataTable(uint8_t pin){
 
 void SetNewConfigurationDataTable(uint8_t pin, int32_t value){
 	println_E("Loading to datatable ");
-						p_int_E(pin);
+        p_int_E(pin);
+        print_E(" to ");p_int_E(value);
 	if(down[pin].currentConfiguration!=value){
 		down[pin].changeConfiguration=true;
 		down[pin].currentConfiguration = value;
