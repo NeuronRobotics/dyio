@@ -36,11 +36,11 @@ void InitServo(uint8_t PIN){
 	SetPinTris(PIN,OUTPUT);
 	//DATA.PIN[PIN].State=IS_SERVO;
 	SetServoPos(PIN,EEReadValue(PIN),0);
-	if( TIMSK1bits._OCIE1A != 1){
+	if( servoEngineStarted != true){
 		servoEngineStarted =true;
 		setTimerLowTime();
-		TIMSK1bits._OCIE1A=1;
 	}
+	TIMSK1bits._OCIE1A=1;
 }
 
 void setPowerOverride(boolean set){

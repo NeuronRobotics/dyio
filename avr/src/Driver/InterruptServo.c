@@ -94,14 +94,14 @@ void setServoTimer(uint32_t value){
 
 boolean pinState= false;
 ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
-	char val = FlagBusy_IO;
 	FlagBusy_IO=1;
 	current = TCNT1;// store the state
 	uint8_t state = TIMSK1; // the interrupts
 	TIMSK1 = 0x00;// stop all interrupts
 	TIFR1bits._OCF1A=0;// clear the interrupt flag
-	uint8_t TCCR1Btmp =TCCR1B;
-	TCCR1Bbits._CS=0;// stop the clock
+	TIMSK1bits._OCIE1A=0;
+	//uint8_t TCCR1Btmp =TCCR1B;
+	//TCCR1Bbits._CS=0;// stop the clock
 
 
 	servoTimerEvent();
@@ -109,11 +109,11 @@ ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
 
 	TIMSK1 = state;// re-enable the interrupts
 	TIMSK1bits._OCIE1A=1;
-	FlagBusy_IO=val;
 
 	EndCritical();
-	TCNT1 = current; // re-load the state value
-	TCCR1B = TCCR1Btmp; // re-start the clock
+	//TCNT1 = current; // re-load the state value
+	//TCCR1B = TCCR1Btmp; // re-start the clock
+	FlagBusy_IO=0;
 }
 
 void stopServos(){
@@ -202,7 +202,6 @@ void servoTimerEvent()
                 	stopCurrentServo();
                 	if(servoStateMachineCurrentState == TIME){
 						if(setUpNextServo() == true) {
-							 EndCritical();
 							//fast stop for channels with the same value
 							return;
 						}
