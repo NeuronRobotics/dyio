@@ -341,13 +341,13 @@ boolean ConfigureChannelFromPacket(BowlerPacket * Packet) {
     if(mode != 0xff && setValues){
 		if (configChannelHWPtr != NULL) {
 
-			println_E("Pushing configs from packet ");
-			p_int_E(pin);
+//			println_E("Pushing configs from packet ");
+//			p_int_E(pin);
 
 			tmp = get32bit(Packet,  3);
 
-			print_E(" value = ");
-			p_int_E(tmp);
+//			print_E(" value = ");
+//			p_int_E(tmp);
 
 			setDataTableCurrentValue(pin,tmp);
 
@@ -357,7 +357,7 @@ boolean ConfigureChannelFromPacket(BowlerPacket * Packet) {
 		}
 
     }
-    println_E("Loading configs into packet");
+    //println_E("Loading configs into packet");
     Packet->use.head.RPC= GetRPCValue("cchn");
     Packet->use.head.Method = BOWLER_CRIT;
     Packet->use.head.DataLegnth = 4+1+(GetNumberOfIOChannels()*4);
