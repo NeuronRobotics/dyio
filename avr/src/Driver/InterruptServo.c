@@ -77,50 +77,41 @@ void printSortedData(){
         print_I(" ] ");
 
 }
-uint32_t current;
+uint32_t current=0;
 void setServoTimer(uint32_t value){
 
-    if(value<1)
-        value = 1;
     if(value>0x0000ffff){
 		println_E("Maxed timer to: ");prHEX32(value,ERROR_PRINT);
         value = 0x0000ffff;
     }
     uint32_t target = value +current;
     if(target>0x0000ffff){
-    	target -=(0x0000ffff+1);
+    	target -=(0x0000ffff);
     }
-
-    TIMSK1bits._OCIE1A=0;
     OCR1A = target & 0x0000ffff;
-    TIMSK1bits._OCIE1A=1;
-
 }
 
 
 boolean pinState= false;
 ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
-	uint8_t TCCR1Btmp = TCCR1B;// store the clock
-	TCCR1Bbits._CS = 0; // stop the clock
-	EndCritical();// re-enable interupts for the UART
+	char val = FlagBusy_IO;
+	FlagBusy_IO=1;
 	current = TCNT1;// store the state
 	uint8_t state = TIMSK1; // the interrupts
 	TIMSK1 = 0x00;// stop all interrupts
+	TIFR1bits._OCF1A=0;// clear the interrupt flag
+
 
 	servoTimerEvent();
 
-//	pinState= pinState?false:true;
-//	SetDIO(11,pinState?ON:OFF);
-//	if(pinState)
-//		setTimerServoTicks(255+(getBcsIoDataTable(11)->PIN.currentValue&0x000000ff));
-//	else{
-//		setTimerLowTime();
-//	}
 
-	TIFR1bits._OCF1A=0;// clear the interrupt flag
 	TIMSK1 = state;// re-enable the interrupts
-	TCNT1 = current; // re-load the state value
-	TCCR1B = TCCR1Btmp; // re-start the clock
+	TIMSK1bits._OCIE1A=1;
+	FlagBusy_IO=val;
+
+	EndCritical();
+	//TCNT1 = current; // re-load the state value
+	//TCCR1B = TCCR1Btmp; // re-start the clock
 }
 
 void stopServos(){
@@ -192,7 +183,7 @@ void servoTimerEvent()
                 for (j=0;j<NUM_SERVO;j++){
                     pinOn(j+ (blockIndex*BLOCK_SIZE));
                 }
-                EndCritical();
+
                 lastValue = 0;
                 sortedIndex=0;
 
@@ -200,20 +191,23 @@ void servoTimerEvent()
                 setTimerPreTime();
                 return;
             case PRETIME:
-            	EndCritical();
                 if(setUpNextServo())
                     return;
                     /* no break */
             case TIME:
-                stopCurrentServo();
-                if(servoStateMachineCurrentState == TIME){
-                    if(setUpNextServo() == false) {
-                        //fast stop for channels with the same value
-                        servoTimerEvent();
-                    }
+
+                while(servoStateMachineCurrentState == TIME){
+                	stopCurrentServo();
+                	if(servoStateMachineCurrentState == TIME){
+						if(setUpNextServo() == true) {
+							 EndCritical();
+							//fast stop for channels with the same value
+							return;
+						}
+                	}
                 }
-                EndCritical();
-                //If there are still more channels to be turned off after the recoursion, break
+
+                //If there are still more channels to be turned off after the stops, break
                 if(servoStateMachineCurrentState != FINISH)
                     return;
                     /* no break */
@@ -227,7 +221,7 @@ void servoTimerEvent()
             	else{
             		setTimerNextBlockTime();
             	}
-            	EndCritical();
+
             	runLinearInterpolationServo(	blockIndex*BLOCK_SIZE,
 												(blockIndex*BLOCK_SIZE)+BLOCK_SIZE);
 				runSort();

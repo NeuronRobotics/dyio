@@ -10,7 +10,7 @@
 extern volatile unsigned int        U2BRG __attribute__((section("sfrs")));
 
 #define MAX_RETRY 5
-#define DELAY_TIMEOUT 1000
+#define DELAY_TIMEOUT 50
 
 boolean valadateRPC(int response, int sent);
 uint8_t sendPacket(BowlerPacket * Packet);
