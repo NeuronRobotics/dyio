@@ -316,7 +316,7 @@ uint8_t sendPacket(BowlerPacket * Packet) {
         println_E("Rx took: ");
         p_fl_E(getMs() - packStartTime);
         printPacket(Packet, ERROR_PRINT);
-        printFiFoState_E(&store);
+        //printFiFoState_E(&store);
         PushCoProcAsync(); //clear out any packets
         initCoProcUART();
         return 2;

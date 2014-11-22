@@ -100,6 +100,8 @@ ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
 	uint8_t state = TIMSK1; // the interrupts
 	TIMSK1 = 0x00;// stop all interrupts
 	TIFR1bits._OCF1A=0;// clear the interrupt flag
+	uint8_t TCCR1Btmp =TCCR1B;
+	TCCR1Bbits._CS=0;// stop the clock
 
 
 	servoTimerEvent();
@@ -110,8 +112,8 @@ ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
 	FlagBusy_IO=val;
 
 	EndCritical();
-	//TCNT1 = current; // re-load the state value
-	//TCCR1B = TCCR1Btmp; // re-start the clock
+	TCNT1 = current; // re-load the state value
+	TCCR1B = TCCR1Btmp; // re-start the clock
 }
 
 void stopServos(){
