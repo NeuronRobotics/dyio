@@ -70,6 +70,8 @@ boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidA
     if (pwr) {
         DownstreamPowerChange();
         pwr = false; 
+        POWER(Packet);
+        pidAsyncCallbackPtr(Packet);
     }
 
     float now = getMs();
@@ -185,7 +187,7 @@ boolean neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet) {
 
   RPC_LIST neuronRoboticsDyIO__rev_g = {BOWLER_GET, // Method
     "_rev", //RPC as string
-    &neuronRoboticsDyIOProcessor_g, //function pointer to a packet parsinf function
+    &neuronRoboticsDyIOProcessor_g, //function pointer to a packet parsing function
     {0}, // Calling arguments
     BOWLER_POST, // response method
     {
@@ -202,7 +204,7 @@ boolean neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet) {
 
   RPC_LIST neuronRoboticsDyIO__pwr_g = {BOWLER_GET, // Method
     "_pwr", //RPC as string
-    &neuronRoboticsDyIOProcessor_g, //function pointer to a packet parsinf function
+    &neuronRoboticsDyIOProcessor_g, //function pointer to a packet parsing function
     {0}, // Calling arguments
     BOWLER_POST, // response method
     {
@@ -217,7 +219,7 @@ boolean neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet) {
 
   RPC_LIST neuronRoboticsDyIO_info_g = {BOWLER_GET, // Method
     "info", //RPC as string
-    &neuronRoboticsDyIOProcessor_g, //function pointer to a packet parsinf function
+    &neuronRoboticsDyIOProcessor_g, //function pointer to a packet parsing function
     {0}, // Calling arguments
     BOWLER_POST, // response method
     {
@@ -229,7 +231,7 @@ boolean neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet) {
 
   RPC_LIST neuronRoboticsDyIO__mac_c = {BOWLER_CRIT, // Method
     "_mac", //RPC as string
-    &neuronRoboticsDyIOProcessor_c, //function pointer to a packet parsinf function
+    &neuronRoboticsDyIOProcessor_c, //function pointer to a packet parsing function
     {
         BOWLER_I08, // mac address
         BOWLER_I08,
@@ -250,7 +252,7 @@ boolean neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet) {
 
   RPC_LIST neuronRoboticsDyIO__pwr_c = {BOWLER_CRIT, // Method
     "_pwr", //RPC as string
-    &neuronRoboticsDyIOProcessor_c, //function pointer to a packet parsinf function
+    &neuronRoboticsDyIOProcessor_c, //function pointer to a packet parsing function
     {
         BOWLER_I08, // Brown out override
         0
@@ -266,7 +268,7 @@ boolean neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet) {
 
   RPC_LIST neuronRoboticsDyIO_info_c = {BOWLER_CRIT, // Method
     "info", //RPC as string
-    &neuronRoboticsDyIOProcessor_c, //function pointer to a packet parsinf function
+    &neuronRoboticsDyIOProcessor_c, //function pointer to a packet parsing function
     {
         BOWLER_ASCII,
         0
