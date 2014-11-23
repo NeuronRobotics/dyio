@@ -14,6 +14,11 @@ static uint8_t zone;
 boolean internalAsyncEventCallback(BowlerPacket* Packet,boolean (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
 	checkDigital();
 	checkAnalog();
+	if(TIMSK1bits._OCIE1B == 0 || TCCR1Bbits._CS == 0 ){
+		TIMSK1bits._OCIE1B=1;// Pin timer
+		TCCR1Bbits._CS =2;
+		println_E("Timer died!");
+	}
     return false; 
 }
 
