@@ -104,8 +104,8 @@ void startUartCoProc() {
     UARTSetLineControl(UART2, UART_DATA_SIZE_8_BITS | UART_PARITY_EVEN | UART_STOP_BITS_1);
     //UARTSetLineControl(UART2, UART_DATA_SIZE_8_BITS | UART_PARITY_NONE| UART_STOP_BITS_1);
     //int actual = UARTSetDataRate(UART2, GetPeripheralClock(), INTERNAL_BAUD+5);
-    int calculated = (GetPeripheralClock()/(4*INTERNAL_BAUD))-1;
-    //calculated +=1;// fudge factor
+    //int calculated = (GetPeripheralClock()/(4*INTERNAL_BAUD))-1;
+    int calculated = INTERNAL_BAUD_PIC;
     U2BRG = calculated;
 //    float actual = ((float)GetPeripheralClock()/(4.0*(((float)calculated)+1.0)));
 //

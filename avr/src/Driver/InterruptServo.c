@@ -1,17 +1,16 @@
 #include "UserApp_avr.h"
 
-#define SERVO_BOUND 		0
-
 #define NUM_BLOCKS (NUM_PINS/BLOCK_SIZE)
 
 #define NUM_SERVO (NUM_PINS/NUM_BLOCKS)
 
-#define dataTableSize (NUM_SERVO)
+#define dataTableSize (BLOCK_SIZE)
 
+#define MIN_SERVO 3
 
 
 //INTERPOLATE_DATA velocity[dataTableSize];
-uint8_t positionTemp[dataTableSize];
+uint8_t positionTemp[dataTableSize+1];
 uint8_t sort[dataTableSize];
 uint8_t lastValue=0;
 uint8_t sortedIndex = 0;
@@ -20,6 +19,8 @@ uint8_t blockIndex = 0;
 ServoState servoStateMachineCurrentState = STARTLOOP;
 uint32_t current=0;
 uint8_t TCCR1Btmp=0;
+
+#define CurrentIndex (blockIndex *BLOCK_SIZE )
 
 void runSort(){
     int i=0,k=0,x;
@@ -111,8 +112,8 @@ ISR(TIMER1_COMPB_vect){//timer 1B compare interrupt
 	TCCR1Bbits._CS=0;// stop the clock
 
 	servoStateMachineCurrentState = STARTLOOP;
-	servoTimerEvent();
 	setServoLoopTimer(255*8);
+	servoTimerEvent();
 	//EndCritical();
 
 	TCCR1B = TCCR1Btmp; // re-start the clock
@@ -141,23 +142,22 @@ void stopServos(){
 
 
 
-#define MIN_SERVO 1
+
 
 
 boolean setUpNextServo(){
 
     int diff = positionTemp[sort[sortedIndex]] - lastValue;
     lastValue = positionTemp[sort[sortedIndex]];
-//    if(diff<0){
-//        setPrintLevelErrorPrint();
-//        println_E("Servo.c: Something is wrong!! Current minus last value is less then 0\r\n");
-//        setPrintLevelInfoPrint();
-//        printSortedData();
-//        while(1);
-//    }
+    if(diff<0 || sortedIndex<0 || sortedIndex>=dataTableSize){
+        setPrintLevelErrorPrint();
+        println_E("Servo.c: Something is wrong!! Current minus last value is less then 0\r\n");
+        setPrintLevelInfoPrint();
+        printSortedData();
+        while(1);
+    }
     servoStateMachineCurrentState = TIME;
     if(diff>MIN_SERVO){
-        //setTimerServoTicks(diff);
         setServoTimer(diff);
         return true; 
     }
@@ -165,14 +165,14 @@ boolean setUpNextServo(){
     return false; 
 }
 
-void stopCurrentServo(){
-//    pinOff(sort[sortedIndex]+ (blockIndex*BLOCK_SIZE));
-//    sortedIndex++;
-//    if(sortedIndex == dataTableSize){
-//        servoStateMachineCurrentState = FINISH;
-//        //fall through to finish
-//    }
-}
+//void stopCurrentServo(){
+////    pinOff(sort[sortedIndex]+ (blockIndex*BLOCK_SIZE));
+////    sortedIndex++;
+////    if(sortedIndex == dataTableSize){
+////        servoStateMachineCurrentState = FINISH;
+////        //fall through to finish
+////    }
+//}
 
 void servoTimerEvent()
 {
@@ -182,7 +182,7 @@ void servoTimerEvent()
         switch(servoStateMachineCurrentState){
             case STARTLOOP:
                 for (j=0;j<NUM_SERVO;j++){
-                    pinOn(j+ (blockIndex*BLOCK_SIZE));
+                    pinOn(j+ CurrentIndex);
                 }
 
                 lastValue = 0;
@@ -193,14 +193,14 @@ void servoTimerEvent()
                 servoStateMachineCurrentState = PRETIME;
                 return;
             case PRETIME:
-                if(setUpNextServo())
+                if(setUpNextServo() == true)
                     return;
                     /* no break */
             case TIME:
 
                 while(servoStateMachineCurrentState == TIME){
                 	//stopCurrentServo();
-                    pinOff(sort[sortedIndex]+ (blockIndex*BLOCK_SIZE));
+                    pinOff(sort[sortedIndex]+ CurrentIndex);
                     sortedIndex++;
                     if(sortedIndex == dataTableSize){
                         servoStateMachineCurrentState = FINISH;
@@ -213,23 +213,24 @@ void servoTimerEvent()
 						}
                 	}
                 }
-
-                //If there are still more channels to be turned off after the stops, break
-                if(servoStateMachineCurrentState != FINISH)
-                    return;
-                    /* no break */
+                //If block is now done, reset the block index and sort
+                /* no break */
 
             case FINISH:
+            	 for (j=0;j<NUM_SERVO;j++){
+            		 pinOff(j+ CurrentIndex);
+				}
             	blockIndex++;
             	if(blockIndex == NUM_BLOCKS){
             		// this resets the block Index
             	    blockIndex=0;
             	}
+            	setServoTimer(255);//1ms
             	stopServos();
 
             	// Interpolate position
-            	runLinearInterpolationServo(	blockIndex*BLOCK_SIZE,
-												(blockIndex*BLOCK_SIZE)+BLOCK_SIZE);
+            	runLinearInterpolationServo(	CurrentIndex,
+            									CurrentIndex+BLOCK_SIZE);
             	// sort values for next loop
 				runSort();
                 return;
