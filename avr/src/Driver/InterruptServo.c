@@ -103,16 +103,16 @@ void setServoTimer(uint32_t value){
     TIMSK1bits._OCIE1A=1;// Pin timer
 }
 
-ISR(TIMER1_COMPB_vect){//timer 1A compare interrupt
+ISR(TIMER1_COMPB_vect){//timer 1B compare interrupt
 	FlagBusy_IO=1;
 	current = TCNT1;// store the state
 	TIFR1bits._OCF1B=0;// clear the interrupt flag
 	TCCR1Btmp =TCCR1B;
 	TCCR1Bbits._CS=0;// stop the clock
 
-	setTimerLowTime();// sets the state machine for the start of a loop,
+	servoStateMachineCurrentState = STARTLOOP;
 	servoTimerEvent();
-
+	setServoLoopTimer(255*8);
 	//EndCritical();
 
 	TCCR1B = TCCR1Btmp; // re-start the clock
@@ -139,13 +139,6 @@ void stopServos(){
 	TIMSK1bits._OCIE1A=0;
 }
 
-
-void setTimerLowTime(){
-	//Use the second compare for overall loop timing
-	//setServoTimer(255*13);//1ms
-    servoStateMachineCurrentState = STARTLOOP;
-    blockIndex=0;
-}
 
 
 #define MIN_SERVO 1
@@ -230,13 +223,10 @@ void servoTimerEvent()
             	blockIndex++;
             	if(blockIndex == NUM_BLOCKS){
             		// this resets the block Index
-            		setTimerLowTime();
-            		stopServos();
+            	    blockIndex=0;
             	}
-            	else{
-            		setServoTimer(255*2);//2ms
-            	    servoStateMachineCurrentState = STARTLOOP;
-            	}
+            	stopServos();
+
             	// Interpolate position
             	runLinearInterpolationServo(	blockIndex*BLOCK_SIZE,
 												(blockIndex*BLOCK_SIZE)+BLOCK_SIZE);

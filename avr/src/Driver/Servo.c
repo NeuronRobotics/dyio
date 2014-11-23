@@ -38,10 +38,8 @@ void InitServo(uint8_t PIN){
 	SetServoPos(PIN,EEReadValue(PIN),0);
 	if( servoEngineStarted != true){
 		servoEngineStarted =true;
-		setServoLoopTimer(255*9);
-		setTimerLowTime();
+		setServoLoopTimer(255*6);
 	}
-	TIMSK1bits._OCIE1B=1;// servo loop timer
 }
 
 void setPowerOverride(boolean set){
