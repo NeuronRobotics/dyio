@@ -39,9 +39,10 @@ void setTimerLowTime();
 void setTimerLowTime();
 void servoTimerEvent();
 void setTimerServoTicks(int value);
+void setServoLoopTimer(uint32_t value);
 
 typedef enum _ServoState{
-    LOW=0,
+    STARTLOOP=0,
     PRETIME=1,
     TIME=2,
     FINISH=3
