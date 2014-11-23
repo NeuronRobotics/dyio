@@ -33,6 +33,7 @@ void SetServoPos(uint8_t PIN,uint8_t val,float time);
 uint8_t GetServoPos(uint8_t PIN);
 void RunServo(uint8_t block);
 void InitServo(uint8_t pin);
+boolean getPowerOverRide();
 void DelayPreServo(void);
 
 void setTimerLowTime();

@@ -37,12 +37,14 @@ void LoadDefaultValues(){
 //}
 
 void setCoProcBrownOutMode(boolean b){
+
 	LoadCorePacket(& downstreamPacketTemp);
 	downstreamPacketTemp.use.head.Method=BOWLER_CRIT;
 	downstreamPacketTemp.use.head.RPC=GetRPCValue("_pwr");
 	downstreamPacketTemp.use.head.DataLegnth=4+1;
-	downstreamPacketTemp.use.data[0]=b?0:1;
+	downstreamPacketTemp.use.data[0]=b;
 	SendPacketToCoProc(& downstreamPacketTemp);
+
 }
 
 void DownstreamPowerChange(void){
@@ -519,8 +521,11 @@ void SyncModes(void){
                 down[i].changeMode = true;// force a sync of the no valid mode
                 //println_E("FAULT: the mode was set to NO_CHANGE");
             }else{
-                getBcsIoDataTable(i)->PIN.currentChannelMode=downstreamPacketTemp.use.data[i+1];
-                down[i].changeMode = false;
+            	if(getBcsIoDataTable(i)->PIN.currentChannelMode!=downstreamPacketTemp.use.data[i+1]){
+					getBcsIoDataTable(i)->PIN.currentChannelMode=downstreamPacketTemp.use.data[i+1];
+					setMode(i,getBcsIoDataTable(i)->PIN.currentChannelMode );
+					down[i].changeMode = false;
+            	}
             }
 	}
 }

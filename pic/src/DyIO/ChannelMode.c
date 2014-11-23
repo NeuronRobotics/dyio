@@ -40,7 +40,7 @@ boolean setMode(uint8_t pin,uint8_t mode){
 	case IS_SERVO:
 		if(!(((pin < 12) && (isRegulated_0() == 0)) || ((pin >= 12) && (isRegulated_1()== 0)))   ){
                     if(getBrownOutDetect()){
-                            print_I(" Servo Mode could not be set, voltage invalid");
+                            print_W(" Servo Mode could not be set, voltage invalid");
                             return false;
                     }
                 }

@@ -6,9 +6,13 @@ BYTE_FIFO_STORAGE storeRx;
 BYTE_FIFO_STORAGE storeTx;
 //BowlerPacket dataTableSync;
 
-boolean brownOutDetect = true;
+boolean brownOutDetect = false;
 
 boolean changedBrownOutDetect = false;
+
+boolean getPowerOverRide(){
+	return getBrownOutDetect();
+}
 
 
 boolean getBrownOutDetect(){
@@ -16,6 +20,8 @@ boolean getBrownOutDetect(){
 }
 
 void setBrownOutDetect(boolean b){
+	if(brownOutDetect == b)
+		return;
 	brownOutDetect = b;
 	changedBrownOutDetect = true;
 	println_W("powerOverRide: ");p_int_W(b);

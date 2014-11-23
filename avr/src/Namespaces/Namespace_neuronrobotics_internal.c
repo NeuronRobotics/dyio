@@ -36,6 +36,13 @@ boolean internalProcessor_g(BowlerPacket * Packet){
 		}else
 			ERR(Packet,zone,1);
 		break;
+	case _PWR:
+
+		SetPowerState0(Packet->use.data[2],Packet->use.data[0]);
+		SetPowerState1(Packet->use.data[3],Packet->use.data[1]);
+		//Packet->use.head.MessageID=44;
+		Packet->use.data[4]=getPowerOverRide();
+		break;
 	case _REV:
 		Packet->use.data[0]=MAJOR_REV;
 		Packet->use.data[1]=MINOR_REV;
@@ -60,12 +67,7 @@ boolean internalProcessor_p(BowlerPacket * Packet){
 	uint16_t  end;
 	uint16_t i;
 	switch (Packet->use.head.RPC){
-	case _PWR:
 
-		SetPowerState0(Packet->use.data[2],Packet->use.data[0]);
-		SetPowerState1(Packet->use.data[3],Packet->use.data[1]);
-		//Packet->use.head.MessageID=44;
-		break;
 	case EEPD:
 		start = Packet->use.data[0];
 		end = Packet->use.data[1];
@@ -130,12 +132,18 @@ RPC_LIST internal_save_g={	BOWLER_GET,// Method
                                 NULL //Termination
 };
 
-RPC_LIST internal_pwr_p={	BOWLER_POST,// Method
+RPC_LIST internal_pwr_p={	BOWLER_GET,// Method
                                 "_pwr",//RPC as string
-                                &internalProcessor_p,//function pointer to a packet parsing function
+                                &internalProcessor_g,//function pointer to a packet parsing function
                                 {0}, // Calling arguments
                                 BOWLER_POST, // response method
-                                {0}, // Calling arguments
+                                {
+                                    BOWLER_I08, // 0 regulated
+                                    BOWLER_I08, // 1 regulated
+                                    BOWLER_I16, // Voltage
+                                    BOWLER_BOOL,// override mode
+                                    0
+                                }, // Calling arguments
                                 NULL //Termination
 };
 RPC_LIST internal_eepd_p={	BOWLER_POST,// Method

@@ -15,7 +15,6 @@ void pushDummy(uint8_t numData){
 	LoadCorePacket(& packetTemp);
 	packetTemp.use.head.Method=BOWLER_ASYN;
 	packetTemp.use.head.RPC=GetRPCValue("test");
-	packetTemp.use.head.MessageID=5;
 	packetTemp.use.head.DataLegnth=4+numData;
 	int i;
 	for(i=0;i<numData;i++){
@@ -32,7 +31,6 @@ void PushAllAsync(){
 
 	GetAllChanelValueFromPacket(&packetTemp);
 	packetTemp.use.head.Method=BOWLER_ASYN;
-	packetTemp.use.head.MessageID=0;
 	Print_Level l = getPrintLevel();
 	//setPrintLevelInfoPrint();
 	PutBowlerPacket(& packetTemp);
@@ -52,7 +50,6 @@ void PushCounterChange(uint8_t pin,int64_t state){
 	packetTemp.use.data[3]=s.byte.SB;
 	packetTemp.use.data[4]=s.byte.LB;
 	packetTemp.use.head.DataLegnth=9;
-	packetTemp.use.head.MessageID=5;
 	PutBowlerPacket(& packetTemp);
 }
 void PushADCval(uint8_t pin,uint16_t val){
@@ -68,7 +65,6 @@ void PushADCval(uint8_t pin,uint16_t val){
 	packetTemp.use.data[1]=an.byte.SB;
 	packetTemp.use.data[2]=an.byte.LB;
 	packetTemp.use.head.DataLegnth=7;
-	packetTemp.use.head.MessageID=5;
 	PutBowlerPacket(& packetTemp);
 }
 void PushDIval(uint8_t pin,uint8_t val){
@@ -81,7 +77,6 @@ void PushDIval(uint8_t pin,uint8_t val){
 	packetTemp.use.data[0]=pin;
 	packetTemp.use.data[1]=val;
 	packetTemp.use.head.DataLegnth=6;
-	packetTemp.use.head.MessageID=5;
 	PutBowlerPacket(& packetTemp);
 }
 
@@ -97,15 +92,15 @@ void UpstreamPushPowerChange(void){
 
 void POWER(BowlerPacket * packet){
 	UINT16_UNION raw;
-	packet->use.head.Method=BOWLER_POST;
+	packet->use.head.Method=BOWLER_GET;
 	packet->use.head.RPC=GetRPCValue("_pwr");
 	packet->use.data[0]=isRegulated_0();
 	packet->use.data[1]=isRegulated_1();
 	raw.Val=(uint16_t)(GetRawVoltage());
 	packet->use.data[2]=raw.byte.SB;
 	packet->use.data[3]=raw.byte.LB;
-	packet->use.head.DataLegnth=8;
-	packet->use.head.MessageID=0;
+	packet->use.data[4]=getPowerOverRide();
+	packet->use.head.DataLegnth=9;
 }
 
 void pushPPMPacket(void){

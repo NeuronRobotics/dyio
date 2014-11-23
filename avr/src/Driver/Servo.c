@@ -19,7 +19,7 @@
 #include "UserApp_avr.h"
 
 
-boolean powerOverRide = true;
+boolean powerOverRide = false;
 
 INTERPOLATE_DATA velocity[NUM_PINS];
 void runLinearInterpolationServo(uint8_t blockStart,uint8_t blockEnd);
@@ -29,6 +29,11 @@ uint8_t pinOn(uint8_t pin);
 void pinOff(uint8_t pin);
 
 boolean servoEngineStarted =false;
+
+boolean getPowerOverRide(){
+	return powerOverRide;
+}
+
 
 void InitServo(uint8_t PIN){
 	//println_I("Starting servo");
@@ -44,7 +49,7 @@ void InitServo(uint8_t PIN){
 
 void setPowerOverride(boolean set){
 	println_W("powerOverRide: ");p_int_W(set);
-	//powerOverRide = set;
+	powerOverRide = set?true:false;
 }
 uint8_t b0OK=true;
 uint8_t b1OK=true;
@@ -187,13 +192,20 @@ uint8_t GetServoPos(uint8_t pin){
 boolean pinServoOk(uint8_t pin){
 	if(GetChannelMode(pin)==IS_SERVO){
 		if((pin > 11)){
-			if(		(b1OK==false && !powerOverRide) ||
-					b1lock == true) {
+			if(	b1lock == true) {
 				return false;
 			}
-		}else if(	(b0OK==false && !powerOverRide)||
-					b0lock == true) {
-			return false;
+			if(	(b1OK==false && getPowerOverRide()==true) ) {
+				return false;
+			}
+
+		}else {
+			if(b0lock == true) {
+				return false;
+			}
+			if(	(b0OK==false && getPowerOverRide()==true)) {
+				return false;
+			}
 		}
 		return true;
 	}

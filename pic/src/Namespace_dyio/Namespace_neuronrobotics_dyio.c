@@ -209,6 +209,7 @@ boolean neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet) {
         BOWLER_I08, // 0 regulated
         BOWLER_I08, // 1 regulated
         BOWLER_I16, // Voltage
+        BOWLER_BOOL,// override mode
         0
     }, // Calling arguments
     NULL //Termination

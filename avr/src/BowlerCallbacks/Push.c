@@ -49,66 +49,66 @@ void PushSerial(void){
 	//_delay_us(800);
 }
 
-void PushAllAdcVal(){
-#if defined(WPIRBE)
-	return;
-#endif
-	//println_I("Pushing analog");
-	UINT16_UNION an;
-	//FlagBusy_IO=1;
-	//_delay_us(800);
-	sendHeader(4+16,"aasn");
-	int i=0;
-	for(i=8;i<16;i++){
-		an.Val=GetValFromAsync(i);
-		send(an.byte.SB);
-		send(an.byte.LB);
-	}
-	//FlagBusy_IO=0;
-	//_delay_us(800);
-}
-
-void PushADCval(uint8_t pin,uint16_t val){
-#if defined(WPIRBE)
-	return;
-#endif
-	UINT16_UNION an;
-	an.Val=val;
-	//FlagBusy_IO=1;
-	//_delay_us(800);
-	sendHeader(4+3,"gchv");
-	send(pin);
-	send(an.byte.SB);
-	send(an.byte.LB);
-	//FlagBusy_IO=0;
-	//_delay_us(800);
-}
-void PushAllDiVal(){
-#if defined(WPIRBE)
-	return;
-#endif
-	println_I("Pushing digital");
-	//FlagBusy_IO=1;
-	//_delay_us(800);
-	sendHeader(4+24,"dasn");
-	int i=0;
-	for(i=0;i<24;i++){
-		send(GetValFromAsync(i));
-	}
-	//FlagBusy_IO=0;
-	//_delay_us(800);
-
-}
-
-void PushDIval(uint8_t pin,uint8_t val){
-#if defined(WPIRBE)
-	return;
-#endif
-	//FlagBusy_IO=1;
-	//_delay_us(800);
-	sendHeader(4+2,"gchv");
-	send(pin);
-	send(val);
-	//FlagBusy_IO=0;
-	//_delay_us(800);
-}
+//void PushAllAdcVal(){
+//#if defined(WPIRBE)
+//	return;
+//#endif
+//	//println_I("Pushing analog");
+//	UINT16_UNION an;
+//	//FlagBusy_IO=1;
+//	//_delay_us(800);
+//	sendHeader(4+16,"aasn");
+//	int i=0;
+//	for(i=8;i<16;i++){
+//		an.Val=GetValFromAsync(i);
+//		send(an.byte.SB);
+//		send(an.byte.LB);
+//	}
+//	//FlagBusy_IO=0;
+//	//_delay_us(800);
+//}
+//
+//void PushADCval(uint8_t pin,uint16_t val){
+//#if defined(WPIRBE)
+//	return;
+//#endif
+//	UINT16_UNION an;
+//	an.Val=val;
+//	//FlagBusy_IO=1;
+//	//_delay_us(800);
+//	sendHeader(4+3,"gchv");
+//	send(pin);
+//	send(an.byte.SB);
+//	send(an.byte.LB);
+//	//FlagBusy_IO=0;
+//	//_delay_us(800);
+//}
+//void PushAllDiVal(){
+//#if defined(WPIRBE)
+//	return;
+//#endif
+//	println_I("Pushing digital");
+//	//FlagBusy_IO=1;
+//	//_delay_us(800);
+//	sendHeader(4+24,"dasn");
+//	int i=0;
+//	for(i=0;i<24;i++){
+//		send(GetValFromAsync(i));
+//	}
+//	//FlagBusy_IO=0;
+//	//_delay_us(800);
+//
+//}
+//
+//void PushDIval(uint8_t pin,uint8_t val){
+//#if defined(WPIRBE)
+//	return;
+//#endif
+//	//FlagBusy_IO=1;
+//	//_delay_us(800);
+//	sendHeader(4+2,"gchv");
+//	send(pin);
+//	send(val);
+//	//FlagBusy_IO=0;
+//	//_delay_us(800);
+//}
