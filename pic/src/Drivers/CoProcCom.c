@@ -10,7 +10,7 @@
 extern volatile unsigned int        U2BRG __attribute__((section("sfrs")));
 
 #define MAX_RETRY 5
-#define DELAY_TIMEOUT 50
+#define DELAY_TIMEOUT 75
 
 boolean valadateRPC(int response, int sent);
 uint8_t sendPacket(BowlerPacket * Packet);
@@ -162,7 +162,7 @@ void initCoProcUART() {
     StartCritical();
     InitByteFifo(&store, privateRX, sizeof (privateRX));
     EndCritical();
-    FLAG_ASYNC = FLAG_BLOCK;
+    FLAG_ASYNC = FLAG_OK;
 }
 
 int uartErrorCheck() {
@@ -170,16 +170,16 @@ int uartErrorCheck() {
     if (err) {
     	FLAG_ASYNC = FLAG_BLOCK;
         		if(err & _U2STA_FERR_MASK){
-        			//println_E("\n\n\nFraming error");
+        			println_E("\n\n\nFraming error");
         		}
         		else if(err & _U2STA_OERR_MASK){
-        			//println_E("\n\n\n\nOverflow error");
+        			println_E("\n\n\n\nOverflow error");
         		}
         		else if(err & _U2STA_PERR_MASK){
-        			//println_E("\n\n\n\nPARITY error");
+        			println_E("\n\n\n\nPARITY error");
         		}
         		else {
-        			//println_E("\n\n\n\nUnknown UART error");
+        			println_E("\n\n\n\nUnknown UART error");
         		}
         UART2ClearAllErrors();
         initCoProcUART();
