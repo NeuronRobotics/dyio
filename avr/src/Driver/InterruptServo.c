@@ -91,10 +91,10 @@ uint32_t calcTimer(uint32_t value){
     if(target>0x0000ffff){
     	target -=(0x0000ffff);
     }
-    if(target == 0 || target == 0x0000ffff){
+    if(target == 0 || target >= 0x0000ffff){
     	println_E("Edge: ");prHEX32(target,ERROR_PRINT);
+    	return 1;
     }
-
     return target & 0x0000ffff;
 }
 
@@ -164,7 +164,7 @@ void servoTimerEvent()
                 sortedIndex=0;
 
                 //1ms delay for all servos
-            	setServoTimer(200);//1ms
+            	setServoTimer(234);// put the 128 value exactly at 1.5ms
                 servoStateMachineCurrentState = PRETIME;
                 break;
             case PRETIME:
