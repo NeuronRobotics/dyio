@@ -19,8 +19,6 @@ void runDyIOMain(void){
 	UserInit();// User code init
 	setPrintLevelWarningPrint();
 
-	InitServo(11);//FIXME this is a hack to start the servo for testing
-
 	while (1){
 
 		UserRun();

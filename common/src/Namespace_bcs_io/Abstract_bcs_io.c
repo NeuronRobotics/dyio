@@ -446,10 +446,10 @@ boolean setDataTableCurrentValue(uint8_t pin, int32_t value){
 		println_E("Pin out of index! : "); p_int_E(pin);
 	}
 	if(value !=getBcsIoDataTable(pin)->PIN.currentValue ){
-//		Print_Level l = isOutputMode(GetChannelMode(pin))?WARN_PRINT:INFO_PRINT;
-//		println("Value was ",l);p_int(getBcsIoDataTable(pin)->PIN.currentValue,l);
-//		print_nnl(" set to ",l);p_int(value,l);
-//		print_nnl(" on pin ",l);p_int(pin,l);
+		Print_Level l = isOutputMode(GetChannelMode(pin))?WARN_PRINT:INFO_PRINT;
+		println("Value was ",l);p_int(getBcsIoDataTable(pin)->PIN.currentValue,l);
+		print_nnl(" set to ",l);p_int(value,l);
+		print_nnl(" on pin ",l);p_int(pin,l);
 		// THis is the only place this variable should be set
 		getBcsIoDataTable(pin)->PIN.currentValue =value;
 		//print_I(" confirmed ");p_int_I(getBcsIoDataTable(pin)->PIN.currentValue);

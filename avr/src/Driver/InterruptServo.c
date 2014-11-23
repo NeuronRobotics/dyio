@@ -18,7 +18,7 @@ uint8_t blockIndex = 0;
 
 ServoState servoStateMachineCurrentState = STARTLOOP;
 uint32_t current=0;
-uint8_t TCCR1Btmp=0;
+//uint8_t TCCR1Btmp=0;
 
 #define CurrentIndex (blockIndex *BLOCK_SIZE )
 
@@ -91,53 +91,33 @@ uint32_t calcTimer(uint32_t value){
     if(target>0x0000ffff){
     	target -=(0x0000ffff);
     }
+    if(target == 0 || target == 0x0000ffff){
+    	println_E("Edge: ");prHEX32(target,ERROR_PRINT);
+    }
+
     return target & 0x0000ffff;
 }
 
 void setServoLoopTimer(uint32_t value){
-    OCR1B = calcTimer( value);
-    TIMSK1bits._OCIE1B=1;// Pin timer
-}
-
-void setServoTimer(uint32_t value){
     OCR1A = calcTimer( value);
     TIMSK1bits._OCIE1A=1;// Pin timer
 }
 
+void setServoTimer(uint32_t value){
+    OCR1B = calcTimer( value);
+    TIMSK1bits._OCIE1B=1;// Pin timer
+}
+
 ISR(TIMER1_COMPB_vect){//timer 1B compare interrupt
-	FlagBusy_IO=1;
-	current = TCNT1;// store the state
-	TIFR1bits._OCF1B=0;// clear the interrupt flag
-	TCCR1Btmp =TCCR1B;
-	TCCR1Bbits._CS=0;// stop the clock
-
-	servoStateMachineCurrentState = STARTLOOP;
-	setServoLoopTimer(255*8);
 	servoTimerEvent();
-	//EndCritical();
-
-	TCCR1B = TCCR1Btmp; // re-start the clock
-	TCNT1 = current; // re-load the state value
-	FlagBusy_IO=0;
 }
 
 ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
-	FlagBusy_IO=1;
-	current = TCNT1;// store the state
-	TIFR1bits._OCF1A=0;// clear the interrupt flag
-	TCCR1Btmp =TCCR1B;
-	TCCR1Bbits._CS=0;// stop the clock
-
 	servoTimerEvent();
-
-	//EndCritical();
-	TCCR1B = TCCR1Btmp; // re-start the clock
-	TCNT1 = current; // re-load the state value
-	FlagBusy_IO=0;
 }
 
 void stopServos(){
-	TIMSK1bits._OCIE1A=0;
+	TIMSK1bits._OCIE1B=0;
 }
 
 
@@ -165,20 +145,15 @@ boolean setUpNextServo(){
     return false; 
 }
 
-//void stopCurrentServo(){
-////    pinOff(sort[sortedIndex]+ (blockIndex*BLOCK_SIZE));
-////    sortedIndex++;
-////    if(sortedIndex == dataTableSize){
-////        servoStateMachineCurrentState = FINISH;
-////        //fall through to finish
-////    }
-//}
 
+int j;
 void servoTimerEvent()
 {
-//	uint8_t start;
-//	uint8_t stop;
-        int j;
+	FlagBusy_IO=1;
+	TCCR1Bbits._CS=0;// stop the clock
+	current = TCNT1;// store the state
+	TIFR1bits._OCF1A=0;// clear the interrupt flag
+
         switch(servoStateMachineCurrentState){
             case STARTLOOP:
                 for (j=0;j<NUM_SERVO;j++){
@@ -189,12 +164,12 @@ void servoTimerEvent()
                 sortedIndex=0;
 
                 //1ms delay for all servos
-            	setServoTimer(255);//1ms
+            	setServoTimer(200);//1ms
                 servoStateMachineCurrentState = PRETIME;
-                return;
+                break;
             case PRETIME:
                 if(setUpNextServo() == true)
-                    return;
+                    break;
                     /* no break */
             case TIME:
 
@@ -209,10 +184,12 @@ void servoTimerEvent()
                 	if(servoStateMachineCurrentState == TIME){
 						if(setUpNextServo() == true) {
 							//fast stop for channels with the same value
-							return;
+							break;
 						}
                 	}
                 }
+                if(servoStateMachineCurrentState == TIME)
+                	break;
                 //If block is now done, reset the block index and sort
                 /* no break */
 
@@ -225,17 +202,19 @@ void servoTimerEvent()
             		// this resets the block Index
             	    blockIndex=0;
             	}
-            	setServoTimer(255);//1ms
+            	servoStateMachineCurrentState = STARTLOOP;
+            	setServoLoopTimer(255*8);
             	stopServos();
-
             	// Interpolate position
             	runLinearInterpolationServo(	CurrentIndex,
             									CurrentIndex+BLOCK_SIZE);
             	// sort values for next loop
 				runSort();
-                return;
+                break;
         }
-        //
+    	TCNT1 = current; // re-load the state value
+    	TCCR1Bbits._CS = 2;//  value CLslk I/O/8 (From prescaler)
+    	FlagBusy_IO=0;
 }
 
 
