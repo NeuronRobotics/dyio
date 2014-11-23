@@ -10,7 +10,7 @@
 extern volatile unsigned int        U2BRG __attribute__((section("sfrs")));
 
 #define MAX_RETRY 5
-#define DELAY_TIMEOUT 75
+#define DELAY_TIMEOUT 20
 
 boolean valadateRPC(int response, int sent);
 uint8_t sendPacket(BowlerPacket * Packet);
@@ -304,6 +304,7 @@ uint8_t sendPacket(BowlerPacket * Packet) {
 
                         copyPacket(&downstream, Packet);
                         //println_I("<<RX CoProc\n");printPacket(Packet,INFO_PRINT);
+                        //println_W("Rx took: "); p_fl_W(getMs() - packStartTime);
                         return 0; //Got a synchronus packet
                     }
                 }
