@@ -41,7 +41,7 @@ boolean getPacket(BowlerPacket * packet) {
     if (numAdded > 0) {
         println_I("getPacket DMA added ");
         p_int_I(numAdded);
-        printFiFoState_I(&store, downstream.stream);
+        printFiFoState_I(&store);
     }
 #endif
     StartCritical();
@@ -313,12 +313,13 @@ uint8_t sendPacket(BowlerPacket * Packet) {
 
             buttonCheck(4);
         }
-        println_E("Rx took: ");
-        p_fl_E(getMs() - packStartTime);
+        println_E("Rx Fail");
         //printPacket(Packet, ERROR_PRINT);
         //printFiFoState_E(&store);
         PushCoProcAsync(); //clear out any packets
         initCoProcUART();
+        println_E("Rx took: ");
+        p_fl_E(getMs() - packStartTime);
         return 2;
     } else {
         println_E("Tx took: ");
@@ -335,7 +336,8 @@ boolean valadateRPC(int response, int sent) {
                     return true;
                 default:
                     return false;
-            }
+            		}
+            		/* no break */
         case GACM:
             switch (response) {
                 case GACM:
@@ -343,6 +345,7 @@ boolean valadateRPC(int response, int sent) {
                 default:
                     return false;
             }
+            /* no break */
         case GCHM:
             switch (response) {
                 case GCHM:
@@ -350,6 +353,7 @@ boolean valadateRPC(int response, int sent) {
                 default:
                     return false;
             }
+            /* no break */
         case GCHV:
             switch (response) {
                 case GCHV:
@@ -358,6 +362,7 @@ boolean valadateRPC(int response, int sent) {
                 default:
                     return false;
             }
+            /* no break */
         case EEPD:
             switch (response) {
                 case EEPD:
@@ -366,6 +371,7 @@ boolean valadateRPC(int response, int sent) {
                 default:
                     return false;
             }
+            /* no break */
         case _REV:
             switch (response) {
                 case _REV:
@@ -374,6 +380,7 @@ boolean valadateRPC(int response, int sent) {
                 default:
                     return false;
             }
+            /* no break */
         case SAVE:
             switch (response) {
                 case SAVE:
@@ -381,6 +388,7 @@ boolean valadateRPC(int response, int sent) {
                 default:
                     return false;
             }
+            /* no break */
         case SCHM:
             switch (response) {
                 case SCHM:
@@ -389,6 +397,7 @@ boolean valadateRPC(int response, int sent) {
                 default:
                     return false;
             }
+            /* no break */
         case SACM:
             switch (response) {
                 case GACM:
@@ -398,6 +407,7 @@ boolean valadateRPC(int response, int sent) {
                 default:
                     return false;
             }
+            /* no break */
         case SCHV:
             switch (response) {
                 case _RDY:
@@ -408,6 +418,7 @@ boolean valadateRPC(int response, int sent) {
                 default:
                     return false;
             }
+            /* no break */
         case SACV:
             switch (response) {
                 case _RDY:
@@ -417,6 +428,7 @@ boolean valadateRPC(int response, int sent) {
                 default:
                     return false;
             }
+            /* no break */
         case _PWR:
             switch (response) {
                 case _PWR:
@@ -424,6 +436,7 @@ boolean valadateRPC(int response, int sent) {
                 default:
                     return false;
             }
+            /* no break */
         case CCHN:
             switch (response) {
                 case CCHN:
@@ -431,6 +444,7 @@ boolean valadateRPC(int response, int sent) {
                 default:
                     return false;
             }
+            /* no break */
         case _MAC:
             switch (response) {
                 case _RDY:
@@ -439,6 +453,7 @@ boolean valadateRPC(int response, int sent) {
                 default:
                     return false;
             }
+            /* no break */
         default:
             println_E("Method unknown");
             return true;
@@ -467,6 +482,7 @@ boolean SendPacketUARTCoProc(uint8_t * packet, uint16_t size) {
             println_E("ERROR Write failed!!");
             initCoProcUART();
             //setPrintLevel(l);
+            FLAG_ASYNC = FLAG_OK;
             return false;
         }
         //Delay10us(2);
@@ -491,12 +507,12 @@ void newByte() {
 #else
 #if !defined(SHORTISR)
     int timeout = 0;
-    while (DataRdyUART2()) {
+    while (U2STAbits.URXDA != 0 ) {
         addCoProcByte(UARTGetDataByte(UART2));
-        mU2ClearAllIntFlags();
-        //buttonCheck(17);
+        U2STAbits.URXDA = 0;
+        buttonCheck(17);
         timeout++;
-        if (timeout > BOWLER_PacketSize) {// size of the built in FIFo
+        if (timeout > 4) {// size of the built in FIFo
             return;
         }
     }
@@ -516,26 +532,23 @@ void __ISR(_UART_2_VECTOR, IPL7AUTO) My_U2_ISR(void) {
     if (INTGetFlag(INT_SOURCE_UART_RX(UART2))) {
         newByte();
         INTClearFlag(INT_SOURCE_UART_RX(UART2));
-        EndCritical();
-    } else if (INTGetFlag(INT_SOURCE_UART_ERROR(UART2))) {
-        	println_E("&@&@&&@&@&@ generic uart error");
-
-        INTClearFlag(INT_SOURCE_UART_ERROR(UART2));
-    } else {
-        if (INTGetFlag(INT_SOURCE_UART_TX(UART2))) {
-            INTClearFlag(INT_SOURCE_UART_TX(UART2));
-            println_E("&@&@&&@&@&@ wtf tx");
-        }
-        if (INTGetFlag(INT_SOURCE_UART(UART2))) {
-            INTClearFlag(INT_SOURCE_UART(UART2));
-            println_E("&@&@&&@&@&@ generic uart");
-        }
     }
     int err = uartErrorCheck();
-    if(err)
-    	return;
-
-
+    EndCritical();
+    if(err){
+		if (INTGetFlag(INT_SOURCE_UART_ERROR(UART2))) {
+			println_E("&@&@&&@&@&@ generic uart error");
+			INTClearFlag(INT_SOURCE_UART_ERROR(UART2));
+		}
+		if (INTGetFlag(INT_SOURCE_UART_TX(UART2))) {
+			INTClearFlag(INT_SOURCE_UART_TX(UART2));
+			println_E("&@&@&&@&@&@ wtf tx");
+		}
+		if (INTGetFlag(INT_SOURCE_UART(UART2))) {
+			INTClearFlag(INT_SOURCE_UART(UART2));
+			println_E("&@&@&&@&@&@ generic uart");
+		}
+    }
     FLAG_ASYNC = FLAG_OK;
 }
 //#endif

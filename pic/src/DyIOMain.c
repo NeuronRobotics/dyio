@@ -11,7 +11,8 @@ void buttonCheck(uint8_t code){
 		DelayMs(100);
 		Reset();
 	}
-	MyServer();
+	if(code != 17)
+		MyServer();
 }
 
  BowlerPacket Packet;
