@@ -168,9 +168,6 @@ uint8_t GetCoProConfigurations(){
 
 
 uint8_t SetCoProConfiguration(uint8_t pin,int32_t mode){
-	if(getBcsIoDataTable(pin)->PIN.currentChannelMode == mode)
-		return true;
-	getBcsIoDataTable(pin)->PIN.currentChannelMode=mode;
 	LoadCorePacket(& downstreamPacketTemp);
 	downstreamPacketTemp.use.head.Method=BOWLER_CRIT;
 	downstreamPacketTemp.use.head.RPC=GetRPCValue("cchn");
@@ -181,7 +178,7 @@ uint8_t SetCoProConfiguration(uint8_t pin,int32_t mode){
 
 	downstreamPacketTemp.use.head.DataLegnth=4+3+4;
 	SendPacketToCoProc(& downstreamPacketTemp);
-	down[pin].changeMode=true;
+
 	return false;
 }
 
