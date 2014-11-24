@@ -14,8 +14,15 @@ static uint8_t zone;
 boolean internalAsyncEventCallback(BowlerPacket* Packet,boolean (*pidAsyncCallbackPtr)(BowlerPacket *Packet)){
 	checkDigital();
 	checkAnalog();
-	TIMSK1bits._OCIE1A=1;// Pin timer
-	TCCR1Bbits._CS =2;
+//	TIMSK1bits._OCIE1A=1;// Pin timer
+//	TCCR1Bbits._CS =2;
+//	if(RunEvery(&vel)>0){
+//		clearPrint();
+//		Print_Level l = getPrintLevel();
+//		setPrintLevelInfoPrint();
+//		printSortedData();
+//		setPrintLevel(l);
+//	}
 
     return false; 
 }

@@ -41,6 +41,7 @@ void setTimerLowTime();
 void servoTimerEvent();
 void setTimerServoTicks(int value);
 void setServoLoopTimer(uint32_t value);
+void printSortedData();
 
 typedef enum _ServoState{
     STARTLOOP=0,
