@@ -24,14 +24,15 @@ static int j;
 #define CurrentIndex (blockIndex *BLOCK_SIZE )
 
 void runSort(){
-    int i=0,k=0,x;
+    int i=0,k=0,x,pin;
     int current;
     for(k=0;k<dataTableSize;k++){
         sort[k]=dataTableSize;
     }
     for(x=0;x<dataTableSize;x++){
-    	if(GetChannelMode(x) == IS_SERVO)
-    		positionTemp[x]=getBcsIoDataTable(x + (blockIndex*BLOCK_SIZE))->PIN.currentValue & 0x000000ff;
+    	pin= x + CurrentIndex;
+    	if(GetChannelMode(pin) == IS_SERVO)
+    		positionTemp[x]=getBcsIoDataTable(pin)->PIN.currentValue & 0x000000ff;
     	else
     		positionTemp[x] = 0;
     }
