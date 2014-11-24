@@ -325,6 +325,7 @@ uint8_t sendPacket(BowlerPacket * Packet) {
     } else {
         println_E("Tx took: ");
         p_fl_E(getMs() - packStartTime);
+        initCoProcUART();
         return 1;
     }
 }
@@ -464,7 +465,7 @@ boolean valadateRPC(int response, int sent) {
 boolean SendPacketUARTCoProc(uint8_t * packet, uint16_t size) {
     FLAG_ASYNC = FLAG_BLOCK;
     uint16_t i;
-    RunEveryData wait = {getMs(), 500};
+    RunEveryData wait = {getMs(), DELAY_TIMEOUT};
     //	Print_Level l = getPrintLevel();
     //	setPrintLevelInfoPrint();
     //	println_I("SendPacketUARTCoProc ");p_int_I(size);print_I(" Bytes [");
