@@ -52,17 +52,17 @@ void setPowerOverride(boolean set){
 	println_W("powerOverRide: ");p_int_W(set);
 	powerOverRide = set?true:false;
 }
-uint8_t b0OK=true;
-uint8_t b1OK=true;
-uint8_t b0lock=false;
-uint8_t b1lock=false;
+uint8_t b0OK=false;
+uint8_t b1OK=false;
+uint8_t b0lock=true;
+uint8_t b1lock=true;
 //uint8_t b0OK=false;
 //uint8_t b1OK=false;
 //uint8_t b0lock=true;
 //uint8_t b1lock=true;
 
 void SetPowerState0(boolean railOk,boolean regulated){
-	return;
+	//return;
 	b0OK=false; 
 	if (regulated == 1){
 		Bank0Green();
@@ -81,7 +81,7 @@ void SetPowerState0(boolean railOk,boolean regulated){
 	}
 }
 void SetPowerState1(boolean railOk,boolean regulated){
-	return;
+	//return;
 	b1OK=false; 
 	if (regulated==1){
 		Bank1Green();
