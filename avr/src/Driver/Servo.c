@@ -19,7 +19,7 @@
 #include "UserApp_avr.h"
 
 
-boolean powerOverRide = false;
+boolean powerOverRide = true;
 
 INTERPOLATE_DATA velocity[NUM_PINS];
 void runLinearInterpolationServo(uint8_t blockStart,uint8_t blockEnd);
