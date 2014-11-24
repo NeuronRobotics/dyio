@@ -192,22 +192,30 @@ uint8_t GetServoPos(uint8_t pin){
 
 boolean pinServoOk(uint8_t pin){
 	if(GetChannelMode(pin)==IS_SERVO){
+		// If the power override is cleared, then the pin should be on no matter what else
+		if(getPowerOverRide()==false) {
+			return true;
+		}
 		if((pin > 11)){
+			// If we are are in the lock out mode, no servos on this bank
 			if(	b1lock == true) {
 				return false;
 			}
-			if(	(b1OK==false && getPowerOverRide()==true) ) {
+			// If the voltage is invalid, no servos on this bank
+			if(	(b1OK==false ) ) {
 				return false;
 			}
-
 		}else {
+			// If we are are in the lock out mode, no servos on this bank
 			if(b0lock == true) {
 				return false;
 			}
-			if(	(b0OK==false && getPowerOverRide()==true)) {
+			// If the voltage is invalid, no servos on this bank
+			if(	(b0OK==false )) {
 				return false;
 			}
 		}
+		// All lock outs have passed, pin is ok to be a servo output
 		return true;
 	}
 	return false;
