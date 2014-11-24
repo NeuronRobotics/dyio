@@ -6,7 +6,7 @@
 
 #define dataTableSize (BLOCK_SIZE)
 
-#define MIN_SERVO 3
+#define MIN_SERVO 1
 
 
 //INTERPOLATE_DATA velocity[dataTableSize];
@@ -116,10 +116,10 @@ uint32_t calcTimer(uint32_t value){
     if(target>0x0000ffff){
     	target -=(0x0000ffff);
     }
-    if(target < 5 || target >= (0x0000ffff-5)  ){
-    	//println_E("Edge: ");prHEX32(target,ERROR_PRINT);
-    	return 5;
-    }
+//    if(target < 5 || target >= (0x0000ffff-5)  ){
+//    	//println_E("Edge: ");prHEX32(target,ERROR_PRINT);
+//    	return 5;
+//    }
     return target & 0x0000ffff;
 }
 
@@ -184,7 +184,7 @@ void servoTimerEvent()
                 }
 
                 //1ms delay for all servos
-            	setServoTimer(234);// put the 128 value exactly at 1.5ms
+            	setServoTimer(103);// put the 128 value exactly at 1.5ms
                 servoStateMachineCurrentState = PRETIME;
                 break;
             case PRETIME:
@@ -232,11 +232,12 @@ void servoTimerEvent()
             									CurrentIndex+BLOCK_SIZE);
             	// sort values for next loop
 				runSort();
+				//stop the pin setting
 				stopServos();
                 break;
         }
     	TCNT1 = current; // re-load the state value
-    	EndCritical();
+    	//EndCritical();
     	TCCR1Bbits._CS = 2;//  value CLslk I/O/8 (From prescaler)
     	FlagBusy_IO=0;
 }
