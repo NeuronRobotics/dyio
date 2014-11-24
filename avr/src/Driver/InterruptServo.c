@@ -115,9 +115,9 @@ uint32_t calcTimer(uint32_t value){
     if(target>0x0000ffff){
     	target -=(0x0000ffff);
     }
-    if(target == 0 || target >= 0x0000ffff  ){
-    	println_E("Edge: ");prHEX32(target,ERROR_PRINT);
-    	return 1;
+    if(target < 5 || target >= (0x0000ffff-5)  ){
+    	//println_E("Edge: ");prHEX32(target,ERROR_PRINT);
+    	return 5;
     }
     return target & 0x0000ffff;
 }
@@ -138,6 +138,8 @@ ISR(TIMER1_COMPB_vect){//timer 1B compare interrupt
 
 ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
 	servoTimerEvent();
+	setServoLoopTimer(255*3);
+	servoStateMachineCurrentState = STARTLOOP;
 }
 
 void stopServos(){
@@ -196,6 +198,8 @@ void servoTimerEvent()
                     pinOff(sort[sortedIndex]+ CurrentIndex);
                     sortedIndex++;
                     if(sortedIndex == dataTableSize){
+                    	sortedIndex=0;
+                    	lastValue = 0;
                         servoStateMachineCurrentState = FINISH;
                         //fall through to finish
                     }
@@ -221,19 +225,17 @@ void servoTimerEvent()
             		// this resets the block Index
             	    blockIndex=0;
             	}
-                lastValue = 0;
-                sortedIndex=0;
+
             	// Interpolate position
             	runLinearInterpolationServo(	CurrentIndex,
             									CurrentIndex+BLOCK_SIZE);
             	// sort values for next loop
 				runSort();
-				setServoLoopTimer(255*5);
-				servoStateMachineCurrentState = STARTLOOP;
 				stopServos();
                 break;
         }
     	TCNT1 = current; // re-load the state value
+    	EndCritical();
     	TCCR1Bbits._CS = 2;//  value CLslk I/O/8 (From prescaler)
     	FlagBusy_IO=0;
 }
