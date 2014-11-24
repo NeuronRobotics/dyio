@@ -52,52 +52,53 @@ void setPowerOverride(boolean set){
 	println_W("powerOverRide: ");p_int_W(set);
 	powerOverRide = set?true:false;
 }
-uint8_t b0OK=false;
-uint8_t b1OK=false;
-uint8_t b0lock=true;
-uint8_t b1lock=true;
+uint8_t bOK[2]={false,false};
+//uint8_t b1OK=false;
+uint8_t blockServo[2]={true,true};
+//uint8_t b1lock=true;
 //uint8_t b0OK=false;
 //uint8_t b1OK=false;
 //uint8_t b0lock=true;
 //uint8_t b1lock=true;
 
-void SetPowerState0(boolean railOk,boolean regulated){
-	//return;
-	b0OK=false; 
+void SetPowerState(int bank,boolean railOk,boolean regulated){
+
+
+	bOK[bank]=false;
 	if (regulated == 1){
-		Bank0Green();
+		if(bank==0){
+			Bank0Green();
+		}else{
+			Bank1Green();
+		}
 	}else {
 		if(railOk==2 ||  railOk==1){
-			b0OK=true; 
+			bOK[bank]=true;
 		}
 		if(railOk ==1 ||railOk ==3  ){
-			Bank0Red();
+			if(bank==0){
+				Bank0Red();
+			}else{
+				Bank1Red();
+			}
 		}else{
-			Bank0Off();
+			if(bank==0){
+				Bank0Off();
+			}else{
+				Bank1Off();
+			}
 		}
 		if(railOk == 3||railOk == 0 ){
-			b0lock=true; 
+			blockServo[bank]=true;
 		}
 	}
 }
+
+void SetPowerState0(boolean railOk,boolean regulated){
+	SetPowerState(0,railOk,regulated);
+}
 void SetPowerState1(boolean railOk,boolean regulated){
-	//return;
-	b1OK=false; 
-	if (regulated==1){
-		Bank1Green();
-	}else {
-		if(railOk ==1 ||railOk ==3  ){
-			Bank1Red();
-		}else{
-			Bank1Off();
-		}
-		if(railOk==2 ||  railOk==1){
-			b1OK=true; 
-		}
-		if(railOk == 3 ||railOk == 0 ){
-			b1lock=true; 
-		}
-	}
+	SetPowerState(1,railOk,regulated);
 }
 boolean print = 0xff;
 void SetServoPos(uint8_t pin,uint8_t val,float time){
@@ -116,9 +117,9 @@ void SetServoPos(uint8_t pin,uint8_t val,float time){
 		velocity[pin].setTime=0;
 	}
 	if(pin<12){
-		b0lock=false; 
+		blockServo[0]=false;
 	}else{
-		b1lock=false; 
+		blockServo[1]=false;
 	}
 	if(GetChannelMode(pin)!=IS_SERVO)
 		return;
@@ -191,30 +192,21 @@ uint8_t GetServoPos(uint8_t pin){
 //}
 
 boolean pinServoOk(uint8_t pin){
+	int bank = (pin > 11)?1:0;
 	if(GetChannelMode(pin)==IS_SERVO){
 		// If the power override is cleared, then the pin should be on no matter what else
 		if(getPowerOverRide()==false) {
 			return true;
 		}
-		if((pin > 11)){
-			// If we are are in the lock out mode, no servos on this bank
-			if(	b1lock == true) {
-				return false;
-			}
-			// If the voltage is invalid, no servos on this bank
-			if(	(b1OK==false ) ) {
-				return false;
-			}
-		}else {
-			// If we are are in the lock out mode, no servos on this bank
-			if(b0lock == true) {
-				return false;
-			}
-			// If the voltage is invalid, no servos on this bank
-			if(	(b0OK==false )) {
-				return false;
-			}
+		// If we are are in the lock out mode, no servos on this bank
+		if(	blockServo[bank] == true) {
+			return false;
 		}
+		// If the voltage is invalid, no servos on this bank
+		if(	(bOK[bank]==false ) ) {
+			return false;
+		}
+
 		// All lock outs have passed, pin is ok to be a servo output
 		return true;
 	}
