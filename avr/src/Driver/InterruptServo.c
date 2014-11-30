@@ -6,7 +6,7 @@
 
 #define dataTableSize (BLOCK_SIZE)
 
-#define MIN_SERVO 1
+#define MIN_SERVO 6
 
 
 //INTERPOLATE_DATA velocity[dataTableSize];
@@ -173,7 +173,7 @@ void servoTimerEvent()
 {
 
 	FlagBusy_IO=1;
-	TCCR1Bbits._CS=0;// stop the clock
+	//TCCR1Bbits._CS=0;// stop the clock
 	current = TCNT1;// store the state
 	TIFR1bits._OCF1A=0;// clear the interrupt flag
 	TIFR1bits._OCF1B=0;// clear the interrupt flag
@@ -239,8 +239,9 @@ void servoTimerEvent()
 
                 break;
         }
-    	TCNT1 = current; // re-load the state value
-    	TCCR1Bbits._CS = 2;//  value CLslk I/O/8 (From prescaler)
+        if(TCNT1 < current )
+        	TCNT1 = current; // re-load the state value
+    	//TCCR1Bbits._CS = 2;//  value CLslk I/O/8 (From prescaler)
     	FlagBusy_IO=0;
 }
 
