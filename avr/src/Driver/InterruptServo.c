@@ -8,6 +8,12 @@
 
 #define MIN_SERVO 6
 
+typedef struct _InteruptServoData{
+	uint8_t positionTemp[12];
+	uint8_t blockIndex;
+	ServoState servoStateMachineCurrentState;
+} InteruptServoData;
+
 
 //INTERPOLATE_DATA velocity[dataTableSize];
 uint8_t positionTemp[dataTableSize+1];
