@@ -14,101 +14,92 @@ typedef struct _InteruptServoData{
 	ServoState servoStateMachineCurrentState;
 } InteruptServoData;
 
+InteruptServoData blockData [2];
 
 //INTERPOLATE_DATA velocity[dataTableSize];
-uint8_t positionTemp[dataTableSize+1];
-uint8_t sort[dataTableSize];
-uint8_t lastValue=0;
-uint8_t sortedIndex = 0;
-uint8_t blockIndex = 0;
+//uint8_t positionTemp[dataTableSize+1];
+//uint8_t sort[dataTableSize];
+//uint8_t lastValue=0;
+//uint8_t sortedIndex = 0;
+//uint8_t blockIndex = 0;
 
-static ServoState servoStateMachineCurrentState = STARTLOOP;
+//static ServoState servoStateMachineCurrentState = STARTLOOP;
 static uint32_t current=0;
 
 //uint8_t TCCR1Btmp=0;
 
-#define CurrentIndex (blockIndex *BLOCK_SIZE )
+//#define CurrentIndex (blockIndex *BLOCK_SIZE )
+
+void startServoLoops(){
+
+	setServoTimer(0, 64);
+	setServoTimer(1, 128);
+}
 
 void runSort(){
-    int i=0,k=0,x,pin;
-    int current;
-    for(k=0;k<dataTableSize;k++){
-        sort[k]=dataTableSize;
+    int block=0,bIndex=0,pin;
+    for(bIndex=0;bIndex<12;bIndex++){
+    	for(block=0;block<2;block++){
+    		pin = bIndex + (block*12);
+			if(GetChannelMode(pin) == IS_SERVO)
+				blockData[block].positionTemp[bIndex]=getBcsIoDataTable(pin)->PIN.currentValue & 0x000000ff;
+			else
+				blockData[block].positionTemp[bIndex] = 0;
+			blockData[block].blockIndex = 0;
+    	}
     }
-    for(x=0;x<dataTableSize;x++){
-    	pin= x + CurrentIndex;
-    	if(GetChannelMode(pin) == IS_SERVO)
-    		positionTemp[x]=getBcsIoDataTable(pin)->PIN.currentValue & 0x000000ff;
-    	else
-    		positionTemp[x] = 0;
-    }
-    for(x=0;x<dataTableSize;x++){
-        current = 256;
-        for(i=0;i<dataTableSize;i++){
-            int used= false; 
-            for(k=0;k<dataTableSize;k++){
-                if(sort[k]==i){
-                    used=true; 
-                }
-            }
-            if(positionTemp[i]<current && !used){
-                sort[x]=i;
 
-                current = positionTemp[i];
-            }
-        }
-    }
 
 }
 
 void printSortedData(){
-    int x;
+//    int x;
 
-    println_I("Servo State: ");p_int_I(servoStateMachineCurrentState);
-    println_I(" block: ");p_int_I(blockIndex);
-    println_I(" sort index: ");p_int_I(sortedIndex);
-    println_I(" last value: ");p_int_I(lastValue);
-    println_I(" time: ");p_fl_I(getMs()/1000.0);
-    println_I(" Comp 1A: ");p_int_I(OCR1A);
-    println_I(" Comp 1B: ");p_int_I(OCR1B);
-    println_I(" TCNT1: ");p_int_I(TCNT1);
-    println_I(" TCCR1A: ");p_int_I(TCCR1A);
-    println_I(" TCCR1B: ");p_int_I(TCCR1B);
-    println_I(" TCCR1C: ");p_int_I(TCCR1C);
-    println_I(" TIFR1: ");p_int_I(TIFR1);
-    println_I(" TIMSK1: ");p_int_I(TIMSK1);
-    println_I(" TIMSK1_ICIE1: ");p_int_I(TIMSK1bits._ICIE1);
-    println_I(" TIMSK1_OCIE1A: ");p_int_I(TIMSK1bits._OCIE1A);
-    println_I(" TIMSK1_OCIE1B: ");p_int_I(TIMSK1bits._OCIE1B);
-    println_I(" TIMSK1_TOIE1: ");p_int_I(TIMSK1bits._TOIE1);
-
-
-    println_I("Servo Data \r\nRaw data \t[ ");
-
-    for(x=0;x<dataTableSize;x++){
-        p_int_I(positionTemp[x]);print_I(" , ");
-    }
-    print_I(" ] ");
-
-    print_I("\r\nSorted index\t[ ");
-
-    for(x=0;x<dataTableSize;x++){
-        p_int_I(sort[x]);print_I(" , ");
-    }
-    print_I(" ] ");
-
-    print_I("\r\nSorted Data\t[ ");
-
-    for(x=0;x<dataTableSize;x++){
-        p_int_I(positionTemp[sort[x]]);print_I(" , ");
-    }
-    print_I(" ] ");
-    print_I("\r\nBlock index\t[ ");
-
-        for(x=0;x<dataTableSize;x++){
-            p_int_I(x + (blockIndex*BLOCK_SIZE));print_I(" , ");
-        }
-        print_I(" ] ");
+//    println_I("Servo State: ");p_int_I(servoStateMachineCurrentState);
+//    println_I(" block: ");p_int_I(blockIndex);
+//    println_I(" sort index: ");p_int_I(sortedIndex);
+//    println_I(" last value: ");p_int_I(lastValue);
+//    println_I(" time: ");p_fl_I(getMs()/1000.0);
+//    println_I(" Comp 1A: ");p_int_I(OCR1A);
+//    println_I(" Comp 1B: ");p_int_I(OCR1B);
+//    println_I(" TCNT1: ");p_int_I(TCNT1);
+//    println_I(" TCCR1A: ");p_int_I(TCCR1A);
+//    println_I(" TCCR1B: ");p_int_I(TCCR1B);
+//    println_I(" TCCR1C: ");p_int_I(TCCR1C);
+//    println_I(" TIFR1: ");p_int_I(TIFR1);
+//    println_I(" TIMSK1: ");p_int_I(TIMSK1);
+//    println_I(" TIMSK1_ICIE1: ");p_int_I(TIMSK1bits._ICIE1);
+//    println_I(" TIMSK1_OCIE1A: ");p_int_I(TIMSK1bits._OCIE1A);
+//    println_I(" TIMSK1_OCIE1B: ");p_int_I(TIMSK1bits._OCIE1B);
+//    println_I(" TIMSK1_TOIE1: ");p_int_I(TIMSK1bits._TOIE1);
+//
+//
+//    println_I("Servo Data \r\nRaw data \t[ ");
+//
+//    for(x=0;x<dataTableSize;x++){
+//        p_int_I(positionTemp[x]);print_I(" , ");
+//    }
+//    print_I(" ] ");
+//
+//    print_I("\r\nSorted index\t[ ");
+//
+//    for(x=0;x<dataTableSize;x++){
+//        p_int_I(sort[x]);print_I(" , ");
+//    }
+//    print_I(" ] ");
+//
+//    print_I("\r\nSorted Data\t[ ");
+//
+//    for(x=0;x<dataTableSize;x++){
+//        p_int_I(positionTemp[sort[x]]);print_I(" , ");
+//    }
+//    print_I(" ] ");
+//    print_I("\r\nBlock index\t[ ");
+//
+//        for(x=0;x<dataTableSize;x++){
+//            p_int_I(x + (blockIndex*BLOCK_SIZE));print_I(" , ");
+//        }
+//        print_I(" ] ");
 
 }
 
@@ -129,125 +120,101 @@ uint32_t calcTimer(uint32_t value){
     return target & 0x0000ffff;
 }
 
-void setServoLoopTimer(uint32_t value){
-    OCR1A = calcTimer( value);
-    TIMSK1bits._OCIE1A=1;// Pin timer
-}
 
-void setServoTimer(uint32_t value){
-    OCR1B = calcTimer( value);
-    TIMSK1bits._OCIE1B=1;// Pin timer
+void setServoTimer(uint8_t block, uint32_t value){
+	if(block == 0){
+		OCR1B = calcTimer( value);
+		TIMSK1bits._OCIE1B=1;// Pin timer
+	}else{
+		OCR1A = calcTimer( value);
+		TIMSK1bits._OCIE1A=1;// Pin timer
+	}
+
 }
 
 ISR(TIMER1_COMPB_vect){//timer 1B compare interrupt
-	servoTimerEvent();
+	current = TCNT1;// store the state
+	servoTimerEvent(0);
 }
 
 ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
 	current = TCNT1;// store the state
-	setServoLoopTimer(512+64);
-	servoTimerEvent();
+	servoTimerEvent(1);
 }
 
 void stopServos(){
 	TIMSK1bits._OCIE1B=0;
 }
 
+//
+//boolean setUpNextServo(){
+//
+//    int diff = positionTemp[sort[sortedIndex]] - lastValue;
+//    lastValue = positionTemp[sort[sortedIndex]];
+//    if(diff<0 || sortedIndex<0 || sortedIndex>=dataTableSize){
+//        setPrintLevelErrorPrint();
+//        println_E("Servo.c: Something is wrong!! Current minus last value is less then 0\r\n");
+//        setPrintLevelInfoPrint();
+//        printSortedData();
+//        while(1);
+//    }
+//    if(diff>MIN_SERVO){
+//        setServoTimer(diff);
+//        return true;
+//    }
+//    //Fall through for pin shut off
+//    return false;
+//}
 
-boolean setUpNextServo(){
-
-    int diff = positionTemp[sort[sortedIndex]] - lastValue;
-    lastValue = positionTemp[sort[sortedIndex]];
-    if(diff<0 || sortedIndex<0 || sortedIndex>=dataTableSize){
-        setPrintLevelErrorPrint();
-        println_E("Servo.c: Something is wrong!! Current minus last value is less then 0\r\n");
-        setPrintLevelInfoPrint();
-        printSortedData();
-        while(1);
-    }
-    if(diff>MIN_SERVO){
-        setServoTimer(diff);
-        return true; 
-    }
-    //Fall through for pin shut off
-    return false; 
-}
 
 
-
-void servoTimerEvent()
+void servoTimerEvent(int block)
 {
 
 	FlagBusy_IO=1;
-	//TCCR1Bbits._CS=0;// stop the clock
-	current = TCNT1;// store the state
-	TIFR1bits._OCF1A=0;// clear the interrupt flag
-	TIFR1bits._OCF1B=0;// clear the interrupt flag
-	uint8_t j;
-        switch(servoStateMachineCurrentState){
+
+        switch(blockData[block].servoStateMachineCurrentState){
             case STARTLOOP:
-                for (j=0;j<dataTableSize;j++){
-                    pinOn(j+ CurrentIndex);
-                }
-
+                pinOn( blockData[block].blockIndex + (block*12) );
                 //1ms delay for all servos
-            	setServoTimer(255);// put the 128 value exactly at 1.5ms
-                servoStateMachineCurrentState = PRETIME;
+            	setServoTimer(block,255 + blockData[block].positionTemp[blockData[block].blockIndex]);// put the 128 value exactly at 1.5ms
+            	blockData[block].servoStateMachineCurrentState = TIME;
                 break;
-            case PRETIME:
-            	servoStateMachineCurrentState = TIME;
-                if(setUpNextServo() == true)
-                    break;
-                    /* no break */
-            case TIME:
 
-                while(servoStateMachineCurrentState == TIME){
-                	//stopCurrentServo();
-                    pinOff(sort[sortedIndex]+ CurrentIndex);
-                    sortedIndex++;
-                    if(sortedIndex == dataTableSize){
-                    	sortedIndex=0;
-                    	lastValue = 0;
-                        servoStateMachineCurrentState = FINISH;
-                        //fall through to finish
-                    }
-                	if(servoStateMachineCurrentState == TIME){
-						if(setUpNextServo() == true) {
-							//fast stop for channels with the same value
-							break;
-						}
-                	}
-                }
-                if(servoStateMachineCurrentState == TIME)
-                	break;
+            case TIME:
+				pinOff(blockData[block].blockIndex + (block*12) );
+//				blockData[block].servoStateMachineCurrentState = FINISH;
 
                 //If block is now done, reset the block index and sort
                 /* no break */
+//
+//            case FINISH:
+            	blockData[block].servoStateMachineCurrentState = STARTLOOP;
 
-            case FINISH:
-            	stopServos();
-            	servoStateMachineCurrentState = STARTLOOP;
-            	 for (j=0;j<dataTableSize;j++){
-            		 pinOff(j+ CurrentIndex);
-				}
-            	blockIndex++;
-            	if(blockIndex == NUM_BLOCKS){
+            	blockData[block].blockIndex++;
+            	if(blockData[block].blockIndex == 12){
             		// this resets the block Index
-            	    blockIndex=0;
+            		blockData[block].blockIndex=0;
+            		if(block == 1){
+            			// Interpolate position
+            			runLinearInterpolationServo(	0,
+            			            					NUM_PINS);
+            			// sort values for next loop
+            			runSort();
+            			startServoLoops();
+            		}else{
+            			// do not re-start the loops after block 0 ends, is should end first, then block 1 half a ms later
+            		}
+
+            	}else{
+            		// make the timer loop consistant by subtracting the on time from the off time
+            		setServoTimer(block,255 - blockData[block].positionTemp[blockData[block].blockIndex-1] + 128);
             	}
-
-            	// Interpolate position
-            	runLinearInterpolationServo(	CurrentIndex,
-            									CurrentIndex+BLOCK_SIZE);
-            	// sort values for next loop
-				runSort();
-				//stop the pin setting
-
                 break;
         }
         if(TCNT1 < current )
         	TCNT1 = current; // re-load the state value
-    	//TCCR1Bbits._CS = 2;//  value CLslk I/O/8 (From prescaler)
+
     	FlagBusy_IO=0;
 }
 

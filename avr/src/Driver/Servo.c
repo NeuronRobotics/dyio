@@ -47,7 +47,7 @@ void InitServo(uint8_t PIN){
 	SetServoPos(PIN,EEReadValue(PIN),0);
 	if( servoEngineStarted != true){
 		servoEngineStarted =true;
-		setServoLoopTimer(255*6);
+		startServoLoops();
 	}
 
 }

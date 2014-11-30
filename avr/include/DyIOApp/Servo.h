@@ -36,18 +36,18 @@ void InitServo(uint8_t pin);
 boolean getPowerOverRide();
 void DelayPreServo(void);
 
-void setTimerLowTime();
-void setTimerLowTime();
-void servoTimerEvent();
-void setTimerServoTicks(int value);
-void setServoLoopTimer(uint32_t value);
+void startServoLoops();
+
+void servoTimerEvent(int block);
+void setServoTimer(uint8_t block, uint32_t value);
+
 void printSortedData();
 
 typedef enum _ServoState{
     STARTLOOP=0,
-    PRETIME=1,
+    //PRETIME=1,
     TIME=2,
-    FINISH=3
+    //FINISH=3
 } ServoState;
 
     /*Stop the servo signals
