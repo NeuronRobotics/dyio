@@ -31,25 +31,22 @@ static uint32_t current=0;
 //#define CurrentIndex (blockIndex *BLOCK_SIZE )
 
 void startServoLoops(){
-
-	setServoTimer(0, 64);
-	setServoTimer(1, 128);
+	current = TCNT1;// store the state
+	blockData[0].servoStateMachineCurrentState = STARTLOOP;
+	blockData[1].servoStateMachineCurrentState = STARTLOOP;
+	setServoTimer(0, 32);
+	setServoTimer(1, 96);
 }
 
-void runSort(){
-    int block=0,bIndex=0,pin;
+void runSort(uint8_t block){
+    int bIndex=0,pin;
     for(bIndex=0;bIndex<12;bIndex++){
-    	for(block=0;block<2;block++){
-    		pin = bIndex + (block*12);
-			if(GetChannelMode(pin) == IS_SERVO)
-				blockData[block].positionTemp[bIndex]=getBcsIoDataTable(pin)->PIN.currentValue & 0x000000ff;
-			else
-				blockData[block].positionTemp[bIndex] = 0;
-			blockData[block].blockIndex = 0;
-    	}
+		pin = bIndex + (block*12);
+		if(GetChannelMode(pin) == IS_SERVO)
+			blockData[block].positionTemp[bIndex]=getBcsIoDataTable(pin)->PIN.currentValue & 0x000000ff;
+		else
+			blockData[block].positionTemp[bIndex] = 0;
     }
-
-
 }
 
 void printSortedData(){
@@ -113,10 +110,10 @@ uint32_t calcTimer(uint32_t value){
     if(target>0x0000ffff){
     	target -=(0x0000ffff);
     }
-//    if(target < 5 || target >= (0x0000ffff-5)  ){
-//    	//println_E("Edge: ");prHEX32(target,ERROR_PRINT);
-//    	return 5;
-//    }
+    if(target < 5 ){
+    	//println_E("Edge: ");prHEX32(target,ERROR_PRINT);
+    	return 5;
+    }
     return target & 0x0000ffff;
 }
 
@@ -135,15 +132,17 @@ void setServoTimer(uint8_t block, uint32_t value){
 ISR(TIMER1_COMPB_vect){//timer 1B compare interrupt
 	current = TCNT1;// store the state
 	servoTimerEvent(0);
+	TCNT1 = current; // re-load the state value
 }
 
 ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
 	current = TCNT1;// store the state
 	servoTimerEvent(1);
+    TCNT1 = current; // re-load the state value
 }
 
 void stopServos(){
-	TIMSK1bits._OCIE1B=0;
+	//TIMSK1bits._OCIE1B=0;
 }
 
 //
@@ -183,37 +182,35 @@ void servoTimerEvent(int block)
 
             case TIME:
 				pinOff(blockData[block].blockIndex + (block*12) );
-//				blockData[block].servoStateMachineCurrentState = FINISH;
-
                 //If block is now done, reset the block index and sort
-                /* no break */
-//
-//            case FINISH:
-            	blockData[block].servoStateMachineCurrentState = STARTLOOP;
+        		// make the timer loop consistant by subtracting the on time from the off time
+        		setServoTimer(block,(255 - blockData[block].positionTemp[blockData[block].blockIndex]) + 32);
+        		blockData[block].servoStateMachineCurrentState = STARTLOOP;
 
             	blockData[block].blockIndex++;
             	if(blockData[block].blockIndex == 12){
+            		blockData[block].servoStateMachineCurrentState = FINISH;
             		// this resets the block Index
             		blockData[block].blockIndex=0;
-            		if(block == 1){
-            			// Interpolate position
-            			runLinearInterpolationServo(	0,
-            			            					NUM_PINS);
-            			// sort values for next loop
-            			runSort();
+        			// Interpolate position
+        			runLinearInterpolationServo(	(block*12),
+        											(block*12) + 12);
+        			// sort values for next loop
+        			runSort(block);
+            		if(	blockData[0].servoStateMachineCurrentState ==FINISH &&
+						blockData[1].servoStateMachineCurrentState ==FINISH ){
             			startServoLoops();
             		}else{
             			// do not re-start the loops after block 0 ends, is should end first, then block 1 half a ms later
+            			//setServoTimer(block,512);
             		}
 
-            	}else{
-            		// make the timer loop consistant by subtracting the on time from the off time
-            		setServoTimer(block,255 - blockData[block].positionTemp[blockData[block].blockIndex-1] + 128);
             	}
                 break;
+            case FINISH:
+            	//blockData[block].servoStateMachineCurrentState = STARTLOOP;
+            	break;
         }
-        if(TCNT1 < current )
-        	TCNT1 = current; // re-load the state value
 
     	FlagBusy_IO=0;
 }

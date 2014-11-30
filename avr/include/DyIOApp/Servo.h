@@ -47,7 +47,7 @@ typedef enum _ServoState{
     STARTLOOP=0,
     //PRETIME=1,
     TIME=2,
-    //FINISH=3
+    FINISH=3
 } ServoState;
 
     /*Stop the servo signals
