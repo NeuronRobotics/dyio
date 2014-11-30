@@ -15,7 +15,7 @@ typedef struct _InteruptServoData{
 } InteruptServoData;
 InteruptServoData blockData [2];
 static uint32_t current=0;
-#define OFFSET (255+15)
+#define OFFSET (255+15+21)
 
 void startServoLoops(){
 	current = TCNT1;// store the state
@@ -38,7 +38,7 @@ void runSort(uint8_t block){
 }
 
 uint32_t calcTimer(uint32_t value){
-	value = value *9;
+	value = value * 8;
     if(value>0x0000ffff){
 		println_E("Maxed timer to: ");prHEX32(value,ERROR_PRINT);
         value = 0x0000ffff;
