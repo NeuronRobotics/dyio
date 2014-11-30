@@ -37,12 +37,13 @@ boolean internalProcessor_g(BowlerPacket * Packet){
 	case EEPD:
 		start = Packet->use.data[0];
 		end = Packet->use.data[1];
+		Packet->use.data[0]=end-start;
 		Packet->use.head.Method=BOWLER_POST;
 		if (end >= start){
 			for (i=start;i<end;i++){
-				Packet->use.data[i-start]=EEReadData(i);
+				Packet->use.data[i-start+1]=EEReadData(i);
 			}
-			Packet->use.head.DataLegnth= 4+end-start;
+
 		}else
 			ERR(Packet,zone,1);
 		break;
@@ -84,7 +85,7 @@ boolean internalProcessor_p(BowlerPacket * Packet){
 
 		if (end >= start){
 			for (i=0;i<(end-start);i++){
-				EEWriteData(i+start,Packet->use.data[i+2]);
+				EEWriteData(i+start,Packet->use.data[i+3]);
 			}
 		}else
 			ERR(Packet,zone,4);
@@ -120,9 +121,12 @@ boolean internalProcessor_c(BowlerPacket * Packet){
 RPC_LIST internal_eepd_g={	BOWLER_GET,// Method
                                 "eepd",//RPC as string
                                 &internalProcessor_g,//function pointer to a packet parsing function
-                                {0}, // Calling arguments
+                                { 		BOWLER_I08, // start address
+                                        BOWLER_I08, //end address
+                                        0}, // Calling arguments
                                 BOWLER_POST, // response method
-                                {0}, // Calling arguments
+                                {	BOWLER_STR, // values
+                                		0}, // Calling arguments
                                 NULL //Termination
 };
 RPC_LIST internal_rev_g={	BOWLER_GET,// Method
@@ -159,7 +163,10 @@ RPC_LIST internal_pwr_p={	BOWLER_GET,// Method
 RPC_LIST internal_eepd_p={	BOWLER_POST,// Method
                                 "eepd",//RPC as string
                                 &internalProcessor_p,//function pointer to a packet parsing function
-                                {0}, // Calling arguments
+                                {		BOWLER_I08, // start address
+                                        BOWLER_I08, //end address
+                                        BOWLER_STR, // values
+                                        0}, // Calling arguments
                                 BOWLER_POST, // response method
                                 {0}, // Calling arguments
                                 NULL //Termination

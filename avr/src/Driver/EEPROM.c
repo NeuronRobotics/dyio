@@ -92,17 +92,24 @@ void EEWriteBaud(uint32_t val){
 }
 
 uint8_t EEReadData(uint16_t addr){
+	uint8_t val=0;
 	if((addr+DATASTART_AVR)>=1024){
 		return 0;
 	}
-	return eeReadByte((DATASTART_AVR+addr));
+	val =  eeReadByte((DATASTART_AVR+addr));
+	if(addr == 189){
+		println_W("R eeprom addr: ");p_int_W(addr);print_W(" is: ");p_int_W(val);
+	}
+	return val;
 }
 void EEWriteData(uint16_t addr,uint8_t data){
 	if((addr+DATASTART_AVR)>=1024){
 		return;
 	}
 	eeWriteByte((DATASTART_AVR+addr),data);
-
+	if(addr == 189){
+		println_E("W eeprom addr: ");p_int_W(addr);print_W(" is: ");p_int_W(data);
+	}
 }
 
 
