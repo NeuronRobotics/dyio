@@ -294,7 +294,7 @@ void SetChannelValueCoProc(uint8_t PIN,uint8_t state){
 		if(retry>0){
 
 			//println_E("#*#*SetChannelValueCoProc did not return RDY pin: ");p_int_E(PIN);print_E(" mode: ");printMode(GetChannelMode(PIN),ERROR_PRINT);
-			printPacket(&downstreamPacketTemp,ERROR_PRINT);
+			//printPacket(&downstreamPacketTemp,ERROR_PRINT);
 			return;
 		}
 		LoadCorePacket(& downstreamPacketTemp);
@@ -366,7 +366,7 @@ boolean GetSerialStream(BowlerPacket * packet){
 
 char * eepd = "eepd";
 void GetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
-	println_W("Getting eeprom page: ");p_int_W(start+DATASTART);print_W(" to ");p_int_W(stop+DATASTART);
+	//println_W("Getting eeprom page: ");p_int_W(start+DATASTART);print_W(" to ");p_int_W(stop+DATASTART);
 	//WORD_VAL raw;
 	uint8_t i=0;
 	if (start>stop){
@@ -388,7 +388,7 @@ void GetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
 		downstreamPacketTemp.use.data[0]=start+DATASTART;
 		downstreamPacketTemp.use.data[1]=stop+DATASTART;
 		downstreamPacketTemp.use.head.DataLegnth=6;
-		SendPacketToCoProc(& downstreamPacketTemp);
+		//SendPacketToCoProc(& downstreamPacketTemp);
 		buttonCheck(12);
 	}while(downstreamPacketTemp.use.head.RPC != GetRPCValue(eepd));
 
@@ -399,7 +399,7 @@ void GetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
 }
 
 void SetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
-	println_W("Setting eeprom page: ");p_int_W(start+DATASTART);print_W(" to ");p_int_W(stop+DATASTART);
+	//println_W("Setting eeprom page: ");p_int_W(start+DATASTART);print_W(" to ");p_int_W(stop+DATASTART);
 	//WORD_VAL raw;
 	uint8_t i=0;
 	if (start>=stop)
@@ -415,7 +415,7 @@ void SetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
 	}
 
 	downstreamPacketTemp.use.head.DataLegnth=6+stop-start+1;
-	printBowlerPacketDEBUG(&downstreamPacketTemp,WARN_PRINT);
+	//printBowlerPacketDEBUG(&downstreamPacketTemp,WARN_PRINT);
 	SendPacketToCoProc(& downstreamPacketTemp);
 }
 

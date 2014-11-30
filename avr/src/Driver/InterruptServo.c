@@ -15,7 +15,7 @@ typedef struct _InteruptServoData{
 } InteruptServoData;
 InteruptServoData blockData [2];
 static uint32_t current=0;
-#define OFFSET (255-1)
+#define OFFSET (255)
 
 void startServoLoops(){
 	current = TCNT1;// store the state
