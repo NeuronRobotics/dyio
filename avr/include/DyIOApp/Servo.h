@@ -18,7 +18,7 @@
 #ifndef SERVO_H_
 #define SERVO_H_
 
-#define BLOCK_SIZE 3
+#define BLOCK_SIZE 2
 
 void SetPowerState0(boolean railOk,boolean regulated);
 void SetPowerState1(boolean railOk,boolean regulated);

@@ -2,7 +2,7 @@
 
 #define NUM_BLOCKS (NUM_PINS/BLOCK_SIZE)
 
-#define NUM_SERVO (NUM_PINS/NUM_BLOCKS)
+//#define NUM_SERVO (NUM_PINS/NUM_BLOCKS)
 
 #define dataTableSize (BLOCK_SIZE)
 
@@ -18,7 +18,7 @@ uint8_t blockIndex = 0;
 
 static ServoState servoStateMachineCurrentState = STARTLOOP;
 static uint32_t current=0;
-static int j;
+
 //uint8_t TCCR1Btmp=0;
 
 #define CurrentIndex (blockIndex *BLOCK_SIZE )
@@ -138,9 +138,9 @@ ISR(TIMER1_COMPB_vect){//timer 1B compare interrupt
 }
 
 ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
+	current = TCNT1;// store the state
+	setServoLoopTimer(512+64);
 	servoTimerEvent();
-	setServoLoopTimer(255*3);
-	servoStateMachineCurrentState = STARTLOOP;
 }
 
 void stopServos(){
@@ -171,20 +171,21 @@ boolean setUpNextServo(){
 
 void servoTimerEvent()
 {
+
 	FlagBusy_IO=1;
 	TCCR1Bbits._CS=0;// stop the clock
 	current = TCNT1;// store the state
 	TIFR1bits._OCF1A=0;// clear the interrupt flag
 	TIFR1bits._OCF1B=0;// clear the interrupt flag
-
+	uint8_t j;
         switch(servoStateMachineCurrentState){
             case STARTLOOP:
-                for (j=0;j<NUM_SERVO;j++){
+                for (j=0;j<dataTableSize;j++){
                     pinOn(j+ CurrentIndex);
                 }
 
                 //1ms delay for all servos
-            	setServoTimer(103);// put the 128 value exactly at 1.5ms
+            	setServoTimer(255);// put the 128 value exactly at 1.5ms
                 servoStateMachineCurrentState = PRETIME;
                 break;
             case PRETIME:
@@ -218,7 +219,9 @@ void servoTimerEvent()
                 /* no break */
 
             case FINISH:
-            	 for (j=0;j<NUM_SERVO;j++){
+            	stopServos();
+            	servoStateMachineCurrentState = STARTLOOP;
+            	 for (j=0;j<dataTableSize;j++){
             		 pinOff(j+ CurrentIndex);
 				}
             	blockIndex++;
@@ -233,11 +236,10 @@ void servoTimerEvent()
             	// sort values for next loop
 				runSort();
 				//stop the pin setting
-				stopServos();
+
                 break;
         }
     	TCNT1 = current; // re-load the state value
-    	//EndCritical();
     	TCCR1Bbits._CS = 2;//  value CLslk I/O/8 (From prescaler)
     	FlagBusy_IO=0;
 }
