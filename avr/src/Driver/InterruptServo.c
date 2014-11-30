@@ -15,7 +15,7 @@ typedef struct _InteruptServoData{
 } InteruptServoData;
 InteruptServoData blockData [2];
 static uint32_t current=0;
-#define OFFSET (255)
+#define OFFSET (255+15)
 
 void startServoLoops(){
 	current = TCNT1;// store the state
@@ -98,7 +98,7 @@ void servoTimerEvent(int block)
             case STARTLOOP:
                 pinOn( blockIndex + (block*12) );
                 //1ms delay for all servos
-            	setServoTimer(block,255 + blockData[block].positionTemp[blockIndex]);// put the 128 value exactly at 1.5ms
+            	setServoTimer(block,OFFSET + blockData[block].positionTemp[blockIndex]);// put the 128 value exactly at 1.5ms
             	blockData[block].servoStateMachineCurrentState = TIME;
                 break;
 
@@ -128,7 +128,7 @@ void servoTimerEvent(int block)
         			blockData[1].servoStateMachineCurrentState = STARTLOOP;
 
         			setServoTimer(0, time+32);
-        			setServoTimer(1, time+32+OFFSET);
+        			setServoTimer(1, time+32+OFFSET-5);
 				}
 
                 break;
