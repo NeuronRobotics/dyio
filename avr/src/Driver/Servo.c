@@ -19,7 +19,7 @@
 #include "UserApp_avr.h"
 
 
-boolean powerOverRide = true;
+//boolean powerOverRide = true;
 
 INTERPOLATE_DATA velocity[NUM_PINS];
 void runLinearInterpolationServo(uint8_t blockStart,uint8_t blockEnd);
@@ -35,7 +35,7 @@ uint8_t blockServo[2]={true,true};
 
 
 boolean getPowerOverRide(){
-	return powerOverRide;
+	return EEReadData(189);
 }
 
 
@@ -54,7 +54,8 @@ void InitServo(uint8_t PIN){
 
 void setPowerOverride(boolean set){
 	println_W("powerOverRide: ");p_int_W(set);
-	powerOverRide = set?true:false;
+	//powerOverRide = set?true:false;
+
 }
 
 
