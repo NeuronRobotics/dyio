@@ -38,6 +38,8 @@ void runSort(uint8_t block){
 }
 
 uint32_t calcTimer(uint32_t value){
+	if(value<=1)
+		value=1;
 	value = value * 8;
     if(value>0x0000ffff){
 		println_E("Maxed timer to: ");prHEX32(value,ERROR_PRINT);
@@ -78,22 +80,37 @@ void stopServoTimer(uint8_t block){
 ISR(TIMER1_COMPB_vect){//timer 1B compare interrupt
 	current = TCNT1;// store the state
 	servoTimerEvent(0);
-	TCNT1 = current; // re-load the state value
+	//TCNT1 = current; // re-load the state value
 }
 
 ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
 	current = TCNT1;// store the state
 	servoTimerEvent(1);
-    TCNT1 = current; // re-load the state value
+    //TCNT1 = current; // re-load the state value
 }
 
+void updateServoValues(){
+	int block;
+
+	for(block=0;block<2;block++){
+		// Interpolate position
+		runLinearInterpolationServo(	blockIndex + (block*12),
+										blockIndex + (block*12)+1);
+		if(GetChannelMode(blockIndex + (block*12)) == IS_SERVO)
+			blockData[block].positionTemp[blockIndex]=getBcsIoDataTable(blockIndex + (block*12))->PIN.currentValue & 0x000000ff;
+		else
+			blockData[block].positionTemp[blockIndex] = 0;
+	}
+
+
+}
 
 
 void servoTimerEvent(int block)
 {
 
 	FlagBusy_IO=1;
-	int time;
+	int time,pin;
         switch(blockData[block].servoStateMachineCurrentState){
             case STARTLOOP:
                 pinOn( blockIndex + (block*12) );
@@ -106,23 +123,15 @@ void servoTimerEvent(int block)
 				pinOff(blockIndex + (block*12) );
 				stopServoTimer(block);
                 //If block is now done, reset the block index and sort
-        		// make the timer loop consistant by subtracting the on time from the off time
-        		//setServoTimer(block,(255 - blockData[block].positionTemp[blockData[block].blockIndex]) + 32);
         		blockData[block].servoStateMachineCurrentState = FINISH;
         		if(	blockData[0].servoStateMachineCurrentState ==FINISH &&
 					blockData[1].servoStateMachineCurrentState ==FINISH ){
         			time = (255 - blockData[1].positionTemp[blockIndex]);
+        			updateServoValues();
         			blockIndex++;
 					if(blockIndex == 12){
-						blockData[block].servoStateMachineCurrentState = FINISH;
 						// this resets the block Index
 						blockIndex=0;
-						// Interpolate position
-						runLinearInterpolationServo(	0,
-														NUM_PINS);
-						// sort values for next loop
-						runSort(0);
-						runSort(1);
 					}
         			blockData[0].servoStateMachineCurrentState = STARTLOOP;
         			blockData[1].servoStateMachineCurrentState = STARTLOOP;

@@ -395,7 +395,7 @@ void GetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
 	for (i=0;i<(stop-start);i++){
 		data[i]=downstreamPacketTemp.use.data[i+1];
 	}
-	printBowlerPacketDEBUG(&downstreamPacketTemp,WARN_PRINT);
+	//printBowlerPacketDEBUG(&downstreamPacketTemp,WARN_PRINT);
 }
 
 void SetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
