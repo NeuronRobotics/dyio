@@ -110,43 +110,43 @@ void servoTimerEvent(int block)
 {
 
 	FlagBusy_IO=1;
-	int time,pin;
-        switch(blockData[block].servoStateMachineCurrentState){
-            case STARTLOOP:
-                pinOn( blockIndex + (block*12) );
-                //1ms delay for all servos
-            	setServoTimer(block,OFFSET + blockData[block].positionTemp[blockIndex]);// put the 128 value exactly at 1.5ms
-            	blockData[block].servoStateMachineCurrentState = TIME;
-                break;
+	int time;
+	switch(blockData[block].servoStateMachineCurrentState){
+		case STARTLOOP:
+			pinOn( blockIndex + (block*12) );
+			//1ms delay for all servos
+			setServoTimer(block,OFFSET + blockData[block].positionTemp[blockIndex]);// put the 128 value exactly at 1.5ms
+			blockData[block].servoStateMachineCurrentState = TIME;
+			break;
 
-            case TIME:
-				pinOff(blockIndex + (block*12) );
-				stopServoTimer(block);
-                //If block is now done, reset the block index and sort
-        		blockData[block].servoStateMachineCurrentState = FINISH;
-        		if(	blockData[0].servoStateMachineCurrentState ==FINISH &&
-					blockData[1].servoStateMachineCurrentState ==FINISH ){
-        			time = (255 - blockData[1].positionTemp[blockIndex]);
-        			updateServoValues();
-        			blockIndex++;
-					if(blockIndex == 12){
-						// this resets the block Index
-						blockIndex=0;
-					}
-        			blockData[0].servoStateMachineCurrentState = STARTLOOP;
-        			blockData[1].servoStateMachineCurrentState = STARTLOOP;
-
-        			setServoTimer(0, time+32);
-        			setServoTimer(1, time+32+OFFSET-5);
+		case TIME:
+			pinOff(blockIndex + (block*12) );
+			stopServoTimer(block);
+			//If block is now done, reset the block index and sort
+			blockData[block].servoStateMachineCurrentState = FINISH;
+			if(	blockData[0].servoStateMachineCurrentState ==FINISH &&
+				blockData[1].servoStateMachineCurrentState ==FINISH ){
+				time = (255 - blockData[1].positionTemp[blockIndex]);
+				updateServoValues();
+				blockIndex++;
+				if(blockIndex == 12){
+					// this resets the block Index
+					blockIndex=0;
 				}
+				blockData[0].servoStateMachineCurrentState = STARTLOOP;
+				blockData[1].servoStateMachineCurrentState = STARTLOOP;
 
-                break;
-            case FINISH:
-            	//blockData[block].servoStateMachineCurrentState = STARTLOOP;
-            	break;
-        }
+				setServoTimer(0, time+64);
+				setServoTimer(1, time+64+OFFSET-5);
+			}
 
-    	FlagBusy_IO=0;
+			break;
+		case FINISH:
+			//blockData[block].servoStateMachineCurrentState = STARTLOOP;
+			break;
+	}
+
+	FlagBusy_IO=0;
 }
 
 
