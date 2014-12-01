@@ -30,22 +30,35 @@ boolean internalAsyncEventCallback(BowlerPacket* Packet,boolean (*pidAsyncCallba
 boolean internalProcessor_g(BowlerPacket * Packet){
 	zone = 4;
 	uint16_t i;
-	uint16_t  start;
-	uint16_t end;
+
+	uint16_t end, size,start;
+	Print_Level l = getPrintLevel();
+	setPrintLevelInfoPrint();
+
 	//UINT16_UNION adc;
 	switch (Packet->use.head.RPC){
 	case EEPD:
+
 		start = Packet->use.data[0];
 		end = Packet->use.data[1];
-		Packet->use.data[0]=end-start;
-		Packet->use.head.Method=BOWLER_STATUS;
-		if (end >= start){
-			for (i=0;i<(end-start);i++){
+		size = end-start;
+//		println_W("Got<< eeprom page: ");p_int_W(start);
+//		print_W(" to ");p_int_W(end);
+//		print_W(" size ");p_int_W(size);
+//		printBowlerPacketDEBUG(Packet,WARN_PRINT);
+
+		Packet->use.data[0]=size;
+		Packet->use.head.Method=BOWLER_POST;
+		if (size>0){
+			for (i=0;i<size;i++){
 				Packet->use.data[i+1]=EEReadData(i+start);
 			}
 
 		}else
 			ERR(Packet,zone,1);
+		Packet->use.head.DataLegnth = 4+1+size;
+//		println_W("RX>> ");
+//		printBowlerPacketDEBUG(Packet,WARN_PRINT);
 		break;
 	case _PWR:
 
@@ -68,8 +81,12 @@ boolean internalProcessor_g(BowlerPacket * Packet){
 		}
 		break;
 	default:
+		println_E("ERR>> ");
+		printBowlerPacketDEBUG(Packet,ERROR_PRINT);
+		setPrintLevel(l);
 		return false; 
 	}
+	setPrintLevel(l);
 	return true; 
 }
 boolean internalProcessor_p(BowlerPacket * Packet){
