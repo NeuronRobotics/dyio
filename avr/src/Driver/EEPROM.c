@@ -97,9 +97,9 @@ uint8_t EEReadData(uint16_t addr){
 		return 0;
 	}
 	val =  eeReadByte((DATASTART_AVR+addr));
-//	if(addr == 189){
-//		println_W("R eeprom addr: ");p_int_W(addr);print_W(" is: ");p_int_W(val);
-//	}
+	if(addr == 189){
+		println_W("R eeprom addr: ");p_int_W(addr);print_W(" is: ");p_int_W(val);
+	}
 	return val;
 }
 void EEWriteData(uint16_t addr,uint8_t data){
@@ -107,9 +107,9 @@ void EEWriteData(uint16_t addr,uint8_t data){
 		return;
 	}
 	eeWriteByte((DATASTART_AVR+addr),data);
-//	if(addr == 189){
-//		println_E("W eeprom addr: ");p_int_W(addr);print_W(" is: ");p_int_W(data);
-//	}
+	if(addr == 189){
+		println_E("W eeprom addr: ");p_int_W(addr);print_W(" is: ");p_int_W(data);
+	}
 }
 
 

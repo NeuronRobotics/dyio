@@ -38,10 +38,10 @@ boolean internalProcessor_g(BowlerPacket * Packet){
 		start = Packet->use.data[0];
 		end = Packet->use.data[1];
 		Packet->use.data[0]=end-start;
-		Packet->use.head.Method=BOWLER_POST;
+		Packet->use.head.Method=BOWLER_STATUS;
 		if (end >= start){
-			for (i=start;i<end;i++){
-				Packet->use.data[i-start+1]=EEReadData(i);
+			for (i=0;i<(end-start);i++){
+				Packet->use.data[i+1]=EEReadData(i+start);
 			}
 
 		}else

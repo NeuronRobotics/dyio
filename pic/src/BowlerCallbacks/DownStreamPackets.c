@@ -366,7 +366,7 @@ boolean GetSerialStream(BowlerPacket * packet){
 
 char * eepd = "eepd";
 void GetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
-	//println_W("Getting eeprom page: ");p_int_W(start+DATASTART);print_W(" to ");p_int_W(stop+DATASTART);
+	println_W("Getting eeprom page: ");p_int_W(start+DATASTART);print_W(" to ");p_int_W(stop+DATASTART);
 	//WORD_VAL raw;
 	uint8_t i=0;
 	if (start>stop){
@@ -395,11 +395,11 @@ void GetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
 	for (i=0;i<(stop-start);i++){
 		data[i]=downstreamPacketTemp.use.data[i+1];
 	}
-	//printBowlerPacketDEBUG(&downstreamPacketTemp,WARN_PRINT);
+	printBowlerPacketDEBUG(&downstreamPacketTemp,WARN_PRINT);
 }
 
 void SetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
-	//println_W("Setting eeprom page: ");p_int_W(start+DATASTART);print_W(" to ");p_int_W(stop+DATASTART);
+	println_W("Setting eeprom page: ");p_int_W(start+DATASTART);print_W(" to ");p_int_W(stop+DATASTART);
 	//WORD_VAL raw;
 	uint8_t i=0;
 	if (start>=stop)
@@ -415,7 +415,7 @@ void SetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
 	}
 
 	downstreamPacketTemp.use.head.DataLegnth=6+stop-start+1;
-	//printBowlerPacketDEBUG(&downstreamPacketTemp,WARN_PRINT);
+	printBowlerPacketDEBUG(&downstreamPacketTemp,WARN_PRINT);
 	SendPacketToCoProc(& downstreamPacketTemp);
 }
 
