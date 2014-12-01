@@ -498,7 +498,7 @@ void SetLockCode(char * code){
                     break;
 	}
 	downstreamPacketTemp.use.data[2+i]='\0';
-	downstreamPacketTemp.use.head.DataLegnth=6+5;
+	downstreamPacketTemp.use.head.DataLegnth=6+LOCKSIZE;
 	SendPacketToCoProc(& downstreamPacketTemp);
 }
 
