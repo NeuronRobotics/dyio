@@ -137,7 +137,7 @@ void servoTimerEvent(int block)
 				blockData[1].servoStateMachineCurrentState = STARTLOOP;
 
 				setServoTimer(0, time+64);
-				setServoTimer(1, time+64+OFFSET-5);
+				setServoTimer(1, time+64+OFFSET-15);
 			}
 
 			break;
