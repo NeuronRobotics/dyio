@@ -30,6 +30,14 @@ void PushAllAsync(){
 	SetColor(0,1,0);
 
 	GetAllChanelValueFromPacket(&packetTemp);
+	int i;
+	for(i=0;i<NUM_PINS;i++){
+		if(GetChannelMode(i) == IS_SERVO){
+			//mask off the time value before sending upstream
+			set32bit(&packetTemp, get32bit(&packetTemp, (i*4) +1)&0x000000ff, (i*4)+1);
+		}
+	}
+
 	packetTemp.use.head.Method=BOWLER_ASYN;
 	Print_Level l = getPrintLevel();
 	//setPrintLevelInfoPrint();
