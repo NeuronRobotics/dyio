@@ -267,68 +267,6 @@ boolean isASetableMode(uint8_t mode){
 	return false; 
 }
 
-//boolean SetAllChannelValue(BowlerPacket * Packet){
-//	UINT32_UNION time;
-//	UINT32_UNION data;
-//	uint8_t i;
-//	time.byte.FB=Packet->use.data[0];
-//	time.byte.TB=Packet->use.data[1];
-//	time.byte.SB=Packet->use.data[2];
-//	time.byte.LB=Packet->use.data[3];
-//	for(i=0;i<NUM_PINS;i++){
-//		data.byte.FB=Packet->use.data[4+(i*4)];
-//		data.byte.TB=Packet->use.data[5+(i*4)];
-//		data.byte.SB=Packet->use.data[6+(i*4)];
-//		data.byte.LB=Packet->use.data[7+(i*4)];
-//		if(isASetableMode(GetChannelMode(i))){
-//			 SetChanVal(i, data.Val, time.Val);
-//		}
-//	}
-//
-//
-//	return true;
-//}
-//boolean SetChannelValue(BowlerPacket * Packet){
-//	boolean ret=false;
-//	uint8_t pin = Packet->use.data[0];
-//	uint8_t mode = GetChannelMode(pin);
-//	uint8_t bval;
-//	UINT16_UNION wval;
-//	uint8_t zone=128;
-//	//println_I("Setting Value of mode: ");printMode(mode);print_I(" on pin:");p_int_I(pin);
-//	if (isASetableMode(mode)){
-//		bval = Packet->use.data[1];
-//		if (Packet->use.head.DataLegnth>6){
-//			wval.byte.SB = Packet->use.data[2];
-//			wval.byte.LB = Packet->use.data[3];
-//		}else{
-//			//println_I("Packet was 6 or less data bytes");
-//			wval.Val=0;
-//		}
-//		SetChanVal(pin,bval,(float)wval.Val);
-//		ret = true;
-//		READY(Packet,zone,0);
-//	}else if ( (mode == IS_ANALOG_OUT)){
-//		wval.byte.SB=Packet->use.data[1];
-//		wval.byte.LB=Packet->use.data[2];
-//		switch (mode){
-//			default:
-//				return false;
-//			}
-//		ret = true;
-//	}else if ((mode == IS_UART_TX) || (mode == IS_UART_RX)){
-//		//Number of bytes in the stream to be sent
-//		uint8_t i;
-//		bval = Packet->use.head.DataLegnth-5;
-//		for (i=0;i<bval;i++){
-//			WriteAVRUART1(Packet->use.data[i+1]);
-//		}
-//		return true;
-//	}
-//	return ret;
-//}
-
-
 
 boolean SetChanVal(uint8_t pin,int32_t bval, float time){
 
