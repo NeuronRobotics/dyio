@@ -80,13 +80,19 @@ void stopServoTimer(uint8_t block){
 ISR(TIMER1_COMPB_vect){//timer 1B compare interrupt
 	current = TCNT1;// store the state
 	servoTimerEvent(0);
-	//TCNT1 = current; // re-load the state value
+	if(current > TCNT1 ){
+		// roll over detect
+		TCNT1 = 0xffff-2;
+	}
 }
 
 ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
 	current = TCNT1;// store the state
 	servoTimerEvent(1);
-    //TCNT1 = current; // re-load the state value
+	if(current > TCNT1 ){
+		// roll over detect
+		TCNT1 = 0xffff-2;
+	}
 }
 
 void updateServoValues(){

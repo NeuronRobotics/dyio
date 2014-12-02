@@ -17,7 +17,7 @@
  */
 boolean SetChanelValueHW(uint8_t pin, uint8_t numValues, int32_t * data, float ms) {
     uint8_t mode = GetChannelMode(pin);
-
+    int32_t value;
     //println_W("Setting on pin=");p_int_W(pin); print_W(" value= ");p_int_W(data[0]); print_W(" time= ");p_fl_W(ms);
     forceValueDownstream( pin);
     if (isStremChannelMode(mode)) {
@@ -46,9 +46,10 @@ boolean SetChanelValueHW(uint8_t pin, uint8_t numValues, int32_t * data, float m
                 return true; 
         }
         if (isSingleByteMode(mode)) {
-            //int32_t time = ( int32_t ) ms;
+            int32_t time = ( int32_t ) ms;
             //mask the time into the data byte
-            setDataTableCurrentValue(pin, data[0]&0x000000ff);
+        	value = data[0]&0x000000ff + time<<16;
+            setDataTableCurrentValue(pin, value);
             return true;
         }
         
