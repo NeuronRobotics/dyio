@@ -30,7 +30,7 @@ void PushAllAsync(){
 	SetColor(0,1,0);
 
 	GetAllChanelValueFromPacket(&packetTemp);
-	int i;
+	int i,packetIndex;
 	for(i=0;i<NUM_PINS;i++){
 		if(GetChannelMode(i) == IS_SERVO){
 			//mask off the time value before sending upstream

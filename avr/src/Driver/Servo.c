@@ -34,6 +34,8 @@ uint8_t bOK[2]={false,false};
 uint8_t blockServo[2]={true,true};
 
 
+
+
 boolean getPowerOverRide(){
 	if(powerOverRide == 0xff)
 		setPowerOverride(EEReadData(189));
@@ -101,18 +103,20 @@ boolean print = 0xff;
 void SetServoPos(uint8_t pin,uint8_t val,float time){
 	if(time<30)
 		time=0;
-	if(val == velocity[pin].set && (int)time == (int)velocity[pin].setTime){
+	if(val == velocity[pin].set){
 		return;
 	}
 
 	println_W("Servo ");p_int_W(pin);
 	print_W(" to val= ");p_int_W(val);
-	print_W(" on time= ");p_fl_W(velocity[pin].setTime);
-
+	print_W(" on time= ");p_fl_W(time);
+	print_W(" val was= ");p_int_W(velocity[pin].set);
+	print_W(" time was= ");p_fl_W(velocity[pin].setTime);
 
 	velocity[pin].setTime=time;
+	// Set the start value to the pervious value
+	velocity[pin].start=(float)velocity[pin].set;
 	velocity[pin].set=(float)val;
-	velocity[pin].start=(float)getBcsIoDataTable(pin)->PIN.currentValue;
 	velocity[pin].startTime=getMs();
 	if (val==getBcsIoDataTable(pin)->PIN.currentValue){
 		velocity[pin].setTime=0;

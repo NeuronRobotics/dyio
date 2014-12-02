@@ -14,6 +14,7 @@ typedef struct _InteruptServoData{
 	ServoState servoStateMachineCurrentState;
 } InteruptServoData;
 InteruptServoData blockData [2];
+extern INTERPOLATE_DATA velocity[NUM_PINS];
 static uint32_t current=0;
 #define OFFSET (255+15+21)
 
@@ -97,17 +98,17 @@ ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
 
 void updateServoValues(){
 	int block;
-
+	int pin;
+	int32_t ip;
 	for(block=0;block<2;block++){
+		pin = blockIndex + (block*12);
 		// Interpolate position
-		runLinearInterpolationServo(	blockIndex + (block*12),
-										blockIndex + (block*12)+1);
+		ip = interpolate(&velocity[pin],getMs());
 		if(GetChannelMode(blockIndex + (block*12)) == IS_SERVO)
-			blockData[block].positionTemp[blockIndex]=getBcsIoDataTable(blockIndex + (block*12))->PIN.currentValue & 0x000000ff;
+			blockData[block].positionTemp[blockIndex]=ip & 0x000000ff;
 		else
 			blockData[block].positionTemp[blockIndex] = 0;
 	}
-
 
 }
 
