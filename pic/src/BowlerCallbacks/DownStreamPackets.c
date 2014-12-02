@@ -160,6 +160,7 @@ uint8_t GetCoProConfigurations(){
 		int i;
 		for (i = 0; i < GetNumberOfIOChannels(); i++) {
 			down[i].currentConfiguration = get32bit(&downstreamPacketTemp,1+(i*4));
+			println_E(__FILE__);println_E("GetCoProConfigurations");
 			setDataTableCurrentValue(i,down[i].currentConfiguration);
 		}
 
@@ -255,17 +256,17 @@ uint8_t SetAllCoProcValues(){
 		LoadCorePacket(& downstreamPacketTemp);
 		downstreamPacketTemp.use.head.Method=BOWLER_POST;
 		downstreamPacketTemp.use.head.RPC=GetRPCValue("sacv");
-                set32bit(& downstreamPacketTemp,123,0);// setting the translation time
-                downstreamPacketTemp.use.data[4] = GetNumberOfIOChannels();
+		set32bit(& downstreamPacketTemp,0,0);// setting the translation time
+		downstreamPacketTemp.use.data[4] = GetNumberOfIOChannels();
 		for(i=0;i<GetNumberOfIOChannels();i++){
 			tmp = getBcsIoDataTable(i)->PIN.currentValue ;
 			down[i].changeValue =false ;
 			set32bit(& downstreamPacketTemp,tmp,(i*4)+5);
 		}
 
-                downstreamPacketTemp.use.head.DataLegnth = 4+4+1+(4*GetNumberOfIOChannels());
+        downstreamPacketTemp.use.head.DataLegnth = 4+4+1+(4*GetNumberOfIOChannels());
 //                clearPrint();
-//                println_W("Syncing channel values ");printPacket(&downstreamPacketTemp,WARN_PRINT);
+//        println_W("Syncing channel values ");printPacket(&downstreamPacketTemp,WARN_PRINT);
 		SendPacketToCoProc(& downstreamPacketTemp);
 //		printPacket(&downstreamPacketTemp,ERROR_PRINT);
 	}

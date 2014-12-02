@@ -98,7 +98,7 @@ boolean GetChanelValueHW(uint8_t pin,uint8_t * numValues,int32_t * data){
 		}
 		if(isSingleByteMode(mode)){
 			//mask the time into the data byte
-			data[0] = getBcsIoDataTable(pin)->PIN.currentValue & 0x000000ff;
+			data[0] = getBcsIoDataTable(pin)->PIN.currentValue ;
 
 		}else{
 			data[0] = getBcsIoDataTable(pin)->PIN.currentValue;

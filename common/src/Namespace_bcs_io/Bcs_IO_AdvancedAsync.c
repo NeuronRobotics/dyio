@@ -167,6 +167,7 @@ void startAdvancedAsyncDefault(uint8_t pin){
 
 
 boolean SetValFromAsync(int pin, int value){
+	//println_E(__FILE__);println_E("SetValFromAsync");
 	return setDataTableCurrentValue(pin,value);
 }
 

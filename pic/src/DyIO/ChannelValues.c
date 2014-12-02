@@ -18,7 +18,7 @@
 boolean SetChanelValueHW(uint8_t pin, uint8_t numValues, int32_t * data, float ms) {
     uint8_t mode = GetChannelMode(pin);
     int32_t value;
-    //println_W("Setting on pin=");p_int_W(pin); print_W(" value= ");p_int_W(data[0]); print_W(" time= ");p_fl_W(ms);
+
     forceValueDownstream( pin);
     if (isStremChannelMode(mode)) {
         uint8_t * bData = (uint8_t *) data;
@@ -48,8 +48,10 @@ boolean SetChanelValueHW(uint8_t pin, uint8_t numValues, int32_t * data, float m
         if (isSingleByteMode(mode)) {
             int32_t time = ( int32_t ) ms;
             //mask the time into the data byte
-        	value = data[0]&0x000000ff + time<<16;
-            setDataTableCurrentValue(pin, value);
+        	value = (data[0]&0x000000ff) + (time<<16);
+        	println_E("Setting on pin=");p_int_E(pin); print_E(" value= ");p_int_E(value); print_E(" time= ");p_fl_E(ms);
+            println_E(__FILE__);println_E("SetChanelValueHW");
+        	setDataTableCurrentValue(pin, value);
             return true;
         }
         
@@ -95,7 +97,7 @@ boolean GetChanelValueHW(uint8_t pin, uint8_t * numValues, int32_t * data) {
         }
         if (isSingleByteMode(mode)) {
             //mask the time into the data byte
-            data[0] = getBcsIoDataTable(pin)->PIN.currentValue & 0x000000ff;
+            data[0] = getBcsIoDataTable(pin)->PIN.currentValue;
         }else{
            data[0] = getBcsIoDataTable(pin)->PIN.currentValue;
         }

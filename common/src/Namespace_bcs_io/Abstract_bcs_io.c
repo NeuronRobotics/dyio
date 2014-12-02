@@ -220,9 +220,12 @@ boolean SetChanelValueFromPacket(BowlerPacket * Packet) {
 
         time = (float) get32bit(Packet, 5);
         //println_W("Setting on pin=");p_int_W(pin); print_W(" value= ");p_int_W(data); print_W(" time= ");p_fl_W(time);
+
+    	//println_E(__FILE__);println_E("SetChanelValueFromPacket");
+        setDataTableCurrentValue(pin,data);
         if (setChanelValueHWPtr != NULL)
             setChanelValueHWPtr(pin, 1, &data, time);
-        setDataTableCurrentValue(pin,data);
+
 
     }
     READY(Packet, 1, 3);
@@ -247,12 +250,14 @@ boolean SetAllChannelValueFromPacket(BowlerPacket * Packet) {
 				data[i] = getBcsIoDataTable(i)->PIN.currentValue;
 			}
         }
-        setAllChanelValueHWPtr(data, time);
         for (i = 0; i < GetNumberOfIOChannels(); i++) {
         	if(isOutputMode(GetChannelMode(i))==true){
+
+        		//println_E(__FILE__);println_E("SetAllChannelValueFromPacket");
 				setDataTableCurrentValue(i,data[i]);
         	}
 		}
+        setAllChanelValueHWPtr(data, time);
         //READY(Packet, 3, 3);
         GetAllChanelValueFromPacket(Packet);
     } else {
@@ -349,6 +354,7 @@ boolean ConfigureChannelFromPacket(BowlerPacket * Packet) {
 //			print_E(" value = ");
 //			p_int_E(tmp);
 
+			println_E(__FILE__);println_E("ConfigureChannelFromPacket");
 			setDataTableCurrentValue(pin,tmp);
 
 			configChannelHWPtr(pin, 1, &tmp);
@@ -446,7 +452,7 @@ boolean setDataTableCurrentValue(uint8_t pin, int32_t value){
 		println_E("Pin out of index! : "); p_int_E(pin);
 	}
 	if(value !=getBcsIoDataTable(pin)->PIN.currentValue ){
-//		Print_Level l = isOutputMode(GetChannelMode(pin))?WARN_PRINT:INFO_PRINT;
+//		Print_Level l = isOutputMode(GetChannelMode(pin))?ERROR_PRINT:INFO_PRINT;
 //		println("Value was ",l);p_int(getBcsIoDataTable(pin)->PIN.currentValue,l);
 //		print_nnl(" set to ",l);p_int(value,l);
 //		print_nnl(" on pin ",l);p_int(pin,l);

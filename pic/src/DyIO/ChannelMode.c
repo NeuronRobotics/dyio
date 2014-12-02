@@ -48,6 +48,7 @@ boolean setMode(uint8_t pin,uint8_t mode){
                 /** no break, fall through to set datatable*/
 
         case IS_PWM:
+        	println_E(__FILE__);println_E("setMode");
                 setDataTableCurrentValue(pin,GetConfigurationDataTable(pin));
 		return true;
 	case IS_SPI_MOSI:

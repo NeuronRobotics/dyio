@@ -49,7 +49,7 @@ main:
 pubDebug:main
 	mkdir -p FirmwarePublish/Dev/
 	rm -rf FirmwarePublish/Dev/*.xml;
-	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	 -output=FirmwarePublish/Dev/dyio-PICDEBUG-$(REVISION)_NO_AVR.xml
+	$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	 -output=FirmwarePublish/Dev/dyio-PICDEBUG-$(REVISION)_NO_AVR.xml
 	#Debug
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Dev/dyio-DEV-$(REVISION)
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p_debug/output.hex -output=FirmwarePublish/Dev/dyio-DEV-AVRDEBUG-$(REVISION)

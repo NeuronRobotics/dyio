@@ -101,9 +101,13 @@ boolean print = 0xff;
 void SetServoPos(uint8_t pin,uint8_t val,float time){
 	if(time<30)
 		time=0;
-	if(val == velocity[pin].set){
+	if(val == velocity[pin].set && (int)time == (int)velocity[pin].setTime){
 		return;
 	}
+
+	println_W("Servo ");p_int_W(pin);
+	print_W(" to val= ");p_int_W(val);
+	print_W(" on time= ");p_fl_W(velocity[pin].setTime);
 
 
 	velocity[pin].setTime=time;
