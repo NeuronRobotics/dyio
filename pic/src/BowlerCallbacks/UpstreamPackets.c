@@ -32,9 +32,10 @@ void PushAllAsync(){
 	GetAllChanelValueFromPacket(&packetTemp);
 	int i,packetIndex;
 	for(i=0;i<NUM_PINS;i++){
+		packetIndex = (i*4) +1;
 		if(GetChannelMode(i) == IS_SERVO){
 			//mask off the time value before sending upstream
-			set32bit(&packetTemp, get32bit(&packetTemp, (i*4) +1)&0x000000ff, (i*4)+1);
+			set32bit(&packetTemp, get32bit(&packetTemp, packetIndex)&0x000000ff, packetIndex);
 		}
 	}
 
