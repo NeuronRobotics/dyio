@@ -101,7 +101,9 @@ void InitPinFunction(void){
 					&GetChanelValueHW,
 					&SetAllChanelValueHW,
 					&GetAllChanelValueHW,
-					&ConfigureChannelHW
+					&ConfigureChannelHW,
+					&SetStreamHW,
+					&GetStreamHW
 				);
 	InitilizeBcsIoSetmode(&setMode);
 }

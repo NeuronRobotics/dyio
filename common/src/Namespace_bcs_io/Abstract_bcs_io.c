@@ -14,6 +14,8 @@
 
 boolean(*setChanelValueHWPtr)(uint8_t  , uint8_t, int32_t *, float);
 boolean(*getChanelValueHWPtr)(uint8_t  , uint8_t*, int32_t *);
+boolean(*setStreamHWPtr)(uint8_t  , uint8_t, uint8_t *);
+boolean(*getStreamHWPtr)(uint8_t  , uint8_t*, uint8_t *);
 boolean(*setAllChanelValueHWPtr)(int32_t *, float);
 boolean(*getAllChanelValueHWPtr)(int32_t *);
 boolean(*configChannelHWPtr)(uint8_t  , uint8_t, int32_t *);
@@ -24,7 +26,9 @@ void InitilizeBcsIo(int numPins,
 					boolean (*getChanelValueHWPtrLocal)(uint8_t,uint8_t*,int32_t *),
 					boolean (*setAllChanelValueHWPtrLocal)(int32_t *,float),
 					boolean (*getAllChanelValueHWPtrLocal)(int32_t *),
-					boolean (*configChannelHWPtrLocal)(uint8_t,uint8_t,int32_t *)
+					boolean (*configChannelHWPtrLocal)(uint8_t,uint8_t,int32_t *),
+					boolean(*setStreamHWPtrLocal)(uint8_t  , uint8_t, uint8_t *),
+					boolean(*getStreamHWPtrLocal)(uint8_t  , uint8_t*, uint8_t *)
 ) {
     if (numPins < 1
             ) {
@@ -110,6 +114,8 @@ void InitilizeBcsIo(int numPins,
     setAllChanelValueHWPtr = setAllChanelValueHWPtrLocal;
     getAllChanelValueHWPtr = getAllChanelValueHWPtrLocal;
     configChannelHWPtr = configChannelHWPtrLocal;
+    setStreamHWPtr=setStreamHWPtrLocal;
+    getStreamHWPtr=getStreamHWPtrLocal;
 }
 
 int GetNumberOfIOChannels() {
@@ -193,17 +199,18 @@ boolean SetChanelStreamFromPacket(BowlerPacket * Packet) {
     uint8_t pin = Packet->use.data[0];
     uint8_t mode = GetChannelMode(pin);
     if (isStremChannelMode(mode)) {
-        if (setChanelValueHWPtr != NULL)
+        if (setStreamHWPtr != NULL && getStreamHWPtr != NULL)
             // Load the data directly into the packet as the buffer
             //Data pointer is offset by one to start after the pin index
-            setChanelValueHWPtr(pin,
-                Packet->use.head.DataLegnth - (4 + 1),
-                (int32_t *) (Packet->use.data + 1),
-                (float) 0);
+            setStreamHWPtr(	pin,
+							Packet->use.data[1],
+							&Packet->use.data[2]);
+        	getStreamHWPtr(	pin,
+							&Packet->use.data[1],
+							&Packet->use.data[2]);
     } else {
         ERR(Packet, 2, 3);
     }
-    READY(Packet, 2, 3);
     return true;
 }
 

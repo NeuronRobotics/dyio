@@ -149,13 +149,13 @@ RPC_LIST bcsIo_gcml_g = {BOWLER_GET, // Method
 RPC_LIST bcsIo_strm_p = {BOWLER_POST, // Method
     "strm", //RPC as string
     &SetChanelStreamFromPacket, //function pointer to a packet parsing function
-    {BOWLER_I08, // channel
-        BOWLER_I32STR, // value
+    {	BOWLER_I08, // channel
+        BOWLER_STR, // value
         0
     }, // Calling arguments
     BOWLER_POST, // response method
-    {BOWLER_I08, // code
-        BOWLER_I08, // trace
+    {	BOWLER_I08, // channel
+		BOWLER_STR, // value
         0
     }, // Calling arguments
     NULL //Termination

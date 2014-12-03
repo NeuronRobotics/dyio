@@ -227,7 +227,9 @@ void InitilizeBcsIo(int numPins,
 					boolean (*getChanelValueHWPtrLocal)(uint8_t,uint8_t*,int32_t *),
 					boolean (*setAllChanelValueHWPtrLocal)(int32_t *,float),
 					boolean (*getAllChanelValueHWPtrLocal)(int32_t *),
-					boolean (*configChannelHWPtrLocal)(uint8_t,uint8_t,int32_t *)
+					boolean (*configChannelHWPtrLocal)(uint8_t,uint8_t,int32_t *),
+					boolean(*setStreamHWPtrLocal)(uint8_t  , uint8_t, uint8_t *),
+					boolean(*getStreamHWPtrLocal)(uint8_t  , uint8_t*, uint8_t *)
 );
 
 //These are the Hardware interface functions that need to be declared and passed in for Initilaize
@@ -236,7 +238,7 @@ void InitilizeBcsIo(int numPins,
  * Set Channel Values
  * This function takes a
  * @param pin pin index
- * @param numValues a number of values to be delt with
+ * @param numValues a number of values to be dealt with
  * @param data an array of data values
  * @param ms the time for the transition to take
  *
@@ -245,7 +247,7 @@ boolean SetChanelValueHW(uint8_t pin,uint8_t numValues,int32_t * data, float ms)
 
 /**
  * Set Channel Values
- * This function takes a pin index, a number of values to be delt with, and an array of data values
+ * This function takes a pin index, a number of values to be dealt with, and an array of data values
  * Data is stored into numValues and data
  */
 boolean GetChanelValueHW(uint8_t pin,uint8_t*  numValues,int32_t * data);
@@ -260,7 +262,7 @@ boolean SetAllChanelValueHW(int32_t * data, float ms);
 
 /**
  * Set Channel Values
- * This function takes a pin index, a number of values to be delt with, and an array of data values
+ * This function takes a pin index, a number of values to be dealt with, and an array of data values
  * Data is stored into numValues and data
  */
 boolean GetAllChanelValueHW(int32_t * data);
@@ -273,6 +275,23 @@ boolean GetAllChanelValueHW(int32_t * data);
  */
 
 boolean ConfigureChannelHW(uint8_t pin,uint8_t numValues,int32_t * data);
+
+/**
+ * Set Stream
+ * This function takes a
+ * @param pin pin index
+ * @param numValues a number of values to be dealt with
+ * @param data an array of data values
+ *
+ */
+boolean SetStreamHW(uint8_t pin,uint8_t numValues,uint8_t * data);
+
+/**
+ * Get Stream
+ * This function takes a pin index, a number of values to be dealt with, and an array of data values
+ * Data is stored into numValues and data
+ */
+boolean GetStreamHW(uint8_t pin,uint8_t*  numValues,uint8_t * data);
 
 //Callbacks
 boolean GetChannelModeFromPacket(BowlerPacket * Packet);
