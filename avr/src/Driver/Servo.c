@@ -97,11 +97,11 @@ void SetServoPos(uint8_t pin,uint8_t val,float time){
 	if(val == velocity[pin].set){
 		return;
 	}
-
-	println_W("Servo ");p_int_W(pin);
-	print_W(" time= ");p_fl_W(time);
-	print_W(" to val= ");p_int_W(val);
-	print_W(" val was= ");p_int_W(velocity[pin].set);
+//
+//	println_W("Servo ");p_int_W(pin);
+//	print_W(" time= ");p_fl_W(time);
+//	print_W(" to val= ");p_int_W(val);
+//	print_W(" val was= ");p_int_W(velocity[pin].set);
 
 	velocity[pin].setTime=time;
 	// Set the start value to the pervious value
