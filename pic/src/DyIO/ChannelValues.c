@@ -20,23 +20,7 @@ boolean SetChanelValueHW(uint8_t pin, uint8_t numValues, int32_t * data, float m
     int32_t value;
 
     forceValueDownstream( pin);
-    if (isStremChannelMode(mode)) {
-        uint8_t * bData = (uint8_t *) data;
-        switch (mode) {
-            case IS_SPI_MOSI:
-            case IS_SPI_MISO:
-            case IS_SPI_SCK:
-                SendPacketToSPIFromArray(numValues, bData);
-                return true; 
-            case IS_UART_TX:
-            case IS_UART_RX:
-                LoadSerialTxData(numValues, bData);
-                return true; 
-            case IS_PPM_IN:
-                ConfigPPMFromArray(bData);
-                return true; 
-        }
-    } else {
+   else {
         switch (mode) {
             case IS_COUNTER_INPUT_INT:
             case IS_COUNTER_INPUT_DIR:
@@ -67,43 +51,26 @@ boolean SetChanelValueHW(uint8_t pin, uint8_t numValues, int32_t * data, float m
  */
 boolean GetChanelValueHW(uint8_t pin, uint8_t * numValues, int32_t * data) {
     uint8_t mode = GetChannelMode(pin);
-    if (isStremChannelMode(mode)) {
-        uint8_t * bData = (uint8_t *) data;
-        switch (mode) {
-            case IS_SPI_MOSI:
-            case IS_SPI_MISO:
-            case IS_SPI_SCK:
-                SendPacketToSPIFromArray(numValues[0], bData);
-                return true; 
-            case IS_UART_TX:
-            case IS_UART_RX:
-                numValues[0] = GetSerialRxData(bData);
-                return true; 
-            case IS_PPM_IN:
-                numValues[0] = GetPPMDataToArray(bData);
-                return true; 
-        }
-    } else {
-        numValues[0] = 1;
-        switch (mode) {
-            case IS_COUNTER_INPUT_INT:
-            case IS_COUNTER_INPUT_DIR:
-                data[0] = GetCounterByChannel(pin);
-                return true; 
-            case IS_COUNTER_OUTPUT_INT:
-            case IS_COUNTER_OUTPUT_DIR:
-                data[0] = GetCounterOutput(pin);
-                return true; 
-        }
-        if (isSingleByteMode(mode)) {
-            //mask the time into the data byte
-            data[0] = getBcsIoDataTable(pin)->PIN.currentValue;
-        }else{
-           data[0] = getBcsIoDataTable(pin)->PIN.currentValue;
-        }
-        return true; 
-    }
-    return false; 
+
+	numValues[0] = 1;
+	switch (mode) {
+		case IS_COUNTER_INPUT_INT:
+		case IS_COUNTER_INPUT_DIR:
+			data[0] = GetCounterByChannel(pin);
+			return true;
+		case IS_COUNTER_OUTPUT_INT:
+		case IS_COUNTER_OUTPUT_DIR:
+			data[0] = GetCounterOutput(pin);
+			return true;
+	}
+	if (isSingleByteMode(mode)) {
+		//mask the time into the data byte
+		data[0] = getBcsIoDataTable(pin)->PIN.currentValue;
+	}else{
+	   data[0] = getBcsIoDataTable(pin)->PIN.currentValue;
+	}
+	return true;
+
 }
 
 /**
@@ -169,7 +136,29 @@ boolean ConfigureChannelHW(uint8_t pin, uint8_t numValues, int32_t * data) {
  */
 boolean SetStreamHW(uint8_t pin,uint8_t numValues,uint8_t * data){
 	println_E("Set Stream Stub");
+	 uint8_t mode = GetChannelMode(pin);
+
+    if (isStremChannelMode(mode)) {
+          uint8_t * bData = (uint8_t *) data;
+          switch (mode) {
+              case IS_SPI_MOSI:
+              case IS_SPI_MISO:
+              case IS_SPI_SCK:
+                  SendPacketToSPIFromArray(numValues, bData);
+                  return true;
+              case IS_UART_TX:
+              case IS_UART_RX:
+                  LoadSerialTxData(numValues, bData);
+                  return true;
+              case IS_PPM_IN:
+                  ConfigPPMFromArray(bData);
+                  return true;
+          }
+      }
+
 	return true;
+
+
 }
 
 /**
@@ -179,6 +168,24 @@ boolean SetStreamHW(uint8_t pin,uint8_t numValues,uint8_t * data){
  */
 boolean GetStreamHW(uint8_t pin,uint8_t*  numValues,uint8_t * data){
 	println_E("Get Stream Stub");
+	 uint8_t mode = GetChannelMode(pin);
+   if (isStremChannelMode(mode)) {
+       uint8_t * bData = (uint8_t *) data;
+       switch (mode) {
+           case IS_SPI_MOSI:
+           case IS_SPI_MISO:
+           case IS_SPI_SCK:
+               SendPacketToSPIFromArray(numValues[0], bData);
+               return true;
+           case IS_UART_TX:
+           case IS_UART_RX:
+               numValues[0] = GetSerialRxData(bData);
+               return true;
+           case IS_PPM_IN:
+               numValues[0] = GetPPMDataToArray(bData);
+               return true;
+       }
+   }
 	return true;
 }
 

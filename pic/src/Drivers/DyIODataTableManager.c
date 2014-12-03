@@ -55,8 +55,6 @@ void SyncDataTable(){
 
 }
 
-
-
 boolean LoadSerialTxData(uint8_t numValues,uint8_t * data){
 	int i;
 	uint8_t err;

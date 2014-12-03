@@ -67,10 +67,10 @@ void SendPacketToSPIFromArray(uint8_t numBytes,uint8_t * data){
 }
 
 
-void SendPacketToSPI(BowlerPacket * Packet){
-	if(!isSPI(GetChannelMode(Packet->use.data[0]))){
-		println_I("channel is not SPI");
-		return;
-	}
-	SendPacketToSPIFromArray(Packet->use.head.DataLegnth-6,Packet->use.data+1);
-}
+//void SendPacketToSPI(BowlerPacket * Packet){
+//	if(!isSPI(GetChannelMode(Packet->use.data[0]))){
+//		println_I("channel is not SPI");
+//		return;
+//	}
+//	SendPacketToSPIFromArray(Packet->use.head.DataLegnth-6,Packet->use.data+1);
+//}
