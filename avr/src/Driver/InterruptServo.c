@@ -103,7 +103,7 @@ void updateServoValues(){
 	for(block=0;block<2;block++){
 		pin = blockIndex + (block*12);
 		// Interpolate position
-		ip = interpolate(&velocity[pin],getMs());
+		ip =getInterpolatedPin(pin);
 		if(GetChannelMode(blockIndex + (block*12)) == IS_SERVO)
 			blockData[block].positionTemp[blockIndex]=ip & 0x000000ff;
 		else

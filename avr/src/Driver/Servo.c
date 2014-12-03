@@ -18,18 +18,9 @@
 
 #include "UserApp_avr.h"
 
-
 boolean powerOverRide = 0xff;
-
 INTERPOLATE_DATA velocity[NUM_PINS];
-void runLinearInterpolationServo(uint8_t blockStart,uint8_t blockEnd);
-boolean pinServoOk(uint8_t pin);
-
-uint8_t pinOn(uint8_t pin);
-void pinOff(uint8_t pin);
-
 boolean servoEngineStarted =false;
-
 uint8_t bOK[2]={false,false};
 uint8_t blockServo[2]={true,true};
 
@@ -108,19 +99,17 @@ void SetServoPos(uint8_t pin,uint8_t val,float time){
 	}
 
 	println_W("Servo ");p_int_W(pin);
+	print_W(" time= ");p_fl_W(time);
 	print_W(" to val= ");p_int_W(val);
-	print_W(" on time= ");p_fl_W(time);
 	print_W(" val was= ");p_int_W(velocity[pin].set);
-	print_W(" time was= ");p_fl_W(velocity[pin].setTime);
 
 	velocity[pin].setTime=time;
 	// Set the start value to the pervious value
-	velocity[pin].start=(float)velocity[pin].set;
+	velocity[pin].start=velocity[pin].set;
 	velocity[pin].set=(float)val;
 	velocity[pin].startTime=getMs();
-	if (val==getBcsIoDataTable(pin)->PIN.currentValue){
-		velocity[pin].setTime=0;
-	}
+	getInterpolatedPin( pin);
+
 	if(pin<12){
 		blockServo[0]=false;
 	}else{
@@ -132,7 +121,7 @@ void SetServoPos(uint8_t pin,uint8_t val,float time){
 
 }
 uint8_t GetServoPos(uint8_t pin){
-	return getBcsIoDataTable(pin)->PIN.currentValue;
+	return (uint32_t) interpolate(&velocity[pin], getMs());
 }
 
 boolean pinServoOk(uint8_t pin){
@@ -170,28 +159,45 @@ void pinOff(uint8_t pin){
 		SetDIO(pin,OFF);
 	}
 }
+uint8_t getInterpolatedPin(uint8_t pin){
 
-
-void runLinearInterpolationServo(uint8_t blockStart,uint8_t blockEnd){
-	uint8_t i;
-	for (i=blockStart;i<blockEnd;i++){
-		if(GetChannelMode(i)==IS_SERVO){
-			int32_t ip = interpolate(&velocity[i],getMs());
+			int32_t ip = interpolate(&velocity[pin],getMs());
 			if(ip>(255- SERVO_BOUND)){
 	#if ! defined(__AVR_ATmega324P__)
-				println_I("Servo Upper out of bounds! got=");p_int_I(ip);print_I(" on time=");p_fl_I(velocity[i].setTime);
+				println_I("Servo Upper out of bounds! got=");p_int_I(ip);print_I(" on time=");p_fl_I(velocity[pin].setTime);
 	#endif
 				ip=(255- SERVO_BOUND);
 			}
 			if(ip<SERVO_BOUND){
 	#if ! defined(__AVR_ATmega324P__)
-				println_I("Servo Lower out of bounds! got=");p_int_I(ip);print_I(" on chan=");p_int_I(i);
+				println_I("Servo Lower out of bounds! got=");p_int_I(ip);print_I(" on chan=");p_int_I(pin);
 	#endif
 				ip=SERVO_BOUND;
 			}
 			int tmp = (int)ip;
-			setDataTableCurrentValue(i,tmp);
-		}
-	}
-
+			return tmp;
 }
+
+//void runLinearInterpolationServo(uint8_t blockStart,uint8_t blockEnd){
+//	uint8_t i;
+//	for (i=blockStart;i<blockEnd;i++){
+//		if(GetChannelMode(i)==IS_SERVO){
+//			int32_t ip = interpolate(&velocity[i],getMs());
+//			if(ip>(255- SERVO_BOUND)){
+//	#if ! defined(__AVR_ATmega324P__)
+//				println_I("Servo Upper out of bounds! got=");p_int_I(ip);print_I(" on time=");p_fl_I(velocity[i].setTime);
+//	#endif
+//				ip=(255- SERVO_BOUND);
+//			}
+//			if(ip<SERVO_BOUND){
+//	#if ! defined(__AVR_ATmega324P__)
+//				println_I("Servo Lower out of bounds! got=");p_int_I(ip);print_I(" on chan=");p_int_I(i);
+//	#endif
+//				ip=SERVO_BOUND;
+//			}
+//			int tmp = (int)ip;
+//			setDataTableCurrentValue(i,tmp);
+//		}
+//	}
+//
+//}
