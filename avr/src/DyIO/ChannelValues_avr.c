@@ -169,6 +169,29 @@ boolean ConfigureChannelHW(uint8_t pin,uint8_t numValues,int32_t * data){
 	return true; 
 }
 
+/**
+ * Set Stream
+ * This function takes a
+ * @param pin pin index
+ * @param numValues a number of values to be dealt with
+ * @param data an array of data values
+ *
+ */
+boolean SetStreamHW(uint8_t pin,uint8_t numValues,uint8_t * data){
+	println_E("Set Stream Stub");
+	return true;
+}
+
+/**
+ * Get Stream
+ * This function takes a pin index, a number of values to be dealt with, and an array of data values
+ * Data is stored into numValues and data
+ */
+boolean GetStreamHW(uint8_t pin,uint8_t*  numValues,uint8_t * data){
+	println_E("Get Stream Stub");
+	return true;
+}
+
 
 /**
  * Legacy
