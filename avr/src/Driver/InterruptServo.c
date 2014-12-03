@@ -14,12 +14,11 @@ typedef struct _InteruptServoData{
 	ServoState servoStateMachineCurrentState;
 } InteruptServoData;
 InteruptServoData blockData [2];
-extern INTERPOLATE_DATA velocity[NUM_PINS];
-static uint32_t current=0;
+static uint32_t currentTimer=0;
 #define OFFSET (255+15+21)
 
 void startServoLoops(){
-	current = TCNT1;// store the state
+	currentTimer = TCNT1;// store the state
 	blockData[0].servoStateMachineCurrentState = STARTLOOP;
 	blockData[1].servoStateMachineCurrentState = STARTLOOP;
 	setServoTimer(0, 32);
@@ -46,7 +45,7 @@ uint32_t calcTimer(uint32_t value){
 		println_E("Maxed timer to: ");prHEX32(value,ERROR_PRINT);
         value = 0x0000ffff;
     }
-    uint32_t target = value +current;
+    uint32_t target = value +currentTimer;
     if(target>0x0000ffff){
     	target -=(0x0000ffff);
     }
@@ -79,21 +78,15 @@ void stopServoTimer(uint8_t block){
 }
 
 ISR(TIMER1_COMPB_vect){//timer 1B compare interrupt
-	current = TCNT1;// store the state
+	currentTimer = TCNT1;// store the state
 	servoTimerEvent(0);
-	if(current > TCNT1 ){
-		// roll over detect
-		TCNT1 = 0xffff-2;
-	}
+	fixTimers(currentTimer);
 }
 
 ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
-	current = TCNT1;// store the state
+	currentTimer = TCNT1;// store the state
 	servoTimerEvent(1);
-	if(current > TCNT1 ){
-		// roll over detect
-		TCNT1 = 0xffff-2;
-	}
+	fixTimers(currentTimer);
 }
 
 void updateServoValues(){
@@ -115,7 +108,7 @@ void updateServoValues(){
 
 void servoTimerEvent(int block)
 {
-
+	int flag = FlagBusy_IO;
 	FlagBusy_IO=1;
 	int time;
 	switch(blockData[block].servoStateMachineCurrentState){
@@ -153,7 +146,7 @@ void servoTimerEvent(int block)
 			break;
 	}
 
-	FlagBusy_IO=0;
+	FlagBusy_IO=flag;
 }
 
 

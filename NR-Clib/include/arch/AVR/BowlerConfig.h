@@ -56,6 +56,8 @@
 void WriteAVRUART0(uint8_t val);
 void WriteAVRUART1(uint8_t val);
 
+void fixTimers(int currentTimer);
+
 //#define WriteUART_COM 			WriteAVRUART0
 //#define WriteUART_DEBUG 		WriteAVRUART1
 
