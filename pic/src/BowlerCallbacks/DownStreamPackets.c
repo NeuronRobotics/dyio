@@ -185,18 +185,10 @@ uint8_t SetCoProConfiguration(uint8_t pin,int32_t mode){
 
 uint8_t SetCoProcMode(uint8_t pin,uint8_t mode){
 	if(getBcsIoDataTable(pin)->PIN.currentChannelMode == mode)
-		return true; 
+		return true;
 	getBcsIoDataTable(pin)->PIN.currentChannelMode=mode;
-	LoadCorePacket(& downstreamPacketTemp);
-	downstreamPacketTemp.use.head.Method=BOWLER_POST;
-	downstreamPacketTemp.use.head.RPC=GetRPCValue("schm");
-	downstreamPacketTemp.use.data[0]=pin;
-	downstreamPacketTemp.use.data[1]=mode;
-	downstreamPacketTemp.use.data[2]=(IsAsync(pin))?1:0;
-	downstreamPacketTemp.use.head.DataLegnth=7;
-	SendPacketToCoProc(& downstreamPacketTemp);
 	down[pin].changeMode=true;
-	return false; 
+	return false;
 }
 
 uint8_t SetAllCoProcMode(){
