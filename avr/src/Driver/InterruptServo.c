@@ -81,6 +81,7 @@ ISR(TIMER1_COMPB_vect){//timer 1B compare interrupt
 	currentTimer = TCNT1;// store the state
 	servoTimerEvent(0);
 	fixTimers(currentTimer);
+
 }
 
 ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
