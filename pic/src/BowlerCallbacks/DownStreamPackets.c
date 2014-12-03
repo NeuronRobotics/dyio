@@ -160,7 +160,7 @@ uint8_t GetCoProConfigurations(){
 		int i;
 		for (i = 0; i < GetNumberOfIOChannels(); i++) {
 			down[i].currentConfiguration = get32bit(&downstreamPacketTemp,1+(i*4));
-			println_E(__FILE__);println_E("GetCoProConfigurations");
+			//println_E(__FILE__);println_E("GetCoProConfigurations");
 			setDataTableCurrentValue(i,down[i].currentConfiguration);
 		}
 
