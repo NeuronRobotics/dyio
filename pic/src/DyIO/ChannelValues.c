@@ -136,7 +136,7 @@ boolean ConfigureChannelHW(uint8_t pin, uint8_t numValues, int32_t * data) {
  */
 boolean SetStreamHW(uint8_t pin,uint8_t numValues,uint8_t * data){
 	println_E("Set Stream Stub");
-	 uint8_t mode = GetChannelMode(pin);
+	uint8_t mode = GetChannelMode(pin);
 
     if (isStremChannelMode(mode)) {
           uint8_t * bData = (uint8_t *) data;

@@ -18,8 +18,7 @@ void InitPinStates(void){
 	initAdvancedAsync();
 	int i;
 	for (i=0;i<GetNumberOfIOChannels();i++){
-		//DelayMs(10);
-		SetChannelMode(i,GetChannelMode(i));
+		setMode(i,GetChannelMode(i));
 	}
 }
 
@@ -29,8 +28,10 @@ void InitPinStates(void){
 boolean setMode(uint8_t pin,uint8_t mode){
 	//println_I("Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_int_I(pin);
 	//uint8_t currentMode = GetChannelMode(pin);
-	if(GetChannelMode(pin)== mode)
-		return true;
+	if(GetChannelMode(pin)== mode){
+		println_W("Re-Setting Mode: ");printMode(mode,WARN_PRINT);print_W(" on: ");p_int_W(pin);
+		//return true;
+	}
 	forceModeDownstream( pin);
 	ClearCounter(pin);
 	StopDyIOSPI(pin);

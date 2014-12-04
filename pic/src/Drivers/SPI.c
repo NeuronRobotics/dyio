@@ -14,18 +14,17 @@ static BYTE_FIFO_STORAGE storeTx;
 static BYTE SSPin=0;
 
 void InitSPIDyIO(void){
-	println_I("Initializing the SPI perpheral");
+	println_W("Initializing the SPI perpheral");
 	mPORTGOpenDrainOpen(BIT_6);// Clock is output
 	mPORTGOpenDrainOpen(BIT_8);// Data Out is an output
 	SPI_SCK_IO=1;
 	SPI_SDO_IO=1;
 	OpenSPI2(SPI_MODE8_ON|ENABLE_SDO_PIN|SLAVE_ENABLE_OFF|SPI_CKE_ON|MASTER_ENABLE_ON|SEC_PRESCAL_8_1|PRI_PRESCAL_64_1, SPI_ENABLE);
-	println_I("Setting up SPI perpheral");
 	SetCoProcMode(0,IS_SPI_SCK);
 	SetCoProcMode(1,IS_SPI_MISO);
 	SetCoProcMode(2,IS_SPI_MOSI);
-	InitByteFifo(&storeRx,privateSerialRX,BOWLER_PacketSize);
-	InitByteFifo(&storeTx,privateSerialTX,BOWLER_PacketSize);
+	InitByteFifo(&storeRx,privateSerialRX,sizeof(privateSerialRX));
+	InitByteFifo(&storeTx,privateSerialTX,sizeof(privateSerialTX));
 }
 
 boolean LoadSPITxData(uint8_t numValues,uint8_t * data){
