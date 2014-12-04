@@ -8,37 +8,30 @@
 
 #define MIN_SERVO 6
 uint8_t blockIndex = 0;
+ServoState servoStateMachineCurrentState;
 typedef struct _InteruptServoData{
-	uint8_t positionTemp[12];
-
-	ServoState servoStateMachineCurrentState;
+	uint8_t positionTempA;
+	uint8_t positionTempB;
+	uint16_t toBON;
+	uint16_t toAOFF;
+	uint16_t toFINISH;
 } InteruptServoData;
-InteruptServoData blockData [2];
+InteruptServoData blockData [12];
 static uint32_t currentTimer=0;
+#define LOOPPERIOD (OFFSET+255+(SPACING/2))
 #define SPACING (36)
+#define LOOPSPACING (SPACING*2)
 #define OFFSET (255+SPACING)
 
 
 void startServoLoops(){
 	currentTimer = TCNT1;// store the state
-	blockData[0].servoStateMachineCurrentState = STARTLOOP;
-	blockData[1].servoStateMachineCurrentState = STARTLOOP;
-	setServoTimer(0, SPACING);
-	setServoTimer(1, SPACING+OFFSET);
+	servoStateMachineCurrentState = STARTLOOP;
+	setServoTimer( LOOPSPACING);
 	blockIndex = 0;
 	TIMSK1bits._TOIE1=0;// Lets not use the overflow timer when the servo engine is running
 }
 
-void runSort(uint8_t block){
-    int bIndex=0,pin;
-    for(bIndex=0;bIndex<12;bIndex++){
-		pin = bIndex + (block*12);
-		if(GetChannelMode(pin) == IS_SERVO)
-			blockData[block].positionTemp[bIndex]=getBcsIoDataTable(pin)->PIN.currentValue & 0x000000ff;
-		else
-			blockData[block].positionTemp[bIndex] = 0;
-    }
-}
 
 uint32_t calcTimer(uint32_t value){
 	if(value<=1)
@@ -60,99 +53,97 @@ uint32_t calcTimer(uint32_t value){
 }
 
 
-void setServoTimer(uint8_t block, uint32_t value){
-	if(block == 0){
-		OCR1B = calcTimer( value);
-		TIMSK1bits._OCIE1B=1;// Pin timer
-	}else{
-		OCR1A = calcTimer( value);
-		TIMSK1bits._OCIE1A=1;// Pin timer
-	}
-
+void setServoTimer( uint32_t value){
+	OCR1A = calcTimer( value);
+	TIMSK1bits._OCIE1A=1;// Pin timer
 }
 
-void stopServoTimer(uint8_t block){
-	if(block == 0){
-		TIMSK1bits._OCIE1B=0;// Pin timer
-	}else{
-		TIMSK1bits._OCIE1A=0;// Pin timer
-	}
+void stopServoTimer(){
 
-}
+	TIMSK1bits._OCIE1A=0;// Pin timer
 
-ISR(TIMER1_COMPB_vect){//timer 1B compare interrupt
-	currentTimer = TCNT1;// store the state
-	servoTimerEvent(0);
-	//fixTimers(currentTimer);
 
 }
 
 ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
 	currentTimer = TCNT1;// store the state
-	servoTimerEvent(1);
+	servoTimerEvent();
 	//fixTimers(currentTimer);
 }
 
 void updateServoValues(){
-	int block;
-	int pin;
+
 	int32_t ip;
-	for(block=0;block<2;block++){
-		pin = blockIndex + (block*12);
-		// Interpolate position
-		ip =getInterpolatedPin(pin);
-		if(GetChannelMode(blockIndex + (block*12)) == IS_SERVO)
-			blockData[block].positionTemp[blockIndex]=ip & 0x000000ff;
-		else
-			blockData[block].positionTemp[blockIndex] = 0;
-		blockData[block].servoStateMachineCurrentState = STARTLOOP;
-	}
+
+	// Interpolate position
+	ip =getInterpolatedPin(blockIndex);
+	if(GetChannelMode(blockIndex) == IS_SERVO)
+		blockData[blockIndex].positionTempA=ip;
+	else
+		blockData[blockIndex].positionTempA = 0;
+
+	// Interpolate position
+	ip =getInterpolatedPin(blockIndex +12);
+	if(GetChannelMode(blockIndex+12) == IS_SERVO)
+		blockData[blockIndex].positionTempB=ip;
+	else
+		blockData[blockIndex].positionTempB = 0;
+
+
 
 }
 
 
-void servoTimerEvent(int block)
+
+void servoTimerEvent()
 {
 	//int flag = FlagBusy_IO;
 	FlagBusy_IO=1;
-	switch(blockData[block].servoStateMachineCurrentState){
+	switch(servoStateMachineCurrentState){
 		case STARTLOOP:
-			pinOn( blockIndex + (block*12) );
-			//1ms delay for all servos
-			setServoTimer(block,OFFSET + blockData[block].positionTemp[blockIndex]);// put the 128 value exactly at 1.5ms
-			blockData[block].servoStateMachineCurrentState = TIME;
+			pinOn( blockIndex );
+			servoStateMachineCurrentState = BON;
+			OCR1A = blockData[blockIndex].toBON;
+
 			break;
 
-		case TIME:
-			pinOff(blockIndex + (block*12) );
-			stopServoTimer(block);
-			//If block is now done, reset the block index and sort
-			blockData[block].servoStateMachineCurrentState = FINISH;
-			if(	blockData[0].servoStateMachineCurrentState ==FINISH &&
-				blockData[1].servoStateMachineCurrentState ==FINISH ){
-				blockIndex++;
-				if(blockIndex == 12){
-					// this resets the block Index
-					blockIndex=0;
-				}
-				TCCR1Bbits._CS=0;// stop the clock
-				updateTimer(TCNT1);
-				TCNT1=0;// Start from zero for each pulse section
-				currentTimer = 0;
+		case BON:
+			pinOn( blockIndex + 12 );
+			servoStateMachineCurrentState =AOFF;
+			OCR1A = blockData[blockIndex].toAOFF;
 
-				updateServoValues();
-
-				setServoTimer(0, (SPACING*2));
-				// Place the second servo pulse so it ends just after the first one
-				setServoTimer(1, 	(SPACING*2)+
-									(255-blockData[1].positionTemp[blockIndex])+
-									(SPACING/2));
-				TCCR1Bbits._CS = 2;//  value CLslk I/O/8 (From prescaler)
-			}
+			break;
+		case AOFF:
+			pinOff(blockIndex );
+			servoStateMachineCurrentState = FINISH;
+			OCR1A = blockData[blockIndex].toFINISH;
 
 			break;
 		case FINISH:
-			//blockData[block].servoStateMachineCurrentState = STARTLOOP;
+			pinOff(blockIndex + 12 );
+
+			TCCR1Bbits._CS=0;// stop the clock
+			//If block is now done, reset the block index and sort
+			blockIndex++;
+			if(blockIndex == 12){
+				// this resets the block Index
+				blockIndex=0;
+			}
+			updateTimer(TCNT1);
+			TCNT1=0;// Start from zero for each pulse section
+			currentTimer = 0;
+
+			updateServoValues();
+			servoStateMachineCurrentState = STARTLOOP;
+			blockData[blockIndex].toBON = calcTimer (	LOOPSPACING+LOOPPERIOD - (OFFSET+blockData[blockIndex].positionTempB));
+			blockData[blockIndex].toAOFF=calcTimer (	LOOPSPACING+OFFSET+blockData[blockIndex].positionTempA);
+			blockData[blockIndex].toFINISH=calcTimer (	LOOPSPACING+LOOPPERIOD );
+
+			setServoTimer( LOOPSPACING);
+
+			TCCR1Bbits._CS = 2;//  value CLslk I/O/8 (From prescaler)
+
+
 			break;
 	}
 

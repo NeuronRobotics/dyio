@@ -44,15 +44,15 @@ void DelayPreServo(void);
 
 void startServoLoops();
 
-void servoTimerEvent(int block);
-void setServoTimer(uint8_t block, uint32_t value);
+void servoTimerEvent();
+void setServoTimer(uint32_t value);
 
 void printSortedData();
 
 typedef enum _ServoState{
     STARTLOOP=0,
-    //PRETIME=1,
-    TIME=2,
+    BON=1,
+    AOFF=2,
     FINISH=3
 } ServoState;
 
