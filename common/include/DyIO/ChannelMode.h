@@ -12,6 +12,8 @@
  */
 void InitPinModes(void);
 void InitPinStates(void);
+void SyncModes(void);
+
 
 /**
  * Helper macro to return the mode with the async flag stripped off

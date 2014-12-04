@@ -6,23 +6,6 @@
  */
 #include "UserApp.h"
 
-boolean setMode(uint8_t pin,uint8_t mode);
-
-void SyncModes(void);
-
-
-
-void InitPinStates(void){
-	SyncModes();
-	//println_I("Modes synced, initializing channels");
-	initAdvancedAsync();
-	int i;
-	for (i=0;i<GetNumberOfIOChannels();i++){
-		setMode(i,GetChannelMode(i));
-	}
-}
-
-
 
 
 boolean setMode(uint8_t pin,uint8_t mode){

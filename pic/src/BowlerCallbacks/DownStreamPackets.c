@@ -516,8 +516,7 @@ void SyncModes(void){
                 //println_E("FAULT: the mode was set to NO_CHANGE");
             }else{
             	if(getBcsIoDataTable(i)->PIN.currentChannelMode!=downstreamPacketTemp.use.data[i+1]){
-					getBcsIoDataTable(i)->PIN.currentChannelMode=downstreamPacketTemp.use.data[i+1];
-					setMode(i,getBcsIoDataTable(i)->PIN.currentChannelMode );
+					SetChannelMode(i,downstreamPacketTemp.use.data[i+1] );
 					down[i].changeMode = false;
             	}
             }

@@ -12,8 +12,12 @@ static uint8_t privateSerialTX[20];
 static BYTE_FIFO_STORAGE storeRx;
 static BYTE_FIFO_STORAGE storeTx;
 static BYTE SSPin=0;
+static boolean HardwareInitialized=false;
 
 void InitSPIDyIO(void){
+	if(HardwareInitialized == true)
+		return;
+	HardwareInitialized = true;
 	println_W("Initializing the SPI perpheral");
 	mPORTGOpenDrainOpen(BIT_6);// Clock is output
 	mPORTGOpenDrainOpen(BIT_8);// Data Out is an output
@@ -58,6 +62,7 @@ void StopDyIOSPI(uint8_t pin){
 		SetCoProcMode(0,IS_DI);
 		SetCoProcMode(1,IS_DI);
 		SetCoProcMode(2,IS_DI);
+		HardwareInitialized = false;
 	}
 }
 boolean isSPI(uint8_t mode){
@@ -71,16 +76,16 @@ boolean isSPI(uint8_t mode){
 }
 
 uint8_t GetByteSPIDyIO(uint8_t b){
-	InitSPIDyIO();
+	//InitSPIDyIO();
 	putcSPI2(b);	// Start sending
 	return getcSPI2();
 }
 
 void SyncSPIData(){
 	if(SSPin<3 || FifoGetByteCount(&storeTx)==0){
-		//println_I("invalid SS pin");
 		return;
 	}
+	println_W("SPI Sync");
 	if(!SetCoProcMode(SSPin,IS_DO))
 		SetChannelValueCoProc(SSPin,1);
 	SetChannelValueCoProc(SSPin,0);

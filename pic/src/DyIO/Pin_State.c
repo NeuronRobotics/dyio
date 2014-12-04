@@ -17,7 +17,9 @@ void InitPins(void){
 	//println_W("Pin Functions");
 	InitPinFunction();
 	//println_W("Pin States");
-	InitPinStates();
+	SyncModes();
+	//println_I("Modes synced, initializing channels");
+	initAdvancedAsync();
 	//println_W("Done with Pin States");
 
 	FlashGetMac(MyMAC.v);
