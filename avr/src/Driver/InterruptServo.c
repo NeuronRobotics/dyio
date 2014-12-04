@@ -16,15 +16,16 @@ typedef struct _InteruptServoData{
 InteruptServoData blockData [2];
 static uint32_t currentTimer=0;
 #define OFFSET (255+15+21)
-#define SPACING 64
+#define SPACING 32
 
 void startServoLoops(){
 	currentTimer = TCNT1;// store the state
 	blockData[0].servoStateMachineCurrentState = STARTLOOP;
 	blockData[1].servoStateMachineCurrentState = STARTLOOP;
-	setServoTimer(0, 32);
-	setServoTimer(1, 32+OFFSET);
+	setServoTimer(0, SPACING);
+	setServoTimer(1, SPACING+OFFSET);
 	blockIndex = 0;
+	TIMSK1bits._TOIE1=0;// Lets not use the overflow timer when the servo engine is running
 }
 
 void runSort(uint8_t block){
@@ -112,7 +113,6 @@ void servoTimerEvent(int block)
 {
 	int flag = FlagBusy_IO;
 	FlagBusy_IO=1;
-	int time;
 	switch(blockData[block].servoStateMachineCurrentState){
 		case STARTLOOP:
 			pinOn( blockIndex + (block*12) );
@@ -128,21 +128,27 @@ void servoTimerEvent(int block)
 			blockData[block].servoStateMachineCurrentState = FINISH;
 			if(	blockData[0].servoStateMachineCurrentState ==FINISH &&
 				blockData[1].servoStateMachineCurrentState ==FINISH ){
-				time = (255 - blockData[0].positionTemp[blockIndex]) + SPACING;
-				updateServoValues();
 				blockIndex++;
 				if(blockIndex == 12){
 					// this resets the block Index
 					blockIndex=0;
 				}
+				TCCR1Bbits._CS=0;// stop the clock
+				updateTimer(TCNT1);
+				TCNT1=0;// Start from zero for each pulse section
+				currentTimer = 0;
+
+
+				updateServoValues();
 				blockData[0].servoStateMachineCurrentState = STARTLOOP;
 				blockData[1].servoStateMachineCurrentState = STARTLOOP;
 
-				setServoTimer(0, time);
+				setServoTimer(0, SPACING);
 				// Place the second servo pulse so it ends just after the first one
-				setServoTimer(1, 	time+
+				setServoTimer(1, 	SPACING+
 									(255-blockData[1].positionTemp[blockIndex])+
-									15);
+									SPACING);
+				TCCR1Bbits._CS = 2;//  value CLslk I/O/8 (From prescaler)
 			}
 
 			break;

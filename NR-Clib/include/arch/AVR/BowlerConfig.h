@@ -55,6 +55,7 @@
 
 void WriteAVRUART0(uint8_t val);
 void WriteAVRUART1(uint8_t val);
+void updateTimer(uint64_t value);
 
 void fixTimers(int currentTimer);
 
