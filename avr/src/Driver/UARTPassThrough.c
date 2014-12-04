@@ -20,25 +20,30 @@ BYTE_FIFO_STORAGE store;
 boolean validBaud(uint32_t baud);
 
 void InitUART(void){
-	uint32_t baudrate = EEReadBaud();
-	if (validBaud(baudrate) == false) {
-		baudrate = 19200;
-		validBaud(baudrate);
+	if(getPrintLevel() == NO_PRINT){
+		uint32_t baudrate = EEReadBaud();
+		if (validBaud(baudrate) == false) {
+			baudrate = 19200;
+			validBaud(baudrate);
+		}
+
+		SetPinTris(16,OUTPUT);
+		SetPinTris(17,INPUT);
+		SetDIO(17,ON);
+
+		/* set the framing to 8N1 */
+		UCSR1C = ((1<< UCSZ10)|(1<< UCSZ11));
+		/* rx interrupts enabled, rx and tx enabled, 8-bit data */
+		UCSR1B =( _BV(RXCIE1) | _BV(RXEN1) | _BV(TXEN1));
+		UCSR1A = 0x00;
+		//println_I("Uart Initialization: ");
+		InitByteFifo(&store,privateRXUART,UART_PASS_BUFF_SIZE);
 	}
 
-	SetPinTris(16,OUTPUT);
-	SetPinTris(17,INPUT);
-	SetDIO(17,ON);
-
-	/* set the framing to 8N1 */
-	UCSR1C = ((1<< UCSZ10)|(1<< UCSZ11));
-	/* rx interrupts enabled, rx and tx enabled, 8-bit data */
-	UCSR1B =( _BV(RXCIE1) | _BV(RXEN1) | _BV(TXEN1));
-	UCSR1A = 0x00;
-	//println_I("Uart Initialization: ");
-	InitByteFifo(&store,privateRXUART,UART_PASS_BUFF_SIZE);
 }
 void StopUartPassThrough(uint8_t pin){
+	if(getPrintLevel() != NO_PRINT)
+		return;
 	if (!(	pinHasFunction(pin,IS_UART_RX)||
 			pinHasFunction(pin,IS_UART_TX)
 		)){
@@ -55,6 +60,8 @@ void StopUartPassThrough(uint8_t pin){
 }
 
 boolean ConfigureUART(uint32_t baudrate){
+	if(getPrintLevel() != NO_PRINT)
+		return true;
 	return validBaud(baudrate);
 }
 
