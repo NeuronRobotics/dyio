@@ -16,6 +16,7 @@ typedef struct _InteruptServoData{
 InteruptServoData blockData [2];
 static uint32_t currentTimer=0;
 #define OFFSET (255+15+21)
+#define SPACING 64
 
 void startServoLoops(){
 	currentTimer = TCNT1;// store the state
@@ -127,7 +128,7 @@ void servoTimerEvent(int block)
 			blockData[block].servoStateMachineCurrentState = FINISH;
 			if(	blockData[0].servoStateMachineCurrentState ==FINISH &&
 				blockData[1].servoStateMachineCurrentState ==FINISH ){
-				time = (255 - blockData[1].positionTemp[blockIndex]);
+				time = (255 - blockData[0].positionTemp[blockIndex]) + SPACING;
 				updateServoValues();
 				blockIndex++;
 				if(blockIndex == 12){
@@ -137,8 +138,11 @@ void servoTimerEvent(int block)
 				blockData[0].servoStateMachineCurrentState = STARTLOOP;
 				blockData[1].servoStateMachineCurrentState = STARTLOOP;
 
-				setServoTimer(0, time+64);
-				setServoTimer(1, time+64+OFFSET-15);
+				setServoTimer(0, time);
+				// Place the second servo pulse so it ends just after the first one
+				setServoTimer(1, 	time+
+									(255-blockData[1].positionTemp[blockIndex])+
+									15);
 			}
 
 			break;
