@@ -31,7 +31,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/DyIO/pic/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/DyIO/avr/include}&quot;"/>
 								</option>
-								<option id="gnu.c.compiler.option.preprocessor.def.symbols.991408930" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.991408930" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="mprocessor=32MX44F128H"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1552885619" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>

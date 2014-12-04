@@ -14,6 +14,10 @@ uint8_t SaveTheState = 0;
 #define mInitSwitch()      (_TRISB0)=1;
 
 const uint8_t MY_MAC_ADDRESS[] = {0x74, 0xf7, 0x26, 0x00, 0x00, 0x00};
+char					LockCode[5];
+char 					Name[17];
+char defaultName[] = "DyIO Module";
+char defaultlock[] = "0000";
 
 extern MAC_ADDR MyMAC __attribute__((section(".scs_global_var")));
 char macStr[13];
@@ -71,7 +75,25 @@ void hardwareInit() {
     //AVR must be running before pin states can be synced in the pin initialization
     ReleaseAVRReset();
     //Must initialize IO before hardware
-    InitPins();
+
+	//println_W("Pin Functions");
+	InitPinFunction();
+
+	FlashGetName(Name);
+        if(Name[0]==0xff){
+                for(i=0;i<17;i++){
+			Name[i]=defaultName[i] ;
+		}
+                FlashSetName(Name);
+		FlashGetName(Name);
+	}
+
+	if (!GetLockCode(LockCode)){
+		for(i=0;i<4;i++){
+                    LockCode[i] = defaultlock[i];
+                }
+		SetLockCode(LockCode);
+	}
     //println_I("Adding IO Namespace");
     addNamespaceToList( get_bcsIoNamespace());
     //println_I("Adding IO.Setmode Namespace");
@@ -128,6 +150,11 @@ void UserInit(void) {
     LoadEEstore();
 
     LoadDefaultValues();
+	//println_W("Pin States");
+	SyncModes();
+	//println_I("Modes synced, initializing channels");
+	initAdvancedAsync();
+	//println_W("Done with Pin States");
 
 
     InitPID();
