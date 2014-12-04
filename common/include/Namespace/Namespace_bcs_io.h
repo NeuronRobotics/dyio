@@ -303,6 +303,7 @@ boolean GetIOChannelCountFromPacket(BowlerPacket * Packet);
 boolean getFunctionList(BowlerPacket * Packet);
 boolean SetChanelValueFromPacket(BowlerPacket * Packet);
 boolean SetChanelStreamFromPacket(BowlerPacket * Packet);
+boolean GetChanelStreamFromPacket(BowlerPacket * Packet);
 boolean SetAllChannelValueFromPacket(BowlerPacket * Packet);
 boolean SetAllChannelModeFromPacket(BowlerPacket * Packet);
 boolean SetAsyncFromPacket(BowlerPacket * Packet);

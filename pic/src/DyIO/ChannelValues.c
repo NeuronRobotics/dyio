@@ -20,26 +20,26 @@ boolean SetChanelValueHW(uint8_t pin, uint8_t numValues, int32_t * data, float m
     int32_t value;
 
     forceValueDownstream( pin);
-   else {
-        switch (mode) {
-            case IS_COUNTER_INPUT_INT:
-            case IS_COUNTER_INPUT_DIR:
-            case IS_COUNTER_OUTPUT_INT:
-            case IS_COUNTER_OUTPUT_DIR:
-                SetChanVal(pin, data[0], ms);
-                return true; 
-        }
-        if (isSingleByteMode(mode)) {
-            int32_t time = ( int32_t ) ms;
-            //mask the time into the data byte
-        	value = (data[0]&0x000000ff) + (time<<16);
+
+	switch (mode) {
+		case IS_COUNTER_INPUT_INT:
+		case IS_COUNTER_INPUT_DIR:
+		case IS_COUNTER_OUTPUT_INT:
+		case IS_COUNTER_OUTPUT_DIR:
+			SetChanVal(pin, data[0], ms);
+			return true;
+	}
+	if (isSingleByteMode(mode)) {
+		int32_t time = ( int32_t ) ms;
+		//mask the time into the data byte
+		value = (data[0]&0x000000ff) + (time<<16);
 //        	println_E("Setting on pin=");p_int_E(pin); print_E(" value= ");p_int_E(value); print_E(" time= ");p_fl_E(ms);
 //            println_E(__FILE__);println_E("SetChanelValueHW");
-        	setDataTableCurrentValue(pin, value);
-            return true;
-        }
+		setDataTableCurrentValue(pin, value);
+		return true;
+	}
         
-    }
+
 
     return false; 
 }
@@ -144,7 +144,8 @@ boolean SetStreamHW(uint8_t pin,uint8_t numValues,uint8_t * data){
               case IS_SPI_MOSI:
               case IS_SPI_MISO:
               case IS_SPI_SCK:
-                  SendPacketToSPIFromArray(numValues, bData);
+            	  LoadSPITxData(numValues, bData);
+                  //SendPacketToSPIFromArray(numValues, bData);
                   return true;
               case IS_UART_TX:
               case IS_UART_RX:
@@ -175,7 +176,8 @@ boolean GetStreamHW(uint8_t pin,uint8_t*  numValues,uint8_t * data){
            case IS_SPI_MOSI:
            case IS_SPI_MISO:
            case IS_SPI_SCK:
-               SendPacketToSPIFromArray(numValues[0], bData);
+        	   numValues[0] = GetSPIRxData(bData);
+               //SendPacketToSPIFromArray(numValues[0], bData);
                return true;
            case IS_UART_TX:
            case IS_UART_RX:

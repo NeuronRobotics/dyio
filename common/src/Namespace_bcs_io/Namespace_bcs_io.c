@@ -146,6 +146,20 @@ RPC_LIST bcsIo_gcml_g = {BOWLER_GET, // Method
 };
 //POST
 
+RPC_LIST bcsIo_strm_g = {BOWLER_GET, // Method
+    "strm", //RPC as string
+    &GetChanelStreamFromPacket, //function pointer to a packet parsing function
+    {	BOWLER_I08, // channel
+        0
+    }, // Calling arguments
+    BOWLER_POST, // response method
+    {	BOWLER_I08, // channel
+		BOWLER_STR, // value
+        0
+    }, // Calling arguments
+    NULL //Termination
+};
+
 RPC_LIST bcsIo_strm_p = {BOWLER_POST, // Method
     "strm", //RPC as string
     &SetChanelStreamFromPacket, //function pointer to a packet parsing function
@@ -154,8 +168,8 @@ RPC_LIST bcsIo_strm_p = {BOWLER_POST, // Method
         0
     }, // Calling arguments
     BOWLER_POST, // response method
-    {	BOWLER_I08, // channel
-		BOWLER_STR, // value
+    {BOWLER_I08, // code
+        BOWLER_I08, // trace
         0
     }, // Calling arguments
     NULL //Termination
@@ -274,6 +288,7 @@ NAMESPACE_LIST * get_bcsIoNamespace() {
         addRpcToNamespace(&bcsIo, & bcsIo_asyn_g);
         addRpcToNamespace(&bcsIo, & bcsIo_gchc_g);
         addRpcToNamespace(&bcsIo, & bcsIo_gcml_g);
+        addRpcToNamespace(&bcsIo, & bcsIo_strm_g);
         //POST
         addRpcToNamespace(&bcsIo, & bcsIo_strm_p);
         addRpcToNamespace(&bcsIo, & bcsIo_schv_p);

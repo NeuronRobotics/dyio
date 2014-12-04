@@ -7,6 +7,12 @@
 #include "UserApp.h"
 
 
+static uint8_t privateSerialRX[20];
+static uint8_t privateSerialTX[20];
+static BYTE_FIFO_STORAGE storeRx;
+static BYTE_FIFO_STORAGE storeTx;
+static BYTE SSPin=0;
+
 void InitSPIDyIO(void){
 	println_I("Initializing the SPI perpheral");
 	mPORTGOpenDrainOpen(BIT_6);// Clock is output
@@ -18,6 +24,27 @@ void InitSPIDyIO(void){
 	SetCoProcMode(0,IS_SPI_SCK);
 	SetCoProcMode(1,IS_SPI_MISO);
 	SetCoProcMode(2,IS_SPI_MOSI);
+	InitByteFifo(&storeRx,privateSerialRX,BOWLER_PacketSize);
+	InitByteFifo(&storeTx,privateSerialTX,BOWLER_PacketSize);
+}
+
+boolean LoadSPITxData(uint8_t numValues,uint8_t * data){
+	int i;
+	uint8_t err;
+	SSPin = data[0];
+	for(i=0;i<numValues;i++){
+		FifoAddByte(&storeTx,data[i+1],&err);
+	}
+	return true;
+}
+
+uint8_t GetSPIRxData(uint8_t * data){
+	//int i;
+	//uint8_t err;
+	uint8_t numValues = FifoGetByteCount(&storeRx);
+	if(numValues>0)
+		numValues = FifoGetByteStream(&storeRx,data,numValues);
+	return numValues;
 }
 
 void StopDyIOSPI(uint8_t pin){
@@ -50,20 +77,21 @@ uint8_t GetByteSPIDyIO(uint8_t b){
 	return getcSPI2();
 }
 
-void SendPacketToSPIFromArray(uint8_t numBytes,uint8_t * data){
-	uint8_t ss = data[0];
-	if(ss<3){
-		println_I("invalid SS pin");
+void SyncSPIData(){
+	if(SSPin<3 || FifoGetByteCount(&storeTx)==0){
+		//println_I("invalid SS pin");
 		return;
 	}
-	if(!SetCoProcMode(ss,IS_DO))
-		SetChannelValueCoProc(ss,1);
-	SetChannelValueCoProc(ss,0);
-	uint8_t i;
-	for (i=0;i<numBytes;i++){
-		data[i+1]=GetByteSPIDyIO(data[i+1]);
+	if(!SetCoProcMode(SSPin,IS_DO))
+		SetChannelValueCoProc(SSPin,1);
+	SetChannelValueCoProc(SSPin,0);
+	uint8_t i,err;
+	while(FifoGetByteCount(&storeTx)>0){
+
+		FifoAddByte(&storeRx,GetByteSPIDyIO(FifoGetByte(&storeTx,&err)),&err) ;
 	}
-	SetChannelValueCoProc(ss,1);
+	SetChannelValueCoProc(SSPin,1);
+	SSPin=0;
 }
 
 

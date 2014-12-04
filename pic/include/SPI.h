@@ -14,6 +14,9 @@ void InitSPIDyIO(void);
 void StopDyIOSPI(uint8_t mode);
 boolean isSPI(uint8_t mode);
 uint8_t GetByteSPIDyIO(uint8_t b);
-void SendPacketToSPI(BowlerPacket * Packet);
 void SendPacketToSPIFromArray(uint8_t numBytes,uint8_t * data);
+
+boolean LoadSPITxData(uint8_t numValues,uint8_t * data);
+uint8_t GetSPIRxData(uint8_t * data);
+
 #endif /* SPI_H_ */

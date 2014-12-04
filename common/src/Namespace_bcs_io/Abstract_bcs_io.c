@@ -194,23 +194,38 @@ boolean GetIOChannelCountFromPacket(BowlerPacket * Packet) {
     FixPacket(Packet);
     return true;
 }
-
-boolean SetChanelStreamFromPacket(BowlerPacket * Packet) {
+boolean GetChanelStreamFromPacket(BowlerPacket * Packet) {
     uint8_t pin = Packet->use.data[0];
     uint8_t mode = GetChannelMode(pin);
     if (isStremChannelMode(mode)) {
-        if (setStreamHWPtr != NULL && getStreamHWPtr != NULL)
+        if ( getStreamHWPtr != NULL)
             // Load the data directly into the packet as the buffer
             //Data pointer is offset by one to start after the pin index
-            setStreamHWPtr(	pin,
-							Packet->use.data[1],
-							&Packet->use.data[2]);
         	getStreamHWPtr(	pin,
 							&Packet->use.data[1],
 							&Packet->use.data[2]);
     } else {
         ERR(Packet, 2, 3);
     }
+    return true;
+}
+
+
+boolean SetChanelStreamFromPacket(BowlerPacket * Packet) {
+    uint8_t pin = Packet->use.data[0];
+    uint8_t mode = GetChannelMode(pin);
+    if (isStremChannelMode(mode)) {
+        if (setStreamHWPtr != NULL)
+            // Load the data directly into the packet as the buffer
+            //Data pointer is offset by one to start after the pin index
+            setStreamHWPtr(	pin,
+							Packet->use.data[1],
+							&Packet->use.data[2]);
+
+    } else {
+        ERR(Packet, 2, 3);
+    }
+    READY(Packet, 2, 3);
     return true;
 }
 

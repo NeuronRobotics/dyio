@@ -47,6 +47,7 @@ uint8_t ReadFirstByte(BYTE_FIFO_STORAGE * fifo);
  */
 
 uint32_t FifoGetByteCount(BYTE_FIFO_STORAGE * fifo);
+uint8_t FifoGetByte(BYTE_FIFO_STORAGE * fifo, uint8_t * errorCode);
 
 uint32_t FifoAddByte(BYTE_FIFO_STORAGE * fifo,uint8_t b, uint8_t * errorCode);
 
