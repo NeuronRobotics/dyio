@@ -304,7 +304,7 @@ boolean SetChanVal(uint8_t pin,int32_t bval, float time){
 		switch (mode){
 		case IS_DI:
 		case IS_DO:
-			SetDIO(pin,bval);
+			SetDIO(pin,bval?1:0);
 			break;
 		case IS_SERVO:
 			SetServoPos(pin,bval,time);
