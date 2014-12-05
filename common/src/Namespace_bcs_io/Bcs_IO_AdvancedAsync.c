@@ -138,7 +138,7 @@ boolean configAdvancedAsync(BowlerPacket * Packet){
 
 
 void startAdvancedAsyncDefault(uint8_t pin){
-	println_W("Starting advanced async on channel: ");p_int_W(pin);
+	//println_W("Starting advanced async on channel: ");p_int_W(pin);
 	int mode =GetChannelMode(pin);
 	if(isOutputMode(mode)==false){
 		if(mode == IS_SERVO || mode == IS_PWM || mode == IS_DC_MOTOR_VEL ){

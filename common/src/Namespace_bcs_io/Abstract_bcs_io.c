@@ -33,7 +33,7 @@ void InitilizeBcsIo(int numPins,
     if (numPins < 1
             ) {
         setPrintLevelErrorPrint();
-        println_E("Failed IO sanity check: failed initialization channels #");
+        //println_E("Failed IO sanity check: failed initialization channels #");
         p_int_E(numPins);
         //println_E("Failed IO sanity check: failed initialization channels #");p_int_E(numPins);
         //FAIL sanity check
