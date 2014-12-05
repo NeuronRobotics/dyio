@@ -19,8 +19,8 @@ typedef struct _InteruptServoData{
 InteruptServoData blockData [12];
 static uint32_t currentTimer=0;
 #define LOOPPERIOD (OFFSET+255+(SPACING/2))
-#define SPACING (36)
-#define LOOPSPACING (SPACING * 2 )
+#define SPACING (50)
+#define LOOPSPACING (SPACING  )
 #define OFFSET (255+SPACING)
 
 
