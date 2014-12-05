@@ -294,9 +294,10 @@ void SetChannelValueCoProc(uint8_t PIN,uint8_t state){
 		downstreamPacketTemp.use.head.Method=BOWLER_POST;
 		downstreamPacketTemp.use.head.RPC=GetRPCValue("schv");
 		downstreamPacketTemp.use.data[0]=PIN;
-		downstreamPacketTemp.use.data[1]=state;
+		downstreamPacketTemp.use.data[1]=0;
 		downstreamPacketTemp.use.data[2]=0;
 		downstreamPacketTemp.use.data[3]=0;
+		downstreamPacketTemp.use.data[4]=state;
 		downstreamPacketTemp.use.head.DataLegnth=8;
 		SendPacketToCoProc(& downstreamPacketTemp);
 		retry++;
@@ -315,47 +316,47 @@ uint8_t GetChannelValueCoProc(uint8_t PIN){
 	if (downstreamPacketTemp.use.head.RPC==_ERR)
 			return 1;
 	SetValFromAsync(PIN, downstreamPacketTemp.use.data[1]);
-	return downstreamPacketTemp.use.data[1];
+	return downstreamPacketTemp.use.data[4];
 }
 
-uint16_t GetADC(uint8_t PIN){
-	WORD_VAL v;
+//uint16_t GetADC(uint8_t PIN){
+//	WORD_VAL v;
+//
+//	LoadCorePacket(& downstreamPacketTemp);
+//	downstreamPacketTemp.use.head.Method=BOWLER_GET;
+//	downstreamPacketTemp.use.head.RPC=GetRPCValue("gchv");
+//	downstreamPacketTemp.use.data[0]=PIN;
+//	downstreamPacketTemp.use.head.DataLegnth=5;
+//	SendPacketToCoProc(& downstreamPacketTemp);
+//	if (downstreamPacketTemp.use.head.RPC==_ERR){
+//		println_I("Failed to get adc");
+//		return 1;
+//	}
+//	v.byte.HB=downstreamPacketTemp.use.data[1];
+//	v.byte.LB=downstreamPacketTemp.use.data[2];
+//
+//	SetValFromAsync(PIN, v.Val);
+//	return v.Val;
+//}
 
-	LoadCorePacket(& downstreamPacketTemp);
-	downstreamPacketTemp.use.head.Method=BOWLER_GET;
-	downstreamPacketTemp.use.head.RPC=GetRPCValue("gchv");
-	downstreamPacketTemp.use.data[0]=PIN;
-	downstreamPacketTemp.use.head.DataLegnth=5;
-	SendPacketToCoProc(& downstreamPacketTemp);
-	if (downstreamPacketTemp.use.head.RPC==_ERR){
-		println_I("Failed to get adc");
-		return 1;
-	}
-	v.byte.HB=downstreamPacketTemp.use.data[1];
-	v.byte.LB=downstreamPacketTemp.use.data[2];
-
-	SetValFromAsync(PIN, v.Val);
-	return v.Val;
-}
-
-boolean GetSerialStream(BowlerPacket * packet){
-	//WORD_VAL v;
-	LoadCorePacket(packet);
-	packet->use.head.Method=BOWLER_GET;
-	packet->use.head.RPC=GetRPCValue("gchv");
-	packet->use.head.MessageID=55;
-	packet->use.data[0]=17;
-	packet->use.head.DataLegnth=5;
-	SendPacketToCoProc(packet);
-	packet->use.data[0]=17;
-	if (packet->use.head.RPC ==_ERR){
-		return false; 
-	}
-	if (packet->use.head.DataLegnth>5){
-		return true; 
-	}
-	return false; 
-}
+//boolean GetSerialStream(BowlerPacket * packet){
+//	//WORD_VAL v;
+//	LoadCorePacket(packet);
+//	packet->use.head.Method=BOWLER_GET;
+//	packet->use.head.RPC=GetRPCValue("gchv");
+//	packet->use.head.MessageID=55;
+//	packet->use.data[0]=17;
+//	packet->use.head.DataLegnth=5;
+//	SendPacketToCoProc(packet);
+//	packet->use.data[0]=17;
+//	if (packet->use.head.RPC ==_ERR){
+//		return false;
+//	}
+//	if (packet->use.head.DataLegnth>5){
+//		return true;
+//	}
+//	return false;
+//}
 
 char * eepd = "eepd";
 void GetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data){
