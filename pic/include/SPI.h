@@ -14,6 +14,7 @@ void InitSPIDyIO(void);
 void StopDyIOSPI(uint8_t mode);
 boolean isSPI(uint8_t mode);
 uint8_t GetByteSPIDyIO(uint8_t b);
+void SyncSPIData();
 void SendPacketToSPIFromArray(uint8_t numBytes,uint8_t * data);
 
 boolean LoadSPITxData(uint8_t numValues,uint8_t * data);

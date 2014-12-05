@@ -24,7 +24,7 @@ void setBrownOutDetect(boolean b){
 		return;
 	brownOutDetect = b;
 	changedBrownOutDetect = true;
-	println_W("powerOverRide: ");p_int_W(b);
+	//println_W("powerOverRide: ");p_int_W(b);
 }
 
 void InitializeDyIODataTableManager(){
@@ -46,14 +46,14 @@ void SyncDataTable(){
 		changedBrownOutDetect = false;
 	}
 	if( FifoGetByteCount(&storeTx)>0){
-		println_E("Stub push serial here: ");
+		//println_E("Stub push serial here: ");
 		while(FifoGetByteCount(&storeTx)>0){
 			p_int_E(FifoGetByte(&storeTx,&err));
 			print_E(" , ");
 		}
 	}
 	if(GetChannelMode(16) == IS_UART_RX && getBcsIoDataTable(16)->PIN.currentValue > 0){
-		println_E("Stub pull serial here: ");
+		//println_E("Stub pull serial here: ");
 
 	}
     SyncConfigurations();

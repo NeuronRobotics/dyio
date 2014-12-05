@@ -21,5 +21,6 @@ void setBrownOutDetect(boolean b);
  * gets the current brown out mode
  */
 boolean getBrownOutDetect();
+boolean getPowerOverRide();
 
 #endif /* POWER_H_ */

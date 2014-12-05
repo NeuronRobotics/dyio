@@ -18,7 +18,7 @@ void InitSPIDyIO(void){
 	if(HardwareInitialized == true)
 		return;
 	HardwareInitialized = true;
-	println_W("Initializing the SPI perpheral");
+	//println_W("Initializing the SPI perpheral");
 	mPORTGOpenDrainOpen(BIT_6);// Clock is output
 	mPORTGOpenDrainOpen(BIT_8);// Data Out is an output
 	SPI_SCK_IO=1;
@@ -89,7 +89,7 @@ void SyncSPIData(){
 	if(!SetCoProcMode(SSPin,IS_DO))
 		SetChannelValueCoProc(SSPin,1);
 	SetChannelValueCoProc(SSPin,0);
-	uint8_t i,err;
+	uint8_t err;
 	while(FifoGetByteCount(&storeTx)>0){
 
 		FifoAddByte(&storeRx,GetByteSPIDyIO(FifoGetByte(&storeTx,&err)),&err) ;

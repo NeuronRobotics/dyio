@@ -74,26 +74,17 @@ void hardwareInit() {
     HoldAVRReset();
     //AVR must be running before pin states can be synced in the pin initialization
     ReleaseAVRReset();
+    //Starts co-proc uart
+    initCoProcCom();
+    
+    InitPinFunction();
     //Must initialize IO before hardware
+    LoadDefaultValues();
+    //println_W("Pin States");
+    SyncModes();
+    //println_I("Modes synced, initializing channels");
+    initAdvancedAsync();
 
-	//println_W("Pin Functions");
-	InitPinFunction();
-
-	FlashGetName(Name);
-        if(Name[0]==0xff){
-                for(i=0;i<17;i++){
-			Name[i]=defaultName[i] ;
-		}
-                FlashSetName(Name);
-		FlashGetName(Name);
-	}
-
-	if (!GetLockCode(LockCode)){
-		for(i=0;i<4;i++){
-                    LockCode[i] = defaultlock[i];
-                }
-		SetLockCode(LockCode);
-	}
     //println_I("Adding IO Namespace");
     addNamespaceToList( get_bcsIoNamespace());
     //println_I("Adding IO.Setmode Namespace");
@@ -122,8 +113,23 @@ void hardwareInit() {
     uint8_t rev [] = {MAJOR_REV, MINOR_REV, FIRMWARE_VERSION};
     FlashSetFwRev(rev);
 
-    //Starts co-proc uart
-    initCoProcCom();
+
+
+    FlashGetName(Name);
+    if(Name[0]==0xff){
+            for(i=0;i<17;i++){
+                    Name[i]=defaultName[i] ;
+            }
+            FlashSetName(Name);
+            FlashGetName(Name);
+    }
+
+    if (!GetLockCode(LockCode)){
+            for(i=0;i<4;i++){
+                LockCode[i] = defaultlock[i];
+            }
+            SetLockCode(LockCode);
+    }
 
     EndCritical();
 
@@ -148,13 +154,6 @@ void UserInit(void) {
     CheckRev();
 
     LoadEEstore();
-
-    LoadDefaultValues();
-	//println_W("Pin States");
-	SyncModes();
-	//println_I("Modes synced, initializing channels");
-	initAdvancedAsync();
-	//println_W("Done with Pin States");
 
 
     InitPID();

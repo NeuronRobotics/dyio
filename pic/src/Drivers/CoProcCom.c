@@ -10,7 +10,7 @@
 extern volatile unsigned int        U2BRG __attribute__((section("sfrs")));
 
 #define MAX_RETRY 5
-#define DELAY_TIMEOUT 20
+#define DELAY_TIMEOUT 200
 
 boolean valadateRPC(int response, int sent);
 uint8_t sendPacket(BowlerPacket * Packet);
@@ -535,21 +535,18 @@ void __ISR(_UART_2_VECTOR, IPL7AUTO) My_U2_ISR(void) {
         newByte();
         INTClearFlag(INT_SOURCE_UART_RX(UART2));
     }
-    int err = uartErrorCheck();
+     uartErrorCheck();
     EndCritical();
-    if(err){
-		if (INTGetFlag(INT_SOURCE_UART_ERROR(UART2))) {
-			println_E("&@&@&&@&@&@ generic uart error");
-			INTClearFlag(INT_SOURCE_UART_ERROR(UART2));
-		}
-		if (INTGetFlag(INT_SOURCE_UART_TX(UART2))) {
-			INTClearFlag(INT_SOURCE_UART_TX(UART2));
-			println_E("&@&@&&@&@&@ wtf tx");
-		}
-		if (INTGetFlag(INT_SOURCE_UART(UART2))) {
-			INTClearFlag(INT_SOURCE_UART(UART2));
-			println_E("&@&@&&@&@&@ generic uart");
-		}
+
+    if (INTGetFlag(INT_SOURCE_UART_TX(UART2))) {
+            INTClearFlag(INT_SOURCE_UART_TX(UART2));
+            //println_E("&@&@&&@&@&@ wtf tx");
+                    //initCoProcUART();
+    }
+    if (INTGetFlag(INT_SOURCE_UART(UART2))) {
+            INTClearFlag(INT_SOURCE_UART(UART2));
+            //println_E("&@&@&&@&@&@ generic uart");
+                    //initCoProcUART();
     }
     FLAG_ASYNC = FLAG_OK;
 }
