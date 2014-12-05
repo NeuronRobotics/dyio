@@ -43,7 +43,7 @@ void PushAllAsync(){
 	Print_Level l = getPrintLevel();
 	setPrintLevelInfoPrint();
 	PutBowlerPacket(& packetTemp);
-	println_I("Sending All Async: ");printPacket(&packetTemp,INFO_PRINT);
+	println_W("Sending All Async: ");printPacket(&packetTemp,WARN_PRINT);
 	setPrintLevel(l);
 }
 //void PushCounterChange(uint8_t pin,int64_t state){
