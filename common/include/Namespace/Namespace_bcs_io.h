@@ -210,8 +210,8 @@ RunEveryData * getPinsScheduler(int pin);
 void setNoAsyncMode(boolean m);
 boolean isOutputMode(uint8_t mode);
 #define isNewDataTableValue(A,B)	(B !=getBcsIoDataTable(A)->PIN.currentValue)
-#define setDataTableCurrentValue(A, B) 	print_nnl(__FILE__,(isOutputMode(GetChannelMode(A)) && isNewDataTableValue(A,B) )?ERROR_PRINT:INFO_PRINT); _setDataTableCurrentValue(A,B);
-//#define setDataTableCurrentValue(A, B) 	 _setDataTableCurrentValue(A,B);
+//#define setDataTableCurrentValue(A, B) 	println(__FILE__,(isOutputMode(GetChannelMode(A)) && isNewDataTableValue(A,B) )?ERROR_PRINT:INFO_PRINT); _setDataTableCurrentValue(A,B);
+#define setDataTableCurrentValue(A, B) 	 _setDataTableCurrentValue(A,B);
 
 #define getDataTableCurrentValue(A) (getBcsIoDataTable(A)->PIN.currentValue)
 uint8_t GetServoPos(uint8_t pin);

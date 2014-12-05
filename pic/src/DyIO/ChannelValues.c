@@ -33,11 +33,11 @@ boolean SetChanelValueHW(uint8_t pin, uint8_t numValues, int32_t * data, float m
 		int32_t time = ( int32_t ) ms;
 		//mask the time into the data byte
 		if(mode == IS_SERVO)
-			value = (data[0]&0x000000ff) + (time<<16);
+			value = (data[0]&0x000000ff) | (time<<16);
 		else
 			value=(data[0]&0x000000ff);
 //        	println_E("Setting on pin=");p_int_E(pin); print_E(" value= ");p_int_E(value); print_E(" time= ");p_fl_E(ms);
-//            println_E(__FILE__);println_E("SetChanelValueHW");
+
 		setDataTableCurrentValue(pin, value);
 		return true;
 	}

@@ -236,17 +236,20 @@ boolean SetChanelValueFromPacket(BowlerPacket * Packet) {
         ERR(Packet, 1, 3);
     } else {
         int32_t data = 0;
-        float time = 0;
+        int32_t time = 0;
 
         data = get32bit(Packet, 1);
 
-        time = (float) get32bit(Packet, 5);
-        //println_W("Setting on pin=");p_int_W(pin); print_W(" value= ");p_int_W(data); print_W(" time= ");p_fl_W(time);
+        time =  get32bit(Packet, 5);
+        println_W("Setting on pin=");p_int_W(pin); print_W(" value= ");p_int_W(data); print_W(" time= ");p_fl_W(time);
+		if(mode == IS_SERVO)
+			data = (data&0x000000ff) + (time<<16);
+
+        if (setChanelValueHWPtr != NULL)
+            setChanelValueHWPtr(pin, 1, &data, (float)time);
 
     	//println_E(__FILE__);println_E("SetChanelValueFromPacket");
         setDataTableCurrentValue(pin,data);
-        if (setChanelValueHWPtr != NULL)
-            setChanelValueHWPtr(pin, 1, &data, time);
 
 
     }
@@ -267,11 +270,18 @@ boolean SetAllChannelValueFromPacket(BowlerPacket * Packet) {
         for (i = 0; i < GetNumberOfIOChannels(); i++) {
         	if(isOutputMode(GetChannelMode(i))==true){
         		tmp = get32bit(Packet, (i*4) +5);
-        		data[i] = tmp;
+        		if(GetChannelMode(i) == IS_SERVO)
+					data[i] = (tmp & 	0x000000ff) | (time<<16);
+        		else
+        			data[i] = tmp;
 			}else{
 				data[i] = getBcsIoDataTable(i)->PIN.currentValue;
 			}
+
         }
+
+        setAllChanelValueHWPtr(data, time);
+
         for (i = 0; i < GetNumberOfIOChannels(); i++) {
         	if(isOutputMode(GetChannelMode(i))==true){
 
@@ -279,7 +289,6 @@ boolean SetAllChannelValueFromPacket(BowlerPacket * Packet) {
 				setDataTableCurrentValue(i,data[i]);
         	}
 		}
-        setAllChanelValueHWPtr(data, time);
         //READY(Packet, 3, 3);
         GetAllChanelValueFromPacket(Packet);
     } else {
@@ -479,7 +488,7 @@ boolean _setDataTableCurrentValue(uint8_t pin, int32_t value){
 	if(value !=getBcsIoDataTable(pin)->PIN.currentValue ){
 		Print_Level l = isOutputMode(GetChannelMode(pin))?ERROR_PRINT:INFO_PRINT;
 
-		println("Value was ",l);p_int(getBcsIoDataTable(pin)->PIN.currentValue,l);
+		print_nnl(" Value was ",l);p_int(getBcsIoDataTable(pin)->PIN.currentValue,l);
 		print_nnl(" set to ",l);p_int(value,l);
 		print_nnl(" on pin ",l);p_int(pin,l);
 		print_nnl(" mode ",l);printMode(GetChannelMode(pin),l);
