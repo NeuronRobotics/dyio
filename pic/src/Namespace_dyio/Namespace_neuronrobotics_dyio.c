@@ -50,9 +50,9 @@ boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidA
 
 
 
-	if ((RunEvery(&syncVolt)>0)){
+	//if ((RunEvery(&syncVolt)>0)){
 		SyncDataTable();
-	}
+	//}
 
     CheckSwitches();
 

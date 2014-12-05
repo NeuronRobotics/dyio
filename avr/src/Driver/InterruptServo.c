@@ -20,7 +20,7 @@ InteruptServoData blockData [12];
 static uint32_t currentTimer=0;
 #define LOOPPERIOD (OFFSET+255+(SPACING/2))
 #define SPACING (36)
-#define LOOPSPACING (SPACING)
+#define LOOPSPACING (SPACING * 2 )
 #define OFFSET (255+SPACING)
 
 
@@ -98,9 +98,10 @@ void updateServoValues(){
 void servoTimerEvent()
 {
 	//int flag = FlagBusy_IO;
-	FlagBusy_IO=1;
+
 	switch(servoStateMachineCurrentState){
 		case STARTLOOP:
+			FlagBusy_IO=1;
 			pinOn( blockIndex );
 			servoStateMachineCurrentState = BON;
 			OCR1A = blockData[blockIndex].toBON;
@@ -121,6 +122,8 @@ void servoTimerEvent()
 			break;
 		case FINISH:
 			pinOff(blockIndex + 12 );
+			FlagBusy_IO=0;
+			EndCritical();
 
 			TCCR1Bbits._CS=0;// stop the clock
 			//If block is now done, reset the block index and sort
@@ -142,13 +145,11 @@ void servoTimerEvent()
 			setServoTimer( LOOPSPACING);
 
 			TCCR1Bbits._CS = 2;//  value CLslk I/O/8 (From prescaler)
-
-
 			break;
 	}
 
 	//FlagBusy_IO=flag;
-	FlagBusy_IO=0;
+
 }
 
 
