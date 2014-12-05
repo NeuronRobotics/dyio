@@ -261,8 +261,8 @@ uint8_t SetAllCoProcValues(){
 		}
 
         downstreamPacketTemp.use.head.DataLegnth = 4+4+1+(4*GetNumberOfIOChannels());
-               clearPrint();
-        println_W("Syncing channel values ");printPacket(&downstreamPacketTemp,WARN_PRINT);
+//               clearPrint();
+//        println_W("Syncing channel values ");printPacket(&downstreamPacketTemp,WARN_PRINT);
 		SendPacketToCoProc(& downstreamPacketTemp);
 //		printPacket(&downstreamPacketTemp,ERROR_PRINT);
 	}
@@ -270,15 +270,17 @@ uint8_t SetAllCoProcValues(){
 //        Print_Level l = getPrintLevel();
 //        setPrintLevelInfoPrint();
 	for(i=0;i<GetNumberOfIOChannels();i++){
+		int index = (i*4)+1;
 		if(isOutputMode(GetChannelMode(i)) == false){
 			boolean back = tmp !=getBcsIoDataTable(i)->PIN.currentValue;
-			setDataTableCurrentValue(i,get32bit(& downstreamPacketTemp, (i*4)+1));
+
+			setDataTableCurrentValue(i,get32bit(& downstreamPacketTemp, index));
             if(back){
             	getBcsIoDataTable(i)->PIN.asyncDataenabled = true;
             }
 		}
 		if(GetChannelMode(i)==IS_SERVO){
-			down[i].ServoPos = get32bit(& downstreamPacketTemp, (i*4)+1);
+			down[i].ServoPos = get32bit(& downstreamPacketTemp, index) & 0x000000ff;
 		}
 	}
 
