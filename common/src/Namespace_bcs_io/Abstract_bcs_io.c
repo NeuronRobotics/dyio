@@ -345,7 +345,10 @@ boolean GetAllChanelValueFromPacket(BowlerPacket * Packet) {
             if(isOutputMode(GetChannelMode(i))==false){
             	setDataTableCurrentValue(i,tmp);
             }else{
-            	tmp = getBcsIoDataTable(i)->PIN.currentValue;
+                 if(GetChannelMode(i) == IS_SERVO){
+                    tmp = getBcsIoDataTable(i)->PIN.currentValue & 0x000000ff;
+                }else
+                    tmp = getBcsIoDataTable(i)->PIN.currentValue;
             }
             set32bit(Packet, tmp, (i*4)+1);
 
@@ -376,7 +379,7 @@ boolean ConfigureChannelFromPacket(BowlerPacket * Packet) {
 //			print_E(" value = ");
 //			p_int_E(tmp);
 
-			println_E(__FILE__);println_E("ConfigureChannelFromPacket");
+			//println_E(__FILE__);println_E("ConfigureChannelFromPacket");
 			setDataTableCurrentValue(pin,tmp);
 
 			configChannelHWPtr(pin, 1, &tmp);
