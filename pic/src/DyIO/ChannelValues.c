@@ -32,7 +32,10 @@ boolean SetChanelValueHW(uint8_t pin, uint8_t numValues, int32_t * data, float m
 	if (isSingleByteMode(mode)) {
 		int32_t time = ( int32_t ) ms;
 		//mask the time into the data byte
-		value = (data[0]&0x000000ff) + (time<<16);
+		if(mode == IS_SERVO)
+			value = (data[0]&0x000000ff) + (time<<16);
+		else
+			value=(data[0]&0x000000ff);
 //        	println_E("Setting on pin=");p_int_E(pin); print_E(" value= ");p_int_E(value); print_E(" time= ");p_fl_E(ms);
 //            println_E(__FILE__);println_E("SetChanelValueHW");
 		setDataTableCurrentValue(pin, value);
@@ -145,7 +148,6 @@ boolean SetStreamHW(uint8_t pin,uint8_t numValues,uint8_t * data){
               case IS_SPI_MISO:
               case IS_SPI_SCK:
             	  LoadSPITxData(numValues-1, bData);
-                  //SendPacketToSPIFromArray(numValues, bData);
                   return true;
               case IS_UART_TX:
               case IS_UART_RX:
@@ -177,7 +179,6 @@ boolean GetStreamHW(uint8_t pin,uint8_t*  numValues,uint8_t * data){
            case IS_SPI_MISO:
            case IS_SPI_SCK:
         	   numValues[0] = GetSPIRxData(bData);
-               //SendPacketToSPIFromArray(numValues[0], bData);
                return true;
            case IS_UART_TX:
            case IS_UART_RX:

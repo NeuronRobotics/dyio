@@ -168,7 +168,10 @@ void startAdvancedAsyncDefault(uint8_t pin){
 
 boolean SetValFromAsync(int pin, int value){
 	//println_E(__FILE__);println_E("SetValFromAsync");
-	return setDataTableCurrentValue(pin,value);
+
+	boolean back = value !=getBcsIoDataTable(pin)->PIN.currentValue;
+	setDataTableCurrentValue(pin,value);
+	return back;
 }
 
 int GetValFromAsync(int pin){

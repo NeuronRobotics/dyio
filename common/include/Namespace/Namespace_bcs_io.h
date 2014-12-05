@@ -209,10 +209,11 @@ int32_t GetChanelSingleValue(uint8_t pin);
 RunEveryData * getPinsScheduler(int pin);
 void setNoAsyncMode(boolean m);
 boolean isOutputMode(uint8_t mode);
+#define setDataTableCurrentValue(A, B) 	println(__FILE__,(isOutputMode(GetChannelMode(A))&&B !=getBcsIoDataTable(A)->PIN.currentValue)?ERROR_PRINT:INFO_PRINT); _setDataTableCurrentValue(A,B);
 /**
  * Sets the datable value and returns true if the value is new, false if it is the same as it was
  */
-boolean setDataTableCurrentValue(uint8_t pin, int32_t value);
+boolean _setDataTableCurrentValue(uint8_t pin, int32_t value);
 
 NAMESPACE_LIST * get_bcsIoNamespace();
 

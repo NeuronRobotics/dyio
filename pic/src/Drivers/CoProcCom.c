@@ -10,7 +10,7 @@
 extern volatile unsigned int        U2BRG __attribute__((section("sfrs")));
 
 #define MAX_RETRY 5
-#define DELAY_TIMEOUT 20
+#define DELAY_TIMEOUT 40
 
 boolean valadateRPC(int response, int sent);
 uint8_t sendPacket(BowlerPacket * Packet);
@@ -294,9 +294,9 @@ uint8_t sendPacket(BowlerPacket * Packet) {
                     //println_I("Not async");
                     if (!valadateRPC(downstream.use.head.RPC, Packet->use.head.RPC)) {
                         println_E("Valadation failed, junk TX>>");
-                        printPacket(Packet, ERROR_PRINT);
-                        print_E("\nRX<<\n");
-                        printPacket(&downstream, ERROR_PRINT);
+//                        printPacket(Packet, ERROR_PRINT);
+//                        print_E("\nRX<<\n");
+//                        printPacket(&downstream, ERROR_PRINT);
                         //SendPacketUARTCoProc(Packet->stream,packetSize);
                         SetColor(1, 0, 0);
                         //wait.MsTime += 2;

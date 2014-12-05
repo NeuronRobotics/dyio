@@ -46,7 +46,9 @@ boolean SetChanelValueHW(uint8_t pin,uint8_t numValues,int32_t * data, float ms)
 			int32_t time = data[0]>>16;
 			//mask the time into the data byte
 			int32_t tmp = (data[0]&0x000000ff);
-			if(setDataTableCurrentValue(pin,tmp)){
+			boolean back = tmp !=getBcsIoDataTable(pin)->PIN.currentValue;
+			setDataTableCurrentValue(pin,tmp);
+			if(back){
 				if(isOutputMode(mode)){
 					SetChanVal(pin,tmp, time);
 				}else{
@@ -54,7 +56,10 @@ boolean SetChanelValueHW(uint8_t pin,uint8_t numValues,int32_t * data, float ms)
 					print_I(" \tto val: ");p_int_I(tmp);
 				}
 			}
+		}else{
+			//println_E("Unknown mode for setting ");printMode(mode,ERROR_PRINT);
 		}
+
 		return true; 
 	}
 
@@ -209,44 +214,44 @@ boolean SaveValue(uint8_t pin,uint8_t val){
 	}
 }
 
-boolean GetChannelValue(BowlerPacket * Packet){
-	boolean ret=false; 
-	uint8_t pin = Packet->use.data[0];
-	uint8_t mode = GetChannelMode(pin);
-	//int i;
-	uint16_t val=GetChanVal(pin);
-	if(IsAsync(pin)){
-		//AsynAck();
-	}
-	Packet->use.head.Method=BOWLER_POST;
-	if ((mode == IS_DC_MOTOR_VEL)||(mode == IS_DC_MOTOR_DIR)||(mode == IS_DO)|| (mode == IS_PWM)|| (mode == IS_SERVO) || (mode == IS_DI) ||(mode == IS_COUNTER_OUTPUT_HOME)||(mode == IS_COUNTER_INPUT_HOME)){
-		set8bit(Packet, val,1);
-		Packet->use.head.DataLegnth=6;
-		ret = true; 
-	}else if ((mode == IS_ANALOG_IN)){
-		val=GetADC(pin);
-		set16bit(Packet,val,1);
-		Packet->use.head.DataLegnth=7;
-		ret = true; 
-	}else if ( (mode == IS_UART_TX) || (mode == IS_UART_RX)){
-		//Number of bytes in the stream to be sent
-		Packet->use.head.DataLegnth=5;
-		uint16_t numBytes=Get_UART_Byte_CountPassThrough();
-		if(numBytes>0){
-			UARTGetArrayPassThrough(Packet->use.data+1,numBytes);
-			//Offset using pointer, rather then shuffeling
-//			for (i=0;i<numBytes;i++){
-//				Packet->use.data[(numBytes)-i]=Packet->use.data[(numBytes-1)-i];
-//			}
-			Packet->use.data[0]=17;
-			Packet->use.head.DataLegnth+=numBytes;
-		}
-		return true; 
-	}else{
-		return false; 
-	}
-	return ret;
-}
+//boolean GetChannelValue(BowlerPacket * Packet){
+//	boolean ret=false;
+//	uint8_t pin = Packet->use.data[0];
+//	uint8_t mode = GetChannelMode(pin);
+//	//int i;
+//	uint16_t val=GetChanVal(pin);
+//	if(IsAsync(pin)){
+//		//AsynAck();
+//	}
+//	Packet->use.head.Method=BOWLER_POST;
+//	if ((mode == IS_DC_MOTOR_VEL)||(mode == IS_DC_MOTOR_DIR)||(mode == IS_DO)|| (mode == IS_PWM)|| (mode == IS_SERVO) || (mode == IS_DI) ||(mode == IS_COUNTER_OUTPUT_HOME)||(mode == IS_COUNTER_INPUT_HOME)){
+//		set8bit(Packet, val,1);
+//		Packet->use.head.DataLegnth=6;
+//		ret = true;
+//	}else if ((mode == IS_ANALOG_IN)){
+//		val=GetADC(pin);
+//		set16bit(Packet,val,1);
+//		Packet->use.head.DataLegnth=7;
+//		ret = true;
+//	}else if ( (mode == IS_UART_TX) || (mode == IS_UART_RX)){
+//		//Number of bytes in the stream to be sent
+//		Packet->use.head.DataLegnth=5;
+//		uint16_t numBytes=Get_UART_Byte_CountPassThrough();
+//		if(numBytes>0){
+//			UARTGetArrayPassThrough(Packet->use.data+1,numBytes);
+//			//Offset using pointer, rather then shuffeling
+////			for (i=0;i<numBytes;i++){
+////				Packet->use.data[(numBytes)-i]=Packet->use.data[(numBytes-1)-i];
+////			}
+//			Packet->use.data[0]=17;
+//			Packet->use.head.DataLegnth+=numBytes;
+//		}
+//		return true;
+//	}else{
+//		return false;
+//	}
+//	return ret;
+//}
 
 uint16_t GetChanVal(uint8_t pin){
 	uint16_t val;

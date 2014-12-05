@@ -107,7 +107,7 @@ void dealWithAsyncPacket(BowlerPacket * Packet){
 		ProcessAsyncData(Packet);
 	} else {
 		println_W("###########Stray sync packet..");
-		printPacket(Packet, WARN_PRINT);
+		//printPacket(Packet, WARN_PRINT);
 	}
 }
 
