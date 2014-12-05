@@ -478,27 +478,6 @@ boolean pinHasFunction(uint8_t pin, uint8_t function) {
     }
 }
 
-/**
- * Sets the datable value and returns true if the value is new, false if it is the same as it was
- */
-boolean _setDataTableCurrentValue(uint8_t pin, int32_t value){
-	if(pin>=GetNumberOfIOChannels()){
-		println_E("Pin out of index! : "); p_int_E(pin);
-	}
-	if(value !=getBcsIoDataTable(pin)->PIN.currentValue ){
-		Print_Level l = isOutputMode(GetChannelMode(pin))?ERROR_PRINT:INFO_PRINT;
-
-		print_nnl(" Value was ",l);p_int(getBcsIoDataTable(pin)->PIN.currentValue,l);
-		print_nnl(" set to ",l);p_int(value,l);
-		print_nnl(" on pin ",l);p_int(pin,l);
-		print_nnl(" mode ",l);printMode(GetChannelMode(pin),l);
-		// THis is the only place this variable should be set
-		getBcsIoDataTable(pin)->PIN.currentValue =value;
-		//print_I(" confirmed ");p_int_I(getBcsIoDataTable(pin)->PIN.currentValue);
-		return true;
-	}
-	return false;
-}
 
 boolean getFunctionList(BowlerPacket * Packet) {
     int chan = Packet->use.data[0];
@@ -517,32 +496,32 @@ boolean getFunctionList(BowlerPacket * Packet) {
 }
 
 void printValues() {
-    int i;
-    println_I("Values");
-    for (i = 0; i < GetNumberOfIOChannels(); i++) {
-        println_I("\t# ");
-        p_int_I(i);
-        print_I("\tCurrent ");
-        p_int_I(getBcsIoDataTable(i)->PIN.currentValue);
-        //print_I("\tPrevious ");p_int_I(getBcsIoDataTable(i)->PIN.previousValue);
-    }
+//    int i;
+//    println_I("Values");
+//    for (i = 0; i < GetNumberOfIOChannels(); i++) {
+//        println_I("\t# ");
+//        p_int_I(i);
+//        print_I("\tCurrent ");
+//        p_int_I(getBcsIoDataTable(i)->PIN.currentValue);
+//        //print_I("\tPrevious ");p_int_I(getBcsIoDataTable(i)->PIN.previousValue);
+//    }
 }
 
 void printModes() {
-    int i;
-    println_I("Modes");
-    for (i = 0; i < GetNumberOfIOChannels(); i++) {
-        println_I("\t# ");
-        p_int_I(i);
-        print_I("\tCurrent ");
-        printMode(getBcsIoDataTable(i)->PIN.currentChannelMode, INFO_PRINT);
-        //print_I("\tPrevious ");printMode(getBcsIoDataTable(i)->PIN.previousChannelMode,INFO_PRINT);
-    }
+//    int i;
+//    println_I("Modes");
+//    for (i = 0; i < GetNumberOfIOChannels(); i++) {
+//        println_I("\t# ");
+//        p_int_I(i);
+//        print_I("\tCurrent ");
+//        printMode(getBcsIoDataTable(i)->PIN.currentChannelMode, INFO_PRINT);
+//        //print_I("\tPrevious ");printMode(getBcsIoDataTable(i)->PIN.previousChannelMode,INFO_PRINT);
+//    }
 }
 
 void printConfigurations() {
     int i;
-    println_I("Configurations");
+//    println_I("Configurations");
     for (i = 0; i < GetNumberOfIOChannels(); i++) {
         println_I("\t# ");
         p_int_I(i);
@@ -552,24 +531,46 @@ void printConfigurations() {
 }
 
 void printAsync() {
-    int i;
-    println_I("Async Data ");
-    p_fl_I(getMs());
-    for (i = 0; i < GetNumberOfIOChannels(); i++) {
-        println_I("\t# ");
-        p_int_I(i);
-        print_I("\tCurrent ");
-        //FIXME
-        p_int_I(getBcsIoDataTable(i)->PIN.currentValue);
-        print_I("\tPrevious ");
-        p_int_I(getBcsIoDataTable(i)->PIN.asyncDataPreviousVal);
-        print_I("\tMode ");
-        printAsyncType(getBcsIoDataTable(i)->PIN.asyncDataType);
-        print_I("\tIteration ");
-        p_fl_I(getBcsIoDataTable(i)->asyncDataTimer.setPoint);
-        print_I("\tLast ");
-        p_fl_I(getBcsIoDataTable(i)->asyncDataTimer.MsTime);
-    }
+//    int i;
+//    println_I("Async Data ");
+//    p_fl_I(getMs());
+//    for (i = 0; i < GetNumberOfIOChannels(); i++) {
+//        println_I("\t# ");
+//        p_int_I(i);
+//        print_I("\tCurrent ");
+//        //FIXME
+//        p_int_I(getBcsIoDataTable(i)->PIN.currentValue);
+//        print_I("\tPrevious ");
+//        p_int_I(getBcsIoDataTable(i)->PIN.asyncDataPreviousVal);
+//        print_I("\tMode ");
+//        printAsyncType(getBcsIoDataTable(i)->PIN.asyncDataType);
+//        print_I("\tIteration ");
+//        p_fl_I(getBcsIoDataTable(i)->asyncDataTimer.setPoint);
+//        print_I("\tLast ");
+//        p_fl_I(getBcsIoDataTable(i)->asyncDataTimer.MsTime);
+//    }
+}
+
+
+/**
+ * Sets the datable value and returns true if the value is new, false if it is the same as it was
+ */
+boolean _setDataTableCurrentValue(uint8_t pin, int32_t value){
+	if(pin>=GetNumberOfIOChannels()){
+		println_E("Pin out of index! : "); p_int_E(pin);
+	}
+	if(value !=getBcsIoDataTable(pin)->PIN.currentValue ){
+//		Print_Level l = isOutputMode(GetChannelMode(pin))?ERROR_PRINT:INFO_PRINT;
+//		print_nnl(" Value was ",l);p_int(getBcsIoDataTable(pin)->PIN.currentValue,l);
+//		print_nnl(" set to ",l);p_int(value,l);
+//		print_nnl(" on pin ",l);p_int(pin,l);
+//		print_nnl(" mode ",l);printMode(GetChannelMode(pin),l);
+		// THis is the only place this variable should be set
+		getBcsIoDataTable(pin)->PIN.currentValue =value;
+		//print_I(" confirmed ");p_int_I(getBcsIoDataTable(pin)->PIN.currentValue);
+		return true;
+	}
+	return false;
 }
 
 

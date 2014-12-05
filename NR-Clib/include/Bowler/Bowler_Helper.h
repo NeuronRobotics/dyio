@@ -46,6 +46,8 @@ float interpolate(INTERPOLATE_DATA * data, float currentTime);
 
 boolean bound(float target, float actual, float plus, float minus);
 
+boolean between(float targetupper, float actual, float targetLower);
+
 
 void set8bit(BowlerPacket * Packet,uint8_t val, uint8_t offset);
 

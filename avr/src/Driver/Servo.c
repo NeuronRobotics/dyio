@@ -101,13 +101,19 @@ void SetServoPos(uint8_t pin,uint8_t val,float time){
 //	println_W("Servo ");p_int_W(pin);
 //	print_W(" time= ");p_fl_W(time);
 //	print_W(" to val= ");p_int_W(val);
-//	print_W(" val was= ");p_int_W(velocity[pin].set);
+//	print_W(" val was= ");p_fl_W(velocity[pin].set);
 
-	velocity[pin].setTime=time;
-	// Set the start value to the pervious value
-	velocity[pin].start=velocity[pin].set;
+	if(time<30 || isnan(velocity[pin].set)){
+		velocity[pin].setTime=0;
+		velocity[pin].start = (float)val;
+	}else{
+		// Set the start value to the pervious value
+		velocity[pin].setTime=time;
+		velocity[pin].start=velocity[pin].set;
+	}
 	velocity[pin].set=(float)val;
 	velocity[pin].startTime=getMs();
+
 	getInterpolatedPin( pin);
 
 	if(pin<12){
@@ -121,7 +127,7 @@ void SetServoPos(uint8_t pin,uint8_t val,float time){
 
 }
 uint8_t GetServoPos(uint8_t pin){
-	return (uint32_t) interpolate(&velocity[pin], getMs());
+	return getInterpolatedPin( pin);
 }
 
 boolean pinServoOk(uint8_t pin){
@@ -160,22 +166,30 @@ void pinOff(uint8_t pin){
 	}
 }
 uint8_t getInterpolatedPin(uint8_t pin){
+	//char cSREG;
+	//cSREG = SREG;
+	/* store SREG value */
+	/*
+	disable interrupts during timed sequence */
+	//StartCritical();
+	float ip = interpolate(&velocity[pin],getMs());
+	//SREG = cSREG;
+	if(ip>(255- SERVO_BOUND)){
+		//println_I("Servo Upper out of bounds! got=");p_fl_I(ip);print_I(" on time=");p_fl_I(velocity[pin].setTime);
+		ip=velocity[pin].set;
+		//print_I(" target=");p_fl_I(ip);
+	}
+	if(ip<SERVO_BOUND){
+		//println_I("Servo Lower out of bounds! got=");p_fl_I(ip);print_I(" on chan=");p_int_I(pin);
+		ip=velocity[pin].set;
+		//print_I(" target=");p_fl_I(ip);
+	}
 
-			int32_t ip = interpolate(&velocity[pin],getMs());
-			if(ip>(255- SERVO_BOUND)){
-	#if ! defined(__AVR_ATmega324P__)
-				println_I("Servo Upper out of bounds! got=");p_int_I(ip);print_I(" on time=");p_fl_I(velocity[pin].setTime);
-	#endif
-				ip=(255- SERVO_BOUND);
-			}
-			if(ip<SERVO_BOUND){
-	#if ! defined(__AVR_ATmega324P__)
-				println_I("Servo Lower out of bounds! got=");p_int_I(ip);print_I(" on chan=");p_int_I(pin);
-	#endif
-				ip=SERVO_BOUND;
-			}
-			int tmp = (int)ip;
-			return tmp;
+	int tmp = (int)ip;
+	if(tmp != (int)velocity[pin].set){
+		//println_I("Srv Mv= ");p_int_I(ip);print_I(" on chan= ");p_int_I(pin);
+	}
+	return tmp;
 }
 
 //void runLinearInterpolationServo(uint8_t blockStart,uint8_t blockEnd){
