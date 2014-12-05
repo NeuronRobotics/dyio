@@ -148,7 +148,7 @@ typedef struct __attribute__((__packed__))  _Downstream_Data
 
 
 	uint32_t  currentConfiguration;
-	uint8_t ServoPos;
+	uint8_t ServoPositionUpstream;
 	//Used to detect any hardware state change and synchronize
 	boolean changeValue;
 	boolean changeConfiguration;

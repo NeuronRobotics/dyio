@@ -121,9 +121,15 @@ void CheckRev(void){
 }
 
 uint8_t GetServoPos(uint8_t pin){
-	return down[pin].ServoPos;
+	return down[pin].ServoPositionUpstream;
 }
 
+void SetServoPos(uint8_t pin,uint8_t val ){
+	if(val ==down[pin].ServoPositionUpstream )
+		return;
+	println_W("Servo upstream on pin: ");p_int_W(pin);print_W(" to: ");p_int_W(val);
+	down[pin].ServoPositionUpstream =  val;
+}
 int32_t GetConfigurationDataTable(uint8_t pin){
 	return down[pin].currentConfiguration;
 }
@@ -280,7 +286,7 @@ uint8_t SetAllCoProcValues(){
             }
 		}
 		if(GetChannelMode(i)==IS_SERVO){
-			down[i].ServoPos = get32bit(& downstreamPacketTemp, index) & 0x000000ff;
+			SetServoPos(i, get32bit(& downstreamPacketTemp, index) & 0x000000ff);
 		}
 	}
 
