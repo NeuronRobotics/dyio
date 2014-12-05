@@ -23,7 +23,7 @@
 //#define blockTime 24.0f
 //#define blockInc1 (blockTime/3.0f)
 //#define blockInc2 (blockInc1+blockInc1)
-//RunEveryData block0 = {0,blockTime};
+RunEveryData block0 = {0,1000};
 //RunEveryData block1 = {blockInc1,blockTime};
 //RunEveryData block2 = {blockInc2,blockTime};
 
@@ -123,13 +123,9 @@ void UserRun(void){
 //		resetBlocks();
 //	}
 //
-//	if (RunEvery(&block0)>0.0f){
-//		//println_I("Step 0");
-//		//
-//		block0.MsTime = getMs();
-//		RunServo(0);
-//		//return;
-//	}
+	if (RunEvery(&block0)>0.0f){
+		println_W("Loop ");p_fl_W(getMs()/1000);
+	}
 //	if (RunEvery(&block1)>0.0f){
 //		//println_I("Step 1");
 //		RunServo(1);
