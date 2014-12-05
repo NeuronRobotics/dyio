@@ -172,13 +172,20 @@ void startAdvancedAsyncDefault(uint8_t pin){
 }
 
 int GetValFromAsync(int pin){
-	return getBcsIoDataTable(pin)->PIN.currentValue;
+	if(GetChannelMode(pin)== IS_SERVO){
+		return GetServoPos(pin);
+	}else{
+		return getDataTableCurrentValue(pin);
+	}
 }
 
 int GetDigitalValFromAsync(uint8_t pin){
 	initAdvancedAsync();
 	if(GetChannelMode(pin)==IS_DI || GetChannelMode(pin)==IS_COUNTER_INPUT_HOME || GetChannelMode(pin)==IS_COUNTER_OUTPUT_HOME ){
-		return getBcsIoDataTable(pin)->PIN.currentValue;
+		return getDataTableCurrentValue(pin);
+	}
+	if(GetChannelMode(pin)== IS_SERVO){
+		return GetServoPos(pin);
 	}
 	return 1;
 }
@@ -202,28 +209,33 @@ boolean pushAsyncReady( uint8_t pin){
 //	print_I(" \nCurrentTime: ");p_fl_I(getMs());
 	float timeout = RunEvery(tRef);
 //	print_I(" \nTimeout: ");p_fl_I(timeout);
+	if(GetChannelMode(pin)== IS_SERVO){
+		aval = GetServoPos(pin);
+	}else{
+		aval = getDataTableCurrentValue(pin);
+	}
+
 	if(timeout !=0){
 //		println_I("Time to do something");
 		switch(getBcsIoDataTable(pin)->PIN.asyncDataType&0x0F){
 		case AUTOSAMP:
 //			println_I("Auto samp ");p_int_I(pin);
-			getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal = getBcsIoDataTable(pin)->PIN.currentValue;
+			getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal = aval;
 
 			return true; 
 		case NOTEQUAL:
 			//
-			if(getBcsIoDataTable(pin)->PIN.currentValue != getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal){
+			if(aval != getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal){
 //				println_I("not equ ");p_int_I(pin);
 //				printfDEBUG_uint8_t*('\t',INFO_PRINT);
 //				p_int_I(getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal);
 //				printfDEBUG_uint8_t*('\t',INFO_PRINT);
 //				p_int_I(getBcsIoDataTable(pin)->PIN.currentValue);
-				getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal = getBcsIoDataTable(pin)->PIN.currentValue;
+				getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal = aval;
 				return true; 
 			}
 			break;
 		case DEADBAND:
-			aval = getBcsIoDataTable(pin)->PIN.currentValue;
 			last = getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal;
 			db = getBcsIoDataTable(pin)->PIN.asyncDatadeadBandval;
 			if (	( 	( last >(aval+db)) ||
@@ -237,10 +249,9 @@ boolean pushAsyncReady( uint8_t pin){
 			break;
 		case THRESHHOLD:
 //			println_I("treshhold");p_int_I(pin);
-			aval = getBcsIoDataTable(pin)->PIN.currentValue;
 			last = getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal;
 			db = getBcsIoDataTable(pin)->PIN.asyncDatathreshholdval;
-			getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal = getBcsIoDataTable(pin)->PIN.currentValue;
+			getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal = aval;
 			if(getBcsIoDataTable(pin)->PIN.asyncDatathreshholdedge == ASYN_RISING || getBcsIoDataTable(pin)->PIN.asyncDatathreshholdedge == ASYN_BOTH){
 				if(last<= db && aval>db){
 
