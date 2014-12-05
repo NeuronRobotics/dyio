@@ -98,9 +98,9 @@ void UserRun(void){
 	RunUserCode();
 #endif
 
-	if (Get_UART_Byte_CountPassThrough()>0){
-		PushSerial();
-	}
+//	if (Get_UART_Byte_CountPassThrough()>0){
+//		PushSerial();
+//	}
 
 	//println_E("Main Loop ");p_fl_E(getMs());
 

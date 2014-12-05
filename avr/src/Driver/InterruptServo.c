@@ -20,7 +20,7 @@ InteruptServoData blockData [12];
 static uint32_t currentTimer=0;
 #define LOOPPERIOD (OFFSET+255+(SPACING/2))
 #define SPACING (36)
-#define LOOPSPACING (SPACING*2)
+#define LOOPSPACING (SPACING)
 #define OFFSET (255+SPACING)
 
 
@@ -135,9 +135,9 @@ void servoTimerEvent()
 
 			updateServoValues();
 			servoStateMachineCurrentState = STARTLOOP;
-			blockData[blockIndex].toBON = calcTimer (	LOOPSPACING+LOOPPERIOD - (OFFSET+blockData[blockIndex].positionTempB));
-			blockData[blockIndex].toAOFF=calcTimer (	LOOPSPACING+OFFSET+blockData[blockIndex].positionTempA);
-			blockData[blockIndex].toFINISH=calcTimer (	LOOPSPACING+LOOPPERIOD );
+			blockData[blockIndex].toBON = 	calcTimer (	LOOPSPACING+LOOPPERIOD - (	OFFSET+blockData[blockIndex].positionTempB)	);
+			blockData[blockIndex].toAOFF=	calcTimer (	LOOPSPACING+				OFFSET+blockData[blockIndex].positionTempA	);
+			blockData[blockIndex].toFINISH=	calcTimer (	LOOPSPACING+LOOPPERIOD );
 
 			setServoTimer( LOOPSPACING);
 

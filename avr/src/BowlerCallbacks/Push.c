@@ -25,7 +25,8 @@ void sendHeader(uint8_t legnth,char * rpc){
 
 boolean avrAsyncCallbackPtr(BowlerPacket *Packet){
 	FixPacket(Packet);
-	//println_I("<<Async\n\r");printPacket(Packet,INFO_PRINT);
+	setPrintLevelWarningPrint();
+	println_W("<<Async\n\r");printPacket(Packet,WARN_PRINT);
 	int i;
 	for(i=0;i<Packet->use.head.DataLegnth+BowlerHeaderSize;i++){
 		send(Packet->stream[i]);
@@ -33,21 +34,21 @@ boolean avrAsyncCallbackPtr(BowlerPacket *Packet){
 	return true; 
 }
 
-void PushSerial(void){
-	uint16_t num = Get_UART_Byte_CountPassThrough();
-	//FlagBusy_IO=1;
-	//_delay_us(800);
-	sendHeader(4+1+num,"gchv");
-	send(17);
-	uint16_t i;
-	uint8_t b;
-	for(i=0;i<num;i++){
-		UARTGetArrayPassThrough(&b,1);
-		send(b);
-	}
-	//FlagBusy_IO=0;
-	//_delay_us(800);
-}
+//void PushSerial(void){
+//	uint8_t num = Get_UART_Byte_CountPassThrough();
+//	//FlagBusy_IO=1;
+//	//_delay_us(800);
+//	sendHeader(4+1+num,"gchv");
+//	send(17);
+//	uint16_t i;
+//	uint8_t b;
+//	for(i=0;i<num;i++){
+//		UARTGetArrayPassThrough(&b,1);
+//		send(b);
+//	}
+//	//FlagBusy_IO=0;
+//	//_delay_us(800);
+//}
 
 //void PushAllAdcVal(){
 //#if defined(WPIRBE)
