@@ -213,7 +213,7 @@ void SendPacketToCoProc(BowlerPacket * Packet) {
     do {
         if (ret > 0) {
             println_E("Resending:");
-            printPacket(Packet, ERROR_PRINT);
+            //printPacket(Packet, ERROR_PRINT);
             FixPacket(Packet);
         }
         ret = sendPacket(Packet);

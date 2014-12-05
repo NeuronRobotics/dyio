@@ -120,6 +120,10 @@ void CheckRev(void){
 	}
 }
 
+uint8_t GetServoPos(uint8_t pin){
+	return down[pin].ServoPos;
+}
+
 int32_t GetConfigurationDataTable(uint8_t pin){
 	return down[pin].currentConfiguration;
 }
@@ -161,7 +165,7 @@ uint8_t GetCoProConfigurations(){
 		for (i = 0; i < GetNumberOfIOChannels(); i++) {
 			down[i].currentConfiguration = get32bit(&downstreamPacketTemp,1+(i*4));
 			//println_E(__FILE__);println_E("GetCoProConfigurations");
-			setDataTableCurrentValue(i,down[i].currentConfiguration);
+			//setDataTableCurrentValue(i,down[i].currentConfiguration);
 		}
 
 		return false;
@@ -257,8 +261,8 @@ uint8_t SetAllCoProcValues(){
 		}
 
         downstreamPacketTemp.use.head.DataLegnth = 4+4+1+(4*GetNumberOfIOChannels());
-//                clearPrint();
-//        println_W("Syncing channel values ");printPacket(&downstreamPacketTemp,WARN_PRINT);
+               clearPrint();
+        println_W("Syncing channel values ");printPacket(&downstreamPacketTemp,WARN_PRINT);
 		SendPacketToCoProc(& downstreamPacketTemp);
 //		printPacket(&downstreamPacketTemp,ERROR_PRINT);
 	}
@@ -267,9 +271,14 @@ uint8_t SetAllCoProcValues(){
 //        setPrintLevelInfoPrint();
 	for(i=0;i<GetNumberOfIOChannels();i++){
 		if(isOutputMode(GetChannelMode(i)) == false){
-            if(SetValFromAsync(i,get32bit(& downstreamPacketTemp, (i*4)+1))){
+			boolean back = tmp !=getBcsIoDataTable(i)->PIN.currentValue;
+			setDataTableCurrentValue(i,get32bit(& downstreamPacketTemp, (i*4)+1));
+            if(back){
             	getBcsIoDataTable(i)->PIN.asyncDataenabled = true;
             }
+		}
+		if(GetChannelMode(i)==IS_SERVO){
+			down[i].ServoPos = get32bit(& downstreamPacketTemp, (i*4)+1);
 		}
 	}
 
@@ -315,7 +324,7 @@ uint8_t GetChannelValueCoProc(uint8_t PIN){
 	SendPacketToCoProc(& downstreamPacketTemp);
 	if (downstreamPacketTemp.use.head.RPC==_ERR)
 			return 1;
-	SetValFromAsync(PIN, downstreamPacketTemp.use.data[1]);
+	setDataTableCurrentValue(PIN, downstreamPacketTemp.use.data[1]);
 	return downstreamPacketTemp.use.data[4];
 }
 
@@ -335,7 +344,7 @@ uint8_t GetChannelValueCoProc(uint8_t PIN){
 //	v.byte.HB=downstreamPacketTemp.use.data[1];
 //	v.byte.LB=downstreamPacketTemp.use.data[2];
 //
-//	SetValFromAsync(PIN, v.Val);
+//	setDataTableCurrentValue(PIN, v.Val);
 //	return v.Val;
 //}
 

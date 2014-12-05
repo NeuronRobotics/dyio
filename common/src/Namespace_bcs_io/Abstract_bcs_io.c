@@ -320,7 +320,7 @@ boolean GetChanelValueFromPacket(BowlerPacket * Packet) {
         } else {
             return false;
         }
-        if(isOutputMode(GetChannelMode(pin))==false){
+        if(isOutputMode(GetChannelMode(pin))==false ){
         	setDataTableCurrentValue(pin,data);
         }else{
         	data = getBcsIoDataTable(pin)->PIN.currentValue;
@@ -346,7 +346,7 @@ boolean GetAllChanelValueFromPacket(BowlerPacket * Packet) {
             	setDataTableCurrentValue(i,tmp);
             }else{
                  if(GetChannelMode(i) == IS_SERVO){
-                    tmp = getBcsIoDataTable(i)->PIN.currentValue & 0x000000ff;
+                    tmp = GetServoPos(i);
                 }else
                     tmp = getBcsIoDataTable(i)->PIN.currentValue;
             }

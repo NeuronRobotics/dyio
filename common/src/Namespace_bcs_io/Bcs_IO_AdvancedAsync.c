@@ -138,10 +138,16 @@ boolean configAdvancedAsync(BowlerPacket * Packet){
 
 
 void startAdvancedAsyncDefault(uint8_t pin){
-	println_I("Starting advanced async on channel: ");p_int_I(pin);
-	if(isOutputMode(GetChannelMode(pin))==false)
-		setDataTableCurrentValue(pin,1);
-	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=1;
+	println_W("Starting advanced async on channel: ");p_int_W(pin);
+	int mode =GetChannelMode(pin);
+	if(isOutputMode(mode)==false){
+		if(mode == IS_SERVO || mode == IS_PWM || mode == IS_DC_MOTOR_VEL ){
+			setDataTableCurrentValue(pin,GetConfigurationDataTable(pin));
+		}else{
+			setDataTableCurrentValue(pin,1);
+		}
+	}
+	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=getDataTableCurrentValue(pin);
 	getBcsIoDataTable(pin)->asyncDataTimer.MsTime=getMs();
 	getBcsIoDataTable(pin)->asyncDataTimer.setPoint=10;
 	getBcsIoDataTable(pin)->PIN.asyncDataType = NOTEQUAL;
@@ -163,15 +169,6 @@ void startAdvancedAsyncDefault(uint8_t pin){
 
 	RunEvery(getPinsScheduler( pin));
 	//println_I("Async OK");
-}
-
-
-boolean SetValFromAsync(int pin, int value){
-	//println_E(__FILE__);println_E("SetValFromAsync");
-
-	boolean back = value !=getBcsIoDataTable(pin)->PIN.currentValue;
-	setDataTableCurrentValue(pin,value);
-	return back;
 }
 
 int GetValFromAsync(int pin){

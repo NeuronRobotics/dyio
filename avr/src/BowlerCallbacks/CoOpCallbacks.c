@@ -31,11 +31,11 @@
 void initPinState(uint8_t i){
 	uint8_t mode =GetChannelMode(i);
 	if ((mode == IS_ANALOG_IN) ){
-		SetValFromAsync(i,GetADC(i));
+		setDataTableCurrentValue(i,GetADC(i));
 	}else if(((mode == IS_DI) )  || ((mode == IS_COUNTER_INPUT_HOME)||(mode == IS_COUNTER_OUTPUT_HOME))){
-		SetValFromAsync(i,GetDIO(i)?1:0);
+		setDataTableCurrentValue(i,GetDIO(i)?1:0);
 	}else{
-		SetValFromAsync(i,0);
+		//setDataTableCurrentValue(i,0);
 	}
 }
 
@@ -43,7 +43,7 @@ boolean checkAnalog(){
 	int i=0;
 	for(i=8;i<16;i++){
 		if ((GetChannelMode(i) == IS_ANALOG_IN) ){
-			SetValFromAsync(i, GetADC(i));
+			setDataTableCurrentValue(i, GetADC(i));
 		}
 	}
 	return true; 
@@ -55,10 +55,10 @@ boolean checkDigital(){
 		boolean run = (((mode == IS_DI) )  || ((mode == IS_COUNTER_INPUT_HOME)||(mode == IS_COUNTER_OUTPUT_HOME) || (mode == IS_SERVO)));
 		if (run){
 			if(mode == IS_SERVO){
-				SetValFromAsync(i,GetServoPos(i));
+				//setDataTableCurrentValue(i,GetServoPos(i));
 			}else{
 				if(GetValFromAsync(i) != GetDIO(i)){
-					SetValFromAsync(i,GetDIO(i));
+					setDataTableCurrentValue(i,GetDIO(i));
 					//printAsync();
 				}
 			}

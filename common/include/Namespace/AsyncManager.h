@@ -61,6 +61,7 @@ typedef struct _AdvancedAsyncData{
 
 boolean pushAsyncReady( uint8_t pin);
 void startAdvancedAsyncDefault(uint8_t pin);
+int32_t GetConfigurationDataTable(uint8_t pin);
 void setAsyncLocal(uint8_t channel,boolean async);
 void configAdvancedAsyncNotEqual(uint8_t pin,float time);
 

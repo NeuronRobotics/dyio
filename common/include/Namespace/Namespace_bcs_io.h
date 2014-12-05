@@ -148,7 +148,7 @@ typedef struct __attribute__((__packed__))  _Downstream_Data
 
 
 	uint32_t  currentConfiguration;
-
+	uint8_t ServoPos;
 	//Used to detect any hardware state change and synchronize
 	boolean changeValue;
 	boolean changeConfiguration;
@@ -210,6 +210,9 @@ RunEveryData * getPinsScheduler(int pin);
 void setNoAsyncMode(boolean m);
 boolean isOutputMode(uint8_t mode);
 #define setDataTableCurrentValue(A, B) 	println(__FILE__,(isOutputMode(GetChannelMode(A))&&B !=getBcsIoDataTable(A)->PIN.currentValue)?ERROR_PRINT:INFO_PRINT); _setDataTableCurrentValue(A,B);
+#define getDataTableCurrentValue(A) (getBcsIoDataTable(A)->PIN.currentValue)
+uint8_t GetServoPos(uint8_t pin);
+
 /**
  * Sets the datable value and returns true if the value is new, false if it is the same as it was
  */

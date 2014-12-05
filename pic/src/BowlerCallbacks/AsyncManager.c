@@ -27,12 +27,12 @@ void ProcessAsyncData(BowlerPacket * Packet){
 			ana.byte.LB = Packet->use.data[2];
 			//ADC_val[pin-8]=ana.Val;
 			if(ana.Val>=0 && ana.Val<1024)
-				SetValFromAsync(pin,ana.Val);//asyncData[pin].currentVal=ana.Val;
+				setDataTableCurrentValue(pin,ana.Val);//asyncData[pin].currentVal=ana.Val;
 			println_W("***Setting analog value: ");p_int_W(pin);print_W(", ");p_int_W(ana.Val);
 		}
 		else if((mode == IS_DI) || (mode == IS_COUNTER_INPUT_HOME)|| (mode == IS_COUNTER_OUTPUT_HOME) || mode == IS_SERVO){
 			//DIG_val[pin]=Packet->use.data[1];
-			SetValFromAsync(pin,Packet->use.data[1]);//asyncData[pin].currentVal=Packet->use.data[1];
+			setDataTableCurrentValue(pin,Packet->use.data[1]);//asyncData[pin].currentVal=Packet->use.data[1];
 			println_I("***Setting digital value: ");p_int_I(pin);print_I(", ");p_int_I(Packet->use.data[1]);//printStream(DIG_val,NUM_PINS);
 		}else {
 			if(IsAsync(pin)){
@@ -51,7 +51,7 @@ void ProcessAsyncData(BowlerPacket * Packet){
 				ana.byte.LB = Packet->use.data[(i*2)+1];
 				//ADC_val[pin-8]=ana.Val
 				if(ana.Val>=0 && ana.Val<1024);
-					SetValFromAsync(pin,ana.Val);//asyncData[pin].currentVal=ana.Val;
+					setDataTableCurrentValue(pin,ana.Val);//asyncData[pin].currentVal=ana.Val;
 			}
 		}
 	}else if (Packet->use.head.RPC==GetRPCValue("dasn")){
@@ -59,7 +59,7 @@ void ProcessAsyncData(BowlerPacket * Packet){
 		for(i=0;i<GetNumberOfIOChannels();i++){
 			uint8_t mode = GetChannelMode(i);
 			if((mode == IS_DI) || (mode == IS_COUNTER_INPUT_HOME)|| (mode == IS_COUNTER_OUTPUT_HOME)|| (mode == IS_SERVO)){
-				SetValFromAsync(i,Packet->use.data[i]);//asyncData[i].currentVal=Packet->use.data[i];
+				setDataTableCurrentValue(i,Packet->use.data[i]);//asyncData[i].currentVal=Packet->use.data[i];
 			}
 		}
 		println_I("***Setting All Digital value: ");
@@ -70,7 +70,7 @@ void ProcessAsyncData(BowlerPacket * Packet){
 			val = get32bit(Packet, (i*4)+1);
 			if(getBcsIoDataTable(i)->PIN.currentValue!=val){
 				println_W("Data on Pin ");p_int_W(i);print_W(" to val ");p_int_W(val);
-				SetValFromAsync(i,val);//
+				setDataTableCurrentValue(i,val);//
 			}
 		}
 	}else{
