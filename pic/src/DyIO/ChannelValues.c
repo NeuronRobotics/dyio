@@ -135,7 +135,7 @@ boolean ConfigureChannelHW(uint8_t pin, uint8_t numValues, int32_t * data) {
  *
  */
 boolean SetStreamHW(uint8_t pin,uint8_t numValues,uint8_t * data){
-	println_E("Set Stream Stub");
+	//println_E("Set Stream Stub");
 	uint8_t mode = GetChannelMode(pin);
 
     if (isStremChannelMode(mode)) {
@@ -144,7 +144,7 @@ boolean SetStreamHW(uint8_t pin,uint8_t numValues,uint8_t * data){
               case IS_SPI_MOSI:
               case IS_SPI_MISO:
               case IS_SPI_SCK:
-            	  LoadSPITxData(numValues, bData);
+            	  LoadSPITxData(numValues-1, bData);
                   //SendPacketToSPIFromArray(numValues, bData);
                   return true;
               case IS_UART_TX:
@@ -168,7 +168,7 @@ boolean SetStreamHW(uint8_t pin,uint8_t numValues,uint8_t * data){
  * Data is stored into numValues and data
  */
 boolean GetStreamHW(uint8_t pin,uint8_t*  numValues,uint8_t * data){
-	println_E("Get Stream Stub");
+	//println_E("Get Stream Stub");
 	 uint8_t mode = GetChannelMode(pin);
    if (isStremChannelMode(mode)) {
        uint8_t * bData = (uint8_t *) data;

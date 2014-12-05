@@ -85,7 +85,7 @@ void SyncSPIData(){
 	if(SSPin<3 || FifoGetByteCount(&storeTx)==0){
 		return;
 	}
-	println_W("SPI Sync");
+	println_W("SPI SS# ");p_int_W(SSPin);
 	if(!SetCoProcMode(SSPin,IS_DO))
 		SetChannelValueCoProc(SSPin,1);
 	SetChannelValueCoProc(SSPin,0);
