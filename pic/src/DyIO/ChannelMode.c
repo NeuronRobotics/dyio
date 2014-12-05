@@ -12,7 +12,7 @@ boolean setMode(uint8_t pin,uint8_t mode){
 	//println_I("Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_int_I(pin);
 	//uint8_t currentMode = GetChannelMode(pin);
 	if(GetChannelMode(pin)== mode){
-		println_W("Re-Setting Mode: ");printMode(mode,WARN_PRINT);print_W(" on: ");p_int_W(pin);
+		//println_W("Re-Setting Mode: ");printMode(mode,WARN_PRINT);print_W(" on: ");p_int_W(pin);
 		//return true;
 	}
 	forceModeDownstream( pin);
@@ -28,7 +28,7 @@ boolean setMode(uint8_t pin,uint8_t mode){
                             return false;
                     }
                 }
-                println_E("Setting servo dfault position to: "); p_int_E(GetConfigurationDataTable(pin));
+                //println_E("Setting servo dfault position to: "); p_int_E(GetConfigurationDataTable(pin));
                 /** no break, fall through to set datatable*/
 
         case IS_PWM:
