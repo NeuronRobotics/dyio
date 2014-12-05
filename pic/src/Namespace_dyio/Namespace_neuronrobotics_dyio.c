@@ -7,7 +7,7 @@
 #include "UserApp.h"
 
 //char dyioNSName[] = "neuronrobotics.dyio.*;1.0;;";
-RunEveryData syncVolt = {0, 200};
+RunEveryData syncVolt = {0, 30};
 RunEveryData ppm = {0, 50};
 
 boolean pwr = false; 
@@ -50,21 +50,10 @@ boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidA
 
 
 
-    //	if ((RunEvery(&syncVolt)>0)){
-    //		//UpdateAVRLED();
-    //		println_I("Voltages\n");
-    //		int i;
-    //		for(i=12;i<16;i++){
-    //			uint32_t val = getDyIOVoltage(i);
-    //			println_I("\t# ");p_int_I(i);
-    //			print_I("\t");p_int_I(val);
-    //			print_I("\t");p_int_I(getAdcRaw(i, 5));
-    ////			UINT32_UNION tmp;
-    ////			tmp.Val = val;
-    ////			printStream_I(tmp.v,4);
-    ////			println_I(" ");
-    //		}
-    //	}
+	if ((RunEvery(&syncVolt)>0)){
+		SyncDataTable();
+	}
+
     CheckSwitches();
 
     if (pwr) {
@@ -83,7 +72,7 @@ boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidA
         unlockServos();
     }
 
-    SyncDataTable();
+
 
     SetColor((isLocked()) ? 1 : 0, (isActive() && !isLocked()) ? 1 : 0, 1);
 
