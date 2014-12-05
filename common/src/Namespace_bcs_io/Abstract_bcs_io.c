@@ -241,7 +241,7 @@ boolean SetChanelValueFromPacket(BowlerPacket * Packet) {
         data = get32bit(Packet, 1);
 
         time =  get32bit(Packet, 5);
-        println_W("Setting on pin=");p_int_W(pin); print_W(" value= ");p_int_W(data); print_W(" time= ");p_fl_W(time);
+        //println_W("Setting on pin=");p_int_W(pin); print_W(" value= ");p_int_W(data); print_W(" time= ");p_fl_W(time);
 		if(mode == IS_SERVO)
 			data = (data&0x000000ff) + (time<<16);
 
