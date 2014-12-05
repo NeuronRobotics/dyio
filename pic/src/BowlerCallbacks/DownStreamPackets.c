@@ -311,11 +311,9 @@ void SetChannelValueCoProc(uint8_t PIN,uint8_t state){
 		downstreamPacketTemp.use.head.Method=BOWLER_POST;
 		downstreamPacketTemp.use.head.RPC=GetRPCValue("schv");
 		downstreamPacketTemp.use.data[0]=PIN;
-		downstreamPacketTemp.use.data[1]=0;
-		downstreamPacketTemp.use.data[2]=0;
-		downstreamPacketTemp.use.data[3]=0;
-		downstreamPacketTemp.use.data[4]=state;
-		downstreamPacketTemp.use.head.DataLegnth=8;
+		set32bit(& downstreamPacketTemp, state, 1);
+		set32bit(& downstreamPacketTemp, 0, 5);// zero ms
+		downstreamPacketTemp.use.head.DataLegnth=4+1+4+4;
 		SendPacketToCoProc(& downstreamPacketTemp);
 		retry++;
 		buttonCheck(13);
@@ -323,18 +321,18 @@ void SetChannelValueCoProc(uint8_t PIN,uint8_t state){
 
 }
 
-uint8_t GetChannelValueCoProc(uint8_t PIN){
-	LoadCorePacket(& downstreamPacketTemp);
-	downstreamPacketTemp.use.head.Method=BOWLER_GET;
-	downstreamPacketTemp.use.head.RPC=GetRPCValue("gchv");
-	downstreamPacketTemp.use.data[0]=PIN;
-	downstreamPacketTemp.use.head.DataLegnth=5;
-	SendPacketToCoProc(& downstreamPacketTemp);
-	if (downstreamPacketTemp.use.head.RPC==_ERR)
-			return 1;
-	setDataTableCurrentValue(PIN, downstreamPacketTemp.use.data[1]);
-	return downstreamPacketTemp.use.data[4];
-}
+//uint8_t GetChannelValueCoProc(uint8_t PIN){
+//	LoadCorePacket(& downstreamPacketTemp);
+//	downstreamPacketTemp.use.head.Method=BOWLER_GET;
+//	downstreamPacketTemp.use.head.RPC=GetRPCValue("gchv");
+//	downstreamPacketTemp.use.data[0]=PIN;
+//	downstreamPacketTemp.use.head.DataLegnth=5;
+//	SendPacketToCoProc(& downstreamPacketTemp);
+//	if (downstreamPacketTemp.use.head.RPC==_ERR)
+//			return 1;
+//	setDataTableCurrentValue(PIN, downstreamPacketTemp.use.data[1]);
+//	return downstreamPacketTemp.use.data[4];
+//}
 
 //uint16_t GetADC(uint8_t PIN){
 //	WORD_VAL v;

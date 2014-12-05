@@ -222,7 +222,7 @@ void SendPacketToCoProc(BowlerPacket * Packet) {
         //		if(ret!=0){
         //			initCoProcCom();
         //		}
-    } while ((i != MAX_RETRY) && (ret != 0) && valadateRPC(Packet->use.head.RPC, rpc));
+    } while (((i != MAX_RETRY) && (ret != 0)) || !(valadateRPC(Packet->use.head.RPC, rpc)));
 
 
     if (i == MAX_RETRY) {
@@ -294,12 +294,12 @@ uint8_t sendPacket(BowlerPacket * Packet) {
                     //println_I("Not async");
                     if (!valadateRPC(downstream.use.head.RPC, Packet->use.head.RPC)) {
                         println_E("Valadation failed, junk TX>>");
-//                        printPacket(Packet, ERROR_PRINT);
-//                        print_E("\nRX<<\n");
-//                        printPacket(&downstream, ERROR_PRINT);
+                        printPacket(Packet, ERROR_PRINT);
+                        print_E("\nRX<<\n");
+                        printPacket(&downstream, ERROR_PRINT);
                         //SendPacketUARTCoProc(Packet->stream,packetSize);
                         SetColor(1, 0, 0);
-                        //wait.MsTime += 2;
+                        return 3;
                     } else {
 
                         copyPacket(&downstream, Packet);
