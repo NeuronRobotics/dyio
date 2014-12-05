@@ -315,6 +315,7 @@ void SetChannelValueCoProc(uint8_t PIN,uint8_t state){
 		set32bit(& downstreamPacketTemp, 0, 5);// zero ms
 		downstreamPacketTemp.use.head.DataLegnth=4+1+4+4;
 		SendPacketToCoProc(& downstreamPacketTemp);
+		setDataTableCurrentValue(PIN,state);
 		retry++;
 		buttonCheck(13);
 	}while(downstreamPacketTemp.use.head.RPC != _RDY);

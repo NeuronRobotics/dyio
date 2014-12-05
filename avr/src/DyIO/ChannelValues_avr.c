@@ -297,14 +297,14 @@ boolean isASetableMode(uint8_t mode){
 
 
 boolean SetChanVal(uint8_t pin,int32_t bval, float time){
-	//println_W("SetChanVal\tchan: ");p_int_W(pin);
-	//print_W(" \tto val: ");p_int_W(bval);
+	println_W("SetChanVal\tchan: ");p_int_W(pin);
+	print_W(" \tto val: ");p_int_W(bval);
 	uint8_t mode = GetChannelMode(pin);
 
 		switch (mode){
 		case IS_DI:
 		case IS_DO:
-			SetDIO(pin,bval?1:0);
+			SetDIO(pin,(bval<=0)?0:1);
 			break;
 		case IS_SERVO:
 			SetServoPos(pin,bval,time);
