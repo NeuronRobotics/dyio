@@ -19,5 +19,6 @@ void SendPacketToSPIFromArray(uint8_t numBytes,uint8_t * data);
 
 boolean LoadSPITxData(uint8_t numValues,uint8_t * data);
 uint8_t GetSPIRxData(uint8_t * data);
+uint32_t getNumberOfSPIRxBytes();
 
 #endif /* SPI_H_ */

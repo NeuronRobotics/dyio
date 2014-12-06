@@ -26,6 +26,8 @@ void POWER(BowlerPacket * packet);
 void SetCoProcLED(boolean a, boolean b, int batt);
 void DownstreamPowerChange(void);
 void UpstreamPushPowerChange(void);
+void UpstreamPushSerialStream(void);
+void UpstreamPushSPIlStream(void);
 void GetAllModes(BowlerPacket * pack);\
 
 void PushCoProcAsync(void);

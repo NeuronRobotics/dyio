@@ -30,6 +30,9 @@ void InitSPIDyIO(void){
 	InitByteFifo(&storeRx,privateSerialRX,sizeof(privateSerialRX));
 	InitByteFifo(&storeTx,privateSerialTX,sizeof(privateSerialTX));
 }
+uint32_t getNumberOfSPIRxBytes(){
+	return FifoGetByteCount(&storeRx);
+}
 
 boolean LoadSPITxData(uint8_t numValues,uint8_t * data){
 	int i;
