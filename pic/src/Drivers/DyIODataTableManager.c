@@ -1,7 +1,7 @@
 #include "UserApp.h"
-
-static uint8_t privateSerialRX[20];
-static uint8_t privateSerialTX[20];
+#define serialBufferSize 40
+static uint8_t privateSerialRX[serialBufferSize];
+static uint8_t privateSerialTX[serialBufferSize];
 static BYTE_FIFO_STORAGE storeRx;
 static BYTE_FIFO_STORAGE storeTx;
 //BowlerPacket dataTableSync;
@@ -28,8 +28,8 @@ void setBrownOutDetect(boolean b){
 }
 
 void InitializeDyIODataTableManager(){
-	InitByteFifo(&storeRx,privateSerialRX,BOWLER_PacketSize);
-	InitByteFifo(&storeTx,privateSerialTX,BOWLER_PacketSize);
+	InitByteFifo(&storeRx,privateSerialRX,serialBufferSize);
+	InitByteFifo(&storeTx,privateSerialTX,serialBufferSize);
 
 }
 //RunEveryData printData = {0,10000};
@@ -48,8 +48,9 @@ void SyncDataTable(){
 	if( FifoGetByteCount(&storeTx)>0){
 		//println_E("Stub push serial here: ");
 		while(FifoGetByteCount(&storeTx)>0){
-			p_int_E(FifoGetByte(&storeTx,&err));
-			print_E(" , ");
+			//p_int_E(FifoGetByte(&storeTx,&err));
+			//print_E(" , ");
+			FifoAddByte(&storeRx,FifoGetByte(&storeTx,&err),&err);
 		}
 	}
 	if(GetChannelMode(16) == IS_UART_RX && getBcsIoDataTable(16)->PIN.currentValue > 0){
@@ -65,6 +66,10 @@ void SyncDataTable(){
 
 }
 
+uint32_t getNumberOfSerialRxBytes(){
+	return FifoGetByteCount(&storeRx);
+}
+
 boolean LoadSerialTxData(uint8_t numValues,uint8_t * data){
 	int i;
 	uint8_t err;
@@ -77,7 +82,7 @@ boolean LoadSerialTxData(uint8_t numValues,uint8_t * data){
 uint8_t GetSerialRxData(uint8_t * data){
 	//int i;
 	//uint8_t err;
-	uint8_t numValues = FifoGetByteCount(&storeRx);
+	uint8_t numValues =  getNumberOfSerialRxBytes();
 	if(numValues>0)
 		numValues = FifoGetByteStream(&storeRx,data,numValues);
 	return numValues;
