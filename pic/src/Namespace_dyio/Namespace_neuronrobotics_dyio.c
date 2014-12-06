@@ -59,8 +59,7 @@ boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidA
     if (pwr) {
         DownstreamPowerChange();
         pwr = false; 
-        POWER(Packet);
-        pidAsyncCallbackPtr(Packet);
+        UpstreamPushPowerChange();
     }
 
     float now = getMs();
@@ -72,7 +71,12 @@ boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidA
         unlockServos();
     }
 
-
+    if(getNumberOfSerialRxBytes()>0){
+    	UpstreamPushSerialStream();
+    }
+    if(getNumberOfSPIRxBytes()>0){
+    	UpstreamPushSPIlStream();
+	}
 
     SetColor((isLocked()) ? 1 : 0, (isActive() && !isLocked()) ? 1 : 0, 1);
 
