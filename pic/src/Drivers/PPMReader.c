@@ -137,15 +137,16 @@ void GetPPMDataToPacket(BowlerPacket * Packet){
 	int i;
 	LoadCorePacket(Packet);
 	Packet->use.head.Method=BOWLER_POST;
-	Packet->use.head.RPC=GetRPCValue("gchv");
+	Packet->use.head.RPC=GetRPCValue("strm");
 	Packet->use.data[0]=23;
+	Packet->use.data[1]=NUM_PPM_CHAN*2;
 	for(i=0;i<NUM_PPM_CHAN;i++){
-		Packet->use.data[1+i]=ppmData[i];
+		Packet->use.data[2+i]=ppmData[i];
 	}
 	for(i=0;i<NUM_PPM_CHAN;i++){
-		Packet->use.data[1+i+NUM_PPM_CHAN]=ppmLink[i];
+		Packet->use.data[2+i+NUM_PPM_CHAN]=ppmLink[i];
 	}
-	Packet->use.head.DataLegnth=4+1+(NUM_PPM_CHAN*2);
+	Packet->use.head.DataLegnth=4+1+1+(NUM_PPM_CHAN*2);
 	Packet->use.head.MessageID=0;
 	SetCRC(Packet);
 }
