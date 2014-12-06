@@ -37,9 +37,9 @@ void InitCounterPins(void){
 		 Counter[i].CURRENT=0;
 		 Counter[i].SETPOINT=0;
 	}
-	//OpenTimer3(T3_ON | T3_SOURCE_INT | T3_PS_1_256, (0x1000/10 ));
-	//ConfigIntTimer3(T3_INT_ON | T3_INT_PRIOR_5);
-    //println_I("Initialized the Counter module");
+	OpenTimer3(T3_ON | T3_SOURCE_INT | T3_PS_1_256, (0x1000/10 ));
+	ConfigIntTimer3(T3_INT_ON | T3_INT_PRIOR_5);
+    println_I("Initialized the Counter module");
 }
 void ClearCounter(uint8_t chan){
 	uint8_t group = channelToCounterGroup(chan);
@@ -61,9 +61,6 @@ void ClearCounter(uint8_t chan){
 	if (group > 3)
 		return;
 	//println_I("Clearing counter channel:");p_int_I(group);
-
-	//Counter[chan].CURRENT=0;
-	//Counter[chan].SETPOINT=0;
 	Counter[group].STEP_INDEX=0;
 	Counter[group].TimeOffset=0;
 	Counter[group].TimeStep=0;
@@ -117,7 +114,7 @@ boolean StartCounterInput(uint8_t chan){
 		SetCoProcMode(pinmap[group].INT,IS_COUNTER_INPUT_INT);
 	if(GetChannelMode(pinmap[group].HOME)!=IS_COUNTER_INPUT_HOME)
 		SetCoProcMode(pinmap[group].HOME ,IS_COUNTER_INPUT_HOME);
-	//initCounterAsync(group, count);
+
 	switch (group){
 	case 0:
 		CHAN0P0_tris=INPUT;
