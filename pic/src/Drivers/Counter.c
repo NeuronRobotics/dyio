@@ -337,7 +337,12 @@ int64_t GetCounterByGroup(uint8_t group){
 	return Counter[group].CURRENT;
 }
 int64_t GetCounterByChannel(uint8_t channel){
-	return GetCounterByGroup(channelToCounterGroup(channel));
+	int64_t val = GetCounterByGroup(channelToCounterGroup(channel));
+	uint8_t mode = GetChannelMode(channel);
+	if((mode == IS_COUNTER_INPUT_DIR || mode==IS_COUNTER_INPUT_INT) && val<4){
+		val-=1;
+	}
+	return val;
 }
 int64_t GetCounterOutput(uint8_t chan){
 	return Counter[channelToCounterGroup(chan)].CURRENT;
