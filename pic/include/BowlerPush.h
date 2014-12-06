@@ -34,6 +34,9 @@ void PushCoProcAsync(void);
 
 void PushADCval(uint8_t pin,uint16_t val);
 void PushDIval(uint8_t pin,uint8_t val);
+void DownstreamSerialStreamSet(BYTE_FIFO_STORAGE * txBuffer);
+
+void DownstreamSerialStreamGet(BYTE_FIFO_STORAGE * rxBuffer);
 
 
 #endif /* PUSH_H_ */

@@ -58,8 +58,8 @@ void SyncDataTable(){
 		}
 	}
 	if(GetChannelMode(16) == IS_UART_RX && getBcsIoDataTable(16)->PIN.currentValue > 0){
-		//println_E("Stub pull serial here: ");
-
+		println_E("Serial port has: ");p_int_E(getBcsIoDataTable(16)->PIN.currentValue );
+		setDataTableCurrentValue(16,0);
 	}
     SyncConfigurations();
 	float end = getMs() - start;

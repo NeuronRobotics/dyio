@@ -47,6 +47,36 @@ void setCoProcBrownOutMode(boolean b){
 
 }
 
+void DownstreamSerialStreamSet(BYTE_FIFO_STORAGE * txBuffer){
+	SetColor(0,1,0);
+	LoadCorePacket(& downstreamPacketTemp);
+	downstreamPacketTemp.use.head.RPC=GetRPCValue("strm");
+	downstreamPacketTemp.use.head.MessageID=3;
+	downstreamPacketTemp.use.head.Method=BOWLER_POST;
+	downstreamPacketTemp.use.data[0] = 16; //the serial rx pin
+	downstreamPacketTemp.use.data[1]=FifoGetByteCount(txBuffer);
+	FifoGetByteStream(txBuffer,& downstreamPacketTemp.use.data[2],downstreamPacketTemp.use.data[1]);
+	downstreamPacketTemp.use.head.DataLegnth = 4+1+1+downstreamPacketTemp.use.data[1];
+	SendPacketToCoProc(& downstreamPacketTemp);
+}
+
+void DownstreamSerialStreamGet(BYTE_FIFO_STORAGE * rxBuffer){
+	int i;
+	uint8_t err;
+	SetColor(0,1,0);
+	LoadCorePacket(& downstreamPacketTemp);
+	downstreamPacketTemp.use.head.RPC=GetRPCValue("strm");
+	downstreamPacketTemp.use.head.MessageID=3;
+	downstreamPacketTemp.use.head.Method=BOWLER_GET;
+	downstreamPacketTemp.use.data[0] = 17; //the serial rx pin
+	PutBowlerPacket(& downstreamPacketTemp);
+
+	for(i=0;i<downstreamPacketTemp.use.data[1];i++){
+		FifoAddByte(rxBuffer,downstreamPacketTemp.use.data[2+i],&err);
+	}
+}
+
+
 void DownstreamPowerChange(void){
 
 	LoadCorePacket(& downstreamPacketTemp);
