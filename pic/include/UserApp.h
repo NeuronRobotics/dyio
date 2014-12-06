@@ -64,4 +64,7 @@ void buttonCheck(uint8_t code);
 void MyServer();
 void UserInit(void);
 
+#define MAX_RETRY 5
+#define DELAY_TIMEOUT 200
+
 #endif /* USERAPP_H_ */

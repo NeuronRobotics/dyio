@@ -58,7 +58,7 @@ void SyncDataTable(){
 	}
     SyncConfigurations();
 	float end = getMs() - start;
-	if(end > 60){
+	if(end > DELAY_TIMEOUT){
 		println_W("Long Sync time = ");
 		p_fl_W(end);
 	}

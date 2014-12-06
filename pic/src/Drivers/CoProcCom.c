@@ -9,8 +9,7 @@
 #include "UserApp.h"
 extern volatile unsigned int        U2BRG __attribute__((section("sfrs")));
 
-#define MAX_RETRY 5
-#define DELAY_TIMEOUT 40
+
 
 boolean valadateRPC(int response, int sent);
 uint8_t sendPacket(BowlerPacket * Packet);
@@ -213,7 +212,7 @@ void SendPacketToCoProc(BowlerPacket * Packet) {
     do {
         if (ret > 0) {
             println_E("Resending:");
-            //printPacket(Packet, ERROR_PRINT);
+            printPacket(Packet, ERROR_PRINT);
             FixPacket(Packet);
         }
         ret = sendPacket(Packet);
