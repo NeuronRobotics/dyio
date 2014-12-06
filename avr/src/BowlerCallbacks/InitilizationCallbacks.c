@@ -21,13 +21,13 @@
 
 void UserInit(void){
 	StartCritical();
-
+	UCSR1B=0;
 	//println_W(startmessage);// All printfDEBUG functions do not need to be removed from code if debug is disabled
-#if defined(DEBUG)
-	ConfigureUART(115200);
-	if(GetChannelMode(16)!=IS_UART_TX)
-		setMode(16,IS_UART_TX);
-#endif
+//#if defined(DEBUG)
+//	ConfigureUART(115200);
+//	if(GetChannelMode(16)!=IS_UART_TX)
+//		setMode(16,IS_UART_TX);
+//#endif
 	setPrintLevelInfoPrint();
 	println_I(/*PSTR*/("\e[1;1H\e[2J ***Starting User initialization***"));
 	InitFlagPins();
@@ -44,7 +44,18 @@ void UserInit(void){
 
 
 
-	InitPins();
+	println_I(/*PSTR*/("Starting Pin Functions"));
+	InitPinFunction();
+	println_I(/*PSTR*/("Starting Pin Modes"));
+	InitPinModes();
+	int i=0;
+	//println_I(/*PSTR*/("Starting hardware modes"));
+	for(i=0;i<GetNumberOfIOChannels();i++){
+		initPinState(i);
+		configAdvancedAsyncNotEqual(i,10);
+		setAsyncLocal(i,true) ;
+	}
+	//println_I(/*PSTR*/("DONE pin initialization"));
 
 	//println_I(/*PSTR*/("Adding IO Initialization"));
 	addNamespaceToList((NAMESPACE_LIST *)get_bcsIoNamespace());

@@ -14,48 +14,52 @@
 #endif
 
 
-uint8_t privateRXUART[UART_PASS_BUFF_SIZE];
-BYTE_FIFO_STORAGE store;
+static uint8_t privateRXUART[UART_PASS_BUFF_SIZE];
+static BYTE_FIFO_STORAGE store;
 
 boolean validBaud(uint32_t baud);
 
+static boolean UartInit = false;
+
 void InitUART(void){
+
+	//println_W("Uart Initialization: ");
 	if(getPrintLevel() == NO_PRINT){
 		uint32_t baudrate = EEReadBaud();
 		if (validBaud(baudrate) == false) {
 			baudrate = 19200;
 			validBaud(baudrate);
 		}
-
-		SetPinTris(16,OUTPUT);
-		SetPinTris(17,INPUT);
-		SetDIO(17,ON);
-
-		/* set the framing to 8N1 */
-		UCSR1C = ((1<< UCSZ10)|(1<< UCSZ11));
-		/* rx interrupts enabled, rx and tx enabled, 8-bit data */
-		UCSR1B =( _BV(RXCIE1) | _BV(RXEN1) | _BV(TXEN1));
-		UCSR1A = 0x00;
-		//println_I("Uart Initialization: ");
-		InitByteFifo(&store,privateRXUART,UART_PASS_BUFF_SIZE);
 	}
+	SetPinTris(16,OUTPUT);
+	SetPinTris(17,INPUT);
+	SetDIO(17,ON);
+	InitByteFifo(&store,privateRXUART,UART_PASS_BUFF_SIZE);
+
+	/* set the framing to 8N1 */
+	UCSR1C = ((1<< UCSZ10)|(1<< UCSZ11));
+	/* rx interrupts enabled, rx and tx enabled, 8-bit data */
+	UCSR1B =( _BV(RXCIE1) | _BV(RXEN1) | _BV(TXEN1));
+	UCSR1A = 0x00;
+	UartInit=true;
 
 }
 void StopUartPassThrough(uint8_t pin){
-	if(getPrintLevel() != NO_PRINT)
-		return;
+
 	if (!(	pinHasFunction(pin,IS_UART_RX)||
 			pinHasFunction(pin,IS_UART_TX)
 		)){
 		return;
 	}
-	UCSR1B=0;
+	if(getPrintLevel() != NO_PRINT)
+		UCSR1B=0;
 	//InitByteFifo(&store,privateRXUART,sizeof(privateRXUART));
 	switch(GetChannelMode(pin)){
 		case IS_UART_TX:
 		case IS_UART_RX:
 			configPinMode(16,IS_DI,INPUT,ON);
 			configPinMode(17,IS_DI,INPUT,ON);
+			UartInit=false;
 	}
 }
 
@@ -115,15 +119,21 @@ ISR(USART1_RX_vect){
 	//while ((UCSR0A & 0x80) == 0 );
 	//read = UDR1;
 	//AddBytePassThrough(read);
-	uint8_t err;
-	FifoAddByte(&store,UDR1,&err);
+	if(UartInit){
+		uint8_t err;
+		FifoAddByte(&store,UDR1,&err);
+	}
 }
 
 void UARTGetArrayPassThrough(uint8_t *packet,uint16_t size){
-	FifoGetByteStream(&store,packet,size);
+	if(UartInit)
+		FifoGetByteStream(&store,packet,size);
 }
 
 uint16_t Get_UART_Byte_CountPassThrough(void){
-	return FifoGetByteCount(&store);
+	if(UartInit)
+		return FifoGetByteCount(&store);
+	else
+		return 0;
 }
 

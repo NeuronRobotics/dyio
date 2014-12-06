@@ -183,7 +183,7 @@ boolean ConfigureChannelHW(uint8_t pin,uint8_t numValues,int32_t * data){
  *
  */
 boolean SetStreamHW(uint8_t pin,uint8_t numValues,uint8_t * data){
-	println_E("Set Stream Stub");
+	//println_E("Set Stream Stub");
 	return true;
 }
 
@@ -193,7 +193,7 @@ boolean SetStreamHW(uint8_t pin,uint8_t numValues,uint8_t * data){
  * Data is stored into numValues and data
  */
 boolean GetStreamHW(uint8_t pin,uint8_t*  numValues,uint8_t * data){
-	println_E("Get Stream Stub");
+	//println_E("Get Stream Stub");
 	return true;
 }
 
@@ -297,8 +297,8 @@ boolean isASetableMode(uint8_t mode){
 
 
 boolean SetChanVal(uint8_t pin,int32_t bval, float time){
-	println_W("SetChanVal\tchan: ");p_int_W(pin);
-	print_W(" \tto val: ");p_int_W(bval);print_W(" \ttime: ");p_fl_W(time);
+//	println_W("SetChanVal\tchan: ");p_int_W(pin);
+//	print_W(" \tto val: ");p_int_W(bval);print_W(" \ttime: ");p_fl_W(time);
 	uint8_t mode = GetChannelMode(pin);
 
 		switch (mode){
