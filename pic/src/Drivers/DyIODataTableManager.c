@@ -4,6 +4,7 @@ static uint8_t privateSerialRX[serialBufferSize];
 static uint8_t privateSerialTX[serialBufferSize];
 static BYTE_FIFO_STORAGE storeRx;
 static BYTE_FIFO_STORAGE storeTx;
+RunEveryData syncVolt = {0,200};
 //BowlerPacket dataTableSync;
 
 boolean brownOutDetect = false;
@@ -39,8 +40,10 @@ void SyncDataTable(){
 	float start = getMs();
 	SetAllCoProcMode();
 	SetAllCoProcValues();
-	CheckSwitches();
-	DownstreamPowerChange();
+	if ((RunEvery(&syncVolt)>0)) {
+		CheckSwitches();
+		DownstreamPowerChange();
+	}
 	SyncSPIData();
 	if(changedBrownOutDetect == true){
 		setEEBrownOutDetect(brownOutDetect);

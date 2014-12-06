@@ -7,7 +7,7 @@
 #include "UserApp.h"
 
 //char dyioNSName[] = "neuronrobotics.dyio.*;1.0;;";
-RunEveryData syncVolt = {0,500};
+
 RunEveryData ppm = {0, 50};
 
 boolean pwr = false; 
