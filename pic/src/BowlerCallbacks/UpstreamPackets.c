@@ -99,6 +99,30 @@ void UpstreamPushPowerChange(void){
 	UpdateAVRLED();
 }
 
+void UpstreamPushSPIlStream(void){
+	SetColor(0,1,0);
+	LoadCorePacket(& packetTemp);
+	packetTemp.use.head.RPC=GetRPCValue("strm");
+	packetTemp.use.head.MessageID=3;
+	packetTemp.use.head.Method=BOWLER_ASYN;
+	packetTemp.use.data[0] = 0; //the SPI clock pin
+	packetTemp.use.data[1]=GetSPIRxData(&packetTemp.use.data[2]);
+	packetTemp.use.head.DataLegnth = 4+1+1+packetTemp.use.data[1];
+	PutBowlerPacket(& packetTemp);
+}
+
+void UpstreamPushSerialStream(void){
+	SetColor(0,1,0);
+	LoadCorePacket(& packetTemp);
+	packetTemp.use.head.RPC=GetRPCValue("strm");
+	packetTemp.use.head.MessageID=3;
+	packetTemp.use.head.Method=BOWLER_ASYN;
+	packetTemp.use.data[0] = 17; //the serial rx pin
+	packetTemp.use.data[1]=GetSerialRxData(&packetTemp.use.data[2]);
+	packetTemp.use.head.DataLegnth = 4+1+1+packetTemp.use.data[1];
+	PutBowlerPacket(& packetTemp);
+}
+
 void POWER(BowlerPacket * packet){
 	UINT16_UNION raw;
 	packet->use.head.Method=BOWLER_GET;
