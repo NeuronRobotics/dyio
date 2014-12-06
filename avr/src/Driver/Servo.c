@@ -18,11 +18,11 @@
 
 #include "UserApp_avr.h"
 
-boolean powerOverRide = 0xff;
-INTERPOLATE_DATA velocity[NUM_PINS];
-boolean servoEngineStarted =false;
-uint8_t bOK[2]={false,false};
-uint8_t blockServo[2]={true,true};
+static boolean powerOverRide = 0xff;
+static INTERPOLATE_DATA velocity[NUM_PINS];
+static boolean servoEngineStarted =false;
+static uint8_t bOK[2]={false,false};
+static uint8_t blockServo[2]={true,true};
 
 
 
@@ -174,21 +174,25 @@ uint8_t getInterpolatedPin(uint8_t pin){
 	//StartCritical();
 	float ip = interpolate(&velocity[pin],getMs());
 	//SREG = cSREG;
+	boolean error = false;
 	if(ip>(255- SERVO_BOUND)){
-		//println_I("Servo Upper out of bounds! got=");p_fl_I(ip);print_I(" on time=");p_fl_I(velocity[pin].setTime);
-		ip=velocity[pin].set;
-		//print_I(" target=");p_fl_I(ip);
+		println_W("Upper=");
+		error = true;
 	}
 	if(ip<SERVO_BOUND){
-		//println_I("Servo Lower out of bounds! got=");p_fl_I(ip);print_I(" on chan=");p_int_I(pin);
+		println_W("Lower=");
+		error = true;
+	}
+	if(error){
+		p_fl_W(ip);print_W(" on chan=");p_int_W(pin);print_W(" target=");p_fl_W(velocity[pin].set);
+		println_W("set=      \t");p_fl_W(velocity[pin].set);
+		println_W("start=    \t");p_fl_W(velocity[pin].start);
+		println_W("setTime=  \t");p_fl_W(velocity[pin].setTime);
+		println_W("startTime=\t");p_fl_W(velocity[pin].startTime);
 		ip=velocity[pin].set;
-		//print_I(" target=");p_fl_I(ip);
 	}
-
 	int tmp = (int)ip;
-	if(tmp != (int)velocity[pin].set){
-		//println_I("Srv Mv= ");p_int_I(ip);print_I(" on chan= ");p_int_I(pin);
-	}
+
 	return tmp;
 }
 
