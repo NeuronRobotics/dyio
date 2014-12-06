@@ -150,6 +150,7 @@ void UserInit(void) {
     hardwareInit();
     //println_I("Hardware Init done");
 
+    InitializeDyIODataTableManager();
 
     CheckRev();
 
