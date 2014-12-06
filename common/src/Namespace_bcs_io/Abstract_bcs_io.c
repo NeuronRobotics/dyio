@@ -243,7 +243,7 @@ boolean SetChanelValueFromPacket(BowlerPacket * Packet) {
         time =  get32bit(Packet, 5);
         println_W("Setting on pin=");p_int_W(pin); print_W(" value= ");p_int_W(data); print_W(" time= ");p_fl_W(time);
 		if(mode == IS_SERVO)
-			data = (data&0x000000ff) + (time<<16);
+			data = (data&0x000000ff) | (time<<16);
 
         if (setChanelValueHWPtr != NULL)
             setChanelValueHWPtr(pin, 1, &data, (float)time);
@@ -270,9 +270,9 @@ boolean SetAllChannelValueFromPacket(BowlerPacket * Packet) {
         for (i = 0; i < GetNumberOfIOChannels(); i++) {
         	if(isOutputMode(GetChannelMode(i))==true){
         		tmp = get32bit(Packet, (i*4) +5);
-        		if(GetChannelMode(i) == IS_SERVO)
-					data[i] = (tmp & 	0x000000ff) | (time<<16);
-        		else
+//        		if(GetChannelMode(i) == IS_SERVO)
+//					data[i] = (tmp & 	0x000000ff) | (time<<16);
+//        		else
         			data[i] = tmp;
 			}else{
 				data[i] = getBcsIoDataTable(i)->PIN.currentValue;

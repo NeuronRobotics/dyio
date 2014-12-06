@@ -298,7 +298,7 @@ boolean isASetableMode(uint8_t mode){
 
 boolean SetChanVal(uint8_t pin,int32_t bval, float time){
 	println_W("SetChanVal\tchan: ");p_int_W(pin);
-	print_W(" \tto val: ");p_int_W(bval);
+	print_W(" \tto val: ");p_int_W(bval);print_W(" \ttime: ");p_fl_W(time);
 	uint8_t mode = GetChannelMode(pin);
 
 		switch (mode){
