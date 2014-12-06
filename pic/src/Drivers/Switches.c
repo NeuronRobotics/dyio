@@ -43,22 +43,6 @@ void CheckSwitches(void){
 		lastVolt = volt;
 	}
 
-	if(up){
-//		println_I("\nVoltage on raw:   \t");
-//		p_fl_I(volt);
-//
-//		println_I("Voltage on bank0: \t");
-//		p_fl_I(GetRail0Voltage());
-//
-//		println_I("Voltage on bank1:\t");
-//		p_fl_I(GetRail1Voltage());
-//		println_I("Pushing upstream Power Packet bank 0: ");p_int_I(bankState[0]);print_I(" bank 1: ");p_int_I(bankState[1]);
-//		println_I("Power Code 0: ");p_int_I(GetRawVoltageCode(0));
-//		println_I("Power Code 1 : ");p_int_I(GetRawVoltageCode(1));
-//		println_I("Raw: ");p_fl_I(GetRawVoltage());
-		UpstreamPushPowerChange();
-//                println_I("Pusing change");
-	}
 	setPrintLevel(l);
 }
 

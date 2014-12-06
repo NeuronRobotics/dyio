@@ -96,7 +96,6 @@ void UpstreamPushPowerChange(void){
 	packetTemp.use.head.MessageID=3;
 	packetTemp.use.head.Method=BOWLER_ASYN;
 	PutBowlerPacket(& packetTemp);
-	UpdateAVRLED();
 }
 
 void UpstreamPushSPIlStream(void){
@@ -124,6 +123,7 @@ void UpstreamPushSerialStream(void){
 }
 
 void POWER(BowlerPacket * packet){
+
 	UINT16_UNION raw;
 	packet->use.head.Method=BOWLER_GET;
 	packet->use.head.RPC=GetRPCValue("_pwr");

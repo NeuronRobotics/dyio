@@ -7,7 +7,7 @@
 #include "UserApp.h"
 
 //char dyioNSName[] = "neuronrobotics.dyio.*;1.0;;";
-RunEveryData syncVolt = {0, 30};
+RunEveryData syncVolt = {0,500};
 RunEveryData ppm = {0, 50};
 
 boolean pwr = false; 
@@ -50,16 +50,17 @@ boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidA
 
 
 
-	//if ((RunEvery(&syncVolt)>0)){
+	//if {
 		SyncDataTable();
 	//}
 
-    CheckSwitches();
 
-    if (pwr) {
+
+    if ((RunEvery(&syncVolt)>0)) {
+    	CheckSwitches();
+    	UpstreamPushPowerChange();
+    	CheckSwitches();
         DownstreamPowerChange();
-        pwr = false; 
-        UpstreamPushPowerChange();
     }
 
     float now = getMs();

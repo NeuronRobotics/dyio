@@ -325,6 +325,7 @@ uint8_t sendPacket(BowlerPacket * Packet) {
         println_E("Tx took: ");
         p_fl_E(getMs() - packStartTime);
         initCoProcUART();
+        PowerCycleAVR();
         return 1;
     }
 }

@@ -20,7 +20,7 @@ InteruptServoData blockData [12];
 static uint32_t currentTimer=0;
 #define LOOPPERIOD (OFFSET+255+(SPACING/2))
 #define SPACING (50)
-#define LOOPSPACING (SPACING  )
+#define LOOPSPACING (SPACING+(SPACING/2) )
 #define OFFSET (255+SPACING)
 
 
