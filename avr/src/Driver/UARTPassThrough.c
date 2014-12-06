@@ -14,8 +14,8 @@
 #endif
 
 
-static uint8_t privateRXUART[UART_PASS_BUFF_SIZE];
-static BYTE_FIFO_STORAGE store;
+uint8_t privateRXUART[UART_PASS_BUFF_SIZE];
+BYTE_FIFO_STORAGE UARTPassThroughStore;
 
 boolean validBaud(uint32_t baud);
 
@@ -25,7 +25,7 @@ static boolean UartInit = false;
 
 void InitUART(void){
 
-	//println_W("Uart Initialization: ");
+	println_W("Uart Initialization: ");
 	if(getPrintLevel() == NO_PRINT){
 		uint32_t baudrate = EEReadBaud();
 		if (validBaud(baudrate) == false) {
@@ -36,7 +36,7 @@ void InitUART(void){
 	SetPinTris(16,OUTPUT);
 	SetPinTris(17,INPUT);
 	SetDIO(17,ON);
-	InitByteFifo(&store,privateRXUART,UART_PASS_BUFF_SIZE);
+	InitByteFifo(&UARTPassThroughStore,privateRXUART,UART_PASS_BUFF_SIZE);
 
 	/* set the framing to 8N1 */
 	UCSR1C = ((1<< UCSZ10)|(1<< UCSZ11));
@@ -55,7 +55,7 @@ void StopUartPassThrough(uint8_t pin){
 	}
 	if(getPrintLevel() != NO_PRINT)
 		UCSR1B=0;
-	//InitByteFifo(&store,privateRXUART,sizeof(privateRXUART));
+	//InitByteFifo(&UARTPassThroughStore,privateRXUART,sizeof(privateRXUART));
 	switch(GetChannelMode(pin)){
 		case IS_UART_TX:
 		case IS_UART_RX:
@@ -123,18 +123,18 @@ ISR(USART1_RX_vect){
 	//AddBytePassThrough(read);
 	if(UartInit){
 		uint8_t err;
-		FifoAddByte(&store,UDR1,&err);
+		FifoAddByte(&UARTPassThroughStore,UDR1,&err);
 	}
 }
 
 void UARTGetArrayPassThrough(uint8_t *packet,uint16_t size){
 	if(UartInit)
-		FifoGetByteStream(&store,packet,size);
+		FifoGetByteStream(&UARTPassThroughStore,packet,size);
 }
 
 uint16_t Get_UART_Byte_CountPassThrough(void){
 	if(UartInit)
-		return FifoGetByteCount(&store);
+		return FifoGetByteCount(&UARTPassThroughStore);
 	else
 		return 0;
 }
@@ -144,7 +144,7 @@ void UARTPassThroughWrite(uint8_t numValues,uint8_t * data){
 	uint8_t err;
 	for(i=0;i<numValues;i++){
 		WriteAVRUART1(data[i]);
-		FifoAddByte(&store,data[i],&err);
+		FifoAddByte(&UARTPassThroughStore,data[i],&err);
 	}
 }
 

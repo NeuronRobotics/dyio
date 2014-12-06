@@ -51,15 +51,12 @@ void SyncDataTable(){
 	}
 	if( FifoGetByteCount(&storeTx)>0){
 		//println_E("Stub push serial here: ");
-		while(FifoGetByteCount(&storeTx)>0){
-			//p_int_E(FifoGetByte(&storeTx,&err));
-			//print_E(" , ");
-			FifoAddByte(&storeRx,FifoGetByte(&storeTx,&err),&err);
-		}
+		DownstreamSerialStreamSet(&storeTx);
 	}
 	if(GetChannelMode(16) == IS_UART_RX && getBcsIoDataTable(16)->PIN.currentValue > 0){
 		println_E("Serial port has: ");p_int_E(getBcsIoDataTable(16)->PIN.currentValue );
 		setDataTableCurrentValue(16,0);
+		DownstreamSerialStreamGet(&storeRx);
 	}
     SyncConfigurations();
 	float end = getMs() - start;
