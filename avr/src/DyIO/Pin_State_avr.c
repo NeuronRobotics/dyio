@@ -20,7 +20,6 @@ void ClearPinState(uint8_t pin){
 		EEWriteMode(0,IS_DI);
 		EEWriteMode(1,IS_DI);
 		EEWriteMode(2,IS_DI);
-		EEWriteMode(3,IS_DI);
 	}
 	if ((current == IS_UART_TX)||(current == IS_UART_RX)){
 		StopUartPassThrough(pin);

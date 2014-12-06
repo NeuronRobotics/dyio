@@ -23,6 +23,7 @@ void InitPinModes(void){
 			mode = EEReadMode(i);
 		}
 		getBcsIoDataTable(i)->PIN.currentChannelMode = mode;
+		println_W("Initializing :");p_int_W(i);printMode(EEReadMode(i),WARN_PRINT);
 		setMode(i,EEReadMode(i));
 	}
 	startup = false; 
@@ -57,7 +58,6 @@ void InitPinModes(void){
 boolean setMode(uint8_t pin,uint8_t mode){
 
 	ClearPinState(pin);
-	//println_W("Pin :");p_int_W(pin);printMode(mode,WARN_PRINT);
 	//uint8_t pwm,dir;
 	if (mode == NO_CHANGE){
 		return true; 
@@ -129,10 +129,12 @@ boolean setMode(uint8_t pin,uint8_t mode){
 }
 
 void configPinMode(uint8_t pin,uint8_t mode,uint8_t tris,uint8_t io){
-	ClearPinState(pin);
 	SetPinTris(pin,tris);
 	SetDIO(pin,io);
 	getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
+	if(EEReadMode(pin) != mode){
+		println_W("Mode Set Pin :");p_int_W(pin);printMode(mode,WARN_PRINT);
+	}
 	EEWriteMode(pin,mode);
 
 }

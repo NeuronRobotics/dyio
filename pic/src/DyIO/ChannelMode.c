@@ -10,7 +10,7 @@
 
 boolean setMode(uint8_t pin,uint8_t mode){
 	//println_I("Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_int_I(pin);
-	//uint8_t currentMode = GetChannelMode(pin);
+	uint8_t current = GetChannelMode(pin);
 	if(GetChannelMode(pin)== mode){
 		//println_W("Re-Setting Mode: ");printMode(mode,WARN_PRINT);print_W(" on: ");p_int_W(pin);
 		//return true;
@@ -19,6 +19,35 @@ boolean setMode(uint8_t pin,uint8_t mode){
 	ClearCounter(pin);
 	StopDyIOSPI(pin);
 	clearPPM(pin);
+
+	ClearPWM(pin);
+	ClearADC(pin);
+	ClearDCMotor(pin);
+
+	if ( (current >= IS_SPI_MOSI)&&(current <= IS_SPI_SCK)){
+		SetCoProcMode(0,IS_DI);
+		SetCoProcMode(1,IS_DI);
+		SetCoProcMode(2,IS_DI);
+	}
+	if ((current == IS_UART_TX)||(current == IS_UART_RX)){
+		SetCoProcMode(16,IS_DI);
+		SetCoProcMode(17,IS_DI);
+	}
+	if(current ==IS_DC_MOTOR_VEL ||current ==IS_DC_MOTOR_DIR ){
+		uint8_t pwm,dir;
+		if(pin>7){
+			dir=pin;
+			pwm=dir-4;
+		}else{
+			pwm=pin;
+			dir=pwm+4;
+		}
+		if((GetChannelMode(pwm)==IS_DC_MOTOR_VEL)&&(GetChannelMode(dir)==IS_DC_MOTOR_DIR)){
+			SetCoProcMode(pwm,IS_DI);
+			SetCoProcMode(dir,IS_DI);
+		}
+	}
+
 	//print_I(" \tHardware Cleared");
 	switch (mode){
 	case IS_SERVO:

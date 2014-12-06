@@ -24,8 +24,15 @@ static boolean UartInit = false;
 
 
 void InitUART(void){
-
+	if(UartInit == true){
+		return;
+	}
 	println_W("Uart Initialization: ");
+	if (!(	pinHasFunction(16,IS_UART_RX)||
+			pinHasFunction(17,IS_UART_TX)
+		)){
+		return;
+	}
 	if(getPrintLevel() == NO_PRINT){
 		uint32_t baudrate = EEReadBaud();
 		if (validBaud(baudrate) == false) {
@@ -47,7 +54,10 @@ void InitUART(void){
 
 }
 void StopUartPassThrough(uint8_t pin){
-
+	if(UartInit == false){
+		return;
+	}
+	println_W("Uart STOP: ");
 	if (!(	pinHasFunction(pin,IS_UART_RX)||
 			pinHasFunction(pin,IS_UART_TX)
 		)){
@@ -135,8 +145,9 @@ void UARTGetArrayPassThrough(uint8_t *packet,uint16_t size){
 uint16_t Get_UART_Byte_CountPassThrough(void){
 	if(UartInit)
 		return FifoGetByteCount(&UARTPassThroughStore);
-	else
+	else{
 		return 0;
+	}
 }
 
 void UARTPassThroughWrite(uint8_t numValues,uint8_t * data){

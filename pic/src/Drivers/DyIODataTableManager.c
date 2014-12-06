@@ -50,7 +50,7 @@ void SyncDataTable(){
 		changedBrownOutDetect = false;
 	}
 	if( FifoGetByteCount(&storeTx)>0){
-		//println_E("Stub push serial here: ");
+		//println_E("push serial here: ");
 		DownstreamSerialStreamSet(&storeTx);
 	}
 	if(GetChannelMode(16) == IS_UART_RX && getBcsIoDataTable(16)->PIN.currentValue > 0){

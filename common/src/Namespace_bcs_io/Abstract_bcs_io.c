@@ -309,19 +309,23 @@ boolean GetChanelValueFromPacket(BowlerPacket * Packet) {
     uint8_t pin = Packet->use.data[0];
     uint8_t mode = GetChannelMode(pin);
     uint8_t numValues = 1;
-    if (isStremChannelMode(mode)) {
+    int32_t data;
+    if (isStremChannelMode(mode) ) {
 
         if (getChanelValueHWPtr != NULL) {
             // Load the data directly into the packet as the buffer
             //Data pointer is offset by one to start after the pin index
             getChanelValueHWPtr(pin,
                     &numValues,
-                    (int32_t *) (Packet->use.data + 1));
+                    &data);
+            set32bit(Packet, data, 1);
+                    numValues = 4;
+
         } else {
             return false;
         }
     } else {
-        int32_t data;
+
         if (getChanelValueHWPtr != NULL) {
             getChanelValueHWPtr(pin,
                     &numValues,

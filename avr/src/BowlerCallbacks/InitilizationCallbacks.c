@@ -72,7 +72,7 @@ void UserInit(void){
 	InitializeUserCode();
 #endif
 	EndCritical();
-	println_I(/*PSTR*/("Starting Pin Initialization"));
+	println_I(/*PSTR*/("Starting Core"));
 //	setMode(22,IS_DO);
 //	setMode(23,IS_DI);
 //	println_I(/*PSTR*/("Pin done"));

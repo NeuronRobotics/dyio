@@ -76,18 +76,15 @@ boolean GetChanelValueHW(uint8_t pin,uint8_t * numValues,int32_t * data){
 	if(isStremChannelMode(mode)){
 		//uint8_t * bData = (uint8_t *)data;
 		switch(mode){
-//		case IS_SPI_MOSI:
-//		case IS_SPI_MISO:
-//		case IS_SPI_SCK:
-//			SendPacketToSPIFromArray(numValues[0],bData);
-//			return true; 
-//		case IS_UART_TX:
-//		case IS_UART_RX:
-//			 numValues[0] = GetSerialRxData( bData);
-//			return true; 
-//		case IS_PPM_IN:
-//			numValues[0] = GetPPMDataToArray(bData);
-//			return true; 
+
+		case IS_UART_RX:
+			 numValues[0] =1;
+			 data[0]= Get_UART_Byte_CountPassThrough();
+			return true;
+		default:
+			numValues[0] =1;
+			 data[0]= 0;
+			return true;
 		}
 	}else{
 		numValues[0]=1;
