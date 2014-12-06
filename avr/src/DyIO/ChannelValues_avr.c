@@ -183,7 +183,9 @@ boolean ConfigureChannelHW(uint8_t pin,uint8_t numValues,int32_t * data){
  *
  */
 boolean SetStreamHW(uint8_t pin,uint8_t numValues,uint8_t * data){
-	//println_E("Set Stream Stub");
+	if(GetChannelMode(pin)==IS_UART_TX){
+		UARTPassThroughWrite(numValues,data);
+	}
 	return true;
 }
 
@@ -193,7 +195,14 @@ boolean SetStreamHW(uint8_t pin,uint8_t numValues,uint8_t * data){
  * Data is stored into numValues and data
  */
 boolean GetStreamHW(uint8_t pin,uint8_t*  numValues,uint8_t * data){
-	//println_E("Get Stream Stub");
+
+	if(GetChannelMode(pin)==IS_UART_RX){
+		int uartSize =Get_UART_Byte_CountPassThrough();
+		if(uartSize>0){
+			UARTGetArrayPassThrough(data,uartSize);
+		}
+		numValues[0]=uartSize;
+	}
 	return true;
 }
 

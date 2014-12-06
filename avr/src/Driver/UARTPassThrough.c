@@ -21,6 +21,8 @@ boolean validBaud(uint32_t baud);
 
 static boolean UartInit = false;
 
+
+
 void InitUART(void){
 
 	//println_W("Uart Initialization: ");
@@ -135,5 +137,14 @@ uint16_t Get_UART_Byte_CountPassThrough(void){
 		return FifoGetByteCount(&store);
 	else
 		return 0;
+}
+
+void UARTPassThroughWrite(uint8_t numValues,uint8_t * data){
+	int i;
+	uint8_t err;
+	for(i=0;i<numValues;i++){
+		WriteAVRUART1(data[i]);
+		FifoAddByte(&store,data[i],&err);
+	}
 }
 
