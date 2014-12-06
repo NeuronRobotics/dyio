@@ -39,6 +39,7 @@ void SyncDataTable(){
 	float start = getMs();
 	SetAllCoProcMode();
 	SetAllCoProcValues();
+	CheckSwitches();
 	DownstreamPowerChange();
 	SyncSPIData();
 	if(changedBrownOutDetect == true){

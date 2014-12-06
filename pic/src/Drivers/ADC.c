@@ -9,7 +9,7 @@
 uint32_t getDyIOVoltage(uint8_t chan);
 
 boolean init = false; 
-#define AVG_SIZE 20
+#define AVG_SIZE 2
 
 typedef struct __attribute__((__packed__)) _ROLLINGAVG
 {
@@ -36,9 +36,9 @@ int32_t calc(ROLLINGAVG * avg){
 	return v;
 }
 void InitADC(void){
-	if(init==true) 
+	if(init==true)
 		return;
-	init = true; 
+	init = true;
 //	println_I("Start Initialized the ADC");
 	uint8_t i,j;
 
@@ -87,7 +87,7 @@ uint8_t GetRawVoltageCode(uint8_t bank){
 					lockOutRail=true; 
 					lockOutTimeout.MsTime=current;
 					lockOutTimeout.setPoint=1000;
-					UpstreamPushPowerChange();
+					//UpstreamPushPowerChange();
 					println_I("Power fluctuation detected\n");
 					println_I("Current Time: ");p_fl_I(current);
 					println_I("Last low time: ");p_fl_I(lastLowTime);print_I(", ");p_fl_I(diffLow);
@@ -98,7 +98,7 @@ uint8_t GetRawVoltageCode(uint8_t bank){
 	}else{
 		if(RunEvery(&lockOutTimeout)>0){
 			lockOutRail = false; 
-			UpstreamPushPowerChange();
+			//UpstreamPushPowerChange();
 			println_I("Power fluctuation Reset");
 		}
 		return 0;

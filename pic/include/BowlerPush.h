@@ -25,7 +25,7 @@ boolean GetSerialStream(BowlerPacket * packet);
 void POWER(BowlerPacket * packet);
 void SetCoProcLED(boolean a, boolean b, int batt);
 void DownstreamPowerChange(void);
-void UpstreamPushPowerChange(void);
+void UpstreamPushPowerChange(uint8_t r0,uint8_t r1, uint16_t voltage, uint8_t override);
 void UpstreamPushSerialStream(void);
 void UpstreamPushSPIlStream(void);
 void GetAllModes(BowlerPacket * pack);\

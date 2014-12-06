@@ -54,14 +54,11 @@ boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidA
 		SyncDataTable();
 	//}
 
-
-
-    if ((RunEvery(&syncVolt)>0)) {
-    	CheckSwitches();
-    	UpstreamPushPowerChange();
-    	CheckSwitches();
-        DownstreamPowerChange();
-    }
+//    if ((RunEvery(&syncVolt)>0)) {
+//    	//CheckSwitches();
+//    	//
+//
+//    }
 
     float now = getMs();
     if ((now - getLastPacketTime()) > heartBeatLockTime) {

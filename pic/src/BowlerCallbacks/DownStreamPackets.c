@@ -66,6 +66,7 @@ void DownstreamPowerChange(void){
 	batteryCode1=downstreamPacketTemp.use.data[3];
 
 	SendPacketToCoProc(& downstreamPacketTemp);
+	UpstreamPushPowerChange(bankA,bankB, GetRawVoltage() ,getPowerOverRide());
 
 }
 void LoadGACM(BowlerPacket * pack){

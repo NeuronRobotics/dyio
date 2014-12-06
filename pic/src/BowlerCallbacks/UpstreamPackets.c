@@ -89,12 +89,17 @@ void PushAllAsync(){
 //	PutBowlerPacket(& packetTemp);
 //}
 
-void UpstreamPushPowerChange(void){
+void UpstreamPushPowerChange(uint8_t r0,uint8_t r1, uint16_t voltage, uint8_t override){
 	SetColor(0,1,0);
-	LoadCorePacket(& packetTemp);
-	POWER(& packetTemp);
+	packetTemp.use.head.RPC=GetRPCValue("_pwr");
 	packetTemp.use.head.MessageID=3;
 	packetTemp.use.head.Method=BOWLER_ASYN;
+	packetTemp.use.data[0]=r0;
+	packetTemp.use.data[1]=r1;
+	set16bit(&packetTemp,voltage,2);
+	packetTemp.use.data[4]=override;
+	packetTemp.use.head.DataLegnth=4+2+2+1;
+
 	PutBowlerPacket(& packetTemp);
 }
 
@@ -133,7 +138,7 @@ void POWER(BowlerPacket * packet){
 	packet->use.data[2]=raw.byte.SB;
 	packet->use.data[3]=raw.byte.LB;
 	packet->use.data[4]=getPowerOverRide();
-	packet->use.head.DataLegnth=9;
+	packet->use.head.DataLegnth=4+2+2+1;
 }
 
 void pushPPMPacket(void){
