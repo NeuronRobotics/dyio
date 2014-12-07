@@ -29,26 +29,36 @@ boolean setMode(uint8_t pin,uint8_t mode){
 		ClearCounter(20);
 		ClearCounter(19);
 		ClearCounter(18);
+		SetCoProcMode(0,IS_SPI_SCK);
+		SetCoProcMode(1,IS_SPI_MISO);
+		SetCoProcMode(2,IS_SPI_MOSI);
 	}
 	if ((mode == IS_UART_TX)||(mode == IS_UART_RX)){
 		ClearCounter(16);
 		ClearCounter(17);
 		ClearCounter(3);
+		SetCoProcMode(16,IS_UART_TX);
+		SetCoProcMode(17,IS_UART_RX);
 	}
+	uint8_t pwm,dir;
+	if(pin>7){
+		dir=pin;
+		pwm=dir-4;
+	}else{
+		pwm=pin;
+		dir=pwm+4;
+	}
+	// check current mode first, clear both pins if set to DC motor mode
+	if((GetChannelMode(pwm)==IS_DC_MOTOR_VEL)&&(GetChannelMode(dir)==IS_DC_MOTOR_DIR)){
+		SetCoProcMode(pwm,IS_DI);
+		SetCoProcMode(dir,IS_DI);
+	}
+	// Set up new DC-motor mode is this is the mode to set
 	if(mode ==IS_DC_MOTOR_VEL ||mode ==IS_DC_MOTOR_DIR ){
-		uint8_t pwm,dir;
-		if(pin>7){
-			dir=pin;
-			pwm=dir-4;
-		}else{
-			pwm=pin;
-			dir=pwm+4;
-		}
-		if((GetChannelMode(pwm)==IS_DC_MOTOR_VEL)&&(GetChannelMode(dir)==IS_DC_MOTOR_DIR)){
-			SetCoProcMode(pwm,IS_DI);
-			SetCoProcMode(dir,IS_DI);
-		}
+		SetCoProcMode(pwm,IS_DC_MOTOR_VEL);
+		SetCoProcMode(dir,IS_DC_MOTOR_DIR);
 	}
+
 	ClearCounter(pin);
 
 	//print_I(" \tHardware Cleared");
@@ -62,8 +72,8 @@ boolean setMode(uint8_t pin,uint8_t mode){
                 }
                 //println_E("Setting servo dfault position to: "); p_int_E(GetConfigurationDataTable(pin));
                 /** no break, fall through to set datatable*/
-
-        case IS_PWM:
+	case IS_DC_MOTOR_VEL:
+	case IS_PWM:
         	//println_E(__FILE__);println_E("setMode");
                 setDataTableCurrentValue(pin,GetConfigurationDataTable(pin));
 		break;
@@ -73,9 +83,7 @@ boolean setMode(uint8_t pin,uint8_t mode){
 		if( pinHasFunction(pin, mode) != false) {
 			print_I("|Mode is now SPI");
 			InitSPIDyIO();
-			SetCoProcMode(0,IS_SPI_SCK);
-			SetCoProcMode(1,IS_SPI_MISO);
-			SetCoProcMode(2,IS_SPI_MOSI);
+
 			break;
 		}else{
 			return false; 
