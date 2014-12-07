@@ -65,6 +65,6 @@ void MyServer();
 void UserInit(void);
 
 #define MAX_RETRY 5
-#define DELAY_TIMEOUT 200
+#define DELAY_TIMEOUT 2000
 
 #endif /* USERAPP_H_ */

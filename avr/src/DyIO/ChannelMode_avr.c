@@ -10,7 +10,7 @@ boolean startup = true;
 void InitPinModes(void){
 	uint8_t i;
 	uint8_t mode=0;
-	for (i=0;i<24;i++){
+	for (i=0;i<NUM_PINS;i++){
 
 		//ClearPinState(i);
 		SetPinTris(i,INPUT);

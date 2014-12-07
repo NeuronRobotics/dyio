@@ -2,12 +2,15 @@
 #include "Namespace/Namespace_bcs_io.h"
 #include "Namespace/Namespace_bcs_io_setmode.h"
 
+#if !defined(__PIC32MX__)
 
+#include "DyIOApp/EEPROM.h"
+#endif
 
 DATA_STRUCT DyioPinFunctionData[NUM_PINS];
 
 void InitPinFunction(void){
-	int i;
+	int i,mode;
 	for (i=0;i<NUM_PINS;i++){
 		DyioPinFunctionData[i].FUNCTION.HAS_ANALOG_IN=false; 
 		DyioPinFunctionData[i].FUNCTION.HAS_PWM=false; 
@@ -94,7 +97,16 @@ void InitPinFunction(void){
 	DyioPinFunctionData[22].FUNCTION.HAS_COUNTER_OUTPUT_D = true; 
 
 	DyioPinFunctionData[23].FUNCTION.HAS_PPM = true; 
-
+#if !defined(__PIC32MX__)
+	for (i=0;i<NUM_PINS;i++){
+		mode=EEReadMode(i);
+		if((mode < 2)||(mode >=IO_MODE_MAX)){
+			EEWriteMode(i,IS_DI);
+			mode = EEReadMode(i);
+		}
+		DyioPinFunctionData[i].PIN.currentChannelMode = mode;
+	}
+#endif
 	InitilizeBcsIo(	NUM_PINS,
 					DyioPinFunctionData,
 					&SetChanelValueHW,
@@ -105,5 +117,6 @@ void InitPinFunction(void){
 					&SetStreamHW,
 					&GetStreamHW
 				);
+
 	InitilizeBcsIoSetmode(&setMode);
 }

@@ -67,8 +67,8 @@ boolean SetAllChannelModes(uint8_t * modeArray){
  * Returns true if successful
  */
 boolean AbstractSetChannelMode(BowlerPacket * Packet){
+	printBowlerPacketDEBUG(Packet,WARN_PRINT);
 	uint8_t pin =Packet->use.data[0];
-
 	uint8_t mode=Packet->use.data[1];
 
 	if(Packet->use.head.DataLegnth == 7){
@@ -90,6 +90,7 @@ boolean AbstractSetChannelMode(BowlerPacket * Packet){
  * Returns true if all modes set OK
  */
 boolean AbstractSetAllChannelMode(BowlerPacket * Packet){
+	printBowlerPacketDEBUG(Packet,WARN_PRINT);
         // First byte is the number of channels
 	int i;
 	for(i=0;i<GetNumberOfIOChannels();i++){

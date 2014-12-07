@@ -9,30 +9,33 @@
 
 
 boolean setMode(uint8_t pin,uint8_t mode){
-	//println_I("Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_int_I(pin);
+	println_E("Setting Mode: ");print_E(" on: ");p_int_E(pin);
 	uint8_t current = GetChannelMode(pin);
-	if(GetChannelMode(pin)== mode){
-		//println_W("Re-Setting Mode: ");printMode(mode,WARN_PRINT);print_W(" on: ");p_int_W(pin);
-		//return true;
-	}
-	forceModeDownstream( pin);
+
 	StopDyIOSPI(pin);
 	clearPPM(pin);
 
-	if(current == IS_PPM_IN){
+	if(mode == IS_PPM_IN){
 		ClearCounter(23);
 		ClearCounter(22);
 	}
-	if ( (current >= IS_SPI_MOSI)&&(current <= IS_SPI_SCK)){
+	if ( (mode >= IS_SPI_MOSI)&&(mode <= IS_SPI_SCK)){
 		ClearCounter(0);
 		ClearCounter(1);
 		ClearCounter(2);
+		ClearCounter(23);
+		ClearCounter(22);
+		ClearCounter(21);
+		ClearCounter(20);
+		ClearCounter(19);
+		ClearCounter(18);
 	}
-	if ((current == IS_UART_TX)||(current == IS_UART_RX)){
+	if ((mode == IS_UART_TX)||(mode == IS_UART_RX)){
 		ClearCounter(16);
 		ClearCounter(17);
+		ClearCounter(3);
 	}
-	if(current ==IS_DC_MOTOR_VEL ||current ==IS_DC_MOTOR_DIR ){
+	if(mode ==IS_DC_MOTOR_VEL ||mode ==IS_DC_MOTOR_DIR ){
 		uint8_t pwm,dir;
 		if(pin>7){
 			dir=pin;
@@ -63,25 +66,28 @@ boolean setMode(uint8_t pin,uint8_t mode){
         case IS_PWM:
         	//println_E(__FILE__);println_E("setMode");
                 setDataTableCurrentValue(pin,GetConfigurationDataTable(pin));
-		return true;
+		break;
 	case IS_SPI_MOSI:
 	case IS_SPI_MISO:
 	case IS_SPI_SCK:
 		if( pinHasFunction(pin, mode) != false) {
-//			print_I("|Mode is now SPI");
+			print_I("|Mode is now SPI");
 			InitSPIDyIO();
-			return true;
+			SetCoProcMode(0,IS_SPI_SCK);
+			SetCoProcMode(1,IS_SPI_MISO);
+			SetCoProcMode(2,IS_SPI_MOSI);
+			break;
 		}else{
 			return false; 
 		}
-		return true;
+		break;
 	case IS_COUNTER_INPUT_INT:
 	case IS_COUNTER_INPUT_DIR:
 	case IS_COUNTER_INPUT_HOME:
 		if(pinHasFunction(pin, mode) != false) {
 //			print_I("|Mode is now Counter Input");
 			StartCounterInput(pin);
-			return true;
+			break;
 		}else{
 			print_E(", Counter Input not availible");
 			return false; 
@@ -93,22 +99,24 @@ boolean setMode(uint8_t pin,uint8_t mode){
 		if(pinHasFunction(pin, mode) != false) {
 //			print_I("|Mode is now Counter Output");
 			StartCounterOutput(pin);
-			return true;
+			break;
 		}else{
 			print_E(", Counter Output not availible");
 			return false; 
 		}
-		return true;
+		break;
 	case IS_PPM_IN:
 		println_I("Setting up PPM...");
 		startPPM(pin);
-		return true;
+		break;
 	case IS_DO:
 		setDataTableCurrentValue(pin,OFF);
-		return true;
-            default:
-                return true;
+		break;
+	default:
+		break;
 	}
+	SetCoProcMode(pin,mode);
+	return true;
 //	print_I(" \tMode set");
 	
 }

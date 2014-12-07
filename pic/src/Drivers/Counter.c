@@ -54,12 +54,12 @@ void ClearCounter(uint8_t chan){
 			SetCoProcMode(pinmap[group].DIR,IS_DI);
 			SetCoProcMode(pinmap[group].INT,IS_DI);
 			SetCoProcMode(pinmap[group].HOME,IS_DI);
-			if(group>0 && GetChannelMode(0)==IS_SPI_SCK){
+			if(group>0 && (GetChannelMode(0)==IS_SPI_SCK || GetChannelMode(1)==IS_SPI_MISO ||GetChannelMode(2)==IS_SPI_MOSI )){
 				SetCoProcMode(0,IS_DI);
 				SetCoProcMode(1,IS_DI);
 				SetCoProcMode(2,IS_DI);
 			}
-			if(group== 0 && GetChannelMode(16)==IS_UART_TX){
+			if(group== 0 && (GetChannelMode(16)==IS_UART_TX ||GetChannelMode(17)==IS_UART_RX )){
 				SetCoProcMode(16,IS_DI);
 				SetCoProcMode(17,IS_DI);
 			}
@@ -117,12 +117,12 @@ boolean StartCounterInput(uint8_t chan){
 	if (group > 3)
 		return false; 
 	//println_I("Setting counter output modes");
-	if(group>0 && GetChannelMode(0)==IS_SPI_SCK){
+	if(group>0 && (GetChannelMode(0)==IS_SPI_SCK || GetChannelMode(1)==IS_SPI_MISO ||GetChannelMode(2)==IS_SPI_MOSI )){
 		SetCoProcMode(0,IS_DI);
 		SetCoProcMode(1,IS_DI);
 		SetCoProcMode(2,IS_DI);
 	}
-	if(group== 0 && GetChannelMode(16)==IS_UART_TX){
+	if(group== 0 && (GetChannelMode(16)==IS_UART_TX ||GetChannelMode(17)==IS_UART_RX )){
 		SetCoProcMode(16,IS_DI);
 		SetCoProcMode(17,IS_DI);
 	}
@@ -171,12 +171,12 @@ boolean StartCounterOutput(uint8_t chan){
 	if (group > 3)
 		return false; 
 
-	if(group>0 && GetChannelMode(0)==IS_SPI_SCK){
+	if(group>0 && (GetChannelMode(0)==IS_SPI_SCK || GetChannelMode(1)==IS_SPI_MISO ||GetChannelMode(2)==IS_SPI_MOSI )){
 		SetCoProcMode(0,IS_DI);
 		SetCoProcMode(1,IS_DI);
 		SetCoProcMode(2,IS_DI);
 	}
-	if(group== 0 && GetChannelMode(16)==IS_UART_TX){
+	if(group== 0 && (GetChannelMode(16)==IS_UART_TX || GetChannelMode(17)==IS_UART_RX )){
 		SetCoProcMode(16,IS_DI);
 		SetCoProcMode(17,IS_DI);
 	}
