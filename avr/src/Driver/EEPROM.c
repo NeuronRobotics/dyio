@@ -51,6 +51,8 @@ boolean ProvisionMAC(uint8_t * m){
 
 void EEWriteMode(uint8_t pin,uint8_t mode){
 	if (EEReadMode(pin) != mode){
+		println_W("Mode Set Pin :");p_int_W(pin);printMode(mode,WARN_PRINT);
+		getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
 		eeWriteByte((uint16_t)(MODESTART+pin),mode);
 	}
 }

@@ -131,10 +131,5 @@ boolean setMode(uint8_t pin,uint8_t mode){
 void configPinMode(uint8_t pin,uint8_t mode,uint8_t tris,uint8_t io){
 	SetPinTris(pin,tris);
 	SetDIO(pin,io);
-	getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
-	if(EEReadMode(pin) != mode){
-		println_W("Mode Set Pin :");p_int_W(pin);printMode(mode,WARN_PRINT);
-	}
 	EEWriteMode(pin,mode);
-
 }

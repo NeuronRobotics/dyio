@@ -16,22 +16,21 @@ boolean setMode(uint8_t pin,uint8_t mode){
 		//return true;
 	}
 	forceModeDownstream( pin);
-	ClearCounter(pin);
 	StopDyIOSPI(pin);
 	clearPPM(pin);
 
-	ClearPWM(pin);
-	ClearADC(pin);
-	ClearDCMotor(pin);
-
+	if(current == IS_PPM_IN){
+		ClearCounter(23);
+		ClearCounter(22);
+	}
 	if ( (current >= IS_SPI_MOSI)&&(current <= IS_SPI_SCK)){
-		SetCoProcMode(0,IS_DI);
-		SetCoProcMode(1,IS_DI);
-		SetCoProcMode(2,IS_DI);
+		ClearCounter(0);
+		ClearCounter(1);
+		ClearCounter(2);
 	}
 	if ((current == IS_UART_TX)||(current == IS_UART_RX)){
-		SetCoProcMode(16,IS_DI);
-		SetCoProcMode(17,IS_DI);
+		ClearCounter(16);
+		ClearCounter(17);
 	}
 	if(current ==IS_DC_MOTOR_VEL ||current ==IS_DC_MOTOR_DIR ){
 		uint8_t pwm,dir;
@@ -47,6 +46,7 @@ boolean setMode(uint8_t pin,uint8_t mode){
 			SetCoProcMode(dir,IS_DI);
 		}
 	}
+	ClearCounter(pin);
 
 	//print_I(" \tHardware Cleared");
 	switch (mode){
