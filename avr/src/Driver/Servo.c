@@ -98,10 +98,10 @@ void SetServoPos(uint8_t pin,uint8_t val,float time){
 		return;
 	}
 //
-//	println_W("Servo ");p_int_W(pin);
-//	print_W(" time= ");p_fl_W(time);
-//	print_W(" to val= ");p_int_W(val);
-//	print_W(" val was= ");p_fl_W(velocity[pin].set);
+	println_W("Servo ");p_int_W(pin);
+	print_W(" time= ");p_fl_W(time);
+	print_W(" to val= ");p_int_W(val);
+	print_W(" val was= ");p_fl_W(velocity[pin].set);
 
 	if(time<30 || isnan(velocity[pin].set)){
 		velocity[pin].setTime=0;
@@ -166,6 +166,9 @@ void pinOff(uint8_t pin){
 	}
 }
 uint8_t getInterpolatedPin(uint8_t pin){
+	if(GetChannelMode(pin)!=IS_SERVO){
+		return 0;
+	}
 	//char cSREG;
 	//cSREG = SREG;
 	/* store SREG value */
@@ -183,13 +186,21 @@ uint8_t getInterpolatedPin(uint8_t pin){
 		println_W("Lower=");
 		error = true;
 	}
+	int dataTableSet = (getDataTableCurrentValue(pin)&0x000000ff);
+	int interpolatorSet = ((int32_t)velocity[pin].set);
+	if(dataTableSet!=interpolatorSet){
+		println_W("Setpoint=");
+				error = true;
+	}
 	if(error){
-		p_fl_W(ip);print_W(" on chan=");p_int_W(pin);print_W(" target=");p_fl_W(velocity[pin].set);
+		p_fl_W(ip);print_W(" on chan=");p_int_W(pin);print_W(" target=");p_int_W(interpolatorSet);
+		print_W(" Data Table=");p_int_W(dataTableSet);
 		println_W("set=      \t");p_fl_W(velocity[pin].set);
 		println_W("start=    \t");p_fl_W(velocity[pin].start);
 		println_W("setTime=  \t");p_fl_W(velocity[pin].setTime);
 		println_W("startTime=\t");p_fl_W(velocity[pin].startTime);
 		ip=velocity[pin].set;
+		SetServoPos(pin,dataTableSet,(float)((getDataTableCurrentValue(pin)>>16)&0x0000ffff));
 	}
 	int tmp = (int)ip;
 
