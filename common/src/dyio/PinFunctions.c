@@ -10,7 +10,7 @@
 DATA_STRUCT DyioPinFunctionData[NUM_PINS];
 
 void InitPinFunction(void){
-	int i,mode;
+	int i;
 	for (i=0;i<NUM_PINS;i++){
 		DyioPinFunctionData[i].FUNCTION.HAS_ANALOG_IN=false; 
 		DyioPinFunctionData[i].FUNCTION.HAS_PWM=false; 
@@ -98,6 +98,7 @@ void InitPinFunction(void){
 
 	DyioPinFunctionData[23].FUNCTION.HAS_PPM = true; 
 #if !defined(__PIC32MX__)
+        int mode;
 	for (i=0;i<NUM_PINS;i++){
 		mode=EEReadMode(i);
 		if((mode < 2)||(mode >=IO_MODE_MAX)){

@@ -293,9 +293,10 @@ uint8_t SetAllCoProcValues() {
 	for (i = 0; i < GetNumberOfIOChannels(); i++) {
 		int index = (i * 4) + 1;
 		if (isOutputMode(GetChannelMode(i)) == false) {
-			boolean back = tmp != getBcsIoDataTable(i)->PIN.currentValue;
+                        tmp= get32bit(&downstreamPacketTemp, index);
+			boolean back = (tmp != getBcsIoDataTable(i)->PIN.currentValue);
 
-			setDataTableCurrentValue(i, get32bit(&downstreamPacketTemp, index));
+			setDataTableCurrentValue(i,tmp);
 			if (back) {
 				getBcsIoDataTable(i)->PIN.asyncDataenabled = true;
 			}

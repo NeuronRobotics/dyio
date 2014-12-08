@@ -63,6 +63,7 @@ boolean getHeartBeatLock();
 void buttonCheck(uint8_t code);
 void MyServer();
 void UserInit(void);
+void InitializeDyIODataTableManager();
 
 #define MAX_RETRY 5
 #define DELAY_TIMEOUT 2000

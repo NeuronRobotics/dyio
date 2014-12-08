@@ -35,7 +35,7 @@ void InitializeDyIODataTableManager(){
 }
 //RunEveryData printData = {0,10000};
 void SyncDataTable(){
-	uint8_t err;
+	//uint8_t err;
 	PushCoProcAsync();
 	float start = getMs();
 	SetAllCoProcMode();
