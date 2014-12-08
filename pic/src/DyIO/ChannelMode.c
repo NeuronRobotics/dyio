@@ -33,6 +33,10 @@ boolean setMode(uint8_t pin,uint8_t mode){
 		SetCoProcMode(1,IS_SPI_MISO);
 		SetCoProcMode(2,IS_SPI_MOSI);
 	}
+	if ((current == IS_UART_TX)||(current == IS_UART_RX)){
+		SetCoProcMode(17,IS_DI);
+		SetCoProcMode(16,IS_DI);
+	}
 	if ((mode == IS_UART_TX)||(mode == IS_UART_RX)){
 		ClearCounter(16);
 		ClearCounter(17);
