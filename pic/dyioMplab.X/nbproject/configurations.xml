@@ -75,7 +75,6 @@
         <logicalFolder name="DyIO" displayName="DyIO" projectFiles="true">
           <itemPath>../src/DyIO/ChannelMode.c</itemPath>
           <itemPath>../src/DyIO/ChannelValues.c</itemPath>
-          <itemPath>../src/DyIO/Pin_State.c</itemPath>
           <itemPath>../src/DyIO/ChannelConfig.c</itemPath>
         </logicalFolder>
         <logicalFolder name="main" displayName="main" projectFiles="true">
