@@ -11,6 +11,7 @@
 
 void GetConfigDyPID(BowlerPacket * Packet);
 uint8_t ConfigDyPID(BowlerPacket * Packet);
+void runPIDConfigurationValueSync();
 void InitPID(void);
 
 void trigerPIDLimit(uint8_t chan,PidLimitType type,int32_t  tick);

@@ -14,7 +14,10 @@ uint8_t GetCoProConfigurations();
 void SyncConfigurations();
 uint8_t SetAllCoProcMode();
 
-void SetChannelValueCoProc(uint8_t PIN,uint8_t state);
+#define SetChannelValueCoProc( PIN, state) setDataTableCurrentValue(PIN, state)
+
+void _SetChannelValueCoProc(uint8_t PIN, uint8_t state);
+
 uint8_t GetChannelValueCoProc(uint8_t PIN);
 uint16_t GetADC(uint8_t PIN);
 boolean GetSerialStream(BowlerPacket * packet);

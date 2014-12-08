@@ -310,7 +310,8 @@ uint8_t SetAllCoProcValues() {
 	return true;
 }
 
-void SetChannelValueCoProc(uint8_t PIN, uint8_t state) {
+
+void _SetChannelValueCoProc(uint8_t PIN, uint8_t state) {
 	uint8_t retry = 0;
 	do {
 		if (retry > 0) {

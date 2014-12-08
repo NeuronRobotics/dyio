@@ -45,23 +45,36 @@ void initPIDChans(uint8_t group){
 		break;
 	}
 
-	println_I("Setting Modes for PID");
+	println_W("PID In chan: ");
+	p_int_W(dyPid[group].inputChannel);
+	println_W(" mode: ");
+	printMode(dyPid[group].inputMode, WARN_PRINT);
+	println_W("PID Out chan: ");
+	p_int_W(dyPid[group].outputChannel);
+	println_W(" mode: ");
+	printMode(dyPid[group].outputMode, WARN_PRINT);
 	SetCoProcMode(dyPid[group].inputChannel,dyPid[group].inputMode);
 	SetCoProcMode(dyPid[group].outputChannel,dyPid[group].outputMode);
-	SyncModes();
+	forceModeDownstream(dyPid[group].inputChannel);
+	forceModeDownstream(dyPid[group].outputChannel);
+	//SyncModes();
 
 	if(dyPid[group].inputMode== IS_ANALOG_IN){
 		pidGroups[group].SetPoint=GetValFromAsync(dyPid[group].inputChannel);
 	}else{
 		pidGroups[group].SetPoint=0;
 	}
+	SetPIDCalibrateionState(group, CALIBRARTION_DONE);
+	getPidGroupDataTable( group)->config.Async=true;
+	getPidGroupDataTable( group)->config.Enabled=true;
+
 }
 boolean asyncCallback(BowlerPacket *Packet){
     PutBowlerPacket(Packet);// This only works with USB and UART
     return true; 
 }
 void InitPID(void){
-
+	//println_I("Starting PID initialization ");
 	uint8_t i;
 	//uint16_t loop;
 	for (i=0;i<NUM_PID_GROUPS;i++){
@@ -70,10 +83,34 @@ void InitPID(void){
 		dyPid[i].outputChannel=DYPID_NON_USED;
 		dyPid[i].inputMode=0;
 		dyPid[i].outputMode=0;
+		dyPid[i].flagValueSync=false;
 
-		pidGroups[i].config.Enabled=false; 
-		pidGroups[i].vel.enabled=false;
-		pidGroups[i].config.V.P=.1;
+//		pidGroups[i].config.Enabled=false;
+//		pidGroups[i].vel.enabled=false;
+//		pidGroups[i].config.V.P=.1;
+//		pidGroups[i].config.tipsScale=1.0;
+//
+        pidGroups[i].config.Enabled = false;
+        pidGroups[i].config.Async = 0;
+        pidGroups[i].config.IndexLatchValue = 0;
+        pidGroups[i].config.stopOnIndex = 0;
+        pidGroups[i].config.useIndexLatch = 0;
+        pidGroups[i].config.K.P = .1;
+        pidGroups[i].config.K.I = 0;
+        pidGroups[i].config.K.D = 0;
+        pidGroups[i].config.V.P = .1;
+        pidGroups[i].config.V.D = 0;
+        pidGroups[i].config.Polarity = 1;
+        pidGroups[i].config.stop = 0;
+        pidGroups[i].config.upperHistoresis = 0;
+        pidGroups[i].config.lowerHistoresis = 0;
+        pidGroups[i].config.offset = 0.0;
+        pidGroups[i].config.calibrationState = CALIBRARTION_Uncalibrated;
+        pidGroups[i].interpolate.set=0;
+        pidGroups[i].interpolate.setTime=0;
+        pidGroups[i].interpolate.start=0;
+        pidGroups[i].interpolate.startTime=0;
+
 		limits[i].type=NO_LIMIT;
 
 		LoadPIDvals(&pidGroups[i],&dyPid[i],i);
@@ -100,11 +137,10 @@ void InitPID(void){
 	for (i=0;i<NUM_PID_GROUPS;i++){
 		printPIDvals(i);
 		if(pidGroups[i].config.Enabled){
+			println_I("PID ");p_int_I(i);
 			initPIDChans(i);
-			println_I("Resetting PID channel from init");
-			int value = 0;
-			if(dyPid[i].inputMode == IS_ANALOG_IN)
-				value = 512;
+
+			int value = getPositionMine(i);
 			pidReset(i,value);
 		}
 	}
@@ -121,6 +157,17 @@ void GetConfigDyPID(BowlerPacket * Packet){
 	Packet->use.head.Method=BOWLER_POST;
 
 }
+
+void runPIDConfigurationValueSync(){
+	int i;
+	for (i=0;i<NUM_PID_GROUPS;i++){
+		if(dyPid[i].flagValueSync == true){
+			dyPid[i].flagValueSync = false;
+			WritePIDvalues(&pidGroups[i],&dyPid[i],i);
+		}
+	}
+}
+
 uint8_t ConfigDyPID(BowlerPacket * Packet){
 	uint8_t chan = Packet->use.data[0];
 	dyPid[chan].inputChannel =Packet->use.data[1];
@@ -129,8 +176,8 @@ uint8_t ConfigDyPID(BowlerPacket * Packet){
 	dyPid[chan].outputMode =Packet->use.data[4];
 
 	initPIDChans(chan);
-
-	WritePIDvalues(&pidGroups[chan],&dyPid[chan],chan);
+	dyPid[chan].flagValueSync = true;
+	//WritePIDvalues(&pidGroups[chan],&dyPid[chan],chan);
 	return true; 
 }
 
@@ -171,7 +218,8 @@ uint8_t GetPIDGroup(uint8_t channel){
 }
 
 void onPidConfigureMine(int group){
-	WritePIDvalues(&pidGroups[group],&dyPid[group],group);
+
+	dyPid[group].flagValueSync = true;
 }
 
 void trigerPIDLimit(uint8_t chan,PidLimitType type,int32_t  tick){
@@ -200,12 +248,11 @@ int resetPositionMine(int group, int current){
 }
 
 float getPositionMine(int group){
-	if(dyPid[group].inputChannel==DYPID_NON_USED||
-			((pidGroups[group].config.Enabled == false)  && ( pidGroups[group].vel.enabled==false) ))
+	if(dyPid[group].inputChannel==DYPID_NON_USED)
 		return 0;
 
-	int64_t pos = 0;
-	//print_I("\nGetting PID value from group: ");p_int_I(chan->channel);print_I(" of mode: ");printMode(chan->inputMode);print_I(" From channel: ");p_int_I(chan->inputChannel);print_I("\n");
+	int32_t pos = 0;
+
 	switch(dyPid[group].inputMode){
 	case IS_COUNTER_INPUT_INT:
 	case IS_COUNTER_INPUT_DIR:
@@ -219,18 +266,17 @@ float getPositionMine(int group){
 		pos = GetDigitalValFromAsync(dyPid[group].inputChannel);
 		break;
 	}
+	println_W("\nGet PID ");p_int_W(group);print_W(" is ");p_int_W(pos);
 	return ((float)pos);
 }
 
 void setOutputMine(int group, float v){
 
-	if( dyPid[group].outputChannel==DYPID_NON_USED||
-			((pidGroups[group].config.Enabled == false)  && ( pidGroups[group].vel.enabled==false) ))
+	if( dyPid[group].outputChannel==DYPID_NON_USED)
 		return;
 	Print_Level l = getPrintLevel();
 	setPrintLevelNoPrint();
 	int val = (int)(v);
-	//uint8_t center = getBcsIoDataTable()[dyPid[group].outputChannel].PIN.currentConfiguration;
 
 	if(dyPid[group].outputMode == IS_SERVO){
 		val += 128;
@@ -251,15 +297,17 @@ void setOutputMine(int group, float v){
 			val=0;
 	}
 	int set = (int)val;
+	println_W("PID set ");p_int_W(group);print_W(" ");p_int_W(set);
+
 	if (dyPid[group].outVal==set){
 		//if(!(RunEvery(&force[chan->channel])>0))
 			return;
 	}else{
-		print_I(" Setting PID output, was ");p_int_I(dyPid[group].outVal);print_I(" is now: ");p_int_I(set);print_I(" on DyIO chan: ");p_int_I(dyPid[group].outputChannel);print_I(", ");
+		//print_I(" Setting PID output, was ");p_int_I(dyPid[group].outVal);print_I(" is now: ");p_int_I(set);print_I(" on DyIO chan: ");p_int_I(dyPid[group].outputChannel);print_I(", ");
 	}
 	dyPid[group].outVal=set;
 
-	println_I("PID setting output for group: ");p_int_I(group);
+
 	SetChannelValueCoProc(dyPid[group].outputChannel,dyPid[group].outVal);
 	setPrintLevel(l);
 }

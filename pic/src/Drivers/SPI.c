@@ -90,14 +90,14 @@ void SyncSPIData(){
 	}
 	println_W("SPI SS# ");p_int_W(SSPin);
 	if(!SetCoProcMode(SSPin,IS_DO))
-		SetChannelValueCoProc(SSPin,1);
-	SetChannelValueCoProc(SSPin,0);
+		_SetChannelValueCoProc(SSPin,1);
+	_SetChannelValueCoProc(SSPin,0);
 	uint8_t err;
 	while(FifoGetByteCount(&storeTx)>0){
 
 		FifoAddByte(&storeRx,GetByteSPIDyIO(FifoGetByte(&storeTx,&err)),&err) ;
 	}
-	SetChannelValueCoProc(SSPin,1);
+	_SetChannelValueCoProc(SSPin,1);
 	SSPin=0;
 }
 

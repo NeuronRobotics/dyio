@@ -157,6 +157,7 @@ typedef struct __attribute__((__packed__)) _DYIO_PID {
     unsigned char outputMode;
     unsigned char outputChannel;
     unsigned char outVal;
+    boolean flagValueSync;
 }
 DYIO_PID;
 

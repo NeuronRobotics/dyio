@@ -11,8 +11,9 @@ RunEveryData pid = {0, 30};
 RunEveryData vel = {0, 100};
 
 boolean bcsPidDypidAsyncEventCallback(BowlerPacket *Packet, boolean(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {
-    //println_W("Async ");print_W(dypidNSName);
+   println_W("Async ");
     if (RunEvery(&pid) > 0) {
+    	println_W("PID Loop");
         RunPIDControl();
     }
     //println_I("Run Velocity ");
@@ -21,7 +22,8 @@ boolean bcsPidDypidAsyncEventCallback(BowlerPacket *Packet, boolean(*pidAsyncCal
         RunVel();
     }
 #endif
-    //println_W("Done ");print_W(dypidNSName);
+    runPIDConfigurationValueSync();
+    println_W("Done ");//print_W(dypidNSName);
     return false; 
 }
 
