@@ -9,8 +9,8 @@
 BowlerPacket downstreamPacketTemp;
   uint8_t isAscii(char * str);
 
-  boolean bankA=true , bankB=true;
-  uint8_t batteryCode0=0,batteryCode1=0;
+  boolean bankA=0xff , bankB=0xff;
+  uint8_t batteryCode0=0xff,batteryCode1=0xff;
 
 Downstream_Data down[NUM_PINS];
 
