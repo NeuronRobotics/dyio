@@ -53,7 +53,7 @@ case IS_DC_MOTOR_DIR:
 case IS_PPM_IN:
 	break;
  */
-
+// Regex 0x.* to : then copy paste it to a case statement. You're welcome.
 #define NO_CHANGE	 	 		0x00
 #define HIGH_IMPEDANCE 	 		0x01
 #define IS_DI	 		 		0x02

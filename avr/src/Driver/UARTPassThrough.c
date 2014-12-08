@@ -79,6 +79,7 @@ void StopUartPassThrough(uint8_t pin){
 }
 
 boolean ConfigureUART(uint32_t baudrate){
+	println_W("Setting: ");p_int_W(baudrate);
 	if(getPrintLevel() != NO_PRINT)
 		return true;
 	return validBaud(baudrate);
