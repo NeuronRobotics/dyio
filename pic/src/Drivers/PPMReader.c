@@ -23,12 +23,22 @@ typedef enum{
 	PULSE_STARTED
 }ppmState ;
 ppmState state;
+boolean startedLinks=false;
 
+boolean writeLinks=false;
 
 void RunPPMCheck(void){
 	if(GetChannelMode(23) != IS_PPM_IN){
 		//setMode(23,IS_PPM_IN);
 		return;
+	}
+	if(startedLinks==false){
+		startedLinks=true;
+		readPPMLink(ppmLink);
+	}
+	if(writeLinks==true){
+		writeLinks=false;
+		writePPMLink(ppmLink);
 	}
 	int i;
 	boolean up = false; 
@@ -87,7 +97,7 @@ void runPPMEvent(void){
 		if((now>(bufferStart + buffTime))&&(pinState == 1)){
 			state =  WAIT_FOR_PULSE;
 		}
-		break;
+		// no break
 	case WAIT_FOR_PULSE:
 		if(pinState == 0 ){
 			ppmStart[ppmIndex]=now;
@@ -119,11 +129,9 @@ void clearPPM(uint8_t chan){
 void startPPM(uint8_t chan){
 	int i;
 	if(chan == 23){
-//		ConfigINT4(EXT_INT_ENABLE | FALLING_EDGE_INT | EXT_INT_PRI_5);
-//		CHAN3P1_tris=INPUT;
 		configPin23Int();
 		state = START;
-		readPPMLink(ppmLink);
+
 		for(i=0;i<NUM_PPM_CHAN;i++){
 			if(ppmLink[i]>= GetNumberOfIOChannels())
 				ppmLink[i]=INVALID_PPM_LINK;
@@ -161,7 +169,8 @@ void ConfigPPMFromArray(uint8_t * data){
 			unlockServos();
 		}
 	}
-	writePPMLink(ppmLink);
+	writeLinks=true;
+
 }
 
 void ConfigPPM(BowlerPacket * Packet){
@@ -174,7 +183,7 @@ void ConfigPPM(BowlerPacket * Packet){
 			unlockServos();
 		}
 	}
-	writePPMLink(ppmLink);
+	writeLinks=true;
 	READY(Packet,66,0);
 }
 

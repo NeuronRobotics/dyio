@@ -118,7 +118,7 @@ boolean setMode(uint8_t pin,uint8_t mode){
 		}
 		break;
 	case IS_PPM_IN:
-		println_I("Setting up PPM...");
+		println_W("Setting up PPM...");
 		startPPM(pin);
 		break;
 	case IS_DO:
