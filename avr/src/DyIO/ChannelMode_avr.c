@@ -19,10 +19,10 @@ void InitPinModes(void){
 		//getBcsIoDataTable(i)->PIN.previousChannelMode=NO_CHANGE;
 		mode=EEReadMode(i);
 		if((mode < 2)||(mode >=IO_MODE_MAX)){
-			EEWriteMode(i,IS_DI);
+			configPinMode(i,IS_DI,INPUT,ON);
 			mode = EEReadMode(i);
 		}
-		getBcsIoDataTable(i)->PIN.currentChannelMode = mode;
+		getBcsIoDataTable(i)->PIN.currentChannelMode = 0xff;// this forces the set Mode function to set the mode and hardware
 		println_W("Initializing :");p_int_W(i);printMode(EEReadMode(i),WARN_PRINT);
 		setMode(i,EEReadMode(i));
 	}
@@ -31,31 +31,10 @@ void InitPinModes(void){
 }
 
 
-//uint8_t GetChannelMode(uint8_t chan){
-//	return EEReadMode(chan) ;
-//}
-//boolean SetChannelModeFromPacket(BowlerPacket * Packet){
-//	//uint8_t isAsync;
-//	uint8_t pin = Packet->use.data[0];
-//	uint8_t mode = Packet->use.data[1];
-//	if(Packet->use.head.DataLegnth>6){
-
-//	}
-//	return setMode(pin,mode);
-//}
-//
-//boolean SetAllChannelModeFromPacket(BowlerPacket * Packet){
-//	uint8_t i;
-//	for (i=0;i<NUM_PINS;i++){
-//		if(!setMode(i,Packet->use.data[i])){
-//			return false; 
-//		}
-//	}
-//	return true; 
-//}
-
-
 boolean setMode(uint8_t pin,uint8_t mode){
+	if(mode == GetChannelMode(pin)){
+		return true;
+	}
 
 	ClearPinState(pin);
 	//uint8_t pwm,dir;
@@ -131,5 +110,5 @@ boolean setMode(uint8_t pin,uint8_t mode){
 void configPinMode(uint8_t pin,uint8_t mode,uint8_t tris,uint8_t io){
 	SetPinTris(pin,tris);
 	SetDIO(pin,io);
-	EEWriteMode(pin,mode);
+	_EEWriteMode(pin,mode);
 }

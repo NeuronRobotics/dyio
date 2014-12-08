@@ -11,7 +11,7 @@
 void EEInitMAC(void);
 boolean ProvisionMAC(uint8_t * m);
 
-void EEWriteMode(uint8_t pin,uint8_t mode);
+void _EEWriteMode(uint8_t pin,uint8_t mode);
 void EEWriteValue(uint16_t pin,uint8_t value);
 uint8_t EEReadValue(uint16_t pin);
 uint8_t EEReadMode(uint8_t pin);

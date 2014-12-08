@@ -101,7 +101,7 @@ void InitPinFunction(void){
 	for (i=0;i<NUM_PINS;i++){
 		mode=EEReadMode(i);
 		if((mode < 2)||(mode >=IO_MODE_MAX)){
-			EEWriteMode(i,IS_DI);
+			configPinMode(i,IS_DI,INPUT,ON);
 			mode = EEReadMode(i);
 		}
 		DyioPinFunctionData[i].PIN.currentChannelMode = mode;

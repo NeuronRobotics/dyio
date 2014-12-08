@@ -17,14 +17,14 @@ void ClearPinState(uint8_t pin){
 	ClearDCMotor(pin);
 
 	if ( (current >= IS_SPI_MOSI)&&(current <= IS_SPI_SCK)){
-		EEWriteMode(0,IS_DI);
-		EEWriteMode(1,IS_DI);
-		EEWriteMode(2,IS_DI);
+		_EEWriteMode(0,IS_DI);
+		_EEWriteMode(1,IS_DI);
+		_EEWriteMode(2,IS_DI);
 	}
 	if ((current == IS_UART_TX)||(current == IS_UART_RX)){
 		StopUartPassThrough(pin);
-		EEWriteMode(16,IS_DI);
-		EEWriteMode(17,IS_DI);
+		_EEWriteMode(16,IS_DI);
+		_EEWriteMode(17,IS_DI);
 	}
 	SetPinTris(pin,INPUT);
 }

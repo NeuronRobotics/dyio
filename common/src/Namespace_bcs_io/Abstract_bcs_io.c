@@ -199,12 +199,15 @@ boolean GetChanelStreamFromPacket(BowlerPacket * Packet) {
     uint8_t pin = Packet->use.data[0];
     uint8_t mode = GetChannelMode(pin);
     if (isStremChannelMode(mode)) {
-        if ( getStreamHWPtr != NULL)
+        if ( getStreamHWPtr != NULL){
             // Load the data directly into the packet as the buffer
             //Data pointer is offset by one to start after the pin index
+        	uint8_t size =0;
         	getStreamHWPtr(	pin,
-							&Packet->use.data[1],
+							&size,
 							&Packet->use.data[2]);
+        	Packet->use.data[1] = size;
+        }
     } else {
         ERR(Packet, 2, 3);
     }
@@ -311,38 +314,28 @@ boolean GetChanelValueFromPacket(BowlerPacket * Packet) {
     uint8_t mode = GetChannelMode(pin);
     uint8_t numValues = 1;
     int32_t data;
-    if (isStremChannelMode(mode) ) {
 
-        if (getChanelValueHWPtr != NULL) {
-            // Load the data directly into the packet as the buffer
-            //Data pointer is offset by one to start after the pin index
-            getChanelValueHWPtr(pin,
-                    &numValues,
-                    &data);
-            set32bit(Packet, data, 1);
-                    numValues = 4;
 
-        } else {
-            return false;
-        }
-    } else {
+	if (getChanelValueHWPtr != NULL) {
+		getChanelValueHWPtr(pin,
+				&numValues,
+				&data);
+	} else {
+		return false;
+	}
+	if(isOutputMode(GetChannelMode(pin))==false ){
+		setDataTableCurrentValue(pin,data);
+	}else{
+		if(mode== IS_UART_RX){
+			setDataTableCurrentValue(pin,data);
+		}else{
+			data = getBcsIoDataTable(pin)->PIN.currentValue;
+		}
+	}
 
-        if (getChanelValueHWPtr != NULL) {
-            getChanelValueHWPtr(pin,
-                    &numValues,
-                    &data);
-        } else {
-            return false;
-        }
-        if(isOutputMode(GetChannelMode(pin))==false ){
-        	setDataTableCurrentValue(pin,data);
-        }else{
-        	data = getBcsIoDataTable(pin)->PIN.currentValue;
-        }
+	set32bit(Packet, data, 1);
+	numValues = 4;
 
-        set32bit(Packet, data, 1);
-        numValues = 4;
-    }
     Packet->use.head.DataLegnth = 4 + 1 + numValues;
     FixPacket(Packet);
     return true;
@@ -361,9 +354,13 @@ boolean GetAllChanelValueFromPacket(BowlerPacket * Packet) {
             }else{
                  if(GetChannelMode(i) == IS_SERVO){
                     tmp = GetServoPos(i);
-                }else
+                }else if(GetChannelMode(i)== IS_UART_RX){
+                	setDataTableCurrentValue(i,tmp);
+    			}else{
                     tmp = getBcsIoDataTable(i)->PIN.currentValue;
+    			}
             }
+
             set32bit(Packet, tmp, (i*4)+1);
 
         }

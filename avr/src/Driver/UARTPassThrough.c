@@ -10,7 +10,7 @@
 #if defined(__AVR_ATmega324P__)
 	#define UART_PASS_BUFF_SIZE 5
 #else
-	#define UART_PASS_BUFF_SIZE 20
+	#define UART_PASS_BUFF_SIZE 60
 #endif
 
 
@@ -27,12 +27,14 @@ void InitUART(void){
 	if(UartInit == true){
 		return;
 	}
-	println_W("Uart Initialization: ");
-	if (!(	pinHasFunction(16,IS_UART_RX)||
-			pinHasFunction(17,IS_UART_TX)
+
+	if (!(	pinHasFunction(16,IS_UART_TX)||
+			pinHasFunction(17,IS_UART_RX)
 		)){
+		println_W("Pins Failed UART Test");
 		return;
 	}
+	println_W("Uart Initialization: ");
 	if(getPrintLevel() == NO_PRINT){
 		uint32_t baudrate = EEReadBaud();
 		if (validBaud(baudrate) == false) {
@@ -57,13 +59,14 @@ void StopUartPassThrough(uint8_t pin){
 	if(UartInit == false){
 		return;
 	}
-	println_W("Uart STOP: ");
+	println_E("Uart STOP: ");
 	if (!(	pinHasFunction(pin,IS_UART_RX)||
 			pinHasFunction(pin,IS_UART_TX)
 		)){
 		return;
 	}
-	if(getPrintLevel() != NO_PRINT)
+	UCSR1Bbits._RXCIE1=0;
+	if(getPrintLevel() == NO_PRINT)
 		UCSR1B=0;
 	//InitByteFifo(&UARTPassThroughStore,privateRXUART,sizeof(privateRXUART));
 	switch(GetChannelMode(pin)){
@@ -127,17 +130,27 @@ boolean validBaud(uint32_t baud){
  * Private helpers
  */
 ISR(USART1_RX_vect){
-	//uint8_t read;
+	uint8_t read;
+	//UCSR1Bbits._RXCIE1=0;
 	//while ((UCSR0A & 0x80) == 0 );
-	//read = UDR1;
+	read = UDR1;
 	//AddBytePassThrough(read);
 	if(UartInit){
 		uint8_t err;
-		FifoAddByte(&UARTPassThroughStore,UDR1,&err);
+		FifoAddByte(&UARTPassThroughStore,read,&err);
+		//WriteAVRUART1(read);
+		//p_int_W(Get_UART_Byte_CountPassThrough());
 	}
+	//UCSR1Bbits._RXCIE1=1;
 }
+ISR(USART1_TX_vect){
 
+}
+ISR(USART1_UDRE_vect){
+
+}
 void UARTGetArrayPassThrough(uint8_t *packet,uint16_t size){
+	println_W("Reading: ");p_int_W(size);
 	if(UartInit)
 		FifoGetByteStream(&UARTPassThroughStore,packet,size);
 }
@@ -151,11 +164,13 @@ uint16_t Get_UART_Byte_CountPassThrough(void){
 }
 
 void UARTPassThroughWrite(uint8_t numValues,uint8_t * data){
+	println_W("Writing: ");p_int_W(numValues);print_W(" ");
 	int i;
-	uint8_t err;
+	//uint8_t err;
 	for(i=0;i<numValues;i++){
 		WriteAVRUART1(data[i]);
-		FifoAddByte(&UARTPassThroughStore,data[i],&err);
+		//FifoAddByte(&UARTPassThroughStore,data[i],&err);
 	}
+	print_W(" done");
 }
 

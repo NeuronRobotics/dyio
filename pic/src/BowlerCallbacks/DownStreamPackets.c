@@ -69,11 +69,13 @@ void DownstreamSerialStreamGet(BYTE_FIFO_STORAGE * rxBuffer){
 	downstreamPacketTemp.use.head.MessageID=3;
 	downstreamPacketTemp.use.head.Method=BOWLER_GET;
 	downstreamPacketTemp.use.data[0] = 17; //the serial rx pin
-	PutBowlerPacket(& downstreamPacketTemp);
+	downstreamPacketTemp.use.head.DataLegnth = 4+1;
+	SendPacketToCoProc(& downstreamPacketTemp);
 
 	for(i=0;i<downstreamPacketTemp.use.data[1];i++){
 		FifoAddByte(rxBuffer,downstreamPacketTemp.use.data[2+i],&err);
 	}
+	println_W("Syncing UART ");printPacket(&downstreamPacketTemp,WARN_PRINT);
 }
 
 
@@ -319,6 +321,9 @@ uint8_t SetAllCoProcValues(){
 		}
 		if(GetChannelMode(i)==IS_SERVO){
 			SetServoPos(i, get32bit(& downstreamPacketTemp, index) & 0x000000ff);
+		}
+		if(GetChannelMode(i)==IS_UART_RX){
+
 		}
 	}
 

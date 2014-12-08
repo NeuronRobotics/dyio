@@ -44,8 +44,8 @@ void ClearDCMotor(uint8_t pin){
 		ClearPWM(pwm);
 		//DATA.PIN[pwm].State=IS_DI;
 		//DATA.PIN[dir].State=IS_DI;
-		EEWriteMode(pwm,IS_DI);
-		EEWriteMode(dir,IS_DI);
+		configPinMode(pwm,IS_DI,INPUT,ON);
+		configPinMode(dir,IS_DI,INPUT,ON);
 	}
 
 
