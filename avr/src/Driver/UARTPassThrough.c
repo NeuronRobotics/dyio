@@ -140,7 +140,7 @@ ISR(USART1_RX_vect){
 	if(UartInit){
 		uint8_t err;
 		FifoAddByte(&UARTPassThroughStore,read,&err);
-		WriteAVRUART1(read);
+		//WriteAVRUART1(read);
 		//p_int_W(Get_UART_Byte_CountPassThrough());
 	}
 	//UCSR1Bbits._RXCIE1=1;
