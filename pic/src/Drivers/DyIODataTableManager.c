@@ -53,9 +53,9 @@ void SyncDataTable(){
 		//println_E("push serial here: ");
 		DownstreamSerialStreamSet(&storeTx);
 	}
-	if(GetChannelMode(16) == IS_UART_RX && getBcsIoDataTable(16)->PIN.currentValue > 0){
-		println_E("Serial port has: ");p_int_E(getBcsIoDataTable(16)->PIN.currentValue );
-		setDataTableCurrentValue(16,0);
+	if(GetChannelMode(17) == IS_UART_RX && getBcsIoDataTable(17)->PIN.currentValue > 0){
+		println_E("Serial port has: ");p_int_E(getBcsIoDataTable(17)->PIN.currentValue );
+		setDataTableCurrentValue(17,0);
 		DownstreamSerialStreamGet(&storeRx);
 	}
     SyncConfigurations();
