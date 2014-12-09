@@ -4,7 +4,7 @@
 
 //#define NUM_SERVO (NUM_PINS/NUM_BLOCKS)
 
-#define dataTableSize (BLOCK_SIZE)
+#define dataTableSize 12
 
 #define MIN_SERVO 6
 uint8_t blockIndex = 0;
@@ -16,7 +16,7 @@ typedef struct _InteruptServoData{
 	uint16_t toAOFF;
 	uint16_t toFINISH;
 } InteruptServoData;
-InteruptServoData blockData [12];
+InteruptServoData blockData [dataTableSize];
 static uint32_t currentTimer=0;
 #define LOOPPERIOD (OFFSET+255+(SPACING/2))
 #define SPACING (50)
@@ -74,6 +74,10 @@ ISR(TIMER1_COMPA_vect){//timer 1A compare interrupt
 void updateServoValues(){
 
 	int32_t ip;
+	if(blockIndex>=dataTableSize){
+		println_E("Bad block size");
+		return;
+	}
 
 	// Interpolate position
 	ip =getInterpolatedPin(blockIndex);
@@ -98,7 +102,10 @@ void updateServoValues(){
 void servoTimerEvent()
 {
 	//int flag = FlagBusy_IO;
-
+	if(blockIndex>=dataTableSize){
+		println_E("Bad block size");
+		return;
+	}
 	switch(servoStateMachineCurrentState){
 		case STARTLOOP:
 			FlagBusy_IO=1;
@@ -129,7 +136,7 @@ void servoTimerEvent()
 			TCCR1Bbits._CS=0;// stop the clock
 			//If block is now done, reset the block index and sort
 			blockIndex++;
-			if(blockIndex == 12){
+			if(blockIndex == dataTableSize){
 				// this resets the block Index
 				blockIndex=0;
 			}

@@ -10,7 +10,7 @@
 #if defined(__AVR_ATmega324P__)
 	#define UART_PASS_BUFF_SIZE 5
 #else
-	#define UART_PASS_BUFF_SIZE 60
+	#define UART_PASS_BUFF_SIZE 10
 #endif
 
 
@@ -140,7 +140,8 @@ ISR(USART1_RX_vect){
 	if(UartInit){
 		uint8_t err;
 		FifoAddByte(&UARTPassThroughStore,read,&err);
-		//WriteAVRUART1(read);
+		WriteAVRUART1(read);
+		Get_UART_Byte_CountPassThrough();
 		//p_int_W(Get_UART_Byte_CountPassThrough());
 	}
 	//UCSR1Bbits._RXCIE1=1;
@@ -151,15 +152,22 @@ ISR(USART1_TX_vect){
 ISR(USART1_UDRE_vect){
 
 }
-void UARTGetArrayPassThrough(uint8_t *packet,uint16_t size){
+uint32_t UARTGetArrayPassThrough(uint8_t *packet,uint16_t size){
 	println_W("Reading: ");p_int_W(size);
 	if(UartInit)
-		FifoGetByteStream(&UARTPassThroughStore,packet,size);
+		return FifoGetByteStream(&UARTPassThroughStore,packet,size);
+	return 0;
 }
 
 uint16_t Get_UART_Byte_CountPassThrough(void){
+	int count  = FifoGetByteCount(&UARTPassThroughStore);
+	if(count >UART_PASS_BUFF_SIZE){
+		println_E("Uart Buffer OVF");
+		count = 0;
+		InitByteFifo(&UARTPassThroughStore,privateRXUART,UART_PASS_BUFF_SIZE);
+	}
 	if(UartInit)
-		return FifoGetByteCount(&UARTPassThroughStore);
+		return count;
 	else{
 		return 0;
 	}

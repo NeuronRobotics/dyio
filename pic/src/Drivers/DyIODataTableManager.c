@@ -54,11 +54,11 @@ void SyncDataTable(){
 		DownstreamSerialStreamSet(&storeTx);
 	}
 	if(GetChannelMode(17) == IS_UART_RX && getBcsIoDataTable(17)->PIN.currentValue > 0){
-		//int bufferSize = getNumberOfSerialRxBytes();
-		//println_E("Serial port has: ");p_int_E(getBcsIoDataTable(17)->PIN.currentValue );
+		int bufferSize = getNumberOfSerialRxBytes();
+		println_E("Serial port has: ");p_int_E(getBcsIoDataTable(17)->PIN.currentValue );
 		setDataTableCurrentValue(17,0);
 		DownstreamSerialStreamGet(&storeRx);
-		//print_E(" added ");p_int_E(getNumberOfSerialRxBytes()- bufferSize);
+		print_E(" added ");p_int_E(getNumberOfSerialRxBytes()- bufferSize);
 	}
     SyncConfigurations();
 	float end = getMs() - start;
