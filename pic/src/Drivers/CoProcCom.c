@@ -466,7 +466,7 @@ boolean valadateRPC(int response, int sent) {
 			}
 			/* no break */
         default:
-            println_E("Method unknown");
+            println_E("Method unknown ");print_E((char * )&sent);print_E(" 0x");prHEX32(sent,ERROR_PRINT);
             return true;
     }
 }
