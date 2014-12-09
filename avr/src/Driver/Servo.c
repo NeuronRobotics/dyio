@@ -48,7 +48,7 @@ void InitServo(uint8_t PIN){
 }
 
 void setPowerOverride(boolean set){
-	println_W("powerOverRide: ");p_int_W(set);
+	//println_W("powerOverRide: ");p_int_W(set);
 	powerOverRide = set?true:false;
 }
 
