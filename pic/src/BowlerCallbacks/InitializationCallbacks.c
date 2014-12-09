@@ -49,7 +49,7 @@ void hardwareInit() {
     }
     StartCritical();
 
-    println_I("Getting MAC from flash ");
+    println_I("MAC");
     enableFlashStorage(true);
     FlashGetMac(MyMAC.v);
 
@@ -145,7 +145,7 @@ void UserInit(void) {
     //setPrintStream(&USBPutArray);
     clearPrint();
     setPrintLevelInfoPrint();
-    println_I("\n\n\nStarting PIC initialization ");
+    println_I("Start PIC");
     //DelayMs(1000);
     hardwareInit();
     //println_I("Hardware Init done");

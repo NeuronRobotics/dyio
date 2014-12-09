@@ -39,6 +39,23 @@ void LoadCorePacket(BowlerPacket * Packet);
 uint8_t CalcCRC(BowlerPacket *Packet);
 void SetCRC(BowlerPacket * Packet);
 unsigned char CheckCRC(BowlerPacket * Packet);
+/*
+ * Calculate waht the CRC should be for a given data section
+ */
+uint8_t CalcDataCRC(BowlerPacket *Packet);
+/*
+ * Returns true if the data crc in the packet matches the one calculated fromthe packet
+ */
+uint8_t CheckDataCRC(BowlerPacket *Packet);
+/*
+ * Calculates and sets the CRC in the packet
+ */
+void SetDataCRC(BowlerPacket * Packet);
+/*
+ * Retreives the CRC in the packet
+ */
+uint8_t GetDataCRC(BowlerPacket * Packet) ;
+
 void copyPacket(BowlerPacket * from,BowlerPacket * to);
 
 

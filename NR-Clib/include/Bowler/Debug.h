@@ -208,7 +208,7 @@ char GetLowNib(uint8_t b);
  */
 char GetHighNib(uint8_t b);
 
-void printPIDvals(int i);
+#define printPIDvals(i) printPIDvalsPointer(getPidGroupDataTable(i))
 void printPIDvalsPointer(AbsPID * conf);
 void sendStr(const char *str) ;
 

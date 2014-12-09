@@ -21,14 +21,14 @@
 #include <stddef.h>
 #include <stdint.h>
 #define BOWLER_VERSION			3
-#define BowlerHeaderSize		11
+#define _BowlerHeaderSize		11
 #define CRCIndex				10
 #define DataSizeIndex			9
 #define SessionIDIndex			8
 #define ResponseFlagIndex		8
 #define MethodIndex				7
 #define RPCDataStart 			15
-#define RPCCodeStart 			BowlerHeaderSize
+#define RPCCodeStart 			_BowlerHeaderSize
 
 #define PRINT_BAUD 			115200
 /**
@@ -52,7 +52,7 @@ AVR Baud = 576000 	Pic Baud = 571428	Percent = 0.793650793650785 AVR Baud = 1 	P
 #define INTERNAL_BAUD_AVR 2
 #define INTERNAL_BAUD_PIC 51
 
-#define BOWLER_PacketSize		(BowlerHeaderSize+255)
+#define BOWLER_PacketSize		(_BowlerHeaderSize+255+1)
 #define ASSERTED				0
 #define NOT_ASSERTED			1
 

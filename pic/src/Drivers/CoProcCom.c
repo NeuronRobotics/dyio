@@ -211,7 +211,7 @@ void SendPacketToCoProc(BowlerPacket * Packet) {
     int rpc = Packet->use.head.RPC;
     do {
         if (ret > 0) {
-            println_E("Resending:");
+            println_E("Re:");
             printPacket(Packet, ERROR_PRINT);
             FixPacket(Packet);
         }
@@ -225,15 +225,14 @@ void SendPacketToCoProc(BowlerPacket * Packet) {
 
 
     if (i == MAX_RETRY) {
-        println_E("#Fail:");
-        printPacket(Packet, ERROR_PRINT);
+
         SetColor(1, 0, 0);
         initCoProcCom();
         PowerCycleAVR();
         DelayMs(200);
         ret = sendPacket(Packet);
         if (ret == 0) {
-            println_W("AVR reset");
+            println_W("AVR rst");
             return;
         }
         //println_E("##Failed sending to co-proc after reset also!!:");
@@ -265,10 +264,11 @@ uint8_t sendPacket(BowlerPacket * Packet) {
 //        printPacket(Packet, ERROR_PRINT);
     }
 
-    int packetSize = BowlerHeaderSize + Packet->use.head.DataLegnth;
+    int packetSize = GetPacketLegnth(Packet);
 
     PushCoProcAsync(); //clear out any packets before begining
     FixPacket(Packet);
+    //println("CoPro TX>>:", ERROR_PRINT);
     float packStartTime = getMs();
     if (SendPacketUARTCoProc(Packet->stream, packetSize)) {
         //println_I("Coproc Send took: ");p_fl_I(getMs()-packStartTime);
@@ -292,10 +292,10 @@ uint8_t sendPacket(BowlerPacket * Packet) {
                 } else {
                     //println_I("Not async");
                     if (!valadateRPC(downstream.use.head.RPC, Packet->use.head.RPC)) {
-                        println_E("Valadation failed, junk TX>>");
-                        printPacket(Packet, ERROR_PRINT);
-                        print_E("\nRX<<\n");
-                        printPacket(&downstream, ERROR_PRINT);
+                        //println_E("Valadation failed, junk TX>>");
+                        //printPacket(Packet, ERROR_PRINT);
+                        //print_E("\nRX<<\n");
+                        //printPacket(&downstream, ERROR_PRINT);
                         //SendPacketUARTCoProc(Packet->stream,packetSize);
                         SetColor(1, 0, 0);
                         return 3;
@@ -318,7 +318,7 @@ uint8_t sendPacket(BowlerPacket * Packet) {
         //printFiFoState_E(&store);
         PushCoProcAsync(); //clear out any packets
         initCoProcUART();
-        println_E("Rx took: ");
+        //println_E("Rx took: ");
         p_fl_E(getMs() - packStartTime);
         return 2;
     } else {
@@ -466,7 +466,7 @@ boolean valadateRPC(int response, int sent) {
 			}
 			/* no break */
         default:
-            println_E("Method unknown ");print_E((char * )&sent);print_E(" 0x");prHEX32(sent,ERROR_PRINT);
+            println_E("unknown ");print_E((char * )&sent);print_E(" 0x");prHEX32(sent,ERROR_PRINT);
             return true;
     }
 }
@@ -490,7 +490,7 @@ boolean SendPacketUARTCoProc(uint8_t * packet, uint16_t size) {
             buttonCheck(3);
         } while (clearToSend() == false);
         if (!Write32UART2(packet[i])) {
-            println_E("ERROR Write failed!!");
+            println_E("Write failed!!");
             initCoProcUART();
             //setPrintLevel(l);
             FLAG_ASYNC = FLAG_OK;

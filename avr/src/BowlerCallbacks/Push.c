@@ -28,7 +28,7 @@ boolean avrAsyncCallbackPtr(BowlerPacket *Packet){
 	setPrintLevelWarningPrint();
 	println_W("<<Async\n\r");printPacket(Packet,WARN_PRINT);
 	int i;
-	for(i=0;i<Packet->use.head.DataLegnth+BowlerHeaderSize;i++){
+	for(i=0;i<GetPacketLegnth(Packet);i++){
 		send(Packet->stream[i]);
 	}
 	return true; 

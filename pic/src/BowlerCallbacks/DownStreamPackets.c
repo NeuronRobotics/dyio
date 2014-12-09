@@ -223,9 +223,9 @@ uint8_t SetCoProConfiguration(uint8_t pin, int32_t mode) {
 uint8_t SetCoProcMode(uint8_t pin, uint8_t mode) {
 	if (getBcsIoDataTable(pin)->PIN.currentChannelMode == mode)
 		return true;
-	println_W("Mode Set Pin :");
-	p_int_W(pin);
-	printMode(mode, WARN_PRINT);
+//	println_W("Mode Set Pin :");
+//	p_int_W(pin);
+//	printMode(mode, WARN_PRINT);
 	getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
 	down[pin].changeMode = true;
 	return false;
@@ -341,7 +341,7 @@ void GetEEPRomData(uint8_t start, uint8_t stop, uint8_t * data) {
 	//WORD_VAL raw;
 	uint8_t i = 0;
 	if (start > stop) {
-		println_W("###ERROR, index for eeprom read bad!");
+		println_W("###ERROR eeprom");
 		return;
 	}
 	int total = 0;

@@ -190,7 +190,7 @@ boolean GetIOChannelCountFromPacket(BowlerPacket * Packet) {
     Packet->use.data[1] = 0;
     Packet->use.data[2] = 0;
     Packet->use.data[3] = GetNumberOfIOChannels();
-    ;
+    Packet->use.head.RPC= GetRPCValue("gchc");
     Packet->use.head.DataLegnth = 4 + 4;
     FixPacket(Packet);
     return true;
