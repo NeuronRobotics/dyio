@@ -85,31 +85,27 @@ void InitPID(void){
 		dyPid[i].outputMode=0;
 		dyPid[i].flagValueSync=false;
 
-//		pidGroups[i].config.Enabled=false;
-//		pidGroups[i].vel.enabled=false;
-//		pidGroups[i].config.V.P=.1;
-//		pidGroups[i].config.tipsScale=1.0;
-//
-        pidGroups[i].config.Enabled = false;
-        pidGroups[i].config.Async = 0;
-        pidGroups[i].config.IndexLatchValue = 0;
-        pidGroups[i].config.stopOnIndex = 0;
-        pidGroups[i].config.useIndexLatch = 0;
-        pidGroups[i].config.K.P = .1;
-        pidGroups[i].config.K.I = 0;
-        pidGroups[i].config.K.D = 0;
-        pidGroups[i].config.V.P = .1;
-        pidGroups[i].config.V.D = 0;
-        pidGroups[i].config.Polarity = 1;
-        pidGroups[i].config.stop = 0;
-        pidGroups[i].config.upperHistoresis = 0;
-        pidGroups[i].config.lowerHistoresis = 0;
-        pidGroups[i].config.offset = 0.0;
-        pidGroups[i].config.calibrationState = CALIBRARTION_Uncalibrated;
-        pidGroups[i].interpolate.set=0;
-        pidGroups[i].interpolate.setTime=0;
-        pidGroups[i].interpolate.start=0;
-        pidGroups[i].interpolate.startTime=0;
+                pidGroups[i].config.tipsScale=1.0;
+                pidGroups[i].config.Enabled = false;
+                pidGroups[i].config.Async = 1;
+                pidGroups[i].config.IndexLatchValue = 0;
+                pidGroups[i].config.stopOnIndex = 0;
+                pidGroups[i].config.useIndexLatch = 0;
+                pidGroups[i].config.K.P = .1;
+                pidGroups[i].config.K.I = 0;
+                pidGroups[i].config.K.D = 0;
+                pidGroups[i].config.V.P = .1;
+                pidGroups[i].config.V.D = 0;
+                pidGroups[i].config.Polarity = 0;
+                pidGroups[i].config.stop = 0;
+                pidGroups[i].config.upperHistoresis = 0;
+                pidGroups[i].config.lowerHistoresis = 0;
+                pidGroups[i].config.offset = 0.0;
+                pidGroups[i].config.calibrationState = CALIBRARTION_DONE;
+                pidGroups[i].interpolate.set=0;
+                pidGroups[i].interpolate.setTime=0;
+                pidGroups[i].interpolate.start=0;
+                pidGroups[i].interpolate.startTime=0;
 
 		limits[i].type=NO_LIMIT;
 
@@ -141,6 +137,7 @@ void InitPID(void){
 			initPIDChans(i);
 
 			int value = getPositionMine(i);
+                        pidGroups[i].CurrentState=value;
 			pidReset(i,value);
 		}
 	}
@@ -268,7 +265,7 @@ float getPositionMine(int group){
             default:
                 return 0;
 	}
-	println_W("Get PID ");p_int_W(group);print_W(" is ");p_int_W(pos);
+	//println_W("Get PID ");p_int_W(group);print_W(" is ");p_int_W(pos);
 	return ((float)pos);
 }
 
@@ -282,8 +279,8 @@ void setOutputMine(int group, float v){
 
 	if(dyPid[group].outputMode == IS_SERVO){
 		val += 128;
-		if (val>254)
-			val=254;
+		if (val>255)
+			val=255;
 		if(val<0)
 			val=0;
 	}else if(dyPid[group].outputMode == IS_DO){
@@ -299,16 +296,9 @@ void setOutputMine(int group, float v){
 			val=0;
 	}
 	int set = (int)val;
-	print_W("  set ");p_int_W(group);print_W(" to ");p_int_W(set);
+	//print_W("  set ");p_int_W(group);print_W(" to ");p_int_W(set);
 
-	if (dyPid[group].outVal==set){
-		//if(!(RunEvery(&force[chan->channel])>0))
-			return;
-	}else{
-		//print_I(" Setting PID output, was ");p_int_I(dyPid[group].outVal);print_I(" is now: ");p_int_I(set);print_I(" on DyIO chan: ");p_int_I(dyPid[group].outputChannel);print_I(", ");
-	}
 	dyPid[group].outVal=set;
-
 
 	SetChannelValueCoProc(dyPid[group].outputChannel,dyPid[group].outVal);
 	setPrintLevel(l);

@@ -157,7 +157,7 @@ void UserInit(void) {
     LoadEEstore();
 
 
-    InitPID();
+    
 
     UpdateAVRLED();
 
@@ -168,6 +168,9 @@ void UserInit(void) {
     boolean brown = getEEBrownOutDetect() ? true:false;
     setBrownOutDetect(brown);
 
+    //Data table needs to be suynced before the PID can init properly
+    SyncDataTable();
+    InitPID();
 
     
     //println_I("###Starting PIC In Debug Mode###\n"); // All printfDEBUG functions do not need to be removed from code if debug is disabled

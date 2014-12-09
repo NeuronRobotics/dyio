@@ -66,8 +66,8 @@ void DownstreamSerialStreamGet(BYTE_FIFO_STORAGE * rxBuffer) {
 	for (i = 0; i < downstreamPacketTemp.use.data[1]; i++) {
 		FifoAddByte(rxBuffer, downstreamPacketTemp.use.data[2 + i], &err);
 	}
-	println_W("Syncing UART ");
-	printPacket(&downstreamPacketTemp, WARN_PRINT);
+	//println_W("Syncing UART ");
+	//printPacket(&downstreamPacketTemp, WARN_PRINT);
 }
 
 void DownstreamPowerChange(void) {
@@ -150,10 +150,10 @@ uint8_t GetServoPos(uint8_t pin) {
 void SetServoPos(uint8_t pin, uint8_t val) {
 	if (val == down[pin].ServoPositionUpstream)
 		return;
-	println_W("Servo upstream on pin: ");
-	p_int_W(pin);
-	print_W(" to: ");
-	p_int_W(val);
+//	println_W("Servo upstream on pin: ");
+//	p_int_W(pin);
+//	print_W(" to: ");
+//	p_int_W(val);
 	down[pin].ServoPositionUpstream = val;
 }
 int32_t GetConfigurationDataTable(uint8_t pin) {

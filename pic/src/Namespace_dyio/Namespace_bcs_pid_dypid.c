@@ -7,14 +7,18 @@
 #include "UserApp.h"
 
 //char dypidNSName[] = "bcs.pid.dypid.*;0.3;;";
-RunEveryData pid = {0, 30};
+RunEveryData pid = {0, 5};
 RunEveryData vel = {0, 100};
 
 boolean bcsPidDypidAsyncEventCallback(BowlerPacket *Packet, boolean(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {
-   println_W("Async ");
+   //println_W("Async ");
     if (RunEvery(&pid) > 0) {
-    	println_W("PID Loop");
+        //clearPrint();
         RunPIDControl();
+//        Print_Level l = getPrintLevel();
+//	setPrintLevelInfoPrint();
+//        printPIDvals(0);
+//        setPrintLevel(l);
     }
     //println_I("Run Velocity ");
 #if defined(USE_VELOCITY)
@@ -23,7 +27,7 @@ boolean bcsPidDypidAsyncEventCallback(BowlerPacket *Packet, boolean(*pidAsyncCal
     }
 #endif
     runPIDConfigurationValueSync();
-    println_W("Done ");//print_W(dypidNSName);
+    //println_W("Done ");//print_W(dypidNSName);
     return false; 
 }
 
