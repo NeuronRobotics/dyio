@@ -159,10 +159,10 @@ boolean neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet) {
                 for (i = 0; i < 17; i++) {
                     tmpName[i] = '\0';
                 }
-            println_I("Setting name: ");
+            //println_I("Setting name: ");
             Packet->use.data[Packet->use.head.DataLegnth - 4] = '\0';
             //print_I(Packet->use.data);
-            print_I(" Num Bytes:");
+            //print_I(" Num Bytes:");
             p_int_I(Packet->use.head.DataLegnth - 4);
             for (i = 0; i < Packet->use.head.DataLegnth - 4; i++) {
                 tmpName[i] = Packet->use.data[i];

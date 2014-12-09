@@ -292,9 +292,9 @@ uint8_t sendPacket(BowlerPacket * Packet) {
                 } else {
                     //println_I("Not async");
                     if (!valadateRPC(downstream.use.head.RPC, Packet->use.head.RPC)) {
-                        println_E("Valadation TX>>");
+                        println_E("V. TX>>");
                         printPacket(Packet, ERROR_PRINT);
-                        print_E("\nRX<<\n");
+                        //print_E("\nRX<<\n");
                         printPacket(&downstream, ERROR_PRINT);
 
                         SetColor(1, 0, 0);
@@ -313,8 +313,8 @@ uint8_t sendPacket(BowlerPacket * Packet) {
 
             buttonCheck(4);
         }
-        println_E("Rx Fail");
-        //printPacket(Packet, ERROR_PRINT);
+        println_E("Rx");
+        printPacket(Packet, ERROR_PRINT);
         //printFiFoState_E(&store);
         PushCoProcAsync(); //clear out any packets
         initCoProcUART();
@@ -322,7 +322,7 @@ uint8_t sendPacket(BowlerPacket * Packet) {
         p_fl_E(getMs() - packStartTime);
         return 2;
     } else {
-        println_E("Tx took: ");
+        println_E("Tx");
         p_fl_E(getMs() - packStartTime);
         initCoProcUART();
         PowerCycleAVR();
@@ -467,7 +467,7 @@ boolean valadateRPC(int response, int sent) {
 			}
 			/* no break */
         default:
-            println_E("unknown ");print_E((char * )&sent);print_E(" 0x");prHEX32(sent,ERROR_PRINT);
+            println_E("?");print_E((char * )&sent);print_E(" 0x");prHEX32(sent,ERROR_PRINT);
             return true;
     }
 }

@@ -245,7 +245,7 @@ boolean SetChanelValueFromPacket(BowlerPacket * Packet) {
         data = get32bit(Packet, 1);
 
         time =  get32bit(Packet, 5);
-        println_W("Setting on pin=");p_int_W(pin); print_W(" value= ");p_int_W(data); print_W(" time= ");p_fl_W(time);
+        //println_W("Setting on pin=");p_int_W(pin); print_W(" value= ");p_int_W(data); print_W(" time= ");p_fl_W(time);
 		if(mode == IS_SERVO)
 			data = (data&0x000000ff) | (time<<16);
 
@@ -559,7 +559,7 @@ void printAsync() {
  */
 boolean _setDataTableCurrentValue(uint8_t pin, int32_t value){
 	if(pin>=GetNumberOfIOChannels()){
-		println_E("Pin out of index! : "); p_int_E(pin);
+		//println_E("Pin out of index! : "); p_int_E(pin);
 	}
 	if(value !=getBcsIoDataTable(pin)->PIN.currentValue ){
 //		Print_Level l = isOutputMode(GetChannelMode(pin))?ERROR_PRINT:INFO_PRINT;

@@ -28,15 +28,15 @@ void ProcessAsyncData(BowlerPacket * Packet){
 			//ADC_val[pin-8]=ana.Val;
 			if(ana.Val>=0 && ana.Val<1024)
 				setDataTableCurrentValue(pin,ana.Val);//asyncData[pin].currentVal=ana.Val;
-			println_W("***Setting analog value: ");p_int_W(pin);print_W(", ");p_int_W(ana.Val);
+			//println_W("***Setting analog value: ");p_int_W(pin);print_W(", ");p_int_W(ana.Val);
 		}
 		else if((mode == IS_DI) || (mode == IS_COUNTER_INPUT_HOME)|| (mode == IS_COUNTER_OUTPUT_HOME) || mode == IS_SERVO){
 			//DIG_val[pin]=Packet->use.data[1];
 			setDataTableCurrentValue(pin,Packet->use.data[1]);//asyncData[pin].currentVal=Packet->use.data[1];
-			println_I("***Setting digital value: ");p_int_I(pin);print_I(", ");p_int_I(Packet->use.data[1]);//printStream(DIG_val,NUM_PINS);
+			//println_I("***Setting digital value: ");p_int_I(pin);print_I(", ");p_int_I(Packet->use.data[1]);//printStream(DIG_val,NUM_PINS);
 		}else {
 			if(IsAsync(pin)){
-				println_I("Sending async packet, not digital or analog");
+				//println_I("Sending async packet, not digital or analog");
 				PutBowlerPacket(Packet);
 			}
 		}
@@ -62,7 +62,7 @@ void ProcessAsyncData(BowlerPacket * Packet){
 				setDataTableCurrentValue(i,Packet->use.data[i]);//asyncData[i].currentVal=Packet->use.data[i];
 			}
 		}
-		println_I("***Setting All Digital value: ");
+		//println_I("***Setting All Digital value: ");
 	}else if (Packet->use.head.RPC==GetRPCValue("gacv")){
 		int i;
 		int val;
@@ -74,8 +74,8 @@ void ProcessAsyncData(BowlerPacket * Packet){
 			}
 		}
 	}else{
-		println_W("***Async packet not UNKNOWN***");
-		printPacket(Packet,WARN_PRINT);
+		//println_W("***Async packet not UNKNOWN***");
+		//printPacket(Packet,WARN_PRINT);
 	}
 //	println_I("***Setting All value: [");
 //	int i;

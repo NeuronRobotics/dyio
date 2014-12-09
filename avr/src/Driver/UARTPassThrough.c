@@ -58,6 +58,13 @@ void StopUartPassThrough(uint8_t pin){
 	UCSR1Bbits._RXEN1=0;
 	if(getPrintLevel() == NO_PRINT){
 		UCSR1Bbits._TXEN1=0;
+	}else{
+		UBRR1=9;
+		/* set the framing to 8N1 */
+		UCSR1C = ((1<< UCSZ10)|(1<< UCSZ11));
+		/* rx interrupts enabled, rx and tx enabled, 8-bit data */
+		UCSR1B =( _BV(TXEN1));
+		UCSR1A = 0x00;
 	}
 	//InitByteFifo(&UARTPassThroughStore,privateRXUART,sizeof(privateRXUART));
 	switch(GetChannelMode(pin)){

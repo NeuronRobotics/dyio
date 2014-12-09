@@ -341,7 +341,7 @@ void GetEEPRomData(uint8_t start, uint8_t stop, uint8_t * data) {
 	//WORD_VAL raw;
 	uint8_t i = 0;
 	if (start > stop) {
-		println_W("###ERROR eeprom");
+		//println_W("###ERROR eeprom");
 		return;
 	}
 	int total = 0;

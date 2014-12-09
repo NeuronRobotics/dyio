@@ -61,7 +61,7 @@ void StopDyIOSPI(uint8_t pin){
 		SDI_TRIS=INPUT;
 		SDO_TRIS=INPUT;
 		SCK_TRIS=INPUT;
-		println_I("Clearing up SPI perpheral");
+		//println_I("Clearing up SPI perpheral");
 		SetCoProcMode(0,IS_DI);
 		SetCoProcMode(1,IS_DI);
 		SetCoProcMode(2,IS_DI);
@@ -88,7 +88,7 @@ void SyncSPIData(){
 	if(SSPin<3 || FifoGetByteCount(&storeTx)==0){
 		return;
 	}
-	println_W("SPI SS# ");p_int_W(SSPin);
+	//println_W("SPI SS# ");p_int_W(SSPin);
 	if(!SetCoProcMode(SSPin,IS_DO))
 		_SetChannelValueCoProc(SSPin,1);
 	_SetChannelValueCoProc(SSPin,0);
