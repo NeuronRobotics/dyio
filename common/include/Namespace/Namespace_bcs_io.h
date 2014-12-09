@@ -110,6 +110,7 @@ case IS_PPM_IN:
 #define ASYN				0x6e797361 // 'asyn'  Set/Get asynchronous mode
 #define GCHC				0x63686367 // 'gchc'  Get Channel Count
 #define GCML				0x6c6d6367 // 'gcml'  Get channel Mode List
+#define STRM				0x6d727473 // 'strm'  Stream get/set
 typedef struct __attribute__((__packed__)) _FUNCTION_MAP
 {
 		unsigned HAS_ANALOG_IN			:1;

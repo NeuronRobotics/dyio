@@ -456,6 +456,15 @@ boolean valadateRPC(int response, int sent) {
                     return false;
             }
             /* no break */
+		case STRM:
+			switch (response) {
+				case STRM:
+				case _ERR:
+					return true;
+				default:
+					return false;
+			}
+			/* no break */
         default:
             println_E("Method unknown");
             return true;
