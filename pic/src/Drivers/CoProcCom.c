@@ -211,7 +211,7 @@ void SendPacketToCoProc(BowlerPacket * Packet) {
     int rpc = Packet->use.head.RPC;
     do {
         if (ret > 0) {
-            println_E("Re:");
+            println_E("Re send:");
             printPacket(Packet, ERROR_PRINT);
             FixPacket(Packet);
         }
@@ -292,11 +292,11 @@ uint8_t sendPacket(BowlerPacket * Packet) {
                 } else {
                     //println_I("Not async");
                     if (!valadateRPC(downstream.use.head.RPC, Packet->use.head.RPC)) {
-                        //println_E("Valadation failed, junk TX>>");
-                        //printPacket(Packet, ERROR_PRINT);
-                        //print_E("\nRX<<\n");
-                        //printPacket(&downstream, ERROR_PRINT);
-                        //SendPacketUARTCoProc(Packet->stream,packetSize);
+                        println_E("Valadation TX>>");
+                        printPacket(Packet, ERROR_PRINT);
+                        print_E("\nRX<<\n");
+                        printPacket(&downstream, ERROR_PRINT);
+
                         SetColor(1, 0, 0);
                         return 3;
                     } else {
@@ -459,6 +459,7 @@ boolean valadateRPC(int response, int sent) {
 		case STRM:
 			switch (response) {
 				case STRM:
+				case _RDY:
 				case _ERR:
 					return true;
 				default:
