@@ -78,8 +78,10 @@ void StopUartPassThrough(uint8_t pin){
 
 boolean ConfigureUART(uint32_t baudrate){
 	println_W("Setting: ");p_int_W(baudrate);
+
 	if(getPrintLevel() != NO_PRINT)
 		baudrate = 115200;
+	//Whith the print channel running the rest of the setup still needs to happen
 	if (validBaud(baudrate) == false) {
 		baudrate = 19200;
 	}else{
@@ -147,8 +149,8 @@ ISR(USART1_RX_vect){
 	if(UartInit){
 		uint8_t err;
 		FifoAddByte(&UARTPassThroughStore,read,&err);
-		WriteAVRUART1(read);
-		Get_UART_Byte_CountPassThrough();
+		//WriteAVRUART1(read);
+		//Get_UART_Byte_CountPassThrough();
 		//p_int_W(Get_UART_Byte_CountPassThrough());
 	}
 	//UCSR1Bbits._RXCIE1=1;
@@ -160,7 +162,7 @@ ISR(USART1_UDRE_vect){
 
 }
 uint32_t UARTGetArrayPassThrough(uint8_t *packet,uint16_t size){
-	println_W("Reading: ");p_int_W(size);
+	//println_W("Reading: ");p_int_W(size);
 	if(UartInit)
 		return FifoGetByteStream(&UARTPassThroughStore,packet,size);
 	return 0;
@@ -181,13 +183,13 @@ uint16_t Get_UART_Byte_CountPassThrough(void){
 }
 
 void UARTPassThroughWrite(uint8_t numValues,uint8_t * data){
-	println_W("Writing: ");p_int_W(numValues);print_W(" ");
+	//println_W("Writing: ");p_int_W(numValues);print_W(" ");
 	int i;
 	//uint8_t err;
 	for(i=0;i<numValues;i++){
 		WriteAVRUART1(data[i]);
 		//FifoAddByte(&UARTPassThroughStore,data[i],&err);
 	}
-	print_W(" done");
+	//print_W(" done");
 }
 
