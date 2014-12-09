@@ -126,7 +126,7 @@ void InitPID(void){
 		force[i].setPoint=200;
 	}
 
-	InitilizePidController( &(pidGroups[0]),
+	InitilizePidController( pidGroups,
                                 NUM_PID_GROUPS,
                                 &getPositionMine,
                                 &setOutputMine,
@@ -265,8 +265,10 @@ float getPositionMine(int group){
 	case IS_DI:
 		pos = GetDigitalValFromAsync(dyPid[group].inputChannel);
 		break;
+            default:
+                return 0;
 	}
-	println_W("\nGet PID ");p_int_W(group);print_W(" is ");p_int_W(pos);
+	println_W("Get PID ");p_int_W(group);print_W(" is ");p_int_W(pos);
 	return ((float)pos);
 }
 
@@ -275,7 +277,7 @@ void setOutputMine(int group, float v){
 	if( dyPid[group].outputChannel==DYPID_NON_USED)
 		return;
 	Print_Level l = getPrintLevel();
-	setPrintLevelNoPrint();
+	//setPrintLevelNoPrint();
 	int val = (int)(v);
 
 	if(dyPid[group].outputMode == IS_SERVO){
@@ -297,7 +299,7 @@ void setOutputMine(int group, float v){
 			val=0;
 	}
 	int set = (int)val;
-	println_W("PID set ");p_int_W(group);print_W(" ");p_int_W(set);
+	print_W("  set ");p_int_W(group);print_W(" to ");p_int_W(set);
 
 	if (dyPid[group].outVal==set){
 		//if(!(RunEvery(&force[chan->channel])>0))
