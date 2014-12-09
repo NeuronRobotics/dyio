@@ -20,7 +20,7 @@ InteruptServoData blockData [12];
 static uint32_t currentTimer=0;
 #define LOOPPERIOD (OFFSET+255+(SPACING/2))
 #define SPACING (50)
-#define LOOPSPACING (SPACING+(SPACING/2) )
+#define LOOPSPACING (SPACING+(SPACING) )
 #define OFFSET (255+SPACING)
 
 
@@ -122,6 +122,7 @@ void servoTimerEvent()
 			break;
 		case FINISH:
 			pinOff(blockIndex + 12 );
+			//UART is now clear to send while timers are re-calculated and the server is run
 			FlagBusy_IO=0;
 			EndCritical();
 
@@ -145,6 +146,8 @@ void servoTimerEvent()
 			setServoTimer( LOOPSPACING);
 
 			TCCR1Bbits._CS = 2;//  value CLslk I/O/8 (From prescaler)
+//			// With the clock re-started, run the server
+//			Server();
 			break;
 	}
 
