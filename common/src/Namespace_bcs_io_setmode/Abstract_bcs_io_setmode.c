@@ -29,7 +29,7 @@ void InitilizeBcsIoSetmode(boolean (*setChanelModeHWPtrLocal)(uint8_t  ,uint8_t)
  */
 boolean SetChannelMode(uint8_t pin,uint8_t mode){
 	if(setChanelModeHWPtr == NULL){
-		println_E("Set mode pointer not set!")
+		//println_E("Set mode pointer not set!")
 		return false; 
 	}
 	//println_I("Abstract_bcs_io_setmode Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_int_I(pin);
@@ -79,7 +79,7 @@ boolean AbstractSetChannelMode(BowlerPacket * Packet){
 		//READY(Packet,4,33);
 		return true; 
 	}else{
-		println_E("Mode Invalid!");
+		//println_E("Mode Invalid!");
 		return false; 
 	}
 

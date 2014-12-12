@@ -39,7 +39,7 @@ void InitCounterPins(void){
 	}
 	OpenTimer3(T3_ON | T3_SOURCE_INT | T3_PS_1_256, (0x1000/10 ));
 	ConfigIntTimer3(T3_INT_ON | T3_INT_PRIOR_5);
-    println_I("Initialized the Counter module");
+    //println_I("Initialized the Counter module");
 }
 void ClearCounter(uint8_t chan){
 	uint8_t group = channelToCounterGroup(chan);

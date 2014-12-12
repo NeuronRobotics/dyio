@@ -3,6 +3,13 @@
 
 BowlerPacket Packet;
 
+void Server(){
+	UserRun();
+	// Run the Bowler Stack Namespace iteration of all async packets
+	// Pass in  the function pointer to push the packets upstream
+	RunNamespaceAsync((BowlerPacket *)&Packet,&avrAsyncCallbackPtr);
+	Bowler_Server((BowlerPacket *) &Packet,true) ;
+}
 
 //#define analogTime  10
 //	RunEveryData asyncSched = {0,analogTime};
@@ -17,11 +24,8 @@ void runDyIOMain(void){
 //	printPacket(&Packet,WARN_PRINT);
 
 	while (1){
+		//Run from Interrupts only
+		Server();
 
-		UserRun();
-		// Run the Bowler Stack Namespace iteration of all async packets
-		// Pass in  the function pointer to push the packets upstream
-		RunNamespaceAsync((BowlerPacket *)&Packet,&avrAsyncCallbackPtr);
-		Bowler_Server((BowlerPacket *) &Packet,true) ;
 	}
 }

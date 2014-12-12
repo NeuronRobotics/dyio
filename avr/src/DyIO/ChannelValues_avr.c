@@ -167,9 +167,8 @@ boolean GetStreamHW(uint8_t pin,uint8_t*  numValues,uint8_t * data){
 	if(GetChannelMode(pin)==IS_UART_RX){
 		int uartSize =Get_UART_Byte_CountPassThrough();
 		if(uartSize>0){
-			UARTGetArrayPassThrough(data,uartSize);
+			numValues[0]=UARTGetArrayPassThrough(data,uartSize);
 		}
-		numValues[0]=uartSize;
 	}
 	return true;
 }

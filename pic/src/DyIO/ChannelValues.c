@@ -117,8 +117,8 @@ boolean GetAllChanelValueHW(int32_t * data) {
 boolean ConfigureChannelHW(uint8_t pin, uint8_t numValues, int32_t * data) {
 
 	if(GetChannelMode(pin) != 0xff){
-		println_E("Loading to hardware ");
-					p_int_E(pin);
+//		println_E("Loading to hardware ");
+//					p_int_E(pin);
 		SetNewConfigurationDataTable(pin, data[0]);
 	}else{
 		int i;
@@ -198,13 +198,13 @@ boolean SetChanVal(uint8_t pin, int32_t bval, float time) {
     switch (mode) {
         case IS_COUNTER_INPUT_INT:
         case IS_COUNTER_INPUT_DIR:
-            println_I("Counter input ");
+            //println_I("Counter input ");
             printMode(mode, INFO_PRINT);
             SetCounterInput(pin, bval);
             return true; 
         case IS_COUNTER_OUTPUT_INT:
         case IS_COUNTER_OUTPUT_DIR:
-            println_I("Counter output ");
+            //println_I("Counter output ");
             printMode(mode, INFO_PRINT);
             SetCounterOutput(pin, bval, time);
             return true; 

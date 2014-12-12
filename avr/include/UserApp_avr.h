@@ -50,7 +50,7 @@ void initBluetooth();
 boolean avrAsyncCallbackPtr(BowlerPacket *Packet);
 void SetNewConfigurationDataTable(uint8_t pin, int32_t value);
 NAMESPACE_LIST * get_internalNamespace();
-
+void Server();
 
 
 #if defined(ROBOSUB_DEMO)

@@ -45,13 +45,13 @@ void initPIDChans(uint8_t group){
 		break;
 	}
 
-	println_W("PID In chan: ");
-	p_int_W(dyPid[group].inputChannel);
-	println_W(" mode: ");
-	printMode(dyPid[group].inputMode, WARN_PRINT);
-	println_W("PID Out chan: ");
-	p_int_W(dyPid[group].outputChannel);
-	println_W(" mode: ");
+//	println_W("PID In chan: ");
+//	p_int_W(dyPid[group].inputChannel);
+//	println_W(" mode: ");
+//	printMode(dyPid[group].inputMode, WARN_PRINT);
+//	println_W("PID Out chan: ");
+//	p_int_W(dyPid[group].outputChannel);
+//	println_W(" mode: ");
 	printMode(dyPid[group].outputMode, WARN_PRINT);
 	SetCoProcMode(dyPid[group].inputChannel,dyPid[group].inputMode);
 	SetCoProcMode(dyPid[group].outputChannel,dyPid[group].outputMode);

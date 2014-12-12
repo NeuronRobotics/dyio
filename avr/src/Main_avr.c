@@ -18,7 +18,7 @@
 #include "Bowler/Bowler.h"
 #include "UserApp_avr.h"
 
-
+#include <avr/wdt.h>
 
 /**
  * Main loop
@@ -28,6 +28,7 @@
  * in 5 ms or realtime is broken
  */
 int main(void){
+	wdt_disable();
 	runDyIOMain();
 	return 1;
 }
