@@ -60,7 +60,8 @@ void SyncDataTable(){
 		DownstreamSerialStreamGet(&storeRx);
 		print_E(" added ");p_int_E(getNumberOfSerialRxBytes()- bufferSize);
 	}
-    SyncConfigurations();
+        SyncConfigurations();
+        runPIDConfigurationValueSync();
 	float end = getMs() - start;
 	if(end > DELAY_TIMEOUT){
 		println_W("Long Sync time = ");
