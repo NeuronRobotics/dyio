@@ -66,6 +66,6 @@ void UserInit(void);
 void InitializeDyIODataTableManager();
 
 #define MAX_RETRY 5
-#define DELAY_TIMEOUT 2000
+#define DELAY_TIMEOUT 200
 
 #endif /* USERAPP_H_ */

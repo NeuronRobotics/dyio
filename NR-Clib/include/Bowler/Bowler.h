@@ -18,6 +18,7 @@
 #ifndef WASP_H_
 #define WASP_H_
 #include <stdint.h>
+#include <math.h>
 #include "Defines.h"
 #include "Bowler_Struct_Def.h"
 #include "Debug.h"

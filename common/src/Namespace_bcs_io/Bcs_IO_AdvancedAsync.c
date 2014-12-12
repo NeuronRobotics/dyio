@@ -27,7 +27,7 @@ void initAdvancedAsync(){
 
 			startAdvancedAsyncDefault(i);
 	}
-        println_W("Initializing advanced async");
+        //println_W("Initializing advanced async");
 }
 
 void setAsync(uint8_t pin,boolean async){
@@ -60,18 +60,18 @@ boolean IsAsync(uint8_t channel){
 }
 
 void printAsyncType(uint8_t t){
-	switch(t){
-	case AUTOSAMP:
-		print_I("AUTOSAMP");return;
-	case NOTEQUAL:
-		print_I("NOTEQUAL");return;
-	case DEADBAND:
-		print_I("DEADBAND");return;
-	case THRESHHOLD:
-		print_I("THRESHHOLD");return;
-	default:
-		print_I("UNKNOWN: "); p_int_I(t);return;
-	}
+//	switch(t){
+//	case AUTOSAMP:
+//		print_I("AUTOSAMP");return;
+//	case NOTEQUAL:
+//		print_I("NOTEQUAL");return;
+//	case DEADBAND:
+//		print_I("DEADBAND");return;
+//	case THRESHHOLD:
+//		print_I("THRESHHOLD");return;
+//	default:
+//		print_I("UNKNOWN: "); p_int_I(t);return;
+//	}
 }
 void configAdvancedAsyncNotEqual(uint8_t pin,float time){
 	getBcsIoDataTable(pin)->asyncDataTimer.MsTime=getMs();

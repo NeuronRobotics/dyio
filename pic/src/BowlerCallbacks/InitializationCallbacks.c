@@ -49,7 +49,7 @@ void hardwareInit() {
     }
     StartCritical();
 
-    println_I("Getting MAC from flash ");
+    println_I("MAC");
     enableFlashStorage(true);
     FlashGetMac(MyMAC.v);
 
@@ -145,7 +145,7 @@ void UserInit(void) {
     //setPrintStream(&USBPutArray);
     clearPrint();
     setPrintLevelInfoPrint();
-    println_I("\n\n\nStarting PIC initialization ");
+    println_I("Start PIC");
     //DelayMs(1000);
     hardwareInit();
     //println_I("Hardware Init done");
@@ -157,7 +157,7 @@ void UserInit(void) {
     LoadEEstore();
 
 
-    InitPID();
+    
 
     UpdateAVRLED();
 
@@ -168,6 +168,9 @@ void UserInit(void) {
     boolean brown = getEEBrownOutDetect() ? true:false;
     setBrownOutDetect(brown);
 
+    //Data table needs to be suynced before the PID can init properly
+    SyncDataTable();
+    InitPID();
 
     
     //println_I("###Starting PIC In Debug Mode###\n"); // All printfDEBUG functions do not need to be removed from code if debug is disabled

@@ -1,9 +1,10 @@
 
 #include "UserApp_avr.h"
 
-BowlerPacketMini Packet;
+BowlerPacket Packet;
 
-void server(){
+void Server(){
+	UserRun();
 	// Run the Bowler Stack Namespace iteration of all async packets
 	// Pass in  the function pointer to push the packets upstream
 	RunNamespaceAsync((BowlerPacket *)&Packet,&avrAsyncCallbackPtr);
@@ -18,12 +19,13 @@ void runDyIOMain(void){
 	Bowler_Init();// Com Stack Init. Sets up timeout timer, uart 0 and if debug enabled, uart 1
 	UserInit();// User code init
 	setPrintLevelWarningPrint();
+//	GetIOChannelCountFromPacket(&Packet);
+//	FixPacket(&Packet);
+//	printPacket(&Packet,WARN_PRINT);
 
 	while (1){
-
-		UserRun();
-		server();
-
+		//Run from Interrupts only
+		Server();
 
 	}
 }

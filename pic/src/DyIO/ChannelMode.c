@@ -9,7 +9,7 @@
 
 
 boolean setMode(uint8_t pin,uint8_t mode){
-	println_E("Setting Mode: ");print_E(" on: ");p_int_E(pin);
+	//println_E("Setting Mode: ");print_E(" on: ");p_int_E(pin);
 	uint8_t current = GetChannelMode(pin);
 
 	StopDyIOSPI(pin);
@@ -70,7 +70,7 @@ boolean setMode(uint8_t pin,uint8_t mode){
 	case IS_SERVO:
 		if(!(((pin < 12) && (isRegulated_0() == 0)) || ((pin >= 12) && (isRegulated_1()== 0)))   ){
                     if(getBrownOutDetect()){
-                            print_W(" Servo Mode could not be set, voltage invalid");
+                            //print_W(" Servo Mode could not be set, voltage invalid");
                             return false;
                     }
                 }
@@ -85,7 +85,7 @@ boolean setMode(uint8_t pin,uint8_t mode){
 	case IS_SPI_MISO:
 	case IS_SPI_SCK:
 		if( pinHasFunction(pin, mode) != false) {
-			print_I("|Mode is now SPI");
+			//print_I("|Mode is now SPI");
 			InitSPIDyIO();
 
 			break;
@@ -101,7 +101,7 @@ boolean setMode(uint8_t pin,uint8_t mode){
 			StartCounterInput(pin);
 			break;
 		}else{
-			print_E(", Counter Input not availible");
+			//print_E(", Counter Input not availible");
 			return false; 
 		}
 		break;
@@ -113,12 +113,12 @@ boolean setMode(uint8_t pin,uint8_t mode){
 			StartCounterOutput(pin);
 			break;
 		}else{
-			print_E(", Counter Output not availible");
+			//print_E(", Counter Output not availible");
 			return false; 
 		}
 		break;
 	case IS_PPM_IN:
-		println_W("Setting up PPM...");
+		//println_W("Setting up PPM...");
 		startPPM(pin);
 		break;
 	case IS_DO:

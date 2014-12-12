@@ -88,10 +88,10 @@ uint8_t GetRawVoltageCode(uint8_t bank){
 					lockOutTimeout.MsTime=current;
 					lockOutTimeout.setPoint=1000;
 					//UpstreamPushPowerChange();
-					println_I("Power fluctuation detected\n");
-					println_I("Current Time: ");p_fl_I(current);
-					println_I("Last low time: ");p_fl_I(lastLowTime);print_I(", ");p_fl_I(diffLow);
-					println_I("Last high time : ");p_fl_I(lastHighTime);print_I(", ");p_fl_I(diffHigh);
+//					println_I("Power fluctuation detected\n");
+//					println_I("Current Time: ");p_fl_I(current);
+//					println_I("Last low time: ");p_fl_I(lastLowTime);print_I(", ");p_fl_I(diffLow);
+//					println_I("Last high time : ");p_fl_I(lastHighTime);print_I(", ");p_fl_I(diffHigh);
 				}
 			}
 		}
@@ -99,7 +99,7 @@ uint8_t GetRawVoltageCode(uint8_t bank){
 		if(RunEvery(&lockOutTimeout)>0){
 			lockOutRail = false; 
 			//UpstreamPushPowerChange();
-			println_I("Power fluctuation Reset");
+//			println_I("Power fluctuation Reset");
 		}
 		return 0;
 	}

@@ -10,7 +10,7 @@
 #if defined(__AVR_ATmega324P__)
 	#define UART_PASS_BUFF_SIZE 5
 #else
-	#define UART_PASS_BUFF_SIZE 60
+	#define UART_PASS_BUFF_SIZE 10
 #endif
 
 
@@ -58,6 +58,13 @@ void StopUartPassThrough(uint8_t pin){
 	UCSR1Bbits._RXEN1=0;
 	if(getPrintLevel() == NO_PRINT){
 		UCSR1Bbits._TXEN1=0;
+	}else{
+		UBRR1=9;
+		/* set the framing to 8N1 */
+		UCSR1C = ((1<< UCSZ10)|(1<< UCSZ11));
+		/* rx interrupts enabled, rx and tx enabled, 8-bit data */
+		UCSR1B =( _BV(TXEN1));
+		UCSR1A = 0x00;
 	}
 	//InitByteFifo(&UARTPassThroughStore,privateRXUART,sizeof(privateRXUART));
 	switch(GetChannelMode(pin)){
@@ -71,8 +78,10 @@ void StopUartPassThrough(uint8_t pin){
 
 boolean ConfigureUART(uint32_t baudrate){
 	println_W("Setting: ");p_int_W(baudrate);
+
 	if(getPrintLevel() != NO_PRINT)
-		return true;
+		baudrate = 115200;
+	//Whith the print channel running the rest of the setup still needs to happen
 	if (validBaud(baudrate) == false) {
 		baudrate = 19200;
 	}else{
@@ -141,6 +150,7 @@ ISR(USART1_RX_vect){
 		uint8_t err;
 		FifoAddByte(&UARTPassThroughStore,read,&err);
 		//WriteAVRUART1(read);
+		//Get_UART_Byte_CountPassThrough();
 		//p_int_W(Get_UART_Byte_CountPassThrough());
 	}
 	//UCSR1Bbits._RXCIE1=1;
@@ -151,28 +161,35 @@ ISR(USART1_TX_vect){
 ISR(USART1_UDRE_vect){
 
 }
-void UARTGetArrayPassThrough(uint8_t *packet,uint16_t size){
-	println_W("Reading: ");p_int_W(size);
+uint32_t UARTGetArrayPassThrough(uint8_t *packet,uint16_t size){
+	//println_W("Reading: ");p_int_W(size);
 	if(UartInit)
-		FifoGetByteStream(&UARTPassThroughStore,packet,size);
+		return FifoGetByteStream(&UARTPassThroughStore,packet,size);
+	return 0;
 }
 
 uint16_t Get_UART_Byte_CountPassThrough(void){
+	int count  = FifoGetByteCount(&UARTPassThroughStore);
+	if(count >UART_PASS_BUFF_SIZE){
+		println_E("Uart Buffer OVF");
+		count = 0;
+		InitByteFifo(&UARTPassThroughStore,privateRXUART,UART_PASS_BUFF_SIZE);
+	}
 	if(UartInit)
-		return FifoGetByteCount(&UARTPassThroughStore);
+		return count;
 	else{
 		return 0;
 	}
 }
 
 void UARTPassThroughWrite(uint8_t numValues,uint8_t * data){
-	println_W("Writing: ");p_int_W(numValues);print_W(" ");
+	//println_W("Writing: ");p_int_W(numValues);print_W(" ");
 	int i;
 	//uint8_t err;
 	for(i=0;i<numValues;i++){
 		WriteAVRUART1(data[i]);
 		//FifoAddByte(&UARTPassThroughStore,data[i],&err);
 	}
-	print_W(" done");
+	//print_W(" done");
 }
 
