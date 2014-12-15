@@ -43,7 +43,9 @@ main:
 	make -C pic all
 	make -C avr all
 	
-	
+bootloader:
+	#http://electropepper.org/blog/item/linux-terminal-only-pic-programming
+	/opt/microchip/mplabx/mplab_ide/bin/mdb.sh ./prog.txt	
 	
 	
 pubDebug:pub
