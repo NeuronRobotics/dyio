@@ -59,7 +59,7 @@ void _EEWriteMode(uint8_t pin,uint8_t mode){
 }
 
 uint8_t EEReadMode(uint8_t pin){
-	return eeReadByte((uint16_t)(MODESTART+pin));
+	return eeReadByte((MODESTART+pin));
 }
 
 
@@ -117,31 +117,54 @@ void EEWriteData(uint16_t addr,uint8_t data){
 
 
 uint8_t eeReadByte(uint16_t addr){
+	int timeout = 10;
+	EECRbits._EERIE = 0;// no interrupts
+//	println_W("EEPROM read 0x");prHEX16(addr,WARN_PRINT);
+//
+//	print_W(" EECR 0x");prHEX8(EECR,WARN_PRINT);
+//	print_W(" SPMCS 0x");prHEX16(SPMCSR,WARN_PRINT);
+
 	/* Wait for completion of previous write */
-	while(EECR & (1<<EEPE));
+	while((EECRbits._EEPE || SPMCSRbits._SPMEN)&&(timeout--)){
+		_delay_ms(1);
+		print_W(".");
+	}
+	if(!timeout){
+		println_E("EEPROM read timeout 0x");prHEX16(addr,ERROR_PRINT);
+		return 0;
+	}
 	EECR=0;
 	/* Set up address register */
 	EEAR = addr;
 	/* Start eeprom read by writing EERE */
-	EECR |= (1<<EERE);
+	EECRbits._EERE=1;// |= (1<<EERE);
 	/* Return data from Data Register */
 	return EEDR;
 
 }
 
 void eeWriteByte(uint16_t addr,uint8_t val){
+
 	if (eeReadByte(addr)==val)
 		return;
+	int timeout = 10;
 	/* Wait for completion of previous write */
-	while(EECR & (1<<EEPE));
+	while((EECRbits._EEPE || SPMCSRbits._SPMEN)&&(timeout--));
+	if(!timeout){
+		println_E("EEPROM write timeout 0x");prHEX16(addr,ERROR_PRINT);
+		return;
+	}
 	EECR=0;
 	/* Set up address and Data Registers */
 	EEAR = addr;
 	EEDR = val;
-	/* Write logical one to EEMPE */
-	EECR |= (1<<EEMPE);
+
+	EECRbits._EEPM0=0;//read/write mode
+	EECRbits._EEPM1=0;
+	/* Erase and write */
+	EECRbits._EEMPE=1;// |= (1<<EEMPE);
 	/* Start eeprom write by setting EEPE */
-	EECR |= (1<<EEPE);
+	EECRbits._EEPE=1;// |= (1<<EEPE);
 
 }
 
