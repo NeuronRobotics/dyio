@@ -7,11 +7,12 @@ PIC_COMPILER=xc32-v1.00-linux
 
 DUALDEBUG=FirmwarePublish/Dev/dyio-DEV-AVRDEBUG-PICDEBUG-$(REVISION).xml
 RELEASEFW=FirmwarePublish/Release/dyio-$(REVISION).xml
-BOOTLOADFW=$(DUALDEBUG)
-#BOOTLOADFW=$RELEASEFW
+#BOOTLOADFW=$(DUALDEBUG)
+BOOTLOADFW=$(RELEASEFW)
 
 #all: pubDebug
-all:pubDebug loadFw
+#all:pubDebug loadFw
+all:loadFw
 	echo DyIO Firmware built OK!
 upload:svnupdate update all commit
 	if (test -d $(NRCLIB_LOCATION)/);then cd $(NRCLIB_LOCATION)/;make commit;	fi
@@ -44,7 +45,7 @@ commit:
 	svn commit -m="Building the DyIO"
 	cd ../NRSDK/fw; svn commit -m="Building the DyIO"
 	
-build:
+build:# update
 	make -C pic all
 	make -C avr all
 
@@ -53,8 +54,10 @@ build:
 bootloader:
 	#http://electropepper.org/blog/item/linux-terminal-only-pic-programming
 	/opt/microchip/mplabx/mplab_ide/bin/mdb.sh ./prog.txt	
-loadFw:
-	nr-console -xml=$(BOOTLOADFW) -port=/dev/Bootloader0
+	
+	sleep 5
+loadFw: bootloader
+	nr-console -xml=$(BOOTLOADFW) -port=/dev/Bootloader1
 	
 pubDebug:pub
 	mkdir -p FirmwarePublish/Dev/
@@ -63,7 +66,9 @@ pubDebug:pub
 	#Debug
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Dev/dyio-DEV-$(REVISION)
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p_debug/output.hex -output=FirmwarePublish/Dev/dyio-DEV-AVRDEBUG-$(REVISION)
-	$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p_debug/output.hex -output=$(DUALDEBUG)
+	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p_debug/output.hex -output=$(DUALDEBUG)
+	#$(PUB) -core=1,avr_atmegaXX4p,2,avr/output/atmega644p_debug/output.hex -output=$(DUALDEBUG)
+
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Dev/dyio-DEV-PICDEBUG-$(REVISION)
 	
 pub:build
