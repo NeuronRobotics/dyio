@@ -42,7 +42,7 @@ void hardwareInit() {
 
     int j = 0, i = 0;
 #if defined(PROGRAMMER_DEBUG)
-    //FlashSwitchMemoryToBootloader();
+    FlashSwitchMemoryToBootloader();
 #endif
     for (i = 0; i < 6; i++) {
         MyMAC.v[i] = MY_MAC_ADDRESS[i];

@@ -9,9 +9,9 @@
 #define FLASHSTORAGE_H_
 
 #define FLASH_PAGE_SIZE 				0x1000
-#define BootloaderStartStorePhysical        0x1D01F000///End of the bootloader page
+#define BootloaderStartStorePhysical        0x1D009000  ///End of the bootloader page
 #define VirtualAddress                      (0x80000000)
-#define DefaultStartStorePhysical           BootloaderStartStorePhysical//end of the chip
+#define DefaultStartStorePhysical           0x1D01F000 //end of the chip
 
 //#define StartAppVectVirtual (BootloaderStartStorePhysical | VirtualAddress)
 
