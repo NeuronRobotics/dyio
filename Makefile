@@ -45,7 +45,7 @@ commit:
 	svn commit -m="Building the DyIO"
 	cd ../NRSDK/fw; svn commit -m="Building the DyIO"
 	
-build:# update
+build: update
 	make -C pic all
 	make -C avr all
 
@@ -56,7 +56,7 @@ bootloader:
 	/opt/microchip/mplabx/mplab_ide/bin/mdb.sh ./prog.txt	
 	
 	sleep 5
-loadFw: bootloader
+loadFw:# bootloader
 	nr-console -xml=$(BOOTLOADFW) -port=/dev/Bootloader1
 	
 pubDebug:pub
