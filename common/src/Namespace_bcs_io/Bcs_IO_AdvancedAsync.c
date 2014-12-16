@@ -202,7 +202,7 @@ boolean pushAsyncReady( uint8_t pin){
 	int32_t aval;
 	int32_t db;
 	//int i=pin;
-	EndCritical();
+	//EndCritical();
 	RunEveryData * tRef=getPinsScheduler( pin);
 //	println_I("Checking timer \nMsTime: ");p_fl_I(tRef->MsTime);
 //	print_I(" \nSetpoint: ");p_fl_I(tRef->setPoint);

@@ -14,6 +14,13 @@ void Server(){
 //#define analogTime  10
 //	RunEveryData asyncSched = {0,analogTime};
 void runDyIOMain(void){
+//	UCSR1B=0;
+//	UCSR1C=0;
+//	UCSR1A=0;
+//
+//	UCSR0B=0;
+//	UCSR0C=0;
+//	UCSR0A=0;
 	startScheduler();
 	AVR_Bowler_HAL_Init();
 	Bowler_Init();// Com Stack Init. Sets up timeout timer, uart 0 and if debug enabled, uart 1
