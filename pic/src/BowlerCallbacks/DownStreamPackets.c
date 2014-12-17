@@ -126,7 +126,7 @@ void CheckRev(void) {
 			&& (downstreamPacketTemp.use.data[2] == FIRMWARE_VERSION)) {
 		SetColor(0, 0, 1);
 	} else {
-		SetColor(1, 0, 0);
+		//SetColor(1, 0, 0);
 		println_I("Rev. Check Failed! AVR:");
 		p_int_I(downstreamPacketTemp.use.data[0]);
 		print_I(".");
