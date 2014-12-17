@@ -54,7 +54,6 @@ build: update
 bootloader:
 	#http://electropepper.org/blog/item/linux-terminal-only-pic-programming
 	/opt/microchip/mplabx/mplab_ide/bin/mdb.sh ./prog.txt	
-	
 	sleep 5
 loadFw:# bootloader
 	nr-console -xml=$(BOOTLOADFW) -port=/dev/Bootloader1
