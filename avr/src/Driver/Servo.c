@@ -194,12 +194,12 @@ uint8_t getInterpolatedPin(uint8_t pin){
 		SetServoPos(pin,dataTableSet,(float)((getDataTableCurrentValue(pin)>>16)&0x0000ffff));
 	}
 	if(error){
-		p_fl_W(ip);print_W(" on chan=");p_int_W(pin);print_W(" target=");p_int_W(interpolatorSet);
-		print_W(" Data Table=");p_int_W(dataTableSet);
-		println_W("set=      \t");p_fl_W(velocity[pin].set);
-		println_W("start=    \t");p_fl_W(velocity[pin].start);
-		println_W("setTime=  \t");p_fl_W(velocity[pin].setTime);
-		println_W("startTime=\t");p_fl_W(velocity[pin].startTime);
+//		p_fl_W(ip);print_W(" on chan=");p_int_W(pin);print_W(" target=");p_int_W(interpolatorSet);
+//		print_W(" Data Table=");p_int_W(dataTableSet);
+//		println_W("set=      \t");p_fl_W(velocity[pin].set);
+//		println_W("start=    \t");p_fl_W(velocity[pin].start);
+//		println_W("setTime=  \t");p_fl_W(velocity[pin].setTime);
+//		println_W("startTime=\t");p_fl_W(velocity[pin].startTime);
 		ip=velocity[pin].set;
 		SetServoPos(pin,dataTableSet,(float)((getDataTableCurrentValue(pin)>>16)&0x0000ffff));
 	}
