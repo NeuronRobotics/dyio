@@ -579,7 +579,7 @@ boolean _setDataTableCurrentValue(uint8_t pin, int32_t value){
 		print_nnl(" mode ",l);printMode(GetChannelMode(pin),l);
 		// THis is the only place this variable should be set
 		getBcsIoDataTable(pin)->PIN.currentValue =value;
-		print(" lastPushed ",l);p_int(	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal,l);
+		print_nnl(" lastPushed ",l);p_int(	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal,l);
 		return true;
 	}
 	return false;
