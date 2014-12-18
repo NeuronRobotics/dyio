@@ -23,8 +23,9 @@ void InitPinModes(void){
 			mode = EEReadMode(i);
 		}
 		getBcsIoDataTable(i)->PIN.currentChannelMode = 0xff;// this forces the set Mode function to set the mode and hardware
-		println_W("Initializing :");p_int_W(i);printMode(EEReadMode(i),WARN_PRINT);
-		setMode(i,EEReadMode(i));
+		println_W("Initializing :");p_int_W(i);printMode(mode,WARN_PRINT);
+		setMode(i,mode);
+		_EEWriteMode(i, mode);
 	}
 	startup = false; 
 	//printModes();
