@@ -223,10 +223,11 @@ boolean pushAsyncReady( uint8_t pin){
 		case DEADBAND:
 			last = getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal;
 			db = getBcsIoDataTable(pin)->PIN.asyncDatadeadBandval;
-			if (	( 	( last >(aval+db)) ||
-						( last <(aval-db)) ) &&
-					(aval >=db)
-					){
+//			if (	( 	( last >(aval+db)) ||
+//						( last <(aval-db)) ) &&
+//					(aval >=db)
+//					)
+			if(!bound(last,aval,db,db)){
 //				println_I("deadband");p_int_I(pin);
 				getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=aval;
 				return true; 
