@@ -193,6 +193,10 @@ int GetNumberOfIOChannels();
  */
 uint8_t GetChannelMode(uint8_t chan);
 
+void _SetChannelMode(uint8_t pin,uint8_t mode );
+//#define SetChannelModeDataTable(A, B) 	if(GetChannelMode(A)!=B){println(__FILE__,ERROR_PRINT); _SetChannelMode(A,B);}
+#define SetChannelModeDataTable(A, B) 	 _SetChannelMode(A,B)
+
 /**
  * Retrevie the pointer to the datatable
  */
