@@ -159,7 +159,7 @@ boolean GetChannelModeFromPacket(BowlerPacket * Packet) {
     Packet->use.head.DataLegnth = 6;
     Packet->use.head.Method = BOWLER_POST;
     FixPacket(Packet);
-    printBowlerPacketDEBUG(Packet,WARN_PRINT);
+    //printBowlerPacketDEBUG(Packet,WARN_PRINT);
     return true;
 }
 
@@ -173,7 +173,7 @@ boolean GetAllChannelModeFromPacket(BowlerPacket * Packet) {
     }
     Packet->use.head.DataLegnth = 4 + GetNumberOfIOChannels()+1;
     FixPacket(Packet);
-    printBowlerPacketDEBUG(Packet,WARN_PRINT);
+    //printBowlerPacketDEBUG(Packet,WARN_PRINT);
     return true;
 }
 

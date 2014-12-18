@@ -71,7 +71,7 @@ boolean AbstractSetChannelMode(BowlerPacket * Packet){
 	//printBowlerPacketDEBUG(Packet,WARN_PRINT);
 	uint8_t pin =Packet->use.data[0];
 	uint8_t mode=Packet->use.data[1];
-	printBowlerPacketDEBUG(Packet,WARN_PRINT);
+	//printBowlerPacketDEBUG(Packet,WARN_PRINT);
 	if(Packet->use.head.DataLegnth == 7){
 		setAsync(pin,Packet->use.data[2]?true:false) ;
 	}
@@ -93,7 +93,7 @@ boolean AbstractSetChannelMode(BowlerPacket * Packet){
 boolean AbstractSetAllChannelMode(BowlerPacket * Packet){
 	//printBowlerPacketDEBUG(Packet,WARN_PRINT);
         // First byte is the number of channels
-	printBowlerPacketDEBUG(Packet,WARN_PRINT);
+	//printBowlerPacketDEBUG(Packet,WARN_PRINT);
 	int i;
 	for(i=0;i<GetNumberOfIOChannels();i++){
 		SetChannelMode(i,Packet->use.data[i+1]);
