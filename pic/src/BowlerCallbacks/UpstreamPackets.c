@@ -11,21 +11,6 @@
 BowlerPacket packetTemp;
 extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 
-//void pushDummy(uint8_t numData){
-//	LoadCorePacket(& packetTemp);
-//	packetTemp.use.head.Method=BOWLER_ASYN;
-//	packetTemp.use.head.RPC=GetRPCValue("test");
-//	packetTemp.use.head.DataLegnth=4+numData;
-//	int i;
-//	for(i=0;i<numData;i++){
-//		packetTemp.use.data[i]=numData;
-//	}
-//	Print_Level l = getPrintLevel();
-//	setPrintLevelInfoPrint();
-//	PutBowlerPacket(& packetTemp);
-//	setPrintLevel(l);
-//}
-
 void PushAllAsync(){
 	SetColor(0,1,0);
 
@@ -43,51 +28,10 @@ void PushAllAsync(){
 	Print_Level l = getPrintLevel();
 	setPrintLevelInfoPrint();
 	PutBowlerPacket(& packetTemp);
-//	println_W("Sending All Async: ");printPacket(&packetTemp,WARN_PRINT);
+	println_W("Sending All Async: ");printPacket(&packetTemp,WARN_PRINT);
 	setPrintLevel(l);
 }
-//void PushCounterChange(uint8_t pin,int64_t state){
-//	SetColor(0,1,0);
-//	INT32_UNION s;
-//	s.Val= state;
-//	LoadCorePacket(& packetTemp);
-//	packetTemp.use.head.Method=BOWLER_ASYN;
-//	packetTemp.use.head.RPC=GetRPCValue("gchv");
-//	packetTemp.use.data[0]=pin;
-//	packetTemp.use.data[1]=s.byte.FB;
-//	packetTemp.use.data[2]=s.byte.TB;
-//	packetTemp.use.data[3]=s.byte.SB;
-//	packetTemp.use.data[4]=s.byte.LB;
-//	packetTemp.use.head.DataLegnth=9;
-//	PutBowlerPacket(& packetTemp);
-//}
-//void PushADCval(uint8_t pin,uint16_t val){
-//	if(val>1024 || val<0)
-//		return;
-//	UINT16_UNION an;
-//	an.Val=val;
-//	SetColor(0,1,0);
-//	LoadCorePacket(& packetTemp);
-//	packetTemp.use.head.Method=BOWLER_ASYN;
-//	packetTemp.use.head.RPC=GetRPCValue("gchv");
-//	packetTemp.use.data[0]=pin;
-//	packetTemp.use.data[1]=an.byte.SB;
-//	packetTemp.use.data[2]=an.byte.LB;
-//	packetTemp.use.head.DataLegnth=7;
-//	PutBowlerPacket(& packetTemp);
-//}
-//void PushDIval(uint8_t pin,uint8_t val){
-//	if(val>1 || val<0)
-//		return;
-//	SetColor(0,1,0);
-//	LoadCorePacket(& packetTemp);
-//	packetTemp.use.head.Method=BOWLER_ASYN;
-//	packetTemp.use.head.RPC=GetRPCValue("gchv");
-//	packetTemp.use.data[0]=pin;
-//	packetTemp.use.data[1]=val;
-//	packetTemp.use.head.DataLegnth=6;
-//	PutBowlerPacket(& packetTemp);
-//}
+
 
 void UpstreamPushPowerChange(uint8_t r0,uint8_t r1, uint16_t voltage, uint8_t override){
 	SetColor(0,1,0);
