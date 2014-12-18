@@ -199,13 +199,13 @@ boolean SetChanVal(uint8_t pin, int32_t bval, float time) {
         case IS_COUNTER_INPUT_INT:
         case IS_COUNTER_INPUT_DIR:
             //println_I("Counter input ");
-            printMode(mode, INFO_PRINT);
+            //printMode(mode, INFO_PRINT);
             SetCounterInput(pin, bval);
             return true; 
         case IS_COUNTER_OUTPUT_INT:
         case IS_COUNTER_OUTPUT_DIR:
             //println_I("Counter output ");
-            printMode(mode, INFO_PRINT);
+            //printMode(mode, INFO_PRINT);
             SetCounterOutput(pin, bval, time);
             return true; 
     }
