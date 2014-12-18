@@ -168,7 +168,7 @@ void UserInit(void) {
     boolean brown = getEEBrownOutDetect() ? true:false;
     setBrownOutDetect(brown);
 
-    //Data table needs to be suynced before the PID can init properly
+    //Data table needs to be synced before the PID can init properly
     SyncDataTable();
     InitPID();
 
