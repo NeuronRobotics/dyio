@@ -37,7 +37,8 @@ boolean SetChannelMode(uint8_t pin,uint8_t mode){
 	boolean ok = setChanelModeHWPtr(pin,mode);
 	//print_I(" Hardware ok");
 
-	getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
+	//getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
+	SetChannelModeDataTable(pin,mode);
 	if(IsAsync(pin)){
 
 		//print_I(" Restarting async");
@@ -70,16 +71,16 @@ boolean AbstractSetChannelMode(BowlerPacket * Packet){
 	//printBowlerPacketDEBUG(Packet,WARN_PRINT);
 	uint8_t pin =Packet->use.data[0];
 	uint8_t mode=Packet->use.data[1];
-
+	printBowlerPacketDEBUG(Packet,WARN_PRINT);
 	if(Packet->use.head.DataLegnth == 7){
 		setAsync(pin,Packet->use.data[2]?true:false) ;
 	}
 
 	if(SetChannelMode(pin,mode)){
-		//READY(Packet,4,33);
+		GetAllChannelModeFromPacket(Packet);
 		return true; 
 	}else{
-		//println_E("Mode Invalid!");
+		GetAllChannelModeFromPacket(Packet);
 		return false; 
 	}
 
@@ -92,6 +93,7 @@ boolean AbstractSetChannelMode(BowlerPacket * Packet){
 boolean AbstractSetAllChannelMode(BowlerPacket * Packet){
 	//printBowlerPacketDEBUG(Packet,WARN_PRINT);
         // First byte is the number of channels
+	printBowlerPacketDEBUG(Packet,WARN_PRINT);
 	int i;
 	for(i=0;i<GetNumberOfIOChannels();i++){
 		SetChannelMode(i,Packet->use.data[i+1]);
