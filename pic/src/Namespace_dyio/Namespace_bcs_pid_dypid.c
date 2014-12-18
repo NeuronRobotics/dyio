@@ -27,7 +27,6 @@ boolean bcsPidDypidAsyncEventCallback(BowlerPacket *Packet, boolean(*pidAsyncCal
     }
 #endif
 
-    runPIDConfigurationValueSync();
     //println_W("Done ");//print_W(dypidNSName);
     return false; 
 }
