@@ -31,8 +31,6 @@ void initAdvancedAsync(){
 }
 
 void setAsync(uint8_t pin,boolean async){
-	uint8_t mode = GetChannelMode(pin);
-	getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
 	setAsyncLocal(pin,async);
 	startAdvancedAsyncDefault(pin);
 }
@@ -151,7 +149,7 @@ void startAdvancedAsyncDefault(uint8_t pin){
 	getBcsIoDataTable(pin)->asyncDataTimer.MsTime=getMs();
 	getBcsIoDataTable(pin)->asyncDataTimer.setPoint=10;
 	getBcsIoDataTable(pin)->PIN.asyncDataType = NOTEQUAL;
-        printMode(GetChannelMode(pin),INFO_PRINT);
+        //printMode(GetChannelMode(pin),INFO_PRINT);
 	switch(GetChannelMode(pin)){
 	case IS_DI:
 	case IS_COUNTER_INPUT_HOME:
