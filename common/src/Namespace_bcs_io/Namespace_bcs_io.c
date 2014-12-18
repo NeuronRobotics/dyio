@@ -25,8 +25,8 @@ boolean bcsIoAsyncEventCallback(BowlerPacket *Packet, boolean (*pidAsyncCallback
     for (i = 0; i < GetNumberOfIOChannels(); i++) {
         //
         if (pushAsyncReady(i)) {
-//        	println_W("Pin Async ");p_int_W(i);
-//        	print_W(" val= ");p_int_W(GetChanelSingleValue(i));
+        	println_W("Pin Async ");p_int_W(i);
+        	print_W(" val= ");p_int_W(GetChanelSingleValue(i));
             update = true; 
         }
     }
@@ -39,13 +39,11 @@ boolean bcsIoAsyncEventCallback(BowlerPacket *Packet, boolean (*pidAsyncCallback
         Packet->use.head.Method = BOWLER_ASYN;
         FixPacket(Packet);
 
-        //println_W("Async ");printBowlerPacketDEBUG(Packet, WARN_PRINT);
+        println_W("bcsIoAsync ");//printPacket(Packet, WARN_PRINT);
 
         if (pidAsyncCallbackPtr != NULL) {
             pidAsyncCallbackPtr(Packet);
         }
-
-        //printBowlerPacketDEBUG(Packet, ERROR_PRINT);
     }
     //println_W("Done ");print_W(ioNSName);
     return false; 
@@ -205,18 +203,18 @@ RPC_LIST bcsIo_sacv_p = {BOWLER_POST, // Method
     NULL //Termination
 };
 
-
-RPC_LIST bcsIo_asyn_p = {BOWLER_POST, // Method
-    "asyn", //RPC as string
-    &SetAsyncFromPacket, //function pointer to a packet parsing function
-    {BOWLER_I08, // channel
-        BOWLER_I08, // async mode
-        0
-    }, // Calling arguments
-    BOWLER_POST, // response method
-    {0}, // Calling arguments
-    NULL //Termination
-};
+//
+//RPC_LIST bcsIo_asyn_p = {BOWLER_POST, // Method
+//    "asyn", //RPC as string
+//    &SetAsyncFromPacket, //function pointer to a packet parsing function
+//    {BOWLER_I08, // channel
+//        BOWLER_I08, // async mode
+//        0
+//    }, // Calling arguments
+//    BOWLER_POST, // response method
+//    {0}, // Calling arguments
+//    NULL //Termination
+//};
 
 //CRIT
 RPC_LIST bcsIo_cchn_c = {BOWLER_CRIT, // Method
@@ -293,7 +291,7 @@ NAMESPACE_LIST * get_bcsIoNamespace() {
         addRpcToNamespace(&bcsIo, & bcsIo_strm_p);
         addRpcToNamespace(&bcsIo, & bcsIo_schv_p);
         addRpcToNamespace(&bcsIo, & bcsIo_sacv_p);
-        addRpcToNamespace(&bcsIo, & bcsIo_asyn_p);
+        //addRpcToNamespace(&bcsIo, & bcsIo_asyn_p);
         //CRIT
         addRpcToNamespace(&bcsIo, & bcsIo_cchn_c);
         addRpcToNamespace(&bcsIo, & bcsIo_schv_c);

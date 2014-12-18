@@ -185,13 +185,14 @@ boolean GetAsyncFromPacket(BowlerPacket * Packet) {
     return true;
 }
 
-boolean SetAsyncFromPacket(BowlerPacket * Packet) {
-    Packet->use.head.Method = BOWLER_POST;
-    setAsync(Packet->use.data[0], Packet->use.data[1]);
-    Packet->use.head.DataLegnth = 4;
-    FixPacket(Packet);
-    return true;
-}
+//boolean SetAsyncFromPacket(BowlerPacket * Packet) {
+//    Packet->use.head.Method = BOWLER_POST;
+//    setAsync(Packet->use.data[0], Packet->use.data[1]);
+//    Packet->use.head.DataLegnth = 4;
+//    FixPacket(Packet);
+//    printBowlerPacketDEBUG(Packet,WARN_PRINT);
+//    return true;
+//}
 
 boolean GetIOChannelCountFromPacket(BowlerPacket * Packet) {
     Packet->use.head.Method = BOWLER_POST;
@@ -578,7 +579,7 @@ boolean _setDataTableCurrentValue(uint8_t pin, int32_t value){
 		print_nnl(" mode ",l);printMode(GetChannelMode(pin),l);
 		// THis is the only place this variable should be set
 		getBcsIoDataTable(pin)->PIN.currentValue =value;
-		//print_I(" confirmed ");p_int_I(getBcsIoDataTable(pin)->PIN.currentValue);
+		print(" lastPushed ",l);p_int(	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal,l);
 		return true;
 	}
 	return false;

@@ -72,9 +72,6 @@ boolean AbstractSetChannelMode(BowlerPacket * Packet){
 	uint8_t pin =Packet->use.data[0];
 	uint8_t mode=Packet->use.data[1];
 	//printBowlerPacketDEBUG(Packet,WARN_PRINT);
-	if(Packet->use.head.DataLegnth == 7){
-		setAsync(pin,Packet->use.data[2]?true:false) ;
-	}
 
 	if(SetChannelMode(pin,mode)){
 		GetAllChannelModeFromPacket(Packet);

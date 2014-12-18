@@ -11,26 +11,26 @@
 BowlerPacket packetTemp;
 extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 
-void PushAllAsync(){
-	SetColor(0,1,0);
-
-	GetAllChanelValueFromPacket(&packetTemp);
-	int i,packetIndex;
-	for(i=0;i<NUM_PINS;i++){
-		packetIndex = (i*4) +1;
-		if(GetChannelMode(i) == IS_SERVO){
-			//mask off the time value before sending upstream
-			set32bit(&packetTemp, get32bit(&packetTemp, packetIndex)&0x000000ff, packetIndex);
-		}
-	}
-
-	packetTemp.use.head.Method=BOWLER_ASYN;
-	Print_Level l = getPrintLevel();
-	setPrintLevelInfoPrint();
-	PutBowlerPacket(& packetTemp);
-	println_W("Sending All Async: ");printPacket(&packetTemp,WARN_PRINT);
-	setPrintLevel(l);
-}
+//void PushAllAsync(){
+//	SetColor(0,1,0);
+//
+//	GetAllChanelValueFromPacket(&packetTemp);
+//	int i,packetIndex;
+//	for(i=0;i<NUM_PINS;i++){
+//		packetIndex = (i*4) +1;
+//		if(GetChannelMode(i) == IS_SERVO){
+//			//mask off the time value before sending upstream
+//			set32bit(&packetTemp, get32bit(&packetTemp, packetIndex)&0x000000ff, packetIndex);
+//		}
+//	}
+//
+//	packetTemp.use.head.Method=BOWLER_ASYN;
+//	Print_Level l = getPrintLevel();
+//	setPrintLevelInfoPrint();
+//	PutBowlerPacket(& packetTemp);
+//	println_W("Sending All Async: ");printPacket(&packetTemp,WARN_PRINT);
+//	setPrintLevel(l);
+//}
 
 
 void UpstreamPushPowerChange(uint8_t r0,uint8_t r1, uint16_t voltage, uint8_t override){
@@ -45,6 +45,7 @@ void UpstreamPushPowerChange(uint8_t r0,uint8_t r1, uint16_t voltage, uint8_t ov
 	packetTemp.use.head.DataLegnth=4+2+2+1;
 
 	PutBowlerPacket(& packetTemp);
+	printPacket(&packetTemp,WARN_PRINT);
 }
 
 void UpstreamPushSPIlStream(void){
@@ -57,6 +58,8 @@ void UpstreamPushSPIlStream(void){
 	packetTemp.use.data[1]=GetSPIRxData(&packetTemp.use.data[2]);
 	packetTemp.use.head.DataLegnth = 4+1+1+packetTemp.use.data[1];
 	PutBowlerPacket(& packetTemp);
+	printPacket(&packetTemp,WARN_PRINT);
+
 }
 
 void UpstreamPushSerialStream(void){
@@ -69,6 +72,8 @@ void UpstreamPushSerialStream(void){
 	packetTemp.use.data[1]=GetSerialRxData(&packetTemp.use.data[2]);
 	packetTemp.use.head.DataLegnth = 4+1+1+packetTemp.use.data[1];
 	PutBowlerPacket(& packetTemp);
+	printPacket(&packetTemp,WARN_PRINT);
+
 }
 
 void POWER(BowlerPacket * packet){
@@ -92,6 +97,7 @@ void pushPPMPacket(void){
 
 	packetTemp.use.head.Method=BOWLER_ASYN;
 	PutBowlerPacket(& packetTemp);
+	printPacket(&packetTemp,WARN_PRINT);
 }
 
 

@@ -29,22 +29,17 @@ boolean SetChanelValueHW(uint8_t pin, uint8_t numValues, int32_t * data, float m
 			SetChanVal(pin, data[0], ms);
 			return true;
 	}
-	if (isSingleByteMode(mode)) {
-		int32_t time = ( int32_t ) ms;
-		//mask the time into the data byte
-		if(mode == IS_SERVO)
-			value = (data[0]&0x000000ff) | (time<<16);
-		else
-			value=(data[0]&0x000000ff);
+
+	int32_t time = ( int32_t ) ms;
+	//mask the time into the data byte
+	if(mode == IS_SERVO)
+		value = (data[0]&0x000000ff) | (time<<16);
+	else
+		value=(data[0]&0x000000ff);
 //        	println_E("Setting on pin=");p_int_E(pin); print_E(" value= ");p_int_E(value); print_E(" time= ");p_fl_E(ms);
 
-		setDataTableCurrentValue(pin, value);
-		return true;
-	}
-        
-
-
-    return false; 
+	setDataTableCurrentValue(pin, value);
+	return true;
 }
 
 /**
@@ -66,12 +61,9 @@ boolean GetChanelValueHW(uint8_t pin, uint8_t * numValues, int32_t * data) {
 			data[0] = GetCounterOutput(pin);
 			return true;
 	}
-	if (isSingleByteMode(mode)) {
-		//mask the time into the data byte
-		data[0] = getBcsIoDataTable(pin)->PIN.currentValue;
-	}else{
-	   data[0] = getBcsIoDataTable(pin)->PIN.currentValue;
-	}
+
+	data[0] = getBcsIoDataTable(pin)->PIN.currentValue;
+
 	return true;
 
 }
@@ -86,7 +78,7 @@ boolean GetChanelValueHW(uint8_t pin, uint8_t * numValues, int32_t * data) {
 boolean SetAllChanelValueHW(int32_t * data, float ms) {
     int i;
     for (i = 0; i < GetNumberOfIOChannels(); i++) {
-        if (!isStremChannelMode(GetChannelMode(i)))
+        //if (!isStremChannelMode(GetChannelMode(i)))
             SetChanelValueHW(i, 1, & data[i], ms);
     }
     return true; 
@@ -101,7 +93,7 @@ boolean GetAllChanelValueHW(int32_t * data) {
     int i;
     uint8_t numValues;
     for (i = 0; i < GetNumberOfIOChannels(); i++) {
-        if (!isStremChannelMode(GetChannelMode(i)))
+        //if (!isStremChannelMode(GetChannelMode(i)))
             GetChanelValueHW(i, &numValues, & data[i]);
     }
     return true; 
