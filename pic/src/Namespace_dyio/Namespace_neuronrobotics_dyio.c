@@ -287,11 +287,11 @@ NAMESPACE_LIST * get_neuronRoboticsDyIONamespace() {
         //Add the RPC structs to the namespace
         addRpcToNamespace(&neuronRoboticsDyIO, & neuronRoboticsDyIO__rev_g);
         addRpcToNamespace(&neuronRoboticsDyIO, & neuronRoboticsDyIO__pwr_g);
-        addRpcToNamespace(&neuronRoboticsDyIO, & neuronRoboticsDyIO_info_g);
+        //addRpcToNamespace(&neuronRoboticsDyIO, & neuronRoboticsDyIO_info_g);
 
         addRpcToNamespace(&neuronRoboticsDyIO, & neuronRoboticsDyIO__mac_c);
         addRpcToNamespace(&neuronRoboticsDyIO, & neuronRoboticsDyIO__pwr_c);
-        addRpcToNamespace(&neuronRoboticsDyIO, & neuronRoboticsDyIO_info_c);
+        //addRpcToNamespace(&neuronRoboticsDyIO, & neuronRoboticsDyIO_info_c);
 
         neuronRoboticsDyIOnamespcaedAdded = true;
     }
