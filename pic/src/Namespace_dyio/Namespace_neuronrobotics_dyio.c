@@ -94,15 +94,15 @@ boolean neuronRoboticsDyIOProcessor_g(BowlerPacket * Packet) {
             Packet->use.data[0] = MAJOR_REV;
             Packet->use.data[1] = MINOR_REV;
             Packet->use.data[2] = FIRMWARE_VERSION;
-            FlashGetBlRev(rev);
-            for (i = 0; i < 3; i++) {
-                Packet->use.data[i + 3] = rev[i];
-            }
+
+            Packet->use.data[3] = MAJOR_REV;
+			Packet->use.data[4] = MINOR_REV;
+			Packet->use.data[5] = FIRMWARE_VERSION;
             Packet->use.head.DataLegnth = 4 + 6;
             Packet->use.head.Method = BOWLER_POST;
             break;
         case INFO:
-            FlashGetName(tmpName);
+            GetName(tmpName);
             i = 0;
             while (tmpName[i] != 0) {
                 Packet->use.data[i] = tmpName[i];
@@ -167,7 +167,7 @@ boolean neuronRoboticsDyIOProcessor_c(BowlerPacket * Packet) {
             for (i = 0; i < Packet->use.head.DataLegnth - 4; i++) {
                 tmpName[i] = Packet->use.data[i];
             }
-            FlashSetName(tmpName);
+            SetName(tmpName);
             READY(Packet, zone, 4);
             break;
         default:
