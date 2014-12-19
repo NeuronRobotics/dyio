@@ -77,8 +77,3 @@ boolean getEEBrownOutDetect(){
 	GetEEPRomData(BROWNOUT_START,BROWNOUT_END,&tmp);
 	return tmp?true:false;
 }
-
-
-
-
-
