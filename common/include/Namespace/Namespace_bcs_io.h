@@ -80,7 +80,7 @@ case IS_PPM_IN:
 
 #define IO_MODE_MAX				(IS_PPM_IN+1)
 
-#define isStremChannelMode(A) ( (A==IS_UART_TX)||\
+#define _isStremChannelMode(A) ( (A==IS_UART_TX)||\
 								(A==IS_UART_RX)||\
 								(A==IS_SPI_MOSI)||\
 								(A==IS_SPI_MISO)||\
