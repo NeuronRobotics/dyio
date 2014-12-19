@@ -132,7 +132,7 @@ boolean configAdvancedAsync(BowlerPacket * Packet){
 		ERR(Packet,45,0);
 		break;
 	}
-	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=getDataTableCurrentValue(pin);
+	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=0xffffffff;// invalid previous, forces a value update
 	READY(Packet,45,0);
 	return true; 
 }
@@ -148,7 +148,7 @@ void startAdvancedAsyncDefault(uint8_t pin){
 			setDataTableCurrentValue(pin,1);
 		}
 	}
-	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=getDataTableCurrentValue(pin);
+	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=0xffffffff;;
 	getBcsIoDataTable(pin)->asyncDataTimer.MsTime=getMs();
 	getBcsIoDataTable(pin)->asyncDataTimer.setPoint=10;
 	getBcsIoDataTable(pin)->PIN.asyncDataType = NOTEQUAL;
@@ -234,15 +234,16 @@ boolean pushAsyncReady( uint8_t pin){
 //			println_I("treshhold");p_int_I(pin);
 			last = getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal;
 			db = getBcsIoDataTable(pin)->PIN.asyncDatathreshholdval;
-			getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal = aval;
+
 			if(getBcsIoDataTable(pin)->PIN.asyncDatathreshholdedge == ASYN_RISING || getBcsIoDataTable(pin)->PIN.asyncDatathreshholdedge == ASYN_BOTH){
 				if(last<= db && aval>db){
-
+					getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal = aval;
 					return true; 
 				}
 			}
 			if(getBcsIoDataTable(pin)->PIN.asyncDatathreshholdedge == ASYN_FALLING|| getBcsIoDataTable(pin)->PIN.asyncDatathreshholdedge == ASYN_BOTH){
 				if(last> db && aval<=db){
+					getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal = aval;
 					return true; 
 				}
 			}
