@@ -36,17 +36,11 @@ boolean setMode(uint8_t pin,uint8_t mode){
 	if(mode == GetChannelMode(pin)){
 		return true;
 	}
-
 	ClearPinState(pin);
 	//uint8_t pwm,dir;
-	if (mode == NO_CHANGE){
-		return true; 
-	}
+
 	switch (mode){
-	case HIGH_IMPEDANCE:
-		ClearPinState(pin);
-		// Return here so as not to save this state to the eeprom
-		return true; 
+
 	case IS_UART_TX:
 	case IS_UART_RX:
 		if(pin == 17 || pin == 16){

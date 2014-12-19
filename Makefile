@@ -8,8 +8,8 @@ PIC_COMPILER=xc32-v1.00-linux
 DUALDEBUG=FirmwarePublish/Dev/dyio-DEV-AVRDEBUG-PICDEBUG-$(REVISION).xml
 RELEASEFW=FirmwarePublish/Release/dyio-$(REVISION).xml
 
-BOOTLOADFW=$(DUALDEBUG)
-#BOOTLOADFW=$(RELEASEFW)
+#BOOTLOADFW=$(DUALDEBUG)
+BOOTLOADFW=$(RELEASEFW)
 
 all:loadFw 
 	echo DyIO Firmware built OK!
@@ -44,7 +44,7 @@ commit:
 	svn commit -m="Building the DyIO"
 	cd ../NRSDK/fw; svn commit -m="Building the DyIO"
 	
-build: #update
+build: update
 	make -C pic all
 	make -C avr all
 

@@ -14,9 +14,9 @@ void Server(){
 //#define analogTime  10
 //	RunEveryData asyncSched = {0,analogTime};
 void runDyIOMain(void){
-//	UCSR1B=0;
-//	UCSR1C=0;
-//	UCSR1A=0;
+	UCSR1B=0;
+	UCSR1C=0;
+	UCSR1A=0;
 //
 //	UCSR0B=0;
 //	UCSR0C=0;
