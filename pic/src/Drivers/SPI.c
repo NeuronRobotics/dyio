@@ -53,8 +53,8 @@ uint8_t GetSPIRxData(uint8_t * data){
 	return numValues;
 }
 
-void StopDyIOSPI(uint8_t pin){
-	if (isSPI(GetChannelMode(pin))){
+void StopDyIOSPI(uint8_t pin,uint8_t mode){
+	if (isSPI(mode)){
 		CloseSPI2();
 		_RG6=1;
 		_RG8=1;

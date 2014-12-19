@@ -31,7 +31,7 @@ void RunCounter(void){
 void InitCounterPins(void){
 	uint8_t i;
 	for (i=0;i< GetNumberOfIOChannels();i++){
-		 ClearCounter(i);
+		 ClearCounter(i, GetChannelMode(i));
 	}
 	for (i=0;i<NUM_COUNTER_GROUPS;i++){
 		 Counter[i].CURRENT=0;
@@ -41,9 +41,9 @@ void InitCounterPins(void){
 	ConfigIntTimer3(T3_INT_ON | T3_INT_PRIOR_5);
     //println_I("Initialized the Counter module");
 }
-void ClearCounter(uint8_t chan){
+void ClearCounter(uint8_t chan,uint8_t mode){
 	uint8_t group = channelToCounterGroup(chan);
-	switch ( GetChannelMode(chan)){
+	switch ( mode){
 		case IS_COUNTER_INPUT_INT:
 		case IS_COUNTER_INPUT_DIR:
 		case IS_COUNTER_INPUT_HOME:
@@ -51,18 +51,17 @@ void ClearCounter(uint8_t chan){
 		case IS_COUNTER_OUTPUT_DIR:
 		case IS_COUNTER_OUTPUT_HOME:
 			//println_I("Mode was counter, clearing");
-			SetCoProcMode(pinmap[group].DIR,IS_DI);
-			SetCoProcMode(pinmap[group].INT,IS_DI);
-			SetCoProcMode(pinmap[group].HOME,IS_DI);
 			if(group>0 && (GetChannelMode(0)==IS_SPI_SCK || GetChannelMode(1)==IS_SPI_MISO ||GetChannelMode(2)==IS_SPI_MOSI )){
 				SetCoProcMode(0,IS_DI);
 				SetCoProcMode(1,IS_DI);
 				SetCoProcMode(2,IS_DI);
-			}
-			if(group== 0 && (GetChannelMode(16)==IS_UART_TX ||GetChannelMode(17)==IS_UART_RX )){
+			}else if(group== 0 && (GetChannelMode(16)==IS_UART_TX ||GetChannelMode(17)==IS_UART_RX )){
 				SetCoProcMode(16,IS_DI);
 				SetCoProcMode(17,IS_DI);
 			}
+			SetCoProcMode(pinmap[group].DIR,IS_DI);
+			SetCoProcMode(pinmap[group].INT,IS_DI);
+			SetCoProcMode(pinmap[group].HOME,IS_DI);
 			break;
 		default:
 			return;

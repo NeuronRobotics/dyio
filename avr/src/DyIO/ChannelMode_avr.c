@@ -23,8 +23,9 @@ void InitPinModes(void){
 			mode = EEReadMode(i);
 		}
 		getBcsIoDataTable(i)->PIN.currentChannelMode = 0xff;// this forces the set Mode function to set the mode and hardware
-		println_W("Initializing :");p_int_W(i);printMode(EEReadMode(i),WARN_PRINT);
-		setMode(i,EEReadMode(i));
+		println_W("Initializing :");p_int_W(i);printMode(mode,WARN_PRINT);
+		setMode(i,mode);
+		_EEWriteMode(i, mode);
 	}
 	startup = false; 
 	//printModes();
@@ -35,17 +36,11 @@ boolean setMode(uint8_t pin,uint8_t mode){
 	if(mode == GetChannelMode(pin)){
 		return true;
 	}
-
 	ClearPinState(pin);
 	//uint8_t pwm,dir;
-	if (mode == NO_CHANGE){
-		return true; 
-	}
+
 	switch (mode){
-	case HIGH_IMPEDANCE:
-		ClearPinState(pin);
-		// Return here so as not to save this state to the eeprom
-		return true; 
+
 	case IS_UART_TX:
 	case IS_UART_RX:
 		if(pin == 17 || pin == 16){

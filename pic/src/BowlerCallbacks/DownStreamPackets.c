@@ -126,7 +126,7 @@ void CheckRev(void) {
 			&& (downstreamPacketTemp.use.data[2] == FIRMWARE_VERSION)) {
 		SetColor(0, 0, 1);
 	} else {
-		SetColor(1, 0, 0);
+		//SetColor(1, 0, 0);
 		println_I("Rev. Check Failed! AVR:");
 		p_int_I(downstreamPacketTemp.use.data[0]);
 		print_I(".");
@@ -221,12 +221,11 @@ uint8_t SetCoProConfiguration(uint8_t pin, int32_t mode) {
 }
 
 uint8_t SetCoProcMode(uint8_t pin, uint8_t mode) {
-	if (getBcsIoDataTable(pin)->PIN.currentChannelMode == mode)
+	if (GetChannelMode(pin) == mode)
 		return true;
-//	println_W("Mode Set Pin :");
-//	p_int_W(pin);
-//	printMode(mode, WARN_PRINT);
-	getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
+	println_E("Setting Mode: ");print_E(" on: ");p_int_E(pin);printMode(mode,ERROR_PRINT);
+	//getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
+	SetChannelModeDataTable(pin,mode);
 	down[pin].changeMode = true;
 	return false;
 }
@@ -246,25 +245,24 @@ uint8_t SetAllCoProcMode() {
 		downstreamPacketTemp.use.head.RPC = GetRPCValue("sacm");
 		downstreamPacketTemp.use.data[0] = GetNumberOfIOChannels();
 		for (i = 0; i < GetNumberOfIOChannels(); i++) {
-			downstreamPacketTemp.use.data[i + 1] =
-					getBcsIoDataTable(i)->PIN.currentChannelMode;
+			downstreamPacketTemp.use.data[i + 1] =GetChannelMode(i) ;
 			down[i].changeMode = false;
 		}
-		downstreamPacketTemp.use.head.DataLegnth = 4 + 1
-				+ GetNumberOfIOChannels();
-//                println_I("Sending mode sync packet");printPacket(&packetTemp,INFO_PRINT);
+		downstreamPacketTemp.use.head.DataLegnth = 4 + 1+ GetNumberOfIOChannels();
+        //println_I("Sending mode sync packet");printPacket(&downstreamPacketTemp,WARN_PRINT);
 		SendPacketToCoProc(&downstreamPacketTemp);
-		for (i = 0; i < NUM_PINS; i++) {
-			if (downstreamPacketTemp.use.data[i + 1] == NO_CHANGE) {
-				getBcsIoDataTable(i)->PIN.currentChannelMode = IS_DI;
-				down[i].changeMode = true;	// force a sync of the no valid mode
-				//println_E("FAULT: the mode was set to NO_CHANGE");
-			} else {
-				getBcsIoDataTable(i)->PIN.currentChannelMode =
-						downstreamPacketTemp.use.data[i + 1];
-				down[i].changeMode = false;
-			}
-		}
+//		for (i = 0; i < NUM_PINS; i++) {
+//			if (downstreamPacketTemp.use.data[i + 1] == NO_CHANGE) {
+//				//getBcsIoDataTable(i)->PIN.currentChannelMode = IS_DI;
+//				SetChannelModeDataTable(i,IS_DI);
+//				down[i].changeMode = true;	// force a sync of the no valid mode
+//				//println_E("FAULT: the mode was set to NO_CHANGE");
+//			} else {
+//				//getBcsIoDataTable(i)->PIN.currentChannelMode =downstreamPacketTemp.use.data[i + 1];
+//				SetChannelModeDataTable(i,downstreamPacketTemp.use.data[i + 1]);
+//				down[i].changeMode = false;
+//			}
+//		}
 
 	}
 	return true;
@@ -401,6 +399,9 @@ boolean GetName(char * name) {
 	downstreamPacketTemp.use.data[1] = LOCKSTART;
 	downstreamPacketTemp.use.head.DataLegnth = 6;
 	SendPacketToCoProc(&downstreamPacketTemp);
+
+	printPacket(&downstreamPacketTemp,WARN_PRINT);
+
 	while (downstreamPacketTemp.use.data[i] != '\0') {
 		name[i] = downstreamPacketTemp.use.data[i];
 		i++;
@@ -409,6 +410,7 @@ boolean GetName(char * name) {
 			break;
 	}
 	name[i] = '\0';
+	println_W(name);
 	return isAscii(name);
 }
 
@@ -436,6 +438,7 @@ boolean GetLockCode(char * code) {
 void SetName(char * name) {
 	//WORD_VAL raw;
 	uint8_t i = 0;
+	println_E(name);
 	LoadCorePacket(&downstreamPacketTemp);
 	downstreamPacketTemp.use.head.Method = BOWLER_POST;
 	downstreamPacketTemp.use.head.RPC = GetRPCValue(eepd);
@@ -450,6 +453,7 @@ void SetName(char * name) {
 	}
 	downstreamPacketTemp.use.data[2 + i] = '\0';
 	downstreamPacketTemp.use.head.DataLegnth = 6 + i + 1;
+	printPacket(&downstreamPacketTemp,ERROR_PRINT);
 	SendPacketToCoProc(&downstreamPacketTemp);
 }
 
@@ -488,12 +492,13 @@ void SyncModes(void) {
 	GetAllModes(&downstreamPacketTemp);
 	for (i = 0; i < NUM_PINS; i++) {
 		if (downstreamPacketTemp.use.data[i + 1] == NO_CHANGE) {
-			getBcsIoDataTable(i)->PIN.currentChannelMode = IS_DI;
+			SetChannelModeDataTable(i, IS_DI);
 			down[i].changeMode = true;	// force a sync of the no valid mode
 			//println_E("FAULT: the mode was set to NO_CHANGE");
 		} else {
-			if (getBcsIoDataTable(i)->PIN.currentChannelMode
+			if (GetChannelMode(i)
 					!= downstreamPacketTemp.use.data[i + 1]) {
+				//println_W("Setting new mode from sync #");p_int_W(i);print_W(" ");//printMode(i,WARN_PRINT);
 				SetChannelMode(i, downstreamPacketTemp.use.data[i + 1]);
 				down[i].changeMode = false;
 			}

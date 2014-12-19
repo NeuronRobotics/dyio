@@ -21,7 +21,7 @@
 
 void UserInit(void){
 	StartCritical();
-	UCSR1B=0;
+
 	//println_W(startmessage);// All printfDEBUG functions do not need to be removed from code if debug is disabled
 //#if defined(DEBUG)
 //	ConfigureUART(115200);
@@ -43,7 +43,7 @@ void UserInit(void){
 #endif
 
 
-
+	//_delay_ms(100);
 	println_I(/*PSTR*/("Starting Pin Functions"));
 	InitPinFunction();
 	println_I(/*PSTR*/("Starting Pin Modes"));

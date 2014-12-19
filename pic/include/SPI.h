@@ -11,7 +11,7 @@
 #define  SDI_TRIS			(_TRISG7)
 #define  SDO_TRIS			(_TRISG8)
 void InitSPIDyIO(void);
-void StopDyIOSPI(uint8_t mode);
+void StopDyIOSPI(uint8_t pin,uint8_t mode);
 boolean isSPI(uint8_t mode);
 uint8_t GetByteSPIDyIO(uint8_t b);
 void SyncSPIData();

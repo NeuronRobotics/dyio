@@ -126,15 +126,11 @@ void SetDIO(uint8_t PIN,uint8_t state){
 
 	case 16:
 		if (getPrintLevel() == NO_PRINT){
-			UCSR1B=0;
-			SetPinTris(PIN,OUTPUT);
 			PO16 = state;
 		}
 		return;
 	case 17:
 		if (getPrintLevel() == NO_PRINT){
-			UCSR1B=0;
-			SetPinTris(PIN,OUTPUT);
 			PO17 = state;
 		}
 		return;

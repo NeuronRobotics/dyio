@@ -143,6 +143,6 @@ uint32_t getDyIOVoltage(uint8_t chan){
 	InitADC();
 	float scale = 16.283951;
 	uint32_t raw = getAdcRaw(chan, 5);
-	uint32_t volt = (UINT32)(((float)raw)*scale);
+	uint32_t volt = (uint32_t)(((float)raw)*scale);
 	return volt;
 }

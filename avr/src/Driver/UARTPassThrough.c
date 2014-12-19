@@ -37,9 +37,11 @@ void InitUART(void){
 	println_W("Uart Initialization: ");
 	ConfigureUART(EEReadBaud());
 
-	SetPinTris(16,OUTPUT);
-	SetPinTris(17,INPUT);
-	SetDIO(17,ON);
+//	SetPinTris(16,OUTPUT);
+//	SetPinTris(17,INPUT);
+//	SetDIO(17,ON);
+	configPinMode(16,IS_UART_TX,OUTPUT,ON);
+	configPinMode(17,IS_UART_RX,INPUT,ON);
 	InitByteFifo(&UARTPassThroughStore,privateRXUART,UART_PASS_BUFF_SIZE);
 
 	UartInit=true;
@@ -54,24 +56,23 @@ void StopUartPassThrough(uint8_t pin){
 		)){
 		return;
 	}
-	UCSR1Bbits._RXCIE1=0;
-	UCSR1Bbits._RXEN1=0;
-	if(getPrintLevel() == NO_PRINT){
-		UCSR1Bbits._TXEN1=0;
-	}else{
-		UBRR1=9;
-		/* set the framing to 8N1 */
-		UCSR1C = ((1<< UCSZ10)|(1<< UCSZ11));
-		/* rx interrupts enabled, rx and tx enabled, 8-bit data */
-		UCSR1B =( _BV(TXEN1));
-		UCSR1A = 0x00;
-	}
 	//InitByteFifo(&UARTPassThroughStore,privateRXUART,sizeof(privateRXUART));
 	switch(GetChannelMode(pin)){
 		case IS_UART_TX:
 		case IS_UART_RX:
 			configPinMode(16,IS_DI,INPUT,ON);
 			configPinMode(17,IS_DI,INPUT,ON);
+			if(getPrintLevel() == NO_PRINT){
+				UCSR1B=0;
+				UCSR1C=0;
+			}else{
+				UBRR1=9;
+				/* set the framing to 8N1 */
+				UCSR1C = ((1<< UCSZ10)|(1<< UCSZ11));
+				/* rx interrupts enabled, rx and tx enabled, 8-bit data */
+				UCSR1B =( _BV(TXEN1));
+			}
+			UCSR1A = 0x00;
 			UartInit=false;
 	}
 }

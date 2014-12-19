@@ -17,23 +17,7 @@
  */
 boolean SetChanelValueHW(uint8_t pin,uint8_t numValues,int32_t * data, float ms){
 	uint8_t mode = GetChannelMode(pin);
-	if(isStremChannelMode(mode)){
-		//uint8_t * bData = (uint8_t *)data;
-		switch(mode){
-//		case IS_SPI_MOSI:
-//		case IS_SPI_MISO:
-//		case IS_SPI_SCK:
-//			SendPacketToSPIFromArray(numValues,bData);
-//			return true; 
-//		case IS_UART_TX:
-//		case IS_UART_RX:
-//			LoadSerialTxData( numValues,bData);
-//			return true; 
-//		case IS_PPM_IN:
-//			ConfigPPMFromArray(bData);
-//			return true; 
-		}
-	}else{
+
 		switch(mode){
 //		case IS_COUNTER_INPUT_INT:
 //		case IS_COUNTER_INPUT_DIR:
@@ -61,7 +45,7 @@ boolean SetChanelValueHW(uint8_t pin,uint8_t numValues,int32_t * data, float ms)
 		}
 
 		return true; 
-	}
+
 
 	return true; 
 }
@@ -94,7 +78,6 @@ boolean SetAllChanelValueHW(int32_t * data, float ms){
 //    clearPrint();
 	int i;
 	for(i=0;i<GetNumberOfIOChannels();i++){
-		if(!isStremChannelMode(GetChannelMode(i)))
 			SetChanelValueHW(i,1,& data[i], ms);
 	}
 
@@ -115,7 +98,6 @@ boolean GetAllChanelValueHW(int32_t * data){
 	int i;
 	uint8_t numValues;
 	for(i=0;i<GetNumberOfIOChannels();i++){
-		//if(!isStremChannelMode(GetChannelMode(i)))
 			GetChanelValueHW(i,&numValues,& data[i]);
 	}
 	return true; 
@@ -130,7 +112,6 @@ boolean GetAllChanelValueHW(int32_t * data){
 
 boolean ConfigureChannelHW(uint8_t pin,uint8_t numValues,int32_t * data){
 	if(GetChannelMode(pin) != 0xff){
-		//if (!isStremChannelMode(GetChannelMode(pin)))
 			SetNewConfigurationDataTable(pin, data[0]);
 	}else{
 		int i;

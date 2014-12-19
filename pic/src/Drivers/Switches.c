@@ -47,7 +47,7 @@ void CheckSwitches(void){
 }
 
 uint8_t IsRegulated(float voltage){
-	float raw = GetRawVoltage()-130;//adding the voltage drop across the diaode
+	float raw = GetRawVoltage();
 	if((voltage < raw+10)&&(voltage > raw-10))
 		return false; 
 	if ((voltage<(RawVoltageMin))&&(voltage>(FiveVoltADC))){//USB spec is 5.25v to 4.4v.

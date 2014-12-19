@@ -97,17 +97,21 @@ void InitPinFunction(void){
 	DyioPinFunctionData[22].FUNCTION.HAS_COUNTER_OUTPUT_D = true; 
 
 	DyioPinFunctionData[23].FUNCTION.HAS_PPM = true; 
-#if !defined(__PIC32MX__)
-        int mode;
-	for (i=0;i<NUM_PINS;i++){
-		mode=EEReadMode(i);
-		if((mode < 2)||(mode >=IO_MODE_MAX)){
-			configPinMode(i,IS_DI,INPUT,ON);
-			mode = EEReadMode(i);
-		}
-		DyioPinFunctionData[i].PIN.currentChannelMode = mode;
-	}
-#endif
+	//println_I("Loaded struct");
+//#if !defined(__PIC32MX__)
+//        int mode;
+//	for (i=0;i<NUM_PINS;i++){
+//		println_I("Setting Mode: ");p_int_I(i);
+//		mode=EEReadMode(i);
+//		print_I(" ");printMode(mode,INFO_PRINT);
+//		if((mode < 2)||(mode >=IO_MODE_MAX)){
+//			configPinMode(i,IS_DI,INPUT,ON);
+//			mode = EEReadMode(i);
+//		}
+//		DyioPinFunctionData[i].PIN.currentChannelMode = mode;
+//		//print_I(" ");printMode(mode,INFO_PRINT);
+//	}
+//#endif
 	InitilizeBcsIo(	NUM_PINS,
 					DyioPinFunctionData,
 					&SetChanelValueHW,

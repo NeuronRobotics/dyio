@@ -25,7 +25,7 @@ boolean bcsIoSetmodeAsyncEventCallback(BowlerPacket *Packet, boolean(*pidAsyncCa
         0
     }, // Calling arguments
     BOWLER_POST, // response method
-    {0}, // Calling arguments
+    {BOWLER_STR,0}, // Calling arguments
     NULL //Termination
 };
 

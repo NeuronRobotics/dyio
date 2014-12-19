@@ -95,12 +95,6 @@ typedef struct _EESTORAGE
 
 
 #define pidValSize sizeof(pid_vales)
-
-#define PID_VAL_END ((pidValSize*(NUM_PID_GROUPS)))
-#define PPM_END	     (PID_VAL_END+NUM_PPM_CHAN)
-#define BROWNOUT_START  (PPM_END+1)
-#define BROWNOUT_END 	(BROWNOUT_START+1)
-
 #define NAMESIZE 17
 #define LOCKSIZE 5
 
@@ -108,6 +102,15 @@ typedef struct _EESTORAGE
 #define LOCKSTART (NAMESIZE+NAMESTART)
 #define DATASTART (LOCKSTART +LOCKSIZE)
 #define DATAVALID 37
+
+#define PID_VAL_END ((pidValSize*(NUM_PID_GROUPS)))
+#define PPM_END	     (PID_VAL_END+NUM_PPM_CHAN)
+#define BROWNOUT_START  (PPM_END+1)
+#define BROWNOUT_END 	(BROWNOUT_START+1)
+
+
+
+
 
 
 boolean ConfigChannel(BowlerPacket * Packet);
