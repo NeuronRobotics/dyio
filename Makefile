@@ -8,8 +8,9 @@ PIC_COMPILER=xc32-v1.00-linux
 DUALDEBUG=FirmwarePublish/Dev/dyio-DEV-AVRDEBUG-PICDEBUG-$(REVISION).xml
 RELEASEFW=FirmwarePublish/Release/dyio-$(REVISION).xml
 
-#BOOTLOADFW=$(DUALDEBUG)
+
 BOOTLOADFW=$(RELEASEFW)
+#BOOTLOADFW=$(DUALDEBUG)
 
 all:loadFw 
 	echo DyIO Firmware built OK!
@@ -50,12 +51,12 @@ build: update
 
 bootloader:
 	#http://electropepper.org/blog/item/linux-terminal-only-pic-programming
-	rm MPLABXLog*
+	rm -rf ./MPLABXLog.xml*
 	/opt/microchip/mplabx/mplab_ide/bin/mdb.sh ./prog.txt	
 	sleep 5
 loadFw: pubDebug #bootloader
-	nr-console -xml=$(BOOTLOADFW) -port=/dev/Bootloader0
-	#nr-console -xml=$(RELEASEFW) -port=/dev/Bootloader1
+	#nr-console -xml=$(BOOTLOADFW) -port=/dev/Bootloader0
+	nr-console -xml=$(BOOTLOADFW) -port=/dev/Bootloader1
 	
 pubDebug:pub
 	mkdir -p FirmwarePublish/Dev/
