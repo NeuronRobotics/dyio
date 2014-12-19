@@ -25,8 +25,8 @@ boolean bcsIoAsyncEventCallback(BowlerPacket *Packet, boolean (*pidAsyncCallback
     for (i = 0; i < GetNumberOfIOChannels(); i++) {
         //
         if (pushAsyncReady(i)) {
-        	println_W("Pin Async ");p_int_W(i);
-        	print_W(" val= ");p_int_W(GetChanelSingleValue(i));
+//        	println_W("Pin Async ");p_int_W(i);
+//        	print_W(" val= ");p_int_W(GetChanelSingleValue(i));
             update = true; 
         }
     }
@@ -39,7 +39,7 @@ boolean bcsIoAsyncEventCallback(BowlerPacket *Packet, boolean (*pidAsyncCallback
         Packet->use.head.Method = BOWLER_ASYN;
         FixPacket(Packet);
 
-        println_W("bcsIoAsync ");//printPacket(Packet, WARN_PRINT);
+        //println_W("bcsIoAsync ");//printPacket(Packet, WARN_PRINT);
 
         if (pidAsyncCallbackPtr != NULL) {
             pidAsyncCallbackPtr(Packet);

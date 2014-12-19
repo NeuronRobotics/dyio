@@ -223,9 +223,7 @@ uint8_t SetCoProConfiguration(uint8_t pin, int32_t mode) {
 uint8_t SetCoProcMode(uint8_t pin, uint8_t mode) {
 	if (GetChannelMode(pin) == mode)
 		return true;
-//	println_W("Mode Set Pin :");
-//	p_int_W(pin);
-//	printMode(mode, WARN_PRINT);
+	println_E("Setting Mode: ");print_E(" on: ");p_int_E(pin);printMode(mode,ERROR_PRINT);
 	//getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
 	SetChannelModeDataTable(pin,mode);
 	down[pin].changeMode = true;
@@ -253,18 +251,18 @@ uint8_t SetAllCoProcMode() {
 		downstreamPacketTemp.use.head.DataLegnth = 4 + 1+ GetNumberOfIOChannels();
         //println_I("Sending mode sync packet");printPacket(&downstreamPacketTemp,WARN_PRINT);
 		SendPacketToCoProc(&downstreamPacketTemp);
-		for (i = 0; i < NUM_PINS; i++) {
-			if (downstreamPacketTemp.use.data[i + 1] == NO_CHANGE) {
-				//getBcsIoDataTable(i)->PIN.currentChannelMode = IS_DI;
-				SetChannelModeDataTable(i,IS_DI);
-				down[i].changeMode = true;	// force a sync of the no valid mode
-				//println_E("FAULT: the mode was set to NO_CHANGE");
-			} else {
-				//getBcsIoDataTable(i)->PIN.currentChannelMode =downstreamPacketTemp.use.data[i + 1];
-				SetChannelModeDataTable(i,downstreamPacketTemp.use.data[i + 1]);
-				down[i].changeMode = false;
-			}
-		}
+//		for (i = 0; i < NUM_PINS; i++) {
+//			if (downstreamPacketTemp.use.data[i + 1] == NO_CHANGE) {
+//				//getBcsIoDataTable(i)->PIN.currentChannelMode = IS_DI;
+//				SetChannelModeDataTable(i,IS_DI);
+//				down[i].changeMode = true;	// force a sync of the no valid mode
+//				//println_E("FAULT: the mode was set to NO_CHANGE");
+//			} else {
+//				//getBcsIoDataTable(i)->PIN.currentChannelMode =downstreamPacketTemp.use.data[i + 1];
+//				SetChannelModeDataTable(i,downstreamPacketTemp.use.data[i + 1]);
+//				down[i].changeMode = false;
+//			}
+//		}
 
 	}
 	return true;

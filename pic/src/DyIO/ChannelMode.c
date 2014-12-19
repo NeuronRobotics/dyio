@@ -9,12 +9,12 @@
 
 
 boolean setMode(uint8_t pin,uint8_t mode){
-	println_E("Setting Mode: ");print_E(" on: ");p_int_E(pin);printMode(mode,ERROR_PRINT);
+
 	uint8_t current = GetChannelMode(pin);
 
-	StopDyIOSPI(pin);
-	clearPPM(pin);
-	ClearCounter(pin);
+	StopDyIOSPI(pin,current );
+	clearPPM(pin,current);
+	ClearCounter(pin,current);
 
 	if ((current == IS_UART_TX)||(current == IS_UART_RX)){
 		SetCoProcMode(17,IS_DI);
@@ -44,7 +44,7 @@ boolean setMode(uint8_t pin,uint8_t mode){
                             return false;
                     }
                 }
-                //println_E("Setting servo dfault position to: "); p_int_E(GetConfigurationDataTable(pin));
+                //println_E("Setting servo default position to: "); p_int_E(GetConfigurationDataTable(pin));
                 /** no break, fall through to set datatable*/
 	case IS_DC_MOTOR_VEL:
 	case IS_DC_MOTOR_DIR:
@@ -61,15 +61,15 @@ boolean setMode(uint8_t pin,uint8_t mode){
 	case IS_SPI_MISO:
 	case IS_SPI_SCK:
 		if( pinHasFunction(pin, mode) != false) {
-			ClearCounter(0);
-			ClearCounter(1);
-			ClearCounter(2);
-			ClearCounter(23);
-			ClearCounter(22);
-			ClearCounter(21);
-			ClearCounter(20);
-			ClearCounter(19);
-			ClearCounter(18);
+			ClearCounter(0,current );
+			ClearCounter(1,current );
+			ClearCounter(2,current );
+			ClearCounter(23,current );
+			ClearCounter(22,current );
+			ClearCounter(21,current );
+			ClearCounter(20,current );
+			ClearCounter(19,current );
+			ClearCounter(18,current );
 			//print_I("|Mode is now SPI");
 			InitSPIDyIO();
 			SetCoProcMode(0,IS_SPI_SCK);
@@ -82,9 +82,9 @@ boolean setMode(uint8_t pin,uint8_t mode){
 		break;
 	case IS_UART_RX:
 	case IS_UART_TX:
-		ClearCounter(16);
-		ClearCounter(17);
-		ClearCounter(3);
+		ClearCounter(16,current );
+		ClearCounter(17,current );
+		ClearCounter(3,current );
 		SetCoProcMode(16,IS_UART_TX);
 		SetCoProcMode(17,IS_UART_RX);
 		break;
@@ -114,8 +114,8 @@ boolean setMode(uint8_t pin,uint8_t mode){
 		break;
 	case IS_PPM_IN:
 		//println_W("Setting up PPM...");
-		ClearCounter(23);
-		ClearCounter(22);
+		ClearCounter(23,current );
+		ClearCounter(22,current );
 		startPPM(pin);
 		break;
 	case IS_DO:

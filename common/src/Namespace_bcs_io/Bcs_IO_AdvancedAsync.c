@@ -104,9 +104,9 @@ boolean configAdvancedAsync(BowlerPacket * Packet){
 	time.byte.SB= Packet->use.data[4];
 	time.byte.LB= Packet->use.data[5];
 	// this sets default async mode and clears and setting of async mode
-	setAsync(Packet->use.data[0],true) ;
+	setAsyncLocal(Packet->use.data[0],true) ;
 
-	printPacket(Packet,ERROR_PRINT);
+	//printPacket(Packet,ERROR_PRINT);
 	switch(type){
 	case AUTOSAMP:
 		configAdvancedAsyncAutoSample(pin,time.Val);
@@ -132,14 +132,14 @@ boolean configAdvancedAsync(BowlerPacket * Packet){
 		ERR(Packet,45,0);
 		break;
 	}
-
+	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=getDataTableCurrentValue(pin);
 	READY(Packet,45,0);
 	return true; 
 }
 
 
 void startAdvancedAsyncDefault(uint8_t pin){
-	println_W("Starting advanced async on channel: ");p_int_W(pin);
+	//println_W("Starting advanced async on channel: ");p_int_W(pin);
 	int mode =GetChannelMode(pin);
 	if(isOutputMode(mode)==false){
 		if(mode == IS_SERVO || mode == IS_PWM || mode == IS_DC_MOTOR_VEL ){
@@ -223,10 +223,7 @@ boolean pushAsyncReady( uint8_t pin){
 		case DEADBAND:
 			last = getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal;
 			db = getBcsIoDataTable(pin)->PIN.asyncDatadeadBandval;
-//			if (	( 	( last >(aval+db)) ||
-//						( last <(aval-db)) ) &&
-//					(aval >=db)
-//					)
+
 			if(!bound(last,aval,db,db)){
 //				println_I("deadband");p_int_I(pin);
 				getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal=aval;

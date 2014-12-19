@@ -7,6 +7,7 @@ PIC_COMPILER=xc32-v1.00-linux
 
 DUALDEBUG=FirmwarePublish/Dev/dyio-DEV-AVRDEBUG-PICDEBUG-$(REVISION).xml
 RELEASEFW=FirmwarePublish/Release/dyio-$(REVISION).xml
+
 BOOTLOADFW=$(DUALDEBUG)
 #BOOTLOADFW=$(RELEASEFW)
 
@@ -54,6 +55,7 @@ bootloader:
 	sleep 5
 loadFw: pubDebug #bootloader
 	nr-console -xml=$(BOOTLOADFW) -port=/dev/Bootloader0
+	#nr-console -xml=$(RELEASEFW) -port=/dev/Bootloader1
 	
 pubDebug:pub
 	mkdir -p FirmwarePublish/Dev/
