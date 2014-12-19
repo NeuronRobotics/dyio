@@ -54,7 +54,7 @@ bootloader:
 	rm -rf ./MPLABXLog.xml*
 	/opt/microchip/mplabx/mplab_ide/bin/mdb.sh ./prog.txt	
 	sleep 5
-loadFw: pubDebug #bootloader
+loadFw: bootloader#pubDebug #
 	#nr-console -xml=$(BOOTLOADFW) -port=/dev/Bootloader0
 	nr-console -xml=$(BOOTLOADFW) -port=/dev/Bootloader1
 	

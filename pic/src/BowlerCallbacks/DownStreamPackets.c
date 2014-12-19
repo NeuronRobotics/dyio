@@ -399,6 +399,9 @@ boolean GetName(char * name) {
 	downstreamPacketTemp.use.data[1] = LOCKSTART;
 	downstreamPacketTemp.use.head.DataLegnth = 6;
 	SendPacketToCoProc(&downstreamPacketTemp);
+
+	printPacket(&downstreamPacketTemp,WARN_PRINT);
+
 	while (downstreamPacketTemp.use.data[i] != '\0') {
 		name[i] = downstreamPacketTemp.use.data[i];
 		i++;
@@ -407,6 +410,7 @@ boolean GetName(char * name) {
 			break;
 	}
 	name[i] = '\0';
+	println_W(name);
 	return isAscii(name);
 }
 
@@ -434,6 +438,7 @@ boolean GetLockCode(char * code) {
 void SetName(char * name) {
 	//WORD_VAL raw;
 	uint8_t i = 0;
+	println_E(name);
 	LoadCorePacket(&downstreamPacketTemp);
 	downstreamPacketTemp.use.head.Method = BOWLER_POST;
 	downstreamPacketTemp.use.head.RPC = GetRPCValue(eepd);
@@ -448,6 +453,7 @@ void SetName(char * name) {
 	}
 	downstreamPacketTemp.use.data[2 + i] = '\0';
 	downstreamPacketTemp.use.head.DataLegnth = 6 + i + 1;
+	printPacket(&downstreamPacketTemp,ERROR_PRINT);
 	SendPacketToCoProc(&downstreamPacketTemp);
 }
 
