@@ -78,7 +78,6 @@ boolean GetChanelValueHW(uint8_t pin, uint8_t * numValues, int32_t * data) {
 boolean SetAllChanelValueHW(int32_t * data, float ms) {
     int i;
     for (i = 0; i < GetNumberOfIOChannels(); i++) {
-        //if (!isStremChannelMode(GetChannelMode(i)))
             SetChanelValueHW(i, 1, & data[i], ms);
     }
     return true; 
@@ -93,7 +92,6 @@ boolean GetAllChanelValueHW(int32_t * data) {
     int i;
     uint8_t numValues;
     for (i = 0; i < GetNumberOfIOChannels(); i++) {
-        //if (!isStremChannelMode(GetChannelMode(i)))
             GetChanelValueHW(i, &numValues, & data[i]);
     }
     return true; 
@@ -133,7 +131,7 @@ boolean SetStreamHW(uint8_t pin,uint8_t numValues,uint8_t * data){
 	//println_E("Set Stream Stub");
 	uint8_t mode = GetChannelMode(pin);
 
-    if (isStremChannelMode(mode)) {
+    if (_isStremChannelMode(mode)) {
           uint8_t * bData = (uint8_t *) data;
           switch (mode) {
               case IS_SPI_MOSI:
@@ -164,7 +162,7 @@ boolean SetStreamHW(uint8_t pin,uint8_t numValues,uint8_t * data){
 boolean GetStreamHW(uint8_t pin,uint8_t*  numValues,uint8_t * data){
 	//println_E("Get Stream Stub");
 	 uint8_t mode = GetChannelMode(pin);
-   if (isStremChannelMode(mode)) {
+   if (_isStremChannelMode(mode)) {
        uint8_t * bData = (uint8_t *) data;
        switch (mode) {
            case IS_SPI_MOSI:
