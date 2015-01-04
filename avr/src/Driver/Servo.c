@@ -18,186 +18,216 @@
 
 #include "UserApp_avr.h"
 
+static boolean powerOverRide = 0xff;
+static INTERPOLATE_DATA velocity[NUM_PINS];
+static boolean servoEngineStarted =false;
+static uint8_t bOK[2]={false,false};
+static uint8_t blockServo[2]={true,true};
 
-BOOL powerOverRide = FALSE;
-
-INTERPOLATE_DATA velocity[NUM_PINS];
-void runLinearInterpolationServo(BYTE blockStart,BYTE blockEnd);
 
 
-BYTE pinOn(BYTE pin);
-void pinOff(BYTE pin);
 
-void InitServo(BYTE PIN){
+boolean getPowerOverRide(){
+	if(powerOverRide == 0xff)
+		setPowerOverride(EEReadData(189));
+	return powerOverRide;
+}
+
+
+void InitServo(uint8_t PIN){
 	//println_I("Starting servo");
 	ClearPinState(PIN);
 	SetPinTris(PIN,OUTPUT);
 	//DATA.PIN[PIN].State=IS_SERVO;
+	SetServoPos(PIN,EEReadValue(PIN),0);
+	if( servoEngineStarted != true){
+		servoEngineStarted =true;
+		startServoLoops();
+	}
+
 }
 
-void setPowerOverride(BOOL set){
-	powerOverRide = set;
+void setPowerOverride(boolean set){
+	//println_W("powerOverRide: ");p_int_W(set);
+	powerOverRide = set?true:false;
 }
 
-BYTE b0OK=FALSE;
-BYTE b1OK=FALSE;
-BYTE b0lock=TRUE;
-BYTE b1lock=TRUE;
 
-void SetPowerState0(BOOL railOk,BOOL regulated){
-	b0OK=FALSE;
+void SetPowerState(int bank,boolean railOk,boolean regulated){
+	bOK[bank]=false;
 	if (regulated == 1){
-		Bank0Green();
+		if(bank==0){
+			Bank0Green();
+		}else{
+			Bank1Green();
+		}
 	}else {
 		if(railOk==2 ||  railOk==1){
-			b0OK=TRUE;
+			bOK[bank]=true;
 		}
 		if(railOk ==1 ||railOk ==3  ){
-			Bank0Red();
+			if(bank==0){
+				Bank0Red();
+			}else{
+				Bank1Red();
+			}
 		}else{
-			Bank0Off();
+			if(bank==0){
+				Bank0Off();
+			}else{
+				Bank1Off();
+			}
 		}
 		if(railOk == 3||railOk == 0 ){
-			b0lock=TRUE;
+			blockServo[bank]=true;
 		}
 	}
 }
-void SetPowerState1(BOOL railOk,BOOL regulated){
-	b1OK=FALSE;
-	if (regulated==1){
-		Bank1Green();
-	}else {
-		if(railOk ==1 ||railOk ==3  ){
-			Bank1Red();
-		}else{
-			Bank1Off();
-		}
-		if(railOk==2 ||  railOk==1){
-			b1OK=TRUE;
-		}
-		if(railOk == 3 ||railOk == 0 ){
-			b1lock=TRUE;
-		}
-	}
+
+void SetPowerState0(boolean railOk,boolean regulated){
+	SetPowerState(0,railOk,regulated);
 }
-BOOL print = 0xff;
-void SetServoPos(BYTE pin,BYTE val,float time){
+void SetPowerState1(boolean railOk,boolean regulated){
+	SetPowerState(1,railOk,regulated);
+}
+boolean print = 0xff;
+void SetServoPos(uint8_t pin,uint8_t val,float time){
 	if(time<30)
 		time=0;
-	velocity[pin].setTime=time;
-	velocity[pin].set=(float)val;
-	velocity[pin].start=(float)getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
-	velocity[pin].startTime=getMs();
-	if (val==getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal){
-		velocity[pin].setTime=0;
+	if(val == velocity[pin].set){
+		return;
 	}
-	if(pin<12){
-		b0lock=FALSE;
+//
+//	println_W("Servo ");p_int_W(pin);
+//	print_W(" time= ");p_fl_W(time);
+//	print_W(" to val= ");p_int_W(val);
+//	print_W(" val was= ");p_fl_W(velocity[pin].set);
+
+	if(time<30 || isnan(velocity[pin].set)){
+		velocity[pin].setTime=0;
+		velocity[pin].start = (float)val;
 	}else{
-		b1lock=FALSE;
+		// Set the start value to the pervious value
+		velocity[pin].setTime=time;
+		velocity[pin].start=velocity[pin].set;
+	}
+	velocity[pin].set=(float)val;
+	velocity[pin].startTime=getMs();
+
+	getInterpolatedPin( pin);
+
+	if(pin<12){
+		blockServo[0]=false;
+	}else{
+		blockServo[1]=false;
 	}
 	if(GetChannelMode(pin)!=IS_SERVO)
 		return;
 	print = pin;
+
 }
-BYTE GetServoPos(BYTE pin){
-	return getBcsIoDataTable(pin)->PIN.asyncDataCurrentVal;
-}
-
-void RunServo(BYTE block){
-
-	//disableDebug();
-	UINT16 j;
-	BYTE xIndex;
-	//return;
-	BYTE start=block*BLOCK_SIZE;
-	BYTE stop=(block*BLOCK_SIZE)+BLOCK_SIZE;
-
-	runLinearInterpolationServo(start,stop);
-	FlagBusy_IO=1;
-	//Short delay to allow any stray transactions to finish
-	_delay_us(800);
-	BYTE num=0;
-	for (j=start;j<stop;j++){
-		num+=pinOn(j);
-	}
-	//run minimal .75 ms pulse
-	DelayPreServo();
-	//loop 255 times and turn off all servos as their set position is equal to the loop counter
-	for (j=0;j<256;j++){
-		//check all servo positions
-		for (xIndex=start; xIndex < stop ;xIndex++){
-			if (j == getBcsIoDataTable(xIndex)->PIN.asyncDataCurrentVal){
-				//turn off if it is time to turn off
-				pinOff(xIndex);
-			}
-		}
-		// Small delay to pad the loop
-		//_delay_us(1);
-		//Nop();Nop();Nop();  Nop();Nop();Nop();  Nop();Nop();Nop();   Nop();Nop();
-	}
-	FlagBusy_IO=0;
-	for (xIndex=start; xIndex < stop ;xIndex++){
-			pinOff(xIndex);
-	}
-
-//	if(print!=0xff){
-//		print_I("\n\tset: ");p_fl_I(velocity[print].set);
-//		print_I("\n\tServoPos: ");p_int_I(DATA.PIN[print].ServoPos);
-//		print = 0xff;
-//	}
-	//enableDebug();
+uint8_t GetServoPos(uint8_t pin){
+	return getInterpolatedPin( pin);
 }
 
-BYTE pinOn(BYTE pin){
+boolean pinServoOk(uint8_t pin){
+	int bank = (pin > 11)?1:0;
 	if(GetChannelMode(pin)==IS_SERVO){
-		if((pin > 11)){
-			if(		(b1OK==FALSE && !powerOverRide) ||
-					b1lock == TRUE){
-				return 0;
-			}
-		}else if(	(b0OK==FALSE && !powerOverRide)||
-					b0lock == TRUE){
-			return 0;
+		// If the power override is cleared, then the pin should be on no matter what else
+		if(getPowerOverRide()==false) {
+			return true;
+		}
+		// If we are are in the lock out mode, no servos on this bank
+		if(	blockServo[bank] == true) {
+			return false;
+		}
+		// If the voltage is invalid, no servos on this bank
+		if(	(bOK[bank]==false ) ) {
+			return false;
 		}
 
+		// All lock outs have passed, pin is ok to be a servo output
+		return true;
+	}
+	return false;
+}
+
+uint8_t pinOn(uint8_t pin){
+	if(pinServoOk(pin) ==true){
 		SetDIO(pin,ON);
 		return 1;
 	}
 	return 0;
 }
 
-void pinOff(BYTE pin){
+void pinOff(uint8_t pin){
 	if(GetChannelMode(pin)==IS_SERVO){
 		SetDIO(pin,OFF);
 	}
 }
-
-void DelayPreServo(void){
-	volatile UINT32 _dcnt = 290;
-	while (_dcnt--);
-}
-
-void runLinearInterpolationServo(BYTE blockStart,BYTE blockEnd){
-	BYTE i;
-	for (i=blockStart;i<blockEnd;i++){
-		if(GetChannelMode(i)==IS_SERVO){
-			INT32 ip = interpolate(&velocity[i],getMs());
-			if(ip>(255- SERVO_BOUND)){
-	#if ! defined(__AVR_ATmega324P__)
-				println_I("Servo Upper out of bounds! got=");p_int_I(ip);print_I(" on time=");p_fl_I(velocity[i].setTime);
-	#endif
-				ip=(255- SERVO_BOUND);
-			}
-			if(ip<SERVO_BOUND){
-	#if ! defined(__AVR_ATmega324P__)
-				println_I("Servo Lower out of bounds! got=");p_int_I(ip);print_I(" on chan=");p_int_I(i);
-	#endif
-				ip=SERVO_BOUND;
-			}
-			int tmp = (int)ip;
-			getBcsIoDataTable(i)->PIN.asyncDataCurrentVal=  tmp;
-		}
+uint8_t getInterpolatedPin(uint8_t pin){
+	if(GetChannelMode(pin)!=IS_SERVO){
+		return 0;
 	}
+	//char cSREG;
+	//cSREG = SREG;
+	/* store SREG value */
+	/*
+	disable interrupts during timed sequence */
+	//StartCritical();
+	float ip = interpolate(&velocity[pin],getMs());
+	//SREG = cSREG;
+	boolean error = false;
+	if(ip>(255- SERVO_BOUND)){
+		println_W("Upper=");
+		error = true;
+	}
+	if(ip<SERVO_BOUND){
+		println_W("Lower=");
+		error = true;
+	}
+	int dataTableSet = (getDataTableCurrentValue(pin)&0x000000ff);
+	int interpolatorSet = ((int32_t)velocity[pin].set);
+	if(dataTableSet!=interpolatorSet){
+//		println_W("Setpoint=");
+//				error = true;
+		SetServoPos(pin,dataTableSet,(float)((getDataTableCurrentValue(pin)>>16)&0x0000ffff));
+	}
+	if(error){
+//		p_fl_W(ip);print_W(" on chan=");p_int_W(pin);print_W(" target=");p_int_W(interpolatorSet);
+//		print_W(" Data Table=");p_int_W(dataTableSet);
+//		println_W("set=      \t");p_fl_W(velocity[pin].set);
+//		println_W("start=    \t");p_fl_W(velocity[pin].start);
+//		println_W("setTime=  \t");p_fl_W(velocity[pin].setTime);
+//		println_W("startTime=\t");p_fl_W(velocity[pin].startTime);
+		ip=velocity[pin].set;
+		SetServoPos(pin,dataTableSet,(float)((getDataTableCurrentValue(pin)>>16)&0x0000ffff));
+	}
+	int tmp = (int)ip;
 
+	return tmp;
 }
+
+//void runLinearInterpolationServo(uint8_t blockStart,uint8_t blockEnd){
+//	uint8_t i;
+//	for (i=blockStart;i<blockEnd;i++){
+//		if(GetChannelMode(i)==IS_SERVO){
+//			int32_t ip = interpolate(&velocity[i],getMs());
+//			if(ip>(255- SERVO_BOUND)){
+//	#if ! defined(__AVR_ATmega324P__)
+//				println_I("Servo Upper out of bounds! got=");p_int_I(ip);print_I(" on time=");p_fl_I(velocity[i].setTime);
+//	#endif
+//				ip=(255- SERVO_BOUND);
+//			}
+//			if(ip<SERVO_BOUND){
+//	#if ! defined(__AVR_ATmega324P__)
+//				println_I("Servo Lower out of bounds! got=");p_int_I(ip);print_I(" on chan=");p_int_I(i);
+//	#endif
+//				ip=SERVO_BOUND;
+//			}
+//			int tmp = (int)ip;
+//			setDataTableCurrentValue(i,tmp);
+//		}
+//	}
+//
+//}

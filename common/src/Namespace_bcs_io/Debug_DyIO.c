@@ -2,7 +2,7 @@
 #include "Bowler/Bowler.h"
 #include "Namespace/Namespace_bcs_io.h"
 
-int maxNumCharsInModes=0;
+//int maxNumCharsInModes=0;
 //char *  printModeStrings[]={
 //		"NO_CHANGE",
 //		"HIGH_IMPEDANCE",
@@ -36,7 +36,7 @@ int mystrlen(const char * s){
 }
 
 //char * unknown = "UNKNOWN";
-void printMode(BYTE mode, Print_Level l){
+void printMode(uint8_t mode, Print_Level l){
 	print_nnl(" Mode 0x",l);prHEX8(mode,l);
 	return;
 //	int i=0;

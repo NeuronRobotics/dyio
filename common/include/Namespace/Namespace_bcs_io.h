@@ -53,7 +53,7 @@ case IS_DC_MOTOR_DIR:
 case IS_PPM_IN:
 	break;
  */
-
+// Regex 0x.* to : then copy paste it to a case statement. You're welcome.
 #define NO_CHANGE	 	 		0x00
 #define HIGH_IMPEDANCE 	 		0x01
 #define IS_DI	 		 		0x02
@@ -80,7 +80,7 @@ case IS_PPM_IN:
 
 #define IO_MODE_MAX				(IS_PPM_IN+1)
 
-#define isStremChannelMode(A) ( (A==IS_UART_TX)||\
+#define _isStremChannelMode(A) ( (A==IS_UART_TX)||\
 								(A==IS_UART_RX)||\
 								(A==IS_SPI_MOSI)||\
 								(A==IS_SPI_MISO)||\
@@ -110,6 +110,7 @@ case IS_PPM_IN:
 #define ASYN				0x6e797361 // 'asyn'  Set/Get asynchronous mode
 #define GCHC				0x63686367 // 'gchc'  Get Channel Count
 #define GCML				0x6c6d6367 // 'gcml'  Get channel Mode List
+#define STRM				0x6d727473 // 'strm'  Stream get/set
 typedef struct __attribute__((__packed__)) _FUNCTION_MAP
 {
 		unsigned HAS_ANALOG_IN			:1;
@@ -131,15 +132,15 @@ typedef struct __attribute__((__packed__)) _FUNCTION_MAP
 
 typedef struct __attribute__((__packed__))  _PIN_MAP
 {
-	INT32 currentValue;
-	BYTE  currentChannelMode;
-	INT32			asyncDataPreviousVal;
-	INT32			asyncDataCurrentVal;
-	BYTE		asyncDataType;
-	BYTE 		asyncDataenabled;
-	INT32 	asyncDatadeadBandval;
-	INT32 	asyncDatathreshholdval;
-	BYTE asyncDatathreshholdedge;
+	int32_t currentValue;
+	uint8_t  currentChannelMode;
+	int32_t			asyncDataPreviousVal;
+	//int32_t			asyncDataCurrentVal;
+	uint8_t		asyncDataType;
+	uint8_t 		asyncDataenabled;
+	int32_t 	asyncDatadeadBandval;
+	int32_t 	asyncDatathreshholdval;
+	uint8_t asyncDatathreshholdedge;
 	
 } PIN_MAP;
 
@@ -147,12 +148,13 @@ typedef struct __attribute__((__packed__))  _Downstream_Data
 {
 
 
-	BYTE  currentConfiguration;
-
+	uint32_t  currentConfiguration;
+	uint8_t ServoPositionUpstream;
 	//Used to detect any hardware state change and synchronize
-	INT32 previousValue;
-	BYTE previousConfiguration;
-	BYTE  previousChannelMode;
+	boolean changeValue;
+	boolean changeConfiguration;
+	boolean changeMode;
+
 } Downstream_Data;
 
 
@@ -161,25 +163,25 @@ typedef struct __attribute__((__packed__)) _DATA
 {
 	PIN_MAP PIN;
 	FUNCTION_MAP FUNCTION;
-        RunEveryData 	asyncDataTime;
+    RunEveryData 	asyncDataTimer;
 } DATA_STRUCT;
 
-void set8bit(BowlerPacket * Packet,BYTE val, BYTE offset);
-void set16bit(BowlerPacket * Packet,INT16 val, BYTE offset);
-void set32bit(BowlerPacket * Packet,INT32 val, BYTE offset);
-INT32 get16bit(BowlerPacket * Packet, BYTE offset);
-INT32 get32bit(BowlerPacket * Packet, BYTE offset);
-void printMode(BYTE mode, Print_Level l);
+void set8bit(BowlerPacket * Packet,uint8_t val, uint8_t offset);
+void set16bit(BowlerPacket * Packet,int16_t val, uint8_t offset);
+void set32bit(BowlerPacket * Packet,int32_t val, uint8_t offset);
+int32_t get16bit(BowlerPacket * Packet, uint8_t offset);
+int32_t get32bit(BowlerPacket * Packet, uint8_t offset);
+void printMode(uint8_t mode, Print_Level l);
 void printModes();
 void printAsync();
-void printAsyncType(BYTE t);
+void printAsyncType(uint8_t t);
 void printConfigurations();
 void printValues();
 
 /**
  * Crawls the function map and returns true if a mode is availible
  */
-BOOL pinHasFunction(BYTE pin, BYTE function);
+boolean pinHasFunction(uint8_t pin, uint8_t function);
 
 /**
  * This returns the number of IO channels availible
@@ -189,7 +191,11 @@ int GetNumberOfIOChannels();
 /**
  * Gets the channel mode
  */
-BYTE GetChannelMode(BYTE chan);
+uint8_t GetChannelMode(uint8_t chan);
+
+void _SetChannelMode(uint8_t pin,uint8_t mode );
+//#define SetChannelModeDataTable(A, B) 	if(GetChannelMode(A)!=B){println(__FILE__,ERROR_PRINT); _SetChannelMode(A,B);}
+#define SetChannelModeDataTable(A, B) 	 _SetChannelMode(A,B)
 
 /**
  * Retrevie the pointer to the datatable
@@ -197,10 +203,28 @@ BYTE GetChannelMode(BYTE chan);
 DATA_STRUCT * getBcsIoDataTable(int pin);
 
 /**
+ * Wrapper to get a single value
+ */
+int32_t GetChanelSingleValue(uint8_t pin);
+
+/**
  * retrive the scheduler
  */
 
 RunEveryData * getPinsScheduler(int pin);
+void setNoAsyncMode(boolean m);
+boolean isOutputMode(uint8_t mode);
+#define isNewDataTableValue(A,B)	(B !=getBcsIoDataTable(A)->PIN.currentValue)
+//#define setDataTableCurrentValue(A, B) 	println(__FILE__,(isOutputMode(GetChannelMode(A)) && isNewDataTableValue(A,B) )?ERROR_PRINT:INFO_PRINT); _setDataTableCurrentValue(A,B);
+#define setDataTableCurrentValue(A, B) 	 _setDataTableCurrentValue(A,B);
+
+#define getDataTableCurrentValue(A) (getBcsIoDataTable(A)->PIN.currentValue)
+uint8_t GetServoPos(uint8_t pin);
+
+/**
+ * Sets the datable value and returns true if the value is new, false if it is the same as it was
+ */
+boolean _setDataTableCurrentValue(uint8_t pin, int32_t value);
 
 NAMESPACE_LIST * get_bcsIoNamespace();
 
@@ -211,11 +235,13 @@ NAMESPACE_LIST * get_bcsIoNamespace();
  */
 void InitilizeBcsIo(int numPins,
 					DATA_STRUCT * dataPtrLocal,
-					BOOL (*setChanelValueHWPtrLocal)(BYTE,BYTE,INT32 *,float),
-					BOOL (*getChanelValueHWPtrLocal)(BYTE,BYTE*,INT32 *),
-					BOOL (*setAllChanelValueHWPtrLocal)(INT32 *,float),
-					BOOL (*getAllChanelValueHWPtrLocal)(INT32 *),
-					BOOL (*configChannelHWPtrLocal)(BYTE,BYTE,INT32 *)
+					boolean (*setChanelValueHWPtrLocal)(uint8_t,uint8_t,int32_t *,float),
+					boolean (*getChanelValueHWPtrLocal)(uint8_t,uint8_t*,int32_t *),
+					boolean (*setAllChanelValueHWPtrLocal)(int32_t *,float),
+					boolean (*getAllChanelValueHWPtrLocal)(int32_t *),
+					boolean (*configChannelHWPtrLocal)(uint8_t,uint8_t,int32_t *),
+					boolean(*setStreamHWPtrLocal)(uint8_t  , uint8_t, uint8_t *),
+					boolean(*getStreamHWPtrLocal)(uint8_t  , uint8_t*, uint8_t *)
 );
 
 //These are the Hardware interface functions that need to be declared and passed in for Initilaize
@@ -224,19 +250,19 @@ void InitilizeBcsIo(int numPins,
  * Set Channel Values
  * This function takes a
  * @param pin pin index
- * @param numValues a number of values to be delt with
+ * @param numValues a number of values to be dealt with
  * @param data an array of data values
  * @param ms the time for the transition to take
  *
  */
-BOOL SetChanelValueHW(BYTE pin,BYTE numValues,INT32 * data, float ms);
+boolean SetChanelValueHW(uint8_t pin,uint8_t numValues,int32_t * data, float ms);
 
 /**
  * Set Channel Values
- * This function takes a pin index, a number of values to be delt with, and an array of data values
+ * This function takes a pin index, a number of values to be dealt with, and an array of data values
  * Data is stored into numValues and data
  */
-BOOL GetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data);
+boolean GetChanelValueHW(uint8_t pin,uint8_t*  numValues,int32_t * data);
 /**
  * Set Channel Values
  * This function takes a
@@ -244,14 +270,14 @@ BOOL GetChanelValueHW(BYTE pin,BYTE * numValues,INT32 * data);
  * @param ms the time for the transition to take
  *
  */
-BOOL SetAllChanelValueHW(INT32 * data, float ms);
+boolean SetAllChanelValueHW(int32_t * data, float ms);
 
 /**
  * Set Channel Values
- * This function takes a pin index, a number of values to be delt with, and an array of data values
+ * This function takes a pin index, a number of values to be dealt with, and an array of data values
  * Data is stored into numValues and data
  */
-BOOL GetAllChanelValueHW(INT32 * data);
+boolean GetAllChanelValueHW(int32_t * data);
 
 /**
  * Configure Channel
@@ -260,21 +286,41 @@ BOOL GetAllChanelValueHW(INT32 * data);
  * @param data the array of values to use in the configuration step
  */
 
-BOOL ConfigureChannelHW(BYTE pin,BYTE numValues,INT32 * data);
+boolean ConfigureChannelHW(uint8_t pin,uint8_t numValues,int32_t * data);
+
+/**
+ * Set Stream
+ * This function takes a
+ * @param pin pin index
+ * @param numValues a number of values to be dealt with
+ * @param data an array of data values
+ *
+ */
+boolean SetStreamHW(uint8_t pin,uint8_t numValues,uint8_t * data);
+
+/**
+ * Get Stream
+ * This function takes a pin index, a number of values to be dealt with, and an array of data values
+ * Data is stored into numValues and data
+ */
+boolean GetStreamHW(uint8_t pin,uint8_t*  numValues,uint8_t * data);
 
 //Callbacks
-BOOL GetChannelModeFromPacket(BowlerPacket * Packet);
-BOOL GetAllChannelModeFromPacket(BowlerPacket * Packet);
-BOOL GetChanelValueFromPacket(BowlerPacket * Packet);
-BOOL GetAllChanelValueFromPacket(BowlerPacket * Packet);
-BOOL GetAsyncFromPacket(BowlerPacket * Packet);
-BOOL GetIOChannelCountFromPacket(BowlerPacket * Packet);
-BOOL getFunctionList(BowlerPacket * Packet);
-BOOL SetChanelValueFromPacket(BowlerPacket * Packet);
-BOOL SetAllChannelValueFromPacket(BowlerPacket * Packet);
-BOOL SetAsyncFromPacket(BowlerPacket * Packet);
-BOOL ConfigureChannelFromPacket(BowlerPacket * Packet);
-BOOL configAdvancedAsync(BowlerPacket * Packet);
+boolean GetChannelModeFromPacket(BowlerPacket * Packet);
+boolean GetAllChannelModeFromPacket(BowlerPacket * Packet);
+boolean GetChanelValueFromPacket(BowlerPacket * Packet);
+boolean GetAllChanelValueFromPacket(BowlerPacket * Packet);
+boolean GetAsyncFromPacket(BowlerPacket * Packet);
+boolean GetIOChannelCountFromPacket(BowlerPacket * Packet);
+boolean getFunctionList(BowlerPacket * Packet);
+boolean SetChanelValueFromPacket(BowlerPacket * Packet);
+boolean SetChanelStreamFromPacket(BowlerPacket * Packet);
+boolean GetChanelStreamFromPacket(BowlerPacket * Packet);
+boolean SetAllChannelValueFromPacket(BowlerPacket * Packet);
+boolean SetAllChannelModeFromPacket(BowlerPacket * Packet);
+boolean SetAsyncFromPacket(BowlerPacket * Packet);
+boolean ConfigureChannelFromPacket(BowlerPacket * Packet);
+boolean configAdvancedAsync(BowlerPacket * Packet);
 
 
 #endif /* NAMESPACE_BCS_IO_H_ */

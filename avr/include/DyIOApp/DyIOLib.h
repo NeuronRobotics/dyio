@@ -12,7 +12,7 @@
  * For any new commands, the packet will be passed to this function
  * @return If the function was able to process the packet
  */
-BOOL DyIOLibOnPacket(BowlerPacket * Packet);
+boolean DyIOLibOnPacket(BowlerPacket * Packet);
 /**
  * This function is called once every iteration of the main loop
  */

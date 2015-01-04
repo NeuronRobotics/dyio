@@ -69,19 +69,19 @@
 //#define TICKS_PER_SECOND		(32768ul)								// 32kHz crystal drives timer with no scalar
 
 // Represents one second in Ticks
-#define TICK_SECOND				((QWORD)TICKS_PER_SECOND)
+#define TICK_SECOND				((uint64_t )TICKS_PER_SECOND)
 // Represents one minute in Ticks
-#define TICK_MINUTE				((QWORD)TICKS_PER_SECOND)*60ull)
+#define TICK_MINUTE				((uint64_t )TICKS_PER_SECOND)*60ull)
 // Represents one hour in Ticks
-#define TICK_HOUR				((QWORD)TICKS_PER_SECOND*3600ull)
+#define TICK_HOUR				((uint64_t )TICKS_PER_SECOND*3600ull)
 #if !defined(_SYSTEM_SERVICES_H_)
 	// Deprecated.  Do not use this function.
 	#define TickGetDiff(a, b)       ((a)-(b))
 #endif
 void TickInit(void);
-DWORD TickGet(void);
-DWORD TickGetUpper();
-DWORD TickGetLower();
+uint32_t TickGet(void);
+uint32_t TickGetUpper();
+uint32_t TickGetLower();
 
 float MyTickConvertToMilliseconds(float dwTickValue);
 float TickGetMS(void);

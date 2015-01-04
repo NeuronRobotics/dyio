@@ -20,13 +20,13 @@
 #define LED_H_
 
 void InitLEDS(void);
-void SetGreen(WORD Duty);
-void SetRed(WORD Duty);
-void SetBlue(WORD Duty);
+void SetGreen(uint16_t Duty);
+void SetRed(uint16_t Duty);
+void SetBlue(uint16_t Duty);
 void ToggleGreen(void);
 void ToggleRed(void);
 void ToggleBlue(void);
-void SetColor(WORD r,WORD g,WORD b);
+void SetColor(uint16_t r,uint16_t g,uint16_t b);
 
 
 #endif /* LED_H_ */

@@ -8,9 +8,9 @@
 #include "UserApp_avr.h"
 
 
-BYTE InitADC(BYTE pin){
+uint8_t InitADC(uint8_t pin){
 	if (!pinHasFunction(pin,IS_ANALOG_IN)){
-		return FALSE;
+		return false; 
 	}
 
 	ADMUXbits._REFS = 0;
@@ -48,9 +48,9 @@ BYTE InitADC(BYTE pin){
 		break;
 	}
 
-	return TRUE;
+	return true; 
 }
-void ClearADC(BYTE pin){
+void ClearADC(uint8_t pin){
 	if (!pinHasFunction(pin,IS_ANALOG_IN)){
 		return;
 	}
@@ -83,7 +83,7 @@ void ClearADC(BYTE pin){
 	////println_I("Clearing ADC on pin:");
 	////printfDEBUG_UL(pin);
 }
-UINT16 GetADC(BYTE pin){
+uint16_t GetADC(uint8_t pin){
 	if(GetChannelMode(pin) != IS_ANALOG_IN)
 		return 0;
 	//UINT16_UNION adc;

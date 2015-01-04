@@ -10,22 +10,22 @@
 
 #define USE_LINKED_LIST_NAMESPACE
 
-typedef BOOL packetEventCallback(BowlerPacket *);
-typedef BOOL asyncEventCallback(BowlerPacket *,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *));
+typedef boolean packetEventCallback(BowlerPacket *);
+typedef boolean asyncEventCallback(BowlerPacket *,boolean (*pidAsyncCallbackPtr)(BowlerPacket *));
 
 typedef struct  _RPC_LIST{
 	//This is the bowler method for this RPC
-	BYTE bowlerMethod;
+	uint8_t bowlerMethod;
 	//This is the 4 byte code for of the RPC
-	const char * rpc;
+	char  rpc[4];
 	//This is the callback function pointer for execution of the method
 	packetEventCallback * callback;
         //This is the array of argument data types
-	const char * arguments;
+	uint8_t  arguments [17] ;
         //This is the bowler method for this RPC
-	BYTE responseMethod;
+	uint8_t responseMethod;
         //This is the array of argument data types
-	const char * responseArguments;
+	uint8_t responseArguments[17];
         
 	//This is the linked list field
 	struct _RPC_LIST * next;
@@ -33,7 +33,7 @@ typedef struct  _RPC_LIST{
 
 typedef struct _NAMESPACE_LIST{
 	//This is the string that identifies the names pace
-	const char *  namespaceString;
+	char  namespaceString[34];
 	//This is the linked list of the RPC's
 	RPC_LIST * rpcSet;
 	//This is the callback function pointer for checking for async.
@@ -44,28 +44,19 @@ typedef struct _NAMESPACE_LIST{
 
 
 
-RPC_LIST * getRpcByID(NAMESPACE_LIST * namespace,unsigned long  rpcId, BYTE bowlerMethod);
-RPC_LIST * getRpcByIndex(NAMESPACE_LIST * namespace,BYTE index);
+RPC_LIST * getRpcByID(NAMESPACE_LIST * namespace,unsigned long  rpcId, uint8_t bowlerMethod);
+RPC_LIST * getRpcByIndex(NAMESPACE_LIST * namespace,uint8_t index);
 void addNamespaceToList(NAMESPACE_LIST * newNs);
 void addRpcToNamespace(NAMESPACE_LIST * namespace,RPC_LIST * rpc );
 NAMESPACE_LIST * getNamespaceAtIndex(int index);
-BYTE getNumberOfNamespaces();
-BYTE getNumberOfRpcs(int namespaceIndex);
+uint8_t getNumberOfNamespaces();
+uint8_t getNumberOfRpcs(int namespaceIndex);
 
-void RunNamespaceAsync(BowlerPacket *Packet,BOOL (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
+void RunNamespaceAsync(BowlerPacket *Packet,boolean (*pidAsyncCallbackPtr)(BowlerPacket *Packet));
 
 
 //bcs.safe
 #define SAFE					0x65666173 // 'safe'  Get/Set the safe-mode parameters
 
-typedef struct  _NAMESPACE{
-		unsigned char len;
-		const unsigned char * name;
-} NAMESPACE;
-
-typedef struct  _NAMESPACE_SET{
-		unsigned char numNamespaces;
-		NAMESPACE  names[8];
-} NAMESPACE_SET;
 
 #endif /* NAMESPACE_H_ */

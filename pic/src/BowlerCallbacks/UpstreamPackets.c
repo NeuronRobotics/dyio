@@ -8,104 +8,86 @@
 
 #include "UserApp.h"
 
-static BowlerPacket packetTemp;
+BowlerPacket packetTemp;
 extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 
-void pushDummy(BYTE numData){
-	LoadCorePacket(& packetTemp);
-	packetTemp.use.head.Method=BOWLER_ASYN;
-	packetTemp.use.head.RPC=GetRPCValue("test");
-	packetTemp.use.head.MessageID=5;
-	packetTemp.use.head.DataLegnth=4+numData;
-	int i;
-	for(i=0;i<numData;i++){
-		packetTemp.use.data[i]=numData;
-	}
-	Print_Level l = getPrintLevel();
-	setPrintLevelInfoPrint();
-	PutBowlerPacket(& packetTemp);
-	setPrintLevel(l);
-}
+//void PushAllAsync(){
+//	SetColor(0,1,0);
+//
+//	GetAllChanelValueFromPacket(&packetTemp);
+//	int i,packetIndex;
+//	for(i=0;i<NUM_PINS;i++){
+//		packetIndex = (i*4) +1;
+//		if(GetChannelMode(i) == IS_SERVO){
+//			//mask off the time value before sending upstream
+//			set32bit(&packetTemp, get32bit(&packetTemp, packetIndex)&0x000000ff, packetIndex);
+//		}
+//	}
+//
+//	packetTemp.use.head.Method=BOWLER_ASYN;
+//	Print_Level l = getPrintLevel();
+//	setPrintLevelInfoPrint();
+//	PutBowlerPacket(& packetTemp);
+//	println_W("Sending All Async: ");printPacket(&packetTemp,WARN_PRINT);
+//	setPrintLevel(l);
+//}
 
-void PushAllAsync(){
-	SetColor(0,1,0);
 
-	populateGACV(&packetTemp);
-	packetTemp.use.head.Method=BOWLER_ASYN;
-	packetTemp.use.head.MessageID=0;
-	Print_Level l = getPrintLevel();
-	//setPrintLevelInfoPrint();
-	PutBowlerPacket(& packetTemp);
-	println_I("Sending All Async: ");printPacket(&packetTemp,INFO_PRINT);
-	setPrintLevel(l);
-}
-void PushCounterChange(BYTE pin,LONG state){
+void UpstreamPushPowerChange(uint8_t r0,uint8_t r1, uint16_t voltage, uint8_t override){
 	SetColor(0,1,0);
-	INT32_UNION s;
-	s.Val= state;
-	LoadCorePacket(& packetTemp);
-	packetTemp.use.head.Method=BOWLER_ASYN;
-	packetTemp.use.head.RPC=GetRPCValue("gchv");
-	packetTemp.use.data[0]=pin;
-	packetTemp.use.data[1]=s.byte.FB;
-	packetTemp.use.data[2]=s.byte.TB;
-	packetTemp.use.data[3]=s.byte.SB;
-	packetTemp.use.data[4]=s.byte.LB;
-	packetTemp.use.head.DataLegnth=9;
-	packetTemp.use.head.MessageID=5;
-	PutBowlerPacket(& packetTemp);
-}
-void PushADCval(BYTE pin,UINT16 val){
-	if(val>1024 || val<0)
-		return;
-	UINT16_UNION an;
-	an.Val=val;
-	SetColor(0,1,0);
-	LoadCorePacket(& packetTemp);
-	packetTemp.use.head.Method=BOWLER_ASYN;
-	packetTemp.use.head.RPC=GetRPCValue("gchv");
-	packetTemp.use.data[0]=pin;
-	packetTemp.use.data[1]=an.byte.SB;
-	packetTemp.use.data[2]=an.byte.LB;
-	packetTemp.use.head.DataLegnth=7;
-	packetTemp.use.head.MessageID=5;
-	PutBowlerPacket(& packetTemp);
-}
-void PushDIval(BYTE pin,BYTE val){
-	if(val>1 || val<0)
-		return;
-	SetColor(0,1,0);
-	LoadCorePacket(& packetTemp);
-	packetTemp.use.head.Method=BOWLER_ASYN;
-	packetTemp.use.head.RPC=GetRPCValue("gchv");
-	packetTemp.use.data[0]=pin;
-	packetTemp.use.data[1]=val;
-	packetTemp.use.head.DataLegnth=6;
-	packetTemp.use.head.MessageID=5;
-	PutBowlerPacket(& packetTemp);
-}
-
-void UpstreamPushPowerChange(void){
-	SetColor(0,1,0);
-	LoadCorePacket(& packetTemp);
-	POWER(& packetTemp);
+	packetTemp.use.head.RPC=GetRPCValue("_pwr");
 	packetTemp.use.head.MessageID=3;
 	packetTemp.use.head.Method=BOWLER_ASYN;
+	packetTemp.use.data[0]=r0;
+	packetTemp.use.data[1]=r1;
+	set16bit(&packetTemp,voltage,2);
+	packetTemp.use.data[4]=override;
+	packetTemp.use.head.DataLegnth=4+2+2+1;
+
 	PutBowlerPacket(& packetTemp);
-	UpdateAVRLED();
+	printPacket(&packetTemp,WARN_PRINT);
+}
+
+void UpstreamPushSPIlStream(void){
+	SetColor(0,1,0);
+	LoadCorePacket(& packetTemp);
+	packetTemp.use.head.RPC=GetRPCValue("strm");
+	packetTemp.use.head.MessageID=3;
+	packetTemp.use.head.Method=BOWLER_ASYN;
+	packetTemp.use.data[0] = 0; //the SPI clock pin
+	packetTemp.use.data[1]=GetSPIRxData(&packetTemp.use.data[2]);
+	packetTemp.use.head.DataLegnth = 4+1+1+packetTemp.use.data[1];
+	PutBowlerPacket(& packetTemp);
+	printPacket(&packetTemp,WARN_PRINT);
+
+}
+
+void UpstreamPushSerialStream(void){
+	SetColor(0,1,0);
+	LoadCorePacket(& packetTemp);
+	packetTemp.use.head.RPC=GetRPCValue("strm");
+	packetTemp.use.head.MessageID=3;
+	packetTemp.use.head.Method=BOWLER_ASYN;
+	packetTemp.use.data[0] = 17; //the serial rx pin
+	packetTemp.use.data[1]=GetSerialRxData(&packetTemp.use.data[2]);
+	packetTemp.use.head.DataLegnth = 4+1+1+packetTemp.use.data[1];
+	PutBowlerPacket(& packetTemp);
+	printPacket(&packetTemp,WARN_PRINT);
+
 }
 
 void POWER(BowlerPacket * packet){
+
 	UINT16_UNION raw;
-	packet->use.head.Method=BOWLER_POST;
+	packet->use.head.Method=BOWLER_GET;
 	packet->use.head.RPC=GetRPCValue("_pwr");
 	packet->use.data[0]=isRegulated_0();
 	packet->use.data[1]=isRegulated_1();
-	raw.Val=(WORD)(GetRawVoltage());
+	raw.Val=(uint16_t)(GetRawVoltage());
 	packet->use.data[2]=raw.byte.SB;
 	packet->use.data[3]=raw.byte.LB;
-	packet->use.head.DataLegnth=8;
-	packet->use.head.MessageID=0;
+	packet->use.data[4]=getPowerOverRide();
+	packet->use.head.DataLegnth=4+2+2+1;
 }
 
 void pushPPMPacket(void){
@@ -115,6 +97,7 @@ void pushPPMPacket(void){
 
 	packetTemp.use.head.Method=BOWLER_ASYN;
 	PutBowlerPacket(& packetTemp);
+	printPacket(&packetTemp,WARN_PRINT);
 }
 
 

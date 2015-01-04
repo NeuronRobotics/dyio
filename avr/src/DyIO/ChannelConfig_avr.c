@@ -6,24 +6,38 @@
  */
 #include "UserApp_avr.h"
 
-void SetNewConfigurationDataTable(BYTE pin, INT32 value){
-
+int32_t GetConfigurationDataTable(uint8_t pin){
+	return EEReadValue(pin);
 }
 
-BOOL ConfigChannel(BowlerPacket * Packet){
-	BYTE mode = GetChannelMode(Packet->use.data[0]);
-	if ((mode == IS_UART_TX) || (mode == IS_UART_RX)){
-		UINT32_UNION baudrate;
-		baudrate.byte.FB = Packet->use.data[1];
-		baudrate.byte.TB = Packet->use.data[2];
-		baudrate.byte.SB = Packet->use.data[3];
-		baudrate.byte.LB = Packet->use.data[4];
-#if defined(DEBUG)
-		return TRUE;
-#endif
-		return ConfigureUART(baudrate.Val);
-	}else{
-		return FALSE;
+void SetNewConfigurationDataTable(uint8_t pin, int32_t value){
+	uint8_t mode = GetChannelMode(pin);
+
+	switch(mode){
+	case IS_UART_TX		 		:
+	case IS_UART_RX	 			:
+		ConfigureUART(value);
+		break;
+	case IS_SPI_MOSI				:
+	case IS_SPI_MISO				:
+	case IS_SPI_SCK	 			:
+		break;
+	case IS_DO		 			:
+	case IS_PWM	 				:
+	case IS_SERVO 				:
+	case IS_COUNTER_INPUT_INT	:
+	case IS_COUNTER_INPUT_DIR	:
+	case IS_COUNTER_INPUT_HOME	:
+	case IS_COUNTER_OUTPUT_INT	:
+	case IS_COUNTER_OUTPUT_DIR	:
+	case IS_COUNTER_OUTPUT_HOME	:
+	case IS_DC_MOTOR_VEL			:
+	case IS_DC_MOTOR_DIR			:
+		EEWriteValue(pin,value);
+		break;
+	case IS_PPM_IN:
+		break;
 	}
 
 }
+

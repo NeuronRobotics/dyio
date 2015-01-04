@@ -6,27 +6,27 @@
  */
 
 #include "UserApp.h"
-UINT32 getDyIOVoltage(BYTE chan);
+uint32_t getDyIOVoltage(uint8_t chan);
 
-BOOL init = FALSE;
-#define AVG_SIZE 20
+boolean init = false; 
+#define AVG_SIZE 2
 
 typedef struct __attribute__((__packed__)) _ROLLINGAVG
 {
-	UINT32 rawAvg[AVG_SIZE];
+	uint32_t rawAvg[AVG_SIZE];
 	float avgSum;
-	BYTE avgIndex;
-	BYTE adcChan;
+	uint8_t avgIndex;
+	uint8_t adcChan;
 } ROLLINGAVG;
 
 ROLLINGAVG adc[4];
 float lastHighTime=0;
 float lastLowTime=0;
 
-static BOOL lockOutRail = FALSE;
-static BOOL externalLock=FALSE;
-INT32 calc(ROLLINGAVG * avg){
-	UINT32 v=getDyIOVoltage(avg->adcChan);
+boolean lockOutRail = false;
+boolean externalLock=false;
+int32_t calc(ROLLINGAVG * avg){
+	uint32_t v=getDyIOVoltage(avg->adcChan);
 //	avg->avgSum+=v;
 //	avg->rawAvg[avg->avgIndex ++]=v;
 //	if (avg->avgIndex == AVG_SIZE)
@@ -36,11 +36,11 @@ INT32 calc(ROLLINGAVG * avg){
 	return v;
 }
 void InitADC(void){
-	if(init==TRUE)
+	if(init==true)
 		return;
-	init = TRUE;
-	println_I("Start Initialized the ADC");
-	BYTE i,j;
+	init = true;
+//	println_I("Start Initialized the ADC");
+	uint8_t i,j;
 
 	adc[0].adcChan=15;
 	adc[1].adcChan=12;
@@ -55,51 +55,51 @@ void InitADC(void){
 			calc(&adc[i]);
 		}
 	}
-	println_I("Finish Initializing the ADC");
+//	println_I("Finish Initializing the ADC");
 
 
 }
 
-BOOL isLocked(void){
+boolean isLocked(void){
 	return lockOutRail;
 }
-BOOL isActive(void){
+boolean isActive(void){
 	return externalLock;
 }
 void unlockServos(){
-	externalLock=FALSE;
+	externalLock=false; 
 }
 void lockServos(){
-	externalLock=TRUE;
+	externalLock=true; 
 }
 #define timeOfVoltageflux .2
 RunEveryData lockOutTimeout;
-BYTE GetRawVoltageCode(BYTE bank){
+uint8_t GetRawVoltageCode(uint8_t bank){
 
 	float rv =GetRawVoltage();
-	if(lockOutRail == FALSE){
+	if(lockOutRail == false) {
 		float current = getMs();
 		float diffLow = (current-lastLowTime);
 		float diffHigh = (current-lastHighTime);
 		if((current>lastLowTime) && (current>lastHighTime)){
 			if((lastHighTime != 0) &&  (lastLowTime != 0)){
 				if((diffLow<timeOfVoltageflux) && (diffHigh<timeOfVoltageflux)){
-					lockOutRail=TRUE;
+					lockOutRail=true; 
 					lockOutTimeout.MsTime=current;
 					lockOutTimeout.setPoint=1000;
-					UpstreamPushPowerChange();
-					println_I("Power fluctuation detected\n");
-					println_I("Current Time: ");p_fl_I(current);
-					println_I("Last low time: ");p_fl_I(lastLowTime);print_I(", ");p_fl_I(diffLow);
-					println_I("Last high time : ");p_fl_I(lastHighTime);print_I(", ");p_fl_I(diffHigh);
+					//UpstreamPushPowerChange();
+//					println_I("Power fluctuation detected\n");
+//					println_I("Current Time: ");p_fl_I(current);
+//					println_I("Last low time: ");p_fl_I(lastLowTime);print_I(", ");p_fl_I(diffLow);
+//					println_I("Last high time : ");p_fl_I(lastHighTime);print_I(", ");p_fl_I(diffHigh);
 				}
 			}
 		}
 	}else{
 		if(RunEvery(&lockOutTimeout)>0){
-			lockOutRail = FALSE;
-			UpstreamPushPowerChange();
-			println_I("Power fluctuation Reset");
+			lockOutRail = false; 
+			//UpstreamPushPowerChange();
+//			println_I("Power fluctuation Reset");
 		}
 		return 0;
 	}
@@ -110,12 +110,12 @@ BYTE GetRawVoltageCode(BYTE bank){
 	}
 	if(rv>RawVoltageMin){
 		lastHighTime = getMs();
-		if(externalLock==TRUE)
+		if(externalLock==true) 
 			return 3;
 		return 1;
 	}else {
 		lastLowTime = getMs();
-		if(rv<3000 && externalLock==FALSE){
+		if(rv<3000 && externalLock==false) {
 			return 2;
 		}else{
 			return 0;
@@ -139,10 +139,10 @@ float GetRail1Voltage(void){
 	return calc(&adc[1]);
 }
 
-UINT32 getDyIOVoltage(BYTE chan){
+uint32_t getDyIOVoltage(uint8_t chan){
 	InitADC();
 	float scale = 16.283951;
-	UINT32 raw = getAdcRaw(chan, 5);
-	UINT32 volt = (UINT32)(((float)raw)*scale);
+	uint32_t raw = getAdcRaw(chan, 5);
+	uint32_t volt = (uint32_t)(((float)raw)*scale);
 	return volt;
 }

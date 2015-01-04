@@ -49,13 +49,12 @@
 #ifndef __UART_H
 #define __UART_H
 
-#include "GenericTypeDefs.h"
-BOOL Write32UART1(BYTE  data);
-BOOL Write32UART2(BYTE  data);
+boolean Write32UART1(uint8_t  data);
+boolean Write32UART2(uint8_t  data);
 
-void Pic32UARTPutArray(BYTE *packet,WORD size);
+void Pic32UARTPutArray(uint8_t *packet,uint16_t size);
 void Pic32UART_HAL_INIT(int BAUDRATE);
-void Pic32UARTGetArray(BYTE *packet,WORD size);
-WORD Pic32Get_UART_Byte_Count(void);
+void Pic32UARTGetArray(uint8_t *packet,uint16_t size);
+uint16_t Pic32Get_UART_Byte_Count(void);
 
 #endif

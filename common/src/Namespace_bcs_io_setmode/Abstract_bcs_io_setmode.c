@@ -8,12 +8,12 @@
 #include "Namespace/Namespace_bcs_io_setmode.h"
 
 
-BOOL (*setChanelModeHWPtr)(BYTE,BYTE)=NULL;
+boolean (*setChanelModeHWPtr)(uint8_t  ,uint8_t)=NULL;
 /*
  * Initialize SetMode hardware interface functions
  */
 
-void InitilizeBcsIoSetmode(BOOL (*setChanelModeHWPtrLocal)(BYTE,BYTE)){
+void InitilizeBcsIoSetmode(boolean (*setChanelModeHWPtrLocal)(uint8_t  ,uint8_t)){
 	if(setChanelModeHWPtrLocal == NULL){
 		setPrintLevelErrorPrint();
 		//println_E("Failed IO.SETMODE sanity check: initialization");
@@ -27,24 +27,22 @@ void InitilizeBcsIoSetmode(BOOL (*setChanelModeHWPtrLocal)(BYTE,BYTE)){
  * Sets the given channel to the given mode
  * Returns true if successful
  */
-BOOL SetChannelMode(BYTE pin,BYTE mode){
+boolean SetChannelMode(uint8_t pin,uint8_t mode){
 	if(setChanelModeHWPtr == NULL){
-		println_E("Set mode pointer not set!")
-		return FALSE;
+		//println_E("Set mode pointer not set!")
+		return false; 
 	}
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-	println_I("Abstract_bcs_io_setmode Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_int_I(pin);
-#endif
+	//println_I("Abstract_bcs_io_setmode Setting Mode: ");printMode(mode,INFO_PRINT);print_I(" on: ");p_int_I(pin);
 
-	BOOL ok = setChanelModeHWPtr(pin,mode);
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-	print_I(" Hardware ok");
-#endif
-	getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
+	boolean ok = setChanelModeHWPtr(pin,mode);
+	//print_I(" Hardware ok");
+
+	//getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
+	SetChannelModeDataTable(pin,mode);
 	if(IsAsync(pin)){
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-		print_I(" Restarting async");
-#endif
+
+		//print_I(" Restarting async");
+
 		startAdvancedAsyncDefault(pin);
 	}
 	return ok;
@@ -55,35 +53,33 @@ BOOL SetChannelMode(BYTE pin,BYTE mode){
  * Iterates down the array of channel modes setting all of them
  * Returns true if all modes set OK
  */
-BOOL SetAllChannelModes(BYTE * modeArray){
+boolean SetAllChannelModes(uint8_t * modeArray){
 	int i=0;
 	for(i=0;i<GetNumberOfIOChannels();i++){
 		if(!SetChannelMode(i,modeArray[i])){
-			return FALSE;
+			return false; 
 		}
 	}
-	return TRUE;
+	return true; 
 }
 /*
  * Set Channel Mode
  * Sets the given channel to the given mode
  * Returns true if successful
  */
-BOOL AbstractSetChannelMode(BowlerPacket * Packet){
-	BYTE pin =Packet->use.data[0];
-
-	BYTE mode=Packet->use.data[1];
-
-	if(Packet->use.head.DataLegnth == 7){
-		setAsync(pin,Packet->use.data[2]?TRUE:FALSE);
-	}
+boolean AbstractSetChannelMode(BowlerPacket * Packet){
+	//printBowlerPacketDEBUG(Packet,WARN_PRINT);
+	uint8_t pin =Packet->use.data[0];
+	uint8_t mode=Packet->use.data[1];
+	//printBowlerPacketDEBUG(Packet,WARN_PRINT);
 
 	if(SetChannelMode(pin,mode)){
-		//READY(Packet,4,33);
-		return TRUE;
+		GetAllChannelModeFromPacket(Packet);
+		//printBowlerPacketDEBUG(Packet,WARN_PRINT);
+		return true; 
 	}else{
-		println_E("Mode Invalid!");
-		return FALSE;
+		GetAllChannelModeFromPacket(Packet);
+		return false; 
 	}
 
 }
@@ -92,10 +88,14 @@ BOOL AbstractSetChannelMode(BowlerPacket * Packet){
  * Iterates down the array of channel modes setting all of them
  * Returns true if all modes set OK
  */
-BOOL AbstractSetAllChannelMode(BowlerPacket * Packet){
-	int i=0;
+boolean AbstractSetAllChannelMode(BowlerPacket * Packet){
+        // First byte is the number of channels
+	//printBowlerPacketDEBUG(Packet,WARN_PRINT);
+	int i;
 	for(i=0;i<GetNumberOfIOChannels();i++){
 		SetChannelMode(i,Packet->use.data[i+1]);
 	}
-	return TRUE;
+	GetAllChannelModeFromPacket(Packet);
+
+	return true; 
 }

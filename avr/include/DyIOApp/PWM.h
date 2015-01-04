@@ -19,8 +19,8 @@
 #ifndef PWM_H_
 #define PWM_H_
 
-void ClearPWM(BYTE pin);
-BYTE InitPWM(BYTE channel);
-void SetPWM(BYTE channel,BYTE val);
-BYTE GetPWM(BYTE pin);
+void ClearPWM(uint8_t pin);
+uint8_t InitPWM(uint8_t channel);
+void SetPWM(uint8_t channel,uint8_t val);
+uint8_t GetPWM(uint8_t pin);
 #endif /* PWM_H_ */

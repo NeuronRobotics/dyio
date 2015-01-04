@@ -10,10 +10,15 @@
 #define  SCK_TRIS			(_TRISG6)
 #define  SDI_TRIS			(_TRISG7)
 #define  SDO_TRIS			(_TRISG8)
-void InitSPI(void);
-void StopSPI(BYTE mode);
-BOOL isSPI(BYTE mode);
-BYTE GetByteSPI(BYTE b);
-void SendPacketToSPI(BowlerPacket * Packet);
-void SendPacketToSPIFromArray(BYTE numBytes,BYTE * data);
+void InitSPIDyIO(void);
+void StopDyIOSPI(uint8_t pin,uint8_t mode);
+boolean isSPI(uint8_t mode);
+uint8_t GetByteSPIDyIO(uint8_t b);
+void SyncSPIData();
+void SendPacketToSPIFromArray(uint8_t numBytes,uint8_t * data);
+
+boolean LoadSPITxData(uint8_t numValues,uint8_t * data);
+uint8_t GetSPIRxData(uint8_t * data);
+uint32_t getNumberOfSPIRxBytes();
+
 #endif /* SPI_H_ */

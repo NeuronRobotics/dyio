@@ -10,55 +10,88 @@
 #if defined(__AVR_ATmega324P__)
 	#define UART_PASS_BUFF_SIZE 5
 #else
-	#define UART_PASS_BUFF_SIZE 20
+	#define UART_PASS_BUFF_SIZE 10
 #endif
 
 
-static BYTE privateRXUART[UART_PASS_BUFF_SIZE];
-static BYTE_FIFO_STORAGE store;
+uint8_t privateRXUART[UART_PASS_BUFF_SIZE];
+BYTE_FIFO_STORAGE UARTPassThroughStore;
 
-BOOL validBaud(UINT32 baud);
+boolean validBaud(uint32_t baud);
+
+static boolean UartInit = false;
+
+
 
 void InitUART(void){
-	UINT32 baudrate = EEReadBaud();
-	if (validBaud(baudrate) == FALSE){
-		baudrate = 19200;
-		validBaud(baudrate);
+	if(UartInit == true){
+		return;
 	}
 
-	SetPinTris(16,OUTPUT);
-	SetPinTris(17,INPUT);
-	SetDIO(17,ON);
+	if (!(	pinHasFunction(16,IS_UART_TX)||
+			pinHasFunction(17,IS_UART_RX)
+		)){
+		println_W("Pins Failed UART Test");
+		return;
+	}
+	println_W("Uart Initialization: ");
+	ConfigureUART(EEReadBaud());
 
-	/* set the framing to 8N1 */
-	UCSR1C = ((1<< UCSZ10)|(1<< UCSZ11));
-	/* rx interrupts enabled, rx and tx enabled, 8-bit data */
-	UCSR1B =( _BV(RXCIE1) | _BV(RXEN1) | _BV(TXEN1));
-	UCSR1A = 0x00;
-	//println_I("Uart Initialization: ");
-	InitByteFifo(&store,privateRXUART,UART_PASS_BUFF_SIZE);
+//	SetPinTris(16,OUTPUT);
+//	SetPinTris(17,INPUT);
+//	SetDIO(17,ON);
+	configPinMode(16,IS_UART_TX,OUTPUT,ON);
+	configPinMode(17,IS_UART_RX,INPUT,ON);
+	InitByteFifo(&UARTPassThroughStore,privateRXUART,UART_PASS_BUFF_SIZE);
+
+	UartInit=true;
 }
-void StopUartPassThrough(BYTE pin){
+void StopUartPassThrough(uint8_t pin){
+	if(UartInit == false){
+		return;
+	}
+	println_E("Uart STOP: ");
 	if (!(	pinHasFunction(pin,IS_UART_RX)||
 			pinHasFunction(pin,IS_UART_TX)
 		)){
 		return;
 	}
-	UCSR1B=0;
-	//InitByteFifo(&store,privateRXUART,sizeof(privateRXUART));
+	//InitByteFifo(&UARTPassThroughStore,privateRXUART,sizeof(privateRXUART));
 	switch(GetChannelMode(pin)){
 		case IS_UART_TX:
 		case IS_UART_RX:
 			configPinMode(16,IS_DI,INPUT,ON);
 			configPinMode(17,IS_DI,INPUT,ON);
+			if(getPrintLevel() == NO_PRINT){
+				UCSR1B=0;
+				UCSR1C=0;
+			}else{
+				UBRR1=9;
+				/* set the framing to 8N1 */
+				UCSR1C = ((1<< UCSZ10)|(1<< UCSZ11));
+				/* rx interrupts enabled, rx and tx enabled, 8-bit data */
+				UCSR1B =( _BV(TXEN1));
+			}
+			UCSR1A = 0x00;
+			UartInit=false;
 	}
 }
 
-BOOL ConfigureUART(UINT32 baudrate){
+boolean ConfigureUART(uint32_t baudrate){
+	println_W("Setting: ");p_int_W(baudrate);
+
+	if(getPrintLevel() != NO_PRINT)
+		baudrate = 115200;
+	//Whith the print channel running the rest of the setup still needs to happen
+	if (validBaud(baudrate) == false) {
+		baudrate = 19200;
+	}else{
+		return true;
+	}
 	return validBaud(baudrate);
 }
 
-BOOL validBaud(UINT32 baud){
+boolean validBaud(uint32_t baud){
 	switch(baud){
 	case   2400:
 		UBRR1=479;
@@ -94,29 +127,70 @@ BOOL validBaud(UINT32 baud){
 		UBRR1=4;
 		break;
 	default:
-		return FALSE;
+		return false; 
 	}
+	/* set the framing to 8N1 */
+	UCSR1C = ((1<< UCSZ10)|(1<< UCSZ11));
+	/* rx interrupts enabled, rx and tx enabled, 8-bit data */
+	UCSR1B =( _BV(RXCIE1) | _BV(RXEN1) | _BV(TXEN1));
+	UCSR1A = 0x00;
 	EEWriteBaud(baud);
-	return TRUE;
+	return true; 
 }
 
 /**
  * Private helpers
  */
 ISR(USART1_RX_vect){
-	//BYTE read;
+	uint8_t read;
+	//UCSR1Bbits._RXCIE1=0;
 	//while ((UCSR0A & 0x80) == 0 );
-	//read = UDR1;
+	read = UDR1;
 	//AddBytePassThrough(read);
-	BYTE err;
-	FifoAddByte(&store,UDR1,&err);
+	if(UartInit){
+		uint8_t err;
+		FifoAddByte(&UARTPassThroughStore,read,&err);
+		//WriteAVRUART1(read);
+		//Get_UART_Byte_CountPassThrough();
+		//p_int_W(Get_UART_Byte_CountPassThrough());
+	}
+	//UCSR1Bbits._RXCIE1=1;
+}
+ISR(USART1_TX_vect){
+
+}
+ISR(USART1_UDRE_vect){
+
+}
+uint32_t UARTGetArrayPassThrough(uint8_t *packet,uint16_t size){
+	//println_W("Reading: ");p_int_W(size);
+	if(UartInit)
+		return FifoGetByteStream(&UARTPassThroughStore,packet,size);
+	return 0;
 }
 
-void UARTGetArrayPassThrough(BYTE *packet,UINT16 size){
-	FifoGetByteStream(&store,packet,size);
+uint16_t Get_UART_Byte_CountPassThrough(void){
+	int count  = FifoGetByteCount(&UARTPassThroughStore);
+	if(count >UART_PASS_BUFF_SIZE){
+		println_E("Uart Buffer OVF");
+		count = 0;
+		InitByteFifo(&UARTPassThroughStore,privateRXUART,UART_PASS_BUFF_SIZE);
+	}
+	if(UartInit)
+		return count;
+	else{
+		return 0;
+	}
 }
 
-UINT16 Get_UART_Byte_CountPassThrough(void){
-	return FifoGetByteCount(&store);
+void UARTPassThroughWrite(uint8_t numValues,uint8_t * data){
+	//println_W("Writing: ");p_int_W(numValues);print_W(" ");
+	int i;
+	//uint8_t err;
+	for(i=0;i<numValues;i++){
+		WriteAVRUART1(data[i]);
+		//FifoAddByte(&UARTPassThroughStore,data[i],&err);
+	}
+	//print_W(" done");
 }
 

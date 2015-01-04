@@ -21,7 +21,7 @@
  * GetTImeTicks
  * @return The number of timer ticks since the chip started running
  */
-UINT64 GetTimeTicks(void);
+uint64_t GetTimeTicks(void);
 
 /**
  * StartScheduler
@@ -47,7 +47,7 @@ unsigned char SchedulerGetStep(unsigned char chan);
 unsigned char ClearForCom(void);
 
 /**
- * Retrurns TRUE if the timer has timed out
+ * Retrurns B_B_true if the timer has timed out
  */
 unsigned char GetTimeoutState(void);
 void TimeoutCounterReset(void);

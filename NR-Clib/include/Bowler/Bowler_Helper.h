@@ -19,51 +19,64 @@
 #define BOWLER_HELPER_H_
 #include "Defines.h"
 #include "Bowler_Struct_Def.h"
-unsigned short int READY(BowlerPacket * Packet,BYTE code,BYTE trace);
-unsigned short int ERR(BowlerPacket * Packet,BYTE code,BYTE trace);
+uint16_t READY(BowlerPacket * Packet,uint8_t code,uint8_t trace);
+uint16_t ERR(BowlerPacket * Packet,uint8_t code,uint8_t trace);
 
-unsigned short int GetDataLegnth(BYTE *buffer);
+uint16_t GetDataLegnth(uint8_t *buffer);
 
-unsigned short int SetPacketLegnth(BowlerPacket * Packet,BYTE len);
-unsigned short int GetPacketLegnth(BowlerPacket * Packet);
+uint16_t SetPacketLegnth(BowlerPacket * Packet,uint8_t len);
+uint16_t GetPacketLegnth(BowlerPacket * Packet);
 
 
-unsigned long Bytes2Int32(BYTE a,BYTE b,BYTE c,BYTE d);
+uint32_t Bytes2Int32(uint8_t a,uint8_t b,uint8_t c,uint8_t d);
 
 unsigned long GetRPCValue(char * data);
 
-unsigned char CheckAddress(BYTE * one,BYTE * two);
+unsigned char CheckAddress(uint8_t * one,uint8_t * two);
 
 void LoadCorePacket(BowlerPacket * Packet);
 
-BYTE CalcCRC(BowlerPacket *Packet);
+uint8_t CalcCRC(BowlerPacket *Packet);
 void SetCRC(BowlerPacket * Packet);
 unsigned char CheckCRC(BowlerPacket * Packet);
+/*
+ * Calculate waht the CRC should be for a given data section
+ */
+uint8_t CalcDataCRC(BowlerPacket *Packet);
+/*
+ * Returns true if the data crc in the packet matches the one calculated fromthe packet
+ */
+uint8_t CheckDataCRC(BowlerPacket *Packet);
+/*
+ * Calculates and sets the CRC in the packet
+ */
+void SetDataCRC(BowlerPacket * Packet);
+/*
+ * Retreives the CRC in the packet
+ */
+uint8_t GetDataCRC(BowlerPacket * Packet) ;
+
 void copyPacket(BowlerPacket * from,BowlerPacket * to);
 
 
-typedef struct _INTERPOLATE_DATA
-{
-	float set;
-	float start;
-	float setTime;
-	float startTime;
-} INTERPOLATE_DATA;
-
 float interpolate(INTERPOLATE_DATA * data, float currentTime);
 
-BOOL bound(float target, float actual, float plus, float minus);
+boolean bound(float target, float actual, float plus, float minus);
+
+boolean between(float targetupper, float actual, float targetLower);
 
 
-void set8bit(BowlerPacket * Packet,BYTE val, BYTE offset);
+void set8bit(BowlerPacket * Packet,uint8_t val, uint8_t offset);
 
-void set16bit(BowlerPacket * Packet,INT16 val, BYTE offset);
+void set16bit(BowlerPacket * Packet,int16_t val, uint8_t offset);
 
-void set32bit(BowlerPacket * Packet,INT32 val, BYTE offset);
+void set32bit(BowlerPacket * Packet,int32_t val, uint8_t offset);
 
-INT32 get32bit(BowlerPacket * Packet, BYTE offset);
+void setString(BowlerPacket * Packet, char * val, uint8_t offset);
 
-INT32 get16bit(BowlerPacket * Packet, BYTE offset);
+int32_t get32bit(BowlerPacket * Packet, uint8_t offset);
+
+int32_t get16bit(BowlerPacket * Packet, uint8_t offset);
 
 
 #endif /* BOWLER_HELPER_H_ */

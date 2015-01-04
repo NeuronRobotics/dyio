@@ -19,11 +19,12 @@
 #ifndef DEBUG_H_
 #define DEBUG_H_
 #include "Defines.h"
+#include "AbstractPID.h"
 typedef enum _Print_Level{
 	NO_PRINT=0,
 	ERROR_PRINT=1,
 	WARN_PRINT=2,
-	//DEBUG_PRINT=3,
+	DEBUG_PRINT=3,
 	INFO_PRINT=4
 }Print_Level;
 
@@ -33,12 +34,13 @@ typedef enum _Print_Level{
 #define setPrintLevelInfoPrint() setPrintLevel(INFO_PRINT)
 
 Print_Level setPrintLevel(Print_Level l);
+boolean okToprint(Print_Level l);
 
 Print_Level getPrintLevel();
 /**
  * Lets you set a custom printstream function pointer
  */
-void setPrintStream(int (*sendToStreamPtr)(BYTE * ,int));
+void setPrintStream(int (*sendToStreamPtr)(uint8_t * ,int));
 
 void EnableDebugTerminal(void);
 ///**
@@ -76,6 +78,7 @@ void EnableDebugTerminal(void);
 /**
  * print the null terminated string with a newline inserted at the begining of the string
  */
+//#define println(A,B) printfDEBUG(__FILE__,DEBUG_PRINT);printfDEBUG(A,B)
 #define println(A,B) printfDEBUG(A,B)
 
 #define printStream(A,B,C) printByteArray(A,B,C);
@@ -100,7 +103,7 @@ void EnableDebugTerminal(void);
 /**
  * print the null terminated string with a newline inserted at the begining of the string
  */
-#define println_E(A) printfDEBUG(A,ERROR_PRINT);
+#define println_E(A) println(A,ERROR_PRINT);
 
 #define printStream_E(A,B) printByteArray(A,B,ERROR_PRINT);
 
@@ -125,7 +128,7 @@ void EnableDebugTerminal(void);
 /**
  * print the null terminated string with a newline inserted at the begining of the string
  */
-#define println_W(A) printfDEBUG(A,WARN_PRINT)
+#define println_W(A) println(A,WARN_PRINT)
 
 #define printStream_W(A,B) printByteArray(A,B,WARN_PRINT);
 
@@ -148,9 +151,14 @@ void EnableDebugTerminal(void);
 #define print_I(A) printfDEBUG_NNL(A,INFO_PRINT)
 
 /**
+ * Clears the print termainal 
+ */
+#define clearPrint() sendStr("\e[1;1H\e[2J")
+
+/**
  * print the null terminated string with a newline inserted at the begining of the string
  */
-#define println_I(A) printfDEBUG(A,INFO_PRINT)
+#define println_I(A) println(A,INFO_PRINT)
 
 #define printStream_I(A,B) printByteArray(A,B,INFO_PRINT);
 
@@ -172,16 +180,16 @@ void printfDEBUG_NNL(char *str,Print_Level l);
 /**
  * print the ascii of a signed long/int. No new line
  */
-void printfDEBUG_INT(long val,Print_Level l);
+void printfDEBUG_INT(int32_t val,Print_Level l);
 
 /**
  * convert a long into an ascii string and place the string into the Buffer
  */
-void ultoaMINE(unsigned long Value, unsigned char* Buffer);
+void ultoaMINE(uint32_t Value, uint8_t* Buffer);
 /**
  * print all the bytes in a byte array. The legnth of the array must be correct
  */
-void printByteArray(unsigned char * stream,unsigned short int len,Print_Level l);
+void printByteArray(uint8_t * stream,uint16_t len,Print_Level l);
 /**
  * convert a float into an ascii string and place the string into the outbuf
  */
@@ -194,14 +202,15 @@ void printfDEBUG_FL(float f,Print_Level l);
 /**
  * return the char of the hex value of the low 4 bits of the given byte
  */
-char GetLowNib(unsigned char b);
+char GetLowNib(uint8_t b);
 /**
  * return the char of the hex value of the high 4 bits of the given byte
  */
-char GetHighNib(unsigned char b);
+char GetHighNib(uint8_t b);
 
-void printPIDvals(int i);
-
+#define printPIDvals(i) printPIDvalsPointer(getPidGroupDataTable(i))
+void printPIDvalsPointer(AbsPID * conf);
+void sendStr(const char *str) ;
 
 //Bowler Stack Specific:
 #if defined(BOWLERSTRUCTDEF_H_)
@@ -210,6 +219,6 @@ void printPIDvals(int i);
 	void printfDEBUG_BYTE(char b,Print_Level l);
 #endif
 
-	BOOL okToPrint(Print_Level l);
+	boolean okToPrint(Print_Level l);
 	void setColor(Print_Level l);
 #endif /* DEBUG_H_ */

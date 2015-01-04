@@ -9,8 +9,8 @@
 
 extern MAC_ADDR MyMAC;
 
-BYTE eeReadByte(UINT16 addr);
-void eeWriteByte(UINT16 addr,BYTE val);
+uint8_t eeReadByte(uint16_t addr);
+void eeWriteByte(uint16_t addr,uint8_t val);
 
 #define MACKEY 42
 #define LOCKKEY 37
@@ -19,12 +19,12 @@ void eeWriteByte(UINT16 addr,BYTE val);
 #define MODESTART 	(MACSTART+6)
 #define VALUESTART 	(MODESTART+24)
 #define UARTBAUD 	(VALUESTART+24)
-#define DATASTART 	(UARTBAUD+4)
+#define DATASTART_AVR 	(UARTBAUD+4)
 
 
 void EEInitMAC(void){
-	BYTE i;
-	BYTE key=0;
+	uint8_t i;
+	uint8_t key=0;
 	key=eeReadByte(KEYADDR);
 	if ( (key == LOCKKEY) ){
 		for (i=0;i<6;i++){
@@ -33,47 +33,51 @@ void EEInitMAC(void){
 	}
 }
 
-BOOL ProvisionMAC(BYTE * m){
-	BYTE i;
-	BYTE key=0;
+boolean ProvisionMAC(uint8_t * m){
+	uint8_t i;
+	uint8_t key=0;
 	key=eeReadByte(KEYADDR);
 	if (key==LOCKKEY){
-		return FALSE;
+		return false; 
 	}else{
 		for (i=0;i<6;i++){
 			MyMAC.v[i]=m[i];
 			eeWriteByte(i+MACSTART,MyMAC.v[i]);
 		}
 		eeWriteByte(KEYADDR,LOCKKEY);
-		return TRUE;
+		return true; 
 	}
 }
 
-void EEWriteMode(BYTE pin,BYTE mode){
-	if (EEReadMode(pin) != mode){
-		eeWriteByte((UINT16)(MODESTART+pin),mode);
+void _EEWriteMode(uint8_t pin,uint8_t mode){
+	//getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
+	SetChannelModeDataTable(pin,mode);
+	while(EEReadMode(pin) != mode){
+		println_W("Mode Set Pin :");p_int_W(pin);printMode(mode,WARN_PRINT);
+
+		eeWriteByte((uint16_t)(MODESTART+pin),mode);
 	}
 }
 
-BYTE EEReadMode(BYTE pin){
-	return eeReadByte((UINT16)(MODESTART+pin));
+uint8_t EEReadMode(uint8_t pin){
+	return eeReadByte((uint16_t)(MODESTART+pin));
 }
 
 
-void EEWriteValue(UINT16 pin,BYTE value){
+void EEWriteValue(uint16_t pin,uint8_t value){
 	if (value == 255)
 		value = 254;
-	eeWriteByte((UINT16)(VALUESTART+pin),value);
+	eeWriteByte((uint16_t)(VALUESTART+pin),value);
 }
 
-BYTE EEReadValue(UINT16 pin){
-	BYTE val = eeReadByte((UINT16)(VALUESTART+pin));
+uint8_t EEReadValue(uint16_t pin){
+	uint8_t val = eeReadByte((uint16_t)(VALUESTART+pin));
 	if (val == 255)
 		EEWriteValue(pin,128);
-	return eeReadByte((UINT16)(VALUESTART+pin));
+	return eeReadByte((uint16_t)(VALUESTART+pin));
 }
 
-UINT32 EEReadBaud(void){
+uint32_t EEReadBaud(void){
 	UINT32_UNION v;
 	v.byte.FB= eeReadByte((UARTBAUD+0));
 	v.byte.TB= eeReadByte((UARTBAUD+1));
@@ -82,7 +86,7 @@ UINT32 EEReadBaud(void){
 	return v.Val;
 }
 
-void EEWriteBaud(UINT32 val){
+void EEWriteBaud(uint32_t val){
 	UINT32_UNION v;
 	v.Val = val;
 	eeWriteByte((UARTBAUD+0),v.byte.FB);
@@ -91,22 +95,29 @@ void EEWriteBaud(UINT32 val){
 	eeWriteByte((UARTBAUD+3),v.byte.LB);
 }
 
-BYTE EEReadData(UINT16 addr){
-	if((addr+DATASTART)>=1024){
+uint8_t EEReadData(uint16_t addr){
+	uint8_t val=0;
+	if((addr+DATASTART_AVR)>=1024){
 		return 0;
 	}
-	return eeReadByte((DATASTART+addr));
+	val =  eeReadByte((DATASTART_AVR+addr));
+//	if(addr == 189){
+//		println_W("R eeprom addr: ");p_int_W(addr);print_W(" is: ");p_int_W(val);
+//	}
+	return val;
 }
-void EEWriteData(UINT16 addr,BYTE data){
-	if((addr+DATASTART)>=1024){
+void EEWriteData(uint16_t addr,uint8_t data){
+	if((addr+DATASTART_AVR)>=1024){
 		return;
 	}
-	eeWriteByte((DATASTART+addr),data);
-
+	eeWriteByte((DATASTART_AVR+addr),data);
+//	if(addr == 189){
+//		println_E("W eeprom addr: ");p_int_W(addr);print_W(" is: ");p_int_W(data);
+//	}
 }
 
 
-BYTE eeReadByte(UINT16 addr){
+uint8_t eeReadByte(uint16_t addr){
 	/* Wait for completion of previous write */
 	while(EECR & (1<<EEPE));
 	EECR=0;
@@ -119,7 +130,7 @@ BYTE eeReadByte(UINT16 addr){
 
 }
 
-void eeWriteByte(UINT16 addr,BYTE val){
+void eeWriteByte(uint16_t addr,uint8_t val){
 	if (eeReadByte(addr)==val)
 		return;
 	/* Wait for completion of previous write */

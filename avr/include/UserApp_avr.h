@@ -10,6 +10,7 @@
 
 //#define WPIRBE
 #include <math.h>
+#include "arch/AVR/BowlerConfig.h"
 #include "Bowler/Bowler.h"
 
 #include "Namespace/Namespace_bcs_io.h"
@@ -39,17 +40,17 @@ void UserInit(void);
 void UserRun(void);
 void AsynAck(void);
 
-BOOL checkAnalog();
-UINT16 getAnv(BYTE pin);
-BOOL getDig(BYTE pin);
-BOOL checkDigital();
-void initPinState(BYTE i);
+boolean checkAnalog();
+uint16_t getAnv(uint8_t pin);
+boolean getDig(uint8_t pin);
+boolean checkDigital();
+void initPinState(uint8_t i);
 void initBluetooth();
 
-BOOL avrAsyncCallbackPtr(BowlerPacket *Packet);
-void SetNewConfigurationDataTable(BYTE pin, INT32 value);
+boolean avrAsyncCallbackPtr(BowlerPacket *Packet);
+void SetNewConfigurationDataTable(uint8_t pin, int32_t value);
 NAMESPACE_LIST * get_internalNamespace();
-
+void Server();
 
 
 #if defined(ROBOSUB_DEMO)

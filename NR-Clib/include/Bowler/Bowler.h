@@ -17,7 +17,8 @@
  */
 #ifndef WASP_H_
 #define WASP_H_
-
+#include <stdint.h>
+#include <math.h>
 #include "Defines.h"
 #include "Bowler_Struct_Def.h"
 #include "Debug.h"
@@ -40,7 +41,7 @@
 #elif defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644PA__) || defined(__AVR_ATmega324P__)
 	#include "arch/AVR/BowlerConfig.h"
 #elif defined (__i386__) || defined (__ia64__) || defined (__amd64__)
-	#include "arch/native/BowlerConfig.h"+
+	#include "arch/native/BowlerConfig.h"
 #elif defined(__MICROBLAZE__)
 	#include "arch/xilinx/BowlerConfig.h"
 #else
@@ -50,9 +51,5 @@
 #endif
 
 #include "BowlerServerHardwareAbstraction.h"
-
-void UserInit(void);
-void UserRun(void);
-
 
 #endif /* WASP_H_ */

@@ -12,16 +12,16 @@
  * Get/Set the pin state to/from a packet
  * @return if the operatiion was a success
  */
-BOOL GetChannelValue(BowlerPacket * Packet);
-BOOL SetChannelValue(BowlerPacket * Packet);
-BOOL SetAllChannelValue(BowlerPacket * Packet);
+boolean GetChannelValue(BowlerPacket * Packet);
+boolean SetChannelValue(BowlerPacket * Packet);
+boolean SetAllChannelValue(BowlerPacket * Packet);
 
 /**
  * Retreives the value of a channel
  * Internaly checks the pin mode and calls the approprate method to access it
  * @return the value of that channel
  */
-UINT16 GetChanVal(BYTE pin);
+uint16_t GetChanVal(uint8_t pin);
 
 /**
  * Sets the value of a channel(primitive only, no stream channels with this method)
@@ -30,11 +30,11 @@ UINT16 GetChanVal(BYTE pin);
  * @param time the time it takes for the transision (only valid with servo for now)
  * @return if it succeded
  */
-BOOL SetChanVal(BYTE pin,INT32 bval, float time);
+boolean SetChanVal(uint8_t pin,int32_t bval, float time);
 
 /**
  * Sets the value of a channel into non volitile storage
  */
-BOOL SaveValue(BYTE pin,BYTE val);
+boolean SaveValue(uint8_t pin,uint8_t val);
 
 #endif /* CHANNELVALUES_H_ */

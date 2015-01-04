@@ -18,21 +18,73 @@
 #ifndef SERVO_H_
 #define SERVO_H_
 
-#define BLOCK_SIZE 8
+#define BLOCK_SIZE 2
 
-void SetPowerState0(BOOL railOk,BOOL regulated);
-void SetPowerState1(BOOL railOk,BOOL regulated);
-void setPowerOverride(BOOL set);
+void SetPowerState0(boolean railOk,boolean regulated);
+void SetPowerState1(boolean railOk,boolean regulated);
+void setPowerOverride(boolean set);
 /**
  * SetServoPos
  * @param PIN the DyIO pin to use
  * @param val the position to set the servo to
  * @param time the time in Ms for the travil to take
  */
-void SetServoPos(BYTE PIN,BYTE val,float time);
-BYTE GetServoPos(BYTE PIN);
-void RunServo(BYTE block);
-void InitServo(BYTE pin);
+void SetServoPos(uint8_t PIN,uint8_t val,float time);
+uint8_t GetServoPos(uint8_t PIN);
+void RunServo(uint8_t block);
+void InitServo(uint8_t pin);
+boolean pinServoOk(uint8_t pin);
+
+uint8_t pinOn(uint8_t pin);
+void pinOff(uint8_t pin);
+
+uint8_t getInterpolatedPin(uint8_t pin);
+boolean getPowerOverRide();
 void DelayPreServo(void);
+
+void startServoLoops();
+
+void servoTimerEvent();
+void setServoTimer(uint32_t value);
+
+void printSortedData();
+
+typedef enum _ServoState{
+    STARTLOOP=0,
+    BON=1,
+    AOFF=2,
+    FINISH=3
+} ServoState;
+
+    /*Stop the servo signals
+     */
+    void stopServos();
+
+    /**
+     * Start the servo hardware
+     */
+    void initServos();
+
+    /**
+     * Run the pulse for all pins
+     */
+    void runServos();
+
+    /**
+     * Set a setpoint for a servo with an intrerpolated time
+     */
+    void setServo(uint8_t PIN, uint8_t val,float time);
+
+    /**
+     * get the current position of the servo
+     */
+    uint8_t getServoPosition(uint8_t PIN);
+   /**
+    * private
+    */
+void runLinearInterpolationServo(uint8_t blockStart,uint8_t blockEnd);
+uint8_t pinOn(uint8_t pin);
+void pinOff(uint8_t pin);
+void DelayPreServoPulse(void);
 
 #endif /* SERVO_H_ */

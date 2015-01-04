@@ -858,7 +858,7 @@ typedef union {
 		unsigned _ICNC1	:1;
 	};
 	struct {
-		unsigned _CS	:3;
+		unsigned _CS	:3;// Clock select 1-5 are valid value
 		unsigned _WGM	:2;
 		unsigned 		:3;
 	};

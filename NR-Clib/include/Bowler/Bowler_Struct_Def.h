@@ -26,7 +26,7 @@
 #if !defined(__STACK_TSK_H) && !defined(_SOCKET_H_)
 	typedef struct __attribute__((__packed__)) _MAC_ADDR
 	{
-		unsigned char v[6];
+		uint8_t v[6];
 	} MAC_ADDR;
 #endif
 	typedef struct __attribute__((__packed__)) _HEADER
@@ -40,7 +40,7 @@
 		unsigned char		CRC;				// CRC for packet
 		unsigned long int				RPC;				// 4 byte RPC stored as a 32 bit int for single compare;
 	} HEADER;
-#define FullPacketDataSize 251
+#define FullPacketDataSize 252
 	typedef union  _BowlerPacket{
 		unsigned char stream[FullPacketDataSize+sizeof(HEADER)];
 		struct
@@ -49,17 +49,28 @@
 			unsigned char data[FullPacketDataSize];
 		} use;
 	}BowlerPacket;
-#define MiniPacketDataSize 105
-	typedef union _BowlerPacketMini{
-		unsigned char stream[MiniPacketDataSize+sizeof(HEADER)];
-		struct
-		{
-			HEADER head;
-			unsigned char data[MiniPacketDataSize];
-		} use;
-	}BowlerPacketMini;
+//#define MiniPacketDataSize FullPacketDataSize
+//	typedef union _BowlerPacketMini{
+//		unsigned char stream[MiniPacketDataSize+sizeof(HEADER)];
+//		struct
+//		{
+//			HEADER head;
+//			unsigned char data[MiniPacketDataSize];
+//		} use;
+//	}BowlerPacketMini;
 
 
+typedef struct  __attribute__((__packed__)) _INTERPOLATE_DATA
+{
+	//Target value for the interpolator to get to
+	float set;
+	//Initial starting point value of target
+	float start;
+	//How many ms the interpolation should take
+	float setTime;
+	//The timestamp of when the interpolation began.
+	float startTime;
 
+} INTERPOLATE_DATA;
 
 #endif /* WASPSTRUCTDEF_H_ */

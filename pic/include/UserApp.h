@@ -15,8 +15,13 @@
 #if !defined(__PIC32MX__)
 #define __PIC32MX__
 #define __C32__
+#define __32MX440F128H__
+#define __PIC32_FEATURE_SET__ 440
+#define __LANGUAGE_C__
 #include "arch/pic32/BowlerConfig.h"
+
 #endif
+//#include <peripheral/legacy/int_3xx_4xx_legacy.h>
 
 #include "Bowler/Bowler.h"
 #include "Namespace/Namespace_bcs_io.h"
@@ -43,17 +48,24 @@
 
 #include "arch/pic32/BowlerConfig.h"
 
+#include <proc/p32mx440f128h.h>
+#include <proc/ppic32mx.h>
 
 
 void UserInit(void);
 void UserRun(void);
 
 void UpdateAVRLED(void);
-void setHeartBeatState( BOOL hb, int time);
+void setHeartBeatState( boolean hb, int time);
 int getHeartBeatTime();
-BOOL getHeartBeatLock();
+boolean getHeartBeatLock();
 
-void buttonCheck(BYTE code);
+void buttonCheck(uint8_t code);
 void MyServer();
+void UserInit(void);
+void InitializeDyIODataTableManager();
+
+#define MAX_RETRY 5
+#define DELAY_TIMEOUT 200
 
 #endif /* USERAPP_H_ */

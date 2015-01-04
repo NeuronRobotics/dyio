@@ -6,6 +6,6 @@
  */
 #include "UserApp.h"
 
-BOOL ConfigChannel(BowlerPacket * Packet){
-	return FALSE;
+boolean ConfigChannel(BowlerPacket * Packet){
+	return false; 
 }

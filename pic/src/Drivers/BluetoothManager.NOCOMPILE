@@ -3,8 +3,8 @@
  * This file is for managment of the onboard bluetooth module
  */
 #include "UserApp.h"
-BOOL btOk = FALSE;
-BOOL btChecked = FALSE;
+boolean btOk = false; 
+boolean btChecked = false; 
 extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 
 #define HIGH_BAUD 230400
@@ -72,7 +72,7 @@ void configBluetooth(){
 	}
 }
 
-BOOL testAtCommand(int baud){
+boolean testAtCommand(int baud){
 
 	Pic32UARTSetBaud( baud );
 	//from http://www.e-gizmo.com/KIT/images/EGBT-04/EGBT-045MS-046S%20Bluetooth%20Module%20Manual%20rev%201r0.pdf
@@ -81,14 +81,14 @@ BOOL testAtCommand(int baud){
 	if( Pic32Get_UART_Byte_Count()>1){
 		Pic32UARTGetArray(packet,Pic32Get_UART_Byte_Count());
 		if(packet[0]=='O' && packet[1]=='K'){
-			return TRUE;
+			return true; 
 		}
 	}
 
-	return FALSE;
+	return false; 
 }
 
-BYTE hasBluetooth(){
+uint8_t hasBluetooth(){
 #if defined(HAS_BLUTOOTH)
 	if(!btChecked){
 
@@ -99,9 +99,9 @@ BYTE hasBluetooth(){
 		 */
 		int i;
 		for(i=0;i<(sizeof(bauds)/sizeof(int));i++){
-			if(btOk==FALSE ){
+			if(btOk==false ){
 				if(testAtCommand(bauds[i])){
-					btOk = TRUE;
+					btOk = true; 
 					myBaud  = bauds[i];
 					//if(myBaud == 9600){
 						configBluetooth();
@@ -119,18 +119,18 @@ BYTE hasBluetooth(){
 			}
 		}
 
-		btChecked = TRUE;
+		btChecked = true; 
 	}
 	return btOk;
 #else
-	return FALSE;
+	return false; 
 #endif
 }
 
 
 void initBluetooth(){
 #if defined(HAS_BLUTOOTH)
-	btChecked = FALSE;
+	btChecked = false; 
 	mPORTDOpenDrainClose(BIT_1 | BIT_2 | BIT_3); // make sure the com port is driven 3.3
 	BluetoothResetTRIS = OUTPUT; //output mode on reset line
 	BluetoothCommandTRIS = OUTPUT; //output mode on CMD line

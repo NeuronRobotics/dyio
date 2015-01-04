@@ -7,9 +7,9 @@
 
 #include "UserApp_avr.h"
 
-extern DATA_STRUCT DATA;
+//extern DATA_STRUCT DyioPinFunctionData;
 
-BYTE GetDIO(BYTE PIN){
+uint8_t GetDIO(uint8_t PIN){
 	switch (PIN){
 #if !defined(WPIRBE)
 	case 0:
@@ -48,9 +48,11 @@ BYTE GetDIO(BYTE PIN){
 	case 16:
 		if (getPrintLevel() == NO_PRINT)
 			return PI16;
+			/* no break */
 	case 17:
 		if (getPrintLevel() == NO_PRINT)
 			return PI17;
+			/* no break */
 	case 18:
 		return PI18;
 	case 19:
@@ -67,7 +69,7 @@ BYTE GetDIO(BYTE PIN){
 	return 0;
 }
 
-void SetDIO(BYTE PIN,BYTE state){
+void SetDIO(uint8_t PIN,uint8_t state){
 	switch (PIN){
 #if !defined(WPIRBE)
 	case 0:
@@ -124,15 +126,11 @@ void SetDIO(BYTE PIN,BYTE state){
 
 	case 16:
 		if (getPrintLevel() == NO_PRINT){
-			UCSR1B=0;
-			SetPinTris(PIN,OUTPUT);
 			PO16 = state;
 		}
 		return;
 	case 17:
 		if (getPrintLevel() == NO_PRINT){
-			UCSR1B=0;
-			SetPinTris(PIN,OUTPUT);
 			PO17 = state;
 		}
 		return;
@@ -156,7 +154,7 @@ void SetDIO(BYTE PIN,BYTE state){
 		return;
 	}
 }
-void SetPinTris(BYTE PIN,BYTE state){
+void SetPinTris(uint8_t PIN,uint8_t state){
 	switch (PIN){
 #if !defined(WPIRBE)
 	case 0:

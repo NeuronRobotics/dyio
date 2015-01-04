@@ -641,6 +641,7 @@ extern BYTE configDescriptor1[];
 
 /** Public Prototypes *************************************************/
 void USBCheckCDCRequest(void);
+BYTE isUSBTxBlocked();
 void CDCInitEP(void);
 BOOL USBUSARTRxIsReady(void);
 BYTE getsUSBUSART(char *buffer, WORD len);
@@ -648,6 +649,5 @@ void putrsUSBUSART(const ROM char *data);
 void putUSBUSART(char *data, WORD Length);
 void putsUSBUSART(char *data);
 void CDCTxService(void);
-void USBDeviceTasksLocal(void);
 
 #endif //CDC_H

@@ -18,6 +18,7 @@
 #ifndef BOWLERCONFIG_H_
 #define BOWLERCONFIG_H_
 
+
 #include "reg_structs.h"
 #include <util/delay.h>
 #include <avr/io.h>
@@ -25,6 +26,7 @@
 #include <string.h>
 #include <avr/pgmspace.h>
 #include "Bowler/Debug.h"
+#  include <avr/iom644p.h>
 #if !defined(__AVR_ATmega324P__)
 	#define USE_DYN_RPC
 #endif
@@ -33,6 +35,7 @@
 #define FlagAsync_DDR 	DDRCbits._P6
 #define FlagBusy_IO		PORTCbits._P7
 #define FlagAsync		PINCbits._P6
+
 #define InitFlagPins() 	FlagBusy_DDR=OUTPUT;FlagAsync_DDR=INPUT;FlagBusy_IO=0;PORTCbits._P6=1;
 
 #define OUTPUT 					1
@@ -50,8 +53,11 @@
 #define Nop()					__asm__("nop\n\t")
 #define nop()					Nop()
 
-void WriteAVRUART0(BYTE val);
-void WriteAVRUART1(BYTE val);
+void WriteAVRUART0(uint8_t val);
+void WriteAVRUART1(uint8_t val);
+void updateTimer(uint64_t value);
+
+void fixTimers(int currentTimer);
 
 //#define WriteUART_COM 			WriteAVRUART0
 //#define WriteUART_DEBUG 		WriteAVRUART1

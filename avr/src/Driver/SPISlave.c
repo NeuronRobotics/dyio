@@ -6,24 +6,24 @@
 #include <avr/interrupt.h>
 
 #if defined(WPIRBE)
-BOOL setMode(BYTE pin,BYTE mode);
+boolean setMode(uint8_t pin,uint8_t mode);
 /**
  * Private functions
  */
 void SPISlaveTx(BowlerPacket * Packet);
-void TXadd(BYTE b);
-void RXadd(BYTE b);
-BYTE TXget();
-BYTE getTXcount();
+void TXadd(uint8_t b);
+void RXadd(uint8_t b);
+uint8_t TXget();
+uint8_t getTXcount();
 
-static BOOL gotPacket = FALSE;
+boolean gotPacket = false;
 
-static BowlerPacket Packet;
+BowlerPacket Packet;
 
-static BYTE privateRX[BOWLER_PacketSize];
-static BYTE_FIFO_STORAGE storeRX;
-static BYTE privateTX[BOWLER_PacketSize];
-static BYTE_FIFO_STORAGE storeTX;
+uint8_t privateRX[BOWLER_PacketSize];
+uint8_t*_FIFO_STORAGE storeRX;
+uint8_t privateTX[BOWLER_PacketSize];
+uint8_t*_FIFO_STORAGE storeTX;
 /**
  * Initialize the SPI port to work as an SPI channel
  */
@@ -45,8 +45,8 @@ void SPISlaveInit(){
 
 	InitByteFifo(&storeTX,privateTX,sizeof(privateTX));
 	InitByteFifo(&storeRX,privateRX,sizeof(privateRX));
-	SetPowerState(TRUE,FALSE,FALSE);
-	BYTE i;
+	SetPowerState(TRUE,FALSE,false) ;
+	uint8_t i;
 	for(i=8;i<16;i++){
 		if(GetChannelMode(i)==IS_DI||GetChannelMode(i)==IS_DO)
 			setMode(i,IS_SERVO);
@@ -59,10 +59,10 @@ void SPISlaveInit(){
  */
 void SPISlaveServer(){
 	if(GetBowlerPacket(&Packet,&storeRX)){
-		gotPacket=TRUE;
+		gotPacket=true; 
 		Process_Self_Packet(&Packet);
 		SPISlaveTx(&Packet);
-		gotPacket=FALSE;
+		gotPacket=false; 
 	}
 	//println_I("Slave Server");
 }
@@ -79,21 +79,21 @@ void SPISlaveTx(BowlerPacket * Packet){
 	}
 }
 
-void RXadd(BYTE b){
+void RXadd(uint8_t b){
 	FifoAddByte(&storeRX,b);
 
 }
-void TXadd(BYTE b){
+void TXadd(uint8_t b){
 	FifoAddByte(&storeTX,b);
 }
 
-BYTE TXget(){
-	BYTE b=0xff;
+uint8_t TXget(){
+	uint8_t b=0xff;
 	if(getTXcount()>0)
 		FifoGetByteStream(&storeTX,&b,1);
 	return b;
 }
-BYTE getTXcount(){
+uint8_t getTXcount(){
 	return storeTX.byteCount;
 }
 

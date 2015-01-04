@@ -38,13 +38,13 @@
 	/**
 	 * Packet Event for cartesian controller
 	 */
-	BOOL CartesianControllerGetPacket(BowlerPacket * Packet);
+	boolean CartesianControllerGetPacket(BowlerPacket * Packet);
 	/**
 	 * Packet Event for cartesian controller
 	 */
-	BOOL CartesianControllerPostPacket(BowlerPacket * Packet);
+	boolean CartesianControllerPostPacket(BowlerPacket * Packet);
 	/**
 	 * Packet Event for cartesian controller
 	 */
-	BOOL CartesianControllerCriticalPacket(BowlerPacket * Packet);
+	boolean CartesianControllerCriticalPacket(BowlerPacket * Packet);
 #endif /* CARTESIANCONTROLLER_H_ */

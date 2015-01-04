@@ -1,12 +1,18 @@
 -include common/Version.mk
 REVISION=$(MAJOR_VER).$(MINOR_VER).$(FIRMWARE_VER)
 PUB=java -jar FirmwarePublish/Publish.jar -revision=$(REVISION)
-WORKSPACE=../../../
-NRCLIB_LOCATION=$(WORKSPACE)/c-bowler/firmware/library/NR-Clib/development/
+WORKSPACE=../
+NRCLIB_LOCATION=$(WORKSPACE)/c-bowler/
 PIC_COMPILER=xc32-v1.00-linux
 
+DUALDEBUG=FirmwarePublish/Dev/dyio-DEV-AVRDEBUG-PICDEBUG-$(REVISION).xml
+RELEASEFW=FirmwarePublish/Release/dyio-$(REVISION).xml
 
-all: pubDebug
+
+BOOTLOADFW=$(RELEASEFW)
+#BOOTLOADFW=$(DUALDEBUG)
+
+all:loadFw 
 	echo DyIO Firmware built OK!
 upload:svnupdate update all commit
 	if (test -d $(NRCLIB_LOCATION)/);then cd $(NRCLIB_LOCATION)/;make commit;	fi
@@ -38,28 +44,38 @@ svnupdate:
 commit:
 	svn commit -m="Building the DyIO"
 	cd ../NRSDK/fw; svn commit -m="Building the DyIO"
-main:
-	make -C avr all
+	
+build: update
 	make -C pic all
+	make -C avr all
+
+bootloader:
+	#http://electropepper.org/blog/item/linux-terminal-only-pic-programming
+	rm -rf ./MPLABXLog.xml*
+	/opt/microchip/mplabx/mplab_ide/bin/mdb.sh ./prog.txt	
+	sleep 5
+loadFw: bootloader#pubDebug #
+	#nr-console -xml=$(BOOTLOADFW) -port=/dev/Bootloader0
+	nr-console -xml=$(BOOTLOADFW) -port=/dev/Bootloader1
 	
-	
-	
-pubDebug:main
+pubDebug:pub
 	mkdir -p FirmwarePublish/Dev/
 	rm -rf FirmwarePublish/Dev/*.xml;
-	$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	 -output=FirmwarePublish/Dev/dyio-PICDEBUG-$(REVISION)_NO_AVR.xml
+	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	 -output=FirmwarePublish/Dev/dyio-PICDEBUG-$(REVISION)_NO_AVR.xml
 	#Debug
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Dev/dyio-DEV-$(REVISION)
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p_debug/output.hex -output=FirmwarePublish/Dev/dyio-DEV-AVRDEBUG-$(REVISION)
-	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p_debug/output.hex -output=FirmwarePublish/Dev/dyio-DEV-AVRDEBUG-PICDEBUG-$(REVISION)
+	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p_debug/output.hex -output=$(DUALDEBUG)
+	$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=$(DUALDEBUG)
+
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Dev/dyio-DEV-PICDEBUG-$(REVISION)
 	
-pub:main
+pub: build
 	mkdir -p FirmwarePublish/Release/
 	rm -rf FirmwarePublish/Release/*.xml; 
 	rm -rf FirmwarePublish/Release/legacy/*.xml
 
-	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 		-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Release/dyio-$(REVISION).xml
+	$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 		-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Release/dyio-$(REVISION).xml
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/bluetooth/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Release/dyio-bluetooth-$(REVISION).xml
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 		-core=1,avr_atmegaXX4p,2,avr/output/atmega324p/output.hex -output=FirmwarePublish/Release/legacy/dyio-$(REVISION)_legacy.xml
 

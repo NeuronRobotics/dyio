@@ -16,7 +16,7 @@
  * Initialize SetMode hardware interface functions
  */
 
-void InitilizeBcsIoSetmode(BOOL (*setChanelModeHWPtrLocal)(BYTE,BYTE));
+void InitilizeBcsIoSetmode(boolean (*setChanelModeHWPtrLocal)(uint8_t,uint8_t));
 
 NAMESPACE_LIST * get_bcsIoSetmodeNamespace();
 
@@ -25,26 +25,26 @@ NAMESPACE_LIST * get_bcsIoSetmodeNamespace();
  * Sets the given channel to the given mode
  * Returns true if successful
  */
-BOOL SetChannelMode(BYTE chan,BYTE mode);
+boolean SetChannelMode(uint8_t chan,uint8_t mode);
 /*
  * Set Channel Mode
  * Sets the given channel to the given mode
  * Returns true if successful
  */
-BOOL AbstractSetChannelMode(BowlerPacket * Packet);
+boolean AbstractSetChannelMode(BowlerPacket * Packet);
 
 /*
  * Set All channel modes
  * Iterates down the array of channel modes setting all of them
  * Returns true if all modes set OK
  */
-BOOL SetAllChannelModes(BYTE * modeArray);
+boolean SetAllChannelModes(uint8_t * modeArray);
 
 /*
  * Set All channel modes
  * Iterates down the array of channel modes setting all of them
  * Returns true if all modes set OK
  */
-BOOL AbstractSetAllChannelMode(BowlerPacket * Packet);
+boolean AbstractSetAllChannelMode(BowlerPacket * Packet);
 
 #endif /* NAMESPACE_BCS_IO_SETMODE_H_ */

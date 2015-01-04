@@ -7,70 +7,105 @@
 #include "UserApp.h"
 
 
-void InitSPI(void){
-	println_I("Initializing the SPI perpheral");
+static uint8_t privateSerialRX[20];
+static uint8_t privateSerialTX[20];
+static BYTE_FIFO_STORAGE storeRx;
+static BYTE_FIFO_STORAGE storeTx;
+static BYTE SSPin=0;
+static boolean HardwareInitialized=false;
+
+void InitSPIDyIO(void){
+	if(HardwareInitialized == true)
+		return;
+	HardwareInitialized = true;
+	//println_W("Initializing the SPI perpheral");
 	mPORTGOpenDrainOpen(BIT_6);// Clock is output
 	mPORTGOpenDrainOpen(BIT_8);// Data Out is an output
 	SPI_SCK_IO=1;
 	SPI_SDO_IO=1;
 	OpenSPI2(SPI_MODE8_ON|ENABLE_SDO_PIN|SLAVE_ENABLE_OFF|SPI_CKE_ON|MASTER_ENABLE_ON|SEC_PRESCAL_8_1|PRI_PRESCAL_64_1, SPI_ENABLE);
-	println_I("Setting up SPI perpheral");
 	SetCoProcMode(0,IS_SPI_SCK);
 	SetCoProcMode(1,IS_SPI_MISO);
 	SetCoProcMode(2,IS_SPI_MOSI);
+	InitByteFifo(&storeRx,privateSerialRX,sizeof(privateSerialRX));
+	InitByteFifo(&storeTx,privateSerialTX,sizeof(privateSerialTX));
+}
+uint32_t getNumberOfSPIRxBytes(){
+	return FifoGetByteCount(&storeRx);
 }
 
-void StopSPI(BYTE pin){
-	if (isSPI(GetChannelMode(pin))){
+boolean LoadSPITxData(uint8_t numValues,uint8_t * data){
+	int i;
+	uint8_t err;
+	SSPin = data[0];
+	for(i=0;i<numValues;i++){
+		FifoAddByte(&storeTx,data[i+1],&err);
+	}
+	return true;
+}
+
+uint8_t GetSPIRxData(uint8_t * data){
+	//int i;
+	//uint8_t err;
+	uint8_t numValues = FifoGetByteCount(&storeRx);
+	if(numValues>0)
+		numValues = FifoGetByteStream(&storeRx,data,numValues);
+	return numValues;
+}
+
+void StopDyIOSPI(uint8_t pin,uint8_t mode){
+	if (isSPI(mode)){
 		CloseSPI2();
 		_RG6=1;
 		_RG8=1;
 		SDI_TRIS=INPUT;
 		SDO_TRIS=INPUT;
 		SCK_TRIS=INPUT;
-		println_I("Clearing up SPI perpheral");
+		//println_I("Clearing up SPI perpheral");
 		SetCoProcMode(0,IS_DI);
 		SetCoProcMode(1,IS_DI);
 		SetCoProcMode(2,IS_DI);
+		HardwareInitialized = false;
 	}
 }
-BOOL isSPI(BYTE mode){
+boolean isSPI(uint8_t mode){
 	switch(mode){
 	case IS_SPI_MOSI:
 	case IS_SPI_MISO:
 	case IS_SPI_SCK:
-		return TRUE;
+		return true; 
 	}
-	return FALSE;
+	return false; 
 }
 
-BYTE GetByteSPI(BYTE b){
-	InitSPI();
+uint8_t GetByteSPIDyIO(uint8_t b){
+	//InitSPIDyIO();
 	putcSPI2(b);	// Start sending
 	return getcSPI2();
 }
 
-void SendPacketToSPIFromArray(BYTE numBytes,BYTE * data){
-	BYTE ss = data[0];
-	if(ss<3){
-		println_I("invalid SS pin");
+void SyncSPIData(){
+	if(SSPin<3 || FifoGetByteCount(&storeTx)==0){
 		return;
 	}
-	if(!SetCoProcMode(ss,IS_DO))
-		SetChannelValueCoProc(ss,1);
-	SetChannelValueCoProc(ss,0);
-	BYTE i;
-	for (i=0;i<numBytes;i++){
-		data[i+1]=GetByteSPI(data[i+1]);
+	//println_W("SPI SS# ");p_int_W(SSPin);
+	if(!SetCoProcMode(SSPin,IS_DO))
+		_SetChannelValueCoProc(SSPin,1);
+	_SetChannelValueCoProc(SSPin,0);
+	uint8_t err;
+	while(FifoGetByteCount(&storeTx)>0){
+
+		FifoAddByte(&storeRx,GetByteSPIDyIO(FifoGetByte(&storeTx,&err)),&err) ;
 	}
-	SetChannelValueCoProc(ss,1);
+	_SetChannelValueCoProc(SSPin,1);
+	SSPin=0;
 }
 
 
-void SendPacketToSPI(BowlerPacket * Packet){
-	if(!isSPI(GetChannelMode(Packet->use.data[0]))){
-		println_I("channel is not SPI");
-		return;
-	}
-	SendPacketToSPIFromArray(Packet->use.head.DataLegnth-6,Packet->use.data+1);
-}
+//void SendPacketToSPI(BowlerPacket * Packet){
+//	if(!isSPI(GetChannelMode(Packet->use.data[0]))){
+//		println_I("channel is not SPI");
+//		return;
+//	}
+//	SendPacketToSPIFromArray(Packet->use.head.DataLegnth-6,Packet->use.data+1);
+//}

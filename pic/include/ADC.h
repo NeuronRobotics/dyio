@@ -9,11 +9,11 @@
 #define ADC_H_
 
 void InitADC(void);
-BOOL isLocked(void);
-BOOL isActive(void);
+boolean isLocked(void);
+boolean isActive(void);
 float GetRawVoltage(void);
 float GetRawVoltagePostFuse(void);
-BYTE GetRawVoltageCode(BYTE bank);
+uint8_t GetRawVoltageCode(uint8_t bank);
 float GetRail0Voltage(void);
 float GetRail1Voltage(void);
 

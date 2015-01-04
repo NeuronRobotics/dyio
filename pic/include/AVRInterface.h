@@ -11,7 +11,7 @@ void PowerCycleAVR();
 void HoldAVRReset(void);
 void ReleaseAVRReset(void);
 
-BOOL writeAVRTempFlashPageLowByte(BYTE data, BYTE address);
-BOOL writeAVRTempFlashPageHighByte(BYTE data, BYTE address);
+boolean writeAVRTempFlashPageLowByte(uint8_t data, uint8_t address);
+boolean writeAVRTempFlashPageHighByte(uint8_t data, uint8_t address);
 
 #endif /* AVRINTERFACE_H_ */

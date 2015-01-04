@@ -19,7 +19,7 @@
 /**
  * Checks to see if the bluetooth module is present
  */
-BYTE hasBluetooth();
+uint8_t hasBluetooth();
 /**
  * Initialized the bluetooth module
  */

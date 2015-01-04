@@ -77,7 +77,6 @@
 	#if !defined(__C32__)
 		#define __C32__
 	#endif
-	#include "Bowler/Defines.h"
 	#include "GenericTypeDefs.h"
 	#include <p32xxxx.h>
 	#include <plib.h>
@@ -158,7 +157,7 @@
 	#if defined(__PIC32MX__)
 		#define persistent
 		#define far
-        #define FAR
+                #define FAR
 		#define Reset()				SoftReset()
 		#define ClrWdt()			(WDTCONSET = _WDTCON_WDTCLR_MASK)
 

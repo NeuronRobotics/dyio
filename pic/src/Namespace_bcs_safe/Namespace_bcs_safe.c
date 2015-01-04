@@ -6,19 +6,19 @@
  */
 #include "UserApp.h"
 int getHeartBeatTime();
-BOOL getHeartBeatLock();
-void setHeartBeatState(BOOL hb, int time);
+boolean getHeartBeatLock();
+void setHeartBeatState(boolean hb, int time);
 
-char safeNSName[] = "bcs.safe.*;0.3;;";
+//char safeNSName[] = "bcs.safe.*;0.3;;";
 
-BOOL bcsSafeAsyncEventCallback(BowlerPacket *Packet, BOOL(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {
+boolean bcsSafeAsyncEventCallback(BowlerPacket *Packet, boolean(*pidAsyncCallbackPtr)(BowlerPacket *Packet)) {
     //println_W("Async ");print_W(safeNSName);
 
-    return FALSE;
+    return false; 
 }
 
-BOOL bcsSafeProcessor_g(BowlerPacket * Packet) {
-    //BYTE temp0;
+boolean bcsSafeProcessor_g(BowlerPacket * Packet) {
+    //uint8_t temp0;
     UINT16_UNION timeUnion;
     switch (Packet->use.head.RPC) {
         case SAFE:
@@ -30,15 +30,15 @@ BOOL bcsSafeProcessor_g(BowlerPacket * Packet) {
             Packet->use.head.DataLegnth = 4 + 3;
             break;
         default:
-            return FALSE;
+            return false; 
     }
-    return TRUE;
+    return true; 
 }
 
-BOOL bcsSafeProcessor_p(BowlerPacket * Packet) {
-    //BYTE temp0;
+boolean bcsSafeProcessor_p(BowlerPacket * Packet) {
+    //uint8_t temp0;
     UINT16_UNION timeUnion;
-    BYTE zone = 5;
+    uint8_t zone = 5;
     switch (Packet->use.head.RPC) {
 
         case SAFE:
@@ -48,61 +48,56 @@ BOOL bcsSafeProcessor_p(BowlerPacket * Packet) {
             READY(Packet, zone, 7);
             break;
         default:
-            return FALSE;
+            return false; 
     }
-    return TRUE;
+    return true; 
 }
 
-static RPC_LIST bcsSafe_safe_g = {BOWLER_GET, // Method
+  RPC_LIST bcsSafe_safe_g = {BOWLER_GET, // Method
     "safe", //RPC as string
     &bcsSafeProcessor_g, //function pointer to a packet parsinf function
-    ((const char [1]) {
-        0
-    }), // Calling arguments
+    { 0}, // Calling arguments
     BOWLER_POST, // response method
-    ((const char [3]) {
-        BOWLER_I08,// heartbeat lockout
+    {BOWLER_I08,// heartbeat lockout
         BOWLER_I16,// heartbeet time
         0
-    }), // Response arguments
+    }, // Calling arguments
     NULL //Termination
 };
 
-static RPC_LIST bcsSafe_safe_p = {BOWLER_POST, // Method
+  RPC_LIST bcsSafe_safe_p = {BOWLER_POST, // Method
     "safe", //RPC as string
     &bcsSafeProcessor_p, //function pointer to a packet parsinf function
-    ((const char [3]) {
-        BOWLER_I08,// heartbeat lockout
+    {BOWLER_I08,// heartbeat lockout
         BOWLER_I16,// heartbeet time
         0
-    }), // Response arguments
+    }, // Calling arguments
     BOWLER_POST, // response method
-    ((const char [3]) {
-        BOWLER_I08, // code
+    {BOWLER_I08, // code
         BOWLER_I08, // trace
         0
-    }), // Response arguments
+    }, // Calling arguments
     NULL //Termination
 };
 
 
 
-static NAMESPACE_LIST bcsSafe = {safeNSName, // The string defining the namespace
+  NAMESPACE_LIST bcsSafe = {"bcs.safe.*;0.3;;", // The string defining the namespace
     NULL, // the first element in the RPC list
     &bcsSafeAsyncEventCallback, // async for this namespace
     NULL// no initial elements to the other namesapce field.
 };
 
-static BOOL namespcaedAdded = FALSE;
+  boolean bcsSafenamespcaedAdded = false;
 
 NAMESPACE_LIST * get_bcsSafeNamespace() {
-    if (!namespcaedAdded) {
+    if (!bcsSafenamespcaedAdded) {
         //POST
         //Add the RPC structs to the namespace
         addRpcToNamespace(&bcsSafe, & bcsSafe_safe_g);
         addRpcToNamespace(&bcsSafe, & bcsSafe_safe_p);
 
-        namespcaedAdded = TRUE;
+        bcsSafenamespcaedAdded = true;
     }
 
     return &bcsSafe; //Return pointer to the struct

@@ -11,8 +11,8 @@
 #define RAW_POWER 1
 #define REGULATED 0
 
-UINT16 GetRailVoltage(void);
-BYTE GetSwitchPosition(BYTE chan);
+uint16_t GetRailVoltage(void);
+uint8_t GetSwitchPosition(uint8_t chan);
 
 
 #endif /* POWER_H_ */

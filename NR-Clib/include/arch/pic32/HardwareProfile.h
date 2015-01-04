@@ -241,9 +241,9 @@
 
 	#define BLUE_LED_TRIS		(_TRISD0)	//
 	#define BLUE_LED_IO			(_RD0)
-	#define startLED()			 AD1CHS = 0x0000;AD1PCFG = 0xFFFF;AD1CON1 = 0x0000;AD1CON2 = 0x0000;AD1CON3 = 0x0000;AD1CSSL = 0x0000;PORTSetPinsDigitalOut(IOPORT_B,BIT_1|BIT_2|BIT_3)
+	#define startLED()			 PORTSetPinsDigitalOut(IOPORT_B,BIT_1|BIT_2|BIT_3)
 	#define SET_RED(a)			(a==0?PORTSetBits(IOPORT_B,BIT_3):PORTClearBits(IOPORT_B,BIT_3))
-	#define SET_GREEN(a)		(a==0?PORTSetBits(IOPORT_B,BIT_2):PORTClearBits(IOPORT_B,BIT_2))
+	#define SET_GREEN(a)                    (a==0?PORTSetBits(IOPORT_B,BIT_2):PORTClearBits(IOPORT_B,BIT_2))
 	#define SET_BLUE(a)			(a==0?PORTSetBits(IOPORT_B,BIT_1):PORTClearBits(IOPORT_B,BIT_1))
 #endif
 
@@ -253,10 +253,10 @@
 	#define FLAG_ASYNC				(_RD7)
 	#define Init_FLAG_BUSY_ASYNC()	FLAG_ASYNC_TRIS=INPUT;FLAG_BUSY_TRIS=INPUT;
 
-
-	#define AVR_RST_TRIS		(_TRISE3)
-	#define AVR_RST_IO			(_RE3)
-	#define InitAVR_RST()	  	 mPORTEOpenDrainOpen(BIT_3);AVR_RST_TRIS=OUTPUT;AVR_RST_IO=0;
+//
+//	#define AVR_RST_TRIS		(_TRISE3)
+	#define AVR_RST_IO(a)		setPicIOPin(a, 'E', 3)
+	#define InitAVR_RST()	  	 mPORTEOpenDrainOpen(BIT_3);setPicIOTristateOutput('E',3);AVR_RST_IO(0);
 	//#define InitAVR_RST()	  	 mPORTEOpenDrainOpen(BIT_3);AVR_RST_IO=1;
 
 	#define SPI_SCK_IO			(_RG6)
@@ -294,3 +294,5 @@
 void InitADCHardware(BYTE chan);
 float getAdcVoltage(BYTE chan, int samples);
 int getAdcRaw(BYTE chan, int samples);
+void measureAdcOffset();
+int getAdcOffset();

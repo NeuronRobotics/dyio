@@ -59,9 +59,9 @@
 #endif
 
 #if defined(__C30__) || defined(__C32__)
-	void Delay10us(DWORD dwCount);
-	void DelayMs(WORD ms);
-	void Delay1us(DWORD dwCount);
+	void Delay10us(uint32_t dwCount);
+	void DelayMs(uint32_t ms);
+	void Delay1us(uint32_t dwCount);
 	void DelayPreServo(void);
 	void DelayIncServo(void);
 #endif

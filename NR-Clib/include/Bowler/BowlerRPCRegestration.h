@@ -9,9 +9,9 @@
 #define BOWLERRPCREGESTRATION_H_
 
 #define MAX_NUM_RPC 15
-BYTE addRPC(BYTE method,const char * rpc,void( *_callback)(BowlerPacket*));
+uint8_t addRPC(uint8_t method,const char * rpc,void( *_callback)(BowlerPacket*));
 #if !defined(USE_LINKED_LIST_NAMESPACE)
-BYTE setMethodCallback(BYTE method,BYTE( *_callback)(BowlerPacket*));
+uint8_t setMethodCallback(uint8_t method,BYTE( *_callback)(BowlerPacket*));
 #endif
 
 typedef void rpcCallback(BowlerPacket *);
@@ -28,7 +28,7 @@ typedef struct  _RPC_HANDLER_SET{
 } RPC_HANDLER_SET;
 
 
-typedef BYTE methodCallback(BowlerPacket *);
+typedef uint8_t methodCallback(BowlerPacket *);
 
 typedef struct  _METHOD_HANDLER{
 		unsigned char set;

@@ -1,0 +1,6 @@
+Device PIC32MX440F128H
+set system.disableerrormsg true
+Hwtool pickit3 -p
+Program "./NR_CDC_Bootloader.hex"
+Reset MCLR
+Quit

@@ -6,14 +6,14 @@
  */
 
 #include "UserApp.h"
-static BYTE ppmData[]={128,128,128,128,128,128};
-static BYTE ppmLastSent[]={255,255,255,255,255,255};
-static BYTE ppmLink[]={255,255,255,255,255,255};
-static UINT32 ppmDataTmp[]={128,128,128,128,128,128};
-static UINT32 ppmStart[NUM_PPM_CHAN];
-static BYTE ppmIndex = 0;
-static UINT32 bufferStart=0;
-static UINT32 buffTime = (TICKS_PER_SECOND/1000)*6;
+uint8_t ppmData[]={128,128,128,128,128,128};
+uint8_t ppmLastSent[]={255,255,255,255,255,255};
+uint8_t ppmLink[]={255,255,255,255,255,255};
+uint32_t ppmDataTmp[]={128,128,128,128,128,128};
+uint32_t ppmStart[NUM_PPM_CHAN];
+uint8_t ppmIndex = 0;
+uint32_t bufferStart=0;
+uint32_t buffTime = (TICKS_PER_SECOND/1000)*6;
 
 void configPin23Int();
 
@@ -22,16 +22,26 @@ typedef enum{
 	WAIT_FOR_PULSE,
 	PULSE_STARTED
 }ppmState ;
-static ppmState state;
+ppmState state;
+boolean startedLinks=false;
 
+boolean writeLinks=false;
 
 void RunPPMCheck(void){
 	if(GetChannelMode(23) != IS_PPM_IN){
 		//setMode(23,IS_PPM_IN);
 		return;
 	}
+	if(startedLinks==false){
+		startedLinks=true;
+		readPPMLink(ppmLink);
+	}
+	if(writeLinks==true){
+		writeLinks=false;
+		writePPMLink(ppmLink);
+	}
 	int i;
-	BOOL up = FALSE;
+	boolean up = false; 
 	for(i=0;i<NUM_PPM_CHAN;i++){
 		float fTime =MyTickConvertToMilliseconds(((float)ppmDataTmp[i])+(((float)TickGetUpper())*((float) 4294967295ul )));
 		if(fTime>.9 && fTime<2.2){
@@ -40,12 +50,12 @@ void RunPPMCheck(void){
 				fVal=254;
 			if(fVal<0)
 				fVal=0;
-			BYTE time =((BYTE) fVal);
+			uint8_t time =((BYTE) fVal);
 
 			if((time>(ppmData[i]+3)) || (time<(ppmData[i]-3))){
 				ppmData[i]=time;
 				//setHeartBeatState( FALSE, 0);
-				up=TRUE;
+				up=true; 
 			}
 		}
 	}
@@ -60,7 +70,7 @@ void RunPPMCheck(void){
 					ppmLastSent[i] = ppmData[i];
 					Print_Level l = getPrintLevel();
 					setPrintLevelInfoPrint();
-					println_I("PPM setting output");
+					//println_I("PPM setting output");
 					//SetChannelValueCoProc(ppmLink[i],ppmData[i]);
 					getBcsIoDataTable(ppmLink[i])->PIN.currentValue=ppmData[i];
 					//SetValFromAsync(ppmLink[i],ppmData[i]);
@@ -72,8 +82,8 @@ void RunPPMCheck(void){
 }
 
 void runPPMEvent(void){
-	BYTE pinState = CHAN3P1;
-	UINT32 now = TickGet();
+	uint8_t pinState = CHAN3P1;
+	uint32_t now = TickGet();
 	if(pinState){
 		mINT4SetEdgeMode(0);
 	}else{
@@ -87,7 +97,7 @@ void runPPMEvent(void){
 		if((now>(bufferStart + buffTime))&&(pinState == 1)){
 			state =  WAIT_FOR_PULSE;
 		}
-		break;
+		// no break
 	case WAIT_FOR_PULSE:
 		if(pinState == 0 ){
 			ppmStart[ppmIndex]=now;
@@ -109,21 +119,19 @@ void runPPMEvent(void){
 	}
 }
 
-void clearPPM(BYTE chan){
-	if((chan == 23) && (GetChannelMode(23)==IS_PPM_IN)){
+void clearPPM(uint8_t chan,uint8_t mode){
+	if((chan == 23) && (mode==IS_PPM_IN)){
 		CloseINT4();
 		CHAN3P1_tris=INPUT;
 	}
 }
 
-void startPPM(BYTE chan){
+void startPPM(uint8_t chan){
 	int i;
 	if(chan == 23){
-//		ConfigINT4(EXT_INT_ENABLE | FALLING_EDGE_INT | EXT_INT_PRI_5);
-//		CHAN3P1_tris=INPUT;
 		configPin23Int();
 		state = START;
-		readPPMLink(ppmLink);
+
 		for(i=0;i<NUM_PPM_CHAN;i++){
 			if(ppmLink[i]>= GetNumberOfIOChannels())
 				ppmLink[i]=INVALID_PPM_LINK;
@@ -137,20 +145,21 @@ void GetPPMDataToPacket(BowlerPacket * Packet){
 	int i;
 	LoadCorePacket(Packet);
 	Packet->use.head.Method=BOWLER_POST;
-	Packet->use.head.RPC=GetRPCValue("gchv");
+	Packet->use.head.RPC=GetRPCValue("strm");
 	Packet->use.data[0]=23;
+	Packet->use.data[1]=NUM_PPM_CHAN*2;
 	for(i=0;i<NUM_PPM_CHAN;i++){
-		Packet->use.data[1+i]=ppmData[i];
+		Packet->use.data[2+i]=ppmData[i];
 	}
 	for(i=0;i<NUM_PPM_CHAN;i++){
-		Packet->use.data[1+i+NUM_PPM_CHAN]=ppmLink[i];
+		Packet->use.data[2+i+NUM_PPM_CHAN]=ppmLink[i];
 	}
-	Packet->use.head.DataLegnth=4+1+(NUM_PPM_CHAN*2);
+	Packet->use.head.DataLegnth=4+1+1+(NUM_PPM_CHAN*2);
 	Packet->use.head.MessageID=0;
 	SetCRC(Packet);
 }
 
-void ConfigPPMFromArray(BYTE * data){
+void ConfigPPMFromArray(uint8_t * data){
 	int i;
 	for(i=0;i<NUM_PPM_CHAN;i++){
 		ppmLink[i]=data[i];
@@ -160,7 +169,8 @@ void ConfigPPMFromArray(BYTE * data){
 			unlockServos();
 		}
 	}
-	writePPMLink(ppmLink);
+	writeLinks=true;
+
 }
 
 void ConfigPPM(BowlerPacket * Packet){
@@ -173,11 +183,11 @@ void ConfigPPM(BowlerPacket * Packet){
 			unlockServos();
 		}
 	}
-	writePPMLink(ppmLink);
+	writeLinks=true;
 	READY(Packet,66,0);
 }
 
-int GetPPMDataToArray(BYTE * data){
+int GetPPMDataToArray(uint8_t * data){
 	int i;
 	for(i=0;i<NUM_PPM_CHAN;i++){
 		data[i]=ppmData[i];

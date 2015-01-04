@@ -18,70 +18,49 @@
 
 #include "UserApp_avr.h"
 
-#define ANALOG_DEAD_BAND 1
-
-#define blockTime 24.0f
-#define blockInc1 (blockTime/3.0f)
-#define blockInc2 (blockInc1+blockInc1)
-static RunEveryData block0 = {0,blockTime};
-static RunEveryData block1 = {blockInc1,blockTime};
-static RunEveryData block2 = {blockInc2,blockTime};
+RunEveryData block0 = {0,1000};
 
 
-void initPinState(BYTE i){
-	BYTE mode =GetChannelMode(i);
+void initPinState(uint8_t i){
+	uint8_t mode =GetChannelMode(i);
 	if ((mode == IS_ANALOG_IN) ){
-		SetValFromAsync(i,GetADC(i));
+		setDataTableCurrentValue(i,GetADC(i));
 	}else if(((mode == IS_DI) )  || ((mode == IS_COUNTER_INPUT_HOME)||(mode == IS_COUNTER_OUTPUT_HOME))){
-		SetValFromAsync(i,GetDIO(i)?1:0);
+		setDataTableCurrentValue(i,GetDIO(i)?1:0);
 	}else{
-		SetValFromAsync(i,0);
+		//setDataTableCurrentValue(i,0);
 	}
 }
 
-BOOL checkAnalog(){
+boolean checkAnalog(){
 	int i=0;
 	for(i=8;i<16;i++){
 		if ((GetChannelMode(i) == IS_ANALOG_IN) ){
-			SetValFromAsync(i, GetADC(i));
+			setDataTableCurrentValue(i, GetADC(i));
 		}
 	}
-	return TRUE;
+	return true; 
 }
-BOOL checkDigital(){
+boolean checkDigital(){
 	int i;
 	for(i=0;i<GetNumberOfIOChannels();i++){
-		BYTE mode = GetChannelMode(i);
-		BOOL run = (((mode == IS_DI) )  || ((mode == IS_COUNTER_INPUT_HOME)||(mode == IS_COUNTER_OUTPUT_HOME) || (mode == IS_SERVO)));
+		uint8_t mode = GetChannelMode(i);
+		boolean run = (((mode == IS_DI) )  || ((mode == IS_COUNTER_INPUT_HOME)||(mode == IS_COUNTER_OUTPUT_HOME) || (mode == IS_SERVO)));
 		if (run){
 			if(mode == IS_SERVO){
-				SetValFromAsync(i,GetServoPos(i));
+				//setDataTableCurrentValue(i,GetServoPos(i));
 			}else{
 				if(GetValFromAsync(i) != GetDIO(i)){
-					SetValFromAsync(i,GetDIO(i));
+					setDataTableCurrentValue(i,GetDIO(i));
 					//printAsync();
 				}
 			}
 		}
+		if(mode == IS_UART_RX){
+			setDataTableCurrentValue(i,Get_UART_Byte_CountPassThrough());
+		}
 	}
-	return TRUE;
-}
-
-void resetBlocks(){
-#if ! defined(__AVR_ATmega324P__)
-	println_E("Block times b0: ");p_fl_E(block0.MsTime);print_E(", b1: ");p_fl_E(block1.MsTime);print_E(", b2: ");p_fl_E(block2.MsTime);
-#endif
-	block0.setPoint = blockTime;
-	block0.MsTime=getMs();
-
-	block1.setPoint = blockTime;
-	block1.MsTime=block0.MsTime+blockInc1 ;
-
-	block2.setPoint = blockTime;
-	block2.MsTime=block0.MsTime+blockInc2 ;
-#if ! defined(__AVR_ATmega324P__)
-	println_E("Fixed to values, b0: ");p_fl_E(block0.MsTime);print_E(", b1: ");p_fl_E(block1.MsTime);print_E(", b2: ");p_fl_E(block2.MsTime);
-#endif
+	return true; 
 }
 
 void UserRun(void){
@@ -98,49 +77,12 @@ void UserRun(void){
 	RunUserCode();
 #endif
 
-	if (Get_UART_Byte_CountPassThrough()>0){
-		PushSerial();
-	}
-
-	if(block0.MsTime < 0.0f){
-#if ! defined(__AVR_ATmega324P__)
-		println_I("Block0 error, ");p_fl_I(block0.MsTime);
-#endif
-		resetBlocks();
-	}
-	if(block1.MsTime < 0.0f){
-#if ! defined(__AVR_ATmega324P__)
-		println_I("Block1 error, ");p_fl_I(block1.MsTime);
-#endif
-		resetBlocks();
-	}
-	if(block2.MsTime < 0.0f){
-#if ! defined(__AVR_ATmega324P__)
-		println_I("Block2 error, ");p_fl_I(block2.MsTime);
-#endif
-		resetBlocks();
-	}
+//	if (Get_UART_Byte_CountPassThrough()>0){
+//		PushSerial();
+//	}
 
 	if (RunEvery(&block0)>0.0f){
-		//println_I("Step 0");
-		//
-		block0.MsTime = getMs();
-		RunServo(0);
-		//return;
+		//println_W("Loop ");p_fl_W(getMs()/1000);
 	}
-	if (RunEvery(&block1)>0.0f){
-		//println_I("Step 1");
-		RunServo(1);
-		//return;
-	}
-	if (RunEvery(&block2)>0.0f){
-		//println_I("Step 2");
-		RunServo(2);
-		//Re-align the offsets for the servos
-		block0.setPoint = blockTime;
-		block1.setPoint = blockTime;
-		block2.setPoint = blockTime;
-		block1.MsTime=block0.MsTime+blockInc1 ;
-		block2.MsTime=block0.MsTime+blockInc2 ;
-	}
+
 }

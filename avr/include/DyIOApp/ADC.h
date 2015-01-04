@@ -8,7 +8,7 @@
 #ifndef ADC_H_
 #define ADC_H_
 
-BYTE InitADC(BYTE pin);
-void ClearADC(BYTE pin);
-UINT16 GetADC(BYTE pin);
+uint8_t InitADC(uint8_t pin);
+void ClearADC(uint8_t pin);
+uint16_t GetADC(uint8_t pin);
 #endif /* ADC_H_ */

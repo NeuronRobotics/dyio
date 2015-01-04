@@ -10,8 +10,8 @@ DEVICEP 		= 32MX440F128H
 DEFINES			= -DUSE_VELOCITY $(DYIO_VER)
 CCP     		= $(GCCP) -mprocessor=$(DEVICEP) $(INCLUDES)  -I$(PICTOOLCHAIN)../pic32mx/include $(DEFINES)
 LINK 			= $(GCCP) -mprocessor=$(DEVICEP) -L$(LINK_DIR) 
-#LFLAFS          =  -Wl,--defsym=__MPLAB_BUILD=1,-Map="dist/default/production/DyIO.X.production.map"
-LFLAFS          = -Wl,--script="elf32pic32mx.ld",--defsym=__MPLAB_BUILD=1,-Map="dyio.map" 
+#LFLAFS          =  -Wl,--defsym=__MPLAB_BUILD=1,-Map="dist/default/production/DyIO.X.production.map",--defsym=_min_heap_size=18000,--defsym=_min_stack_size=9016
+LFLAFS          = -Wl,--script="elf32pic32mx.ld",-Map="dyio.map"
 
 CFILES :=	$(wildcard ../common/src/*/*.c) \
 			$(wildcard src/*.c) \
@@ -21,25 +21,25 @@ CFILES :=	$(wildcard ../common/src/*/*.c) \
 OFILES := 	$(CFILES:%.c=%.o)
 
     
-all:clean release debug size
+all:clean release debug 
 #all: clean debug size
 	echo PIC Build OK!
 
 release:buildSpecificClean $(OFILES)
 	mkdir -p output/release/
 	$(LINK) $(OFILES) -lNRLIB  		-o output/release/output.elf $(LFLAFS)
-	cd output/release/;$(BIN2HEX) 	-v -a  output.elf	
+	cd output/release/;$(BIN2HEX) 	-a  output.elf	
 	
 debug:buildSpecificClean $(OFILES)
 	mkdir -p output/debug/
 	$(LINK) $(OFILES) -lNRLIB_debug  -o output/debug/output.elf $(LFLAFS)
-	cd output/debug/;$(BIN2HEX) 	 -v -a  output.elf
+	cd output/debug/;$(BIN2HEX) 	 -a  output.elf
 	
 bluetooth:buildSpecificClean	$(OFILES)
 	mkdir -p output/bluetooth/
 	$(CCP) -c src/Drivers/BluetoothManager.c -DHAS_BLUTOOTH	-o src/Drivers/BluetoothManager.o
 	$(LINK) $(OFILES) -lNRLIB  		 -o output/bluetooth/output.elf $(LFLAFS)  
-	cd output/bluetooth/;$(BIN2HEX)  -v -a  output.elf
+	cd output/bluetooth/;$(BIN2HEX)   -a  output.elf
 	
 buildSpecificClean:
 	rm -rf src/Drivers/BluetoothManager.o

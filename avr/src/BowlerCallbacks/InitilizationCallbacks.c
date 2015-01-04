@@ -18,17 +18,18 @@
 
 #include "UserApp_avr.h"
 
-char startmessage[]  = "\n\n###Starting AVR In Debug Mode\n";
+
 void UserInit(void){
 	StartCritical();
-	setPrintLevelWarningPrint();
-	println_I(startmessage);// All printfDEBUG functions do not need to be removed from code if debug is disabled
-#if defined(DEBUG)
-	ConfigureUART(115200);
-	if(GetChannelMode(16)!=IS_UART_TX)
-		setMode(16,IS_UART_TX);
-#endif
-	//println_I(/*PSTR*/("\n\n***Starting User initialization***"));
+
+	//println_W(startmessage);// All printfDEBUG functions do not need to be removed from code if debug is disabled
+//#if defined(DEBUG)
+//	ConfigureUART(115200);
+//	if(GetChannelMode(16)!=IS_UART_TX)
+//		setMode(16,IS_UART_TX);
+//#endif
+	setPrintLevelInfoPrint();
+	println_I(/*PSTR*/("\e[1;1H\e[2J ***Starting User initialization***"));
 	InitFlagPins();
 	InitBankLEDs();
 	SetPowerState0(0,0);
@@ -41,26 +42,40 @@ void UserInit(void){
 	SPISlaveInit();
 #endif
 
-//	setMethodCallback(BOWLER_GET,UserGetRPCs);
-//	setMethodCallback(BOWLER_POST,UserPostRPCs);
-//	setMethodCallback(BOWLER_CRIT,UserCriticalRPCs);
-	//println_I(/*PSTR*/("Starting Pin Initialization"));
-	InitPins();
+
+	//_delay_ms(100);
+	println_I(/*PSTR*/("Starting Pin Functions"));
+	InitPinFunction();
+	println_I(/*PSTR*/("Starting Pin Modes"));
+	InitPinModes();
+	int i=0;
+	//println_I(/*PSTR*/("Starting hardware modes"));
+	for(i=0;i<GetNumberOfIOChannels();i++){
+		initPinState(i);
+		configAdvancedAsyncNotEqual(i,10);
+		setAsyncLocal(i,true) ;
+	}
+	//println_I(/*PSTR*/("DONE pin initialization"));
+
 	//println_I(/*PSTR*/("Adding IO Initialization"));
 	addNamespaceToList((NAMESPACE_LIST *)get_bcsIoNamespace());
 	//println_I(/*PSTR*/("Adding IO.SETMODE Initialization"));
 	addNamespaceToList((NAMESPACE_LIST *)get_bcsIoSetmodeNamespace());
 	//println_I(/*PSTR*/("Adding Internal Initialization"));
 	addNamespaceToList((NAMESPACE_LIST *)get_internalNamespace());
-
+	setNoAsyncMode(true);
+	setIgnoreAddressing(true);
 	//SetPinTris(0,OUTPUT);
 	//SetDIO(0,OFF);
 
 #if defined(USE_AS_LIBRARY)
 	InitializeUserCode();
 #endif
-setPrintLevelInfoPrint();
 	EndCritical();
+	println_I(/*PSTR*/("Starting Core"));
+//	setMode(22,IS_DO);
+//	setMode(23,IS_DI);
+//	println_I(/*PSTR*/("Pin done"));
 }
 
 

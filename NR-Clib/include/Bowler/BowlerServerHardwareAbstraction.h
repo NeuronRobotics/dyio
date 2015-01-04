@@ -22,7 +22,7 @@
  *
  * @return returns the number of bytes in the fifo
  */
-UINT16 getNumBytes(BYTE_FIFO_STORAGE * fifo);
+uint16_t getNumBytes(BYTE_FIFO_STORAGE * fifo);
 
 /**
  * @Depricated use library function FifoGetByteStream
@@ -31,7 +31,7 @@ UINT16 getNumBytes(BYTE_FIFO_STORAGE * fifo);
  * @param buffer this is the data buffer where the data retrieved from the physical connection is stored.
  * @param the number of bytes to retrieve from the physical connection.
  */
-UINT16 getStream(BYTE * buffer,UINT16 datalength,BYTE_FIFO_STORAGE * fifo);
+uint16_t getStream(uint8_t * buffer,uint16_t datalength,BYTE_FIFO_STORAGE * fifo);
 
 /**
  * @Depricated use library FifoAddByte
@@ -40,7 +40,7 @@ UINT16 getStream(BYTE * buffer,UINT16 datalength,BYTE_FIFO_STORAGE * fifo);
  *
  * This function should be called when new data is retrieved from the physical connection.
  */
-UINT32 addbyte(BYTE_FIFO_STORAGE * fifo,BYTE b, BYTE * errorCode);
+uint32_t addbyte(BYTE_FIFO_STORAGE * fifo,uint8_t b, uint8_t * errorCode);
 
 /**
  * This function is used to send data from a buffer to the physical connection.
@@ -49,7 +49,7 @@ UINT32 addbyte(BYTE_FIFO_STORAGE * fifo,BYTE b, BYTE * errorCode);
  * @param dataLength this is the number of bytes to send to the physical connection.
  *
  */
-UINT16 putStream(BYTE * buffer,UINT16 datalength);
+uint16_t putStream(uint8_t * buffer,uint16_t datalength);
 /**
  * get the time in ms
  * @return This should return a float of milliseconds since the processor started.

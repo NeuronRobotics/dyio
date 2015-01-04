@@ -8,18 +8,17 @@
 #ifndef PPMREADER_H_
 #define PPMREADER_H_
 
-#define NUM_PPM_CHAN 6
-#define INVALID_PPM_LINK 0xff
+
 void pushPPMPacket(void);
 void runPPMEvent(void);
 void RunPPMCheck(void);
-void clearPPM(BYTE chan);
-void startPPM(BYTE chan);
+void clearPPM(uint8_t chan,uint8_t mode);
+void startPPM(uint8_t chan);
 
-void ConfigPPMFromArray(BYTE * data);
+void ConfigPPMFromArray(uint8_t * data);
 
 void GetPPMDataToPacket(BowlerPacket * Packet);
 void ConfigPPM(BowlerPacket * Packet);
-int GetPPMDataToArray(BYTE * data);
+int GetPPMDataToArray(uint8_t * data);
 
 #endif /* PPMREADER_H_ */

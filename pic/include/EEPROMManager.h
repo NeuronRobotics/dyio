@@ -8,59 +8,27 @@
 #ifndef EEPROMMANAGER_H_
 #define EEPROMMANAGER_H_
 
-#define NAMESTART 0
-#define LOCKSTART 17
-#define DATASTART 22
-#define DATAVALID 37
+
+
 #include "Bowler/AbstractPID.h"
-struct _local_pid{
-        unsigned 					:5;
-        unsigned		Async		:1;
-        unsigned		Polarity	:1;
-        unsigned		Enabled 	:1;
-        unsigned 		char inputMode;
-        unsigned 		char inputChannel;
-        unsigned 		char outputMode;
-        unsigned 		char outputChannel;
-        struct{
-            double P;
-            double I;
-            double D;
-        }K;
-};
-typedef struct  _pid_vales
-{
-	union{
-		struct _local_pid data;
-		BYTE stream[sizeof(struct _local_pid)];
-	};
-} pid_vales;
 
-typedef struct _EESTORAGE
-{
 
-		BYTE lockByte;
-		pid_vales pid[NUM_PID_GROUPS];
-		BYTE end;
+void readPPMLink(uint8_t * vals);
+void writePPMLink(uint8_t * vals);
 
-} EESTORAGE;
-
-void readPPMLink(BYTE * vals);
-void writePPMLink(BYTE * vals);
-
-void setEEBrownOutDetect(BOOL b);
-BOOL getEEBrownOutDetect();
+void setEEBrownOutDetect(boolean b);
+boolean getEEBrownOutDetect();
 
 void LoadEEstore(void);
 void WritePIDvalues(AbsPID * pid, DYIO_PID * dy,int group);
 void LoadPIDvals(AbsPID * pid, DYIO_PID * dy,int group);
 
-BOOL GetName(char * name);
+boolean GetName(char * name);
 void SetName(char * name);
-BOOL GetLockCode(char * name);
+boolean GetLockCode(char * name);
 void SetLockCode(char * code);
-void SetEEPRomData(BYTE start,BYTE stop,BYTE * data);
-void GetEEPRomData(BYTE start,BYTE stop,BYTE * data);
+void SetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data);
+void GetEEPRomData(uint8_t start,uint8_t stop,uint8_t * data);
 
 
 #endif /* EEPROMMANAGER_H_ */

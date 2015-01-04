@@ -9,27 +9,31 @@
 #include "Namespace/Namespace_bcs_io.h"
 
 
-static int NumberOfIOChannels = 0;
-static DATA_STRUCT * dataPtr = NULL;
+  int NumberOfIOChannels = 0;
+  DATA_STRUCT * dataPtr = NULL;
 
-BOOL(*setChanelValueHWPtr)(BYTE, BYTE, INT32 *, float);
-BOOL(*getChanelValueHWPtr)(BYTE, BYTE*, INT32 *);
-BOOL(*setAllChanelValueHWPtr)(INT32 *, float);
-BOOL(*getAllChanelValueHWPtr)(INT32 *);
-BOOL(*configChannelHWPtr)(BYTE, BYTE, INT32 *);
+boolean(*setChanelValueHWPtr)(uint8_t  , uint8_t, int32_t *, float);
+boolean(*getChanelValueHWPtr)(uint8_t  , uint8_t*, int32_t *);
+boolean(*setStreamHWPtr)(uint8_t  , uint8_t, uint8_t *);
+boolean(*getStreamHWPtr)(uint8_t  , uint8_t*, uint8_t *);
+boolean(*setAllChanelValueHWPtr)(int32_t *, float);
+boolean(*getAllChanelValueHWPtr)(int32_t *);
+boolean(*configChannelHWPtr)(uint8_t  , uint8_t, int32_t *);
 
 void InitilizeBcsIo(int numPins,
-        DATA_STRUCT * dataPtrLocal,
-        BOOL(*setChanelValueHWPtrLocal)(BYTE, BYTE, INT32 *, float),
-        BOOL(*getChanelValueHWPtrLocal)(BYTE, BYTE*, INT32 *),
-        BOOL(*setAllChanelValueHWPtrLocal)(INT32 *, float),
-        BOOL(*getAllChanelValueHWPtrLocal)(INT32 *),
-        BOOL(*configChannelHWPtrLocal)(BYTE, BYTE, INT32 *)
-        ) {
+					DATA_STRUCT * dataPtrLocal,
+					boolean (*setChanelValueHWPtrLocal)(uint8_t,uint8_t,int32_t *,float),
+					boolean (*getChanelValueHWPtrLocal)(uint8_t,uint8_t*,int32_t *),
+					boolean (*setAllChanelValueHWPtrLocal)(int32_t *,float),
+					boolean (*getAllChanelValueHWPtrLocal)(int32_t *),
+					boolean (*configChannelHWPtrLocal)(uint8_t,uint8_t,int32_t *),
+					boolean(*setStreamHWPtrLocal)(uint8_t  , uint8_t, uint8_t *),
+					boolean(*getStreamHWPtrLocal)(uint8_t  , uint8_t*, uint8_t *)
+) {
     if (numPins < 1
             ) {
         setPrintLevelErrorPrint();
-        println_E("Failed IO sanity check: failed initialization channels #");
+        //println_E("Failed IO sanity check: failed initialization channels #");
         p_int_E(numPins);
         //println_E("Failed IO sanity check: failed initialization channels #");p_int_E(numPins);
         //FAIL sanity check
@@ -39,9 +43,9 @@ void InitilizeBcsIo(int numPins,
             dataPtrLocal == NULL
             ) {
         setPrintLevelErrorPrint();
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-        println_E("Failed IO sanity check: failed initialization dataPtrLocal");
-#endif
+//#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
+//        println_E("Failed IO sanity check: failed initialization dataPtrLocal");
+//#endif
         //println_E("Failed IO sanity check: failed initialization dataPtrLocal");
         //FAIL sanity check
         while (1);
@@ -50,9 +54,9 @@ void InitilizeBcsIo(int numPins,
             setChanelValueHWPtrLocal == NULL
             ) {
         setPrintLevelErrorPrint();
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-        println_E("Failed IO sanity check: failed initialization setChanelValueHWPtrLocal");
-#endif
+//#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
+//        println_E("Failed IO sanity check: failed initialization setChanelValueHWPtrLocal");
+//#endif
         //println_E("Failed IO sanity check: failed initialization setChanelValueHWPtrLocal");
         //FAIL sanity check
         while (1);
@@ -61,9 +65,9 @@ void InitilizeBcsIo(int numPins,
             getChanelValueHWPtrLocal == NULL
             ) {
         setPrintLevelErrorPrint();
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-        println_E("Failed IO sanity check: failed initialization getChanelValueHWPtrLocal");
-#endif
+//#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
+//        println_E("Failed IO sanity check: failed initialization getChanelValueHWPtrLocal");
+//#endif
         //println_E("Failed IO sanity check: failed initialization getChanelValueHWPtrLocal");
         //FAIL sanity check
         while (1);
@@ -72,9 +76,9 @@ void InitilizeBcsIo(int numPins,
             setAllChanelValueHWPtrLocal == NULL
             ) {
         setPrintLevelErrorPrint();
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-        println_E("Failed IO sanity check: failed initialization setAllChanelValueHWPtrLocal");
-#endif
+//#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
+//        println_E("Failed IO sanity check: failed initialization setAllChanelValueHWPtrLocal");
+//#endif
         //println_E("Failed IO sanity check: failed initialization setAllChanelValueHWPtrLocal");
         //FAIL sanity check
         while (1);
@@ -83,9 +87,9 @@ void InitilizeBcsIo(int numPins,
             getAllChanelValueHWPtrLocal == NULL
             ) {
         setPrintLevelErrorPrint();
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-        println_E("Failed IO sanity check: failed initialization getAllChanelValueHWPtrLocal");
-#endif
+//#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
+//        println_E("Failed IO sanity check: failed initialization getAllChanelValueHWPtrLocal");
+//#endif
         //println_E("Failed IO sanity check: failed initialization getAllChanelValueHWPtrLocal");
         //FAIL sanity check
         while (1);
@@ -94,9 +98,9 @@ void InitilizeBcsIo(int numPins,
             configChannelHWPtrLocal == NULL
             ) {
         setPrintLevelErrorPrint();
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-        println_E("Failed IO sanity check: failed initialization configChannelHWPtrLocal");
-#endif
+//#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
+//        println_E("Failed IO sanity check: failed initialization configChannelHWPtrLocal");
+//#endif
         //println_E("Failed IO sanity check: failed initialization configChannelHWPtrLocal");
         //FAIL sanity check
         while (1);
@@ -110,36 +114,39 @@ void InitilizeBcsIo(int numPins,
     setAllChanelValueHWPtr = setAllChanelValueHWPtrLocal;
     getAllChanelValueHWPtr = getAllChanelValueHWPtrLocal;
     configChannelHWPtr = configChannelHWPtrLocal;
+    setStreamHWPtr=setStreamHWPtrLocal;
+    getStreamHWPtr=getStreamHWPtrLocal;
 }
 
 int GetNumberOfIOChannels() {
     return NumberOfIOChannels;
 }
 
-BYTE GetChannelMode(BYTE pin) {
+void _SetChannelMode(uint8_t pin,uint8_t mode ) {
     if (pin < 0 || pin > GetNumberOfIOChannels()) {
-        setPrintLevelErrorPrint();
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-        println_E("Failed IO sanity check: channel number out of bounds # ");
-        p_int_E(pin);
-#endif
-        //FAIL sanity check
-        while (1);
+        return ;
     }
-    //Strip off the internally stored High Bit
+    //print_nnl("Set Channel Mode ",ERROR_PRINT);printMode(mode,ERROR_PRINT);
+    getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
+}
+
+uint8_t GetChannelMode(uint8_t pin) {
+    if (pin < 0 || pin > GetNumberOfIOChannels()) {
+        return 0xff;
+    }
     return getBcsIoDataTable(pin)->PIN.currentChannelMode;
 }
 
-RunEveryData * getPinsScheduler(int pin){
-	return & dataPtr[pin].asyncDataTime;
+RunEveryData * getPinsScheduler(int pin) {
+    return & dataPtr[pin].asyncDataTimer;
 }
 
 DATA_STRUCT * getBcsIoDataTable(int pin) {
     if (dataPtr == NULL) {
         setPrintLevelErrorPrint();
-#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
-        println_E("Failed IO sanity check: no data table");
-#endif
+//#if !defined(__AVR_ATmega644P__) && !defined(__AVR_ATmega644PA__) && !defined(__AVR_ATmega324P__)
+//        println_E("Failed IO sanity check: no data table");
+//#endif
         //println_E("Failed IO sanity check: no data table");
         //FAIL sanity check
         while (1);
@@ -147,206 +154,305 @@ DATA_STRUCT * getBcsIoDataTable(int pin) {
     return &dataPtr[pin];
 }
 
-BOOL GetChannelModeFromPacket(BowlerPacket * Packet) {
+boolean GetChannelModeFromPacket(BowlerPacket * Packet) {
     Packet->use.data[1] = GetChannelMode(Packet->use.data[0]);
     Packet->use.head.DataLegnth = 6;
     Packet->use.head.Method = BOWLER_POST;
     FixPacket(Packet);
-    return TRUE;
+    //printBowlerPacketDEBUG(Packet,WARN_PRINT);
+    return true;
 }
 
-BOOL GetAllChannelModeFromPacket(BowlerPacket * Packet) {
+boolean GetAllChannelModeFromPacket(BowlerPacket * Packet) {
     int i;
     Packet->use.head.Method = BOWLER_POST;
+    Packet->use.head.RPC=GetRPCValue("gacm");
     Packet->use.data[0] = GetNumberOfIOChannels();
     for (i = 0; i < GetNumberOfIOChannels(); i++) {
         Packet->use.data[1 + i] = GetChannelMode(i);
     }
-    Packet->use.head.DataLegnth = 4 + GetNumberOfIOChannels();
+    Packet->use.head.DataLegnth = 4 + GetNumberOfIOChannels()+1;
     FixPacket(Packet);
-    return TRUE;
+    //printBowlerPacketDEBUG(Packet,WARN_PRINT);
+    return true;
 }
 
-BOOL GetAsyncFromPacket(BowlerPacket * Packet) {
+boolean GetAsyncFromPacket(BowlerPacket * Packet) {
     Packet->use.head.Method = BOWLER_POST;
     Packet->use.data[1] = IsAsync(Packet->use.data[0]);
     Packet->use.head.DataLegnth = 4 + 2;
     FixPacket(Packet);
-    return TRUE;
+    return true;
 }
 
-BOOL SetAsyncFromPacket(BowlerPacket * Packet) {
-    Packet->use.head.Method = BOWLER_POST;
-    setAsync(Packet->use.data[0], Packet->use.data[1]);
-    Packet->use.head.DataLegnth = 4;
-    FixPacket(Packet);
-    return TRUE;
-}
+//boolean SetAsyncFromPacket(BowlerPacket * Packet) {
+//    Packet->use.head.Method = BOWLER_POST;
+//    setAsync(Packet->use.data[0], Packet->use.data[1]);
+//    Packet->use.head.DataLegnth = 4;
+//    FixPacket(Packet);
+//    printBowlerPacketDEBUG(Packet,WARN_PRINT);
+//    return true;
+//}
 
-BOOL GetIOChannelCountFromPacket(BowlerPacket * Packet) {
+boolean GetIOChannelCountFromPacket(BowlerPacket * Packet) {
     Packet->use.head.Method = BOWLER_POST;
     Packet->use.data[0] = 0;
     Packet->use.data[1] = 0;
     Packet->use.data[2] = 0;
     Packet->use.data[3] = GetNumberOfIOChannels();
-    ;
+    Packet->use.head.RPC= GetRPCValue("gchc");
     Packet->use.head.DataLegnth = 4 + 4;
     FixPacket(Packet);
-    return TRUE;
+    return true;
 }
-
-BOOL SetChanelValueFromPacket(BowlerPacket * Packet) {
-    BYTE pin = Packet->use.data[0];
-    BYTE mode = GetChannelMode(pin);
-    if (isStremChannelMode(mode)) {
-        if (setChanelValueHWPtr != NULL)
+boolean GetChanelStreamFromPacket(BowlerPacket * Packet) {
+    uint8_t pin = Packet->use.data[0];
+    uint8_t mode = GetChannelMode(pin);
+    if (_isStremChannelMode(mode)) {
+        if ( getStreamHWPtr != NULL){
             // Load the data directly into the packet as the buffer
             //Data pointer is offset by one to start after the pin index
-            setChanelValueHWPtr(pin,
-                Packet->use.head.DataLegnth - (4 + 1),
-                (INT32 *) (Packet->use.data + 1),
-                (float) 0);
-        READY(Packet, 1, 3);
-    } else {
-        INT32 data = 0;
-        INT32 time = 0;
-
-
-        data = get32bit(Packet, 1);
-        if (Packet->use.head.DataLegnth > (4 + 5)) {
-            time = get32bit(Packet, 5);
-        } else {
-            time = 0;
+        	uint8_t size =0;
+        	getStreamHWPtr(	pin,
+							&size,
+							&Packet->use.data[2]);
+        	Packet->use.data[1] = size;
         }
-        getBcsIoDataTable(pin)->PIN.currentValue = data;
-        if (setChanelValueHWPtr != NULL)
-            setChanelValueHWPtr(pin, 1, &data, (float) time);
-        READY(Packet, 2, 3);
+    } else {
+        ERR(Packet, 2, 3);
     }
-
-    return TRUE;
+    return true;
 }
 
-BOOL SetAllChannelValueFromPacket(BowlerPacket * Packet) {
-    INT32 * data = (INT32 *) (Packet->use.data + 4);
-    UINT32 tmp;
+
+boolean SetChanelStreamFromPacket(BowlerPacket * Packet) {
+    uint8_t pin = Packet->use.data[0];
+    uint8_t mode = GetChannelMode(pin);
+    if (_isStremChannelMode(mode)) {
+        if (setStreamHWPtr != NULL)
+            // Load the data directly into the packet as the buffer
+            //Data pointer is offset by one to start after the pin index
+            setStreamHWPtr(	pin,
+							Packet->use.data[1],
+							&Packet->use.data[2]);
+
+    } else {
+        ERR(Packet, 2, 3);
+    }
+    READY(Packet, 2, 3);
+    return true;
+}
+
+boolean SetChanelValueFromPacket(BowlerPacket * Packet) {
+    uint8_t pin = Packet->use.data[0];
+    uint8_t mode = GetChannelMode(pin);
+
+	int32_t data = 0;
+	int32_t time = 0;
+
+	data = get32bit(Packet, 1);
+
+	time =  get32bit(Packet, 5);
+	//println_W("Setting on pin=");p_int_W(pin); print_W(" value= ");p_int_W(data); print_W(" time= ");p_fl_W(time);
+	if(mode == IS_SERVO)
+		data = (data&0x000000ff) | (time<<16);
+
+	if (setChanelValueHWPtr != NULL)
+		setChanelValueHWPtr(pin, 1, &data, (float)time);
+
+	//println_E(__FILE__);println_E("SetChanelValueFromPacket");
+	setDataTableCurrentValue(pin,data);
+
+    READY(Packet, 1, 3);
+    return true;
+}
+
+boolean SetAllChannelValueFromPacket(BowlerPacket * Packet) {
+    int32_t * data = (int32_t *) (&Packet->use.data[5] );
+    int32_t tmp;
+
     if (setAllChanelValueHWPtr != NULL) {
-        UINT32_UNION time;
-        BYTE i;
+    	uint32_t time;
+        uint8_t i;
 
-        time.byte.FB = Packet->use.data[0];
-        time.byte.TB = Packet->use.data[1];
-        time.byte.SB = Packet->use.data[2];
-        time.byte.LB = Packet->use.data[3];
+        time=get32bit(Packet, 0);
+
         for (i = 0; i < GetNumberOfIOChannels(); i++) {
-            tmp = get32bit(Packet, i * 4);
-            getBcsIoDataTable(i)->PIN.currentValue = tmp;
-            data[i] = tmp;
+        	if(isOutputMode(GetChannelMode(i))==true){
+        		tmp = get32bit(Packet, (i*4) +5);
+//        		if(GetChannelMode(i) == IS_SERVO)
+//					data[i] = (tmp & 	0x000000ff) | (time<<16);
+//        		else
+        			data[i] = tmp;
+			}else{
+				data[i] = getBcsIoDataTable(i)->PIN.currentValue;
+			}
+
         }
-        setAllChanelValueHWPtr(data, time.Val);
-        READY(Packet, 3, 3);
-        FixPacket(Packet);
+
+        setAllChanelValueHWPtr(data, time);
+
+        for (i = 0; i < GetNumberOfIOChannels(); i++) {
+        	if(isOutputMode(GetChannelMode(i))==true){
+
+        		//println_E(__FILE__);println_E("SetAllChannelValueFromPacket");
+				setDataTableCurrentValue(i,data[i]);
+        	}
+		}
+        //READY(Packet, 3, 3);
+        GetAllChanelValueFromPacket(Packet);
     } else {
-        return FALSE;
+        return false;
     }
-    return TRUE;
+    return true;
 }
 
-BOOL GetChanelValueFromPacket(BowlerPacket * Packet) {
-    BYTE pin = Packet->use.data[0];
-    BYTE mode = GetChannelMode(pin);
-    BYTE numValues;
-    if (isStremChannelMode(mode)) {
-
-        if (getChanelValueHWPtr != NULL) {
-            // Load the data directly into the packet as the buffer
-            //Data pointer is offset by one to start after the pin index
-            getChanelValueHWPtr(pin,
-                    &numValues,
-                    (INT32 *) (Packet->use.data + 1));
-        } else {
-            return FALSE;
-        }
-    } else {
-        INT32 data;
-        if (getChanelValueHWPtr != NULL) {
-            getChanelValueHWPtr(pin,
-                    &numValues,
-                    &data);
-        } else {
-            return FALSE;
-        }
-
-        set32bit(Packet, data, 1);
-        numValues = 4;
+int32_t GetChanelSingleValue(uint8_t pin){
+	int32_t val;
+	uint8_t size=1;
+	GetChanelValueHW(pin, &size, &val);
+	return val;
+}
 
 
-    }
+boolean GetChanelValueFromPacket(BowlerPacket * Packet) {
+    uint8_t pin = Packet->use.data[0];
+    uint8_t mode = GetChannelMode(pin);
+    uint8_t numValues = 1;
+    int32_t data;
+
+
+	if (getChanelValueHWPtr != NULL) {
+		getChanelValueHWPtr(pin,
+				&numValues,
+				&data);
+	} else {
+		return false;
+	}
+	if(isOutputMode(GetChannelMode(pin))==false ){
+		setDataTableCurrentValue(pin,data);
+	}else{
+		if(mode== IS_UART_RX){
+			setDataTableCurrentValue(pin,data);
+		}else{
+			data = getBcsIoDataTable(pin)->PIN.currentValue;
+		}
+	}
+
+	set32bit(Packet, data, 1);
+	numValues = 4;
+
     Packet->use.head.DataLegnth = 4 + 1 + numValues;
     FixPacket(Packet);
-    return TRUE;
+    return true;
 }
 
-BOOL GetAllChanelValueFromPacket(BowlerPacket * Packet) {
-    INT32 * data = (INT32 *) (Packet->use.data);
+boolean GetAllChanelValueFromPacket(BowlerPacket * Packet) {
+    int32_t * data = (int32_t *) (&Packet->use.data[1]);
     if (getAllChanelValueHWPtr != NULL) {
         int i;
-        INT32 tmp;
-        getAllChanelValueHWPtr((INT32 *) Packet->use.data);
+        int32_t tmp;
+        getAllChanelValueHWPtr(data);
         for (i = 0; i < GetNumberOfIOChannels(); i++) {
             tmp = data[i];
-            getBcsIoDataTable(i)->PIN.currentValue = tmp;
-            set32bit(Packet, tmp, i * 4);
-        }
-        Packet->use.head.DataLegnth = 4 + GetNumberOfIOChannels()*4;
-    } else
-        return FALSE;
-    FixPacket(Packet);
-    return TRUE;
-}
-
-BOOL ConfigureChannelFromPacket(BowlerPacket * Packet) {
-    BYTE pin = Packet->use.data[0];
-    BYTE mode = GetChannelMode(pin);
-    INT32 * data = (INT32 *) (Packet->use.data + 1);
-    INT32 tmp;
-    int i;
-    if (configChannelHWPtr != NULL) {
-        if (Packet->use.head.DataLegnth > 5 && mode != IS_SERVO) {
-            int numVals = (Packet->use.head.DataLegnth - (4 + 1)) / 4;
-            for (i = 0; i < numVals; i++) {
-                tmp = get32bit(Packet, (i * 4) + 1);
-                getBcsIoDataTable(i)->PIN.currentValue = tmp;
-                data[i] = tmp;
+            if(isOutputMode(GetChannelMode(i))==false){
+            	setDataTableCurrentValue(i,tmp);
+            }else{
+                 if(GetChannelMode(i) == IS_SERVO){
+                    tmp = GetServoPos(i);
+                }else if(GetChannelMode(i)== IS_UART_RX){
+                	setDataTableCurrentValue(i,tmp);
+    			}else{
+                    tmp = getBcsIoDataTable(i)->PIN.currentValue;
+    			}
             }
-            configChannelHWPtr(pin, numVals, (INT32 *) (Packet->use.data + 1));
-        } else {
-            // Single Byte Servo, legacy HACK
-            INT32 value = Packet->use.data[1];
-            configChannelHWPtr(pin, 1, &value);
+
+            set32bit(Packet, tmp, (i*4)+1);
+
         }
-    } else {
-        return FALSE;
-    }
+        Packet->use.data[0]=(GetNumberOfIOChannels());
+        Packet->use.head.RPC=GetRPCValue("gacv");
+        Packet->use.head.DataLegnth = 4+1+(GetNumberOfIOChannels()*4);
+    } else
+        return false;
     FixPacket(Packet);
-    return TRUE;
+    return true;
 }
 
-BOOL pinHasFunction(BYTE pin, BYTE function) {
+boolean ConfigureChannelFromPacket(BowlerPacket * Packet) {
+    uint8_t pin = Packet->use.data[0];
+    boolean setValues = Packet->use.data[1];
+    uint8_t mode = GetChannelMode(pin);
+
+    int32_t tmp;
+    if(mode != 0xff && setValues){
+		if (configChannelHWPtr != NULL) {
+
+//			println_E("Pushing configs from packet ");
+//			p_int_E(pin);
+
+			tmp = get32bit(Packet,  3);
+
+//			print_E(" value = ");
+//			p_int_E(tmp);
+
+			//println_E(__FILE__);println_E("ConfigureChannelFromPacket");
+			setDataTableCurrentValue(pin,tmp);
+
+			configChannelHWPtr(pin, 1, &tmp);
+		} else {
+			return false;
+		}
+
+    }
+    //println_E("Loading configs into packet");
+    Packet->use.head.RPC= GetRPCValue("cchn");
+    Packet->use.head.Method = BOWLER_CRIT;
+    Packet->use.head.DataLegnth = 4+1+(GetNumberOfIOChannels()*4);
+    int32_t * data = (int32_t *) (Packet->use.data + 1);
+    configChannelHWPtr(0xff, GetNumberOfIOChannels(), data);
+    Packet->use.data[0] =GetNumberOfIOChannels();
+    int i;
+    for (i = 0; i < GetNumberOfIOChannels(); i++) {
+		tmp = data[i];
+		set32bit(Packet, tmp, (i*4)+1);
+	}
+    FixPacket(Packet);
+    return true;
+}
+
+boolean isOutputMode(uint8_t mode){
+    switch (mode) {
+
+        case IS_DO:
+        case IS_ANALOG_OUT:
+        case IS_PWM:
+        case IS_SERVO:
+        case IS_COUNTER_OUTPUT_INT:
+        case IS_COUNTER_OUTPUT_DIR:
+        case IS_DC_MOTOR_VEL:
+        case IS_DC_MOTOR_DIR:
+        	return true;
+        default:
+            return false;
+    }
+}
+
+boolean pinHasFunction(uint8_t pin, uint8_t function) {
     switch (function) {
         case IS_DI:
-            return TRUE;
+            return true;
         case IS_DO:
-            return TRUE;
+            return true;
         case IS_ANALOG_IN:
             return getBcsIoDataTable(pin)->FUNCTION.HAS_ANALOG_IN;
         case IS_ANALOG_OUT:
-            return FALSE;
+            return false;
             //return getBcsIoDataTable(pin)->FUNCTION.HAS_ANALOG_OUT;
         case IS_PWM:
             return getBcsIoDataTable(pin)->FUNCTION.HAS_PWM;
         case IS_SERVO:
-            return TRUE;
+            return true;
         case IS_UART_TX:
             return getBcsIoDataTable(pin)->FUNCTION.HAS_UART_T;
         case IS_UART_RX:
@@ -376,11 +482,12 @@ BOOL pinHasFunction(BYTE pin, BYTE function) {
         case IS_PPM_IN:
             return getBcsIoDataTable(pin)->FUNCTION.HAS_PPM;
         default:
-            return FALSE;
+            return false;
     }
 }
 
-BOOL getFunctionList(BowlerPacket * Packet) {
+
+boolean getFunctionList(BowlerPacket * Packet) {
     int chan = Packet->use.data[0];
 
     int index = 1;
@@ -393,62 +500,86 @@ BOOL getFunctionList(BowlerPacket * Packet) {
     Packet->use.data[0] = index - 1;
     Packet->use.head.DataLegnth = 4 + index;
     FixPacket(Packet);
-    return TRUE;
+    return true;
 }
 
 void printValues() {
-    int i;
-    println_I("Values");
-    for (i = 0; i < GetNumberOfIOChannels(); i++) {
-        println_I("\t# ");
-        p_int_I(i);
-        print_I("\tCurrent ");
-        p_int_I(getBcsIoDataTable(i)->PIN.currentValue);
-        //print_I("\tPrevious ");p_int_I(getBcsIoDataTable(i)->PIN.previousValue);
-    }
+//    int i;
+//    println_I("Values");
+//    for (i = 0; i < GetNumberOfIOChannels(); i++) {
+//        println_I("\t# ");
+//        p_int_I(i);
+//        print_I("\tCurrent ");
+//        p_int_I(getBcsIoDataTable(i)->PIN.currentValue);
+//        //print_I("\tPrevious ");p_int_I(getBcsIoDataTable(i)->PIN.previousValue);
+//    }
 }
 
 void printModes() {
-    int i;
-    println_I("Modes");
-    for (i = 0; i < GetNumberOfIOChannels(); i++) {
-        println_I("\t# ");
-        p_int_I(i);
-        print_I("\tCurrent ");
-        printMode(getBcsIoDataTable(i)->PIN.currentChannelMode, INFO_PRINT);
-        //print_I("\tPrevious ");printMode(getBcsIoDataTable(i)->PIN.previousChannelMode,INFO_PRINT);
-    }
+//    int i;
+//    println_I("Modes");
+//    for (i = 0; i < GetNumberOfIOChannels(); i++) {
+//        println_I("\t# ");
+//        p_int_I(i);
+//        print_I("\tCurrent ");
+//        printMode(getBcsIoDataTable(i)->PIN.currentChannelMode, INFO_PRINT);
+//        //print_I("\tPrevious ");printMode(getBcsIoDataTable(i)->PIN.previousChannelMode,INFO_PRINT);
+//    }
 }
 
 void printConfigurations() {
     int i;
-    println_I("Configurations");
+//    println_I("Configurations");
     for (i = 0; i < GetNumberOfIOChannels(); i++) {
         println_I("\t# ");
         p_int_I(i);
-        //print_I("\tCurrent ");p_int_I(getBcsIoDataTable(i)->PIN.currentConfiguration);
-        //print_I("\tPrevious ");p_int_I(getBcsIoDataTable(i)->PIN.previousConfiguration);
+//        print_I("\tCurrent ");p_int_I(getBcsIoDataTable(i)->PIN.currentConfiguration);
+//        print_I("\tPrevious ");p_int_I(getBcsIoDataTable(i)->PIN.previousConfiguration);
     }
 }
 
 void printAsync() {
-    int i;
-    println_I("Async Data ");
-    p_fl_I(getMs());
-    for (i = 0; i < GetNumberOfIOChannels(); i++) {
-        println_I("\t# ");
-        p_int_I(i);
-        print_I("\tCurrent ");
-        p_int_I(getBcsIoDataTable(i)->PIN.asyncDataCurrentVal);
-        print_I("\tPrevious ");
-        p_int_I(getBcsIoDataTable(i)->PIN.asyncDataPreviousVal);
-        print_I("\tMode ");
-        printAsyncType(getBcsIoDataTable(i)->PIN.asyncDataType);
-        print_I("\tIteration ");
-        p_fl_I(getBcsIoDataTable(i)->asyncDataTime.setPoint);
-        print_I("\tLast ");
-        p_fl_I(getBcsIoDataTable(i)->asyncDataTime.MsTime);
-    }
+//    int i;
+//    println_I("Async Data ");
+//    p_fl_I(getMs());
+//    for (i = 0; i < GetNumberOfIOChannels(); i++) {
+//        println_I("\t# ");
+//        p_int_I(i);
+//        print_I("\tCurrent ");
+//        //FIXME
+//        p_int_I(getBcsIoDataTable(i)->PIN.currentValue);
+//        print_I("\tPrevious ");
+//        p_int_I(getBcsIoDataTable(i)->PIN.asyncDataPreviousVal);
+//        print_I("\tMode ");
+//        printAsyncType(getBcsIoDataTable(i)->PIN.asyncDataType);
+//        print_I("\tIteration ");
+//        p_fl_I(getBcsIoDataTable(i)->asyncDataTimer.setPoint);
+//        print_I("\tLast ");
+//        p_fl_I(getBcsIoDataTable(i)->asyncDataTimer.MsTime);
+//    }
+}
+
+
+/**
+ * Sets the datable value and returns true if the value is new, false if it is the same as it was
+ */
+boolean _setDataTableCurrentValue(uint8_t pin, int32_t value){
+	if(pin>=GetNumberOfIOChannels()){
+		//println_E("Pin out of index! : "); p_int_E(pin);
+	}
+	if(value !=getBcsIoDataTable(pin)->PIN.currentValue ){
+		//Print_Level l = INFO_PRINT;
+		Print_Level l = isOutputMode(GetChannelMode(pin))?ERROR_PRINT:WARN_PRINT;
+		println(" Value was ",l);p_int(getBcsIoDataTable(pin)->PIN.currentValue,l);
+		print_nnl(" set to ",l);p_int(value,l);
+		print_nnl(" on pin ",l);p_int(pin,l);
+		print_nnl(" mode ",l);printMode(GetChannelMode(pin),l);
+		// THis is the only place this variable should be set
+		getBcsIoDataTable(pin)->PIN.currentValue =value;
+		print_nnl(" lastPushed ",l);p_int(	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal,l);
+		return true;
+	}
+	return false;
 }
 
 
