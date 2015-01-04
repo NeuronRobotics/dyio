@@ -10,9 +10,9 @@ RELEASEFW=FirmwarePublish/Release/dyio-$(REVISION).xml
 #BOOTLOADFW=$(DUALDEBUG)
 BOOTLOADFW=$(RELEASEFW)
 
-#all: pubDebug
+all: pubDebug
 #all:pubDebug loadFw
-all:loadFw
+#all:loadFw
 	echo DyIO Firmware built OK!
 upload:svnupdate update all commit
 	if (test -d $(NRCLIB_LOCATION)/);then cd $(NRCLIB_LOCATION)/;make commit;	fi
@@ -45,7 +45,7 @@ commit:
 	svn commit -m="Building the DyIO"
 	cd ../NRSDK/fw; svn commit -m="Building the DyIO"
 	
-build: update
+build: #update
 	make -C pic all
 	make -C avr all
 
