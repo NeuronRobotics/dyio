@@ -97,7 +97,7 @@ void InitPinFunction(void){
 	DyioPinFunctionData[22].FUNCTION.HAS_COUNTER_OUTPUT_D = true; 
 
 	DyioPinFunctionData[23].FUNCTION.HAS_PPM = true; 
-	println_I("Loaded struct");
+	//println_I("Loaded struct");
 //#if !defined(__PIC32MX__)
 //        int mode;
 //	for (i=0;i<NUM_PINS;i++){

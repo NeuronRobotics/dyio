@@ -1,7 +1,8 @@
 
 #include "UserApp.h"
-
+boolean serverRecursionCheck = false;
 void buttonCheck(uint8_t code){
+
 //	StartCritical();
 //	EndCritical();
 	if (_RB0==1){
@@ -11,8 +12,13 @@ void buttonCheck(uint8_t code){
 		DelayMs(100);
 		Reset();
 	}
-	if(code != 17)
-		MyServer();
+	if(serverRecursionCheck == true){
+		//println_E("Server recursion detected");
+		return;
+	}
+	serverRecursionCheck = true;
+	MyServer();
+	serverRecursionCheck = false;
 }
 
  BowlerPacket Packet;

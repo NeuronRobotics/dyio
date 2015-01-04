@@ -212,7 +212,7 @@ void SendPacketToCoProc(BowlerPacket * Packet) {
     do {
         if (ret > 0) {
             println_E("Re send:");
-            printPacket(Packet, ERROR_PRINT);
+            //printPacket(Packet, ERROR_PRINT);
             FixPacket(Packet);
         }
         ret = sendPacket(Packet);
@@ -314,7 +314,7 @@ uint8_t sendPacket(BowlerPacket * Packet) {
             buttonCheck(4);
         }
         println_E("Rx");
-        printPacket(Packet, ERROR_PRINT);
+        //printPacket(Packet, ERROR_PRINT);
         //printFiFoState_E(&store);
         PushCoProcAsync(); //clear out any packets
         initCoProcUART();

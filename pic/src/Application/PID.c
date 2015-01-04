@@ -33,8 +33,9 @@ void fail(){
 
 void initPIDChans(uint8_t group){
 
-	if(dyPid[group].inputChannel==DYPID_NON_USED || dyPid[group].outputChannel==DYPID_NON_USED)
+	if(dyPid[group].inputChannel==DYPID_NON_USED || dyPid[group].outputChannel==DYPID_NON_USED){
 		return;
+	}
 
 	switch(dyPid[group].inputMode){
 	case IS_COUNTER_INPUT_INT:
@@ -52,11 +53,9 @@ void initPIDChans(uint8_t group){
 //	println_W("PID Out chan: ");
 //	p_int_W(dyPid[group].outputChannel);
 //	println_W(" mode: ");
-	printMode(dyPid[group].outputMode, WARN_PRINT);
+	//printMode(dyPid[group].outputMode, WARN_PRINT);
 	SetCoProcMode(dyPid[group].inputChannel,dyPid[group].inputMode);
 	SetCoProcMode(dyPid[group].outputChannel,dyPid[group].outputMode);
-	forceModeDownstream(dyPid[group].inputChannel);
-	forceModeDownstream(dyPid[group].outputChannel);
 	//SyncModes();
 
 	if(dyPid[group].inputMode== IS_ANALOG_IN){
@@ -66,7 +65,7 @@ void initPIDChans(uint8_t group){
 	}
 	SetPIDCalibrateionState(group, CALIBRARTION_DONE);
 	getPidGroupDataTable( group)->config.Async=true;
-	getPidGroupDataTable( group)->config.Enabled=true;
+	//getPidGroupDataTable( group)->config.Enabled=true;
 
 }
 boolean asyncCallback(BowlerPacket *Packet){
@@ -112,10 +111,12 @@ void InitPID(void){
 		LoadPIDvals(&pidGroups[i],&dyPid[i],i);
 		if(		dyPid[i].inputChannel==DYPID_NON_USED ||
 				dyPid[i].outputChannel==DYPID_NON_USED  ||
-				dyPid[i].outputChannel==dyPid[i].inputChannel)
+				dyPid[i].outputChannel==dyPid[i].inputChannel||
+				pidGroups[i].config.Enabled !=true)
 		{
 			dyPid[i].inputChannel=DYPID_NON_USED;
 			dyPid[i].outputChannel=DYPID_NON_USED;
+			pidGroups[i].config.Enabled = false;
 			WritePIDvalues(&pidGroups[i],&dyPid[i],i);
 		}
 		force[i].MsTime=0;
@@ -131,13 +132,14 @@ void InitPID(void){
                                 &checkPIDLimitEventsMine);
 
 	for (i=0;i<NUM_PID_GROUPS;i++){
-		printPIDvals(i);
+		//
 		if(pidGroups[i].config.Enabled){
-			println_I("PID ");p_int_I(i);
+			println_W("PID ");p_int_W(i);
+			printPIDvals(i);
 			initPIDChans(i);
 
 			int value = getPositionMine(i);
-                        pidGroups[i].CurrentState=value;
+            pidGroups[i].CurrentState=value;
 			pidReset(i,value);
 		}
 	}
@@ -160,6 +162,7 @@ void runPIDConfigurationValueSync(){
 	for (i=0;i<NUM_PID_GROUPS;i++){
 		if(dyPid[i].flagValueSync == true){
 			dyPid[i].flagValueSync = false;
+			println_E("Syncing PID values");
 			WritePIDvalues(&pidGroups[i],&dyPid[i],i);
 		}
 	}
@@ -171,10 +174,14 @@ uint8_t ConfigDyPID(BowlerPacket * Packet){
 	dyPid[chan].inputMode =Packet->use.data[2];
 	dyPid[chan].outputChannel =Packet->use.data[3];
 	dyPid[chan].outputMode =Packet->use.data[4];
+	if(dyPid[chan].inputChannel==DYPID_NON_USED ){
 
+	}
+	if( dyPid[chan].outputChannel==DYPID_NON_USED){
+
+	}
 	initPIDChans(chan);
-	dyPid[chan].flagValueSync = true;
-	//WritePIDvalues(&pidGroups[chan],&dyPid[chan],chan);
+	dyPid[chan].flagValueSync = true;// set up values to be synced later
 	return true; 
 }
 
@@ -245,7 +252,7 @@ int resetPositionMine(int group, int current){
 }
 
 float getPositionMine(int group){
-	if(dyPid[group].inputChannel==DYPID_NON_USED)
+	if(dyPid[group].inputChannel==DYPID_NON_USED || !pidGroups[group].config.Enabled)
 		return 0;
 
 	int32_t pos = 0;
@@ -271,7 +278,7 @@ float getPositionMine(int group){
 
 void setOutputMine(int group, float v){
 
-	if( dyPid[group].outputChannel==DYPID_NON_USED)
+	if( dyPid[group].outputChannel==DYPID_NON_USED|| !pidGroups[group].config.Enabled)
 		return;
 	Print_Level l = getPrintLevel();
 	//setPrintLevelNoPrint();

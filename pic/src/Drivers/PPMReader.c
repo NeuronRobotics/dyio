@@ -119,8 +119,8 @@ void runPPMEvent(void){
 	}
 }
 
-void clearPPM(uint8_t chan){
-	if((chan == 23) && (GetChannelMode(23)==IS_PPM_IN)){
+void clearPPM(uint8_t chan,uint8_t mode){
+	if((chan == 23) && (mode==IS_PPM_IN)){
 		CloseINT4();
 		CHAN3P1_tris=INPUT;
 	}

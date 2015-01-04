@@ -15,10 +15,6 @@ void InitPinStates(void);
 void SyncModes(void);
 
 
-/**
- * Helper macro to return the mode with the async flag stripped off
- */
-uint8_t GetChannelMode(uint8_t chan);
 
 /**
  * Sets the modes from an incoming packet

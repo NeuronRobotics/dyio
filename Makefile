@@ -7,8 +7,9 @@ PIC_COMPILER=xc32-v1.00-linux
 
 DUALDEBUG=FirmwarePublish/Dev/dyio-DEV-AVRDEBUG-PICDEBUG-$(REVISION).xml
 RELEASEFW=FirmwarePublish/Release/dyio-$(REVISION).xml
-#BOOTLOADFW=$(DUALDEBUG)
+
 BOOTLOADFW=$(RELEASEFW)
+#BOOTLOADFW=$(DUALDEBUG)
 
 all: pubDebug
 #all:pubDebug loadFw
@@ -49,13 +50,13 @@ build: #update
 	make -C pic all
 	make -C avr all
 
-
-	
 bootloader:
 	#http://electropepper.org/blog/item/linux-terminal-only-pic-programming
+	rm -rf ./MPLABXLog.xml*
 	/opt/microchip/mplabx/mplab_ide/bin/mdb.sh ./prog.txt	
 	sleep 5
-loadFw:# bootloader
+loadFw: bootloader#pubDebug #
+	#nr-console -xml=$(BOOTLOADFW) -port=/dev/Bootloader0
 	nr-console -xml=$(BOOTLOADFW) -port=/dev/Bootloader1
 	
 pubDebug:pub
@@ -66,11 +67,11 @@ pubDebug:pub
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Dev/dyio-DEV-$(REVISION)
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p_debug/output.hex -output=FirmwarePublish/Dev/dyio-DEV-AVRDEBUG-$(REVISION)
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p_debug/output.hex -output=$(DUALDEBUG)
-	#$(PUB) -core=1,avr_atmegaXX4p,2,avr/output/atmega644p_debug/output.hex -output=$(DUALDEBUG)
+	$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=$(DUALDEBUG)
 
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/debug/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Dev/dyio-DEV-PICDEBUG-$(REVISION)
 	
-pub:build
+pub: build
 	mkdir -p FirmwarePublish/Release/
 	rm -rf FirmwarePublish/Release/*.xml; 
 	rm -rf FirmwarePublish/Release/legacy/*.xml

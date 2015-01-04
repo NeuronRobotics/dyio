@@ -122,6 +122,14 @@ int GetNumberOfIOChannels() {
     return NumberOfIOChannels;
 }
 
+void _SetChannelMode(uint8_t pin,uint8_t mode ) {
+    if (pin < 0 || pin > GetNumberOfIOChannels()) {
+        return ;
+    }
+    //print_nnl("Set Channel Mode ",ERROR_PRINT);printMode(mode,ERROR_PRINT);
+    getBcsIoDataTable(pin)->PIN.currentChannelMode = mode;
+}
+
 uint8_t GetChannelMode(uint8_t pin) {
     if (pin < 0 || pin > GetNumberOfIOChannels()) {
         return 0xff;
@@ -151,6 +159,7 @@ boolean GetChannelModeFromPacket(BowlerPacket * Packet) {
     Packet->use.head.DataLegnth = 6;
     Packet->use.head.Method = BOWLER_POST;
     FixPacket(Packet);
+    //printBowlerPacketDEBUG(Packet,WARN_PRINT);
     return true;
 }
 
@@ -176,13 +185,14 @@ boolean GetAsyncFromPacket(BowlerPacket * Packet) {
     return true;
 }
 
-boolean SetAsyncFromPacket(BowlerPacket * Packet) {
-    Packet->use.head.Method = BOWLER_POST;
-    setAsync(Packet->use.data[0], Packet->use.data[1]);
-    Packet->use.head.DataLegnth = 4;
-    FixPacket(Packet);
-    return true;
-}
+//boolean SetAsyncFromPacket(BowlerPacket * Packet) {
+//    Packet->use.head.Method = BOWLER_POST;
+//    setAsync(Packet->use.data[0], Packet->use.data[1]);
+//    Packet->use.head.DataLegnth = 4;
+//    FixPacket(Packet);
+//    printBowlerPacketDEBUG(Packet,WARN_PRINT);
+//    return true;
+//}
 
 boolean GetIOChannelCountFromPacket(BowlerPacket * Packet) {
     Packet->use.head.Method = BOWLER_POST;
@@ -198,7 +208,7 @@ boolean GetIOChannelCountFromPacket(BowlerPacket * Packet) {
 boolean GetChanelStreamFromPacket(BowlerPacket * Packet) {
     uint8_t pin = Packet->use.data[0];
     uint8_t mode = GetChannelMode(pin);
-    if (isStremChannelMode(mode)) {
+    if (_isStremChannelMode(mode)) {
         if ( getStreamHWPtr != NULL){
             // Load the data directly into the packet as the buffer
             //Data pointer is offset by one to start after the pin index
@@ -218,7 +228,7 @@ boolean GetChanelStreamFromPacket(BowlerPacket * Packet) {
 boolean SetChanelStreamFromPacket(BowlerPacket * Packet) {
     uint8_t pin = Packet->use.data[0];
     uint8_t mode = GetChannelMode(pin);
-    if (isStremChannelMode(mode)) {
+    if (_isStremChannelMode(mode)) {
         if (setStreamHWPtr != NULL)
             // Load the data directly into the packet as the buffer
             //Data pointer is offset by one to start after the pin index
@@ -236,27 +246,23 @@ boolean SetChanelStreamFromPacket(BowlerPacket * Packet) {
 boolean SetChanelValueFromPacket(BowlerPacket * Packet) {
     uint8_t pin = Packet->use.data[0];
     uint8_t mode = GetChannelMode(pin);
-    if (isStremChannelMode(mode)) {
-        ERR(Packet, 1, 3);
-    } else {
-        int32_t data = 0;
-        int32_t time = 0;
 
-        data = get32bit(Packet, 1);
+	int32_t data = 0;
+	int32_t time = 0;
 
-        time =  get32bit(Packet, 5);
-        //println_W("Setting on pin=");p_int_W(pin); print_W(" value= ");p_int_W(data); print_W(" time= ");p_fl_W(time);
-		if(mode == IS_SERVO)
-			data = (data&0x000000ff) | (time<<16);
+	data = get32bit(Packet, 1);
 
-        if (setChanelValueHWPtr != NULL)
-            setChanelValueHWPtr(pin, 1, &data, (float)time);
+	time =  get32bit(Packet, 5);
+	//println_W("Setting on pin=");p_int_W(pin); print_W(" value= ");p_int_W(data); print_W(" time= ");p_fl_W(time);
+	if(mode == IS_SERVO)
+		data = (data&0x000000ff) | (time<<16);
 
-    	//println_E(__FILE__);println_E("SetChanelValueFromPacket");
-        setDataTableCurrentValue(pin,data);
+	if (setChanelValueHWPtr != NULL)
+		setChanelValueHWPtr(pin, 1, &data, (float)time);
 
+	//println_E(__FILE__);println_E("SetChanelValueFromPacket");
+	setDataTableCurrentValue(pin,data);
 
-    }
     READY(Packet, 1, 3);
     return true;
 }
@@ -562,14 +568,15 @@ boolean _setDataTableCurrentValue(uint8_t pin, int32_t value){
 		//println_E("Pin out of index! : "); p_int_E(pin);
 	}
 	if(value !=getBcsIoDataTable(pin)->PIN.currentValue ){
-//		Print_Level l = isOutputMode(GetChannelMode(pin))?ERROR_PRINT:INFO_PRINT;
-//		print_nnl(" Value was ",l);p_int(getBcsIoDataTable(pin)->PIN.currentValue,l);
-//		print_nnl(" set to ",l);p_int(value,l);
-//		print_nnl(" on pin ",l);p_int(pin,l);
-//		print_nnl(" mode ",l);printMode(GetChannelMode(pin),l);
+		//Print_Level l = INFO_PRINT;
+		Print_Level l = isOutputMode(GetChannelMode(pin))?ERROR_PRINT:WARN_PRINT;
+		println(" Value was ",l);p_int(getBcsIoDataTable(pin)->PIN.currentValue,l);
+		print_nnl(" set to ",l);p_int(value,l);
+		print_nnl(" on pin ",l);p_int(pin,l);
+		print_nnl(" mode ",l);printMode(GetChannelMode(pin),l);
 		// THis is the only place this variable should be set
 		getBcsIoDataTable(pin)->PIN.currentValue =value;
-		//print_I(" confirmed ");p_int_I(getBcsIoDataTable(pin)->PIN.currentValue);
+		print_nnl(" lastPushed ",l);p_int(	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal,l);
 		return true;
 	}
 	return false;

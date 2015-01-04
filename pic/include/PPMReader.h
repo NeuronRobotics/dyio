@@ -12,7 +12,7 @@
 void pushPPMPacket(void);
 void runPPMEvent(void);
 void RunPPMCheck(void);
-void clearPPM(uint8_t chan);
+void clearPPM(uint8_t chan,uint8_t mode);
 void startPPM(uint8_t chan);
 
 void ConfigPPMFromArray(uint8_t * data);

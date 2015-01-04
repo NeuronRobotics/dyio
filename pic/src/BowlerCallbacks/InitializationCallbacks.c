@@ -28,6 +28,10 @@ char macStr[13];
 char  dev [] = "DyIO v1.0";
 #endif
 
+uint8_t rev [] = {MAJOR_REV, MINOR_REV, FIRMWARE_VERSION};
+
+
+
 void hardwareInit() {
 
 
@@ -110,18 +114,18 @@ void hardwareInit() {
     InitADC();
 
 
-    uint8_t rev [] = {MAJOR_REV, MINOR_REV, FIRMWARE_VERSION};
-    FlashSetFwRev(rev);
+
+    //SetFwRev(rev);
 
 
 
-    FlashGetName(Name);
+    GetName(Name);
     if(Name[0]==0xff){
             for(i=0;i<17;i++){
                     Name[i]=defaultName[i] ;
             }
-            FlashSetName(Name);
-            FlashGetName(Name);
+            SetName(Name);
+            GetName(Name);
     }
 
     if (!GetLockCode(LockCode)){
@@ -168,7 +172,7 @@ void UserInit(void) {
     boolean brown = getEEBrownOutDetect() ? true:false;
     setBrownOutDetect(brown);
 
-    //Data table needs to be suynced before the PID can init properly
+    //Data table needs to be synced before the PID can init properly
     SyncDataTable();
     InitPID();
 

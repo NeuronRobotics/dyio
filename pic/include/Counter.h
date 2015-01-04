@@ -32,8 +32,8 @@
 
 typedef struct __attribute__((__packed__)) _COUNTER
 {
-	int64_t SETPOINT;
-	int64_t CURRENT;
+	int32_t SETPOINT;
+	int32_t CURRENT;
 	uint8_t STEP_INDEX;
 	uint8_t TimeOffset;
 	uint8_t TimeStep;
@@ -43,9 +43,7 @@ typedef struct __attribute__((__packed__)) _COUNTER
 } COUNTER;
 
 typedef struct __attribute__((__packed__)) _COUNTER_PINS
-{
-
-		uint8_t INT;
+{		uint8_t INT;
 		uint8_t DIR;
 		uint8_t HOME;
 } COUNTER_PINS;
@@ -55,7 +53,7 @@ void setPinsByGroup(uint8_t chan,uint8_t pin1,uint8_t pin2);
 #define NUM_COUNTER_GROUPS 4
 
 void InitCounterPins(void);
-void ClearCounter(uint8_t pin);
+void ClearCounter(uint8_t pin,uint8_t mode);
 boolean StartCounterInput(uint8_t pin);
 void initCounterAsync(uint8_t chan,int32_t val);
 boolean StartCounterOutput(uint8_t pin);
