@@ -4,6 +4,8 @@ This repository is for the standard set of bowler servers implemented in microco
 
 ##Building the DyIO Firmware
 
+Fitst install the compilers from c-bowler https://github.com/NeuronRobotics/c-bowler and clone the repository. 
+
 ###Loading firmware using the Bootloader
 
 ##Building the Nr CDC Bootloader Firmware

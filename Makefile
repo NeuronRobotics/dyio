@@ -8,11 +8,12 @@ PIC_COMPILER=xc32-v1.00-linux
 DUALDEBUG=FirmwarePublish/Dev/dyio-DEV-AVRDEBUG-PICDEBUG-$(REVISION).xml
 RELEASEFW=FirmwarePublish/Release/dyio-$(REVISION).xml
 
-
 BOOTLOADFW=$(RELEASEFW)
 #BOOTLOADFW=$(DUALDEBUG)
 
-all:loadFw 
+all: pubDebug
+#all:pubDebug loadFw
+#all:loadFw
 	echo DyIO Firmware built OK!
 upload:svnupdate update all commit
 	if (test -d $(NRCLIB_LOCATION)/);then cd $(NRCLIB_LOCATION)/;make commit;	fi
@@ -45,7 +46,7 @@ commit:
 	svn commit -m="Building the DyIO"
 	cd ../NRSDK/fw; svn commit -m="Building the DyIO"
 	
-build: update
+build: #update
 	make -C pic all
 	make -C avr all
 
@@ -76,7 +77,7 @@ pub: build
 	rm -rf FirmwarePublish/Release/legacy/*.xml
 
 	$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 		-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Release/dyio-$(REVISION).xml
-	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/bluetooth/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Release/dyio-bluetooth-$(REVISION).xml
+	$(PUB) -core=0,pic32mx440f128h,4,pic/output/bluetooth/output.hex 	-core=1,avr_atmegaXX4p,2,avr/output/atmega644p/output.hex -output=FirmwarePublish/Release/dyio-bluetooth-$(REVISION).xml
 	#$(PUB) -core=0,pic32mx440f128h,4,pic/output/release/output.hex 		-core=1,avr_atmegaXX4p,2,avr/output/atmega324p/output.hex -output=FirmwarePublish/Release/legacy/dyio-$(REVISION)_legacy.xml
 
 	#nr-console

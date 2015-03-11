@@ -214,7 +214,11 @@ void sendStr(const char *str) ;
 
 //Bowler Stack Specific:
 #if defined(BOWLERSTRUCTDEF_H_)
-	#define printPacket printBowlerPacketDEBUG
+#if !defined(NO_PRINTING)
+	#define printPacket(a,b) printBowlerPacketDEBUG(a,b)
+#else
+	#define printPacket(a,b) Nop();
+#endif
 	void printBowlerPacketDEBUG(BowlerPacket * packet,Print_Level l);
 	void printfDEBUG_BYTE(char b,Print_Level l);
 #endif
