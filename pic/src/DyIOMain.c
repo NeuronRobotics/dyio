@@ -27,7 +27,7 @@ void runDyIOMain(void){
 	UserInit();// User code init
 	//println_I("Main Loop Start");
 
-	OpenTimer4(T4_ON | T4_SOURCE_INT | T4_PS_1_256, 10);
+	OpenTimer4(T4_ON | T4_SOURCE_INT | T4_PS_1_16, 100);
 	ConfigIntTimer4(T4_INT_ON | T4_INT_PRIOR_5);
 
 	while (1){
@@ -42,6 +42,12 @@ void __ISR(_TIMER_4_VECTOR, ipl5) _Timer4Handler(void)
 	//StartCritical();
 	ConfigIntTimer4(T4_INT_OFF);
 	mT4ClearIntFlag();
+	while (_RB0==1){
+		SetColor(0,1,1);
+		U1CON = 0x0000;
+		DelayMs(100);
+		Reset();
+	}
 	// Run the Bowler Stack Namespace iteration of all async packets
 	// Pass in  the function pointer to push the packets upstream
     boolean back = GetBowlerPacket_arch(&Packet);
@@ -62,12 +68,7 @@ void __ISR(_TIMER_4_VECTOR, ipl5) _Timer4Handler(void)
             SetColor(0, 0, 1);
         }
     }//Have a packet
-	while (_RB0==1){
-		SetColor(0,1,1);
-		U1CON = 0x0000;
-		DelayMs(100);
-		Reset();
-	}
+
 	ConfigIntTimer4(T4_INT_ON | T4_INT_PRIOR_5);
 	//EndCritical();
 }
