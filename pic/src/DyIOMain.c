@@ -1,10 +1,7 @@
 
 #include "UserApp.h"
-boolean serverRecursionCheck = false;
-void buttonCheck(uint8_t code){
 
-//	StartCritical();
-//	EndCritical();
+void buttonCheck(uint8_t code){
 	if (_RB0==1){
 		p_int_E(code);print_E(" Reset");
 		SetColor(1,1,1);
@@ -12,22 +9,11 @@ void buttonCheck(uint8_t code){
 		DelayMs(100);
 		Reset();
 	}
-	if(serverRecursionCheck == true){
-		//println_E("Server recursion detected");
-		return;
-	}
 
 }
 
  BowlerPacket Packet;
 
-
-void MyServer(){
-
-	//println_I("Main Loop 2");
-	Bowler_Server((BowlerPacket *) &Packet, false) ;
-	//println_I("Main Loop 3");
-}
 
 void runDyIOMain(void){
 	startScheduler();
@@ -36,15 +22,28 @@ void runDyIOMain(void){
 
 	UserInit();// User code init
 	//println_I("Main Loop Start");
-	while (1){
-		MyServer();
-		// Run the Bowler Stack Namespace iteration of all async packets
-		// Pass in  the function pointer to push the packets upstream
 
+	OpenTimer4(T4_ON | T4_SOURCE_INT | T4_PS_1_256, (0x1000/10 ));
+	ConfigIntTimer3(T4_INT_ON | T4_INT_PRIOR_5);
+
+	while (1){
 
 		RunNamespaceAsync(&Packet,&PutBowlerPacket);
 		buttonCheck(0);
 	}
+}
+
+void __ISR(_TIMER_4_VECTOR, ipl5) _Timer3Handler(void)
+{
+	//StartCritical();
+	ConfigIntTimer4(T4_INT_OFF);
+	mT4ClearIntFlag();
+	// Run the Bowler Stack Namespace iteration of all async packets
+	// Pass in  the function pointer to push the packets upstream
+	Bowler_Server((BowlerPacket *) &Packet, false) ;
+	buttonCheck(99);
+	ConfigIntTimer4(T4_INT_ON | T4_INT_PRIOR_5);
+	//EndCritical();
 }
 
 
