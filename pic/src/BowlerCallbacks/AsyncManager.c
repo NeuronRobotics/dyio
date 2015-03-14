@@ -37,7 +37,7 @@ void ProcessAsyncData(BowlerPacket * Packet){
 		}else {
 			if(IsAsync(pin)){
 				//println_I("Sending async packet, not digital or analog");
-				PutBowlerPacket(Packet);
+				PutBowlerPacketLocal(Packet);
 			}
 		}
 	}else if (Packet->use.head.RPC==GetRPCValue("aasn")){

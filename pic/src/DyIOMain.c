@@ -14,7 +14,11 @@ void buttonCheck(uint8_t code){
 
  BowlerPacket Packet;
 
-
+ boolean PutBowlerPacketLocal(BowlerPacket * Packet){
+	 StartCritical();
+	 PutBowlerPacket(Packet);
+	 EndCritical();
+ }
 void runDyIOMain(void){
 	startScheduler();
 	Bowler_HAL_Init();
@@ -27,8 +31,8 @@ void runDyIOMain(void){
 	ConfigIntTimer4(T4_INT_ON | T4_INT_PRIOR_5);
 
 	while (1){
-		//Bowler_Server((BowlerPacket *) &Packet, false) ;
-		RunNamespaceAsync(&Packet,&PutBowlerPacket);
+		//_Timer4Handler() ;
+		RunNamespaceAsync(&Packet,&PutBowlerPacketLocal);
 		buttonCheck(0);
 	}
 }
@@ -40,8 +44,25 @@ void __ISR(_TIMER_4_VECTOR, ipl5) _Timer4Handler(void)
 	mT4ClearIntFlag();
 	// Run the Bowler Stack Namespace iteration of all async packets
 	// Pass in  the function pointer to push the packets upstream
-	Bowler_Server((BowlerPacket *) &Packet, false) ;
-	if (_RB0==1){
+    boolean back = GetBowlerPacket_arch(&Packet);
+    if (back) {
+        SetColor(0, 1, 0);
+        if (process(&Packet)) {
+            //Packet found, sending
+            PutBowlerPacket(&Packet);
+            if (Packet.use.head.RPC != GetRPCValue("_pwr") &&
+                    Packet.use.head.RPC != GetRPCValue("_png")&&
+                    Packet.use.head.RPC != GetRPCValue("_rpc") &&
+                                        Packet.use.head.RPC != GetRPCValue("_nms") &&
+                                        Packet.use.head.RPC != GetRPCValue("args")
+                    ) {//Ignore Power Packet
+                println("Response:", INFO_PRINT);
+                printPacket(&Packet, INFO_PRINT);
+            }
+            SetColor(0, 0, 1);
+        }
+    }//Have a packet
+	while (_RB0==1){
 		SetColor(0,1,1);
 		U1CON = 0x0000;
 		DelayMs(100);

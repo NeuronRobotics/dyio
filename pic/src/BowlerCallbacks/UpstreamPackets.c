@@ -44,7 +44,7 @@ void UpstreamPushPowerChange(uint8_t r0,uint8_t r1, uint16_t voltage, uint8_t ov
 	packetTemp.use.data[4]=override;
 	packetTemp.use.head.DataLegnth=4+2+2+1;
 
-	PutBowlerPacket(& packetTemp);
+	PutBowlerPacketLocal(& packetTemp);
 	printPacket(&packetTemp,WARN_PRINT);
 }
 
@@ -57,7 +57,7 @@ void UpstreamPushSPIlStream(void){
 	packetTemp.use.data[0] = 0; //the SPI clock pin
 	packetTemp.use.data[1]=GetSPIRxData(&packetTemp.use.data[2]);
 	packetTemp.use.head.DataLegnth = 4+1+1+packetTemp.use.data[1];
-	PutBowlerPacket(& packetTemp);
+	PutBowlerPacketLocal(& packetTemp);
 	printPacket(&packetTemp,WARN_PRINT);
 
 }
@@ -71,7 +71,7 @@ void UpstreamPushSerialStream(void){
 	packetTemp.use.data[0] = 17; //the serial rx pin
 	packetTemp.use.data[1]=GetSerialRxData(&packetTemp.use.data[2]);
 	packetTemp.use.head.DataLegnth = 4+1+1+packetTemp.use.data[1];
-	PutBowlerPacket(& packetTemp);
+	PutBowlerPacketLocal(& packetTemp);
 	printPacket(&packetTemp,WARN_PRINT);
 
 }
@@ -96,7 +96,7 @@ void pushPPMPacket(void){
 	packetTemp.use.head.MessageID=45;
 
 	packetTemp.use.head.Method=BOWLER_ASYN;
-	PutBowlerPacket(& packetTemp);
+	PutBowlerPacketLocal(& packetTemp);
 	printPacket(&packetTemp,WARN_PRINT);
 }
 
