@@ -23,8 +23,11 @@ int getBluetoothBaud(){
 void sendString(char * data){
 	Pic32UARTGetArray(packet,Pic32Get_UART_Byte_Count());
 	int i=0;
-	while(data[i++]!=0){}
+	while(data[i++]!=0){
+		// calculate length of string stored in i
+	}
 	Pic32UARTPutArray(data,i-1);
+
 	int tick = 2000;
 	while(Pic32Get_UART_Byte_Count()<2 && tick>0){
 		tick--;
@@ -38,7 +41,7 @@ void sendString(char * data){
 
 void configBluetooth(){
 	char name [] ="AT+NAMENR_DyIOxxxx\0";
-	FlashGetMac(MyMAC.v);
+	//FlashGetMac(MyMAC.v);
 	name[14]=GetHighNib(MyMAC.v[4]);
 	name[15]=GetLowNib(MyMAC.v[4]);
 	name[16]=GetHighNib(MyMAC.v[5]);
@@ -58,9 +61,9 @@ void configBluetooth(){
 		Pic32UARTGetArray(packet,Pic32Get_UART_Byte_Count());
 		if(packet[0]=='O' && packet[1]=='K'){
 			Pic32UARTSetBaud( HIGH_BAUD );
-			BluetoothReset=OFF; // Pull BT module out of reset
+			BluetoothReset(OFF); // Pull BT module out of reset
 			DelayMs(100);
-			BluetoothReset=ON; // Pull BT module out of reset
+			BluetoothReset(ON); // Pull BT module out of reset
 			DelayMs(100 );//wait for it to settle
 		}else{
 			int i=0;
@@ -132,9 +135,9 @@ void initBluetooth(){
 #if defined(HAS_BLUTOOTH)
 	btChecked = false; 
 	mPORTDOpenDrainClose(BIT_1 | BIT_2 | BIT_3); // make sure the com port is driven 3.3
-	BluetoothResetTRIS = OUTPUT; //output mode on reset line
-	BluetoothCommandTRIS = OUTPUT; //output mode on CMD line
-	BluetoothReset=ON; // Pull BT module out of reset
+	BluetoothResetTRIS (); //output mode on reset line
+	BluetoothCommandTRIS (); //output mode on CMD line
+	BluetoothReset(ON); // Pull BT module out of reset
 	DelayMs(BT_RESET_DELAY );//wait for it to settle
 	if(!hasBluetooth()){
 		Pic32UARTSetBaud( 115200 );
