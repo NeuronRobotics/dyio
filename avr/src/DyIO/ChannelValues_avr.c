@@ -46,8 +46,6 @@ boolean SetChanelValueHW(uint8_t pin,uint8_t numValues,int32_t * data, float ms)
 
 		return true; 
 
-
-	return true; 
 }
 
 /**

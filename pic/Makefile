@@ -21,7 +21,8 @@ CFILES :=	$(wildcard ../common/src/*/*.c) \
 OFILES := 	$(CFILES:%.c=%.o)
 
     
-all:clean  bluetooth
+
+all:clean release debug bluetooth
 #all: clean debug size
 	echo PIC Build OK!
 

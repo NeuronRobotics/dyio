@@ -16,9 +16,7 @@ void buttonCheck(uint8_t code){
 		//println_E("Server recursion detected");
 		return;
 	}
-	serverRecursionCheck = true;
-	MyServer();
-	serverRecursionCheck = false;
+
 }
 
  BowlerPacket Packet;
