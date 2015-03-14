@@ -27,7 +27,7 @@ void runDyIOMain(void){
 	UserInit();// User code init
 	//println_I("Main Loop Start");
 
-	OpenTimer4(T4_ON | T4_SOURCE_INT | T4_PS_1_256, 300);// .5ms
+	OpenTimer4(T4_ON | T4_SOURCE_INT | T4_PS_1_256, 10);
 	ConfigIntTimer4(T4_INT_ON | T4_INT_PRIOR_5);
 
 	while (1){
