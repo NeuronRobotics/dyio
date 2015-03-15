@@ -2,13 +2,13 @@
 #include "UserApp.h"
 
 void buttonCheck(uint8_t code){
-//	if (_RB0==1){
-//		p_int_E(code);print_E(" Reset");
-//		SetColor(1,1,1);
-//		U1CON = 0x0000;
-//		DelayMs(100);
-//		Reset();
-//	}
+	if (_RB0==1){
+		p_int_E(code);print_E(" Reset");
+		SetColor(1,1,1);
+		U1CON = 0x0000;
+		DelayMs(100);
+		Reset();
+	}
 
 }
 
@@ -27,7 +27,7 @@ void runDyIOMain(void){
 	UserInit();// User code init
 	//println_I("Main Loop Start");
 
-	OpenTimer4(T4_ON | T4_SOURCE_INT | T4_PS_1_64 , 100);
+	OpenTimer4(T4_ON | T4_SOURCE_INT | T4_PS_1_64 , 1000);
 	ConfigIntTimer4(T4_INT_ON | T4_INT_PRIOR_5);
 
 	while (1){
