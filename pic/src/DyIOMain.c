@@ -42,7 +42,7 @@ void __ISR(_TIMER_4_VECTOR, ipl5) _Timer4Handler(void)
 	//shut off the timer to avoid process recoursion
 	ConfigIntTimer4(T4_INT_OFF);
 	mT4ClearIntFlag();
-	//re-enable interrupts so thue stack can function if a long process takes place
+	//re-enable interrupts so the stack can function if a long process takes place
 	EndCritical();
 	//button check in the timer, acts as a psudo-watchdog
 	if(_RB0==1){
