@@ -27,11 +27,11 @@ void runDyIOMain(void){
 	UserInit();// User code init
 	//println_I("Main Loop Start");
 
+	//kick off packet processor timer
 	OpenTimer4(T4_ON | T4_SOURCE_INT | T4_PS_1_64 , 1000);
 	ConfigIntTimer4(T4_INT_ON | T4_INT_PRIOR_5);
 
 	while (1){
-		//_Timer4Handler() ;
 		RunNamespaceAsync(&Packet,&PutBowlerPacketLocal);
 		buttonCheck(0);
 	}
@@ -39,9 +39,12 @@ void runDyIOMain(void){
 
 void __ISR(_TIMER_4_VECTOR, ipl5) _Timer4Handler(void)
 {
-	//StartCritical();
+	//shut off the timer to avoid process recoursion
 	ConfigIntTimer4(T4_INT_OFF);
 	mT4ClearIntFlag();
+	//re-enable interrupts so thue stack can function if a long process takes place
+	EndCritical();
+	//button check in the timer, acts as a psudo-watchdog
 	if(_RB0==1){
 		SetColor(0,1,1);
 		U1CON = 0x0000;
@@ -56,21 +59,11 @@ void __ISR(_TIMER_4_VECTOR, ipl5) _Timer4Handler(void)
         if (process(&Packet)) {
             //Packet found, sending
             PutBowlerPacket(&Packet);
-            if (Packet.use.head.RPC != GetRPCValue("_pwr") &&
-                    Packet.use.head.RPC != GetRPCValue("_png")&&
-                    Packet.use.head.RPC != GetRPCValue("_rpc") &&
-                                        Packet.use.head.RPC != GetRPCValue("_nms") &&
-                                        Packet.use.head.RPC != GetRPCValue("args")
-                    ) {//Ignore Power Packet
-                println("Response:", INFO_PRINT);
-                printPacket(&Packet, INFO_PRINT);
-            }
             SetColor(0, 0, 1);
         }
     }//Have a packet
 
 	ConfigIntTimer4(T4_INT_ON | T4_INT_PRIOR_5);
-	//EndCritical();
 }
 
 
