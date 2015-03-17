@@ -29,7 +29,6 @@ update:
 	if (test -d $(NRCLIB_LOCATION)/);					then cd $(NRCLIB_LOCATION)/;git pull;					fi
 	if (test -d $(NRCLIB_LOCATION)/);					then cd $(NRCLIB_LOCATION)/Platform;make pic32MX440F128H;		fi
 	if (test -d $(NRCLIB_LOCATION)/);					then cd $(NRCLIB_LOCATION)/Platform;make AVR644p;				fi
-	if (test -d $(NRCLIB_LOCATION)/);					then cd $(NRCLIB_LOCATION)/Platform;make AVR324p;				fi
 	if (test -d $(NRCLIB_LOCATION)/Platform/include/); 	then rsync -avz --exclude=.svn*						$(NRCLIB_LOCATION)/Platform/include/* 					NR-Clib/include;			fi
 	if (test -d $(NRCLIB_LOCATION)/BowlerStack/); 		then rsync -avz --exclude=.svn*						$(NRCLIB_LOCATION)/BowlerStack/include/* 				NR-Clib/include;			fi
 	
