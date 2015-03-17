@@ -153,8 +153,7 @@ void servoTimerEvent()
 			setServoTimer( LOOPSPACING);
 
 			TCCR1Bbits._CS = 2;//  value CLslk I/O/8 (From prescaler)
-//			// With the clock re-started, run the server
-//			Server();
+
 			break;
 	}
 
