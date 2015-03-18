@@ -148,10 +148,12 @@ void hardwareInit() {
     if(defaultmac){
     	srand((unsigned) GetRawVoltage());// random seed from the air
 
-    	MY_MAC_ADDRESS[3] = MINOR_REV;
-    	MY_MAC_ADDRESS[4] = FIRMWARE_VERSION;
-    	MY_MAC_ADDRESS[5] = rand() % 255;
-    	FlashSetMac(MY_MAC_ADDRESS);
+    	MyMAC.v[3] = MINOR_REV;
+    	MyMAC.v[4] = FIRMWARE_VERSION;
+    	MyMAC.v[5] = rand() % 255;
+    	FlashSetMac(MyMAC.v);
+		U1CON = 0x0000;
+		DelayMs(100);
     	Reset();
     }
 
