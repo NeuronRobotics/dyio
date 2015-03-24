@@ -30,14 +30,14 @@ typedef struct __attribute__((__packed__)) _FLASH_STORE{
 	}FlashStorageStruct;
 #define FLASHSTORE			sizeof(FlashStorageStruct)
 uint8_t FlashSetMac(uint8_t * mac);
-void FlashSetName(char * name);
+//void FlashSetName(char * name);
 void FlashGetMac(uint8_t * mac);
 void FlashGetName(char * name);
 
-uint8_t FlashSetBlRev(uint8_t * mac);
-void FlashGetBlRev(uint8_t * mac);
-uint8_t FlashSetFwRev(uint8_t * mac);
-void FlashGetFwRev(uint8_t * mac);
+//uint8_t FlashSetBlRev(uint8_t * mac);
+//void FlashGetBlRev(uint8_t * mac);
+//uint8_t FlashSetFwRev(uint8_t * mac);
+//void FlashGetFwRev(uint8_t * mac);
 
 void FlashSwitchMemoryToBootloader();
 void enableFlashStorage(boolean enabled);

@@ -25,7 +25,18 @@ static uint8_t bOK[2]={false,false};
 static uint8_t blockServo[2]={true,true};
 
 
-
+void SetServoPosDataTable(uint8_t pin,uint8_t val,float time){
+	if(time<30 || isnan(velocity[pin].set)){
+		velocity[pin].setTime=0;
+		velocity[pin].start = (float)val;
+	}else{
+		// Set the start value to the pervious value
+		velocity[pin].setTime=time;
+		velocity[pin].start=velocity[pin].set;
+	}
+	velocity[pin].set=(float)val;
+	velocity[pin].startTime=getMs();
+}
 
 boolean getPowerOverRide(){
 	if(powerOverRide == 0xff)
@@ -103,16 +114,7 @@ void SetServoPos(uint8_t pin,uint8_t val,float time){
 //	print_W(" to val= ");p_int_W(val);
 //	print_W(" val was= ");p_fl_W(velocity[pin].set);
 
-	if(time<30 || isnan(velocity[pin].set)){
-		velocity[pin].setTime=0;
-		velocity[pin].start = (float)val;
-	}else{
-		// Set the start value to the pervious value
-		velocity[pin].setTime=time;
-		velocity[pin].start=velocity[pin].set;
-	}
-	velocity[pin].set=(float)val;
-	velocity[pin].startTime=getMs();
+	SetServoPosDataTable( pin, val, time);
 
 	getInterpolatedPin( pin);
 
@@ -161,7 +163,7 @@ uint8_t pinOn(uint8_t pin){
 }
 
 void pinOff(uint8_t pin){
-	if(GetChannelMode(pin)==IS_SERVO){
+	if(pinServoOk(pin) ==true){
 		SetDIO(pin,OFF);
 	}
 }
@@ -188,10 +190,12 @@ uint8_t getInterpolatedPin(uint8_t pin){
 	}
 	int dataTableSet = (getDataTableCurrentValue(pin)&0x000000ff);
 	int interpolatorSet = ((int32_t)velocity[pin].set);
+	float time = (float)((getDataTableCurrentValue(pin)>>16)&0x0000ffff);
+
 	if(dataTableSet!=interpolatorSet){
 //		println_W("Setpoint=");
 //				error = true;
-		SetServoPos(pin,dataTableSet,(float)((getDataTableCurrentValue(pin)>>16)&0x0000ffff));
+		SetServoPosDataTable( pin, dataTableSet,time);
 	}
 	if(error){
 //		p_fl_W(ip);print_W(" on chan=");p_int_W(pin);print_W(" target=");p_int_W(interpolatorSet);
@@ -201,7 +205,7 @@ uint8_t getInterpolatedPin(uint8_t pin){
 //		println_W("setTime=  \t");p_fl_W(velocity[pin].setTime);
 //		println_W("startTime=\t");p_fl_W(velocity[pin].startTime);
 		ip=velocity[pin].set;
-		SetServoPos(pin,dataTableSet,(float)((getDataTableCurrentValue(pin)>>16)&0x0000ffff));
+		SetServoPosDataTable(pin, dataTableSet,time);
 	}
 	int tmp = (int)ip;
 

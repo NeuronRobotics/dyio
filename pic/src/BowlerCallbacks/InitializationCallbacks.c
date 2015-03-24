@@ -13,7 +13,7 @@ uint8_t SaveTheState = 0;
 
 #define mInitSwitch()      (_TRISB0)=1;
 
-const uint8_t MY_MAC_ADDRESS[] = {0x74, 0xf7, 0x26, 0x00, 0x00, 0x00};
+uint8_t MY_MAC_ADDRESS[] = {0x74, 0xf7, 0x26, 0x00, 0x00, 0x00};
 char					LockCode[5];
 char 					Name[17];
 char defaultName[] = "DyIO Module";
@@ -45,9 +45,7 @@ void hardwareInit() {
 
 
     int j = 0, i = 0;
-#if defined(PROGRAMMER_DEBUG)
-    FlashSwitchMemoryToBootloader();
-#endif
+
     for (i = 0; i < 6; i++) {
         MyMAC.v[i] = MY_MAC_ADDRESS[i];
     }
@@ -56,7 +54,6 @@ void hardwareInit() {
     println_I("MAC");
     enableFlashStorage(true);
     FlashGetMac(MyMAC.v);
-
 
     for (i = 0; i < 6; i++) {
         macStr[j++] = GetHighNib(MyMAC.v[i]);
@@ -137,11 +134,28 @@ void hardwareInit() {
 
     EndCritical();
 
-    //	initBluetooth();
-    //	if(!hasBluetooth()){
-    //		Pic32UARTSetBaud( 115200 );
-    //	}
+	initBluetooth();
+	if(!hasBluetooth()){
+		Pic32UARTSetBaud( 115200 );
+	}
 
+    boolean defaultmac=true;
+    for (i = 0; (i < 6) && defaultmac; i++) {
+    	if(MyMAC.v[i] != MY_MAC_ADDRESS[i]){
+    		defaultmac = false;
+    	}
+    }
+    if(defaultmac){
+    	srand((unsigned) GetRawVoltage());// random seed from the air
+
+    	MyMAC.v[3] = MINOR_REV;
+    	MyMAC.v[4] = FIRMWARE_VERSION;
+    	MyMAC.v[5] = rand() % 255;
+    	FlashSetMac(MyMAC.v);
+		U1CON = 0x0000;
+		DelayMs(100);
+    	Reset();
+    }
 
 }
 

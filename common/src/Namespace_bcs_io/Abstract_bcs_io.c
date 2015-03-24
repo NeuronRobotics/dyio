@@ -296,7 +296,8 @@ boolean SetAllChannelValueFromPacket(BowlerPacket * Packet) {
         	if(isOutputMode(GetChannelMode(i))==true){
 
         		//println_E(__FILE__);println_E("SetAllChannelValueFromPacket");
-				setDataTableCurrentValue(i,data[i]);
+        		if(GetChannelMode(i)!=IS_SERVO)
+        			setDataTableCurrentValue(i,data[i]);
         	}
 		}
         //READY(Packet, 3, 3);

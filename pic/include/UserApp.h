@@ -64,8 +64,9 @@ void buttonCheck(uint8_t code);
 void MyServer();
 void UserInit(void);
 void InitializeDyIODataTableManager();
+boolean PutBowlerPacketLocal(BowlerPacket * Packet);
 
 #define MAX_RETRY 5
-#define DELAY_TIMEOUT 200
+#define DELAY_TIMEOUT 40
 
 #endif /* USERAPP_H_ */
