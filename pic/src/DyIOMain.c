@@ -13,11 +13,15 @@ void buttonCheck(uint8_t code){
 }
 
  BowlerPacket Packet;
+ boolean pushing = false;
 
  boolean PutBowlerPacketLocal(BowlerPacket * Packet){
-	 StartCritical();
+
+	 pushing = true;
+	 //StartCritical();
 	 PutBowlerPacket(Packet);
-	 EndCritical();
+	 //EndCritical();
+	 pushing = false;
  }
 void runDyIOMain(void){
 	startScheduler();
@@ -28,7 +32,7 @@ void runDyIOMain(void){
 	//println_I("Main Loop Start");
 
 	//kick off packet processor timer
-	OpenTimer4(T4_ON | T4_SOURCE_INT | T4_PS_1_64 , 1000);
+	OpenTimer4(T4_ON | T4_SOURCE_INT | T4_PS_1_64 , 100);
 	ConfigIntTimer4(T4_INT_ON | T4_INT_PRIOR_5);
 
 	while (1){
@@ -51,17 +55,19 @@ void __ISR(_TIMER_4_VECTOR, ipl5) _Timer4Handler(void)
 		DelayMs(100);
 		Reset();
 	}
-	// Run the Bowler Stack Namespace iteration of all async packets
-	// Pass in  the function pointer to push the packets upstream
-    boolean back = GetBowlerPacket_arch(&Packet);
-    if (back) {
-        SetColor(0, 1, 0);
-        if (process(&Packet)) {
-            //Packet found, sending
-            PutBowlerPacket(&Packet);
-            SetColor(0, 0, 1);
-        }
-    }//Have a packet
+	if(pushing == false){
+		// Run the Bowler Stack Namespace iteration of all async packets
+		// Pass in  the function pointer to push the packets upstream
+		boolean back = GetBowlerPacket_arch(&Packet);
+		if (back) {
+			SetColor(0, 1, 0);
+			if (process(&Packet)) {
+				//Packet found, sending
+				PutBowlerPacket(&Packet);
+				SetColor(0, 0, 1);
+			}
+		}//Have a packet
+	}
 
 	ConfigIntTimer4(T4_INT_ON | T4_INT_PRIOR_5);
 }
