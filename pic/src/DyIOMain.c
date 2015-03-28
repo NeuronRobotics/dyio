@@ -68,7 +68,7 @@ void __ISR(_TIMER_4_VECTOR, ipl5) _Timer4Handler(void)
 			}
 		}//Have a packet
 	}
-
+	OpenTimer4(T4_ON | T4_SOURCE_INT | T4_PS_1_64 , 100);
 	ConfigIntTimer4(T4_INT_ON | T4_INT_PRIOR_5);
 }
 
