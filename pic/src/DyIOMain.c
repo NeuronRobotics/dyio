@@ -19,9 +19,12 @@ void buttonCheck(uint8_t code){
 
 	 pushing = true;
 	 //StartCritical();
-	 PutBowlerPacket(Packet);
+         SetRed(1);
+	 boolean ret = PutBowlerPacket(Packet);
 	 //EndCritical();
+         SetRed(0);
 	 pushing = false;
+         return ret;
  }
 void runDyIOMain(void){
 	startScheduler();
@@ -60,11 +63,11 @@ void __ISR(_TIMER_4_VECTOR, ipl5) _Timer4Handler(void)
 		// Pass in  the function pointer to push the packets upstream
 		boolean back = GetBowlerPacket_arch(&Packet);
 		if (back) {
-			SetColor(0, 1, 0);
+			SetGreen(1);
 			if (process(&Packet)) {
 				//Packet found, sending
 				PutBowlerPacket(&Packet);
-				SetColor(0, 0, 1);
+				SetGreen(0);
 			}
 		}//Have a packet
 	}

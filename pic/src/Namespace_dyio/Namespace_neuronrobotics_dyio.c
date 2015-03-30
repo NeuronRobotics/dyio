@@ -51,7 +51,16 @@ boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidA
 
 
 	//if {
-		SyncDataTable();
+    int r = (isLocked()) ? 1 : 0;
+    int g = (isActive() && !isLocked()) ? 1 : 0;
+
+    SetGreen(g);
+    SetRed(r);
+    SetBlue(1);
+    SyncDataTable();
+    SetGreen(g);
+    SetRed(r);
+    SetBlue(0);
 	//}
 
 //    if ((RunEvery(&syncVolt)>0)) {
@@ -76,7 +85,7 @@ boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidA
     	UpstreamPushSPIlStream();
 	}
 
-    SetColor((isLocked()) ? 1 : 0, (isActive() && !isLocked()) ? 1 : 0, 1);
+
 
     return false; 
 }
@@ -85,7 +94,7 @@ boolean neuronRoboticsDyIOProcessor_g(BowlerPacket * Packet) {
     //int zone = 1;
     char tmpName[17];
     int i;
-    uint8_t rev[3];
+    //uint8_t rev[3];
     switch (Packet->use.head.RPC) {
         case _PWR:
             POWER(Packet);

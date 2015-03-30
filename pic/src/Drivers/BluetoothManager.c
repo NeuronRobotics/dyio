@@ -8,7 +8,7 @@ boolean btChecked = false;
 extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 
 #define HIGH_BAUD 230400
-char packet[50];
+uint8_t packet[50];
 #define BT_RESET_DELAY 300
 int bauds[] = {
 				HIGH_BAUD,
@@ -26,7 +26,7 @@ void sendString(char * data){
 	while(data[i++]!=0){
 		// calculate length of string stored in i
 	}
-	Pic32UARTPutArray(data,i-1);
+	Pic32UARTPutArray((uint8_t *)data,i-1);
 
 	int tick = 2000;
 	while(Pic32Get_UART_Byte_Count()<2 && tick>0){

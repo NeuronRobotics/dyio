@@ -68,6 +68,7 @@
           <itemPath>../src/Drivers/SerialPassThrough.c</itemPath>
           <itemPath>../src/Drivers/ADC.c</itemPath>
           <itemPath>../src/Drivers/DyIODataTableManager.c</itemPath>
+          <itemPath>../src/Drivers/BluetoothManager.c</itemPath>
         </logicalFolder>
         <logicalFolder name="dyio" displayName="dyio" projectFiles="true">
           <itemPath>../../common/src/dyio/PinFunctions.c</itemPath>

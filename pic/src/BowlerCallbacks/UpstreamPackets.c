@@ -34,7 +34,7 @@ extern MAC_ADDR MyMAC __attribute__ ((section (".scs_global_var")));
 
 
 void UpstreamPushPowerChange(uint8_t r0,uint8_t r1, uint16_t voltage, uint8_t override){
-	SetColor(0,1,0);
+	//SetColor(0,1,0);
 	packetTemp.use.head.RPC=GetRPCValue("_pwr");
 	packetTemp.use.head.MessageID=3;
 	packetTemp.use.head.Method=BOWLER_ASYN;
@@ -49,7 +49,7 @@ void UpstreamPushPowerChange(uint8_t r0,uint8_t r1, uint16_t voltage, uint8_t ov
 }
 
 void UpstreamPushSPIlStream(void){
-	SetColor(0,1,0);
+	//SetColor(0,1,0);
 	LoadCorePacket(& packetTemp);
 	packetTemp.use.head.RPC=GetRPCValue("strm");
 	packetTemp.use.head.MessageID=3;
@@ -63,7 +63,7 @@ void UpstreamPushSPIlStream(void){
 }
 
 void UpstreamPushSerialStream(void){
-	SetColor(0,1,0);
+	//SetColor(0,1,0);
 	LoadCorePacket(& packetTemp);
 	packetTemp.use.head.RPC=GetRPCValue("strm");
 	packetTemp.use.head.MessageID=3;
@@ -91,7 +91,7 @@ void POWER(BowlerPacket * packet){
 }
 
 void pushPPMPacket(void){
-	SetColor(0,1,0);
+	//SetColor(0,1,0);
 	GetPPMDataToPacket(& packetTemp);
 	packetTemp.use.head.MessageID=45;
 

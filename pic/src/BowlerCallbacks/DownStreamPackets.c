@@ -37,7 +37,7 @@ void setCoProcBrownOutMode(boolean b) {
 }
 
 void DownstreamSerialStreamSet(BYTE_FIFO_STORAGE * txBuffer) {
-	SetColor(0, 1, 0);
+	//(0, 1, 0);
 	LoadCorePacket(&downstreamPacketTemp);
 	downstreamPacketTemp.use.head.RPC = GetRPCValue("strm");
 	downstreamPacketTemp.use.head.MessageID = 3;
@@ -54,7 +54,7 @@ void DownstreamSerialStreamSet(BYTE_FIFO_STORAGE * txBuffer) {
 void DownstreamSerialStreamGet(BYTE_FIFO_STORAGE * rxBuffer) {
 	int i;
 	uint8_t err;
-	SetColor(0, 1, 0);
+	//SetColor(0, 1, 0);
 	LoadCorePacket(&downstreamPacketTemp);
 	downstreamPacketTemp.use.head.RPC = GetRPCValue("strm");
 	downstreamPacketTemp.use.head.MessageID = 3;
@@ -124,7 +124,7 @@ void CheckRev(void) {
 	if ((downstreamPacketTemp.use.data[0] == MAJOR_REV)
 			&& (downstreamPacketTemp.use.data[1] == MINOR_REV)
 			&& (downstreamPacketTemp.use.data[2] == FIRMWARE_VERSION)) {
-		SetColor(0, 0, 1);
+		//SetColor(0, 0, 1);
 	} else {
 		//SetColor(1, 0, 0);
 		println_I("Rev. Check Failed! AVR:");

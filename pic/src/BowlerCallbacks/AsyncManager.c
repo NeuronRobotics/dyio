@@ -100,7 +100,7 @@ boolean isAnalog(BowlerPacket * Packet){
 
 void dealWithAsyncPacket(BowlerPacket * Packet){
 	if(Packet->use.head.RPC==_PWR){
-		SetColor(1,0,0);
+		//SetColor(1,0,0);
 		return;
 	}
 	if (Packet->use.head.Method == BOWLER_ASYN) {

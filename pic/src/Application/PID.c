@@ -26,7 +26,7 @@ RunEveryData force[NUM_PID_GROUPS];
 
 void fail(){
 	while(true) {
-		SetColor(1,1,0);
+		//(1,1,0);
 		buttonCheck(1);
 	}
 }

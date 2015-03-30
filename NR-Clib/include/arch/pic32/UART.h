@@ -56,5 +56,6 @@ void Pic32UARTPutArray(uint8_t *packet,uint16_t size);
 void Pic32UART_HAL_INIT(int BAUDRATE);
 void Pic32UARTGetArray(uint8_t *packet,uint16_t size);
 uint16_t Pic32Get_UART_Byte_Count(void);
+void Pic32UARTSetBaud(int baud);
 
 #endif

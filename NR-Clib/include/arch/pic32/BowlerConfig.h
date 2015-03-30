@@ -51,6 +51,7 @@ void SetPICUARTFifo(BYTE_FIFO_STORAGE * s);
 void SendPacketUSB(uint8_t * packet,uint16_t size);
 void Pic32_Bowler_HAL_Init(void);
 
+
 void FlashSync(void);
 void SetFlashData(uint32_t * s,uint32_t size);
 void FlashLoad(void);

@@ -22,6 +22,12 @@ uint8_t Bowler_Server_Static(BowlerPacket * Packet,BYTE_FIFO_STORAGE * fifo);
  */
 uint8_t Bowler_Server(BowlerPacket * Packet, boolean debug);
 
+/*
+ RUn the stack processor of all regestered namespaces
+ */
+
+boolean process(BowlerPacket * Packet);
+
 
 
 #endif /* BOWLER_SERVER_H_ */

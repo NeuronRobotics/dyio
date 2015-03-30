@@ -226,7 +226,7 @@ void SendPacketToCoProc(BowlerPacket * Packet) {
 
     if (i == MAX_RETRY) {
 
-        SetColor(1, 0, 0);
+        //SetColor(1, 0, 0);
         initCoProcCom();
         PowerCycleAVR();
         DelayMs(200);
@@ -297,7 +297,7 @@ uint8_t sendPacket(BowlerPacket * Packet) {
                         //print_E("\nRX<<\n");
                         printPacket(&downstream, ERROR_PRINT);
 
-                        SetColor(1, 0, 0);
+                        //SetColor(1, 0, 0);
                         return 3;
                     } else {
 
