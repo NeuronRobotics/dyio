@@ -1,4 +1,3 @@
-
 /**
  * This file is for managment of the onboard bluetooth module
  */
