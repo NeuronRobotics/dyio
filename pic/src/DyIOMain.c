@@ -20,9 +20,9 @@ PACKET_FIFO_STORAGE packetFifo;
 BowlerPacket buffer[SIZE_OF_PACKET_BUFFER];
 
 boolean PutBowlerPacketLocal(BowlerPacket * Packet) {
-    StartCritical();
+    DisableIntT4;
     FifoAddPacket(&packetFifo, Packet);
-    EndCritical();
+    EnableIntT4;
     return true;
 }
 void startTimer(boolean on){
@@ -36,9 +36,9 @@ void startTimer(boolean on){
 void __ISR(_TIMER_4_VECTOR, ipl5) _Timer4Handler(void) {
     //shut off the timer to avoid process recoursion
     mT4ClearIntFlag();
-    EndCritical();
     startTimer(false);
-
+    USBEnableInterrupts();
+    
     //button check in the timer, acts as a psudo-watchdog
     if (_RB0 == 1) {
         SetColor(0, 1, 1);

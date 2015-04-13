@@ -158,9 +158,9 @@ void initCoProcUART() {
 #else
     startUartCoProc();
 #endif
-    StartCritical();
+    //StartCritical();
     InitByteFifo(&store, privateRX, sizeof (privateRX));
-    EndCritical();
+    //EndCritical();
     FLAG_ASYNC = FLAG_OK;
 }
 
@@ -539,14 +539,14 @@ void newByte() {
 //#if !defined(USE_DMA)
 
 void __ISR(_UART_2_VECTOR, IPL7AUTO) My_U2_ISR(void) {
-	StartCritical();
+	//StartCritical();
     FLAG_ASYNC = FLAG_BLOCK;
     if (INTGetFlag(INT_SOURCE_UART_RX(UART2))) {
         newByte();
         INTClearFlag(INT_SOURCE_UART_RX(UART2));
     }
      uartErrorCheck();
-    EndCritical();
+    //EndCritical();
 
     if (INTGetFlag(INT_SOURCE_UART_TX(UART2))) {
             INTClearFlag(INT_SOURCE_UART_TX(UART2));
