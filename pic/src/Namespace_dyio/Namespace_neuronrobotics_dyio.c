@@ -72,10 +72,12 @@ boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidA
     float now = getMs()- getLastPacketTime();
 
 
+
     if(!isActive()){
         if (now  > heartBeatLockTime ){
             println_W("Resetting the usb system");
             resetUsbSystem();//when the system switches, reset the usb
+            Pic32_Bowler_HAL_Init();
             lockServos();
         }
     }else{

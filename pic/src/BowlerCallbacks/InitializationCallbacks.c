@@ -181,7 +181,7 @@ void UserInit(void) {
 
 
     lockServos();
-    setPrintLevelInfoPrint();
+    //setPrintLevelInfoPrint();
 
     boolean brown = getEEBrownOutDetect() ? true:false;
     setBrownOutDetect(brown);

@@ -69,7 +69,7 @@ void RunPPMCheck(void){
 				if(ppmLastSent[i] != ppmData[i]){
 					ppmLastSent[i] = ppmData[i];
 					Print_Level l = getPrintLevel();
-					setPrintLevelInfoPrint();
+					//setPrintLevelInfoPrint();
 					//println_I("PPM setting output");
 					//SetChannelValueCoProc(ppmLink[i],ppmData[i]);
 					getBcsIoDataTable(ppmLink[i])->PIN.currentValue=ppmData[i];

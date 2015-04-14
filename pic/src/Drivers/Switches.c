@@ -16,7 +16,7 @@ float volt;
 void CheckSwitches(void){
 
 	Print_Level l = getPrintLevel();
-	setPrintLevelInfoPrint();
+	//setPrintLevelInfoPrint();
 	switched=0;
 	volt = GetRawVoltage();
 	boolean up = false; 

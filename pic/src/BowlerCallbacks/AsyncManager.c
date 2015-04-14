@@ -14,7 +14,7 @@
 
 void ProcessAsyncData(BowlerPacket * Packet){
     Print_Level l = getPrintLevel();
-	setPrintLevelInfoPrint();
+	//setPrintLevelInfoPrint();
 	println_I("**Got Async Packet**");
 	printPacket(Packet,INFO_PRINT);
 
