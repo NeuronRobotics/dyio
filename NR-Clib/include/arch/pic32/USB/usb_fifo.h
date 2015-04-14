@@ -23,6 +23,7 @@ void USBDeviceTasksLocal(void);
 BOOL GotUSBData(void);
 
 void SetPICUSBFifo(BYTE_FIFO_STORAGE  * s);
+void resetUsbSystem();
 
 void usb_CDC_Serial_Init(char * DevStr,char * SerialStr,UINT16 vid,UINT16 pid);
 WORD USBGetArray(BYTE* stream, WORD count);

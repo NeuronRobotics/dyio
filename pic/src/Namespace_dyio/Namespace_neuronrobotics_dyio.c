@@ -13,7 +13,7 @@ RunEveryData ppm = {0, 50};
 boolean pwr = false; 
 
 boolean heartBeatLock = true;
-int heartBeatLockTime = 1;
+int heartBeatLockTime = 1000;
 
 
 extern MAC_ADDR MyMAC __attribute__((section(".scs_global_var")));
@@ -58,8 +58,8 @@ boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidA
     SetRed(r);
     SetBlue(1);
     SyncDataTable();
-    SetGreen(g);
-    SetRed(r);
+    SetGreen(0);
+    SetRed(0);
     SetBlue(0);
 	//}
 
@@ -69,13 +69,18 @@ boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidA
 //
 //    }
 
-    float now = getMs();
-    if ((now - getLastPacketTime()) > heartBeatLockTime) {
-        if (heartBeatLock) {
+    float now = getMs()- getLastPacketTime();
+
+
+    if(!isActive()){
+        if (now  > heartBeatLockTime ){
+            println_W("Resetting the usb system");
+            resetUsbSystem();//when the system switches, reset the usb
             lockServos();
         }
-    } else {
-        unlockServos();
+    }else{
+        if (now  < heartBeatLockTime )
+           unlockServos();
     }
 
     if(getNumberOfSerialRxBytes()>0){
