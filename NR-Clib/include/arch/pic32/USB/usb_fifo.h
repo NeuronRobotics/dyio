@@ -35,6 +35,8 @@ void SetUSB_VID_PID(WORD vid,WORD pid);
 
 void usb_Buffer_Update(void);
 
+#define USB_TIMEOUT 150
+
 /**
  * Checks to see if the USB port is opened by a host
  */

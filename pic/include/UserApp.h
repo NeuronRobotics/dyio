@@ -65,8 +65,9 @@ void MyServer();
 void UserInit(void);
 void InitializeDyIODataTableManager();
 boolean PutBowlerPacketLocal(BowlerPacket * Packet);
+void server();
 
 #define MAX_RETRY 5
-#define DELAY_TIMEOUT 4000
+#define DELAY_TIMEOUT (USB_TIMEOUT*2)
 
 #endif /* USERAPP_H_ */
