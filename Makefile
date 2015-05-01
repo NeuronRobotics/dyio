@@ -89,9 +89,11 @@ clean:
 setup:
 	sudo rm -rf $(PIC_COMPILER)*
 	#64 bit
-	#sudo apt-get install -y --force-yes avr-libc gcc-avr lib32z1 lib32ncurses5 lib32bz2-1.0 git build-essential
+	wget http://launchpadlibrarian.net/187844602/lib32bz2-1.0_1.0.6-5ubuntu5_amd64.deb
+	sudo dpkg -i http://launchpadlibrarian.net/187844602/lib32bz2-1.0_1.0.6-5ubuntu5_amd64.deb
+	sudo apt-get install -y --force-yes avr-libc gcc-avr lib32z1 lib32ncurses5 lib32bz2-1.0 git build-essential
 	#32 bit
-	sudo apt-get install -y --force-yes avr-libc gcc-avr git build-essential
+	#sudo apt-get install -y --force-yes avr-libc gcc-avr git build-essential
 	wget http://ww1.microchip.com/downloads/en/DeviceDoc/$(PIC_COMPILER).zip
 	unzip $(PIC_COMPILER).zip
 	#wget https://nr-sdk.googlecode.com/svn/trunk/firmware/tools/$(PIC_COMPILER)-installer.run
