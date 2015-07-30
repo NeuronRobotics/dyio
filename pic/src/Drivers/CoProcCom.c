@@ -43,9 +43,9 @@ boolean getPacket(BowlerPacket * packet) {
         printFiFoState_I(&store);
     }
 #endif
-    StartCritical();
+    INTEnable(INT_SOURCE_UART_RX(UART2), INT_DISABLED);
     boolean b = _getBowlerPacket(packet, & store, true);
-    EndCritical();
+    INTEnable(INT_SOURCE_UART_RX(UART2), INT_ENABLED);
     if (b) {
         //println_I("Returning packet");
     }
@@ -97,7 +97,7 @@ void startUartCoProc() {
 
     //Start configuration
     UARTConfigure(UART2, UART_ENABLE_PINS_TX_RX_ONLY | UART_ENABLE_HIGH_SPEED );
-    UARTSetFifoMode(UART2, UART_INTERRUPT_ON_RX_NOT_EMPTY);
+    UARTSetFifoMode(UART2, UART_INTERRUPT_ON_TX_NOT_FULL |UART_INTERRUPT_ON_RX_NOT_EMPTY);
 
     //OpenUART1(UART_EN|UART_EVEN_PAR_8BIT|UART_1STOPBIT|UART_DIS_BCLK_CTS_RTS,UART_TX_ENABLE|UART_RX_ENABLE,CalcBaud(INTERNAL_BAUD ));
     UARTSetLineControl(UART2, UART_DATA_SIZE_8_BITS | UART_PARITY_EVEN | UART_STOP_BITS_1);
@@ -325,7 +325,7 @@ uint8_t sendPacket(BowlerPacket * Packet) {
         println_E("Tx");
         p_fl_E(getMs() - packStartTime);
         initCoProcUART();
-        PowerCycleAVR();
+        //PowerCycleAVR();
         return 1;
     }
 }
@@ -519,15 +519,14 @@ void newByte() {
 #else
 #if !defined(SHORTISR)
     int timeout = 0;
-    while (U2STAbits.URXDA != 0 ) {
+    INTEnable(INT_SOURCE_UART_RX(UART2), INT_DISABLED);
+    while (U2STAbits.URXDA != 0 &&timeout < 4 ) {
         addCoProcByte(UARTGetDataByte(UART2));
         U2STAbits.URXDA = 0;
         buttonCheck(17);
         timeout++;
-        if (timeout > 4) {// size of the built in FIFo
-            return;
-        }
     }
+    INTEnable(INT_SOURCE_UART_RX(UART2), INT_ENABLED);
 #else
     if (DataRdyUART2()) {
         addCoProcByte(UARTGetDataByte(UART2));
@@ -547,7 +546,10 @@ void __ISR(_UART_2_VECTOR, IPL7AUTO) My_U2_ISR(void) {
     }
      uartErrorCheck();
     //EndCritical();
-
+    if (INTGetFlag(INT_SOURCE_UART_ERROR(UART2))) {
+                INTClearFlag(INT_SOURCE_UART_ERROR(UART2));
+                //println_E("&@&@&&@&@&@ wtf tx");
+    }
     if (INTGetFlag(INT_SOURCE_UART_TX(UART2))) {
             INTClearFlag(INT_SOURCE_UART_TX(UART2));
             //println_E("&@&@&&@&@&@ wtf tx");
