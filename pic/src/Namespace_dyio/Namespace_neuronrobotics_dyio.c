@@ -49,11 +49,9 @@ boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidA
         RunPPMCheck();
 
 
-
-	//if {
     int r = (isLocked()) ? 1 : 0;
     int g = (isActive() && !isLocked()) ? 1 : 0;
-
+//
     SetGreen(g);
     SetRed(r);
     SetBlue(1);
@@ -61,13 +59,7 @@ boolean neuronRoboticsDyIOAsyncEventCallback(BowlerPacket *Packet, boolean(*pidA
     SetGreen(0);
     SetRed(0);
     SetBlue(0);
-	//}
 
-//    if ((RunEvery(&syncVolt)>0)) {
-//    	//CheckSwitches();
-//    	//
-//
-//    }
 
     float now = getMs()- getLastPacketTime();
 
