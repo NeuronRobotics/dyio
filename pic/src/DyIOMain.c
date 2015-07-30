@@ -27,7 +27,7 @@ boolean PutBowlerPacketLocal(BowlerPacket * Packet) {
 }
 void startTimer(boolean on){
     if(on){
-            OpenTimer4(T4_ON | T4_SOURCE_INT | T4_PS_1_256, 100);
+            OpenTimer4(T4_ON | T4_SOURCE_INT | T4_PS_1_256, 1000);
             ConfigIntTimer4(T4_INT_ON | T4_INT_PRIOR_1);
     }else
        CloseTimer4();
@@ -44,7 +44,6 @@ void server(){
         SetRed(0);
         return;
     }
-
     // Run the Bowler Stack Namespace iteration of all async packets
     // Pass in  the function pointer to push the packets upstream
     boolean back = GetBowlerPacket_arch(&ISRPacket);
@@ -83,7 +82,14 @@ void runDyIOMain(void) {
     
     //kick off packet processor timer
     startTimer(true);
-
+    setPrintLevelNoPrint();
+    if(getPrintLevel()!=NO_PRINT){
+         //disableSerialComs(true);
+         println_E("Serial Port Disabled!");
+    }else{
+         disableSerialComs(false);
+    }
+    //SetGreen(0);
     while (1) {
         //server();
         RunNamespaceAsync(&Packet, &PutBowlerPacketLocal);
