@@ -162,7 +162,7 @@ void hardwareInit() {
 void UserInit(void) {
     //setPrintStream(&USBPutArray);
     clearPrint();
-    //setPrintLevelInfoPrint();
+    setPrintLevelInfoPrint();
     println_I("Start PIC");
     //DelayMs(1000);
     hardwareInit();
@@ -193,7 +193,7 @@ void UserInit(void) {
     
     //println_I("###Starting PIC In Debug Mode###\n"); // All printfDEBUG functions do not need to be removed from code if debug is disabled
     //DelayMs(1000);
-    //setPrintLevelWarningPrint();
+    setPrintLevelWarningPrint();
     //println_E("Error level printing");
     //println_W("Warning level printing");
     //println_I("Info level printing");

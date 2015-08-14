@@ -68,6 +68,6 @@ boolean PutBowlerPacketLocal(BowlerPacket * Packet);
 void server();
 
 #define MAX_RETRY 5
-#define DELAY_TIMEOUT (USB_TIMEOUT*2)
+#define DELAY_TIMEOUT (80)
 
 #endif /* USERAPP_H_ */
