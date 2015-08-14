@@ -229,7 +229,7 @@ void SendPacketToCoProc(BowlerPacket * Packet) {
         //SetColor(1, 0, 0);
         initCoProcCom();
         //PowerCycleAVR();
-        //DelayMs(200);
+        DelayMs(40);
         ret = sendPacket(Packet);
         if (ret == 0) {
             println_W("AVR rst");
@@ -325,7 +325,7 @@ uint8_t sendPacket(BowlerPacket * Packet) {
         println_E("Tx");
         p_fl_E(getMs() - packStartTime);
         initCoProcUART();
-        PowerCycleAVR();
+        //PowerCycleAVR();
         return 1;
     }
 }
