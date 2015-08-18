@@ -228,7 +228,7 @@ void SendPacketToCoProc(BowlerPacket * Packet) {
 
         //SetColor(1, 0, 0);
         initCoProcCom();
-        //PowerCycleAVR();
+        PowerCycleAVR();
         DelayMs(40);
         ret = sendPacket(Packet);
         if (ret == 0) {

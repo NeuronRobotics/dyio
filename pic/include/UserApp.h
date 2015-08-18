@@ -67,7 +67,7 @@ void InitializeDyIODataTableManager();
 boolean PutBowlerPacketLocal(BowlerPacket * Packet);
 void server();
 
-#define MAX_RETRY 5
+#define MAX_RETRY 8
 #define DELAY_TIMEOUT (80)
 
 #endif /* USERAPP_H_ */
