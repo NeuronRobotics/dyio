@@ -145,6 +145,7 @@ void hardwareInit() {
     		defaultmac = false;
     	}
     }
+#if !defined(__DEBUG)
     if(defaultmac){
     	srand((unsigned) GetRawVoltage());// random seed from the air
 
@@ -156,7 +157,7 @@ void hardwareInit() {
 		DelayMs(100);
     	Reset();
     }
-
+#endif
 }
 
 void UserInit(void) {

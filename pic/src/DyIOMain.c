@@ -82,7 +82,7 @@ void runDyIOMain(void) {
     
     //kick off packet processor timer
     startTimer(true);
-    //setPrintLevelNoPrint();
+    setPrintLevelNoPrint();
     if(getPrintLevel()!=NO_PRINT){
          //disableSerialComs(true);
          println_E("Serial Port Disabled!");
