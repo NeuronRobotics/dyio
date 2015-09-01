@@ -125,7 +125,7 @@ boolean setMode(uint8_t pin,uint8_t mode){
 		break;
 	}
 	SetCoProcMode(pin,mode);
-	print_E(" OK ");
+	//print_E(" OK ");
 	return true;
 //	print_I(" \tMode set");
 	

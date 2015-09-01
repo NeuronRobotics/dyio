@@ -570,14 +570,14 @@ boolean _setDataTableCurrentValue(uint8_t pin, int32_t value){
 	}
 	if(value !=getBcsIoDataTable(pin)->PIN.currentValue ){
 		//Print_Level l = INFO_PRINT;
-		Print_Level l = isOutputMode(GetChannelMode(pin))?ERROR_PRINT:INFO_PRINT;
-		println(" Value was ",l);p_int(getBcsIoDataTable(pin)->PIN.currentValue,l);
-		print_nnl(" set to ",l);p_int(value,l);
-		print_nnl(" on pin ",l);p_int(pin,l);
-		print_nnl(" mode ",l);printMode(GetChannelMode(pin),l);
+//		Print_Level l = isOutputMode(GetChannelMode(pin))?ERROR_PRINT:INFO_PRINT;
+//		println(" Value was ",l);p_int(getBcsIoDataTable(pin)->PIN.currentValue,l);
+//		print_nnl(" set to ",l);p_int(value,l);
+//		print_nnl(" on pin ",l);p_int(pin,l);
+//		print_nnl(" mode ",l);printMode(GetChannelMode(pin),l);
 		// THis is the only place this variable should be set
 		getBcsIoDataTable(pin)->PIN.currentValue =value;
-		print_nnl(" lastPushed ",l);p_int(	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal,l);
+//		print_nnl(" lastPushed ",l);p_int(	getBcsIoDataTable(pin)->PIN.asyncDataPreviousVal,l);
 		return true;
 	}
 	return false;
