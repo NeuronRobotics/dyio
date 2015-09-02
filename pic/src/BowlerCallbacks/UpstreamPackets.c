@@ -45,7 +45,7 @@ void UpstreamPushPowerChange(uint8_t r0,uint8_t r1, uint16_t voltage, uint8_t ov
 	packetTemp.use.head.DataLegnth=4+2+2+1;
 
 	PutBowlerPacketLocal(& packetTemp);
-	printPacket(&packetTemp,WARN_PRINT);
+	//printPacket(&packetTemp,WARN_PRINT);
 }
 
 void UpstreamPushSPIlStream(void){
@@ -58,7 +58,7 @@ void UpstreamPushSPIlStream(void){
 	packetTemp.use.data[1]=GetSPIRxData(&packetTemp.use.data[2]);
 	packetTemp.use.head.DataLegnth = 4+1+1+packetTemp.use.data[1];
 	PutBowlerPacketLocal(& packetTemp);
-	printPacket(&packetTemp,WARN_PRINT);
+	//printPacket(&packetTemp,WARN_PRINT);
 
 }
 
@@ -72,7 +72,7 @@ void UpstreamPushSerialStream(void){
 	packetTemp.use.data[1]=GetSerialRxData(&packetTemp.use.data[2]);
 	packetTemp.use.head.DataLegnth = 4+1+1+packetTemp.use.data[1];
 	PutBowlerPacketLocal(& packetTemp);
-	printPacket(&packetTemp,WARN_PRINT);
+	//printPacket(&packetTemp,WARN_PRINT);
 
 }
 
@@ -97,7 +97,7 @@ void pushPPMPacket(void){
 
 	packetTemp.use.head.Method=BOWLER_ASYN;
 	PutBowlerPacketLocal(& packetTemp);
-	printPacket(&packetTemp,WARN_PRINT);
+	//printPacket(&packetTemp,WARN_PRINT);
 }
 
 

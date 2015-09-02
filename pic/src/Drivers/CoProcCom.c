@@ -43,9 +43,11 @@ boolean getPacket(BowlerPacket * packet) {
         printFiFoState_I(&store);
     }
 #endif
-    INTEnable(INT_SOURCE_UART_RX(UART2), INT_DISABLED);
+//    DisableIntT4;
+//    INTEnable(INT_SOURCE_UART_RX(UART2), INT_DISABLED);//disable the system server timer whle grabbing bytes
     boolean b = _getBowlerPacket(packet, & store, true);
-    INTEnable(INT_SOURCE_UART_RX(UART2), INT_ENABLED);
+//    INTEnable(INT_SOURCE_UART_RX(UART2), INT_ENABLED);//restart the server timer
+//    EnableIntT4;
     if (b) {
         //println_I("Returning packet");
     }
@@ -97,7 +99,7 @@ void startUartCoProc() {
 
     //Start configuration
     UARTConfigure(UART2, UART_ENABLE_PINS_TX_RX_ONLY | UART_ENABLE_HIGH_SPEED );
-    UARTSetFifoMode(UART2, UART_INTERRUPT_ON_TX_NOT_FULL |UART_INTERRUPT_ON_RX_NOT_EMPTY);
+    UARTSetFifoMode(UART2, UART_INTERRUPT_ON_TX_BUFFER_EMPTY |UART_INTERRUPT_ON_RX_NOT_EMPTY);
 
     //OpenUART1(UART_EN|UART_EVEN_PAR_8BIT|UART_1STOPBIT|UART_DIS_BCLK_CTS_RTS,UART_TX_ENABLE|UART_RX_ENABLE,CalcBaud(INTERNAL_BAUD ));
     UARTSetLineControl(UART2, UART_DATA_SIZE_8_BITS | UART_PARITY_EVEN | UART_STOP_BITS_1);
@@ -519,14 +521,16 @@ void newByte() {
 #else
 #if !defined(SHORTISR)
     int timeout = 0;
-    INTEnable(INT_SOURCE_UART_RX(UART2), INT_DISABLED);
+//    DisableIntT4;//disable the system server timer whle grabbing bytes
+//    INTEnable(INT_SOURCE_UART_RX(UART2), INT_DISABLED);
     while (U2STAbits.URXDA != 0 &&timeout < 4 ) {
         addCoProcByte(UARTGetDataByte(UART2));
         U2STAbits.URXDA = 0;
         buttonCheck(17);
         timeout++;
     }
-    INTEnable(INT_SOURCE_UART_RX(UART2), INT_ENABLED);
+//    INTEnable(INT_SOURCE_UART_RX(UART2), INT_ENABLED);
+//    EnableIntT4;//restart the server
 #else
     if (DataRdyUART2()) {
         addCoProcByte(UARTGetDataByte(UART2));

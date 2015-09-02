@@ -25,9 +25,9 @@ boolean PutBowlerPacketLocal(BowlerPacket * Packet) {
     EnableIntT4;
     return true;
 }
-void startTimer(boolean on){
+void startCoreUpstreamServerTimer(boolean on){
     if(on){
-            OpenTimer4(T4_ON | T4_SOURCE_INT | T4_PS_1_256, 1000);
+            OpenTimer4(T4_ON | T4_SOURCE_INT | T4_PS_1_256, 2000);
             ConfigIntTimer4(T4_INT_ON | T4_INT_PRIOR_1);
     }else
        CloseTimer4();
@@ -40,6 +40,7 @@ void server(){
     if (FifoGetPacketCount(&packetFifo) > 0) {
         FifoGetPacket(&packetFifo, &ISRPacket);
         SetRed(1);
+        //println_E("Asyn");
         PutBowlerPacket(& ISRPacket);
         SetRed(0);
         return;
@@ -62,13 +63,13 @@ void server(){
 void __ISR(_TIMER_4_VECTOR, ipl1) _Timer4Handler(void) {
     //shut off the timer to avoid process recoursion
     mT4ClearIntFlag();
-    startTimer(false);
+    startCoreUpstreamServerTimer(false);
     USBEnableInterrupts();
     EndCritical();
 
     server();
 
-    startTimer(true);
+    startCoreUpstreamServerTimer(true);
 }
 
 void runDyIOMain(void) {
@@ -81,8 +82,8 @@ void runDyIOMain(void) {
     //println_I("Main Loop Start");
     
     //kick off packet processor timer
-    startTimer(true);
-    setPrintLevelNoPrint();
+    startCoreUpstreamServerTimer(true);
+    //setPrintLevelNoPrint();
     if(getPrintLevel()!=NO_PRINT){
          //disableSerialComs(true);
          println_E("Serial Port Disabled!");

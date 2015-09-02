@@ -400,7 +400,7 @@ boolean GetName(char * name) {
 	downstreamPacketTemp.use.head.DataLegnth = 6;
 	SendPacketToCoProc(&downstreamPacketTemp);
 
-	printPacket(&downstreamPacketTemp,WARN_PRINT);
+	//printPacket(&downstreamPacketTemp,WARN_PRINT);
 
 	while (downstreamPacketTemp.use.data[i] != '\0') {
 		name[i] = downstreamPacketTemp.use.data[i];
@@ -453,7 +453,7 @@ void SetName(char * name) {
 	}
 	downstreamPacketTemp.use.data[2 + i] = '\0';
 	downstreamPacketTemp.use.head.DataLegnth = 6 + i + 1;
-	printPacket(&downstreamPacketTemp,ERROR_PRINT);
+	//printPacket(&downstreamPacketTemp,ERROR_PRINT);
 	SendPacketToCoProc(&downstreamPacketTemp);
 }
 

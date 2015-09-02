@@ -105,10 +105,11 @@ void dealWithAsyncPacket(BowlerPacket * Packet){
 	}
 	if (Packet->use.head.Method == BOWLER_ASYN) {
 		ProcessAsyncData(Packet);
-	} else {
-		println_W("###########Stray sync packet..");
-		printPacket(Packet, WARN_PRINT);
 	}
+//        else {
+//		println_W("###########Stray sync packet..");
+//		printPacket(Packet, WARN_PRINT);
+//	}
 }
 
 
