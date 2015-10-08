@@ -45,9 +45,9 @@
 #elif defined(__MICROBLAZE__)
 	#include "arch/xilinx/BowlerConfig.h"
 #else
-	#error Unknown archetecture!! See Bowler.h
+	//#error Unknown archetecture!! See Bowler.h
 	//#warning this is a hacky work around
-	//#include "arch/NXP/BowlerConfig.h"
+	#include "BowlerConfig.h"
 #endif
 
 #include "BowlerServerHardwareAbstraction.h"
